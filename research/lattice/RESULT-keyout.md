@@ -44,6 +44,19 @@ units), a mainnet ML-DSA-65 spend in this shape would cost about 13,003 + 329 + 
 + 3,309 ≈ 5.5 KB; the ring of 1,024 about 13,440 units and 5.9 KB. The shape for SK-028's method spec is this
 one: commitment in the proposition, key and signature in the context extension.
 
+## Three things the table does not say
+
+- **The ring is an authorization ring, not a hidden signer.** The lookup proof carries the key, so the spend
+  reveals which member authorized it; forged-key rejection shows non-members fail and says nothing about
+  ambiguity. The sigma tree's hidden-signer threshold is not available for keys that live in the extension.
+- **The rejection costs.** A spend with a flipped key byte fails at the commitment compare: local script cost 21
+  units (single), 51 (ring 32), 63 (ring 1,024), from the `LOCAL-EVAL how=forged` lines in the log. The WOTS
+  per-key form in `q2` rejects only after the full verification (37,592 units) and the transaction pays no fee;
+  a commitment check fails early and cheaply, which is the shape a node wants.
+- **The extension bound is per input and per transaction, not per box.** One 2 KB key is nothing; a transaction
+  spending several such inputs puts several keys in one transaction against the 98,304-byte relay config and the
+  block, and that case was not measured (it is also where SK-012's multi-input binding lives).
+
 ## Caveats
 
 - One mining node, no relay; the 2.1 to 2.6 KB spends are far under the 98,304-byte relay config and were not

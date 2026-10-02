@@ -1,5 +1,8 @@
 # SK-028: `Global.verifyMLDSA` and `Global.verifyFalcon`, a one-page spec (draft, not proposed anywhere)
 
+Status: a note attached to the two cost tables, held until the four-week read of thread 5369 (2026-10-30) shows
+whether maintainers engage with the hash-based opcode ask already in front of them; an EIP only if one asks.
+
 Written 2026-10-02 from the 6.0 extension pattern in sigma 6.0.3 (`methods.scala:1812-1832`: `Header.checkPow`
 is `SMethod(this, "checkPow", SFunc(Array(SHeader), SBoolean), 16, FixedCost(JitCost(700)))`, listed in
 `v6Methods` and switched in by `VersionContext.current.isV3OrLaterErgoTreeVersion`, evaluated in `CHeader.checkPow`
@@ -20,9 +23,13 @@ is the standard algorithm unmodified (`ML-DSA.Verify` with `ctx` empty), so FIPS
 
 ## Cost
 
-`FixedCost(JitCost(n))` per call, from the measured ratio to `ComputeCommitments_Schnorr` (3,400 JIT) in
-`RESULT.md`, rounded up by the same margin `checkPow` used (its comment: "about 2×32 hashes", charged 700 for
-work that costs less):
+`FixedCost(JitCost(n))` per call. The figures come from SK-026's benchmark (`RESULT.md`), not from the devnet run
+in `RESULT-keyout.md`, which had no verifier. A fixed cost is charged at reduction, so it must upper-bound the
+*worst-case* verify time on the hardware the cost model is calibrated on, not the median measured here: the
+proposed constants cover the measured p95 (174 µs for ML-DSA-65, 271 for ML-DSA-87, 51 for Falcon-512) by about
+1.2× on this machine and must be re-derived on the reference hardware before anyone relies on them. Underpricing
+is a denial-of-service vector; `checkPow`'s margin ("about 2×32 hashes", charged 700 for work that costs less) is
+the right instinct only when the margin is against the worst case.
 
 | Method | measured ratio | implied JIT | proposed `JitCost` |
 |---|---|---|---|
@@ -43,8 +50,9 @@ and older scripts cannot; activated by the block-version vote (`softForkApproved
 the voting epochs, `VotingSettings.scala:9`). Nodes that have not upgraded reject the new tree version until
 activation and accept blocks after it under the soft-fork rules for added method codes. Both implementations
 must ship together: the JVM (Bouncy Castle's `MLDSASigner` and `FalconSigner` are already in the node's jar) and
-sigma-rust (a Rust ML-DSA and Falcon verifier; consensus-critical parity, with the FIPS 204 vectors as the
-conformance set, the SANTA shape).
+sigma-rust (a Rust ML-DSA and Falcon verifier). Parity between the two is a consensus requirement, not a
+portability note: a block one implementation accepts and the other rejects is a chain split. The FIPS 204 vectors
+are the conformance set, the SANTA shape.
 
 ## The script it enables
 
