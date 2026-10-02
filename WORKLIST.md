@@ -23,7 +23,6 @@ is not scheduled before that foundation has a measured answer.
 | SK-002 | research | chain | Q1 final census at the tip | run `q1/run.sh` when the mainnet node reaches ~1,885,000; reply in 5369 | none | `q1/`, `NEXT.md` |
 | SK-003 | upstream | tooling | sigma-rust #928 / PR #929: respond to review; watch #860 and #879 which affect two tests | reply within the maintainers' cadence | none | `posts/sigma-rust/` |
 | SK-004 | upstream | tooling | Fleet #219 (`toP2SH()` hashes the tree, not the proposition) | respond to review | none | `posts/fleet/ISSUE.md` |
-| SK-028 | upstream | script | A `Global.verifyMLDSA` / `verifyFalcon` method in the 6.0 `checkPow` pattern (`SMethod` with a `FixedCost` behind the next activation): a one-page spec with the cost from SK-026, the message binding from `q2/wots.es`, and the hybrid `proveDlog && verify` script; the first proposal shape, ahead of any sigma leaf | now; costs from RESULT.md and RESULT-keyout.md | none | `research/lattice/README.md`, direction 2 |
 | SK-005 | research | script | The on-chain spending policy for autonomous agents ("fence") | write the policy contract; cost it; devnet attacks | F1 (the interval uses the creation height rent resets), F3 | `research/agents/README.md` |
 
 ## Next
@@ -81,6 +80,7 @@ repository; the registration prompt is `prompts/peeryard-foundations.md`.
 | SK-101 | skunk | oneshot steps 1 to 4 on devnet and public testnet; Node A = A1 | handed off in the post; page live |
 | SK-102 | upstream | sigma-rust P2SH script unspendable: issue #928, PR #929 (five review passes) | filed 2026-10-02 |
 | SK-103 | upstream | Fleet `toP2SH()`: issue #219 | filed 2026-10-02 |
+| SK-107 | upstream | SK-028, the `Global.verifyMLDSA` / `verifyFalcon` method spec in the 6.0 `checkPow` pattern, costs from the two measurements; draft only, not proposed | `research/lattice/SPEC-verify-method.md`, 2026-10-02 |
 | SK-106 | research | SK-027, keys outside the proposition on a devnet: key from the context extension 63 block units, AVL ring of 1,024 keys 105, box 109 to 120 bytes, forged keys rejected | `research/lattice/RESULT-keyout.md`, 2026-10-02 |
 | SK-105 | research | SK-026, verification benchmark on the node's jar: ML-DSA-65 0.97× the `proveDlog` commitment, Falcon-512 0.28×, SLH-DSA-128s 5.5×; lattice spends are byte-bound | `research/lattice/RESULT.md`, 2026-10-02 |
 | SK-104 | research | The P2SH forms finding (one address, three box scripts; a mainnet instance per sigma-rust #860) | in the post, section 4 |
