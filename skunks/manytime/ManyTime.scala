@@ -1,7 +1,7 @@
 // SK-029 driver. keygen <outdir> <n> <w> <h>: 2^h WOTS leaves (fresh SecureRandom), the AVL tree of their
 // commitments (key = 8-byte index, value = blake2b256(pk_i), inserted in index order), the compiled tree, its
 // devnet P2S address, and R4 for leaf 0. spend <keydir> <boxJson|-> <toAddress> <feeNanoErg> <amountNanoErg>
-// <valid|forged|wrongindex> [minerRewardDelay]: reads i from the box's R4, signs with leaf i, recreates the
+// <valid|forged|wrongindex|staleleaf> [minerRewardDelay]: reads i from the box's R4, signs with leaf i, recreates the
 // box as OUTPUTS(0) with R4 = i + 1 (wrongindex: R4 = i), pays amount to toAddress and the fee; evaluates
 // locally (stderr LOCAL-EVAL) and prints the JSON for POST /transactions.
 package manytime
@@ -70,8 +70,10 @@ object ManyTime {
     require(hex(box.ergoTree.bytes) == read(keyDir, "tree.hex"), "box is not locked by this key's tree")
     val i = box.get(ErgoBox.R4) match { case Some(IntConstant(v)) => v; case other => sys.error(s"R4 is not an Int: $other") }
     require(i < leaves, s"leaf index $i beyond $leaves leaves")
-    val sk = read(keyDir, s"sk-$i.hex").split("\n").map(unhex)
-    val p = prover(hashes); p.performOneOperation(Lookup(ADKey @@ idxKey(i))).get; val proof = p.generateProof()
+    val leaf = if (how == "staleleaf") i - 1 else i
+    require(leaf >= 0, "staleleaf needs R4 >= 1")
+    val sk = read(keyDir, s"sk-$leaf.hex").split("\n").map(unhex)
+    val p = prover(hashes); p.performOneOperation(Lookup(ADKey @@ idxKey(leaf))).get; val proof = p.generateProof()
     val nextI = if (how == "wrongindex") i else i + 1
     val toTree = enc.fromString(toAddress).get.script
     val feeTree = ErgoTreePredef.feeProposition(rewardDelay)
@@ -83,7 +85,7 @@ object ManyTime {
       new ErgoBoxCandidate(fee, feeTree, hgt))
     val msg = Blake2b256.hash(box.id ++ outputs.flatMap(_.bytesWithNoRef)).take(n)
     val sig = Runner6.wotsSign(sk, msg, n, w)
-    if (how == "forged") sig(0) = (sig(0) ^ 0x01).toByte else require(Set("valid", "wrongindex")(how), s"valid|forged|wrongindex, got $how")
+    if (how == "forged") sig(0) = (sig(0) ^ 0x01).toByte else require(Set("valid", "wrongindex", "staleleaf")(how), s"valid|forged|wrongindex|staleleaf, got $how")
     val ext = ContextExtension(Map(0.toByte -> ByteArrayConstant(sig), 1.toByte -> ByteArrayConstant(proof)))
     val tx = new ErgoLikeTransaction(IndexedSeq(new Input(box.id, ProverResult(Array.emptyByteArray, ext))), IndexedSeq.empty, outputs)
     val ctx = new ErgoLikeContext(
@@ -93,7 +95,7 @@ object ManyTime {
       initCost = 0L, activatedScriptVersion = 3.toByte)
     val local = Runner6.verifier.verify(box.ergoTree, ctx, ProverResult(Array.emptyByteArray, ext), tx.messageToSign)
     val txBytes = ErgoLikeTransaction.serializer.toBytes(tx)
-    System.err.println(s"LOCAL-EVAL how=$how leaf=$i next=$nextI leaves=$leaves result=${local.map(_._1)} cost=${local.map(_._2)} tx_id=${tx.id} " +
+    System.err.println(s"LOCAL-EVAL how=$how r4=$i leaf=$leaf next=$nextI leaves=$leaves result=${local.map(_._1)} cost=${local.map(_._2)} tx_id=${tx.id} " +
       s"tx_bytes=${txBytes.length} sig_bytes=${sig.length} proof_bytes=${proof.length} box_bytes=${box.bytes.length} tree_bytes=${box.ergoTree.bytes.length}")
     def out(c: ErgoBoxCandidate): String = {
       val r = c.additionalRegisters.map { case (k, v) => s""""R${k.number}":"${hex(ValueSerializer.serialize(v))}"""" }.mkString("{", ",", "}")
@@ -108,6 +110,6 @@ object ManyTime {
     case "spend" :: dir :: boxFile :: to :: fee :: amount :: how :: rest =>
       val boxJson = if (boxFile == "-") Source.stdin.mkString else new String(Files.readAllBytes(Paths.get(boxFile)), UTF_8)
       spend(new File(dir), boxJson, to, fee.toLong, amount.toLong, how, rest.headOption.map(_.toInt).getOrElse(720))
-    case _ => System.err.println("usage: ManyTime keygen <outdir> <n> <w> <h> | ManyTime spend <keydir> <boxJson|-> <toAddress> <fee> <amount> <valid|forged|wrongindex> [minerRewardDelay]"); sys.exit(2)
+    case _ => System.err.println("usage: ManyTime keygen <outdir> <n> <w> <h> | ManyTime spend <keydir> <boxJson|-> <toAddress> <fee> <amount> <valid|forged|wrongindex|staleleaf> [minerRewardDelay]"); sys.exit(2)
   }
 }

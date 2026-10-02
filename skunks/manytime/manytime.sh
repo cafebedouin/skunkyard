@@ -1,8 +1,10 @@
 # manytime: SK-029, many-time hash-based keys with no fork (skunks/manytime/). One mining node A at block
 # version 4. keygen 2^H WOTS leaves (n=32, w=16) under one AVL root; fund the box with R4 = 0 (leaf index);
 # on the funded box post: forged (one signature bit flipped; must be rejected by the script check), wrongindex
-# (recreated box keeps R4 = i; must be rejected), valid (must confirm, recreating the box with R4 = 1); then
-# spend the recreated box with leaf 1 (must confirm, R4 = 2). PASS = both rejections and both confirmations.
+# (recreated box keeps R4 = i; must be rejected), valid (must confirm, recreating the box with R4 = 1); then on the
+# recreated box: staleleaf (leaf 0's signature and proof against R4 = 1; must be rejected), valid with leaf 1 (must
+# confirm, R4 = 2). Each rejection prints the local cost and the node's verdict. PASS = three rejections, two
+# confirmations.
 MT_N=${MT_N:-32}; MT_W=${MT_W:-16}; MT_H=${MT_H:-4}; FUND=${MT_FUND:-1000000000}; FEE=${MT_FEE:-1000000}; AMT=${MT_AMOUNT:-100000000}
 MTD="$(dirname "$RIG_HOOK")"; REPO="$(cd "$MTD/../.." && pwd)"
 CPF="$MTD/target/cp.txt"; WD="$SCRATCH/manytime"; mkdir -p "$WD"; DELAY="${REWARD_DELAY:-720}"
@@ -27,7 +29,7 @@ if [[ "${rig_verdict:-}" != FAIL ]]; then
   ADDR_A=""; end=$((SECONDS + 60)); while [[ -z "$ADDR_A" && $SECONDS -lt $end ]]; do ADDR_A=$(address A 2>/dev/null); [[ -n "$ADDR_A" ]] || sleep 2; done
   [[ -n "$ADDR_A" ]] || { echo "[mt] FAIL: no wallet address"; rig_verdict=FAIL; }
 fi
-rej_forged=no; rej_wrongindex=no; conf1=no; conf2=no
+rej_forged=no; rej_wrongindex=no; rej_stale=no; conf1=no; conf2=no
 if [[ "${rig_verdict:-}" != FAIL ]]; then
   mt_cli keygen "$WD/keys" "$MT_N" "$MT_W" "$MT_H" 2>&1 | sed 's/^/[mt] /'
   P2S=$(cat "$WD/keys/address"); TREE=$(cat "$WD/keys/tree.hex"); R4=$(cat "$WD/keys/r4-0.hex")
@@ -48,6 +50,7 @@ spend_round(){ # <boxfile> <how> <tag> ; sets LAST_TX, LAST_BLOCK
   hb=$(full_height A); code=$(post_json A /transactions "$WD/tx_$tag.json"); body=$(cat "$WD/tx_$tag.json.body")
   if [[ "$how" != valid ]]; then
     echo "[mt:$tag] POST -> HTTP $code: $(tr -d '\n' <<< "$body" | cut -c1-260)"
+    echo "[mt:$tag] REJECTED local_cost=$(grep -o 'cost=[^ ]*' "$WD/spend_$tag.err" | head -1) node_verdict=$(grep -o 'Success((false,[0-9]*))\|Failure([^)]*)' <<< "$body" | head -1)"
     [[ "$code" == 400 ]] && grep -q 'Scripts of all transaction inputs should pass verification' <<< "$body" && return 0 || return 1
   fi
   vid=$(jq -r 'if type == "string" then . else tojson end' <<< "$body" 2>/dev/null)
@@ -66,9 +69,10 @@ if [[ "${rig_verdict:-}" != FAIL ]]; then
   spend_round "$WD/box0.json" wrongindex wrongindex && rej_wrongindex=yes
   if spend_round "$WD/box0.json" valid valid0; then conf1=yes
     rest A "/utxo/byId/$LAST_BOX" > "$WD/box1.json"; echo "[mt] box1 $LAST_BOX R4=$(jq -r .additionalRegisters.R4 "$WD/box1.json")"
+    spend_round "$WD/box1.json" staleleaf staleleaf && rej_stale=yes
     spend_round "$WD/box1.json" valid valid1 && conf2=yes
   fi
 fi
 echo "[mt] /info parameters: $(rest A /info | jq -c '.parameters')"
-if [[ "${rig_verdict:-}" != FAIL && $rej_forged == yes && $rej_wrongindex == yes && $conf1 == yes && $conf2 == yes ]]; then rig_verdict=PASS; else rig_verdict=FAIL; fi
-echo "MANYTIME: $rig_verdict (forged_rejected=$rej_forged wrongindex_rejected=$rej_wrongindex spend0_confirmed=$conf1 spend1_confirmed=$conf2)"
+if [[ "${rig_verdict:-}" != FAIL && $rej_forged == yes && $rej_wrongindex == yes && $rej_stale == yes && $conf1 == yes && $conf2 == yes ]]; then rig_verdict=PASS; else rig_verdict=FAIL; fi
+echo "MANYTIME: $rig_verdict (forged_rejected=$rej_forged wrongindex_rejected=$rej_wrongindex staleleaf_rejected=$rej_stale spend0_confirmed=$conf1 spend1_confirmed=$conf2)"
