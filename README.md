@@ -10,3 +10,5 @@ Results and measurements for Q2 pilot: see [`q2/README.md`](q2/README.md).
 
 Second program: TSNP, the Temporal Stealth Note Protocol specification posted to the forum in March 2026, with the
 pilot that would answer its open items and a note on its terms against the quantum horizon (`tsnp/`).
+
+The worklist is `WORKLIST.md`; how the repository works is `PROGRAM.md`.

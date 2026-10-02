@@ -45,6 +45,8 @@ Outward text (`posts/`), dated reads behind claims (`notes/`), and shared toolin
 
 ## Current map
 
+The hand-maintained register is `WORKLIST.md` (ids SK-nnn, lanes now/next/later/done); this table is the summary.
+
 | | Status | Where |
 |---|---|---|
 | Research: post-quantum readiness, measured | Q1 dry run done, final run waits on sync; Q2 executed on a devnet; post drafted (v3) | `SCOPE.md`, `LITERATURE.md`, `q1/`, `q2/`, `posts/` (to move to `research/pq/`) |
