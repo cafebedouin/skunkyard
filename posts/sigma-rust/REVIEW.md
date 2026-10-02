@@ -61,3 +61,11 @@ the loose matcher was not a sigma-rust-only property; the texts describe it neut
    issue affecting anything that trusts `recreate_from_ergo_tree`; no funds at risk; the reference behaves the same).
 2. File the issue, put its number into `PR.md` (`Fixes #<n>`), push the branch, open the PR with `PR-TITLE.txt`.
 3. Attach or link `captures/` (they are not in the sigma-rust branch).
+
+## Filed (2026-10-02)
+
+- Issue: https://github.com/ergoplatform/sigma-rust/issues/928
+- Pull request: https://github.com/ergoplatform/sigma-rust/pull/929 (branch `fix/p2sh-script-form` on the fork
+  cafebedouin/sigma-rust, three commits on `develop` 1633e018)
+- Fleet: https://github.com/fleet-sdk/fleet/issues/219 (`posts/fleet/ISSUE.md`; no seat review, filed on the
+  person's instruction with the recon evidence)

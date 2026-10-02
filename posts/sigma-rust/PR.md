@@ -2,7 +2,7 @@ Prepared with Claude Code (Anthropic, Claude Opus 5.5) for cafebedouin, using pe
 
 **Wrap `GetVar` in `OptionGet` in the P2SH box script**
 
-Fixes #<issue number>
+Fixes #928
 
 **Observed.** `develop`'s `ergotree-ir/src/chain/address.rs:221-230` hashes `GetVar(1)` without `OptionGet`. A 6.0.6 devnet node rejected both submitted spends of boxes with that tree (`ClassCastException`); sigma-rust cannot parse it. Tested on 0.28.0 only, unchanged since #407.
 
