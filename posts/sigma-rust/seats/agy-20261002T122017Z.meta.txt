@@ -1,0 +1,10 @@
+seat:    agy (1.2.14)
+model:   tool default
+utc:     20261002T122017Z
+slice:   /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/rust-slice
+slice-git: not a git checkout
+web:     UNCONTROLLED (no flag)
+jail:    tools/seat-jail
+prompt-sha256: f4814b196825e3ad13c041e03b597b3706eee5dc88cabec2fc975daaeea0ddfd
+exit:    0
+model-reported: gemini-3.8-flash(x27),gemini-3.8-flash-high(x2) [from 768213e0-3d61-46f3-a159-fa32cc9c1ecf.db]
