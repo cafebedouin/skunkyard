@@ -1,0 +1,55 @@
+$ cd /home/scott/bin/sigma-rust-pr && cargo clippy -p ergotree-ir --all-features --all-targets -- -D warnings
+    Checking memchr v2.8.3
+    Checking libc v0.2.189
+    Checking zerocopy v0.8.59
+    Checking num-traits v0.2.19
+    Checking serde v1.0.229
+    Checking bounded-vec v0.9.0
+    Checking num-integer v0.1.47
+    Checking num-bigint v0.4.8
+    Checking bnum v0.12.1
+    Checking object v0.37.3
+    Checking serde_json v1.0.151
+    Checking core3 v0.1.2
+    Checking sigma-ser v0.20.0 (/home/scott/bin/sigma-rust-pr/sigma-ser)
+    Checking ppv-lite86 v0.2.21
+    Checking serde_with v3.24.0
+    Checking getrandom v0.2.17
+    Checking rand_core v0.6.4
+    Checking ff v0.13.1
+    Checking rand_chacha v0.3.1
+    Checking crypto-bigint v0.5.5
+    Checking rand_xorshift v0.3.0
+    Checking signature v2.2.0
+    Checking backtrace v0.3.76
+    Checking rand v0.8.8
+    Checking group v0.13.0
+    Checking backtrace-ext v0.2.1
+    Checking miette v7.6.0
+    Checking proptest v1.6.0
+    Checking elliptic-curve v0.13.8
+    Checking ecdsa v0.16.9
+    Checking k256 v0.13.4
+    Checking ergo-chain-types v0.16.0 (/home/scott/bin/sigma-rust-pr/ergo-chain-types)
+    Checking sigma-test-util v0.4.0 (/home/scott/bin/sigma-rust-pr/sigma-test-util)
+    Checking ergotree-ir v0.29.0 (/home/scott/bin/sigma-rust-pr/ergotree-ir)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 55.37s
+[exit 0]
+
+$ cd /home/scott/bin/sigma-rust-pr && cargo clippy -p ergo-lib --all-features --all-targets -- -D warnings
+    Checking ergotree-ir v0.29.0 (/home/scott/bin/sigma-rust-pr/ergotree-ir)
+    Checking ergo-nipopow v0.16.0 (/home/scott/bin/sigma-rust-pr/ergo-nipopow)
+    Checking ergotree-interpreter v0.29.0 (/home/scott/bin/sigma-rust-pr/ergotree-interpreter)
+    Checking ergoscript-compiler v0.25.0 (/home/scott/bin/sigma-rust-pr/ergoscript-compiler)
+    Checking ergo-rest v0.14.0 (/home/scott/bin/sigma-rust-pr/ergo-rest)
+    Checking ergo-lib v0.29.0 (/home/scott/bin/sigma-rust-pr/ergo-lib)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 32s
+[exit 0]
+
+$ cd /home/scott/bin/sigma-rust-pr && cargo clippy -p ergotree-interpreter --all-features --all-targets -- -D warnings
+    Checking ergotree-ir v0.29.0 (/home/scott/bin/sigma-rust-pr/ergotree-ir)
+    Checking ergoscript-compiler v0.25.0 (/home/scott/bin/sigma-rust-pr/ergoscript-compiler)
+    Checking ergotree-interpreter v0.29.0 (/home/scott/bin/sigma-rust-pr/ergotree-interpreter)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 37.18s
+[exit 0]
+

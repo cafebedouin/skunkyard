@@ -1,1 +1,1 @@
-Write the sigma-state 6.x P2SH box script in `Address::script()`
+Fix P2SH `Address::script()` (missing OptionGet); write the sigma-state 6.x form

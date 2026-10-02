@@ -1,0 +1,828 @@
+# HEAD 3e06bf0b; rustc rustc 1.91.1 (ed61e7d7e 2025-11-07)
+$ cd /home/scott/bin/sigma-rust-pr && cargo test -p ergotree-ir --features arbitrary
+   Compiling sigma-test-util v0.4.0 (/home/scott/bin/sigma-rust-pr/sigma-test-util)
+   Compiling ergotree-ir v0.29.0 (/home/scott/bin/sigma-rust-pr/ergotree-ir)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 21s
+     Running unittests src/lib.rs (target/debug/deps/ergotree_ir-8db6dcc23f20399f)
+
+running 278 tests
+test bigint256::tests::max_value ... ok
+test bigint256::tests::min_value ... ok
+test bigint256::tests::out_of_bounds ... ok
+test chain::address::p2sh_tests::legacy_var1_no_option_get_bytes_do_not_parse ... ok
+test chain::address::p2sh_tests::p2sh_script_matches_reference_bytes ... ok
+test chain::address::p2sh_tests::p2sh_script_matches_tree_spent_on_node ... ok
+test chain::address::p2sh_tests::p2sh_script_recreates_p2sh_address ... ok
+test chain::address::p2sh_tests::p2sh_script_roundtrips_through_bytes ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_hash_input_other_than_option_get_get_var ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_mismatched_get_var_and_deserialize_context_ids ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_hash_constant_not_24_bytes ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_other_deserialize_context_var ... ok
+test chain::address::p2sh_tests::recreate_p2s_from_legacy_var1_no_option_get_tree ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_segregated_constants_header ... ok
+test chain::address::p2sh_tests::recreate_p2sh_from_legacy_var1_option_get_tree ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_v1_header ... ok
+test chain::address::p2sh_tests::recreate_p2sh_from_reference_tree_bytes ... ok
+test chain::context_extension::tests::json::parse_context_extension ... ok
+test chain::context_extension::tests::json::parse_empty_context_extension ... ok
+test chain::context_extension::tests::test_hamt_sort_order_6_entries ... ok
+test chain::context_extension::tests::test_scala_212_improve ... ok
+test chain::context_extension::tests::test_hamt_sort_order_matches_scala_212_golden_vectors ... ok
+test chain::context_extension::tests::test_serialize_order_5plus_entries ... ok
+test chain::context_extension::tests::test_serialize_order_matches_scala_212_golden_vectors ... ok
+test chain::context_extension::tests::test_v6_type_reject - should panic ... ok
+test chain::context_extension::tests::test_serialize_all_five_entry_insertion_orders ... ok
+test chain::context_extension::tests::test_serialize_order_4_entries_unchanged ... ok
+test bigint256::tests::upcast ... ok
+test bigint256::tests::bigint_roundtrip ... ok
+test bigint256::tests::roundtrip ... ok
+test chain::ergo_box::box_value::tests::test_checked_add ... ok
+test chain::ergo_box::box_value::tests::test_checked_add_overflow ... ok
+test chain::ergo_box::box_value::tests::test_checked_mul ... ok
+test chain::ergo_box::box_value::tests::test_checked_mul_overflow ... ok
+test chain::ergo_box::box_value::tests::test_checked_mul_u32_overflow ... ok
+test chain::ergo_box::box_value::tests::test_checked_sub ... ok
+test chain::ergo_box::box_value::tests::test_checked_sub_overflow ... ok
+test chain::ergo_box::box_value::tests::test_checked_sum_empty_input ... ok
+test chain::ergo_box::box_value::tests::test_checked_sum_overflow ... ok
+test chain::ergo_box::register::tests::test_empty ... ok
+test chain::ergo_box::register::tests::test_non_densely_packed_error ... ok
+test chain::ergo_box::register::tests::test_v6_type_reject ... ok
+test chain::ergo_box::register::value::tests::test_tuple_expr_i700 ... ok
+test chain::ergo_box::tests::creation_info ... ok
+test chain::ergo_box::register::tests::reg_id_from_byte ... ok
+test chain::ergo_box::box_id::tests::ser_roundtrip ... ok
+test chain::ergo_box::box_value::tests::test_checked_sum ... ok
+test chain::json::ergo_box::box_value::tests::encode_value_as_num ... ok
+test chain::json::ergo_box::box_value::tests::parse_value_as_num ... ok
+test chain::json::ergo_box::box_value::tests::parse_value_as_str ... ok
+test chain::json::ergo_box::tests::encode_token_amount_as_num ... ok
+test chain::ergo_box::tests::test_max_tokens ... ok
+test chain::json::ergo_box::tests::parse_ergo_box ... ok
+test chain::ergo_box::tests::get_register_mandatory ... ok
+test chain::json::ergo_box::tests::parse_ergo_box_alternative_box_id_field_name ... ok
+test chain::json::ergo_box::tests::parse_ergo_box_alternative_transaction_id_field_name ... ok
+test chain::json::ergo_box::tests::parse_ergo_box_without_id ... ok
+test chain::json::ergo_box::tests::parse_registers ... ok
+test chain::json::ergo_box::tests::parse_registers_error ... ok
+test chain::json::ergo_box::tests::parse_registers_explorer_api_v1 ... ok
+test chain::json::ergo_box::tests::parse_registers_explorer_api_v2 ... ok
+test chain::json::ergo_box::tests::parse_registers_unit ... ok
+test chain::json::ergo_box::tests::parse_token_amount_as_num ... ok
+test chain::json::ergo_box::tests::parse_token_amount_as_str ... ok
+test chain::json::ergo_tree::tests::parse_ergo_tree_with_constants ... ok
+test chain::json::ergo_box::tests::parse_ergo_box_from_explorer ... ok
+test ergo_tree::tests::deserialization_non_parseable_root_v0 ... ok
+test ergo_tree::tests::deserialization_non_parseable_root_v1 ... ok
+test ergo_tree::tests::deserialization_non_parseable_tree_v0 ... ok
+test ergo_tree::tests::deserialization_non_parseable_tree_v1 ... ok
+test ergo_tree::tests::dex_t2tpool_parse ... ok
+test ergo_tree::tests::parse_invalid_677 ... ok
+test ergo_tree::tests::parse_p2pk_672 ... ok
+test ergo_tree::tests::parse_tree_707 ... ok
+test ergo_tree::tests::parse_tree_extra_bytes ... ok
+test chain::token::tests::token_id_roundtrip ... ok
+test ergo_tree::tests::test_constant_len ... ok
+test ergo_tree::tests::test_constant_segregation ... ok
+test ergo_tree::tests::test_constant_segregation_header_flag_support ... ok
+test ergo_tree::tests::test_contract_template ... ok
+test ergo_tree::tests::test_get_constant ... ok
+test ergo_tree::tests::test_lazy_has_deserialize ... ok
+test ergo_tree::tests::test_set_constant ... ok
+test chain::address::tests::doesnt_crash_on_invalid_input ... ok
+test chain::ergo_box::register::tests::get ... ok
+test chain::ergo_box::register::tests::hash_map_roundtrip ... ok
+test mir::avl_tree_data::tests::ser_roundtrip ... ok
+test chain::address::tests::recreate_roundtrip ... ok
+test mir::bin_op::tests::regression_249 ... ok
+test mir::bit_inversion::tests::ser_roundtrip ... ok
+test mir::bin_op::tests::proptests::ser_roundtrip ... ok
+test mir::bool_to_sigma::tests::ser_roundtrip ... ok
+test mir::byte_array_to_bigint::tests::ser_roundtrip ... ok
+test mir::byte_array_to_long::tests::ser_roundtrip ... ok
+test mir::and::tests::ser_roundtrip ... ok
+test mir::calc_sha256::tests::ser_roundtrip ... ok
+test mir::calc_blake2b256::tests::ser_roundtrip ... ok
+test mir::coll_by_index::tests::ser_roundtrip ... ok
+test chain::ergo_box::register::tests::ser_roundtrip ... ok
+test mir::coll_append::tests::ser_roundtrip ... ok
+test mir::coll_fold::tests::ser_roundtrip ... ok
+test mir::coll_forall::tests::ser_roundtrip ... ok
+test ergo_tree::tests::ser_roundtrip ... ok
+test mir::coll_exists::tests::ser_roundtrip ... ok
+test mir::apply::tests::ser_roundtrip ... ok
+test mir::coll_filter::tests::ser_roundtrip ... ok
+test mir::coll_size::tests::ser_roundtrip ... ok
+test mir::constant::tests::bigint_roundtrip ... ok
+test mir::constant::tests::bool_roundtrip ... ok
+test mir::constant::tests::constant_from_iter ... ok
+test mir::constant::tests::digest32_roundtrip ... ok
+test mir::constant::tests::group_element_roundtrip ... ok
+test mir::constant::tests::header_ser_roundtrip ... ok
+test mir::constant::tests::i16_roundtrip ... ok
+test mir::constant::tests::i32_roundtrip ... ok
+test mir::constant::tests::i64_roundtrip ... ok
+test mir::constant::tests::i8_roundtrip ... ok
+test mir::constant::tests::option_nested_tuple_type_roundtrip ... ok
+test mir::constant::tests::option_nested_vector_type_roundtrip ... ok
+test mir::coll_map::tests::ser_roundtrip ... ok
+test mir::constant::tests::parse_invalid_string ... ok
+test mir::constant::tests::option_primitive_type_roundtrip ... ok
+test mir::constant::tests::sigma_prop_roundtrip ... ok
+test mir::constant::tests::token_id_roundtrip ... ok
+test mir::constant::tests::string_roundtrip ... ok
+test mir::constant::tests::tuple_primitive_types_roundtrip ... ok
+test mir::constant::tests::unit_roundtrip ... ok
+test mir::constant::tests::unsigned_bigint_roundtrip ... ok
+test mir::constant::tests::vec_bigint_roundtrip ... ok
+test mir::constant::tests::vec_i16_roundtrip ... ok
+test mir::constant::tests::vec_i32_roundtrip ... ok
+test mir::constant::tests::vec_i64_roundtrip ... ok
+test mir::constant::tests::vec_i8_roundtrip ... ok
+test mir::constant::tests::vec_option_bigint_roundtrip ... ok
+test mir::collection::tests::ser_roundtrip_bool_const ... ok
+test mir::constant::tests::vec_u8_roundtrip ... ok
+test mir::coll_slice::tests::ser_roundtrip ... ok
+test mir::create_prove_dh_tuple::tests::ser_roundtrip ... ok
+test mir::create_provedlog::tests::ser_roundtrip ... ok
+test mir::constant::tests::vec_sigmaprop_roundtrip ... ok
+test mir::deserialize_context::tests::ser_roundtrip ... ok
+test chain::address::tests::str_roundtrip ... ok
+test mir::create_avl_tree::tests::ser_roundtrip ... ok
+test mir::deserialize_register::tests::ser_roundtrip ... ok
+test mir::extract_amount::tests::ser_roundtrip ... ok
+test mir::extract_bytes::tests::ser_roundtrip ... ok
+test mir::extract_bytes_with_no_ref::tests::ser_roundtrip ... ok
+test mir::extract_creation_info::tests::ser_roundtrip ... ok
+test mir::extract_id::tests::ser_roundtrip ... ok
+test mir::extract_reg_as::tests::ser_roundtrip ... ok
+test mir::extract_script_bytes::tests::ser_roundtrip ... ok
+test mir::exponentiate::tests::ser_roundtrip ... ok
+test mir::constant::tests::tuple_nested_types_roundtrip ... ok
+test mir::downcast::proptests::ser_roundtrip ... ok
+test mir::decode_point::tests::ser_roundtrip ... ok
+test mir::get_var::tests::ser_roundtrip ... ok
+test mir::logical_not::tests::ser_roundtrip ... ok
+test mir::block::tests::ser_roundtrip ... ok
+test mir::long_to_byte_array::tests::ser_roundtrip ... ok
+test mir::option_get::tests::ser_roundtrip ... ok
+test mir::option_get_or_else::tests::ser_roundtrip ... ok
+test mir::option_is_defined::tests::ser_roundtrip ... ok
+test mir::select_field::tests::ser_roundtrip ... ok
+test mir::multiply_group::tests::ser_roundtrip ... ok
+test mir::negation::tests::ser_roundtrip ... ok
+test mir::sigma_prop_bytes::tests::ser_roundtrip ... ok
+test mir::subst_const::tests::ser_roundtrip ... ok
+test chain::context_extension::tests::ser_roundtrip ... ok
+test mir::collection::tests::ser_roundtrip ... ok
+test mir::tree_lookup::tests::ser_roundtrip ... ok
+test mir::upcast::proptests::ser_roundtrip ... ok
+test chain::ergo_box::tests::ergo_box_candidate_ser_roundtrip ... ok
+test mir::func_value::tests::ser_roundtrip ... ok
+test mir::value::tests::byte_from_vec_roundtrip ... ok
+test mir::value::tests::byte_i8_array_into ... ok
+test mir::value::tests::byte_u8_array_into ... ok
+test mir::value::tests::wrapped_from_vec_roundtrip ... ok
+test mir::xor::tests::ser_roundtrip ... ok
+test mir::val_use::tests::ser_roundtrip_func_value ... ok
+test pretty_printer::tests::ageusd_ballot ... ok
+test pretty_printer::tests::ageusd_bank_full ... ok
+test pretty_printer::tests::ageusd_update ... ok
+test pretty_printer::tests::amm_conc_pool ... ok
+test pretty_printer::tests::amm_conc_pool_boot ... ok
+test pretty_printer::tests::amm_conc_pool_root ... ok
+test pretty_printer::tests::amm_simple_pool ... ok
+test pretty_printer::tests::amm_simple_swap ... ok
+test pretty_printer::tests::eip23_ballot_contract ... ok
+test pretty_printer::tests::eip23_oracle_contract ... ok
+test pretty_printer::tests::eip23_refresh_contract ... ok
+test pretty_printer::tests::eip23_update_contract ... ok
+test pretty_printer::tests::eip_22_auction ... ok
+test pretty_printer::tests::print_binop ... ok
+test pretty_printer::tests::print_block ... ok
+test mir::val_def::tests::ser_roundtrip ... ok
+test mir::if_op::tests::ser_roundtrip ... ok
+test reference::test::test_ref_partialeq ... ok
+test serialization::bin_op::tests::ser_roundtrip_neq ... ok
+test serialization::bin_op::tests::ser_roundtrip_eq ... ok
+test serialization::constant::tests::parse_register_coll_box_issue_695_incorrect_method_id_and_missing_type_spec ... ok
+test mir::val_use::tests::ser_roundtrip_block_value ... ok
+test serialization::constant::tests::ser_roundtrip_option ... ok
+test serialization::constant::tests::test_parse_r5_in_698 ... ok
+test mir::tuple::tests::ser_roundtrip ... ok
+test serialization::constant_store::tests::test_empty ... ok
+test serialization::bin_op::proptests::ser_roundtrip ... ok
+test serialization::constant_store::tests::test_non_empty ... ok
+test serialization::constant_store::tests::test_put ... ok
+test serialization::expr::tests::ser_global ... ok
+test serialization::expr::tests::full_age_usd_bank_contract ... ok
+test mir::or::tests::ser_roundtrip ... ok
+test serialization::constant_placeholder::tests::ser_roundtrip ... ok
+test serialization::method_call::tests::ser_roundtrip ... ok
+test serialization::method_call::tests::versioned_roundtrip ... ok
+test serialization::property_call::tests::ser_roundtrip_property ... ok
+test serialization::global_vars::tests::ser_roundtrip ... ok
+test serialization::types::tests::serialize_invalid_sfunc ... ok
+test sigma_protocol::dlog_group::tests::scalar_bigint256_roundtrip ... ok
+test serialization::constant::tests::ser_roundtrip ... ok
+test sigma_protocol::sigma_boolean::cand::tests::pk_pk ... ok
+test sigma_protocol::sigma_boolean::cand::tests::pk_triv_false ... ok
+test sigma_protocol::sigma_boolean::cand::tests::pk_triv_true ... ok
+test sigma_protocol::dlog_group::tests::scalar_biguint_roundtrip ... ok
+test sigma_protocol::sigma_boolean::cand::tests::trivial_false ... ok
+test sigma_protocol::sigma_boolean::cand::tests::trivial_true ... ok
+test sigma_protocol::sigma_boolean::cor::tests::pk_pk ... ok
+test sigma_protocol::sigma_boolean::cor::tests::pk_triv_false ... ok
+test sigma_protocol::sigma_boolean::cor::tests::pk_triv_true ... ok
+test serialization::expr::tests::ser_roundtrip ... ok
+test sigma_protocol::sigma_boolean::cor::tests::trivial_false ... ok
+test sigma_protocol::sigma_boolean::cor::tests::trivial_true ... ok
+test serialization::types::tests::ser_roundtrip ... ok
+test traversable::test::test_impl_traversable ... ok
+test types::savltree::tests::test_from_ids ... ok
+test types::sbox::tests::test_from_ids ... ok
+test types::sbox::tests::test_getreg_serialization_roundtrip ... ok
+test types::scoll::tests::test_from_ids ... ok
+test types::scontext::tests::roundtrip_get_var_from_input ... ok
+test types::scontext::tests::test_from_ids ... ok
+test types::sglobal::test::decode_nbits_method_roundtrip ... ok
+test types::sglobal::test::encode_nbits_method_roundtrip ... ok
+test mir::xor_of::tests::ser_roundtrip ... ok
+test types::sglobal::test::pow_hit_roundtrip ... ok
+test types::sgroup_elem::tests::test_from_ids ... ok
+test types::snumeric::test::bigint_method_roundtrips ... ok
+test types::snumeric::test::byte_method_roundtrips ... ok
+test types::snumeric::test::int_method_roundtrips ... ok
+test types::snumeric::test::long_method_roundtrips ... ok
+test types::snumeric::test::short_method_roundtrips ... ok
+test types::snumeric::test::unsigned_bigint_method_roundtrips ... ok
+test types::soption::tests::test_from_ids ... ok
+test types::sglobal::test::test_deserialize_method_roundtrip ... ok
+test types::type_unify::tests::unify_diff_size ... ok
+test types::type_unify::tests::unify_empty_subst ... ok
+test types::type_unify::tests::unify_negative ... ok
+test types::type_unify::tests::unify_with_subst ... ok
+test unsignedbigint256::modular_boundary_tests::mod_inv_zero_modulus_returns_none ... ok
+test unsignedbigint256::modular_boundary_tests::mod_sub_zero_modulus_returns_none ... ok
+test unsignedbigint256::modular_boundary_tests::modular_nonzero_boundaries ... ok
+test types::type_unify::tests::prim_types ... ok
+test unsignedbigint256::test::mod_add ... ok
+test unsignedbigint256::test::mod_mul ... ok
+test unsignedbigint256::test::mod_sub ... ok
+test unsignedbigint256::test::ser_roundtrip ... ok
+test unsignedbigint256::test::serialize_zero ... ok
+test unsignedbigint256::test::to_scalar ... ok
+test unsignedbigint256::test::to_unsigned_mod ... ok
+test sigma_protocol::sigma_boolean::tests::sigma_boolean_ser_roundtrip ... ok
+test unsignedbigint256::test::mod_inv ... ok
+test mir::sigma_and::tests::ser_roundtrip ... ok
+test chain::json::ergo_box::tests::ergo_box_roundtrip ... ok
+test mir::sigma_or::tests::ser_roundtrip ... ok
+test chain::ergo_box::tests::ergo_box_ser_roundtrip ... ok
+test sigma_protocol::sigma_boolean::cand::tests::sigma_proposition_ser_roundtrip ... ok
+test sigma_protocol::sigma_boolean::cor::tests::sigma_proposition_ser_roundtrip ... ok
+test serialization::constant::tests::ser_roundtrip_sbox ... ok
+test mir::atleast::tests::ser_roundtrip ... ok
+test serialization::types::tests::sfunc_roundtrip ... ok
+
+test result: ok. 278 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.51s
+
+   Doc-tests ergotree_ir
+
+running 2 tests
+test ergotree-ir/src/unsignedbigint256.rs - unsignedbigint256::UnsignedBigInt::to_be_vec (line 131) ... ok
+test ergotree-ir/src/bigint256.rs - bigint256::BigInt256::to_be_vec (line 74) ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.06s
+
+[exit 0]
+
+$ cd /home/scott/bin/sigma-rust-pr && cargo test -p ergotree-interpreter --features arbitrary
+   Compiling sigma-test-util v0.4.0 (/home/scott/bin/sigma-rust-pr/sigma-test-util)
+   Compiling ergotree-interpreter v0.29.0 (/home/scott/bin/sigma-rust-pr/ergotree-interpreter)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 12s
+     Running unittests src/lib.rs (target/debug/deps/ergotree_interpreter-1949e6e75b27a1d7)
+
+running 342 tests
+test contracts::tests::ageusd_ballot ... ok
+test contracts::tests::amm_simple_swap ... ok
+test contracts::tests::amm_conc_pool_root ... ok
+test contracts::tests::amm_conc_pool_boot ... ok
+test contracts::tests::ageusd_update ... ok
+test contracts::tests::amm_simple_pool ... ok
+test contracts::tests::amm_conc_pool ... ok
+test contracts::tests::eip_22_auction ... ok
+test contracts::tests::ageusd_bank_full ... ok
+test eval::bin_op::tests::num_eq ... ok
+test eval::atleast::tests::bound_error ... ok
+test eval::bin_op::tests::bin_and_eval_laziness ... ok
+test eval::bin_op::tests::num_neq ... ok
+test eval::apply::tests::eval_user_defined_func_call ... ok
+test contracts::tests::simplified_age_usd_bank_contract ... ok
+test eval::bin_op::tests::test_bigint_extremes ... ok
+test eval::bin_op::tests::option_neq ... ok
+test eval::bin_op::tests::bin_or_eval_laziness ... ok
+test eval::bin_op::tests::option_eq ... ok
+test eval::bit_inversion::tests::eval ... ok
+test eval::bin_op::tests::tuple_eq ... ok
+test eval::bin_op::tests::test_num_bigint ... ok
+test eval::bin_op::tests::test_num_sbyte ... ok
+test eval::bin_op::tests::test_and_or_xor ... ok
+test eval::bin_op::tests::test_num_sshort ... ok
+test eval::bin_op::tests::test_eq ... ok
+test eval::byte_array_to_bigint::tests::eval_1 ... ok
+test eval::byte_array_to_bigint::tests::eval_256 ... ok
+test eval::bin_op::tests::test_num_sint ... ok
+test eval::byte_array_to_bigint::tests::eval_max_bound ... ok
+test eval::bool_to_sigma::tests::eval ... ok
+test eval::byte_array_to_bigint::tests::eval_below_min_bound ... ok
+test eval::byte_array_to_bigint::tests::eval_above_max_bound ... ok
+test eval::byte_array_to_bigint::tests::eval_min_bound ... ok
+test eval::byte_array_to_long::tests::eval_neg1 ... ok
+test eval::byte_array_to_bigint::tests::eval_empty ... ok
+test eval::bin_op::tests::test_num_unsigned_bigint ... ok
+test eval::byte_array_to_bigint::tests::eval_neg32768 ... ok
+test eval::bin_op::tests::test_num_slong ... ok
+test eval::byte_array_to_bigint::tests::eval_neg1b ... ok
+test eval::byte_array_to_long::tests::fails_for_short ... ok
+test eval::byte_array_to_long::tests::eval_1 ... ok
+test eval::byte_array_to_long::tests::eval_skip_tail ... ok
+test eval::byte_array_to_bigint::tests::eval_neg1 ... ok
+test eval::coll_append::tests::append_byte_array_and_byte ... ok
+test eval::byte_array_to_long::tests::test_equivalence ... ok
+test eval::coll_by_index::tests::eval_with_default ... ok
+test eval::coll_by_index::tests::eval_lazy ... ok
+test eval::coll_by_index::tests::eval ... ok
+test eval::coll_exists::tests::eval_emty_coll ... ok
+test eval::coll_exists::tests::eval_false ... ok
+test eval::coll_append::tests::test_append_basic_numbers ... ok
+test eval::coll_forall::tests::eval_emty_coll ... ok
+test eval::coll_exists::tests::eval_true ... ok
+test eval::coll_forall::tests::eval_false ... ok
+test eval::coll_forall::tests::eval_true ... ok
+test eval::coll_map::tests::test_higher_order_lambda ... ok
+test eval::coll_size::tests::eval ... ok
+test eval::coll_slice::tests::slice ... ok
+test eval::coll_slice::tests::slice_indices_equal ... ok
+test eval::coll_slice::tests::slice_empty_coll ... ok
+test eval::coll_slice::tests::slice_index_out_of_bounds ... ok
+test eval::coll_slice::tests::slice_start_index_greater_than_end_index ... ok
+test eval::collection::tests::eval_bool_coll ... ok
+test eval::atleast::tests::eval ... ok
+test eval::collection::tests::eval_byte_coll ... ok
+test eval::collection::tests::eval_long_coll ... ok
+test eval::deserialize_context::tests::eval ... ok
+test eval::deserialize_context::tests::deserialize_v6_type ... ok
+test eval::deserialize_context::tests::eval_context_extension_wrong_type ... ok
+test eval::deserialize_context::tests::eval_id_not_found ... ok
+test eval::create_avl_tree::tests::eval_create_avl_tree ... ok
+test eval::deserialize_context::tests::eval_recursive ... ok
+test eval::deserialize_context::tests::eval_reduction ... ok
+test eval::deserialize_context::tests::evaluated_expr_wrong_type ... ok
+test eval::coll_map::tests::eval_box_value ... ok
+test eval::deserialize_register::tests::eval_reg_wrong_type ... ok
+test eval::deserialize_register::tests::eval ... ok
+test eval::decode_point::tests::eval ... ok
+test eval::coll_fold::tests::eval_fold ... ok
+test eval::downcast::tests::reduce_to_crypto_propagates_tree_version ... ok
+test eval::downcast::tests::test_overflow ... ok
+test eval::coll_filter::tests::eval_box_value ... ok
+test eval::deserialize_register::tests::evaluated_expr_wrong_type ... ok
+test eval::error::tests::pretty_binop_div_zero ... ok
+test eval::deserialize_register::tests::eval_reg_is_empty ... ok
+test eval::error::tests::pretty_out_of_bounds ... ok
+test eval::exponentiate::tests::eval_exponent_negative ... ok
+test eval::block::tests::ser_roundtrip ... ok
+test eval::extract_amount::tests::eval ... ok
+test eval::extract_bytes_with_no_ref::tests::eval ... ok
+test eval::extract_bytes::tests::eval ... ok
+test eval::extract_creation_info::tests::eval ... ok
+test eval::extract_id::tests::eval ... ok
+test eval::extract_reg_as::tests::eval_box_get_reg_r0 ... ok
+test eval::extract_reg_as::tests::eval_box_get_reg_r0_wrong_type ... ok
+test eval::extract_script_bytes::tests::eval ... ok
+test eval::collection::tests::eval_bytes_coll_coll ... ok
+test eval::get_var::tests::eval_fail ... ok
+test eval::global_vars::tests::eval_group_generator ... ok
+test eval::get_var::tests::eval_success ... ok
+test eval::get_var::tests::eval_wrong_type ... ok
+test eval::global_vars::tests::eval_height ... ok
+test eval::global_vars::tests::eval_outputs ... ok
+test eval::global_vars::tests::eval_self_box ... ok
+test eval::global_vars::tests::eval_inputs ... ok
+test eval::if_op::tests::eval ... ok
+test eval::logical_not::tests::eval ... ok
+test eval::long_to_byte_array::tests::eval_1 ... ok
+test eval::if_op::tests::eval_laziness_false_branch ... ok
+test eval::if_op::tests::eval_laziness_true_branch ... ok
+test eval::long_to_byte_array::tests::eval_big ... ok
+test eval::long_to_byte_array::tests::eval_neg1 ... ok
+test eval::negation::tests::eval ... ok
+test eval::option_get::tests::eval_get ... ok
+test eval::option_get_or_else::tests::eval_empty ... ok
+test eval::option_get_or_else::tests::eval_lazy ... ok
+test eval::option_get_or_else::tests::eval_non_empty ... ok
+test eval::option_is_defined::tests::eval ... ok
+test eval::property_call::tests::eval_context_data_inputs ... ok
+test eval::savltree::tests::eval_avl_contains ... ok
+test eval::savltree::tests::eval_avl_digest ... ok
+test eval::savltree::tests::eval_avl_enabled_operations ... ok
+test eval::savltree::tests::eval_avl_get ... ok
+test eval::savltree::tests::eval_avl_get_many ... ok
+test eval::savltree::tests::eval_avl_insert ... ok
+test eval::savltree::tests::eval_avl_insert_allowed ... ok
+test eval::savltree::tests::eval_avl_insert_or_update ... ok
+test eval::savltree::tests::eval_avl_key_length ... ok
+test eval::savltree::tests::eval_avl_remove ... ok
+test eval::savltree::tests::eval_avl_remove_allowed ... ok
+test eval::savltree::tests::eval_avl_update ... ok
+test eval::savltree::tests::eval_avl_update_allowed ... ok
+test eval::savltree::tests::eval_avl_update_digest ... ok
+test eval::savltree::tests::eval_avl_update_operations ... ok
+test eval::downcast::tests::to_int ... ok
+test eval::savltree::tests::eval_avl_value_length_opt ... ok
+test eval::sbox::tests::eval_box_value ... ok
+test eval::sbox::tests::eval_box_tokens ... ok
+test eval::downcast::tests::to_byte ... ok
+test eval::sbox::tests::eval_reg_out_wrong_type ... ok
+test eval::downcast::tests::to_short ... ok
+test eval::scoll::tests::eval_flatmap ... ok
+test eval::sbox::tests::eval_reg_out ... ok
+test eval::scoll::tests::eval_ends_with ... ok
+test eval::scoll::tests::eval_get ... ok
+test eval::scoll::tests::eval_index_of ... ok
+test eval::scoll::tests::eval_index_of_default ... ok
+test eval::scoll::tests::eval_patch_addition ... ok
+test eval::scoll::tests::eval_indices_empty_coll ... ok
+test eval::scoll::tests::eval_patch ... ok
+test eval::scoll::tests::eval_patch_index_negative ... ok
+test eval::downcast::tests::to_bigint ... ok
+test eval::scoll::tests::eval_patch_index_oob ... ok
+test eval::scoll::tests::eval_indices ... ok
+test eval::scoll::tests::eval_update ... ok
+test eval::scoll::tests::eval_patch_subtraction ... ok
+test eval::scoll::tests::eval_reverse ... ok
+test eval::scoll::tests::eval_update_many ... ok
+test eval::scoll::tests::eval_update_many_index_oob ... ok
+test eval::scoll::tests::eval_starts_with ... ok
+test eval::scoll::tests::eval_zip_different_lengths ... ok
+test eval::scoll::tests::eval_zip_empty ... ok
+test eval::downcast::tests::to_long ... ok
+test eval::scoll::tests::eval_zip_same_length ... ok
+test eval::scontext::tests::eval_last_block_utxo_root_hash ... ok
+test eval::scoll::tests::eval_update_many_len_mismatch ... ok
+test eval::scontext::tests::eval_get_var_from_input ... ok
+test eval::scontext::tests::eval_miner_pubkey ... ok
+test eval::scontext::tests::eval_preheader ... ok
+test eval::scontext::tests::eval_self_box_index ... ok
+test eval::scoll::tests::eval_update_oob ... ok
+test eval::scontext::tests::eval_headers ... ok
+test eval::sglobal::tests::eval_group_generator ... ok
+test eval::sglobal::tests::eval_xor ... ok
+test eval::sglobal::tests::deserialize_group_element ... ok
+test eval::sglobal::tests::serialize_byte_array ... ok
+test eval::sglobal::tests::serialize_long_ne_tobytearray ... ok
+test eval::sglobal::tests::serialize_group_element ... ok
+test eval::sglobal::tests::pow_hit_eval ... ok
+test eval::sglobal::tests::serialize_byte ... ok
+test eval::sglobal::tests::test_bigendian_bytes_roundtrip ... ok
+test eval::sglobal::tests::test_bigint_roundtrip ... ok
+test eval::sglobal::tests::test_eval_decode_nbits ... ok
+test eval::sglobal::tests::test_eval_encode_nbits ... ok
+test eval::sglobal::tests::serialize_short ... ok
+test eval::sglobal::tests::test_some_and_none ... ok
+test eval::sglobal::tests::test_unsigned_bigint_roundtrip ... ok
+test eval::sgroup_elem::tests::eval_exponentiate_unsigned ... ok
+test eval::sgroup_elem::tests::eval_exponentiate ... ok
+test eval::sgroup_elem::tests::eval_get_encoded ... ok
+test eval::sgroup_elem::tests::eval_negate ... ok
+test eval::sgroup_elem::tests::eval_multiply ... ok
+test eval::sheader::tests::test_eval_failed_invalid_obj ... ok
+test eval::sheader::tests::test_eval_check_pow ... ok
+test eval::sheader::tests::test_eval_failed_unknown_property ... ok
+test eval::sheader::tests::test_eval_ids ... ok
+test eval::sheader::tests::test_eval_height ... ok
+test eval::sheader::tests::test_eval_n_bits ... ok
+test eval::sheader::tests::test_eval_pks ... ok
+test eval::sheader::tests::test_eval_pow_distance ... ok
+test eval::sheader::tests::test_eval_roots ... ok
+test eval::sheader::tests::test_eval_pow_nonce ... ok
+test eval::sheader::tests::test_eval_state_root ... ok
+test eval::sheader::tests::test_eval_timestamp ... ok
+test eval::sheader::tests::test_eval_version ... ok
+test eval::sheader::tests::test_eval_votes ... ok
+test eval::sigma_and::tests::eval ... ok
+test eval::sigma_prop_bytes::tests::eval ... ok
+test eval::sigma_or::tests::eval ... ok
+test eval::snumeric::test::bitwise_and_bigint_arbitrary ... ok
+test eval::snumeric::test::bigint_big_endian_roundtrip ... ok
+test eval::snumeric::test::bitwise_and_byte_arbitrary ... ok
+test eval::snumeric::test::bitwise_and_long_arbitrary ... ok
+test eval::snumeric::test::bitwise_and_int_arbitrary ... ok
+test eval::snumeric::test::bitwise_and_short_arbitrary ... ok
+test eval::snumeric::test::bitwise_and_unsigned_bigint_arbitrary ... ok
+test eval::snumeric::test::bitwise_or_bigint_arbitrary ... ok
+test eval::snumeric::test::bitwise_or_byte ... ok
+test eval::snumeric::test::bitwise_or_byte_arbitrary ... ok
+test eval::snumeric::test::bitwise_or_int_arbitrary ... ok
+test eval::snumeric::test::bitwise_or_long_arbitrary ... ok
+test eval::snumeric::test::bitwise_or_short_arbitrary ... ok
+test eval::snumeric::test::bitwise_or_unsigned_bigint_arbitrary ... ok
+test eval::snumeric::test::bitwise_xor_bigint_arbitrary ... ok
+test eval::snumeric::test::bitwise_xor_byte_arbitrary ... ok
+test eval::snumeric::test::bitwise_xor_int_arbitrary ... ok
+test eval::snumeric::test::bitwise_xor_short_arbitrary ... ok
+test eval::snumeric::test::bitwise_xor_long_arbitrary ... ok
+test eval::snumeric::test::byte_big_endian_roundtrip ... ok
+test eval::snumeric::test::bitwise_xor_unsigned_bigint_arbitrary ... ok
+test eval::snumeric::test::eval_mod_inverse_zero_modulus_arithmetic_exception ... ok
+test eval::snumeric::test::eval_subtract_mod_zero_modulus_arithmetic_exception ... ok
+test eval::snumeric::test::eval_to_signed ... ok
+test eval::snumeric::test::eval_to_unsigned ... ok
+test eval::snumeric::test::eval_to_unsigned_mod ... ok
+test eval::snumeric::test::int_big_endian_roundtrip ... ok
+test eval::snumeric::test::inverse_bigint ... ok
+test eval::snumeric::test::inverse_byte ... ok
+test eval::snumeric::test::eval_mod_ops ... ok
+test eval::snumeric::test::inverse_int ... ok
+test eval::snumeric::test::inverse_long ... ok
+test eval::snumeric::test::inverse_short ... ok
+test eval::snumeric::test::inverse_unsigned_bigint ... ok
+test eval::snumeric::test::long_big_endian_roundtrip ... ok
+test eval::snumeric::test::shl_bigint_arbitrary ... ok
+test eval::snumeric::test::shl_bigint_arbitrary_invalid - should panic ... ok
+test eval::snumeric::test::shl_byte_arbitrary ... ok
+test eval::snumeric::test::shl_byte_arbitrary_invalid - should panic ... ok
+test eval::snumeric::test::shl_int_arbitrary_invalid - should panic ... ok
+test eval::snumeric::test::shl_int_arbitrary ... ok
+test eval::snumeric::test::shl_long_arbitrary_invalid - should panic ... ok
+test eval::snumeric::test::shl_long_arbitrary ... ok
+test eval::snumeric::test::shl_short_arbitrary ... ok
+test eval::snumeric::test::shl_short_arbitrary_invalid - should panic ... ok
+test eval::snumeric::test::shl_unsigned_bigint_arbitrary ... ok
+test eval::snumeric::test::shl_unsigned_bigint_arbitrary_invalid - should panic ... ok
+test eval::snumeric::test::short_big_endian_roundtrip ... ok
+test eval::snumeric::test::shr_bigint_arbitrary ... ok
+test eval::snumeric::test::shr_bigint_arbitrary_invalid - should panic ... ok
+test eval::snumeric::test::shr_byte_arbitrary_invalid - should panic ... ok
+test eval::snumeric::test::shr_byte_arbitrary ... ok
+test eval::snumeric::test::shr_int_arbitrary_invalid - should panic ... ok
+test eval::snumeric::test::shr_int_arbitrary ... ok
+test eval::snumeric::test::shr_long_arbitrary ... ok
+test eval::snumeric::test::shr_long_arbitrary_invalid - should panic ... ok
+test eval::snumeric::test::shr_short_arbitrary_invalid - should panic ... ok
+test eval::snumeric::test::shr_short_arbitrary ... ok
+test eval::snumeric::test::shr_unsigned_bigint_arbitrary ... ok
+test eval::snumeric::test::shr_unsigned_bigint_arbitrary_invalid - should panic ... ok
+test eval::snumeric::test::to_bits_byte ... ok
+test eval::calc_sha256::tests::eval ... ok
+test eval::snumeric::test::to_bits_long ... ok
+test eval::snumeric::test::to_bits_int ... ok
+test eval::snumeric::test::to_bits_bigint ... ok
+test eval::and::tests::eval ... ok
+test eval::snumeric::test::to_bits_short ... ok
+test eval::soption::tests::eval_filter_predicate_invalid_tpe ... ok
+test eval::snumeric::test::unsigned_bigint_big_endian_roundtrip ... ok
+test eval::soption::tests::eval_filter_none ... ok
+test eval::soption::tests::eval_filter_some_true ... ok
+test eval::soption::tests::eval_filter_some_false ... ok
+test eval::snumeric::test::to_bits_unsigned_bigint ... ok
+test eval::soption::tests::eval_map_some ... ok
+test eval::spreheader::tests::test_eval_failed_unknown_property ... ok
+test eval::spreheader::tests::test_eval_failed_invalid_obj ... ok
+test eval::soption::tests::eval_map_none ... ok
+test eval::spreheader::tests::test_eval_height ... ok
+test eval::spreheader::tests::test_eval_miner_pk ... ok
+test eval::spreheader::tests::test_eval_parent_id ... ok
+test eval::spreheader::tests::test_eval_timestamp ... ok
+test eval::spreheader::tests::test_eval_version ... ok
+test eval::spreheader::tests::test_eval_n_bits ... ok
+test eval::spreheader::tests::test_eval_votes ... ok
+test eval::test::diag_on_reduced_to_false ... ok
+test eval::tree_lookup::tests::eval_tree_lookup ... ok
+test eval::tuple::tests::eval ... ok
+test eval::subst_const::tests::eval_3_substitutions ... ok
+test eval::upcast::tests::from_byte ... ok
+test eval::upcast::tests::from_int ... ok
+test eval::upcast::tests::from_long ... ok
+test eval::calc_blake2b256::tests::eval ... ok
+test eval::xor::tests::eval_0_xor_0 ... ok
+test eval::upcast::tests::from_short ... ok
+test eval::xor::tests::eval_0_xor_1 ... ok
+test eval::xor::tests::eval_1100_xor_0101 ... ok
+test eval::xor::tests::eval_1_xor_1 ... ok
+test eval::xor::tests::eval_1_xor_0 ... ok
+test eval::xor::tests::eval_any ... ok
+test eval::subst_const::tests::eval_single_substitution ... ok
+test sigma_protocol::prover::tests::test_prove_dht_prop ... ok
+test sigma_protocol::prover::tests::test_prove_false_prop ... ok
+test sigma_protocol::prover::tests::test_prove_inner_threshold ... ok
+test sigma_protocol::dlog_protocol::tests::test_compute_commitment ... ok
+test sigma_protocol::prover::tests::test_prove_pk_and_or ... ok
+test sigma_protocol::prover::tests::test_prove_pk_and_pk ... ok
+test sigma_protocol::prover::tests::test_prove_pk_or_and ... ok
+test sigma_protocol::prover::tests::test_prove_pk_or_pk ... ok
+test sigma_protocol::prover::tests::test_prove_pk_prop ... ok
+test sigma_protocol::sig_serializer::test::test_scalar_parse ... ok
+test sigma_protocol::tests::ensure_soundness_bits ... ok
+test sigma_protocol::prover::tests::test_prove_true_prop ... ok
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_only_var_1_fails_to_reduce ... ok
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_reduces_to_proposition_and_verifies ... ok
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_of_other_proposition_reduces_to_false ... ok
+test eval::multiply_group::tests::eval_any ... ok
+test eval::exponentiate::tests::eval_any ... ok
+test eval::or::tests::eval ... ok
+test sigma_protocol::verifier::tests::test_prover_verifier_atleast ... ok
+test sigma_protocol::verifier::tests::test_prover_verifier_conj_and ... ok
+test sigma_protocol::dlog_protocol::tests::test_deterministic_commitment ... ok
+test sigma_protocol::verifier::tests::test_prover_verifier_conj_and_and ... ok
+test sigma_protocol::verifier::tests::test_prover_verifier_conj_or ... ok
+test sigma_protocol::verifier::tests::test_prover_verifier_p2pk ... ok
+test sigma_protocol::verifier::tests::test_prover_verifier_dht ... ok
+test sigma_protocol::verifier::tests::test_prover_verifier_conj_or_or ... ok
+test eval::upcast::tests::from_bigint ... ok
+test eval::xor_of::tests::eval ... ok
+test eval::sglobal::tests::serialize_header ... ok
+test eval::sglobal::tests::serialize_unsigned_bigint ... ok
+test eval::sglobal::tests::serialize_roundtrip ... ok
+test eval::sglobal::tests::serialize_sigmaprop_eq_prop_bytes ... ok
+
+test result: ok. 342 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.86s
+
+     Running tests/signing_spec_tests.rs (target/debug/deps/signing_spec_tests-07d02f60f0e944d3)
+
+running 8 tests
+test sig_test_vector_conj_or ... ok
+test sig_test_vector_prove_dht ... ok
+test sig_test_vector_conj_or_and ... ok
+test sig_test_vector_conj_or_prove_dht ... ok
+test sig_test_vector_provedlog ... ok
+test sig_test_vector_threshold ... ok
+test sig_test_vector_conj_and ... ok
+test sig_test_vector_conj_and_or ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+   Doc-tests ergotree_interpreter
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+[exit 0]
+
+$ cd /home/scott/bin/sigma-rust-pr && cargo test -p ergo-lib --features arbitrary,compiler,mnemonic_gen
+   Compiling ergotree-ir v0.29.0 (/home/scott/bin/sigma-rust-pr/ergotree-ir)
+   Compiling sigma-test-util v0.4.0 (/home/scott/bin/sigma-rust-pr/sigma-test-util)
+   Compiling ergotree-interpreter v0.29.0 (/home/scott/bin/sigma-rust-pr/ergotree-interpreter)
+   Compiling ergo-nipopow v0.16.0 (/home/scott/bin/sigma-rust-pr/ergo-nipopow)
+   Compiling ergoscript-compiler v0.25.0 (/home/scott/bin/sigma-rust-pr/ergoscript-compiler)
+   Compiling ergo-lib v0.29.0 (/home/scott/bin/sigma-rust-pr/ergo-lib)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2m 46s
+     Running unittests src/lib.rs (target/debug/deps/ergo_lib-b03a955acd9679f9)
+
+running 121 tests
+test chain::contract::tests::compile ... ok
+test chain::ergo_box::box_builder::tests::test_build ... ok
+test chain::ergo_box::box_builder::tests::test_box_size_estimation ... ok
+test chain::ergo_box::box_builder::tests::test_mint_token_exclusivity_rule ... ok
+test chain::ergo_box::box_builder::tests::test_set_get_register_value ... ok
+test chain::ergo_box::box_builder::tests::test_mint_token ... ok
+test chain::ergo_box::box_builder::tests::test_default_min_box_value ... ok
+test chain::ergo_box::box_builder::tests::test_mint_token_register_overwrite ... ok
+test chain::ergo_box::box_builder::tests::test_build_fail_box_value_too_low ... ok
+test chain::ergo_box::box_builder::tests::test_calc_min_box_value ... ok
+test chain::ergo_box::box_builder::tests::test_delete_register_value ... ok
+test chain::ergo_box::box_builder::tests::test_add_token ... ok
+test chain::ergo_box::box_builder::tests::test_set_value ... ok
+test chain::block::tests::test_parse_full_block ... ok
+test chain::json::parameters::tests::parse_parameters ... ok
+test chain::transaction::input::prover_result::json::tests::parse_proof_explorer_api ... ok
+test chain::transaction::reduced::tests::reduced_transaction_serialization_rejects_excess_reduction ... ok
+test chain::transaction::reduced::tests::reduced_transaction_json_rejects_excess_reduction ... ok
+test chain::transaction::reduced::tests::reduced_transaction_json_rejects_missing_reduction ... ok
+test chain::transaction::reduced::tests::reduced_transaction_json_rejects_extension_mismatch ... ok
+test chain::transaction::reduced::tests::reduced_transaction_serialization_rejects_extension_mismatch ... ok
+test chain::transaction::reduced::tests::reduced_transaction_serialization_rejects_missing_reduction ... ok
+test chain::transaction::reduced::tests::reduced_transaction_signing_rejects_excess_reduction ... ok
+test chain::transaction::reduced::tests::reduced_transaction_signing_rejects_extension_mismatch ... ok
+test chain::transaction::reduced::tests::reduced_transaction_signing_rejects_extension_order_mismatch ... ok
+test chain::transaction::reduced::tests::reduced_transaction_signing_rejects_mutated_input_count ... ok
+test chain::transaction::reduced::tests::reduced_transaction_valid_signing_and_serialization ... ok
+test chain::transaction::tests::test_tx_id_calc ... ok
+test chain::transaction::reduced::tests::reduced_transaction_valid_extensions_preserve_bytes ... ok
+test chain::json::transaction::tests::item_order_preservation_685 ... ok
+test chain::transaction::tests::test_v6_types ... ok
+test chain::transaction::tests::tx_id_ser_roundtrip ... ok
+test wallet::box_selector::simple::tests::test_empty_inputs ... ok
+test chain::transaction::data_input::tests::data_input_roundtrip ... ok
+test wallet::box_selector::simple::tests::test_select_change_value_is_too_small ... ok
+test wallet::box_selector::simple::tests::test_select_all_value ... ok
+test wallet::box_selector::simple::tests::test_select_not_enough_tokens ... ok
+test wallet::box_selector::simple::tests::test_select_multiple_tokens ... ok
+test wallet::box_selector::simple::tests::test_select_not_enough_value ... ok
+test wallet::box_selector::simple::tests::test_select_single_token ... ok
+test wallet::box_selector::simple::tests::test_select_value ... ok
+test wallet::box_selector::simple::tests::test_select_single_token_all_amount ... ok
+test wallet::box_selector::tests::sum_tokens_eq ... ok
+test wallet::box_selector::tests::test_sum_tokens_repeating_token_id ... ok
+test wallet::derivation_path::tests::test_derivation_path_next ... ok
+test wallet::derivation_path::tests::test_derivation_path_next_returns_err_if_emtpy ... ok
+test wallet::derivation_path::tests::test_derivation_path_to_string ... ok
+test wallet::derivation_path::tests::test_derivation_path_to_string_no_addr ... ok
+test wallet::derivation_path::tests::test_string_to_derivation_path ... ok
+test wallet::deterministic::test::deterministic_contract_rejects_dhtuple ... ok
+test wallet::deterministic::test::deterministic_contract_rejects_false ... ok
+test wallet::deterministic::test::deterministic_contract_rejects_missing_key ... ok
+test wallet::box_selector::simple::tests::test_select_value_change_and_tokens ... ok
+test wallet::deterministic::test::deterministic_contract_rejects_two_key_and ... ok
+test wallet::deterministic::test::deterministic_contract_single_dlog_is_repeatable ... ok
+test wallet::deterministic::test::deterministic_contract_true_needs_no_witness ... ok
+test wallet::ext_pub_key::tests::bip32_test_vector0 ... ok
+test wallet::ext_pub_key::tests::bip32_test_vector1 ... ok
+test wallet::ext_pub_key::tests::bip32_test_vector2 ... ok
+test wallet::ext_pub_key::tests::ergo_node_key_tree_derivation_from_seed ... ok
+test chain::json::hint::tests::thb_json_roundtrip ... ok
+test wallet::ext_secret_key::tests::bip32_test_vector1 ... ok
+test wallet::ext_secret_key::tests::bip32_test_vector2 ... ok
+test wallet::ext_secret_key::tests::appkit_test_vector ... ok
+test wallet::ext_secret_key::tests::ergo_node_key_tree_derivation_from_seed ... ok
+test wallet::ext_secret_key::tests::ergo_wallet_incorrect_bip32_derivation ... ok
+test wallet::miner_fee::tests::fee_mainnet_address ... ok
+test wallet::miner_fee::tests::fee_testnet_address ... ok
+test wallet::miner_fee::tests::parses_fee_address ... ok
+test wallet::ext_secret_key::tests::ergo_node_path_derivation ... ok
+test chain::transaction::input::tests::ser_roundtrip ... ok
+test chain::transaction::input::prover_result::tests::ser_roundtrip ... ok
+test wallet::mnemonic::tests::test_mnemonic_to_seed ... ok
+test wallet::multi_sig::tests::extract_hint ... ok
+test wallet::multi_sig::tests::generating_commitment_two_signer ... ok
+test wallet::mnemonic::tests::test_mnemonic_to_seed_with_pass ... ok
+test wallet::multi_sig::tests::multi_sig_2 ... ok
+test wallet::multi_sig::tests::multi_sig_and_3 ... ok
+test wallet::multi_sig::tests::multi_dlog_dht ... ok
+test wallet::multi_sig::tests::multi_sig_atleast_2_out_of_3 ... ok
+test wallet::multi_sig::tests::multi_sig_atleast_3_out_of_4 ... ok
+test wallet::secret_key::json_tests::json_dht_golden ... ok
+test wallet::secret_key::json_tests::json_dht_roundtrip ... ok
+test wallet::secret_key::json_tests::json_dlog_golden ... ok
+test wallet::secret_key::json_tests::json_dlog_roundtrip ... ok
+test wallet::secret_key::tests::dht_roundtrip ... ok
+test wallet::secret_key::tests::dlog_roundtrip ... ok
+test wallet::signing::tests::test_multi_sig_issue_597 ... ok
+test wallet::signing::tests::test_proof_from_mainnet ... ok
+test wallet::signing::tests::test_prover_verify_signature ... ok
+test wallet::multi_sig::tests::multi_sig_atleast_7_out_of_10_i692 ... ok
+test chain::transaction::unsigned::tests::test_unsigned_tx_bytes_to_sign ... ok
+test wallet::tx_builder::tests::test_balance_error_not_enough_inputs ... ok
+test wallet::tx_builder::tests::test_balance_error_not_enough_outputs ... ok
+test wallet::mnemonic_generator::tests::test_jp_bip39_vectors ... ok
+test wallet::tx_builder::tests::test_burn_token ... ok
+test wallet::tx_builder::tests::test_burn_token_w_permit_too_low ... ok
+test wallet::tx_builder::tests::test_burn_token_wo_permit ... ok
+test wallet::tx_builder::tests::test_duplicate_inputs ... ok
+test wallet::signing::tests::test_tx_context_input_reorderings ... ok
+test wallet::tx_builder::tests::test_empty_outputs ... ok
+test wallet::tx_builder::tests::test_mint_token ... ok
+test wallet::tx_builder::tests::test_token_burn_permit_wo_burn ... ok
+test wallet::tx_builder::tests::test_tokens_balance_error ... ok
+test wallet::tx_builder::tests::test_est_tx_size ... ok
+test wallet::mnemonic_generator::tests::test_trezor_vectors ... ok
+test wallet::tx_builder::tests::test_build_tx ... ok
+test wallet::signing::tests::test_tx_signing ... ok
+test wallet::box_selector::simple::tests::test_select_over_max_tokens ... ok
+test wallet::tx_context::test::test_ergo_preservation ... ok
+test wallet::tx_context::test::test_asset_preservation ... ok
+test wallet::deterministic::test::test_sign_deterministic ... ok
+test wallet::box_selector::simple::tests::test_change_over_max_tokens_i590 ... ok
+test chain::transaction::reduced::tests::ser_roundtrip ... ok
+test chain::json::transaction::tests::tx_roundtrip ... ok
+test chain::transaction::tests::tx_ser_roundtrip ... ok
+test wallet::tx_context::test::test_valid_transaction ... ok
+test wallet::tx_context::test::test_zero_asset_creation ... ok
+test chain::json::transaction::tests::unsigned_tx_roundtrip ... ok
+test wallet::tx_context::test::test_monotonic_box_creation ... ok
+test wallet::tx_context::test::test_false_proposition ... ok
+
+test result: ok. 121 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 19.69s
+
+   Doc-tests ergo_lib
+
+running 1 test
+test ergo-lib/src/utils.rs - utils::ArrLength (line 3) ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.73s
+
+[exit 0]
+
+$ git -C /home/scott/bin/sigma-rust-pr diff --quiet develop HEAD -- ergotree-ir/src/chain/ergo_box/register.rs && echo 'register.rs same as develop'
+register.rs same as develop
+[exit 0]
+
+$ cd /home/scott/bin/sigma-rust-pr && cargo test -p ergotree-ir --no-run 2>&1 | grep -E '^(error|warning)|-->'
+error: unused import: `sigma_serialize_roundtrip`
+   --> ergotree-ir/src/chain/ergo_box/register.rs:327:32
+   --> ergotree-ir/src/lib.rs:11:9
+error: could not compile `ergotree-ir` (lib test) due to 1 previous error
+[exit 0]
+

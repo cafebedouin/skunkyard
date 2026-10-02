@@ -1,0 +1,249 @@
+# GUIDE 11c check: open PRs on ergoplatform/sigma-rust touching ergotree-ir/src/chain/address.rs or the interpreter's DeserializeContext substitution. 2026-10-02T14:24Z
+$ gh pr list -R ergoplatform/sigma-rust --state open --limit 200 --json number,title,files --jq "[.[] | {number, title, n: (.files|length)}] | length as \$t | \"open PRs: \(\$t); max files listed per PR: \(map(.n)|max)\""
+open PRs: 65; max files listed per PR: 100
+[exit 0]
+
+$ gh pr list -R ergoplatform/sigma-rust --state open --limit 200 --json number,title,files --jq ".[] | select(any(.files[]; .path == \"ergotree-ir/src/chain/address.rs\")) | \"#\(.number) \(.title)\""
+[exit 0]
+
+$ gh pr list -R ergoplatform/sigma-rust --state open --limit 200 --json number,title,files --jq ".[] | select(any(.files[]; .path == \"ergotree-interpreter/src/sigma_protocol/verifier.rs\" or .path == \"ergotree-ir/src/mir/expr.rs\")) | \"#\(.number) \(.title) :: \([.files[].path] | join(\", \"))\""
+#904 feat: add ergoscript-compiler crate (byte-match with Scala + node-fallback for residual cases) :: .gitignore, Cargo.toml, ergo-chain-types/Cargo.toml, ergo-chain-types/src/digest32.rs, ergo-chain-types/src/header.rs, ergo-lib/src/chain/block.rs, ergo-significant-contracts.md, ergoscript-compiler/CONTRIBUTING.md, ergoscript-compiler/Cargo.toml, ergoscript-compiler/src/ast.rs, ergoscript-compiler/src/binder.rs, ergoscript-compiler/src/compiler.rs, ergoscript-compiler/src/error.rs, ergoscript-compiler/src/hir.rs, ergoscript-compiler/src/hir/optimize.rs, ergoscript-compiler/src/hir/rewrite.rs, ergoscript-compiler/src/lexer/token_kind.rs, ergoscript-compiler/src/mir.rs, ergoscript-compiler/src/mir/cse.rs, ergoscript-compiler/src/mir/lower.rs, ergoscript-compiler/src/parser.rs, ergoscript-compiler/src/parser/grammar/expr.rs, ergoscript-compiler/src/parser/grammar/stmt.rs, ergoscript-compiler/src/parser/parse_error.rs, ergoscript-compiler/src/parser/source.rs, ergoscript-compiler/src/syntax.rs, ergoscript-compiler/src/type_infer.rs, ergoscript-compiler/tests/conformance.rs, ergoscript-compiler/tests/conformance/bitwise_infix.rs, ergoscript-compiler/tests/conformance/methods/mod.rs, ergoscript-compiler/tests/conformance/methods/savltree.rs, ergoscript-compiler/tests/conformance/methods/sbox.rs, ergoscript-compiler/tests/conformance/methods/scoll.rs, ergoscript-compiler/tests/conformance/methods/scontext.rs, ergoscript-compiler/tests/conformance/methods/sglobal.rs, ergoscript-compiler/tests/conformance/methods/sgroup_elem.rs, ergoscript-compiler/tests/conformance/methods/sheader.rs, ergoscript-compiler/tests/conformance/methods/snumeric.rs, ergoscript-compiler/tests/conformance/methods/soption.rs, ergoscript-compiler/tests/conformance/methods/spreheader.rs, ergoscript-compiler/tests/conformance/methods/ssigma_prop.rs, ergoscript-compiler/tests/conformance/predef_funcs.rs, ergoscript-compiler/tests/diff_fuzz.rs, ergoscript-compiler/tests/diff_fuzz_gen.rs, ergoscript-compiler/tests/fixtures/conformance/method-coverage.md, ergoscript-compiler/tests/fixtures/significant_15/MANIFEST.md, ergoscript-compiler/tests/fixtures/significant_15/SIGNIFICANT-15-PLAN.md, ergoscript-compiler/tests/fixtures/significant_15/chaincash_reserve.es, ergoscript-compiler/tests/fixtures/significant_15/dexy_bank_full.es, ergoscript-compiler/tests/fixtures/significant_15/duckpools_child_interest.es, ergoscript-compiler/tests/fixtures/significant_15/ergomixer_fullmix.es, ergoscript-compiler/tests/fixtures/significant_15/ergoraffle_active.es, ergoscript-compiler/tests/fixtures/significant_15/gluon_box_guard.es, ergoscript-compiler/tests/fixtures/significant_15/oracle_refresh.es, ergoscript-compiler/tests/fixtures/significant_15/paideia_stake_state.es, ergoscript-compiler/tests/fixtures/significant_15/parity-handoffs/STATUS.html, ergoscript-compiler/tests/fixtures/significant_15/phoenix_hodlerg_bank_full.es, ergoscript-compiler/tests/fixtures/significant_15/rosen_event_trigger.es, ergoscript-compiler/tests/fixtures/significant_15/sigmao_option.es, ergoscript-compiler/tests/fixtures/significant_15/sigmausd_bank.es, ergoscript-compiler/tests/fixtures/significant_15/skyharbor_v1_erg.es, ergoscript-compiler/tests/fixtures/significant_15/spectrum_n2t_pool.es, ergoscript-compiler/tests/fixtures/significant_15/spectrum_t2t_pool.es, ergotree-interpreter/Cargo.toml, ergotree-interpreter/src/eval.rs, ergotree-interpreter/src/eval/bin_op.rs, ergotree-interpreter/src/eval/create_avl_tree.rs, ergotree-interpreter/src/eval/expr.rs, ergotree-interpreter/src/eval/sigma_prop_is_proven.rs, ergotree-interpreter/src/eval/zk_proof.rs, ergotree-interpreter/src/sigma_protocol.rs, ergotree-interpreter/src/sigma_protocol/challenge.rs, ergotree-interpreter/src/sigma_protocol/fiat_shamir.rs, ergotree-interpreter/src/sigma_protocol/sig_serializer.rs, ergotree-ir/Cargo.toml, ergotree-ir/src/chain/ergo_box/register.rs, ergotree-ir/src/chain/ergo_box/register/value.rs, ergotree-ir/src/ergo_tree.rs, ergotree-ir/src/ergo_tree/tree_header.rs, ergotree-ir/src/mir.rs, ergotree-ir/src/mir/bin_op.rs, ergotree-ir/src/mir/create_avl_tree.rs, ergotree-ir/src/mir/expr.rs, ergotree-ir/src/mir/sigma_prop_is_proven.rs, ergotree-ir/src/mir/val_def.rs, ergotree-ir/src/mir/zk_proof.rs, ergotree-ir/src/pretty_printer/print.rs, ergotree-ir/src/serialization.rs, ergotree-ir/src/serialization/bin_op.rs, ergotree-ir/src/serialization/constant_placeholder.rs, ergotree-ir/src/serialization/expr.rs, ergotree-ir/src/serialization/serializable.rs, ergotree-ir/src/serialization/sigma_byte_reader.rs, ergotree-ir/src/serialization/sigma_byte_writer.rs, ergotree-ir/src/source_span.rs, ergotree-ir/src/types/smethod.rs, sigma-ser/Cargo.toml, sigma-ser/src/scorex_serialize.rs, sigma-ser/src/vlq_encode.rs, target/diff_fuzz/clusters/closed/9c4d5a31_ws-g2-3-audits-1b-1c.md
+#879 fix: tolerate absent/non-bytearray context var in DeserializeContext substitution :: ergotree-interpreter/src/eval/deserialize_context.rs, ergotree-ir/src/mir/expr.rs
+#876 JIT Costing: The Definitive PR :: bindings/ergo-lib-wasm/src/transaction.rs, ergo-lib/src/chain/parameters.rs, ergo-lib/src/chain/transaction/ergo_transaction.rs, ergo-lib/src/wallet/signing.rs, ergo-lib/src/wallet/tx_context.rs, ergo-lib/tests/cost_parity.rs, ergo-lib/tests/test-vectors/headers_700000_700060.json, ergo-lib/tests/test-vectors/transactions_700000_700050.json, ergo-lib/tests/test-vectors/tx_costs_700000_700050.json, ergotree-interpreter/src/eval.rs, ergotree-interpreter/src/eval/and.rs, ergotree-interpreter/src/eval/apply.rs, ergotree-interpreter/src/eval/atleast.rs, ergotree-interpreter/src/eval/bin_op.rs, ergotree-interpreter/src/eval/bit_inversion.rs, ergotree-interpreter/src/eval/block.rs, ergotree-interpreter/src/eval/bool_to_sigma.rs, ergotree-interpreter/src/eval/byte_array_to_bigint.rs, ergotree-interpreter/src/eval/byte_array_to_long.rs, ergotree-interpreter/src/eval/calc_blake2b256.rs, ergotree-interpreter/src/eval/calc_sha256.rs, ergotree-interpreter/src/eval/coll_append.rs, ergotree-interpreter/src/eval/coll_by_index.rs, ergotree-interpreter/src/eval/coll_exists.rs, ergotree-interpreter/src/eval/coll_filter.rs, ergotree-interpreter/src/eval/coll_fold.rs, ergotree-interpreter/src/eval/coll_forall.rs, ergotree-interpreter/src/eval/coll_map.rs, ergotree-interpreter/src/eval/coll_size.rs, ergotree-interpreter/src/eval/coll_slice.rs, ergotree-interpreter/src/eval/collection.rs, ergotree-interpreter/src/eval/cost_accum.rs, ergotree-interpreter/src/eval/costs.rs, ergotree-interpreter/src/eval/create_prove_dh_tuple.rs, ergotree-interpreter/src/eval/create_provedlog.rs, ergotree-interpreter/src/eval/data_value_comparer.rs, ergotree-interpreter/src/eval/decode_point.rs, ergotree-interpreter/src/eval/deserialize_context.rs, ergotree-interpreter/src/eval/deserialize_register.rs, ergotree-interpreter/src/eval/downcast.rs, ergotree-interpreter/src/eval/error.rs, ergotree-interpreter/src/eval/exponentiate.rs, ergotree-interpreter/src/eval/expr.rs, ergotree-interpreter/src/eval/extract_amount.rs, ergotree-interpreter/src/eval/extract_bytes.rs, ergotree-interpreter/src/eval/extract_bytes_with_no_ref.rs, ergotree-interpreter/src/eval/extract_creation_info.rs, ergotree-interpreter/src/eval/extract_id.rs, ergotree-interpreter/src/eval/extract_reg_as.rs, ergotree-interpreter/src/eval/extract_script_bytes.rs, ergotree-interpreter/src/eval/func_value.rs, ergotree-interpreter/src/eval/get_var.rs, ergotree-interpreter/src/eval/global_vars.rs, ergotree-interpreter/src/eval/if_op.rs, ergotree-interpreter/src/eval/logical_not.rs, ergotree-interpreter/src/eval/long_to_byte_array.rs, ergotree-interpreter/src/eval/method_call.rs, ergotree-interpreter/src/eval/multiply_group.rs, ergotree-interpreter/src/eval/negation.rs, ergotree-interpreter/src/eval/option_get.rs, ergotree-interpreter/src/eval/option_get_or_else.rs, ergotree-interpreter/src/eval/option_is_defined.rs, ergotree-interpreter/src/eval/or.rs, ergotree-interpreter/src/eval/property_call.rs, ergotree-interpreter/src/eval/savltree.rs, ergotree-interpreter/src/eval/sbox.rs, ergotree-interpreter/src/eval/scoll.rs, ergotree-interpreter/src/eval/scontext.rs, ergotree-interpreter/src/eval/select_field.rs, ergotree-interpreter/src/eval/sglobal.rs, ergotree-interpreter/src/eval/sgroup_elem.rs, ergotree-interpreter/src/eval/sheader.rs, ergotree-interpreter/src/eval/sigma_and.rs, ergotree-interpreter/src/eval/sigma_or.rs, ergotree-interpreter/src/eval/sigma_prop_bytes.rs, ergotree-interpreter/src/eval/snumeric.rs, ergotree-interpreter/src/eval/soption.rs, ergotree-interpreter/src/eval/spreheader.rs, ergotree-interpreter/src/eval/subst_const.rs, ergotree-interpreter/src/eval/tuple.rs, ergotree-interpreter/src/eval/upcast.rs, ergotree-interpreter/src/eval/val_use.rs, ergotree-interpreter/src/eval/xor.rs, ergotree-interpreter/src/eval/xor_of.rs, ergotree-interpreter/src/sigma_protocol.rs, ergotree-interpreter/src/sigma_protocol/crypto_cost.rs, ergotree-interpreter/src/sigma_protocol/verifier.rs, ergotree-ir/src/bigint256.rs, ergotree-ir/src/chain/context.rs, ergotree-ir/src/chain/ergo_box.rs, ergotree-ir/src/chain/ergo_box/box_value.rs, ergotree-ir/src/chain/ergo_box/register.rs, ergotree-ir/src/chain/tx_id.rs, ergotree-ir/src/ergo_tree.rs, ergotree-ir/src/mir/avl_tree_data.rs, ergotree-ir/src/mir/constant/constant_placeholder.rs, ergotree-ir/src/mir/expr.rs, ergotree-ir/src/mir/tuple.rs, ergotree-ir/src/pretty_printer/print.rs, ergotree-ir/src/serialization/constant_placeholder.rs
+#860 fix: accept SOption(T) where T expected in check_post_eval_tpe :: ergotree-ir/src/mir/expr.rs, ergotree-ir/src/serialization/expr.rs
+#858 perf: lazy constant resolution in ErgoTree evaluation :: ergo-lib/src/wallet/signing.rs, ergotree-interpreter/src/eval.rs, ergotree-interpreter/src/eval/deserialize_context.rs, ergotree-interpreter/src/eval/expr.rs, ergotree-ir/src/chain/context.rs, ergotree-ir/src/ergo_tree.rs, ergotree-ir/src/mir/expr.rs
+#846 Implement JIT costing for ErgoTree evaluation with Scala parity :: .gitignore, bindings/ergo-lib-wasm/src/transaction.rs, ergo-lib/src/chain/parameters.rs, ergo-lib/src/chain/transaction/ergo_transaction.rs, ergo-lib/src/wallet/signing.rs, ergo-lib/src/wallet/tx_context.rs, ergo-lib/tests/cost_parity.rs, ergo-lib/tests/test-vectors/headers_700000_700060.json, ergo-lib/tests/test-vectors/transactions_700000_700050.json, ergo-lib/tests/test-vectors/tx_costs_700000_700050.json, ergotree-interpreter/src/eval.rs, ergotree-interpreter/src/eval/and.rs, ergotree-interpreter/src/eval/apply.rs, ergotree-interpreter/src/eval/atleast.rs, ergotree-interpreter/src/eval/bin_op.rs, ergotree-interpreter/src/eval/block.rs, ergotree-interpreter/src/eval/calc_blake2b256.rs, ergotree-interpreter/src/eval/calc_sha256.rs, ergotree-interpreter/src/eval/coll_append.rs, ergotree-interpreter/src/eval/coll_exists.rs, ergotree-interpreter/src/eval/coll_filter.rs, ergotree-interpreter/src/eval/coll_fold.rs, ergotree-interpreter/src/eval/coll_forall.rs, ergotree-interpreter/src/eval/coll_map.rs, ergotree-interpreter/src/eval/coll_slice.rs, ergotree-interpreter/src/eval/cost_accum.rs, ergotree-interpreter/src/eval/cost_tests.rs, ergotree-interpreter/src/eval/costs.rs, ergotree-interpreter/src/eval/data_value_comparer.rs, ergotree-interpreter/src/eval/expr.rs, ergotree-interpreter/src/eval/or.rs, ergotree-interpreter/src/eval/savltree.rs, ergotree-interpreter/src/eval/sbox.rs, ergotree-interpreter/src/eval/scoll.rs, ergotree-interpreter/src/eval/scontext.rs, ergotree-interpreter/src/eval/sglobal.rs, ergotree-interpreter/src/eval/sgroup_elem.rs, ergotree-interpreter/src/eval/sheader.rs, ergotree-interpreter/src/eval/sigma_and.rs, ergotree-interpreter/src/eval/sigma_or.rs, ergotree-interpreter/src/eval/sigma_prop_bytes.rs, ergotree-interpreter/src/eval/snumeric.rs, ergotree-interpreter/src/eval/soption.rs, ergotree-interpreter/src/eval/spreheader.rs, ergotree-interpreter/src/eval/subst_const.rs, ergotree-interpreter/src/eval/tree_lookup.rs, ergotree-interpreter/src/eval/xor.rs, ergotree-interpreter/src/eval/xor_of.rs, ergotree-interpreter/src/sigma_protocol.rs, ergotree-interpreter/src/sigma_protocol/crypto_cost.rs, ergotree-interpreter/src/sigma_protocol/verifier.rs, ergotree-ir/src/chain/context.rs, ergotree-ir/src/ergo_tree.rs, ergotree-ir/src/mir/constant/constant_placeholder.rs, ergotree-ir/src/mir/expr.rs, ergotree-ir/src/pretty_printer/print.rs, ergotree-ir/src/serialization/constant_placeholder.rs, ergotree-ir/src/serialization/constant_store.rs, ergotree-ir/src/serialization/data.rs, ergotree-ir/src/serialization/sigma_byte_writer.rs
+#832 Soft Fork support :: Cargo.toml, bindings/ergo-lib-c-core/src/error_conversion.rs, bindings/ergo-lib-wasm/src/box_selector.rs, bindings/ergo-lib-wasm/src/error_conversion.rs, ergo-chain-types/Cargo.toml, ergo-chain-types/src/header.rs, ergo-lib/src/wallet/multi_sig.rs, ergo-p2p/src/peer_spec.rs, ergotree-interpreter/Cargo.toml, ergotree-interpreter/src/eval/coll_exists.rs, ergotree-interpreter/src/eval/coll_filter.rs, ergotree-interpreter/src/eval/coll_forall.rs, ergotree-interpreter/src/eval/collection.rs, ergotree-interpreter/src/eval/deserialize_register.rs, ergotree-interpreter/src/eval/extract_reg_as.rs, ergotree-interpreter/src/eval/option_get.rs, ergotree-interpreter/src/eval/scontext.rs, ergotree-interpreter/src/eval/sigma_and.rs, ergotree-interpreter/src/eval/sigma_or.rs, ergotree-interpreter/src/sigma_protocol.rs, ergotree-interpreter/src/sigma_protocol/challenge.rs, ergotree-interpreter/src/sigma_protocol/fiat_shamir.rs, ergotree-interpreter/src/sigma_protocol/proof_tree.rs, ergotree-interpreter/src/sigma_protocol/prover.rs, ergotree-interpreter/src/sigma_protocol/prover/hint.rs, ergotree-interpreter/src/sigma_protocol/sig_serializer.rs, ergotree-interpreter/src/sigma_protocol/unchecked_tree.rs, ergotree-interpreter/src/sigma_protocol/unproven_tree.rs, ergotree-interpreter/src/sigma_protocol/verifier.rs, ergotree-ir/Cargo.toml, ergotree-ir/src/chain/json/sigma_protocol.rs, ergotree-ir/src/ergo_tree.rs, ergotree-ir/src/ergo_tree/tree_header.rs, ergotree-ir/src/lib.rs, ergotree-ir/src/mir/apply.rs, ergotree-ir/src/mir/atleast.rs, ergotree-ir/src/mir/bit_inversion.rs, ergotree-ir/src/mir/bool_to_sigma.rs, ergotree-ir/src/mir/byte_array_to_bigint.rs, ergotree-ir/src/mir/byte_array_to_long.rs, ergotree-ir/src/mir/calc_blake2b256.rs, ergotree-ir/src/mir/calc_sha256.rs, ergotree-ir/src/mir/coll_append.rs, ergotree-ir/src/mir/coll_by_index.rs, ergotree-ir/src/mir/coll_exists.rs, ergotree-ir/src/mir/coll_filter.rs, ergotree-ir/src/mir/coll_forall.rs, ergotree-ir/src/mir/coll_map.rs, ergotree-ir/src/mir/coll_size.rs, ergotree-ir/src/mir/coll_slice.rs, ergotree-ir/src/mir/create_avl_tree.rs, ergotree-ir/src/mir/create_provedlog.rs, ergotree-ir/src/mir/decode_point.rs, ergotree-ir/src/mir/downcast.rs, ergotree-ir/src/mir/expr.rs, ergotree-ir/src/mir/extract_amount.rs, ergotree-ir/src/mir/extract_bytes.rs, ergotree-ir/src/mir/extract_bytes_with_no_ref.rs, ergotree-ir/src/mir/extract_creation_info.rs, ergotree-ir/src/mir/extract_id.rs, ergotree-ir/src/mir/extract_reg_as.rs, ergotree-ir/src/mir/extract_script_bytes.rs, ergotree-ir/src/mir/logical_not.rs, ergotree-ir/src/mir/long_to_byte_array.rs, ergotree-ir/src/mir/negation.rs, ergotree-ir/src/mir/option_get.rs, ergotree-ir/src/mir/option_is_defined.rs, ergotree-ir/src/mir/sigma_and.rs, ergotree-ir/src/mir/sigma_or.rs, ergotree-ir/src/mir/sigma_prop_bytes.rs, ergotree-ir/src/mir/subst_const.rs, ergotree-ir/src/mir/unary_op.rs, ergotree-ir/src/mir/val_def.rs, ergotree-ir/src/mir/xor.rs, ergotree-ir/src/pretty_printer.rs, ergotree-ir/src/pretty_printer/print.rs, ergotree-ir/src/serialization/constant_placeholder.rs, ergotree-ir/src/serialization/data.rs, ergotree-ir/src/serialization/expr.rs, ergotree-ir/src/serialization/method_call.rs, ergotree-ir/src/serialization/property_call.rs, ergotree-ir/src/serialization/serializable.rs, ergotree-ir/src/serialization/sigma_byte_reader.rs, ergotree-ir/src/serialization/sigma_byte_writer.rs, ergotree-ir/src/serialization/types.rs, ergotree-ir/src/sigma_protocol/sigma_boolean.rs, ergotree-ir/src/sigma_protocol/sigma_boolean/cand.rs, ergotree-ir/src/sigma_protocol/sigma_boolean/cor.rs, ergotree-ir/src/sigma_protocol/sigma_boolean/cthreshold.rs, ergotree-ir/src/soft_fork.rs, ergotree-ir/src/types/smethod.rs, ergotree-ir/src/types/stype.rs, ergotree-ir/src/types/stype_companion.rs, sigma-ser/Cargo.toml, sigma-ser/src/scorex_serialize.rs, sigma-ser/src/vlq_encode.rs
+#634 Ergotree proc-macro :: .github/workflows/ci.yml, Cargo.toml, ergotree-interpreter/Cargo.toml, ergotree-ir/Cargo.toml, ergotree-ir/src/ergotree_proc_macro.rs, ergotree-ir/src/lib.rs, ergotree-ir/src/mir/bin_op.rs, ergotree-ir/src/mir/block.rs, ergotree-ir/src/mir/bool_to_sigma.rs, ergotree-ir/src/mir/coll_append.rs, ergotree-ir/src/mir/constant.rs, ergotree-ir/src/mir/downcast.rs, ergotree-ir/src/mir/expr.rs, ergotree-ir/src/mir/extract_script_bytes.rs, ergotree-ir/src/mir/func_value.rs, ergotree-ir/src/mir/logical_not.rs, ergotree-ir/src/mir/method_call.rs, ergotree-ir/src/mir/select_field.rs, ergotree-ir/src/mir/tuple.rs, ergotree-ir/src/mir/upcast.rs, ergotree-ir/src/mir/val_def.rs, ergotree-ir/src/mir/val_use.rs, ergotree-ir/src/types/sfunc.rs, ergotree-ir/src/types/smethod.rs, ergotree-ir/src/types/stuple.rs, ergotree-ir/src/types/stype.rs, ergotree-ir/src/types/stype_companion.rs, ergotree-ir/src/types/stype_param.rs, ergotree-macro/Cargo.toml, ergotree-macro/README.md, ergotree-macro/src/lib.rs, ergotree-macro/tests/method_call_smoke_tests.rs, ergotree-macro/tests/tests.rs
+[exit 0]
+
+$ gh pr view 879 -R ergoplatform/sigma-rust --json number,title,state,files,body --jq "\"#\(.number) \(.state) \(.title)\nfiles: \([.files[].path]|join(\", \"))\n\n\(.body)\""
+#879 OPEN fix: tolerate absent/non-bytearray context var in DeserializeContext substitution
+files: ergotree-interpreter/src/eval/deserialize_context.rs, ergotree-ir/src/mir/expr.rs
+
+`substitute_deserialize` rewrites the whole tree, so a `DeserializeContext` over a context-extension variable that is absent (or present but not `Coll[Byte]`) errored even when the node sat on a branch the live reduction never takes.
+
+The JVM `Interpreter.substDeserialize` returns `None` in both cases, leaving the node; the sibling `DeserializeRegister` already does the same. This mirrors them. A leftover node on the *live* path still errors at eval (`DeserializeContext cannot be evaluated`), so a live-path deserialize cannot silently pass.
+
+Fixes a full-node sync wedge on testnet block 111,927 (tx 2 input 0: empty proof, empty extension, `DeserializeContext(0)` on a dead `if` branch).
+
+Two commits: absent var, then non-bytearray var (full `substDeserialize` parity).
+
+[exit 0]
+
+$ gh pr diff 879 -R ergoplatform/sigma-rust | head -80
+diff --git a/ergotree-interpreter/src/eval/deserialize_context.rs b/ergotree-interpreter/src/eval/deserialize_context.rs
+index fa8bafe12..6900c5e1e 100644
+--- a/ergotree-interpreter/src/eval/deserialize_context.rs
++++ b/ergotree-interpreter/src/eval/deserialize_context.rs
+@@ -6,6 +6,7 @@ mod tests {
+     use ergotree_ir::mir::deserialize_context::DeserializeContext;
+     use ergotree_ir::mir::expr::Expr;
+     use ergotree_ir::mir::global_vars::GlobalVars;
++    use ergotree_ir::mir::if_op::If;
+     use ergotree_ir::mir::value::Value;
+     use ergotree_ir::serialization::SigmaSerializable;
+     use ergotree_ir::types::stype::SType;
+@@ -73,6 +74,59 @@ mod tests {
+         assert!(try_eval_with_deserialize::<bool>(&expr, &ctx).is_err());
+     }
+ 
++    // Regression for testnet block 111,927: a `DeserializeContext` over an
++    // absent context var sitting on a dead `if` branch must NOT sink reduction.
++    // Substitution walks the whole tree but, mirroring the JVM
++    // `Interpreter.substDeserialize` `else None`, leaves the absent-var node in
++    // place; the live branch then reduces normally. A leftover node on the
++    // *live* path still errors at eval (see `eval_id_not_found`).
++    #[test]
++    fn eval_absent_var_on_dead_branch() {
++        let deser: Expr = DeserializeContext {
++            tpe: SType::SBoolean,
++            id: 0,
++        }
++        .into();
++        // if (true) true else deserializeContext(0)
++        let expr: Expr = If {
++            condition: Expr::Const(true.into()).into(),
++            true_branch: Expr::Const(true.into()).into(),
++            false_branch: deser.into(),
++        }
++        .into();
++        let extension = ContextExtension::empty();
++        let ctx = force_any_val::<Context>().with_extension(&extension);
++        assert!(try_eval_with_deserialize::<bool>(&expr, &ctx).unwrap());
++    }
++
++    // Parity with the JVM `Interpreter.substDeserialize` inner `case _ => None`:
++    // a context var that is present but not a `Coll[Byte]` is not substituted,
++    // so a dead-branch deserialize over a wrong-typed var does not sink
++    // reduction either. (A wrong-typed var on the *live* path still errors at
++    // eval — see `eval_context_extension_wrong_type`.)
++    #[test]
++    fn eval_wrong_type_var_on_dead_branch() {
++        let deser: Expr = DeserializeContext {
++            tpe: SType::SBoolean,
++            id: 0,
++        }
++        .into();
++        // if (true) true else deserializeContext(0)
++        let expr: Expr = If {
++            condition: Expr::Const(true.into()).into(),
++            true_branch: Expr::Const(true.into()).into(),
++            false_branch: deser.into(),
++        }
++        .into();
++        // var 0 present but an Int, not a Coll[Byte]
++        let ctx_ext_val: Constant = 1i32.into();
++        let ctx_ext = ContextExtension {
++            values: [(0u8, ctx_ext_val)].iter().cloned().collect(),
++        };
++        let ctx = force_any_val::<Context>().with_extension(&ctx_ext);
++        assert!(try_eval_with_deserialize::<bool>(&expr, &ctx).unwrap());
++    }
++
+     #[test]
+     fn eval_context_extension_wrong_type() {
+         let expr: Expr = DeserializeContext {
+diff --git a/ergotree-ir/src/mir/expr.rs b/ergotree-ir/src/mir/expr.rs
+index 867676e5f..3f89fcf36 100644
+--- a/ergotree-ir/src/mir/expr.rs
++++ b/ergotree-ir/src/mir/expr.rs
+@@ -416,13 +416,27 @@ impl Expr {
+             |expr| {
+                 let (tpe, parsed_expr): (&mut SType, Expr) = match expr {
+                     Expr::DeserializeContext(DeserializeContext { tpe, id }) => {
+[exit 0]
+
+$ gh pr view 860 -R ergoplatform/sigma-rust --json number,title,state,createdAt,files,body --jq "\"#\(.number) \(.state) \(.createdAt) \(.title)\nfiles: \([.files[].path]|join(\", \"))\n\n\(.body)\""
+#860 OPEN 2026-04-16T14:02:10Z fix: accept SOption(T) where T expected in check_post_eval_tpe
+files: ergotree-ir/src/mir/expr.rs, ergotree-ir/src/serialization/expr.rs
+
+Widens Expr::check_post_eval_tpe to accept SOption(T) where T is expected — matches JVM OneArgumentOperationSerializer.parse's unchecked asValue[T] cast. Without this, sigma-rust rejects mainnet block 1,711,120 tx dce9…ff2c (uses blake2b256(getVar[Coll[Byte]](1)) without .get).
+
+Eval-time type check unchanged — UnexpectedValue still fires at runtime if the var is missing.
+
+[exit 0]
+
+$ gh pr diff 860 -R ergoplatform/sigma-rust | head -120
+diff --git a/ergotree-ir/src/mir/expr.rs b/ergotree-ir/src/mir/expr.rs
+index 867676e5f..87c404930 100644
+--- a/ergotree-ir/src/mir/expr.rs
++++ b/ergotree-ir/src/mir/expr.rs
+@@ -321,24 +321,47 @@ impl Expr {
+         }
+     }
+ 
+-    /// Check if given expected_tpe type is the same as the expression's post-evaluation type
++    /// Check that the expression's post-evaluation type is compatible with the
++    /// expected type.
++    ///
++    /// Strict equality is the primary acceptance rule. As a parse-time leniency,
++    /// `SOption(T)` is also accepted where `T` is expected — this matches the
++    /// JVM v6.0.3 sigmastate-interpreter, whose
++    /// `OneArgumentOperationSerializer.parse` uses an unchecked `asValue[T]`
++    /// cast and performs no type validation when deserializing. Real on-chain
++    /// scripts trigger this case by passing `getVar[T](id)` (post-eval type
++    /// `SOption(T)`) directly into a combinator that statically expects `T` —
++    /// most commonly `blake2b256` / `sha256` / `byteArrayToBigInt` /
++    /// `byteArrayToLong` of `getVar[Coll[Byte]](id)` without an explicit
++    /// `.get`. Such scripts are accepted by the JVM at parse time and would
++    /// fail at evaluation time only if actually executed (our evaluator's
++    /// `EvalError::UnexpectedValue` arm matches the JVM runtime failure).
++    /// Without this leniency sigma-rust would reject txs the JVM accepts and
++    /// ergo-node-rust would diverge from consensus.
++    ///
++    /// See: mainnet block 1,711,120 tx[1] output[0] for a real-world reproducer
++    /// (`parse_block_1711120_output0` in `serialization::expr::tests`).
+     pub fn check_post_eval_tpe(
+         &self,
+         expected_tpe: &SType,
+     ) -> Result<(), InvalidExprEvalTypeError> {
+         let expr_tpe = self.post_eval_tpe();
+         if &expr_tpe == expected_tpe {
+-            Ok(())
+-        } else {
+-            #[cfg(feature = "std")]
+-            let backtrace = std::backtrace::Backtrace::capture();
+-            #[cfg(not(feature = "std"))]
+-            let backtrace = "Backtraces not supported without std";
+-            Err(InvalidExprEvalTypeError(format!(
+-                "expected: {0:?}, got: {1:?}\nBacktrace:\n{backtrace}",
+-                expected_tpe, expr_tpe
+-            )))
++            return Ok(());
+         }
++        if let SType::SOption(inner) = &expr_tpe {
++            if inner.as_ref() == expected_tpe {
++                return Ok(());
++            }
++        }
++        #[cfg(feature = "std")]
++        let backtrace = std::backtrace::Backtrace::capture();
++        #[cfg(not(feature = "std"))]
++        let backtrace = "Backtraces not supported without std";
++        Err(InvalidExprEvalTypeError(format!(
++            "expected: {0:?}, got: {1:?}\nBacktrace:\n{backtrace}",
++            expected_tpe, expr_tpe
++        )))
+     }
+ 
+     /// Rewrite tree bottom-up, matching nodes that satisfy `rule` and applying `subst` to them
+diff --git a/ergotree-ir/src/serialization/expr.rs b/ergotree-ir/src/serialization/expr.rs
+index 5206721c0..40dd5e251 100644
+--- a/ergotree-ir/src/serialization/expr.rs
++++ b/ergotree-ir/src/serialization/expr.rs
+@@ -337,6 +337,39 @@ mod tests {
+         assert_eq!(sigma_serialize_roundtrip(&e), e);
+     }
+ 
++    /// Regression test for ergo-node-rust mainnet sync failure at block 1,711,120 tx[1]
++    /// (`dce90de114a7d36cb2dd724c04ccc11b461a02bd2a783ef820234046cb47ff2c`,
++    /// block id `bcfb89f0d7c3c6c3f13d885e037c79e349a1ffa37301cb899a1a24c8f47ba49f`).
++    /// `output[0]` uses `blake2b256(getVar[Coll[Byte]](1))` directly (no `.get`),
++    /// which the JVM v6.0.3 reference node parses cleanly because its
++    /// `OneArgumentOperationSerializer` does an unchecked `asValue[T]` cast at parse
++    /// time. sigma-rust must match that leniency at parse time; runtime behavior
++    /// (`EvalError::UnexpectedValue`) stays the same.
++    #[test]
++    fn parse_block_1711120_output0() {
++        use crate::ergo_tree::ErgoTree;
++        let hex = "00ea02d193b4cbe3010e040004300e183092aafc2966e1c791f619b14b084b26d41825661c6c040bd40801";
++        let bytes = base16::decode(hex).unwrap();
++        let tree = ErgoTree::sigma_parse_bytes(&bytes).unwrap();
++        // Round-trip: serialized bytes must match the input exactly.
++        let reser = tree.sigma_serialize_bytes().unwrap();
++        assert_eq!(reser, bytes, "round-trip bytes must be identical");
++    }
++
++    /// Companion regression for `output[2]` of the same tx. This box has the
++    /// constant-segregation header (`0x10`) and uses `0xea` (SIGMA_AND) deeper in the
++    /// tree body. Already passes today, but pinned here so a future regression that
++    /// only breaks `output[0]` is caught alongside one that breaks `output[2]`.
++    #[test]
++    fn parse_block_1711120_output2() {
++        use crate::ergo_tree::ErgoTree;
++        let hex = "1005040004000e36100204a00b08cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304";
++        let bytes = base16::decode(hex).unwrap();
++        let tree = ErgoTree::sigma_parse_bytes(&bytes).unwrap();
++        let reser = tree.sigma_serialize_bytes().unwrap();
++        assert_eq!(reser, bytes, "round-trip bytes must be identical");
++    }
++
+     proptest! {
+ 
+         #[test]
+[exit 0]
+
+Result: of 65 open PRs, none touches ergotree-ir/src/chain/address.rs, so there is no PR to build on.
+Two open PRs touch code the new tests exercise (neither touches address.rs or verifier.rs's p2sh_tests):
+- #860 widens check_post_eval_tpe to accept SOption(T) where T is expected; its regression test parses
+  00ea02d193b4cbe3010e040004300e18 3092aafc2966e1c791f619b14b084b26d41825661c6c040b d40801 from mainnet block 1,711,120
+  (the 0.28.0 P2SH form, variable 1, no OptionGet). If #860 merges, `legacy_var1_no_option_get_bytes_do_not_parse`
+  fails and the 0.28.0 bytes parse (and are then classified P2S by this branch).
+- #879 leaves DeserializeContext in place when the variable is absent; if it merges, the error asserted by
+  `p2sh_script_with_only_var_1_fails_to_reduce` (ExtensionKeyNotFound(126) at substitution) changes to an eval-time error.
+$ for n in 904 876; do echo "#$n: $(gh api --paginate repos/ergoplatform/sigma-rust/pulls/$n/files --jq ".[].filename" | wc -l) files; address.rs: $(gh api --paginate repos/ergoplatform/sigma-rust/pulls/$n/files --jq ".[].filename" | grep -c "chain/address.rs")"; done
+#904: 100 files; address.rs: 0
+#876: 112 files; address.rs: 0
+[exit 0]
+

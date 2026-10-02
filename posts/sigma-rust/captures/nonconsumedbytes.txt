@@ -1,0 +1,114 @@
+$ git -C /home/scott/bin/sigma-rust-pr show f6048c1e --stat
+commit f6048c1e4e4813af9308c484b3ab7fe904ce7005
+Author: Kamal Ahmad <kamalahmad22@pm.me>
+Date:   Mon Sep 30 11:45:05 2024 +0500
+
+    Unify ergotree sigma_parse/sigma_parse_bytes, add validation rule for ErgoTree Root TPE
+
+ ergotree-ir/src/ergo_tree.rs                       | 113 +++++----------------
+ ergotree-ir/src/mir/bool_to_sigma.rs               |   2 +-
+ ergotree-ir/src/serialization/sigma_byte_reader.rs |  15 +++
+ sigma-ser/src/scorex_serialize.rs                  |   8 +-
+ sigma-ser/src/vlq_encode.rs                        |   4 +-
+ 5 files changed, 47 insertions(+), 95 deletions(-)
+
+$ git -C /home/scott/bin/sigma-rust-pr show ergo-lib-v0.28.0:ergotree-ir/src/ergo_tree.rs | sed -n 386,431p
+    fn sigma_parse_bytes(bytes: &[u8]) -> Result<Self, SigmaParsingError> {
+        let wrap_in_ergotree = |r: Result<ParsedErgoTree, ErgoTreeError>| -> Self {
+            match r {
+                Ok(parsed_tree) => ErgoTree::Parsed(parsed_tree),
+                Err(error) => ErgoTree::Unparsed {
+                    tree_bytes: bytes.to_vec(),
+                    error,
+                },
+            }
+        };
+        let mut r = SigmaByteReader::new(Cursor::new(bytes), ConstantStore::empty());
+        let tree: Result<ErgoTree, SigmaParsingError> = match ErgoTreeHeader::sigma_parse(&mut r) {
+            Ok(header) => {
+                if header.has_size() {
+                    let tree_size_bytes = r.get_u32()?;
+                    let mut buf = vec![0u8; tree_size_bytes as usize];
+                    r.read_exact(buf.as_mut_slice())?;
+                    let mut inner_r =
+                        SigmaByteReader::new(Cursor::new(&mut buf[..]), ConstantStore::empty());
+                    Ok(wrap_in_ergotree(ErgoTree::sigma_parse_sized(
+                        &mut inner_r,
+                        header,
+                    )))
+                } else {
+                    Ok(wrap_in_ergotree(ErgoTree::sigma_parse_sized(
+                        &mut r, header,
+                    )))
+                }
+            }
+            Err(e) => Ok(ErgoTree::Unparsed {
+                tree_bytes: bytes.to_vec(),
+                error: e.into(),
+            }),
+        };
+        let mut buffer = Vec::new();
+        if let Ok(0) = r.read_to_end(&mut buffer) {
+            tree
+        } else {
+            Ok(ErgoTree::Unparsed {
+                tree_bytes: bytes.to_vec(),
+                error: ErgoTreeRootParsingError::NonConsumedBytes.into(),
+            })
+        }
+    }
+}
+
+
+$ git -C /home/scott/bin/sigma-rust-pr show f6048c1e -- ergotree-ir/src/ergo_tree.rs | sed -n 80,122p
+-        let wrap_in_ergotree = |r: Result<ParsedErgoTree, ErgoTreeError>| -> Self {
+-            match r {
+-                Ok(parsed_tree) => ErgoTree::Parsed(parsed_tree),
+-                Err(error) => ErgoTree::Unparsed {
+-                    tree_bytes: bytes.to_vec(),
+-                    error,
+-                },
+-            }
+-        };
+-        let mut r = SigmaByteReader::new(Cursor::new(bytes), ConstantStore::empty());
+-        let tree: Result<ErgoTree, SigmaParsingError> = match ErgoTreeHeader::sigma_parse(&mut r) {
+-            Ok(header) => {
+-                if header.has_size() {
+-                    let tree_size_bytes = r.get_u32()?;
+-                    let mut buf = vec![0u8; tree_size_bytes as usize];
+-                    r.read_exact(buf.as_mut_slice())?;
+-                    let mut inner_r =
+-                        SigmaByteReader::new(Cursor::new(&mut buf[..]), ConstantStore::empty());
+-                    Ok(wrap_in_ergotree(ErgoTree::sigma_parse_sized(
+-                        &mut inner_r,
+-                        header,
+-                    )))
+-                } else {
+-                    Ok(wrap_in_ergotree(ErgoTree::sigma_parse_sized(
+-                        &mut r, header,
+-                    )))
+-                }
+-            }
+-            Err(e) => Ok(ErgoTree::Unparsed {
+-                tree_bytes: bytes.to_vec(),
+-                error: e.into(),
+-            }),
+-        };
+-        let mut buffer = Vec::new();
+-        if let Ok(0) = r.read_to_end(&mut buffer) {
+-            tree
+-        } else {
+-            Ok(ErgoTree::Unparsed {
+-                tree_bytes: bytes.to_vec(),
+-                error: ErgoTreeRootParsingError::NonConsumedBytes.into(),
+-            })
+-        }
+-    }
+
+$ git -C /home/scott/bin/sigma-rust-pr merge-base --is-ancestor f6048c1e ergo-lib-v0.28.0; echo "exit $? (1 = f6048c1e is not in ergo-lib-v0.28.0)"
+exit 1 (1 = f6048c1e is not in ergo-lib-v0.28.0)
+
+$ git -C /home/scott/bin/sigma-rust-pr merge-base --is-ancestor f6048c1e develop; echo "exit $? (0 = f6048c1e is in develop)"
+exit 0 (0 = f6048c1e is in develop)
+
+Reading: in ergo-lib-v0.28.0, sigma_parse_bytes discards the parse result (Parsed or Unparsed with the root error) and returns Unparsed{NonConsumedBytes} whenever bytes remain after the root parse stops; f6048c1e (after 0.28.0, in develop) removes that branch.

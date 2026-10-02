@@ -1,0 +1,3 @@
+$ cd /home/scott/bin/sigma-rust-pr && cargo fmt --all --check
+[exit 0]
+

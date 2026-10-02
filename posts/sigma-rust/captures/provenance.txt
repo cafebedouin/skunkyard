@@ -1,0 +1,4 @@
+$ bash /home/scott/bin/peeryard/review/provenance.sh /home/scott/bin/ergo-node/ergo-6.0.6.jar
+peeryard v0.1.0 (ba56b25) on 6.0.6 (21b9023933b1)
+[exit 0]
+

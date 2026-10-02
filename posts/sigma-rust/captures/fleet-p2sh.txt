@@ -1,0 +1,57 @@
+# Fleet SDK 0.12.0 P2SH tree form and classification, from the installed package in skunkyard/skunks/oneshot. The explorer's classification was not checked.
+$ grep -n '"version"' /home/scott/bin/skunkyard/skunks/oneshot/node_modules/@fleet-sdk/core/package.json
+3:  "version": "0.12.0",
+[exit 0]
+
+$ sed -n 458,472p /home/scott/bin/skunkyard/skunks/oneshot/node_modules/@fleet-sdk/core/dist/index.mjs
+var P2PK_ERGOTREE_PREFIX = hex.decode("0008cd");
+var P2PK_ERGOTREE_LENGTH = 36;
+var P2SH_ERGOTREE_PREFIX = hex.decode("00ea02d193b4cbe4e3010e040004300e18");
+var P2SH_ERGOTREE_SUFFIX = hex.decode("d40801");
+var P2SH_ERGOTREE_LENGTH = 44;
+var P2SH_HASH_LENGTH = 24;
+function getErgoTreeType(ergoTree) {
+  if (ergoTree.length === P2PK_ERGOTREE_LENGTH && startsWith(ergoTree, P2PK_ERGOTREE_PREFIX)) {
+    return AddressType.P2PK;
+  }
+  if (ergoTree.length === P2SH_ERGOTREE_LENGTH && startsWith(ergoTree, P2SH_ERGOTREE_PREFIX) && endsWith(ergoTree, P2SH_ERGOTREE_SUFFIX)) {
+    return AddressType.P2SH;
+  }
+  return AddressType.P2S;
+}
+[exit 0]
+
+$ sed -n 500,530p /home/scott/bin/skunkyard/skunks/oneshot/node_modules/@fleet-sdk/core/dist/index.mjs
+   * @param ergoTree ErgoTree hex string
+   */
+  static fromErgoTree(ergoTree, network) {
+    return new _ErgoAddress(ensureBytes(ergoTree), network);
+  }
+  /**
+   * Create a new instance from a public key
+   * @param publicKey Public key hex string
+   */
+  static fromPublicKey(publicKey, network) {
+    const bytes = ensureBytes(publicKey);
+    if (!validateEcPoint(bytes)) throw new Error("The Public Key is invalid.");
+    const ergoTree = concatBytes(P2PK_ERGOTREE_PREFIX, bytes);
+    return new _ErgoAddress(ergoTree, network);
+  }
+  static fromHash(hash, network) {
+    let bytes = ensureBytes(hash);
+    if (bytes.length === BLAKE_256_HASH_LENGTH) {
+      bytes = bytes.subarray(0, P2SH_HASH_LENGTH);
+    } else if (bytes.length !== P2SH_HASH_LENGTH) {
+      throw Error(`Invalid hash length: ${bytes.length}`);
+    }
+    const ergoTree = concatBytes(P2SH_ERGOTREE_PREFIX, bytes, P2SH_ERGOTREE_SUFFIX);
+    return new _ErgoAddress(ergoTree, network);
+  }
+  /**
+   * Create a new checked instance from an address string
+   * @param encodedAddress Address encoded as base58
+   */
+  static decode(encodedAddress) {
+    const bytes = base58.decode(encodedAddress);
+[exit 0]
+

@@ -18,9 +18,10 @@ remote yet.
    list.
 2. Create the GitHub repository `cafebedouin/skunkyard`, push, enable GitHub Pages (branch `main`, folder `/docs`) so the oneshot page resolves at `https://cafebedouin.github.io/skunkyard/oneshot/`, fill the URL placeholder in the draft.
 3. Draft is at v5 (`posts/REVIEW-v4.md`); Grok and Gemini ran on v5 (`posts/seats/` once copied in); fold them in as v6.
-   Before posting: file the sigma-rust issue and PR from `posts/sigma-rust/` (after the three Claude seats and the two
-   outside seats on those texts; the Claude seats were deferred by the person), draft and file a Fleet issue for
-   `toP2SH()` hashing the tree instead of the proposition, and put the issue numbers into section 4 and ask 3.
+   Before posting: the sigma-rust issue and PR in `posts/sigma-rust/` are reviewed (five passes, `posts/sigma-rust/REVIEW.md`)
+   and ready to file from the clone `~/bin/sigma-rust-pr` (branch `fix/p2sh-script-form`, three commits; attach
+   `captures/`); decide on the private note to kushti first (REVIEW.md, last section). Draft and file a Fleet issue for
+   `toP2SH()` hashing the tree instead of the proposition. Put the issue numbers into the post's section 4 and ask 3.
 4. Post. Then the Q1 final run and the oneshot results as replies.
 
 ## oneshot (`skunks/oneshot/CHARTER.md`)

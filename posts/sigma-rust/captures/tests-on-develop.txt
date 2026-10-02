@@ -1,0 +1,200 @@
+# The new test modules (p2sh_tests) of fix/p2sh-script-form at 3e06bf0b, grafted onto develop 1633e018 in a detached worktree.
+# How they were made to compile on develop: the address.rs module is appended verbatim to develop's
+# ergotree-ir/src/chain/address.rs with five lines added at its top: the two constants defined locally
+# (const P2SH_SCRIPT_VAR_ID: u8 = 126; const P2SH_SCRIPT_VAR_ID_V5: u8 = 1) and imports of
+# crate::mir::option_get::OptionGet and crate::mir::unary_op::OneArgOpTryBuild (the branch adds these
+# at file level). The verifier.rs module is appended verbatim to develop's verifier.rs. No other change.
+$ git -C /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop rev-parse HEAD
+1633e01835d48e4d4b127f7478e602e129e80110
+[exit 0]
+
+$ git -C /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop diff --stat
+ .../src/sigma_protocol/verifier.rs                 | 103 +++++++
+ ergotree-ir/src/chain/address.rs                   | 319 +++++++++++++++++++++
+ 2 files changed, 422 insertions(+)
+[exit 0]
+
+$ git -C /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop diff ergotree-ir/src/chain/address.rs | sed -n 1,20p
+diff --git a/ergotree-ir/src/chain/address.rs b/ergotree-ir/src/chain/address.rs
+index 941eb1be..a6426032 100644
+--- a/ergotree-ir/src/chain/address.rs
++++ b/ergotree-ir/src/chain/address.rs
+@@ -620,3 +620,322 @@ mod tests {
+         }
+     }
+ }
++
++#[cfg(test)]
++#[allow(clippy::unwrap_used)]
++mod p2sh_tests {
++    use super::*;
++    // Grafted onto develop: the constants and imports the branch adds outside this module.
++    use crate::mir::option_get::OptionGet;
++    use crate::mir::unary_op::OneArgOpTryBuild;
++    const P2SH_SCRIPT_VAR_ID: u8 = 126;
++    const P2SH_SCRIPT_VAR_ID_V5: u8 = 1;
++
++    // Testnet P2SH address qQqAgn6N6hrNTTu2s19HJg52NK37GENqoeo2W6i of `proveDlog(pk)`,
+[exit 0]
+
+$ cd /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop && CARGO_TARGET_DIR=/home/scott/bin/sigma-rust-pr/target cargo test -p ergotree-ir --features arbitrary p2sh_tests
+    Updating crates.io index
+     Locking 333 packages to latest compatible versions
+      Adding base64 v0.22.1 (available: v0.23.1)
+      Adding blake2 v0.10.6 (available: v0.11.0)
+      Adding bnum v0.12.1 (available: v0.14.4)
+      Adding criterion v0.5.1 (available: v0.8.2)
+      Adding elliptic-curve v0.13.8 (available: v0.14.1)
+      Adding generic-array v0.14.7 (available: v0.14.9)
+      Adding getrandom v0.2.17 (available: v0.4.3)
+      Adding gloo-utils v0.2.0 (available: v0.3.0)
+      Adding hashbrown v0.16.1 (available: v0.17.1)
+      Adding hmac v0.12.1 (available: v0.13.0)
+      Adding itertools v0.14.0 (available: v0.15.0)
+      Adding jni v0.19.0 (available: v0.22.4)
+      Adding k256 v0.13.4 (available: v0.14.0)
+      Adding logos v0.12.1 (available: v0.16.1)
+      Adding minicov v0.3.8 (available: v0.3.9)
+      Adding num-bigint v0.4.8 (available: v0.5.1)
+      Adding num-derive v0.4.2 (available: v0.5.1)
+      Adding pbkdf2 v0.12.2 (available: v0.13.0)
+      Adding proptest v1.6.0 (available: v1.11.0)
+      Adding proptest-derive v0.5.1 (available: v0.8.0)
+      Adding rand v0.8.8 (available: v0.10.3)
+      Adding reqwest v0.12.28 (available: v0.13.5)
+      Adding rowan v0.16.1 (available: v0.17.0)
+      Adding sha2 v0.10.9 (available: v0.11.0)
+      Adding strum v0.27.2 (available: v0.28.0)
+      Adding strum_macros v0.27.2 (available: v0.28.0)
+   Compiling sigma-ser v0.20.0 (/tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop/sigma-ser)
+   Compiling sigma-util v0.19.0 (/tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop/sigma-util)
+   Compiling sigma-test-util v0.4.0 (/tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop/sigma-test-util)
+   Compiling ergo-chain-types v0.16.0 (/tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop/ergo-chain-types)
+   Compiling ergotree-ir v0.29.0 (/tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop/ergotree-ir)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 30s
+     Running unittests src/lib.rs (/home/scott/bin/sigma-rust-pr/target/debug/deps/ergotree_ir-8db6dcc23f20399f)
+
+running 14 tests
+test chain::address::p2sh_tests::legacy_var1_no_option_get_bytes_do_not_parse ... ok
+test chain::address::p2sh_tests::p2sh_script_matches_tree_spent_on_node ... FAILED
+test chain::address::p2sh_tests::p2sh_script_matches_reference_bytes ... FAILED
+test chain::address::p2sh_tests::p2sh_script_roundtrips_through_bytes ... FAILED
+test chain::address::p2sh_tests::p2sh_script_recreates_p2sh_address ... FAILED
+test chain::address::p2sh_tests::recreate_p2s_for_hash_input_other_than_option_get_get_var ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_other_deserialize_context_var ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_mismatched_get_var_and_deserialize_context_ids ... FAILED
+test chain::address::p2sh_tests::recreate_p2s_for_hash_constant_not_24_bytes ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_segregated_constants_header ... ok
+test chain::address::p2sh_tests::recreate_p2s_from_legacy_var1_no_option_get_tree ... FAILED
+test chain::address::p2sh_tests::recreate_p2sh_from_legacy_var1_option_get_tree ... ok
+test chain::address::p2sh_tests::recreate_p2sh_from_reference_tree_bytes ... FAILED
+test chain::address::p2sh_tests::recreate_p2s_for_v1_header ... ok
+
+failures:
+
+---- chain::address::p2sh_tests::p2sh_script_matches_tree_spent_on_node stdout ----
+
+thread 'chain::address::p2sh_tests::p2sh_script_matches_tree_spent_on_node' (499655) panicked at ergotree-ir/src/chain/address.rs:680:9:
+assertion `left == right` failed
+  left: "00ea02d193b4cbe3010e040004300e18c0a470aaba05a2ea5af472095898300cf8ca7707244df4f9d40801"
+ right: "00ea02d193b4cbe4e37e0e040004300e18c0a470aaba05a2ea5af472095898300cf8ca7707244df4f9d4087e"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- chain::address::p2sh_tests::p2sh_script_matches_reference_bytes stdout ----
+
+thread 'chain::address::p2sh_tests::p2sh_script_matches_reference_bytes' (499654) panicked at ergotree-ir/src/chain/address.rs:664:9:
+assertion `left == right` failed
+  left: "00ea02d193b4cbe3010e040004300e1862d1e48400494bfedf9bf70d4af152428fb46f32bf05d199d40801"
+ right: "00ea02d193b4cbe4e37e0e040004300e1862d1e48400494bfedf9bf70d4af152428fb46f32bf05d199d4087e"
+
+---- chain::address::p2sh_tests::p2sh_script_roundtrips_through_bytes stdout ----
+
+thread 'chain::address::p2sh_tests::p2sh_script_roundtrips_through_bytes' (499657) panicked at ergotree-ir/src/chain/address.rs:690:58:
+called `Result::unwrap()` on an `Err` value: InvalidArgument(InvalidArgumentError("InvalidExprEvalTypeError: InvalidExprEvalTypeError: expected: SColl(SByte), got: SOption(SColl(SByte))\nBacktrace:\ndisabled backtrace"))
+
+---- chain::address::p2sh_tests::p2sh_script_recreates_p2sh_address stdout ----
+
+thread 'chain::address::p2sh_tests::p2sh_script_recreates_p2sh_address' (499656) panicked at ergotree-ir/src/chain/address.rs:703:90:
+called `Result::unwrap()` on an `Err` value: InvalidArgument(InvalidArgumentError("InvalidExprEvalTypeError: InvalidExprEvalTypeError: expected: SColl(SByte), got: SOption(SColl(SByte))\nBacktrace:\ndisabled backtrace"))
+
+---- chain::address::p2sh_tests::recreate_p2s_for_mismatched_get_var_and_deserialize_context_ids stdout ----
+
+thread 'chain::address::p2sh_tests::recreate_p2s_for_mismatched_get_var_and_deserialize_context_ids' (499660) panicked at ergotree-ir/src/chain/address.rs:823:13:
+assertion `left == right` failed: GetVar(126) with DeserializeContext(1)
+  left: P2SH([98, 209, 228, 132, 0, 73, 75, 254, 223, 155, 247, 13, 74, 241, 82, 66, 143, 180, 111, 50, 191, 5, 209, 153])
+ right: P2S([0, 234, 2, 209, 147, 180, 203, 228, 227, 126, 14, 4, 0, 4, 48, 14, 24, 98, 209, 228, 132, 0, 73, 75, 254, 223, 155, 247, 13, 74, 241, 82, 66, 143, 180, 111, 50, 191, 5, 209, 153, 212, 8, 1])
+
+---- chain::address::p2sh_tests::recreate_p2s_from_legacy_var1_no_option_get_tree stdout ----
+
+thread 'chain::address::p2sh_tests::recreate_p2s_from_legacy_var1_no_option_get_tree' (499664) panicked at ergotree-ir/src/chain/address.rs:788:9:
+assertion `left == right` failed
+  left: P2SH([98, 209, 228, 132, 0, 73, 75, 254, 223, 155, 247, 13, 74, 241, 82, 66, 143, 180, 111, 50, 191, 5, 209, 153])
+ right: P2S([0, 234, 2, 209, 147, 180, 203, 227, 1, 14, 4, 0, 4, 48, 14, 24, 98, 209, 228, 132, 0, 73, 75, 254, 223, 155, 247, 13, 74, 241, 82, 66, 143, 180, 111, 50, 191, 5, 209, 153, 212, 8, 1])
+
+---- chain::address::p2sh_tests::recreate_p2sh_from_reference_tree_bytes stdout ----
+
+thread 'chain::address::p2sh_tests::recreate_p2sh_from_reference_tree_bytes' (499666) panicked at ergotree-ir/src/chain/address.rs:712:9:
+assertion `left == right` failed
+  left: P2S([0, 234, 2, 209, 147, 180, 203, 228, 227, 126, 14, 4, 0, 4, 48, 14, 24, 98, 209, 228, 132, 0, 73, 75, 254, 223, 155, 247, 13, 74, 241, 82, 66, 143, 180, 111, 50, 191, 5, 209, 153, 212, 8, 126])
+ right: P2SH([98, 209, 228, 132, 0, 73, 75, 254, 223, 155, 247, 13, 74, 241, 82, 66, 143, 180, 111, 50, 191, 5, 209, 153])
+
+
+failures:
+    chain::address::p2sh_tests::p2sh_script_matches_reference_bytes
+    chain::address::p2sh_tests::p2sh_script_matches_tree_spent_on_node
+    chain::address::p2sh_tests::p2sh_script_recreates_p2sh_address
+    chain::address::p2sh_tests::p2sh_script_roundtrips_through_bytes
+    chain::address::p2sh_tests::recreate_p2s_for_mismatched_get_var_and_deserialize_context_ids
+    chain::address::p2sh_tests::recreate_p2s_from_legacy_var1_no_option_get_tree
+    chain::address::p2sh_tests::recreate_p2sh_from_reference_tree_bytes
+
+test result: FAILED. 7 passed; 7 failed; 0 ignored; 0 measured; 264 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p ergotree-ir --lib`
+[exit 101]
+
+$ cd /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop && CARGO_TARGET_DIR=/home/scott/bin/sigma-rust-pr/target cargo test -p ergotree-interpreter --features arbitrary p2sh_tests
+   Compiling sigma-ser v0.20.0 (/tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop/sigma-ser)
+   Compiling gf2_192 v0.29.0 (/tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop/gf2_192)
+   Compiling sigma-test-util v0.4.0 (/tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop/sigma-test-util)
+   Compiling ergo-chain-types v0.16.0 (/tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop/ergo-chain-types)
+   Compiling ergotree-ir v0.29.0 (/tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop/ergotree-ir)
+   Compiling ergotree-interpreter v0.29.0 (/tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop/ergotree-interpreter)
+   Compiling ergoscript-compiler v0.25.0 (/tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/wt-develop/ergoscript-compiler)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 50s
+     Running unittests src/lib.rs (/home/scott/bin/sigma-rust-pr/target/debug/deps/ergotree_interpreter-1949e6e75b27a1d7)
+
+running 3 tests
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_only_var_1_fails_to_reduce ... FAILED
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_reduces_to_proposition_and_verifies ... FAILED
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_of_other_proposition_reduces_to_false ... FAILED
+
+failures:
+
+---- sigma_protocol::verifier::p2sh_tests::p2sh_script_with_only_var_1_fails_to_reduce stdout ----
+
+thread 'sigma_protocol::verifier::p2sh_tests::p2sh_script_with_only_var_1_fails_to_reduce' (501047) panicked at ergotree-interpreter/src/sigma_protocol/verifier.rs:474:88:
+called `Result::unwrap()` on an `Err` value: InvalidArgument(InvalidArgumentError("InvalidExprEvalTypeError: InvalidExprEvalTypeError: expected: SColl(SByte), got: SOption(SColl(SByte))\nBacktrace:\ndisabled backtrace"))
+
+---- sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_reduces_to_proposition_and_verifies stdout ----
+
+thread 'sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_reduces_to_proposition_and_verifies' (501049) panicked at ergotree-interpreter/src/sigma_protocol/verifier.rs:474:88:
+called `Result::unwrap()` on an `Err` value: InvalidArgument(InvalidArgumentError("InvalidExprEvalTypeError: InvalidExprEvalTypeError: expected: SColl(SByte), got: SOption(SColl(SByte))\nBacktrace:\ndisabled backtrace"))
+
+---- sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_of_other_proposition_reduces_to_false stdout ----
+
+thread 'sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_of_other_proposition_reduces_to_false' (501048) panicked at ergotree-interpreter/src/sigma_protocol/verifier.rs:474:88:
+called `Result::unwrap()` on an `Err` value: InvalidArgument(InvalidArgumentError("InvalidExprEvalTypeError: InvalidExprEvalTypeError: expected: SColl(SByte), got: SOption(SColl(SByte))\nBacktrace:\ndisabled backtrace"))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    sigma_protocol::verifier::p2sh_tests::p2sh_script_with_only_var_1_fails_to_reduce
+    sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_of_other_proposition_reduces_to_false
+    sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_reduces_to_proposition_and_verifies
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 339 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p ergotree-interpreter --lib`
+[exit 101]
+

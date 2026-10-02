@@ -1,0 +1,41 @@
+# Run card against fixed: ergotree-ir from /home/scott/bin/sigma-rust-pr at 3e06bf0bae90288c9ba28857018751ac4077d60b. Scratch crate /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/runcard-fixed with an empty target dir (cold build).
+$ cat Cargo.toml
+[package]
+name = "p2sh-runcard"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ergotree-ir = { path = "/home/scott/bin/sigma-rust-pr/ergotree-ir" }
+base16 = "0.2.1"
+
+$ cat src/main.rs
+use ergotree_ir::chain::address::{Address, AddressEncoder};
+use ergotree_ir::ergo_tree::ErgoTree;
+use ergotree_ir::serialization::SigmaSerializable;
+
+fn main() {
+    let addr = AddressEncoder::unchecked_parse_address_from_str("qQqAgn6N6hrNTTu2s19HJg52NK37GENqoeo2W6i").unwrap();
+    let tree = addr.script().unwrap();
+    let bytes = tree.sigma_serialize_bytes().unwrap();
+    println!("script() bytes: {}", base16::encode_lower(&bytes));
+    let parsed = ErgoTree::sigma_parse_bytes(&bytes);
+    println!("parse back:     {:?}", parsed.as_ref().map(|_| "ok"));
+    let reference = base16::decode("00ea02d193b4cbe4e37e0e040004300e1862d1e48400494bfedf9bf70d4af152428fb46f32bf05d199d4087e").unwrap();
+    let ref_tree = ErgoTree::sigma_parse_bytes(&reference).unwrap();
+    let is_p2sh = Address::recreate_from_ergo_tree(&ref_tree).map(|a| matches!(a, Address::P2SH(_)));
+    println!("recreate(6.x reference tree) is P2SH: {:?}", is_p2sh);
+    if parsed.is_err() || is_p2sh != Ok(true) {
+        std::process::exit(1);
+    }
+}
+
+$ cd /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/runcard-fixed && rm -rf target && time cargo run -q; echo "exit $?"
+script() bytes: 00ea02d193b4cbe4e37e0e040004300e1862d1e48400494bfedf9bf70d4af152428fb46f32bf05d199d4087e
+parse back:     Ok("ok")
+recreate(6.x reference tree) is P2SH: Ok(true)
+
+real	1m14.077s
+user	1m12.566s
+sys	0m12.838s
+exit 0

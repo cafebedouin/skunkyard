@@ -1,0 +1,121 @@
+# The devnet runs of the three P2SH forms (all six rows, including the two control rows), as recorded in skunkyard at 10b19ea.
+$ git -C /home/scott/bin/skunkyard show 10b19ea:skunks/oneshot/devnet/README.md | sed -n 110,226p
+## p2sh-forms.sh: are the three P2SH box-script forms spendable on a node?
+
+One P2SH address around `proveDlog(pk)` (testnet `rNoPVtL9L9cuzgqQqkPsqo9VginDU6dBAtBamSU`, a fixed devnet key
+derived in `scripts/p2sh-forms.mjs`), three outer trees (recon, `RESULT.md` "Step 4 recon"): sigmastate-js writes the
+var-126 tree, Fleet the var-1 tree, ergo-lib-wasm the var-1 tree without `OptionGet`. `p2sh-forms.mjs --plan` takes each
+tree from its own library and prints the testnet P2S address of exactly those bytes; A pays 1 ERG to each address twice
+in one `/wallet/payment/send` (six outputs), and the hook checks that the funded boxes carry the tree bytes unchanged.
+Then, inside A's namespace, `p2sh-forms.mjs --spend` for each box: Fleet builds the spend (all of it, value - fee to A,
+fee to the devnet fee contract), the form's variable holds `Coll[Byte]` of `08cd ++ pk`, the named prover signs, and
+the transaction goes to `POST /transactions`; the node's response is printed verbatim. When a prover cannot sign the
+transaction (it cannot reduce the form), the same prover signs the transaction's bytes to sign as a message for
+`proveDlog(pk)` (sigmastate-js `SigmaPropProver.signMessage`, ergo-lib-wasm `Wallet.sign_message_using_p2pk`), so the
+node still gets a transaction carrying a valid `proveDlog(pk)` proof; the row says so. The fifth spend is the control
+for that path (message-signing proof on the var-126 form, which spends), the sixth asks whether ergo-lib-wasm's
+transaction signer handles Fleet's tree. `P2SH-FORMS: PASS` means every spend got a verdict from the node, whatever it
+was; the hook measures and does not expect an outcome.
+
+Command (from `/home/scott/bin/peeryard`, after `npm ci` in `skunks/oneshot/recon`, which pins sigmastate-js 0.6.3,
+Fleet 0.12.0 and ergo-lib-wasm-nodejs 0.28.0):
+
+```bash
+cd /home/scott/bin/peeryard && bash rig/preflight.sh && PEERYARD_JAR=/home/scott/bin/ergo-node/ergo-6.0.6.jar \
+  bash review/with-lock.sh -- bash rig/rig.sh <skunkyard>/skunks/oneshot/devnet/oneshot-v4.json \
+  <skunkyard>/skunks/oneshot/devnet/p2sh-forms.sh
+```
+
+### Runs (2026-10-02, peeryard ba56b25, ergo-6.0.6.jar, node v25.1.0)
+
+Three runs, all `P2SH-FORMS: PASS (node verdicts 6 of 6 spends)` with the same verdict per row. Run 1 was on 371678b
+(the hook's table labelled the proof path less precisely; scripts otherwise the same); runs 2 and 3 on 64847e6. Between
+runs 2 and 3 the lines differ only in the proof bytes (Schnorr nonces), in transaction ids and heights after the
+second spend, and in A's starting balance. Run 3, rig and hook lines verbatim (the scratch directory name replaced by
+`XXXX`):
+
+```
+[rig] scratch: /tmp/peeryard-rig.XXXX
+[rig] chain preset current: blockInterval=2s minerRewardDelay=10 v4=early (soft-fork voting 4/1/1)
+[rig] genesis state digest for minerRewardDelay=10 derived from a probe start: c01a142d004a917b…
+[rig] java: openjdk version "21.0.12.1" 2026-08-18 (java, opts: -Xmx512m)
+[rig] effective configuration: /tmp/peeryard-rig.XXXX/out/effective.json ({"chain":"current","nodes":["A:ergo-6.0.6.jar"],"links":0})
+[rig] launched A (ns=ns_A ip=100.64.0.1 p2p=9021 rest=9052 kind=jvm jar=ergo-6.0.6.jar pid=437286)
+[rig] A pid=437286 cpus_applied=0-11 gc=G1GC
+[rig] A REST up
+[rig] bring-up: every link connected
+[rig] === handing off to hook: /home/scott/bin/skunkyard-measure/skunks/oneshot/devnet/p2sh-forms.sh ===
+[pf] blockVersion=4 at height 16
+[pf] repo /home/scott/bin/skunkyard-measure (64847e6); node v25.1.0; chain minerRewardDelay=10
+[pf] KEY pk 0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4 inner 08cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4 p2sh rNoPVtL9L9cuzgqQqkPsqo9VginDU6dBAtBamSU
+[pf] FORM sigma 126 00ea02d193b4cbe4e37e0e040004300e18c0a470aaba05a2ea5af472095898300cf8ca7707244df4f9d4087e 45TWsQhXtNUkko51AfXYYh44rPGSZqFjmWypwTc9ondYpeZMQJFzcJnBu4VVkEbnviS
+[pf] FORM fleet 1 00ea02d193b4cbe4e3010e040004300e18c0a470aaba05a2ea5af472095898300cf8ca7707244df4f9d40801 45TWsQhXtNUkkmfPTt1cDtp1b9aPY2Gm6spVW82HrvFuqiL6cKUCdbFuYETGzmYS5kj
+[pf] FORM rust 1 00ea02d193b4cbe3010e040004300e18c0a470aaba05a2ea5af472095898300cf8ca7707244df4f9d40801 hS3Egony3bqLSmg5DswSw4cVo16KKr2sTdEBW1isenreERavr9VccSPKRnJstZB28
+[pf] A balance 405000000000 nanoERG at height 17
+[pf] A address 3WycCMYP9kXAfUQ3TYXU26Vg8UNvoJSY5cc8WaZrswh6sQuMJ8Vv
+[pf] funding via /wallet/payment/send (6 outputs, no registers): b3a15c7173e2666113e6a1deb213cddee9c13128c7db6344387b1d11d4a1d023
+[pf] funding tx confirmed at height 19
+[pf] form sigma: tree in the funded boxes equals the plan's tree bytes: yes (2 boxes); boxes a0b77b873ece29c31f6b2fd720511dc0668cc7ce1b16911478595d44f79f95ab d1faf2ffa89369e5e714364cf2d8de68bcd62abc933560f8b56ff208e7e41deb
+[pf] form fleet: tree in the funded boxes equals the plan's tree bytes: yes (2 boxes); boxes 1e65578a9ee3ab9dce05ca39e25a6f3aa0b81a81b1de77602449c69f8efae366 312d8d0328d1636d0258631a699e7ef0c4a1eb77953ad835adc72a3ea99621b5
+[pf] form rust: tree in the funded boxes equals the plan's tree bytes: yes (2 boxes); boxes ff5dec6a1d1817562dcfa67e9657d8655832fae4fae09ec43cc64e01b8433a0f b140e43c267a60a4993ef06bfbe593529bb45fb77141afd3675e1b27468c7eef
+[pf] BUILD box a0b77b873ece29c31f6b2fd720511dc0668cc7ce1b16911478595d44f79f95ab value 1000000000 tree 00ea02d193b4cbe4e37e0e040004300e18c0a470aaba05a2ea5af472095898300cf8ca7707244df4f9d4087e; height 19; extension {"126":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}; unsigned tx id 0d280c1c8f17d741b5e1b6b33569880a990f93cbf7b04a0b03568edfc983f026
+[pf] SIGN sigmastate-js ok: tx id 0d280c1c8f17d741b5e1b6b33569880a990f93cbf7b04a0b03568edfc983f026; proof 56 bytes; extension {"126":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}
+[pf] SIGN proof verifies as proveDlog(pk) over the unsigned bytes (sigmastate-js SigmaPropVerifier): true
+[pf] SUBMIT HTTP 200 "0d280c1c8f17d741b5e1b6b33569880a990f93cbf7b04a0b03568edfc983f026"
+[pf] RESULT form=sigma writer=sigmastate-js var=126 signer=sigmastate-js outcome=confirmed height=21 tx=0d280c1c8f17d741b5e1b6b33569880a990f93cbf7b04a0b03568edfc983f026
+[pf] tx json: {"id":"0d280c1c8f17d741b5e1b6b33569880a990f93cbf7b04a0b03568edfc983f026","inputs":[{"boxId":"a0b77b873ece29c31f6b2fd720511dc0668cc7ce1b16911478595d44f79f95ab","spendingProof":{"proofBytes":"90b5e1a79a46f519f1827fa00f621435adae1daff90a247b56294ee4819407dda9fd2ddcc6743037cefa29742101096ab2d2ba14e23a4364","extension":{"126":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}}}],"dataInputs":[],"outputs":[{"value":999000000,"ergoTree":"0008cd038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c","assets":[],"additionalRegisters":{},"creationHeight":19},{"value":1000000,"ergoTree":"1005040004000e351002041408cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304","assets":[],"additionalRegisters":{},"creationHeight":19}]}
+[pf] BUILD box 1e65578a9ee3ab9dce05ca39e25a6f3aa0b81a81b1de77602449c69f8efae366 value 1000000000 tree 00ea02d193b4cbe4e3010e040004300e18c0a470aaba05a2ea5af472095898300cf8ca7707244df4f9d40801; height 21; extension {"1":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}; unsigned tx id dce6f6b6fa38acf1e48028533b340c7a4d5447d770352eb349b7d88355bd5dc4
+[pf] SIGN sigmastate-js ok: tx id dce6f6b6fa38acf1e48028533b340c7a4d5447d770352eb349b7d88355bd5dc4; proof 56 bytes; extension {"1":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}
+[pf] SIGN proof verifies as proveDlog(pk) over the unsigned bytes (sigmastate-js SigmaPropVerifier): true
+[pf] SUBMIT HTTP 200 "dce6f6b6fa38acf1e48028533b340c7a4d5447d770352eb349b7d88355bd5dc4"
+[pf] RESULT form=fleet writer=Fleet var=1 signer=sigmastate-js outcome=confirmed height=24 tx=dce6f6b6fa38acf1e48028533b340c7a4d5447d770352eb349b7d88355bd5dc4
+[pf] tx json: {"id":"dce6f6b6fa38acf1e48028533b340c7a4d5447d770352eb349b7d88355bd5dc4","inputs":[{"boxId":"1e65578a9ee3ab9dce05ca39e25a6f3aa0b81a81b1de77602449c69f8efae366","spendingProof":{"proofBytes":"77787e77c712dccdf8003d06292518c4a2c8d4165bf329a4542c65404c9eeff25e81fba08c24e101bd5b80918b38cf834c799539c021e624","extension":{"1":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}}}],"dataInputs":[],"outputs":[{"value":999000000,"ergoTree":"0008cd038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c","assets":[],"additionalRegisters":{},"creationHeight":21},{"value":1000000,"ergoTree":"1005040004000e351002041408cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304","assets":[],"additionalRegisters":{},"creationHeight":21}]}
+[pf] BUILD box ff5dec6a1d1817562dcfa67e9657d8655832fae4fae09ec43cc64e01b8433a0f value 1000000000 tree 00ea02d193b4cbe3010e040004300e18c0a470aaba05a2ea5af472095898300cf8ca7707244df4f9d40801; height 24; extension {"1":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}; unsigned tx id 69b1541e55f3da470a22105241ed1ba0007a74d666db81301561e1c406bf921b
+[pf] SIGN ergo-lib-wasm transaction signing FAILED: Transaction signing error: Prover error (tx input index 0): Ergo tree error: ErgoTree root expr parsing (deserialization) error: NonConsumedBytes
+[pf] SIGN ergo-lib-wasm Wallet.sign_message_using_p2pk over the unsigned transaction bytes instead
+[pf] PROOFVIA message-signing Wallet.sign_message_using_p2pk; tx-signing error: Transaction signing error: Prover error (tx input index 0): Ergo tree error: ErgoTree root expr parsing (deserialization) error: NonConsumedBytes
+[pf] SIGN ergo-lib-wasm ok: tx id 69b1541e55f3da470a22105241ed1ba0007a74d666db81301561e1c406bf921b; proof 56 bytes; extension {"1":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}
+[pf] SIGN proof verifies as proveDlog(pk) over the unsigned bytes (sigmastate-js SigmaPropVerifier): true
+[pf] SUBMIT HTTP 400 { "error" : 400, "reason" : "bad.request", "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 69b1541e55f3da470a22105241ed1ba0007a74d666db81301561e1c406bf921b: #0 => Failure(java.lang.ClassCastException: class scala.Some cannot be cast to class sigma.Coll (scala.Some and sigma.Coll are in unnamed module of loader 'app'))" }
+[pf] RESULT form=rust writer=ergo-lib-wasm var=1 signer=ergo-lib-wasm outcome=rejected http=400
+[pf] tx json: {"inputs":[{"boxId":"ff5dec6a1d1817562dcfa67e9657d8655832fae4fae09ec43cc64e01b8433a0f","spendingProof":{"proofBytes":"c095798b35617b031ca2dd720dea095407d8cef2198bcdcad8ff3a61ab7c0a32ac2d433f8df8ba8ea05697edac5f282884a1735b904598ab","extension":{"1":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}}}],"dataInputs":[],"outputs":[{"value":999000000,"ergoTree":"0008cd038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c","assets":[],"additionalRegisters":{},"creationHeight":24},{"value":1000000,"ergoTree":"1005040004000e351002041408cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304","assets":[],"additionalRegisters":{},"creationHeight":24}],"id":"69b1541e55f3da470a22105241ed1ba0007a74d666db81301561e1c406bf921b"}
+[pf] BUILD box b140e43c267a60a4993ef06bfbe593529bb45fb77141afd3675e1b27468c7eef value 1000000000 tree 00ea02d193b4cbe3010e040004300e18c0a470aaba05a2ea5af472095898300cf8ca7707244df4f9d40801; height 24; extension {"1":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}; unsigned tx id b7a5410ed9eb7cce3dece3ffc517270fd5e3eb0bae75aafc3ba643c41f867284
+[pf] SIGN sigmastate-js transaction signing FAILED: scala.Some cannot be cast to sigma.Coll
+[pf] SIGN sigmastate-js SigmaPropProver.signMessage over the unsigned transaction bytes instead
+[pf] PROOFVIA message-signing SigmaPropProver.signMessage; tx-signing error: scala.Some cannot be cast to sigma.Coll
+[pf] SIGN sigmastate-js ok: tx id b7a5410ed9eb7cce3dece3ffc517270fd5e3eb0bae75aafc3ba643c41f867284; proof 56 bytes; extension {"1":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}
+[pf] SIGN proof verifies as proveDlog(pk) over the unsigned bytes (sigmastate-js SigmaPropVerifier): true
+[pf] SUBMIT HTTP 400 { "error" : 400, "reason" : "bad.request", "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. b7a5410ed9eb7cce3dece3ffc517270fd5e3eb0bae75aafc3ba643c41f867284: #0 => Failure(java.lang.ClassCastException: class scala.Some cannot be cast to class sigma.Coll (scala.Some and sigma.Coll are in unnamed module of loader 'app'))" }
+[pf] RESULT form=rust writer=ergo-lib-wasm var=1 signer=sigmastate-js outcome=rejected http=400
+[pf] tx json: {"inputs":[{"boxId":"b140e43c267a60a4993ef06bfbe593529bb45fb77141afd3675e1b27468c7eef","spendingProof":{"proofBytes":"384e971a3dc067ea210ad0da4ab8470a91fb50fffbf6f37f0a91868d26f94102b200a813d5e3ea40322fc7ac6ce4fea23e82f3935bd1d421","extension":{"1":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}}}],"dataInputs":[],"outputs":[{"value":999000000,"ergoTree":"0008cd038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c","assets":[],"additionalRegisters":{},"creationHeight":24},{"value":1000000,"ergoTree":"1005040004000e351002041408cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304","assets":[],"additionalRegisters":{},"creationHeight":24}],"id":"b7a5410ed9eb7cce3dece3ffc517270fd5e3eb0bae75aafc3ba643c41f867284"}
+[pf] BUILD box d1faf2ffa89369e5e714364cf2d8de68bcd62abc933560f8b56ff208e7e41deb value 1000000000 tree 00ea02d193b4cbe4e37e0e040004300e18c0a470aaba05a2ea5af472095898300cf8ca7707244df4f9d4087e; height 25; extension {"126":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}; unsigned tx id 6a57db0f08c904b621c66e289c48f9250e4bcab714b1f9c64c9e6d184bb1eaa7
+[pf] SIGN ergo-lib-wasm transaction signing FAILED: --message-proof: transaction signing skipped (control)
+[pf] SIGN ergo-lib-wasm Wallet.sign_message_using_p2pk over the unsigned transaction bytes instead
+[pf] PROOFVIA message-signing Wallet.sign_message_using_p2pk; tx-signing error: --message-proof: transaction signing skipped (control)
+[pf] SIGN ergo-lib-wasm ok: tx id 6a57db0f08c904b621c66e289c48f9250e4bcab714b1f9c64c9e6d184bb1eaa7; proof 56 bytes; extension {"126":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}
+[pf] SIGN proof verifies as proveDlog(pk) over the unsigned bytes (sigmastate-js SigmaPropVerifier): true
+[pf] SUBMIT HTTP 200 "6a57db0f08c904b621c66e289c48f9250e4bcab714b1f9c64c9e6d184bb1eaa7"
+[pf] RESULT form=sigma writer=sigmastate-js var=126 signer=ergo-lib-wasm outcome=confirmed height=27 tx=6a57db0f08c904b621c66e289c48f9250e4bcab714b1f9c64c9e6d184bb1eaa7
+[pf] tx json: {"inputs":[{"boxId":"d1faf2ffa89369e5e714364cf2d8de68bcd62abc933560f8b56ff208e7e41deb","spendingProof":{"proofBytes":"ed27bf0587a5ada6f1392747ec03fe2751416494f7bf03ad6b12187c3dc7363c989b143eb4a4d743cde44e8ac48723046649edea17100fee","extension":{"126":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}}}],"dataInputs":[],"outputs":[{"value":999000000,"ergoTree":"0008cd038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c","assets":[],"additionalRegisters":{},"creationHeight":25},{"value":1000000,"ergoTree":"1005040004000e351002041408cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304","assets":[],"additionalRegisters":{},"creationHeight":25}],"id":"6a57db0f08c904b621c66e289c48f9250e4bcab714b1f9c64c9e6d184bb1eaa7"}
+[pf] BUILD box 312d8d0328d1636d0258631a699e7ef0c4a1eb77953ad835adc72a3ea99621b5 value 1000000000 tree 00ea02d193b4cbe4e3010e040004300e18c0a470aaba05a2ea5af472095898300cf8ca7707244df4f9d40801; height 27; extension {"1":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}; unsigned tx id 2d1a2de787c21700498ae3d46940009efaedb988a1c176725b5992b010809caa
+[pf] SIGN ergo-lib-wasm ok: tx id 2d1a2de787c21700498ae3d46940009efaedb988a1c176725b5992b010809caa; proof 56 bytes; extension {"1":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}
+[pf] SIGN proof verifies as proveDlog(pk) over the unsigned bytes (sigmastate-js SigmaPropVerifier): true
+[pf] SUBMIT HTTP 200 "2d1a2de787c21700498ae3d46940009efaedb988a1c176725b5992b010809caa"
+[pf] RESULT form=fleet writer=Fleet var=1 signer=ergo-lib-wasm outcome=confirmed height=29 tx=2d1a2de787c21700498ae3d46940009efaedb988a1c176725b5992b010809caa
+[pf] tx json: {"id":"2d1a2de787c21700498ae3d46940009efaedb988a1c176725b5992b010809caa","inputs":[{"boxId":"312d8d0328d1636d0258631a699e7ef0c4a1eb77953ad835adc72a3ea99621b5","spendingProof":{"proofBytes":"569082e0fb400ee8f4b53aa957f3a7885aca7e852b1ee99af15493a28301364a4cc7aaa08f5cf6c69f5cf552dac7867003acce0dba3251af","extension":{"1":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}}}],"dataInputs":[],"outputs":[{"boxId":"e111b6b1489617371770bb48f5283f2edde68206146632fcba543f60763abf78","value":999000000,"ergoTree":"0008cd038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c","assets":[],"additionalRegisters":{},"creationHeight":27,"transactionId":"2d1a2de787c21700498ae3d46940009efaedb988a1c176725b5992b010809caa","index":0},{"boxId":"9fa01281390346c7ca51c2fd98deabad2c57a3f3f4b84df32818b10e8702a870","value":1000000,"ergoTree":"1005040004000e351002041408cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304","assets":[],"additionalRegisters":{},"creationHeight":27,"transactionId":"2d1a2de787c21700498ae3d46940009efaedb988a1c176725b5992b010809caa","index":1}]}
+[pf] table: form | writer | var | signed by | node response (POST /transactions, verbatim) | confirmed height
+[pf] sigma | sigmastate-js | 126 | sigmastate-js (reduce + signReduced) | HTTP 200 "0d280c1c8f17d741b5e1b6b33569880a990f93cbf7b04a0b03568edfc983f026" | 21
+[pf] fleet | Fleet | 1 | sigmastate-js (reduce + signReduced) | HTTP 200 "dce6f6b6fa38acf1e48028533b340c7a4d5447d770352eb349b7d88355bd5dc4" | 24
+[pf] rust | ergo-lib-wasm | 1 | ergo-lib-wasm (Wallet.sign_message_using_p2pk over the bytes to sign; transaction signing failed locally) | HTTP 400 { "error" : 400, "reason" : "bad.request", "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 69b1541e55f3da470a22105241ed1ba0007a74d666db81301561e1c406bf921b: #0 => Failure(java.lang.ClassCastException: class scala.Some cannot be cast to class sigma.Coll (scala.Some and sigma.Coll are in unnamed module of loader 'app'))" } | -
+[pf] rust | ergo-lib-wasm | 1 | sigmastate-js (SigmaPropProver.signMessage over the bytes to sign; transaction signing failed locally) | HTTP 400 { "error" : 400, "reason" : "bad.request", "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. b7a5410ed9eb7cce3dece3ffc517270fd5e3eb0bae75aafc3ba643c41f867284: #0 => Failure(java.lang.ClassCastException: class scala.Some cannot be cast to class sigma.Coll (scala.Some and sigma.Coll are in unnamed module of loader 'app'))" } | -
+[pf] sigma | sigmastate-js | 126 | ergo-lib-wasm (Wallet.sign_message_using_p2pk over the bytes to sign, control) | HTTP 200 "6a57db0f08c904b621c66e289c48f9250e4bcab714b1f9c64c9e6d184bb1eaa7" | 27
+[pf] fleet | Fleet | 1 | ergo-lib-wasm (Wallet.sign_transaction) | HTTP 200 "2d1a2de787c21700498ae3d46940009efaedb988a1c176725b5992b010809caa" | 29
+[pf] /info: {"network":"devnet","appVersion":"6.0.6","fullHeight":29,"blockVersion":4}
+P2SH-FORMS: PASS (node verdicts 6 of 6 spends)
+[rig] COSTS no recovery events
+[rig] === hook done (verdict: PASS) ===
+[rig] all nodes stopped
+```
+
+[exit 0]
+

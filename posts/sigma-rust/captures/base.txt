@@ -1,0 +1,23 @@
+$ git -C /home/scott/bin/sigma-rust-pr rev-parse develop
+1633e01835d48e4d4b127f7478e602e129e80110
+[exit 0]
+
+$ git -C /home/scott/bin/sigma-rust-pr log --oneline develop..HEAD
+3e06bf0b Tighten P2SH recognition; test the interpreter's rejection paths
+bad807c3 Recognize P2SH only when the hashed and deserialized variables match
+9518ec4c Write the sigma-state 6.x P2SH box script in Address::script()
+[exit 0]
+
+$ git -C /home/scott/bin/sigma-rust-pr status --short
+?? ISSUE.md
+?? PR-TITLE.txt
+?? PR.md
+[exit 0]
+
+$ git -C /home/scott/bin/sigma-rust-pr diff --stat develop..HEAD
+ ergo-lib/CHANGELOG.md                              |   3 +
+ .../src/sigma_protocol/verifier.rs                 | 103 +++++
+ ergotree-ir/src/chain/address.rs                   | 414 ++++++++++++++++++++-
+ 3 files changed, 505 insertions(+), 15 deletions(-)
+[exit 0]
+

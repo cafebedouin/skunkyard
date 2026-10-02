@@ -1,0 +1,358 @@
+# Mutations of fix/p2sh-script-form at 3e06bf0b. Each: apply (diff shown), run both p2sh_tests modules, list failures, revert from a saved copy.
+
+=== MUTATION: CalcBlake2b256 input type check removed
+$ git diff
+diff --git a/ergotree-ir/src/mir/calc_blake2b256.rs b/ergotree-ir/src/mir/calc_blake2b256.rs
+index 923dbbdf..a1496567 100644
+--- a/ergotree-ir/src/mir/calc_blake2b256.rs
++++ b/ergotree-ir/src/mir/calc_blake2b256.rs
+@@ -39,7 +39,6 @@ impl OneArgOp for CalcBlake2b256 {
+ 
+ impl OneArgOpTryBuild for CalcBlake2b256 {
+     fn try_build(input: Expr) -> Result<Self, InvalidArgumentError> {
+-        input.check_post_eval_tpe(&SType::SColl(Arc::new(SType::SByte)))?;
+         Ok(CalcBlake2b256 {
+             input: Box::new(input),
+         })
+
+$ cargo test -p ergotree-ir --features arbitrary p2sh_tests
+test chain::address::p2sh_tests::p2sh_script_matches_tree_spent_on_node ... ok
+test chain::address::p2sh_tests::p2sh_script_matches_reference_bytes ... ok
+test chain::address::p2sh_tests::p2sh_script_roundtrips_through_bytes ... ok
+test chain::address::p2sh_tests::legacy_var1_no_option_get_bytes_do_not_parse ... FAILED
+test chain::address::p2sh_tests::p2sh_script_recreates_p2sh_address ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_hash_constant_not_24_bytes ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_hash_input_other_than_option_get_get_var ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_other_deserialize_context_var ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_segregated_constants_header ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_mismatched_get_var_and_deserialize_context_ids ... ok
+test chain::address::p2sh_tests::recreate_p2s_from_legacy_var1_no_option_get_tree ... ok
+test chain::address::p2sh_tests::recreate_p2sh_from_legacy_var1_option_get_tree ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_v1_header ... ok
+test chain::address::p2sh_tests::recreate_p2sh_from_reference_tree_bytes ... ok
+test result: FAILED. 13 passed; 1 failed; 0 ignored; 0 measured; 264 filtered out; finished in 0.00s
+error: test failed, to rerun pass `-p ergotree-ir --lib`
+[exit 101]
+FAILED: chain::address::p2sh_tests::legacy_var1_no_option_get_bytes_do_not_parse
+
+$ cargo test -p ergotree-interpreter --features arbitrary p2sh_tests
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_of_other_proposition_reduces_to_false ... ok
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_reduces_to_proposition_and_verifies ... ok
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_only_var_1_fails_to_reduce ... ok
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 339 filtered out; finished in 0.02s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+[exit 0]
+FAILED: (none)
+
+reverted; $ git diff --stat
+(empty)
+
+
+=== MUTATION: id equality dropped from the matcher
+$ git diff
+diff --git a/ergotree-ir/src/chain/address.rs b/ergotree-ir/src/chain/address.rs
+index 0360aab8..2b6e78d9 100644
+--- a/ergotree-ir/src/chain/address.rs
++++ b/ergotree-ir/src/chain/address.rs
+@@ -189,7 +189,7 @@ impl Address {
+                                         // hash must be 24 bytes, and the header must be the
+                                         // one `Address::script` writes (v0, no constant
+                                         // segregation); anything else is P2S.
+-                                        if p2sh_script_var_id(&hash_input) == Some(*id)
++                                        if p2sh_script_var_id(&hash_input).is_some()
+                                             && tree.header().ok() == Some(ErgoTreeHeader::v0(false))
+                                         {
+                                             if let Ok(script_hash) =
+
+$ cargo test -p ergotree-ir --features arbitrary p2sh_tests
+test chain::address::p2sh_tests::legacy_var1_no_option_get_bytes_do_not_parse ... ok
+test chain::address::p2sh_tests::p2sh_script_matches_reference_bytes ... ok
+test chain::address::p2sh_tests::p2sh_script_matches_tree_spent_on_node ... ok
+test chain::address::p2sh_tests::p2sh_script_recreates_p2sh_address ... ok
+test chain::address::p2sh_tests::p2sh_script_roundtrips_through_bytes ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_hash_input_other_than_option_get_get_var ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_hash_constant_not_24_bytes ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_other_deserialize_context_var ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_mismatched_get_var_and_deserialize_context_ids ... FAILED
+test chain::address::p2sh_tests::recreate_p2s_for_segregated_constants_header ... ok
+test chain::address::p2sh_tests::recreate_p2s_from_legacy_var1_no_option_get_tree ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_v1_header ... ok
+test chain::address::p2sh_tests::recreate_p2sh_from_legacy_var1_option_get_tree ... ok
+test chain::address::p2sh_tests::recreate_p2sh_from_reference_tree_bytes ... ok
+test result: FAILED. 13 passed; 1 failed; 0 ignored; 0 measured; 264 filtered out; finished in 0.00s
+error: test failed, to rerun pass `-p ergotree-ir --lib`
+[exit 101]
+FAILED: chain::address::p2sh_tests::recreate_p2s_for_mismatched_get_var_and_deserialize_context_ids
+
+$ cargo test -p ergotree-interpreter --features arbitrary p2sh_tests
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_of_other_proposition_reduces_to_false ... ok
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_reduces_to_proposition_and_verifies ... ok
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_only_var_1_fails_to_reduce ... ok
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 339 filtered out; finished in 0.02s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+[exit 0]
+FAILED: (none)
+
+reverted; $ git diff --stat
+(empty)
+
+
+=== MUTATION: any hash input accepted
+$ git diff
+diff --git a/ergotree-ir/src/chain/address.rs b/ergotree-ir/src/chain/address.rs
+index 0360aab8..e174f347 100644
+--- a/ergotree-ir/src/chain/address.rs
++++ b/ergotree-ir/src/chain/address.rs
+@@ -189,7 +189,7 @@ impl Address {
+                                         // hash must be 24 bytes, and the header must be the
+                                         // one `Address::script` writes (v0, no constant
+                                         // segregation); anything else is P2S.
+-                                        if p2sh_script_var_id(&hash_input) == Some(*id)
++                                        if { let _ = p2sh_script_var_id(&hash_input); true }
+                                             && tree.header().ok() == Some(ErgoTreeHeader::v0(false))
+                                         {
+                                             if let Ok(script_hash) =
+
+$ cargo test -p ergotree-ir --features arbitrary p2sh_tests
+test chain::address::p2sh_tests::p2sh_script_matches_tree_spent_on_node ... ok
+test chain::address::p2sh_tests::legacy_var1_no_option_get_bytes_do_not_parse ... ok
+test chain::address::p2sh_tests::p2sh_script_matches_reference_bytes ... ok
+test chain::address::p2sh_tests::p2sh_script_recreates_p2sh_address ... ok
+test chain::address::p2sh_tests::p2sh_script_roundtrips_through_bytes ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_hash_input_other_than_option_get_get_var ... FAILED
+test chain::address::p2sh_tests::recreate_p2s_for_hash_constant_not_24_bytes ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_other_deserialize_context_var ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_mismatched_get_var_and_deserialize_context_ids ... FAILED
+test chain::address::p2sh_tests::recreate_p2s_for_segregated_constants_header ... ok
+test chain::address::p2sh_tests::recreate_p2s_from_legacy_var1_no_option_get_tree ... FAILED
+test chain::address::p2sh_tests::recreate_p2s_for_v1_header ... ok
+test chain::address::p2sh_tests::recreate_p2sh_from_legacy_var1_option_get_tree ... ok
+test chain::address::p2sh_tests::recreate_p2sh_from_reference_tree_bytes ... ok
+test result: FAILED. 11 passed; 3 failed; 0 ignored; 0 measured; 264 filtered out; finished in 0.00s
+error: test failed, to rerun pass `-p ergotree-ir --lib`
+[exit 101]
+FAILED: chain::address::p2sh_tests::recreate_p2s_for_hash_input_other_than_option_get_get_var, chain::address::p2sh_tests::recreate_p2s_for_mismatched_get_var_and_deserialize_context_ids, chain::address::p2sh_tests::recreate_p2s_from_legacy_var1_no_option_get_tree
+
+$ cargo test -p ergotree-interpreter --features arbitrary p2sh_tests
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_only_var_1_fails_to_reduce ... ok
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_reduces_to_proposition_and_verifies ... ok
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_of_other_proposition_reduces_to_false ... ok
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 339 filtered out; finished in 0.03s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+[exit 0]
+FAILED: (none)
+
+reverted; $ git diff --stat
+(empty)
+
+
+=== MUTATION: P2SH_SCRIPT_VAR_ID = 1
+$ git diff
+diff --git a/ergotree-ir/src/chain/address.rs b/ergotree-ir/src/chain/address.rs
+index 0360aab8..54ab1dec 100644
+--- a/ergotree-ir/src/chain/address.rs
++++ b/ergotree-ir/src/chain/address.rs
+@@ -47,7 +47,7 @@ use thiserror::Error;
+ /// sigma-state 6.0, `1` in sigma-state 5.x (see [`P2SH_SCRIPT_VAR_ID_V5`]).
+ /// [`Address::script`] writes this id; the spending input must carry the serialized
+ /// script (`Coll[Byte]`) in this context extension variable.
+-pub const P2SH_SCRIPT_VAR_ID: u8 = 126;
++pub const P2SH_SCRIPT_VAR_ID: u8 = 1;
+ 
+ /// Context variable id used by the P2SH box script in sigma-state 5.x, the form Fleet SDK
+ /// and the explorer write today.
+
+$ cargo test -p ergotree-ir --features arbitrary p2sh_tests
+test chain::address::p2sh_tests::legacy_var1_no_option_get_bytes_do_not_parse ... ok
+test chain::address::p2sh_tests::p2sh_script_matches_tree_spent_on_node ... FAILED
+test chain::address::p2sh_tests::p2sh_script_matches_reference_bytes ... FAILED
+test chain::address::p2sh_tests::p2sh_script_roundtrips_through_bytes ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_hash_input_other_than_option_get_get_var ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_hash_constant_not_24_bytes ... ok
+test chain::address::p2sh_tests::p2sh_script_recreates_p2sh_address ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_other_deserialize_context_var ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_mismatched_get_var_and_deserialize_context_ids ... FAILED
+test chain::address::p2sh_tests::recreate_p2s_from_legacy_var1_no_option_get_tree ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_segregated_constants_header ... ok
+test chain::address::p2sh_tests::recreate_p2sh_from_legacy_var1_option_get_tree ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_v1_header ... ok
+test chain::address::p2sh_tests::recreate_p2sh_from_reference_tree_bytes ... FAILED
+test result: FAILED. 10 passed; 4 failed; 0 ignored; 0 measured; 264 filtered out; finished in 0.00s
+error: test failed, to rerun pass `-p ergotree-ir --lib`
+[exit 101]
+FAILED: chain::address::p2sh_tests::p2sh_script_matches_tree_spent_on_node, chain::address::p2sh_tests::p2sh_script_matches_reference_bytes, chain::address::p2sh_tests::recreate_p2s_for_mismatched_get_var_and_deserialize_context_ids, chain::address::p2sh_tests::recreate_p2sh_from_reference_tree_bytes
+
+$ cargo test -p ergotree-interpreter --features arbitrary p2sh_tests
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_reduces_to_proposition_and_verifies ... FAILED
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_of_other_proposition_reduces_to_false ... FAILED
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_only_var_1_fails_to_reduce ... FAILED
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 339 filtered out; finished in 0.02s
+error: test failed, to rerun pass `-p ergotree-interpreter --lib`
+[exit 101]
+FAILED: sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_reduces_to_proposition_and_verifies, sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_of_other_proposition_reduces_to_false, sigma_protocol::verifier::p2sh_tests::p2sh_script_with_only_var_1_fails_to_reduce
+
+reverted; $ git diff --stat
+(empty)
+
+
+=== MUTATION: OptionGet dropped from script()
+$ git diff
+diff --git a/ergotree-ir/src/chain/address.rs b/ergotree-ir/src/chain/address.rs
+index 0360aab8..427f5d20 100644
+--- a/ergotree-ir/src/chain/address.rs
++++ b/ergotree-ir/src/chain/address.rs
+@@ -269,7 +269,7 @@ impl Address {
+                     .into(),
+                 );
+                 // GetVar yields Option[Coll[Byte]]; CalcBlake2b256 needs the Coll[Byte] inside.
+-                let script_bytes_expr = Expr::OptionGet(OptionGet::try_build(get_var_expr)?.into());
++                let script_bytes_expr = { let _ = OptionGet::try_build(get_var_expr.clone()); get_var_expr };
+                 let hash_expr = Expr::CalcBlake2b256(CalcBlake2b256 {
+                     input: Box::new(script_bytes_expr),
+                 });
+
+$ cargo test -p ergotree-ir --features arbitrary p2sh_tests
+test chain::address::p2sh_tests::legacy_var1_no_option_get_bytes_do_not_parse ... ok
+test chain::address::p2sh_tests::p2sh_script_matches_reference_bytes ... FAILED
+test chain::address::p2sh_tests::p2sh_script_matches_tree_spent_on_node ... FAILED
+test chain::address::p2sh_tests::p2sh_script_recreates_p2sh_address ... FAILED
+test chain::address::p2sh_tests::p2sh_script_roundtrips_through_bytes ... FAILED
+test chain::address::p2sh_tests::recreate_p2s_for_hash_input_other_than_option_get_get_var ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_hash_constant_not_24_bytes ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_mismatched_get_var_and_deserialize_context_ids ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_other_deserialize_context_var ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_segregated_constants_header ... ok
+test chain::address::p2sh_tests::recreate_p2s_from_legacy_var1_no_option_get_tree ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_v1_header ... ok
+test chain::address::p2sh_tests::recreate_p2sh_from_legacy_var1_option_get_tree ... ok
+test chain::address::p2sh_tests::recreate_p2sh_from_reference_tree_bytes ... ok
+test result: FAILED. 10 passed; 4 failed; 0 ignored; 0 measured; 264 filtered out; finished in 0.00s
+error: test failed, to rerun pass `-p ergotree-ir --lib`
+[exit 101]
+FAILED: chain::address::p2sh_tests::p2sh_script_matches_reference_bytes, chain::address::p2sh_tests::p2sh_script_matches_tree_spent_on_node, chain::address::p2sh_tests::p2sh_script_recreates_p2sh_address, chain::address::p2sh_tests::p2sh_script_roundtrips_through_bytes
+
+$ cargo test -p ergotree-interpreter --features arbitrary p2sh_tests
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_of_other_proposition_reduces_to_false ... FAILED
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_reduces_to_proposition_and_verifies ... FAILED
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_only_var_1_fails_to_reduce ... FAILED
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 339 filtered out; finished in 0.00s
+error: test failed, to rerun pass `-p ergotree-interpreter --lib`
+[exit 101]
+FAILED: sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_of_other_proposition_reduces_to_false, sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_reduces_to_proposition_and_verifies, sigma_protocol::verifier::p2sh_tests::p2sh_script_with_only_var_1_fails_to_reduce
+
+reverted; $ git diff --stat
+(empty)
+
+
+=== MUTATION: header check dropped
+$ git diff
+diff --git a/ergotree-ir/src/chain/address.rs b/ergotree-ir/src/chain/address.rs
+index 0360aab8..8a53c8e7 100644
+--- a/ergotree-ir/src/chain/address.rs
++++ b/ergotree-ir/src/chain/address.rs
+@@ -190,7 +190,7 @@ impl Address {
+                                         // one `Address::script` writes (v0, no constant
+                                         // segregation); anything else is P2S.
+                                         if p2sh_script_var_id(&hash_input) == Some(*id)
+-                                            && tree.header().ok() == Some(ErgoTreeHeader::v0(false))
++                                            
+                                         {
+                                             if let Ok(script_hash) =
+                                                 <[u8; 24]>::try_from(v.as_vec_u8())
+
+$ cargo test -p ergotree-ir --features arbitrary p2sh_tests
+test chain::address::p2sh_tests::legacy_var1_no_option_get_bytes_do_not_parse ... ok
+test chain::address::p2sh_tests::p2sh_script_matches_reference_bytes ... ok
+test chain::address::p2sh_tests::p2sh_script_matches_tree_spent_on_node ... ok
+test chain::address::p2sh_tests::p2sh_script_recreates_p2sh_address ... ok
+test chain::address::p2sh_tests::p2sh_script_roundtrips_through_bytes ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_hash_input_other_than_option_get_get_var ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_hash_constant_not_24_bytes ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_mismatched_get_var_and_deserialize_context_ids ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_other_deserialize_context_var ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_segregated_constants_header ... FAILED
+test chain::address::p2sh_tests::recreate_p2s_from_legacy_var1_no_option_get_tree ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_v1_header ... FAILED
+test chain::address::p2sh_tests::recreate_p2sh_from_legacy_var1_option_get_tree ... ok
+test chain::address::p2sh_tests::recreate_p2sh_from_reference_tree_bytes ... ok
+test result: FAILED. 12 passed; 2 failed; 0 ignored; 0 measured; 264 filtered out; finished in 0.00s
+error: test failed, to rerun pass `-p ergotree-ir --lib`
+[exit 101]
+FAILED: chain::address::p2sh_tests::recreate_p2s_for_segregated_constants_header, chain::address::p2sh_tests::recreate_p2s_for_v1_header
+
+$ cargo test -p ergotree-interpreter --features arbitrary p2sh_tests
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_only_var_1_fails_to_reduce ... ok
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_of_other_proposition_reduces_to_false ... ok
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_reduces_to_proposition_and_verifies ... ok
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 339 filtered out; finished in 0.02s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+[exit 0]
+FAILED: (none)
+
+reverted; $ git diff --stat
+(empty)
+
+
+=== MUTATION: 24-byte check dropped (back to returning Err for a non-24-byte hash)
+$ git diff
+diff --git a/ergotree-ir/src/chain/address.rs b/ergotree-ir/src/chain/address.rs
+index 0360aab8..7787e75a 100644
+--- a/ergotree-ir/src/chain/address.rs
++++ b/ergotree-ir/src/chain/address.rs
+@@ -192,11 +192,14 @@ impl Address {
+                                         if p2sh_script_var_id(&hash_input) == Some(*id)
+                                             && tree.header().ok() == Some(ErgoTreeHeader::v0(false))
+                                         {
+-                                            if let Ok(script_hash) =
+-                                                <[u8; 24]>::try_from(v.as_vec_u8())
+-                                            {
+-                                                return Ok(Address::P2SH(script_hash));
+-                                            }
++                                            return <[u8; 24]>::try_from(v.as_vec_u8())
++                                                .map(Address::P2SH)
++                                                .map_err(|_| {
++                                                    AddressError::UnexpectedErgoTree(
++                                                        tree.clone().into(),
++                                                        String::from("Failed to create P2SH address, invalid script hash."),
++                                                    )
++                                                });
+                                         }
+                                     }
+                                 }
+
+$ cargo test -p ergotree-ir --features arbitrary p2sh_tests
+test chain::address::p2sh_tests::p2sh_script_matches_reference_bytes ... ok
+test chain::address::p2sh_tests::p2sh_script_matches_tree_spent_on_node ... ok
+test chain::address::p2sh_tests::legacy_var1_no_option_get_bytes_do_not_parse ... ok
+test chain::address::p2sh_tests::p2sh_script_roundtrips_through_bytes ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_hash_input_other_than_option_get_get_var ... ok
+test chain::address::p2sh_tests::p2sh_script_recreates_p2sh_address ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_hash_constant_not_24_bytes ... FAILED
+test chain::address::p2sh_tests::recreate_p2s_for_segregated_constants_header ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_other_deserialize_context_var ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_v1_header ... ok
+test chain::address::p2sh_tests::recreate_p2s_from_legacy_var1_no_option_get_tree ... ok
+test chain::address::p2sh_tests::recreate_p2s_for_mismatched_get_var_and_deserialize_context_ids ... ok
+test chain::address::p2sh_tests::recreate_p2sh_from_legacy_var1_option_get_tree ... ok
+test chain::address::p2sh_tests::recreate_p2sh_from_reference_tree_bytes ... ok
+test result: FAILED. 13 passed; 1 failed; 0 ignored; 0 measured; 264 filtered out; finished in 0.00s
+error: test failed, to rerun pass `-p ergotree-ir --lib`
+[exit 101]
+FAILED: chain::address::p2sh_tests::recreate_p2s_for_hash_constant_not_24_bytes
+
+$ cargo test -p ergotree-interpreter --features arbitrary p2sh_tests
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_only_var_1_fails_to_reduce ... ok
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_of_other_proposition_reduces_to_false ... ok
+test sigma_protocol::verifier::p2sh_tests::p2sh_script_with_var_126_reduces_to_proposition_and_verifies ... ok
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 339 filtered out; finished in 0.01s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+[exit 0]
+FAILED: (none)
+
+reverted; $ git diff --stat
+(empty)
+
+
+=== END
+$ git diff --stat
+(empty)
