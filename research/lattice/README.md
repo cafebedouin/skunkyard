@@ -2,7 +2,7 @@
 
 Opened 2026-10-02 as worklist item SK-025. Literature-first; no code, nothing executed. Every number below is
 taken from a paper page or a source line that was read for this note, cited inline. Anything from memory is
-marked [not re-fetched].
+marked [not re-fetched]. Revised 2026-10-02 after the Grok seat (`seats/REVIEW-grok.md`).
 
 ## The ask, as it was left in 2020
 
@@ -33,40 +33,58 @@ verifier opcode, which is what section 5 of the post-quantum post called the com
 
 ## The candidates, sorted by shape
 
-### Fiat-Shamir with aborts (sigma-shaped): ML-DSA, Raccoon
+### Fiat-Shamir with aborts (sigma-shaped): ML-DSA, HAETAE, Raccoon
 
 The Lyubashevsky family (2009, 2012) is a sigma protocol: commitment `w = A·y`, challenge `c`, response
-`z = c·s + y` with rejection sampling. ML-DSA (FIPS 204, Dilithium) is its standard.
+`z = c·s + y`, with rejection sampling in ML-DSA and HAETAE and noise flooding instead of rejection in Raccoon.
+ML-DSA (FIPS 204, Dilithium) is its standard.
 
-| Set | NIST cat. | challenge bits | pk | signature | source |
-|---|---|---|---|---|---|
-| ML-DSA-44 (Dilithium-2) | 2 | 128 | 1,312 B | 2,420 B | Blockstream ePrint 2026/1628, Table 4.2 p.80 |
-| ML-DSA-65 (Dilithium-3) | 3 | 192 | 1,952 B | 3,309 B | same |
-| ML-DSA-87 (Dilithium-5) | 5 | 256 | 2,592 B | 4,627 B | same |
-| Raccoon, level 1 | 1 | | 2,256 B | 11,524 B | https://raccoonfamily.org/ (no rejection sampling) |
-| Threshold Raccoon, 128-bit, T ≤ 1024 | | | 3.9 KB | 12.7 KB, 40.8 KB communication per user | ePrint 2024/184, Table 2 p.43 |
+| Set | NIST cat. | λ (collision strength of c̃) | c̃ bytes (= λ/4) | challenge entropy, bits | expected repetitions | pk | signature | source |
+|---|---|---|---|---|---|---|---|---|
+| ML-DSA-44 | 2 | 128 | 32 | 192 | 4.25 | 1,312 B | 2,420 B | FIPS 204 Table 1 p.15, Table 2 p.16, Alg. 7 line 15 |
+| ML-DSA-65 | 3 | 192 | 48 | 225 | 5.1 | 1,952 B | 3,309 B | same |
+| ML-DSA-87 | 5 | 256 | 64 | 257 | 3.85 | 2,592 B | 4,627 B | same |
+| HAETAE-120 | 2 | | | 192 | 6.0 | 992 B | 1,474 B | ePrint 2023/624 Table 4 p.23, Table 6 p.28, §3.3 p.12 |
+| HAETAE-180 | 3 | | | 225 | 5.0 | 1,472 B | 2,349 B | same |
+| HAETAE-260 | 5 | | | 255 | 6.0 | 2,080 B | 2,948 B | same |
+| Raccoon, level 1 (no rejection sampling) | 1 | | | | 1 | 2,256 B | 11,524 B | https://raccoonfamily.org/; 2023/624 Table 10 p.41 |
+| Threshold Raccoon, 128-bit, T ≤ 1024 (one shared key, interactive) | | | | | | 3.9 KB | 12.7 KB, 40.8 KB communication per user | ePrint 2024/184, Table 2 p.43 |
 
-Three composition facts follow:
+Four composition facts follow. The first corrects an earlier draft of this note, which had read FIPS 204's λ
+column as the challenge seed; the Grok seat caught it (`seats/REVIEW-grok.md`, items 1-3) and FIPS 204 confirms it.
 
-- **The challenge width matches.** ML-DSA-65 derives its ternary challenge polynomial from a 192-bit seed, which is
-  exactly Ergo's 24-byte challenge. ML-DSA-44 wants 128 bits (truncate), ML-DSA-87 wants 256 (Ergo would have to
-  widen `SOUNDNESS_BITS` or expand the 192 bits, a design decision, not a blocker).
-- **A leaf's proof is the signature minus its own challenge hash**: the response `z` and the hint, about 3.26 KB
-  for ML-DSA-65. The verifier recomputes `w1` from `(c, z, h)`, which is what the tree needs.
-- **Aborts restart the whole tree.** The real branch rejects with the scheme's usual probability (ML-DSA's expected
-  repetition count is a small single-digit number [not re-fetched from FIPS 204]); because every leaf's commitment
-  is hashed at the root, an abort re-randomizes the simulated branches too. Prover-side cost only; the proof size
-  is unchanged. Raccoon removes rejection sampling entirely (that is what makes it thresholdable), at 3.5× the
-  ML-DSA-65 size. Whether the CDS composition of an aborting sigma protocol keeps its security proof is a question
-  the literature treats separately (Devevey, Fallahpour, Passelegue, Stehle, "A detailed analysis of Fiat-Shamir
-  with aborts", CRYPTO 2023, cited by 2024/184 as [DFPS23]; not read for this note). **Open.**
+- **The challenge width does not match.** ML-DSA hashes `μ ‖ w1` to a c̃ of λ/4 bytes, 48 for ML-DSA-65, and
+  `Verify` checks `c̃ = H(μ ‖ w1')` (FIPS 204 Alg. 8 line 12-13). Ergo's 24-byte challenge can therefore be the
+  prescribed challenge only of a *modified* Lyubashevsky leaf: a 24-byte seed into `SampleInBall`, the tree's root
+  hash in place of the per-signature hash check. That leaf would have 192-bit soundness, which is Ergo's existing
+  soundness for every leaf (`CryptoConstants.scala:29`) and ML-DSA-65's λ, and the ternary challenge set at τ = 49
+  has 225 bits of entropy, so the seed is the binding term. But it is a different scheme from FIPS 204: no standard
+  test vectors, no library verifier, its own proof. Expanding the 192-bit parent string into a longer seed does not
+  raise soundness above 192 bits.
+- **A leaf's proof is the response and the hint**: 3,309 − 48 = 3,261 bytes for ML-DSA-65; the verifier recomputes
+  `w1` from `(c, z, h)` together with the public key and `μ` (Alg. 8 lines 8-10), which is the shape
+  `computeCommitments` needs.
+- **Aborts restart the whole tree.** The real branch rejects at ML-DSA's rates (expected 4.25 / 5.1 / 3.85 loop
+  iterations, FIPS 204 Table 1; HAETAE 6 / 5 / 6, 2023/624 Table 4); one root hash binds every commitment, so a
+  rejected real branch re-rolls the simulated transcripts too. Prover-side cost only; the proof size is unchanged.
+  Raccoon has no rejection step, so its prescribed-challenge simulator is straight-line and the abort question below
+  does not arise for it, at 3.5× the ML-DSA-65 size.
+- **Whether CDS composition of an aborting leaf keeps a security proof is open.** The honest simulator accepts a
+  prescribed challenge (sample `c, z`, set `w = Az − ct`; Lyubashevsky 2009, 2012). What the classical CDS theorem
+  (Cramer, Damgård, Schoenmakers, CRYPTO 1994) assumes and an aborting prover does not give is perfect
+  completeness; what Dilithium's own proof gives (Kiltz, Lyubashevsky, Schaffner, EUROCRYPT 2018: a lossy
+  identification scheme) is not the special-soundness interface CDS consumes; and extraction from two transcripts
+  needs `c − c'` invertible (Lyubashevsky-Seiler, ePrint 2017/523), so soundness is not simply 1/|challenge space|
+  and Ergo's XOR of seeds is not the group CDS composes over. Devevey, Fallahpour, Passelègue, Stehlé (CRYPTO
+  2023) covers only the Fiat-Shamir loss of a single aborting scheme. No proof covering this tree and no attack on it
+  were found in the reading; the Grok seat (item 5) concurs. **Open.**
 
 ### Hash-and-sign (not sigma-shaped): Falcon
 
 Falcon-512: pk 897 B, signature 666 B; Falcon-1024: 1,793 B and 1,280 B (2026/1628 Table 1.1 p.9). Smallest of
 all, but a GPV trapdoor sampler, not a three-move proof: no simulator-with-prescribed-challenge, so no composition.
 It would be a verifier opcode, same category as the WOTS script. Blockstream's own conclusion for Bitcoin: Falcon is
-the leading lattice candidate once FN-DSA is final, there is no workable public-key derivation for it yet, and the
+the leading lattice candidate once FN-DSA (FIPS 206, a draft when FIPS 204 was published; its 2026 status was not checked) is final, there is no workable public-key derivation for it yet, and the
 conservative choice today is hash-based (pp.11-12). Hawk was withdrawn after a key-recovery attack (p.7).
 
 ### Succinct one-out-of-many proofs (the lattice way to do OR, but not a leaf)
@@ -78,9 +96,9 @@ comparison for what an N-way OR costs.
 | Scheme | N = 2^3 | 2^5 | 2^6 | 2^10 | 2^12 | 2^15 | 2^21 | 2^25 | pk | source |
 |---|---|---|---|---|---|---|---|---|---|---|
 | SMILE (CRYPTO 2021) | | 16.0 KB | | 17.3 KB | | 18.7 KB | | 21.5 KB | 3.28 KB | ePrint 2021/564, Fig. 11 p.48; pk p.54 |
-| Falafl (Asiacrypt 2020), NIST 1 | 30 | | 32 | | 35 | | 39 | | | 2020/646 Table 1 p.3 |
-| Esgin et al. / MatRiCT (CCS 2019) | 19 (N=8) | | 31 | 48 | 59 | | 148-156 | | 3.38 KB (9.14 at 2^10) | 2019/1287 Table 3 p.3, Table 7 p.19 |
-| Raptor (linear in N) | | | 81 | | 5,161 | | | | | 2020/646 Table 1 |
+| Falafl (Asiacrypt 2020), NIST 1 | 30 KB | | 32 KB | | 35 KB | | 39 KB | | | 2020/646 Table 1 p.3 |
+| Esgin et al. / MatRiCT (CCS 2019) | 19 KB (N=8) | | 31 KB | 48 KB | 59 KB | | 148-156 KB | | 3.38 KB (9.14 KB at 2^10) | 2019/1287 Table 3 p.3, Table 7 p.19 |
+| Raptor (linear in N) | | | 81 KB | | 5,161 KB | | | | | 2020/646 Table 1 |
 
 The basic lattice proof of knowledge of an MLWE secret is 14.4 KB (ePrint 2022/284, Fig. 12 p.51; down from 33 KB
 in 2021 and 3.8 MB in 2017). LaBRADOR proves an R1CS of 2^10 to 2^20 constraints in 47 to 58 KB, nearly flat
@@ -98,11 +116,16 @@ without the 237 KB STARK.
 | FAEST-128f | | 32 B | 5,170 B | same |
 | FAEST-256s | | 48 B | 16,626 B | same |
 
-Picnic was not advanced past NIST's third round [NISTIR 8413, not re-fetched]; FAEST is its successor in the
-additional-signatures round. ZKB++ is a three-move protocol, so picnic-L1-FS is sigma-shaped in principle: 219
-parallel repetitions with ternary challenges, which the spec derives by iterating a hash (section 6.4.5), so a
-24-byte seed could drive it. KKW (picnic3) and FAEST are multi-round, not leaves. The public keys are 32 bytes,
-which matters below.
+Picnic was not advanced past NIST's third round [NISTIR 8413, not re-fetched]; FAEST is in the additional-signatures
+round (FAEST-256s's 48-byte key is as the site prints it; the Even-Mansour variants have 64-byte keys at level 5).
+ZKB++ is a three-move protocol with a prescribed-challenge simulator, so picnic-L1-FS is sigma-shaped in principle,
+as *one* leaf whose commitment is one hash over 219 parallel repetitions; but 219 ternary challenges give 128-bit
+soundness, and Ergo's 192 bits need (2/3)^τ ≤ 2^-192, τ ≥ 329, the L3 repetition count, about 1.5× the size.
+KKW (picnic3) has two sequential challenges (five moves) and VOLE-in-the-head (FAEST) is five-pass plus a
+consistency-check round (arXiv 2510.11224 §2, which also notes a three-pass variant exists at a size cost): not
+leaves. SLH-DSA (FIPS 205), the standardized hash-based scheme, is not three-move either: 32-byte keys, 7,856-byte
+signatures at 128s (2026/1628 Table 1.1). The public keys of this whole family are 32 to 64 bytes, which matters
+below.
 
 ### The 2020 baseline
 
@@ -154,22 +177,30 @@ through data inputs or the context extension (no per-variable cap, bounded by th
 
 **Transaction (proofs), the composition arithmetic.** With CDS composition every leaf pays its full response:
 
-| Statement | today (`proveDlog`, 56 B per leaf) | ML-DSA-65 leaves (3.26 KB each) | lattice one-out-of-many |
-|---|---|---|---|
-| 1-of-1 | 56 B | 3.3 KB | n/a |
-| 2-of-2 (AND) | 112 B | 6.5 KB | n/a |
-| 1-of-5 (OR) | 280 B | 16.3 KB | SMILE at 2^5: 16.0 KB |
-| 1-of-32 (OR) | 1.8 KB | 104 KB, over what stock nodes relay (98,304, config); fits a block | SMILE: 16.0 KB |
-| 2-of-3 threshold | 168 B | 9.8 KB | n/a (TRaccoon: 12.7 KB, interactive, any T ≤ 1024) |
+| Statement | today (`proveDlog`, 56 B per leaf) | ML-DSA-65 leaves (3,261 B each) | ML-DSA-44 leaves (2,388 B) | HAETAE-180 leaves (about 2,349 B) | lattice one-out-of-many |
+|---|---|---|---|---|---|
+| 1-of-1 | 56 B | 3.3 KB | 2.4 KB | 2.3 KB | n/a |
+| 2-of-2 (AND) | 112 B | 6.5 KB | 4.8 KB | 4.7 KB | n/a |
+| 1-of-5 (OR) | 280 B | 16.3 KB | 11.9 KB | 11.7 KB | SMILE pads the ring to 2^5 = 32 keys: 16.0 KB |
+| 1-of-32 (OR) | 1.8 KB | 104.4 KB, over what stock nodes relay (98,304, config); fits a block | 76.4 KB, under the relay config | 75.2 KB, under it | SMILE: 16.0 KB |
+| 2-of-3 threshold | 168 B | 9.8 KB | 7.2 KB | 7.0 KB | n/a (Threshold Raccoon is one shared key signed interactively, a different object) |
 
-Per-leaf ratio ML-DSA-65 to `proveDlog`: about 58×. (The unverified "60×" caption in `LITERATURE.md` line 199 is
-consistent with this; it remains unverified as his statement.) The crossover where a succinct lattice OR proof
-beats CDS-composed ML-DSA leaves is N ≈ 5.
+Keys for the same statements, against the 4,096-byte proposition: ML-DSA-65 stops at two keys (3,904 B), ML-DSA-44
+at three (3,936 B), HAETAE-120 at four (3,968 B), Falcon-512 at four (3,588 B); 32 keys of any lattice scheme
+(31.7 KB at HAETAE-120) never fit, so every ring above a handful of keys already needs its keys outside the
+proposition: a hash in the script and the keys in the context extension or data inputs, the P2SH shape.
+
+Per-leaf ratio ML-DSA-65 to `proveDlog`: about 58× (HAETAE-180: 42×). (The unverified "60×" caption in
+`LITERATURE.md` line 199 is consistent with this; it remains unverified as his statement.) The crossover where a
+succinct lattice OR proof beats CDS-composed leaves is N ≈ 5 for ML-DSA-65 and N ≈ 7 for HAETAE-180; SMILE is
+nearly flat (16.0 KB at 32 keys, 21.5 KB at 2^25), so above the crossover it wins by a widening margin.
 
 **Block, by size only** (cost is unmeasurable without an implementation): a 1-in/2-out spend of an ML-DSA-65 box,
 32 B input id + 3,309 B proof + 1,952 B new key box + ~50 B fee box ≈ 5.4 KB, so about 235 per 1,271,009-byte
 block; Falcon-512 ≈ 1.65 KB, about 770; the measured WOTS spend is 2,345 B, about 540 by size (its cost-bound
-figure in `q2/RESULT.md` is 154). Today's P2PK spend is about 250 B. Both the byte bound and the cost bound are
+figure in `q2/RESULT.md` is 154). Today's P2PK 1-in/2-out spend is about 250 B [estimate from the serialization; the one measured P2PK
+transaction in this repository is the 3-in/3-out funding transaction at 1,304 bytes, `q2/devnet/README.md:195`].
+The 5.4 KB figure counts the key and the input id, not the full box and transaction headers, so 235 is an upper bound. Both the byte bound and the cost bound are
 votable, so these are today's numbers, not ceilings: at +1% per epoch each doubles in about 100 days of sustained
 majority voting, and parameter 4 has already moved about eightfold since launch.
 
@@ -185,24 +216,31 @@ block-cost units per leaf after the ÷10. The hook a lattice leaf would use is t
 
 Settled from the literature:
 
-- The sizes thread 257 asked for exist and three of them are standards: an ML-DSA-65 leaf is 1,952 + 3,309 bytes,
-  Falcon-512 is 897 + 666, Picnic3-L1 is 34 + 12,359, FAEST-128s is 32 + 4,066.
-- Only the Fiat-Shamir-with-aborts family (ML-DSA, Raccoon) and ZKB++ have the three-move shape a tree leaf needs;
-  Falcon, picnic3 and FAEST would be boolean opcodes.
-- ML-DSA-65's 192-bit challenge seed equals Ergo's `SOUNDNESS_BITS`; the tree's XOR and GF(2^192) composition would
-  take such a leaf unchanged.
-- A single lattice leaf fits every limit. A 32-way OR of lattice leaves is above what stock nodes relay (a config
-  value) but inside a block; the succinct lattice proofs that cost 16 KB at that size are not leaves. Composition
-  past about five keys needs a different proof system; the limits a vote can move (block bytes, block cost) are not
-  the binding ones, the two it cannot (proposition bytes, the leaf set) are.
+- The sizes thread 257 asked for exist. ML-DSA-65 is a standard (FIPS 204): 1,952 + 3,309 bytes. Falcon-512 is
+  897 + 666 (FN-DSA draft status unchecked). HAETAE-180 is 1,472 + 2,349 (additional round, KpqC). Picnic3-L1 is
+  34 + 12,359 (not advanced). FAEST-128s is 32 + 4,066 (additional round).
+- Only the Fiat-Shamir-with-aborts family (ML-DSA, HAETAE; Raccoon without the aborts) and ZKB++ have the
+  three-move shape a tree leaf needs; Falcon, picnic3, FAEST, SLH-DSA, MAYO and UOV would be boolean opcodes.
+- No standardized leaf takes Ergo's 24-byte challenge as it stands. A modified Lyubashevsky leaf with a 24-byte
+  seed would, at 192-bit soundness, the same as every leaf Ergo has today; whether its CDS composition with aborts
+  is provably secure is open, and Raccoon's abort-free variant sidesteps that question at 3.5× the size.
+- A single lattice leaf fits every limit. A 32-way OR of ML-DSA-65 leaves is above what stock nodes relay (a
+  config value) but inside a block; at ML-DSA-44 or HAETAE-180 it is under the relay config too. The limit that
+  binds first is the 4,096-byte proposition, which holds two to four lattice keys, so any ring beyond that already
+  needs keys outside the proposition. The succinct lattice proofs that cost 16 KB at 32 keys are not leaves.
+  Composition past about five to seven keys needs a different proof system; the limits a vote can move (block
+  bytes, block cost) are not the binding ones, the two it cannot (proposition bytes, the leaf set) are.
 
 Open (each a candidate follow-on):
 
+0. **The leaf itself.** Write down the modified Lyubashevsky leaf (24-byte seed, `SampleInBall`, the verify
+   equations of FIPS 204 Alg. 8 with the tree's challenge in place of c̃) as a one-page spec, so that the cost
+   measurement and the composition question refer to one object. [script, skunkyard]
 1. **Cost.** No node cost exists for any of these. The cheapest measurement: verify time of ML-DSA-65 in the JVM
    and in sigmastate-js's target, mapped through the "1 block-cost unit ≈ 1 µs" convention in `trees.scala`, which
    turns the size table into a per-block capacity by cost. [tooling, skunkyard]
-2. **Security of CDS composition with aborts** (the [DFPS23] question), and the QROM status of the composed proof.
-   [literature; a question for a cryptographer, not a measurement]
+2. **Security of CDS composition with aborts**, with the citation list above, and the QROM status of the composed
+   proof. [literature; a question for a cryptographer, not a measurement]
 3. **Picnic/ZKB++ as a leaf**: 219 repetitions means 219 commitments hashed at the root; whether sigma-tree Fiat-
    Shamir admits a multi-repetition leaf without a per-leaf hash is a design question. [literature]
 4. **Opcode cost model for a boolean Falcon verifier**, as the no-composition alternative with the smallest bytes.
@@ -225,8 +263,12 @@ Implementing any scheme; proposing an opcode; isogeny and multivariate schemes b
   Plancon), 2022/1341 (LaBRADOR), 2019/490 (Beullens), 2017/523 (Lyubashevsky-Seiler, challenge sets in partially
   splitting rings), 2024/184 (Threshold Raccoon), 2026/1628 (Blockstream, lattice signatures for Bitcoin),
   arXiv 2608.26792 (Thresholding post-quantum signatures, survey).
-- Picnic specification v3.0, https://github.com/microsoft/Picnic/raw/master/spec/spec-v3.0.pdf; https://faest.info/;
-  https://raccoonfamily.org/.
+- FIPS 204 (https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf), ePrint 2023/624 (HAETAE), arXiv 2510.11224
+  (TCitH/VOLEitH round structure); Picnic specification v3.0,
+  https://github.com/microsoft/Picnic/raw/master/spec/spec-v3.0.pdf; https://faest.info/; https://raccoonfamily.org/.
+- Outside seat: `seats/REVIEW-grok.md` (Grok, 2026-10-02, no web, sandboxed; items 1-3, 5, 7-10, 12, 15-16, 18 and
+  the SLH-DSA/MAYO/UOV line of 19 accepted after checking against FIPS 204 and 2023/624; item 13 resolved against
+  the FAEST site's printed table; item 14's FAEST-as-three-move claim rejected on arXiv 2510.11224 §2).
 - sigma-rust `ergotree-interpreter/src/sigma_protocol/{sigma_protocol.rs,challenge.rs,prover.rs}` at develop
   1633e018; sigma 6.0.3 sources (`ergo_logic/vendor/sigma-state-6.0.3`, Maven sources jar, sha256 in its
   PROVENANCE.txt); ergo node v6.0.7 (`ergo_logic/subjects/ergo-v6.0.7`, 3a6b00d37); `LITERATURE.md` in this

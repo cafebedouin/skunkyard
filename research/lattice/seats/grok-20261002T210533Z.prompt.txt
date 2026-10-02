@@ -1,0 +1,24 @@
+You are an outside reviewer with a cryptography background. Read /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/lattice-slice/README.md, a literature note that
+computes sizes for lattice and MPC-in-the-head signature schemes as candidate leaves in Ergo's sigma-protocol tree
+(the Cramer-Damgard-Schoenmakers OR/threshold composition with 192-bit challenges). You have no web access; use what
+you know of the cited papers (SMILE 2021/564, Calamari-Falafl 2020/646, MatRiCT 2019/1287, LNP 2022/284, LaBRADOR
+2022/1341, Beullens 2019/490, Threshold Raccoon 2024/184, FIPS 204, Falcon, the Picnic v3.0 spec, FAEST, Raccoon).
+
+Report, as a numbered list, each item tagged ERROR (a stated number or claim you believe is wrong, with the value
+you believe is right and your confidence), UNSUPPORTED (a claim that needs a citation or a caveat), or SUGGESTION
+(a scheme or result that would change a conclusion if added). Quote the sentence you are reacting to. Cover:
+
+1. Every number in the tables (sizes, parameter sets, repetition counts, challenge-seed widths).
+2. The claim that a Fiat-Shamir-with-aborts leaf can take a prescribed challenge from a CDS-composed tree, and
+   whether CDS composition of aborting sigma protocols is known to be secure, known to be broken, or open. Name the
+   papers you would cite.
+3. The claim that ML-DSA-65's challenge seed is 192 bits and ML-DSA-44's is 128.
+4. The arithmetic in the "Against Ergo's limits" section (per-leaf ratio, crossover at N≈5, the 32-way OR
+   exceeding 98,304 bytes, the per-block counts by size).
+5. Whether Falcon, picnic3 and FAEST are correctly classified as not three-move.
+6. Anything standardized or in NIST's additional round (HAETAE, MAYO, SQIsign, UOV, Hawk, SDitH, MQOM, LESS) that
+   would change the conclusions; say explicitly if it would not.
+
+Be specific and terse. Do not rewrite the note. If you are unsure, say so rather than guess. End with one
+paragraph: is the note's main conclusion ("a single lattice leaf fits every limit; composition past about five keys
+needs a different proof system, not a bigger box") supported by the literature as you know it?
