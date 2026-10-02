@@ -40,7 +40,11 @@ Outward text (`posts/`), dated reads behind claims (`notes/`), and shared toolin
    scripts do not print them unless asked.
 6. **A skunk hands off or dies.** The charter names the recipient of the hand-off and the kill criterion; the result
    file says which happened.
-7. **Paths do not move once cited.** A directory a post links to stays where it is; reorganization happens before
+7. **Layers decide where a question is settled.** `script`, `chain` and `tooling` questions are settled here; `node`
+   questions (a network, an adversary, a version comparison) are peeryard scenarios registered in ergo_logic, and a
+   skunkyard item is not scheduled before the foundation it rests on has a measured answer (`WORKLIST.md`,
+   Foundations).
+8. **Paths do not move once cited.** A directory a post links to stays where it is; reorganization happens before
    publication or by leaving a pointer behind.
 
 ## Current map
