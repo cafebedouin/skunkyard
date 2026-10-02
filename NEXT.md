@@ -13,9 +13,14 @@ remote yet.
 
 1. Agree the layout in `PROGRAM.md`; move `SCOPE.md`, `LITERATURE.md`, `q1/`, `q2/` to `research/pq/` and `tsnp/` to
    `research/tsnp/`, updating every path in `posts/2026-10-post-quantum-forum-draft.md`, `README.md` and the
-   `q1`/`q2` READMEs in the same commit (rule 7).
+   `q1`/`q2` READMEs in the same commit (rule 7). History was squashed to one commit on 2026-10-02 (the old history is
+   on the local branch `main-pre-squash`, never to be pushed) because earlier commits carried the top-20 exposed-box
+   list.
 2. Create the GitHub repository `cafebedouin/skunkyard`, push, enable GitHub Pages (branch `main`, folder `/docs`) so the oneshot page resolves at `https://cafebedouin.github.io/skunkyard/oneshot/`, fill the URL placeholder in the draft.
-3. The person's outside-model review of draft v3; fold it in as v4 with a `posts/REVIEW-v3.md`.
+3. Draft is at v5 (`posts/REVIEW-v4.md`); Grok and Gemini ran on v5 (`posts/seats/` once copied in); fold them in as v6.
+   Before posting: file the sigma-rust issue and PR from `posts/sigma-rust/` (after the three Claude seats and the two
+   outside seats on those texts; the Claude seats were deferred by the person), draft and file a Fleet issue for
+   `toP2SH()` hashing the tree instead of the proposition, and put the issue numbers into section 4 and ask 3.
 4. Post. Then the Q1 final run and the oneshot results as replies.
 
 ## oneshot (`skunks/oneshot/CHARTER.md`)
