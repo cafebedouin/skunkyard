@@ -246,6 +246,40 @@ Open (each a candidate follow-on):
 4. **Opcode cost model for a boolean Falcon verifier**, as the no-composition alternative with the smallest bytes.
    [tooling]
 
+## Directions proposed by the Gemini seat, evaluated against the code
+
+The Gemini seat (`seats/REVIEW-gemini.md`, 2026-10-02, sandboxed, given this note and Grok's review) ranked five
+directions and named three things the note had missed. Each is checked here against the vendored sigma 6.0.3
+sources and the node at v6.0.7; "tier" is which kind of limit it touches.
+
+| # | Direction (Gemini's rank) | What the code says | Tier | Verdict |
+|---|---|---|---|---|
+| 1 | JVM benchmark of ML-DSA-65 and Falcon-512 verification against the `proveDlog` leaf (rank 1) | sigma-state 6.0.7 depends on Bouncy Castle `bcprov-jdk15to18` 1.85.1 (its Maven pom), and that jar on this machine contains `pqc/crypto/mldsa/MLDSASigner`, `falcon/FalconSigner` and `slhdsa/SLHDSASigner`: the verifiers are already on the node's classpath. The comparison point is `ProveDlogVerificationCost` = 10 + 3,400 + Fiat-Shamir bytes JIT (`Interpreter.scala:537`), and the honest ratio is measured by timing `DLogProver.computeCommitment` in the same harness rather than trusting the "1 unit ≈ 1 µs" comment. Gemini's kill threshold (4,900 µs) confuses the relay cost cap (4,900,000) with a per-leaf figure; the real kill is a measured ratio to `proveDlog` large enough that a lattice spend costs more than the 13,003-unit fixed per-transaction charge it would sit beside. | none to measure; a fork to use | **Do first.** One session, no new dependency. Worklist SK-026. |
+| 2 | Hybrid script `proveDlog(pk) && verifyPQ(pk, msg, sig)` with a boolean verifier instead of a sigma leaf (rank 2) | The cheapest extension point is not an opcode but a method: 6.0 added `Header.checkPow` as `SMethod(..., methodId 16, FixedCost(JitCost(700)))` (`methods.scala:1815-1816`) and `Global.serialize`, `some`, `deserializeTo` the same way, all gated by `VersionContext.isV6Activated` through the method-lookup rule (`methods.scala:131`). A `Global.verifyMLDSA(pk, msg, sig): Boolean` is that pattern behind the next activation. The AND is `CAND(ProveDlog, TrivialProp)`, which the tree already serializes (`SigmaBoolean.scala:45`). The message binding is the one `q2/wots.es` already uses: the script hashes `OUTPUTS` and `INPUTS` itself, so no new context field is needed. What is lost is exactly what the post said: OR and threshold over boolean verifiers reveal which key signed (an `atLeast` over booleans), where the sigma tree hides it. For P2PK and 2-of-3 cold storage that is a privacy loss, not a capability loss. A standard FIPS 204 or Falcon verifier is used unmodified, which closes the 24-byte-challenge question. Gemini's "722-byte proof" (56 + 666) is right for the proof; the Falcon key still has to live in the box or the context extension. | soft fork (new script version, like 6.0's) | **Right first proposal shape**, ahead of any leaf. Spec the method and its cost from SK-026's number. Worklist SK-028. |
+| 3 | A capacity model of +1%/epoch voting under a post-quantum adoption curve (rank 3) | The vote mechanics are sourced above (`Parameters.scala:155-176`, `VotingSettings.scala:11`). The model's decisive input, propagation delay against block size, is not a chain fact but a network measurement: foundation F8 (large-transaction relay) and F5 (vote mechanics on a devnet) in ergo_logic's register. The chain half, reconstructing the real vote history, is SK-023. | miner vote, node config | Not a skunkyard item on its own; its inputs are F5, F8 and SK-023. Folded there. |
+| 4 | Keys outside the proposition: a hash in the box, the keys in the context extension or data inputs, Merkle or AVL membership for rings (rank 4) | Executable on a stock node today. The context extension has no per-variable cap and 127 slots (`ContextExtension.scala`), `getVar[Coll[Byte]]` costs a fixed 10 JIT, `blake2b256` over a 2 KB key costs 20 + 7×16 = 132 JIT (`trees.scala`), and `AvlTree` membership proofs exist. This is the P2SH shape of the post, applied to keys. It also removes the rent penalty below: the box holds a 32-byte digest whatever the scheme. The measurement is the key-loading and membership cost on the q2 harness with a placeholder verify, since no lattice verifier exists in script. | none | **Second.** One session on the existing harness. Worklist SK-027. |
+| 5 | Trace SMILE's and LaBRADOR's verifiers to primitive operations and estimate an opcode (rank 5) | Literature only; the comparison it needs is EIP-0045's STARK verifier, already SK-024. SMILE's verifier is polynomial-ring arithmetic over q ≈ 2^32, d = 128 (2021/564 Fig. 11), LaBRADOR's is O(n) single-precision modular multiplications (2022/1341 p.2). | soft fork | Later; attach to SK-024 as its lattice arm. |
+
+Gemini's "do not pursue" list is accepted as stated, with one note: it rejects a bespoke 24-byte-seed ML-DSA
+variant and the CDS-with-aborts proof as research, which this note had listed as open items 0 and 2. They stay
+listed as open, not as work: direction 2 makes both unnecessary for the first proposal.
+
+The dimension the note missed, grounded: **storage rent scales with box bytes.** The fee is
+`storageFeeFactor × box.bytes.length` per `StoragePeriod` of 1,051,200 blocks (`ErgoInterpreter.scala:43`,
+`Constants.scala:33`), with `storageFeeFactor` 1,250,000 nanoERG per byte on mainnet (votable, parameter 1):
+
+| Box | bytes (key + about 70 of box overhead) | rent per four years |
+|---|---|---|
+| P2PK today | about 105 | 0.13 ERG |
+| Falcon-512 key in the proposition | about 970 | 1.21 ERG |
+| HAETAE-120 key | about 1,060 | 1.33 ERG |
+| ML-DSA-65 key | about 2,020 | 2.53 ERG |
+| any scheme, 32-byte key digest in the box (direction 4) | about 105 | 0.13 ERG |
+
+So a cold-storage holder who moves to a lattice key in the proposition pays ten to twenty times today's rent, and
+the P2SH shape pays today's. Gemini's other two notes: the boolean-verifier route was under-weighted in the note
+(agreed, now direction 2); FIPS 206's status remains unchecked here.
+
 ## Kill criterion
 
 Met if the follow-on cost measurement (open item 1) puts an ML-DSA-65 leaf above the relay cost cap (4,900,000) on

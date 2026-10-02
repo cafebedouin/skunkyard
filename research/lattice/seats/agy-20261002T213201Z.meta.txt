@@ -1,0 +1,10 @@
+seat:    agy (1.2.14)
+model:   tool default
+utc:     20261002T213201Z
+slice:   /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/lattice-slice2
+slice-git: not a git checkout
+web:     UNCONTROLLED (no flag)
+jail:    tools/seat-jail
+prompt-sha256: 02c9ccfbf5d05aaa404c8bd9f8d82327723f93bb5ace4c45b622b70eacbe03b6
+exit:    0
+model-reported: gemini-3.8-flash(x8),gemini-3.8-flash-high(x2) [from a557fd89-2596-4a69-b6b6-db4609afc6b3.db]
