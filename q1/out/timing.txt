@@ -1,0 +1,6 @@
+run1:
+wall-clock seconds: copy 2, scan 57
+run2:
+wall-clock seconds: copy 1, scan 55
+diff run1 run2 stdout: identical
+height 783047: copy 48 s, scan 103 s (1,649,000 boxes; from the run's stderr wall-clock line)

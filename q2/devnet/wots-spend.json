@@ -1,0 +1,7 @@
+{
+  "chain": "current",
+  "nodes": [
+    { "name": "A", "mining": true, "mine_poll": "2s", "knownPeers": [] }
+  ],
+  "links": []
+}

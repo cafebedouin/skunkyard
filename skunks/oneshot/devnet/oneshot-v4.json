@@ -1,0 +1,7 @@
+{
+  "chain": { "preset": "current", "v4": true },
+  "nodes": [
+    { "name": "A", "mining": true, "mine_poll": "2s", "knownPeers": [], "conf": { "ergo.node.extraIndex": true } }
+  ],
+  "links": []
+}

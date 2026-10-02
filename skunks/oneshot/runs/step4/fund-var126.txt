@@ -1,0 +1,10 @@
+[fund] wallet 3WxtnwJojAm4C9DJtgNHs5zawzD44yE6cKyGM7NeHf7Cw1yP7XBU
+[fund] to oneshot p2sh address r66m8Cse92GbtMoy1aSnk1S8... (39 chars), amount 1000000000 nanoERG; output written with the var126 tree explicitly
+[fund] height 576630; wallet unspent boxes 2, total 14995800000 nanoERG
+[fund] built: 2 inputs, outputs 1000000000 + 1100000 + 13994700000; tx id 912274c33727086b8bcbd1c2adcb134b515efdbdf0288d7a05debbac4ecf6094
+[fund] output 0 tree (var126): 00ea02d193b4cbe4e37e0e040004300e18a4a5a3cc92c8c686867c490eb7b50a0e2dda15643878867cd4087e
+[fund]   var126 form: 00ea02d193b4cbe4e37e0e040004300e18a4a5a3cc92c8c686867c490eb7b50a0e2dda15643878867cd4087e
+[fund]   var1 form:   00ea02d193b4cbe4e3010e040004300e18a4a5a3cc92c8c686867c490eb7b50a0e2dda15643878867cd40801
+[fund] submit (http://128.253.41.110:9052/transactions) -> HTTP 200: "912274c33727086b8bcbd1c2adcb134b515efdbdf0288d7a05debbac4ecf6094"
+[fund] confirmed at height 576632; oneshot box 8b975449cb2c8e907f9937ef757dc341aff6aed66ec86adfc3f6535e68f7a4f2
+FUND: CONFIRMED 912274c33727086b8bcbd1c2adcb134b515efdbdf0288d7a05debbac4ecf6094 height 576632 box 8b975449cb2c8e907f9937ef757dc341aff6aed66ec86adfc3f6535e68f7a4f2

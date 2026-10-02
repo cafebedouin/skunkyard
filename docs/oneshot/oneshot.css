@@ -1,0 +1,32 @@
+:root { --fg: #1b1b1b; --bg: #fbfbf8; --muted: #5d5d5d; --line: #c9c9c0; --warn-bg: #fff0e0; --warn-line: #c0571a;
+  --err: #a8201a; --ok: #1d6b2c; --code-bg: #f0efe8; }
+@media (prefers-color-scheme: dark) {
+  :root { --fg: #e8e8e3; --bg: #161615; --muted: #a3a39c; --line: #45453f; --warn-bg: #3a2414; --warn-line: #e08a4a;
+    --err: #ff8a80; --ok: #7fd18b; --code-bg: #232320; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 52rem; margin: 0 auto; padding: 1rem 16px 3rem; }
+h1 small { font-size: 0.5em; color: var(--muted); font-weight: normal; }
+h2 { border-top: 1px solid var(--line); padding-top: 1rem; margin-top: 2rem; }
+code, pre, textarea, input[type=text], input[type=url] { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.85rem; }
+textarea, input[type=text], input[type=url] { width: 100%; background: var(--code-bg); color: var(--fg); border: 1px solid var(--line); padding: 0.4rem; word-break: break-all; }
+pre { background: var(--code-bg); padding: 0.6rem; white-space: pre-wrap; word-break: break-all; }
+label.wide { display: block; margin: 0.6rem 0; }
+label.disabled { color: var(--muted); }
+label.confirm { display: block; margin: 0.8rem 0; font-weight: 600; }
+fieldset { border: 1px solid var(--line); margin: 0.6rem 0; }
+.row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin: 0.5rem 0; }
+.row input[type=text] { flex: 1 1 20rem; width: auto; }
+.or { color: var(--muted); }
+button { font: inherit; padding: 0.45rem 0.9rem; border: 1px solid var(--fg); background: var(--bg); color: var(--fg); cursor: pointer; }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+.warn { background: var(--warn-bg); border: 3px solid var(--warn-line); padding: 0.4rem 1rem; font-size: 1.1rem; }
+.warn-inline { background: var(--warn-bg); border-left: 4px solid var(--warn-line); padding: 0.4rem 0.8rem; font-weight: 600; }
+.note { color: var(--muted); }
+.error { color: var(--err); font-weight: 600; white-space: pre-wrap; }
+.ok { color: var(--ok); font-weight: 600; }
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+th, td { border-bottom: 1px solid var(--line); padding: 0.3rem; text-align: left; }
+td.id { font-family: ui-monospace, Menlo, Consolas, monospace; word-break: break-all; }
+footer { margin-top: 3rem; color: var(--muted); font-size: 0.9rem; }

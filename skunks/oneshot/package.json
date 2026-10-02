@@ -1,0 +1,27 @@
+{
+  "name": "oneshot",
+  "private": true,
+  "type": "module",
+  "description": "oneshot: WOTS and P2SH one-time locks for Ergo (TypeScript signer, Fleet spend flow, sigmastate-js for P2SH, the page; steps 2-4)",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:check": "node scripts/build.mjs --check",
+    "test": "tsx test/wots.test.ts && tsx test/fleet-serialization.test.ts && tsx test/spend.test.ts && tsx test/p2sh.test.ts",
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@fleet-sdk/core": "0.12.0",
+    "@fleet-sdk/serializer": "0.11.0",
+    "@fleet-sdk/wallet": "0.12.0",
+    "@noble/curves": "1.9.7",
+    "@noble/hashes": "2.4.0",
+    "@scure/base": "1.2.6",
+    "sigmastate-js": "0.6.3"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.4",
+    "esbuild": "0.28.2",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2"
+  }
+}

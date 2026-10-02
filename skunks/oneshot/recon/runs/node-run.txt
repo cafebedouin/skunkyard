@@ -1,0 +1,39 @@
+load: 570 ms from process start to first statement (imports of sigmastate-js, Fleet, ergo-lib-wasm)
+pk 03f2dab42d7333f37f527841998d5212468d0e7a0b7e091709501ed9be8e2fc7f3
+PASS compile PK(addr) == 0008cd++pk 0008cd03f2dab42d7333f37f527841998d5212468d0e7a0b7e091709501ed9be8e2fc7f3
+P2SH address (hash of 08cd++pk)   qQqAgn6N6hrNTTu2s19HJg52NK37GENqoeo2W6i
+P2SH address (hash of 0008cd++pk) qGTwZAJmGFgsocxdWta7RdQbP9zoGADfhyD4EvK
+Fleet ErgoAddress.fromErgoTree(P2PK tree).toP2SH() qGTwZAJmGFgsocxdWta7RdQbP9zoGADfhyD4EvK
+PASS Fleet toP2SH() hashes the ErgoTree bytes 0008cd++pk, not the proposition 08cd++pk
+PASS sigmastate-js Address$.fromString(addr).isP2SH()
+outer tree sigmastate-js 00ea02d193b4cbe4e37e0e040004300e1862d1e48400494bfedf9bf70d4af152428fb46f32bf05d199d4087e
+outer tree Fleet         00ea02d193b4cbe4e3010e040004300e1862d1e48400494bfedf9bf70d4af152428fb46f32bf05d199d40801
+outer tree ergo-lib-wasm 00ea02d193b4cbe3010e040004300e1862d1e48400494bfedf9bf70d4af152428fb46f32bf05d199d40801
+PASS sigmastate-js tree == 00ea02d193b4cbe4e37e0e040004300e18 ++ hash24 ++ d4087e (scriptId 126)
+PASS Fleet tree == 00ea02d193b4cbe4e3010e040004300e18 ++ hash24 ++ d40801 (scriptId 1)
+PASS ergo-lib-wasm tree == 00ea02d193b4cbe3010e040004300e18 ++ hash24 ++ d40801 (scriptId 1, no OptionGet)
+PASS the three trees differ
+PASS ergo-lib-wasm address_type_prefix == Pay2Sh
+INFO address recreated from the sigmastate-js tree: sigmastate-js qQqAgn6N6hrNTTu2s19HJg52NK37GENqoeo2W6i; Fleet P2S; ergo-lib-wasm P2S (67 chars)
+INFO address recreated from the Fleet tree: sigmastate-js P2S (67 chars); Fleet qQqAgn6N6hrNTTu2s19HJg52NK37GENqoeo2W6i; ergo-lib-wasm qQqAgn6N6hrNTTu2s19HJg52NK37GENqoeo2W6i
+INFO address recreated from the ergo-lib-wasm tree: sigmastate-js P2S (65 chars); Fleet P2S; ergo-lib-wasm P2S (65 chars)
+PASS sigmastate-js Address$.fromErgoTree(126-tree) round-trips to the address
+block version 4
+unsigned tx id 07da6e260faabcca39f34bda4e8d4177697e946e1918c1ba9526c9005519a05a; input extension {"126":"0e2308cd03f2dab42d7333f37f527841998d5212468d0e7a0b7e091709501ed9be8e2fc7f3"}
+PASS A: reduce+sign (first call: reduce 23 ms, sign 5 ms)
+signed tx id 07da6e260faabcca39f34bda4e8d4177697e946e1918c1ba9526c9005519a05a; proof 56 bytes; extension {"126":"0e2308cd03f2dab42d7333f37f527841998d5212468d0e7a0b7e091709501ed9be8e2fc7f3"}
+reduced tx hex 271 bytes
+PASS signed id == Fleet unsigned id
+PASS extension var 126 carried into the signed input
+PASS SigmaPropVerifier.verifySignature(proveDlog(pk), bytesToSign, proof)
+PASS SigmaPropVerifier rejects a flipped proof byte
+PASS ergo-lib-wasm verify_signature(P2PK(pk), bytesToSign, proof)
+PASS ergo-lib-wasm verify_tx_input_proof (evaluates the P2SH tree) -> true
+PASS ergo-lib-wasm verify_tx_input_proof rejects: flipped proof byte -> false
+TIMING node v25.1.0 runs=10 reduce median 5.5 ms (min 3.8, max 6.6); sign median 2.5 ms (min 1.7, max 3.1); first call reduce 22.6 ms sign 5.3 ms
+PASS B 126-tree over hash(0008cd++pk), var126 = 0008cd++pk: fails error: Cannot deserialize type prefix 0. Unexpected buffer sigma.serialization.SigmaByteReader@9e with bytes [B@9f
+PASS C 126-tree over hash(0008cd++pk), var126 = 08cd++pk: fails error: Script reduced to false
+PASS D Fleet tree, var126 = 08cd++pk: fails error: None.get
+INFO E Fleet tree, var1 = 08cd++pk: reduced and signed; proof verifies against proveDlog(pk): true
+INFO F ergo-lib-wasm tree, var1 = 08cd++pk: error: scala.Some cannot be cast to sigma.Coll
+RESULT: PASS

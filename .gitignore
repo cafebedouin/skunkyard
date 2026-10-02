@@ -1,0 +1,6 @@
+target/
+*.class
+.bsp/
+.metals/
+.scala-build/
+q1/out/top_boxes.csv

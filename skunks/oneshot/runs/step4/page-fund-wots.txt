@@ -1,0 +1,7 @@
+[fund] wallet 3WxtnwJojAm4C9DJtgNHs5zawzD44yE6cKyGM7NeHf7Cw1yP7XBU
+[fund] to oneshot wots address 517F9i5jUNsxjWYWLHRbMAGZ... (1154 chars), amount 1000000000 nanoERG
+[fund] height 576644; wallet unspent boxes 2, total 14993700000 nanoERG
+[fund] built: 2 inputs, outputs 1000000000 + 1100000 + 13992600000; tx id 4ad280bf72ac014b0c8b71b41689066c1864acae65df194726bd8166626820b4
+[fund] submit (http://128.253.41.110:9052/transactions) -> HTTP 200: "4ad280bf72ac014b0c8b71b41689066c1864acae65df194726bd8166626820b4"
+[fund] confirmed at height 576646; oneshot box 2999ea40e985a6745e5c73cc4154485b8359ad05c9592377c26bd4bd65fd487c
+FUND: CONFIRMED 4ad280bf72ac014b0c8b71b41689066c1864acae65df194726bd8166626820b4 height 576646 box 2999ea40e985a6745e5c73cc4154485b8359ad05c9592377c26bd4bd65fd487c

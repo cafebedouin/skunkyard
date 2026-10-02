@@ -1,0 +1,10 @@
+[fund] wallet 3WxtnwJojAm4C9DJtgNHs5zawzD44yE6cKyGM7NeHf7Cw1yP7XBU
+[fund] to oneshot p2sh address pTZZR2AtqN5cuEeTS1QD3FfV... (39 chars), amount 1000000000 nanoERG; output written by Fleet from the address string
+[fund] height 576648; wallet unspent boxes 2, total 14991600000 nanoERG
+[fund] built: 2 inputs, outputs 1000000000 + 1100000 + 13990500000; tx id 83b2178cefc3e4e6da9ed8eefa2f679850a8fbb63eea0e095070799b485d3338
+[fund] output 0 tree (var1): 00ea02d193b4cbe4e3010e040004300e18062bd605cedc46c3ab97acbebd527e722188c83478281b3dd40801
+[fund]   var126 form: 00ea02d193b4cbe4e37e0e040004300e18062bd605cedc46c3ab97acbebd527e722188c83478281b3dd4087e
+[fund]   var1 form:   00ea02d193b4cbe4e3010e040004300e18062bd605cedc46c3ab97acbebd527e722188c83478281b3dd40801
+[fund] submit (http://128.253.41.110:9052/transactions) -> HTTP 200: "83b2178cefc3e4e6da9ed8eefa2f679850a8fbb63eea0e095070799b485d3338"
+[fund] confirmed at height 576650; oneshot box 42383110bebc6f0fb9605aba3b648c1a4e79965ff2364d0b357bf2fb90347892
+FUND: CONFIRMED 83b2178cefc3e4e6da9ed8eefa2f679850a8fbb63eea0e095070799b485d3338 height 576650 box 42383110bebc6f0fb9605aba3b648c1a4e79965ff2364d0b357bf2fb90347892

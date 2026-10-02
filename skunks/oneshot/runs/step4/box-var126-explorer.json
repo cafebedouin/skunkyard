@@ -1,0 +1,18 @@
+{
+    "boxId": "8b975449cb2c8e907f9937ef757dc341aff6aed66ec86adfc3f6535e68f7a4f2",
+    "transactionId": "912274c33727086b8bcbd1c2adcb134b515efdbdf0288d7a05debbac4ecf6094",
+    "blockId": "ff3d011720db2e5f83be82e86885a4994611fe8224f13157a140438ccaaceabd",
+    "value": 1000000000,
+    "index": 0,
+    "globalIndex": 1888041,
+    "creationHeight": 576630,
+    "settlementHeight": 576632,
+    "ergoTree": "00ea02d193b4cbe4e37e0e040004300e18a4a5a3cc92c8c686867c490eb7b50a0e2dda15643878867cd4087e",
+    "ergoTreeConstants": "",
+    "ergoTreeScript": "SigmaAnd(WrappedArray(BoolToSigmaProp(EQ(Slice(CalcBlake2b256(OptionGet(GetVar(126,Option[Coll[SByte$]]))),IntConstant(0),IntConstant(24)),ConstantNode(Coll(-92,-91,-93,-52,-110,-56,-58,-122,-122,124,73,14,-73,-75,10,14,45,-38,21,100,56,120,-122,124),Coll[SByte$]))), DeserializeContext(126,SSigmaProp)))",
+    "address": "45TWsQhXtNUkko51AfXYYh44qxWQdM5bac5haFWM6r5qrXUT1t2x5cDGLJzvreiRdTv",
+    "assets": [],
+    "additionalRegisters": {},
+    "spentTransactionId": "a8d888e9987860aa449888f6d0f4e5d83719e6c07662d37d29a1416bc85e1ab0",
+    "mainChain": true
+}

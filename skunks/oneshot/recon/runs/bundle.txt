@@ -1,0 +1,7 @@
+out/recon.js: 7100693 bytes, gzip -9 1059214, brotli 719288
+out/recon.mjs: 7100517 bytes, gzip -9 1059235, brotli 720714
+out/sigma-only.js: 6984415 bytes, gzip -9 1019286, brotli 687729
+bytes in out/recon.js by package: {"sigmastate-js":6939471,"sigmajs-crypto-facade":44588,"@noble/curves":36616,"@fleet-sdk/core":26638,"@fleet-sdk/serializer":18029,"@fleet-sdk/crypto":12664,"@noble/hashes":9628,"@fleet-sdk/common":4580,"browser-entry.mjs":3348,"@scure/base":2999,"empty:crypto":40}
+stubbed modules: ["empty:crypto"]
+unpacked node_modules/sigmastate-js/dist/main.js: 13251628 bytes
+NODE-BUNDLE {"address":"qQqAgn6N6hrNTTu2s19HJg52NK37GENqoeo2W6i","tree":"00ea02d193b4cbe4e37e0e040004300e1862d1e48400494bfedf9bf70d4af152428fb46f32bf05d199d4087e","txId":"07da6e260faabcca39f34bda4e8d4177697e946e1918c1ba9526c9005519a05a","idMatches":true,"verified":true,"bundleEvaluatedAtMs":446.9,"setupMs":146.1,"firstReduceMs":23.3,"firstSignMs":6.2,"runs":10,"reduceMedianMs":4.4,"signMedianMs":2.3,"userAgent":"Node.js/25"}

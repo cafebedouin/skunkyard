@@ -1,0 +1,44 @@
+PASS page loaded, script ran (mode note filled)
+PASS mainnet choice disabled
+PASS watch and spend hidden before a key
+PASS generate: seed is 64 hex
+PASS generate: note names oneshot/v1 n=32 w=16
+PASS generate: address, watch and spend hidden until the seed is confirmed copied
+PASS after confirming: testnet P2S address shown (1154 chars, starts 5)
+PASS destination validation rejects garbage
+PASS restore: seed shown
+address pTZZR2AtqN5cuEeTS1QD3FfV... (39 chars)
+  row: 42383110bebc6f0fb9605aba3b648c1a4e79965ff2364d0b357bf2fb90347892 (script var1, var 1) | 1 | created 576648
+PASS destination accepted
+PASS sign button enabled
+lock          P2SH(proveDlog), box script var1 (context variable 1 = 08cd ++ pk)
+input box     42383110bebc6f0fb9605aba3b648c1a4e79965ff2364d0b357bf2fb90347892
+outputs       0.999 ERG + 0.001 ERG (destination + fee)
+height        576650 (headers 576641..576650, ids recomputed)
+proof         56 bytes, verified locally (SigmaPropVerifier)
+timings       sigmastate-js load 655 ms, reduce 67.8 ms, sign 6.6 ms
+tx id         140752b2761ba0f0b346ad93e96b458c053afdf02b1bebcc9f55e16cf6473cbc
+size          291 bytes
+PASS sign button disabled after signing
+--- page log (verbatim) ---
+forged transaction 140752b2761ba0f0b346ad93e96b458c053afdf02b1bebcc9f55e16cf6473cbc (sigma proof byte 0, low bit flipped; same id, since the proof is not part of it): submitting...
+HTTP 400: {
+  "error" : 400,
+  "reason" : "bad.request",
+  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 140752b2761ba0f0b346ad93e96b458c053afdf02b1bebcc9f55e16cf6473cbc: #0 => Success((false,569))"
+}
+rejected by the script check, as it should be.
+submitting 140752b2761ba0f0b346ad93e96b458c053afdf02b1bebcc9f55e16cf6473cbc...
+HTTP 200: "140752b2761ba0f0b346ad93e96b458c053afdf02b1bebcc9f55e16cf6473cbc"
+transaction id 140752b2761ba0f0b346ad93e96b458c053afdf02b1bebcc9f55e16cf6473cbc (equals the id computed here)
+state: mempool
+state: confirmed at height 576652
+CONFIRMED: 140752b2761ba0f0b346ad93e96b458c053afdf02b1bebcc9f55e16cf6473cbc at height 576652
+---
+PASS page: forged rejected by the script check
+PASS page: valid confirmed
+PASS page refuses a second key or signature after signing
+PASS page: the P2SH lock was used (summary)
+PASS only the API base was contacted (http://128.253.41.110:9052)
+PASS no script errors in the page
+PAGE-DRIVE: PASS

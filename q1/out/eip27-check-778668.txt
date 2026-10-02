@@ -1,0 +1,178 @@
+# Q1 UTXO scan (ergo-6.0.6.jar classes; traversal of the authenticated AVL+ tree)
+# mining_reward template: rewardOutputScript(minerRewardDelay=720, pk), 54 bytes, key slot at offset 7
+# p2sh template: Pay2SHAddress script, 44 bytes, hash slot at offset 17
+# genesis boxes (ErgoState.genesisBoxes): emission b69575e11c5c43400bfead5976ee0d6245a1168396b2e2a4f384691f275d501c value=93409132500000000 tree=101004020e361002...; no_premine_proof b8ce8cfe331e5eadfb0783bdc375c94413433f65e1e45857d71550d42e4d83bd value=1000000000 tree=10010100d17300...; foundation 5527430474b673e4aafb08e0079c639de23e6a17e87edd00f78662b43c88aeda value=4330791500000000 tree=100e040004c09440...
+# genesis sum = 97739925000000000 nanoERG; emissionRules.coinsTotal = 97739925000000000
+# state context height (tip used for ages): 778668
+# state context last header id: 2466c6b1f71bb0f4827cb94e44635b8cef62ad7f32a43cc2123f7ab9a95c5e8c
+# state store version: 70ceaf026c4d8c689356508971bd063b90e9f82bd2f3bef1f755676c4ab33abb19
+# age bucket thresholds (blocks): 131400, 262800, 525600, 788400, 1051200  buckets: <131400 | 131400-262799 | 262800-525599 | 525600-788399 | 788400-1051199 | >=1051200
+# nodes visited: 3250157, label mismatches: 0, sentinel leaves: 1, box id != leaf key: 0
+# boxes with creationHeight > tip: 0, max creationHeight: 778668
+
+stored root digest:    70ceaf026c4d8c689356508971bd063b90e9f82bd2f3bef1f755676c4ab33abb19
+traversed root digest: 70ceaf026c4d8c689356508971bd063b90e9f82bd2f3bef1f755676c4ab33abb19  match=true
+total boxes: 1625078  total box bytes: 148837114
+supply check: sum of all box values = 97739925000000000 nanoERG = 97739925.000000000 ERG; genesis sum = 97739925000000000; equal=true
+supply check: sum excluding the no-premine-proof box (b8ce8cfe331e5ead..., 1000000000 nanoERG, present=true) = 97739924000000000 nanoERG = 97739924.000000000 ERG; brief figure 97739924000000000; equal=true
+
+== By category ==
+category                                               boxes                 ERG  pct_supply  pct_supply_ex_protocol  boxes_with_tokens  distinct_token_ids
+p2pk                                                 1589819  52742855.655133640     53.9624                 95.3945             178417               38424
+p2pk_other                                                 0         0.000000000      0.0000                  0.0000                  0                   0
+mining_reward                                          17856    310920.065263372      0.3181                  0.5624                858                  15
+p2sh                                                       0         0.000000000      0.0000                  0.0000                  0                   0
+protocol                                                 252  42450728.308690072     43.4323                       -                  8                  19
+p2s_with_key                                            7393     53037.384925102      0.0543                  0.0959               6096                3052
+p2s_no_key                                              9757   2182383.584987814      2.2328                  3.9472               7447                 914
+unparseable                                                1         0.001000000      0.0000                  0.0000                  0                   0
+EXPOSED(p2pk+p2pk_other+mining_reward+p2s_with_key)  1615068  53106813.105322114     54.3348                 96.0528             185371               41360
+TOTAL                                                1625078  97739925.000000000    100.0000                100.0000             192826               42018
+
+== Protocol boxes ==
+protocol_box       boxes                 ERG  tree_key_indicator    register_key_indicator
+emission               3  41210709.200000000   create_prove_dlog                         -
+foundation             7   1232719.518690072                   -  R4:serialized_prove_dlog
+no_premine_proof       1         1.000000000                   -                         -
+pay_to_reemission    240      7296.000000000                   -                         -
+reemission             1         2.590000000   create_prove_dlog                         -
+
+== p2s_with_key by first key indicator found ==
+indicator              boxes              ERG
+create_prove_dh_tuple     58     17.146500000
+create_prove_dlog       4587  45358.907960000
+group_element_value        5      0.050000000
+prove_dlog              2743   7661.280465102
+
+== p2s_with_key: top 10 script templates by ERG (of 245 distinct; template = blake2b256(ErgoTree.template), first 8 bytes) ==
+template          boxes              ERG  first_key_indicator
+441438d8b1a847e8   1125  43687.005000000    create_prove_dlog
+842e6165a18b3a28     12   4058.272900000           prove_dlog
+ea5f97f7597b325f      5   1463.270000000           prove_dlog
+7d507235e5dd3e05     66   1164.000000000    create_prove_dlog
+c439d478a39c8457     19    625.842546174           prove_dlog
+5153fa5abfba5094     20    507.117127060           prove_dlog
+d36ad138f86dd4a7      8    291.488750000    create_prove_dlog
+61c7b9a8765bcfb4      4    203.704000819           prove_dlog
+75833402a4b7d760     20    197.204000000           prove_dlog
+bd35823b2ded0f9b     92     84.307500000    create_prove_dlog
+
+== p2s_no_key: top 10 script templates by ERG (of 413 distinct; template = blake2b256(ErgoTree.template), first 8 bytes) ==
+template          boxes                ERG  first_key_indicator
+c7709a676c759d63      2  1753820.970513587                    -
+850f2d5b02b3e666     72   415605.416671251                    -
+bff7d38d6ae0f207      2    10250.093406380                    -
+91a2f80777b42d1d    165     1621.648000000                    -
+84e5e6c0db984157    631      290.192000000                    -
+ca8dad57c86f9abd     30      263.174000000                    -
+709d1f2766608653      7      122.345000000                    -
+77dd972f4b409269      1       79.893910269                    -
+a8c36eea8a185e24      1       66.000000000                    -
+699dedd649bb60a9    934       60.598250000                    -
+
+== By category x age bucket (age = tip - creationHeight, blocks) ==
+category           age_bucket   boxes                 ERG
+p2pk                  <131400  947781  19467919.158539219
+p2pk            131400-262799  524827   8426620.710257999
+p2pk            262800-525599   86557  16443719.432266717
+p2pk            525600-788399   30654   8404596.354069705
+p2pk           788400-1051199       0         0.000000000
+p2pk                >=1051200       0         0.000000000
+p2pk_other            <131400       0         0.000000000
+p2pk_other      131400-262799       0         0.000000000
+p2pk_other      262800-525599       0         0.000000000
+p2pk_other      525600-788399       0         0.000000000
+p2pk_other     788400-1051199       0         0.000000000
+p2pk_other          >=1051200       0         0.000000000
+mining_reward         <131400   11439    183926.285234972
+mining_reward   131400-262799    4903    108156.023196352
+mining_reward   262800-525599    1376      9860.194932048
+mining_reward   525600-788399     138      8977.561900000
+mining_reward  788400-1051199       0         0.000000000
+mining_reward       >=1051200       0         0.000000000
+p2sh                  <131400       0         0.000000000
+p2sh            131400-262799       0         0.000000000
+p2sh            262800-525599       0         0.000000000
+p2sh            525600-788399       0         0.000000000
+p2sh           788400-1051199       0         0.000000000
+p2sh                >=1051200       0         0.000000000
+protocol              <131400      18  42443827.268690072
+protocol        131400-262799       3         0.030000000
+protocol        262800-525599       1         0.010000000
+protocol        525600-788399     230      6901.000000000
+protocol       788400-1051199       0         0.000000000
+protocol            >=1051200       0         0.000000000
+p2s_with_key          <131400    4566      4659.200401764
+p2s_with_key    131400-262799     753     12965.779689919
+p2s_with_key    262800-525599    1788     34210.224433419
+p2s_with_key    525600-788399     286      1202.180400000
+p2s_with_key   788400-1051199       0         0.000000000
+p2s_with_key        >=1051200       0         0.000000000
+p2s_no_key            <131400    9123   1808591.310440912
+p2s_no_key      131400-262799     417        68.589508490
+p2s_no_key      262800-525599     150       181.166809885
+p2s_no_key      525600-788399      67    373542.518228527
+p2s_no_key     788400-1051199       0         0.000000000
+p2s_no_key          >=1051200       0         0.000000000
+unparseable           <131400       0         0.000000000
+unparseable     131400-262799       1         0.001000000
+unparseable     262800-525599       0         0.000000000
+unparseable     525600-788399       0         0.000000000
+unparseable    788400-1051199       0         0.000000000
+unparseable         >=1051200       0         0.000000000
+EXPOSED               <131400  963786  19656504.644175955
+EXPOSED         131400-262799  530483   8547742.513144270
+EXPOSED         262800-525599   89721  16487789.851632184
+EXPOSED         525600-788399   31078   8414776.096369705
+EXPOSED        788400-1051199       0         0.000000000
+EXPOSED             >=1051200       0         0.000000000
+
+exposed and storage-rent eligible (age >= 1051200 blocks): boxes=0 ERG=0.000000000 (0.0000% of supply, 0.0000% ex protocol)
+
+== Top 20 token ids in exposed categories, by number of holding boxes ==
+token_id                                                          boxes         raw_amount
+0779ec04f2fae64e87418a1ad917639d4668f78484f45df962b0dec14a2591d2  74626         4986113084
+472c3d4ecaa08fb7392ff041ee2e6af75f4a558810a74b28600549d5392810e8  31897    986957442931538
+ef802b475c06189fdbf844153cdc1d449a5ba87cce13d11bb47b5a539f27f12b  21000  94958091238579326
+30974274078845f263b4f21787e33cc99e9ec19a17ad85a5bc6da2cca91c5a2e  20926  42319064425299407
+fbbaac7337d051c10fc3da0ccb864f4d32d40027551e1c3ea3ce361f39b91e40  13525          958689256
+e91cbc48016eb390f8f872aa2962772863e2e840708517d1ab85e57451f91bed  12546           52959733
+0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b  12376        18215856070
+94180232cc0d91447178a0a995e2c14c57fbf03b06d5d87d5f79226094f52ffc  10373    999882421692942
+36aba4b4a97b65be491cf9f5ca57b5408b0da8d0194f30ec8330d1e8946161c1   4170             421412
+4f5c05967a2a68d5fe0cdd7a688289f5b1a8aef7d24cab71c20ab8896068e0a8   2804    449627550046007
+003bd19d0187117f130b62e1bcab0939929ff5c7709f843c5c4dd158949285d0   2518         2203117038
+fa6326a26334f5e933b96470b53b45083374f71912b0d7597f00c2c7ebeb5da6   1758        25108080079
+5a34d53ca483924b9a6aa0c771f11888881b516a8d1a9cdc535d063fe26d065e   1596   1879060942913724
+1c51c3a53abfe87e6db9a03c649e8360f255ffc4bd34303d30fc7db23ae551db   1422      1170072163038
+03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04   1413           69188723
+1a6a8c16e4b1cc9d73d03183565cfb8e79dd84198cb66beeed7d3463e0da2b98   1402       199999355388
+303f39026572bcb4060b51fafc93787a236bb243744babaa99fceb833d61e198   1283        36458610704
+d9a2cc8a09abfaed87afacfbb7daee79a6b26f10c6613fc13d3f3953e5521d1a    844     10128000000000
+e249780a22e14279357103749102d0a7033e0459d10b7f277356522ae9df779c    775     19541247047158
+d71693c49a84fbbecd4908c94813b46514b18b67a99952dc1e6e4791556de413    733          596101958
+
+== Top 20 token ids in exposed categories, by raw amount ==
+token_id                                                                   raw_amount  boxes
+17c21d0dcde99d552a6430c9d96fae3247d88bc484306333060b46e2af7e953f  9223372036854774807      1
+19e5b066e46094f99c39564208995fc0544f7a452082e2aaa1b5b090a7f104b9  9223372036854774807      1
+4aa1e892c8b6d8ff5acd0f3c8a77975b3851f32aa9298c2acc9daafa8fbd7624  9223372036854774807      1
+a0fddcb960e2a4b82b7c7647058485338e38d8f4c6d4f07a568e0765784c98b8  9223372036854774807      1
+dca5ced7c814761c9d0a75509d884e46e971ffaaa5497f4bf9476f4f35cfeb56  9223372036854774807      1
+eabfa0c3ee84692c1f37dcb4b36d182e2cb971dffa6792cae18cf54c9f7f4693  9223372036854774807      1
+29c231e5ed1174223a15575104b954524eb2c91baabb65732144a92b222033e4  4500000000000000000      2
+aa9011d6e69b96b9bd734cebe8a64a776bd49f2db98a4acb1c8d3108cd23b662  2000000000000000000      1
+20b22d9b4ea1b4ee0c46f16fafa8a6eea20812e566f2291efbc29d1836884e55  1234567890123456800      1
+a07f38e5b37d67bb18f68a79a615567b3627055f48f3fcbc26f147a98cac70ba  1234567890123456800      1
+b21f9d034e0296fa54f85fede94c1c3323b1d52a77ba1eba9fb8ecb0ec810a3d  1234567890123456800      1
+eb41912d6e04773acdf12e669d21a7c5925ee8e09fd1e2f56c7cd6dc529a3ee6  1234567890123456800      1
+0c1ae0ed8307abf191719dbb5fe16f54342dee973e56635a0d8d4c83f4dd43c4  1234567890123456789      1
+131d726c5e190ef1d4a47a8fd581ac916105ebcc8169f8461835aff200108421  1234567890123456789      1
+2170179acb579cddf144bfc44cfbdb967cb26255c761b7cd46564f03110db8cc  1234567890123456789      1
+24a370194722bf9a16c9ba0f28cd4fe7325a1aeb289f35aebedd562ed6ab7866  1234567890123456789      1
+36af2332458f4758891aef53edf9dce0915ba8f8b97db6a005004b6b0af793e4  1234567890123456789      1
+3b03cf193ca58f65374fc9d55a2a542224758580889eb0cdb8f351974d064118  1234567890123456789      1
+4b83a45f55691a976ceb0fdadbe05e891c317849d7ae2207918e1a46298e3e0d  1234567890123456789      1
+4c93c2304a66e64fce0f71e8b21227aa1400b71fd82e8759c193e2a4bb4eafa5  1234567890123456789      1
+
+== Top 20 boxes by value in exposed categories: not printed (set Q1_TOP_BOXES=1; do not post publicly) ==

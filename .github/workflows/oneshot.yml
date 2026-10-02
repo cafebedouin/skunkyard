@@ -1,0 +1,22 @@
+# oneshot: the TypeScript signer reproduces the Scala vectors byte for byte, Fleet's output bytes match the reference
+# serializer, and two builds of the page are identical to the committed docs/oneshot/. Runs on GitHub-hosted runners
+# so the claims in skunks/oneshot/RESULT.md can be re-checked by anyone from the Actions tab.
+name: oneshot checks
+on:
+  push:
+    paths: ['skunks/oneshot/**', 'docs/oneshot/**', '.github/workflows/oneshot.yml']
+  pull_request:
+    paths: ['skunks/oneshot/**', 'docs/oneshot/**']
+  workflow_dispatch:
+jobs:
+  test-and-build:
+    runs-on: ubuntu-24.04
+    defaults: { run: { working-directory: skunks/oneshot } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '24', cache: npm, cache-dependency-path: skunks/oneshot/package-lock.json }
+      - run: npm ci
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run build:check

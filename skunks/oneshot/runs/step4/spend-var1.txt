@@ -1,0 +1,27 @@
+[flow] sigmastate-js loaded in 2466 ms
+[flow] scheme oneshot/p2sh/v1; pk 03a0a93caad01e49c9ef010a8ee680506256123e8f50de30b7199b3e1fb4c7ecdf; inner proposition 08cd03a0a93caad01e49c9ef010a8ee680506256123e8f50de30b7199b3e1fb4c7ecdf (35 bytes); script hash 0839a50cfb7bb9c41ff6914a439b2ae1bbe9d301a6ec37e3
+[flow] P2SH address pUndDX5bSKiFNPHmrRM4mfp99SySzCJsqoMwDRj
+[flow] api http://128.253.41.110:9052 (node mode)
+[flow] destination 3WxtnwJojAm4C9DJtgNHs5zawzD44yE6cKyGM7NeHf7Cw1yP7XBU (testnet address, checked)
+[flow] box a0686a6f29bbff33f5a68ccc10bc7b6db7c87d71e3c193958cb46df295c77ee9 value 1000000000; ergoTree 00ea02d193b4cbe4e3010e040004300e180839a50cfb7bb9c41ff6914a439b2ae1bbe9d301a6ec37e3d40801
+[flow] box script form: var1 (equals the var1 tree byte for byte; Fleet's ErgoAddress.decode tree, sigma-state 5.x) -> context variable 1
+[flow] state context: last 10 headers 576619..576628 from node http://128.253.41.110:9052, ids recomputed and chained; tip 62da91fc8b36cbec59a3e8072254aebccdd0e8d1d11d2969ab225adddac4ccb9; pre-header height 576629; parameters blockVersion 4
+[flow] built with Fleet at height 576628: 1 input (extension var 1 = 0e23 ++ 08cd ++ pk), outputs 999000000 + 1000000 (destination + fee)
+[flow] reduce 67.1 ms, sign 7.1 ms (first call in this process)
+[flow] proof 56 bytes d6be2de410c34a09547a9a7faaacb19a1a8d794494d69b99a0940a07bb26a76c8bca03d598c43712fbc068dfad2accfbcf442075fe32d01e; SigmaPropVerifier: true; forged proof verifies: false
+[flow] local tx id d660cd11dc8e4656f1658ff2ce24caa5c4401b34dc2dc8469ed0dea40f41e96d (291 bytes)
+[flow] BENCH var126 node v25.1.0 runs=20 on the real header context: reduce median 4.3 ms (min 3.2, max 7.8); sign median 1.8 ms (min 1.4, max 10.9)
+[flow] BENCH var1 node v25.1.0 runs=20 on the real header context: reduce median 2.8 ms (min 2.3, max 4.2); sign median 1.3 ms (min 1.1, max 1.8)
+[flow] FORGED submit -> HTTP 400
+[flow] FORGED response: {
+  "error" : 400,
+  "reason" : "bad.request",
+  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. d660cd11dc8e4656f1658ff2ce24caa5c4401b34dc2dc8469ed0dea40f41e96d: #0 => Success((false,569))"
+}
+[flow] FORGED rejected by the script check
+FLOW: FORGED-REJECTED d660cd11dc8e4656f1658ff2ce24caa5c4401b34dc2dc8469ed0dea40f41e96d (same id: the proof is not part of the id)
+[flow] VALID submit -> HTTP 200: "d660cd11dc8e4656f1658ff2ce24caa5c4401b34dc2dc8469ed0dea40f41e96d"
+[flow] submitted tx id d660cd11dc8e4656f1658ff2ce24caa5c4401b34dc2dc8469ed0dea40f41e96d; equals the local id: yes
+[flow] state mempool (mempool entry: size 291 cost absent)
+[flow] state confirmed at height 576630
+FLOW: CONFIRMED d660cd11dc8e4656f1658ff2ce24caa5c4401b34dc2dc8469ed0dea40f41e96d height 576630 form var1

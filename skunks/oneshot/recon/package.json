@@ -1,0 +1,21 @@
+{
+  "name": "oneshot-recon",
+  "private": true,
+  "type": "module",
+  "description": "oneshot step 4 recon: P2SH spend through sigmastate-js (Node, then an esbuild browser bundle)",
+  "dependencies": {
+    "@fleet-sdk/core": "0.12.0",
+    "@fleet-sdk/serializer": "0.11.0",
+    "@noble/curves": "1.9.7",
+    "@noble/hashes": "2.4.0",
+    "sigmastate-js": "0.6.3"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "ergo-lib-wasm-nodejs": "0.28.0"
+  },
+  "scripts": {
+    "recon": "node p2sh-sigmastatejs.mjs",
+    "bundle": "node bundle.mjs && node out/smoke.mjs"
+  }
+}

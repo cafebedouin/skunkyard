@@ -1,0 +1,43 @@
+PASS page loaded, script ran (mode note filled)
+PASS mainnet choice disabled
+PASS watch and spend hidden before a key
+PASS generate: seed is 64 hex
+PASS generate: note names oneshot/v1 n=32 w=16
+PASS generate: address, watch and spend hidden until the seed is confirmed copied
+PASS after confirming: testnet P2S address shown (1154 chars, starts 5)
+PASS destination validation rejects garbage
+PASS restore: seed shown
+address 517F9i5jUNsxjWYWLHRbMAGZ... (1154 chars)
+  row: 2999ea40e985a6745e5c73cc4154485b8359ad05c9592377c26bd4bd65fd487c | 1 | created 576644
+PASS destination accepted
+PASS sign button enabled
+lock          WOTS (oneshot/v1 n=32 w=16)
+input box     2999ea40e985a6745e5c73cc4154485b8359ad05c9592377c26bd4bd65fd487c
+outputs       0.999 ERG + 0.001 ERG (destination + fee)
+height        576646
+message       b33fc3e5954fc88f77d7882ac5f6d9e2df31786056774b083030690871a30807
+signature     2144 bytes (context variable 0), verified locally
+tx id         773e1fe404cc192caa55962ff5056b2322494ab2bbc4df22da3bc0716e959ef0
+size          2345 bytes
+PASS sign button disabled after signing
+--- page log (verbatim) ---
+forged transaction 27e7b6019986e29ca3b530439900b8689657662d50e40e5fd608d2027f892d3e (signature byte 0, low bit flipped): submitting...
+HTTP 400: {
+  "error" : 400,
+  "reason" : "bad.request",
+  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 27e7b6019986e29ca3b530439900b8689657662d50e40e5fd608d2027f892d3e: #0 => Success((false,37701))"
+}
+rejected by the script check, as it should be.
+submitting 773e1fe404cc192caa55962ff5056b2322494ab2bbc4df22da3bc0716e959ef0...
+HTTP 200: "773e1fe404cc192caa55962ff5056b2322494ab2bbc4df22da3bc0716e959ef0"
+transaction id 773e1fe404cc192caa55962ff5056b2322494ab2bbc4df22da3bc0716e959ef0 (equals the id computed here)
+state: mempool
+state: confirmed at height 576648
+CONFIRMED: 773e1fe404cc192caa55962ff5056b2322494ab2bbc4df22da3bc0716e959ef0 at height 576648
+---
+PASS page: forged rejected by the script check
+PASS page: valid confirmed
+PASS page refuses a second key or signature after signing
+PASS only the API base was contacted (http://128.253.41.110:9052)
+PASS no script errors in the page
+PAGE-DRIVE: PASS

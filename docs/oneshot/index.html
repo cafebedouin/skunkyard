@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src *; script-src 'self'; style-src 'self'; img-src 'self' data:">
+<title>oneshot: one-time locks for Ergo (testnet)</title>
+<link rel="stylesheet" href="oneshot.css">
+</head>
+<body>
+<main>
+<h1>oneshot <small>testnet</small></h1>
+<p class="lede">Two one-time locks for Ergo. <strong>WOTS</strong>: a hash-based (post-quantum) one-time signature;
+the lock is an ordinary pay-to-script address and the spend carries a 2,144-byte signature as context variable 0 and
+no other proof. <strong>P2SH</strong>: an ordinary <code>proveDlog</code> key hidden behind a pay-to-script-hash
+address, so the public key is not on chain until the spend; the spend is proved with sigmastate-js (loaded only
+then, about 7 MB). Generate a key, send testnet ERG to its address from any wallet, then spend the whole box once to
+an address you name. Source:
+<code>skunks/oneshot/</code> in the skunkyard repository; this page is its bundle, built by
+<code>scripts/build.mjs</code>.</p>
+
+<div class="warn" role="alert">
+<p><strong>One-time key.</strong> This key may sign exactly one transaction, ever. A second signature by the same key
+lets anyone who sees both forge a third: the funds are then at risk.</p>
+<p><strong>Spend everything once.</strong> The spend takes the whole box (all of it, minus a 0.001 ERG fee) to one
+address. Send to this address exactly once. If two boxes arrive, only one can ever be spent safely.</p>
+<p><strong>A second spend from the same key is unsafe.</strong> This page refuses to sign twice with the same seed in
+one session, but it cannot know what you did in another tab, another browser or another tool.</p>
+<p id="warn-p2sh" hidden><strong>P2SH hides the key only until the first spend.</strong> A <code>proveDlog</code>
+key can sign many times, but the spend publishes the public key: after it, this address is an ordinary exposed key
+(and not post-quantum). Do not use one seed twice: send to the address once, spend once, then discard the seed.</p>
+<p><strong>Testnet only.</strong> Experimental code, no audit. The seed is the only key: lose it and the box is gone.</p>
+</div>
+
+<section id="s-network">
+<h2>1. Network and API</h2>
+<fieldset>
+<legend>Network</legend>
+<label><input type="radio" name="net" value="testnet" checked> testnet</label>
+<label class="disabled"><input type="radio" name="net" value="mainnet" disabled> mainnet</label>
+<p class="note">Mainnet is disabled in this version (charter: no mainnet funds).</p>
+</fieldset>
+<fieldset>
+<legend>API</legend>
+<label><input type="radio" name="mode" value="explorer" checked> explorer</label>
+<label><input type="radio" name="mode" value="node"> node</label>
+<label class="wide">API base <input id="api-base" type="url" spellcheck="false" value="https://api-testnet.ergoplatform.com"></label>
+<p class="note" id="mode-note"></p>
+<label class="wide" id="delay-row" hidden>Miner-fee contract delay (node mode only: 720 on testnet; a peeryard devnet uses 10)
+<input id="fee-delay" type="text" inputmode="numeric" value="720"></label>
+</fieldset>
+</section>
+
+<section id="s-key">
+<h2>2. Key</h2>
+<fieldset>
+<legend>Lock type</legend>
+<label><input type="radio" name="lock" value="wots" checked> WOTS (one-time, post-quantum)</label>
+<label><input type="radio" name="lock" value="p2sh"> P2SH (<code>proveDlog</code>, key hidden until the spend)</label>
+</fieldset>
+<div class="row">
+<button id="btn-generate" type="button">Generate a new key</button>
+<span class="or">or restore:</span>
+<input id="restore-seed" type="text" spellcheck="false" autocomplete="off" placeholder="seed: 64 hex characters, or the whole note line">
+<button id="btn-restore" type="button">Restore</button>
+</div>
+<p class="error" id="key-error"></p>
+<div id="key-out" hidden>
+<label class="wide">Seed (32 bytes, hex)<textarea id="seed-hex" readonly rows="2" spellcheck="false"></textarea></label>
+<label class="wide">Derivation note (keep it with the seed)<textarea id="seed-note" readonly rows="3" spellcheck="false"></textarea></label>
+<div class="row"><button id="btn-copy-note" type="button">Copy note</button><span id="copy-status" class="note"></span></div>
+<label class="confirm"><input id="seed-saved" type="checkbox"> I have copied the seed and the note somewhere safe. Without them the box cannot be spent.</label>
+</div>
+<div id="addr-out" hidden>
+<label class="wide">Testnet address (<span id="addr-kind">pay-to-script</span>, <span id="addr-len"></span> characters)<textarea id="address" readonly rows="6" spellcheck="false"></textarea></label>
+<p class="note" id="p2sh-trees" hidden></p>
+<div class="row"><button id="btn-copy-addr" type="button">Copy address</button><span class="note">Send testnet ERG here once, from any wallet, with no registers or tokens needed.</span></div>
+</div>
+</section>
+
+<section id="s-watch" hidden>
+<h2>3. Watch for funding</h2>
+<div class="row"><button id="btn-watch" type="button">Start watching</button><span id="watch-status" class="note"></span></div>
+<div class="row"><input id="box-id" type="text" spellcheck="false" autocomplete="off" placeholder="or a box id (for a node without an address index)"><button id="btn-box-id" type="button">Look up box</button></div>
+<p class="error" id="watch-error"></p>
+<table id="boxes"><thead><tr><th></th><th>box id</th><th>value (ERG)</th><th>height</th></tr></thead><tbody></tbody></table>
+<p class="warn-inline" id="multi-box" hidden>More than one box is at this address. A one-time key can spend only one of them; the others stay locked for good.</p>
+</section>
+
+<section id="s-spend" hidden>
+<h2>4. Spend (once)</h2>
+<label class="wide">Destination (testnet address)<input id="dest" type="text" spellcheck="false" autocomplete="off"></label>
+<p class="note" id="dest-status"></p>
+<p>Fee: 0.001 ERG. The destination receives the box value minus the fee.</p>
+<div class="row"><button id="btn-sign" type="button" disabled>Build and sign (uses the one-time key)</button><span id="sign-status" class="note"></span></div>
+<p class="error" id="sign-error"></p>
+<div id="signed" hidden>
+<pre id="signed-summary"></pre>
+<details><summary>Transaction JSON (node / explorer submit format)</summary><textarea id="tx-json" readonly rows="10" spellcheck="false"></textarea></details>
+<details><summary>EIP-12 object (Fleet)</summary><textarea id="eip12-json" readonly rows="10" spellcheck="false"></textarea></details>
+<h3>Self-check, then submit</h3>
+<p>The test submits the same transaction with one bit of the signature (WOTS) or of the sigma proof (P2SH)
+flipped; the node must refuse it with its script-verification message. Run it before the real submission: afterwards the box is spent and a rejection would
+mean nothing.</p>
+<div class="row">
+<button id="btn-forge" type="button">Test rejection (submit forged)</button>
+<button id="btn-submit" type="button">Submit the transaction</button>
+</div>
+<pre id="submit-log" aria-live="polite"></pre>
+</div>
+</section>
+
+<footer><p>No analytics, no third-party scripts, no fonts fetched: the only network calls go to the API base above.
+Scripts load only from this page's own directory (<code>oneshot.js</code>; <code>oneshot-sigma.js</code> for a P2SH
+spend), under a Content Security Policy that says so.</p></footer>
+</main>
+<script src="oneshot.js"></script>
+</body>
+</html>
