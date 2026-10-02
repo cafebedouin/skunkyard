@@ -1,0 +1,1 @@
+Document the canonical P2SH box script for sigma 6.x and the three forms SDKs write (one is unspendable)
