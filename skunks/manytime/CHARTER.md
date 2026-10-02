@@ -26,3 +26,9 @@ is wrong and the post's section 5 line stays "unimplemented".
 different transaction (a stuck spend is replaced by spending the output, never by re-signing; the index advances
 only on confirmation); binding of other inputs (the message covers `SELF.id` and the outputs only, as in the post);
 anything about which holders should use it.
+
+**Next step (SK-032).** Rotation as an option: on the last leaf, require the continuing box to carry a fresh tree
+and index 0, in two forms a wallet can switch between like Nautilus's fresh-address toggle: the digest as a script
+constant (a new address per key set) or in a register (one address, a new digest). Height is a parameter; XMSS's
+standard heights are 10, 16 and 20. How many times a typical address signs on mainnet is unmeasured and would set
+the default height; a chain scan answers it.
