@@ -6,45 +6,69 @@ detail lives in the linked file. Lanes: **now** (unblocked, do first), **next** 
 
 Kinds: `research` (a question measured on Ergo's chain and script), `skunk` (a proof of concept with a charter and a
 kill criterion), `upstream` (an issue, PR or reply we owe someone), `community` (an item from a stated community
-need: kushti's self-governance thread 5368, developer-chat asks).
+need).
+
+Layers, which decide where a question is settled: `script` (what a box script can enforce; one node's answer to a
+transaction settles it; skunkyard), `chain` (data already on the chain: censuses, vote history; a scan settles it;
+skunkyard), `node` (what the node or the network does under load, adversaries or version differences; a peeryard
+scenario settles it; registered in ergo_logic's register and consumed here), `tooling` (SDKs, wallets, pages,
+explorers; skunkyard), `community`. An item that rests on a `node` foundation names it in the Foundations table and
+is not scheduled before that foundation has a measured answer.
 
 ## Now
 
-| Id | Kind | Item | Next action | Where |
-|---|---|---|---|---|
-| SK-001 | upstream | Post-quantum thread 5369: the four-week read on 2026-10-30, the eight-week check on 2026-11-27 | watch replies; route per Node B | `research/pq/DECISIONS.md` |
-| SK-002 | research | Q1 final census at the tip | run `q1/run.sh` when the mainnet node reaches ~1,885,000; reply in 5369 | `q1/`, `NEXT.md` |
-| SK-003 | upstream | sigma-rust #928 / PR #929: respond to review; watch #860 and #879 which affect two tests | reply within the maintainers' cadence | `posts/sigma-rust/` |
-| SK-004 | upstream | Fleet #219 (`toP2SH()` hashes the tree, not the proposition) | respond to review | `posts/fleet/ISSUE.md` |
-| SK-005 | research | The on-chain spending policy for autonomous agents ("fence"): what a box script can enforce on an LLM-driven agent that holds its key | write the policy contract; cost it; devnet attacks | `research/agents/README.md` |
+| Id | Kind | Layer | Item | Next action | Foundations | Where |
+|---|---|---|---|---|---|---|
+| SK-001 | upstream | community | Post-quantum thread 5369: the four-week read on 2026-10-30, the eight-week check on 2026-11-27 | watch replies; route per Node B | F5, F8 for the capacity claims | `research/pq/DECISIONS.md` |
+| SK-002 | research | chain | Q1 final census at the tip | run `q1/run.sh` when the mainnet node reaches ~1,885,000; reply in 5369 | none | `q1/`, `NEXT.md` |
+| SK-003 | upstream | tooling | sigma-rust #928 / PR #929: respond to review; watch #860 and #879 which affect two tests | reply within the maintainers' cadence | none | `posts/sigma-rust/` |
+| SK-004 | upstream | tooling | Fleet #219 (`toP2SH()` hashes the tree, not the proposition) | respond to review | none | `posts/fleet/ISSUE.md` |
+| SK-005 | research | script | The on-chain spending policy for autonomous agents ("fence") | write the policy contract; cost it; devnet attacks | F1 (the interval uses the creation height rent resets), F3 | `research/agents/README.md` |
 
 ## Next
 
-| Id | Kind | Item | Trigger | Where |
-|---|---|---|---|---|
-| SK-006 | skunk | Second skunk, chosen at Node D: many-time keys (AVL tree of WOTS keys, box-carried index) if someone asks for reuse-safe keys; otherwise the TSNP pilot | 2026-10-30 read | `research/pq/DECISIONS.md` Node D |
-| SK-007 | research | TSNP: the anonymity-set correction (Q0) for thread 5311 and the ring-cost measurement (Q1) | after SK-001's first replies; the correction can go sooner | `tsnp/PILOT-TSNP.md` |
-| SK-008 | research | TSNP post-quantum bearer note (oneshot lock + expiry + fee box; P2SH-wrapped variant) | after SK-007 | `tsnp/QUANTUM-HORIZON.md` |
-| SK-009 | research | Inclusion and ordering: what a transaction can enforce about who includes it and when (I1 to I5) | a free devnet slot | `research/inclusion/README.md` |
-| SK-010 | upstream | sigmastate-js: an `AvlTreeProver` facade in `sdk/js` (the prover already compiles to JS; no export) | after SK-003 settles the P2SH question | `notes/` (reads on the Scala.js build) |
-| SK-011 | upstream | The canonical P2SH box script (var 126 vs 1): if the maintainers answer in 5369, a doc or EIP note in sigmastate | the maintainers' answer | thread 5369, ask 2 |
-| SK-019 | research | Basis under adversarial trackers: the reserve contract's seven stated security properties executed as a devnet attack suite, plus the README-versus-contract gap on emergency redemption and censorship, with redemption costs | kushti's tracker launch (thread 5368); before the community ledger carries value | `research/basis/README.md` (to write; contract: BetterMoneyLabs/basis-tracker `contract/basis.es`) |
-| SK-012 | upstream | Multi-input binding for the WOTS verifier (message over `INPUTS` ids), then re-measure | before any opcode proposal | `q2/` |
+| Id | Kind | Layer | Item | Trigger | Foundations | Where |
+|---|---|---|---|---|---|---|
+| SK-006 | skunk | script | Second skunk, chosen at Node D: many-time keys (AVL tree of WOTS keys, box-carried index) if someone asks for reuse-safe keys; otherwise the TSNP pilot | 2026-10-30 read | F1 (box-carried state across rent) | `research/pq/DECISIONS.md` Node D |
+| SK-007 | research | script, chain | TSNP: the anonymity-set correction (Q0) for thread 5311 and the ring-cost measurement (Q1) | after SK-001's first replies; the correction can go sooner | F3 (grace period and mempool cleanup), F7 (ring rebuilt from an indexer) | `tsnp/PILOT-TSNP.md` |
+| SK-008 | research | script | TSNP post-quantum bearer note (oneshot lock + expiry + fee box; P2SH-wrapped variant) | after SK-007 | F1, F3 | `tsnp/QUANTUM-HORIZON.md` |
+| SK-009 | research | node, script | Inclusion and ordering: what a transaction can enforce about who includes it and when (I1 to I5) | I1 to I3 are peeryard scenarios (F3, F4); I4, I5 here | F3, F4 | `research/inclusion/README.md` |
+| SK-010 | upstream | tooling | sigmastate-js: an `AvlTreeProver` facade in `sdk/js` | after SK-003 settles the P2SH question | none | `notes/` |
+| SK-011 | upstream | community | The canonical P2SH box script (var 126 vs 1): a doc or EIP note in sigmastate if the maintainers answer | the maintainers' answer | none | thread 5369, ask 2 |
+| SK-012 | upstream | script | Multi-input binding for the WOTS verifier (message over `INPUTS` ids), then re-measure | before any opcode proposal | none | `q2/` |
+| SK-019 | research | script, node | Basis under adversarial trackers: the reserve contract's seven stated security properties as a devnet attack suite, the README-versus-contract gap on emergency redemption and censorship, redemption costs | kushti's tracker launch (thread 5368) | F1 (reserves older than rent age), F2 (issuer timestamps vs any clock), F3 (tracker reordering is mempool ordering) | to write: `research/basis/README.md` |
 
 ## Later
 
-| Id | Kind | Item | Trigger | Where |
+| Id | Kind | Layer | Item | Trigger | Foundations | Where |
+|---|---|---|---|---|---|---|
+| SK-013 | community | community | Basis tracker (thread 5368): join as an early tester; log skunkyard's contributions as credit notes; report what the system does with research work | kushti's server launch | none | thread 5368 |
+| SK-014 | research | chain | Basis reserves under the quantum horizon: the reserve and note contracts rest on `proveDlog`; measure the reserve contract's exposure when live | Basis mainnet contracts published | none | `tsnp/QUANTUM-HORIZON.md` for the method |
+| SK-015 | community | community | kushti's per-primitive spec rewrite: contribute the measured cost-model facts | his pull request opens | none | `q2/RESULT.md`, `notes/` |
+| SK-016 | upstream | tooling | Nautilus: a sigmastate-js reduction path as the fallback; the oneshot page as the reference flow | a wallet-team answer in 5369 | none | thread 5369, ask 3 |
+| SK-017 | research | node | Lithos LIT as the instrument for inclusion deals | SK-009's I1 result | F3 | `research/inclusion/README.md` I4 |
+| SK-020 | research | tooling | Wallet and SDK capability table: which of Fleet, sigma-rust (wasm), appkit, sigmastate-js, Nautilus, the mobile wallet can build and sign each transaction shape, each submitted to a devnet; vectors offered to SANTA | a free session; first among the four below | none | to write: `research/sdk-table/README.md` |
+| SK-021 | research | chain, node | Storage rent as an actor: mainnet contract boxes approaching rent age by template (chain), then rent collection executed on a devnet against each contract type (node: F1) | after SK-020 | F1 is this item's node half | to write: `research/rent/README.md` |
+| SK-022 | research | node, chain | The contract clock: `HEIGHT`, the pre-header timestamp, `creationHeight`, issuer-set note timestamps; who controls each and how far each can be pushed (node: F2), which deployed contracts rest on which (chain) | after SK-021 | F2 is this item's node half | to write: `research/clock/README.md` |
+| SK-023 | research | chain | Governance measured: reconstruct the miner-vote history of parameters 3, 4 and 9 from block extensions | a free session | F5 for the mechanics | to write: `research/votes/README.md` |
+| SK-018 | skunk | tooling | oneshot: a person clicks through the page in a real browser; HTTPS submit path; mainnet enablement is NOT planned | a volunteer with testnet ERG | F7 | `skunks/oneshot/CHARTER.md` |
+
+## Foundations (node layer; peeryard questions)
+
+What the items above silently assume about the node and the network. "Status" says whether the assumption has a
+measured answer. Items registered in ergo_logic's register get their id recorded here; the registration prompt is
+`prompts/peeryard-foundations.md`.
+
+| Id | Foundation | Assumed by | Status | ergo_logic id |
 |---|---|---|---|---|
-| SK-013 | community | Basis tracker (thread 5368): join as an early tester; log skunkyard's contributions (the sigma-rust fix, the Fleet report, the census) as credit notes through it; report what the system does with research work | kushti's server launch | https://ergoforum.org/t/ergo-community-self-governance-via-p2p-money-creation/5368 |
-| SK-014 | research | Basis reserves under the quantum horizon: the reserve and note contracts rest on `proveDlog`; the same census and the bearer-note design apply; measure the reserve contract's exposure when the tracker is live | Basis mainnet contracts published | `tsnp/QUANTUM-HORIZON.md` for the method |
-| SK-015 | community | kushti's per-primitive spec rewrite of the yellow paper: contribute the measured cost-model facts (fixed per-transaction charge, hash cost constants, the P2SH script forms) | his pull request opens | `q2/RESULT.md`, `notes/` |
-| SK-016 | upstream | Nautilus: a reduction path through sigmastate-js as the fallback when sigma-rust cannot reduce a tree; the oneshot page as the reference flow | a wallet-team answer in 5369 | thread 5369, ask 3 |
-| SK-017 | research | Lithos LIT as the instrument for inclusion deals (from the Discord idea) | SK-009's I1 result | `research/inclusion/README.md` I4 |
-| SK-020 | research | Wallet and SDK capability table: which of Fleet, sigma-rust (wasm), appkit, sigmastate-js, Nautilus, the mobile wallet can build and sign each transaction shape (P2S send with registers, context extension, data inputs, custom fee script, P2SH spend, sigma OR proof, AVL proof, a 6.0 tree), each submitted to a devnet; vectors offered to the SANTA conformance set | a free session; first among these four | to write: `research/sdk-table/README.md` |
-| SK-021 | research | Storage rent as an actor: mainnet contract boxes approaching rent age by template (the scanner's age buckets), then rent collection executed on a devnet against an oneshot box, a Basis reserve, a TSNP note and an agent policy box | after SK-020 | to write: `research/rent/README.md` |
-| SK-022 | research | The contract clock: `HEIGHT`, the pre-header timestamp, `creationHeight` and issuer-set note timestamps; who controls each, how far each can be pushed, which deployed contracts rest on which | after SK-021 | to write: `research/clock/README.md` |
-| SK-023 | research | Governance measured: reconstruct the miner-vote history of parameters 3, 4 and 9 from block extensions (which moved, when, how many epochs of sustained voting); the number behind "votes close the capacity gap" and the first measurement for thread 5368 | a free session | to write: `research/votes/README.md` |
-| SK-018 | skunk | oneshot: a person clicks through the page in a real browser; HTTPS submit path; mainnet enablement is NOT planned | a volunteer with testnet ERG | `skunks/oneshot/CHARTER.md` |
+| F1 | Storage rent collection: the guard is not evaluated, registers are kept, `creationHeight` resets, value falls by the fee, a box below the fee is consumed; what each deployed contract type looks like after one collection | SK-005, SK-006, SK-008, SK-019, SK-021, oneshot boxes | read from docs and the rent code; not executed | to assign |
+| F2 | Clock bounds: how far a miner can push the pre-header timestamp and what the consensus rule is; `HEIGHT` monotonicity; how `creationHeight` is validated against the block height | SK-019, SK-022 | read; not executed | to assign |
+| F3 | Mempool and candidate policy: which outputs count as a fee (the standard fee script bytes only?), ordering by fee rate, minimum fee, cleanup of transactions whose scripts become invalid with height, chained unconfirmed spends, acceptance of a second transaction replacing a rejected one | SK-005, SK-007, SK-008, SK-009 (I1 to I3), SK-017, SK-019 | partly executed (txload, txchain scenarios exist in peeryard); fee recognition and height-dependent cleanup not | to assign |
+| F4 | Input-block ordering at block version 4: which input block a transaction lands in and what "before" means for chained transactions | SK-009 (I3), SK-001's mempool-window claim | peeryard matrix scenarios exist; the ordering question is not asked by them | to assign |
+| F5 | Parameter voting mechanics: step per epoch, epochs of sustained voting to move a parameter by a given factor, who votes | SK-001 (the "votes close the gap" claim), SK-023 | read from `Parameters.scala`; a devnet vote run not executed | to assign |
+| F6 | Script cost accounting at the node: the fixed per-transaction charge, relay cap versus block cap | SK-001, all capacity figures | **executed** (q2 devnet runs, 12,200 residual on every run) | not needed |
+| F7 | Indexer and explorer behavior: an explorer that misfiles var-126 P2SH boxes and times out on submits; a node without `extraIndex` has no address lookup | SK-005, SK-007, SK-018, every off-chain client | observed on testnet; not characterized | tooling, skunkyard (SK-020) |
+| F8 | Relay of large or unusual transactions: 2,345-byte and 4 KB-box transactions, the 96 KB relay cap, fee-per-byte ranking (ergo_logic E-066 is adjacent) | SK-001 (capacity), oneshot | observed on devnet and testnet for 2,345 bytes; the cap and ranking not measured | to assign |
 
 ## Done
 
