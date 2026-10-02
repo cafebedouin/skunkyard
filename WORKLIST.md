@@ -28,6 +28,7 @@ need: kushti's self-governance thread 5368, developer-chat asks).
 | SK-009 | research | Inclusion and ordering: what a transaction can enforce about who includes it and when (I1 to I5) | a free devnet slot | `research/inclusion/README.md` |
 | SK-010 | upstream | sigmastate-js: an `AvlTreeProver` facade in `sdk/js` (the prover already compiles to JS; no export) | after SK-003 settles the P2SH question | `notes/` (reads on the Scala.js build) |
 | SK-011 | upstream | The canonical P2SH box script (var 126 vs 1): if the maintainers answer in 5369, a doc or EIP note in sigmastate | the maintainers' answer | thread 5369, ask 2 |
+| SK-019 | research | Basis under adversarial trackers: the reserve contract's seven stated security properties executed as a devnet attack suite, plus the README-versus-contract gap on emergency redemption and censorship, with redemption costs | kushti's tracker launch (thread 5368); before the community ledger carries value | `research/basis/README.md` (to write; contract: BetterMoneyLabs/basis-tracker `contract/basis.es`) |
 | SK-012 | upstream | Multi-input binding for the WOTS verifier (message over `INPUTS` ids), then re-measure | before any opcode proposal | `q2/` |
 
 ## Later
