@@ -53,8 +53,7 @@ The eight foundations, with what skunkyard already has:
 - **F7 Indexer and explorer behavior.** Tooling, skunkyard's (SK-020); listed for completeness. The node-side part,
   what `extraIndex` adds and costs, is yours if you want it.
 - **F8 Relay of large or unusual transactions.** The 2,345-byte WOTS spend and 4 KB boxes against the 96 KB relay
-  cap and fee-per-byte ranking across several nodes; ergo_logic's E-066 (fee-per-byte denominator) is adjacent.
-  Assumed by SK-001's capacity figures. Status: single-node devnet and testnet acceptance observed; relay across
+  cap and fee-per-byte ranking across several nodes. Assumed by SK-001's capacity figures. Status: single-node devnet and testnet acceptance observed; relay across
   peers not measured.
 
 Evidence skunkyard can hand over for any of these: the devnet hooks under `q2/devnet/` and `skunks/oneshot/devnet/`

@@ -56,19 +56,19 @@ is not scheduled before that foundation has a measured answer.
 ## Foundations (node layer; peeryard questions)
 
 What the items above silently assume about the node and the network. "Status" says whether the assumption has a
-measured answer. Items registered in ergo_logic's register get their id recorded here; the registration prompt is
-`prompts/peeryard-foundations.md`.
+measured answer. Registered items are named here by scenario, not by ergo_logic's register ids, which are private to that
+repository; the registration prompt is `prompts/peeryard-foundations.md`.
 
 | Id | Foundation | Assumed by | Status | ergo_logic id |
 |---|---|---|---|---|
-| F1 | Storage rent collection: the guard is not evaluated, registers are kept, `creationHeight` resets, value falls by the fee, a box below the fee is consumed; what each deployed contract type looks like after one collection | SK-005, SK-006, SK-008, SK-019, SK-021, oneshot boxes | read from docs and the rent code; not executed | to assign |
-| F2 | Clock bounds: how far a miner can push the pre-header timestamp and what the consensus rule is; `HEIGHT` monotonicity; how `creationHeight` is validated against the block height | SK-019, SK-022 | read; not executed | to assign |
-| F3 | Mempool and candidate policy: which outputs count as a fee (the standard fee script bytes only?), ordering by fee rate, minimum fee, cleanup of transactions whose scripts become invalid with height, chained unconfirmed spends, acceptance of a second transaction replacing a rejected one | SK-005, SK-007, SK-008, SK-009 (I1 to I3), SK-017, SK-019 | partly executed (txload, txchain scenarios exist in peeryard); fee recognition and height-dependent cleanup not | to assign |
-| F4 | Input-block ordering at block version 4: which input block a transaction lands in and what "before" means for chained transactions | SK-009 (I3), SK-001's mempool-window claim | peeryard matrix scenarios exist; the ordering question is not asked by them | to assign |
-| F5 | Parameter voting mechanics: step per epoch, epochs of sustained voting to move a parameter by a given factor, who votes | SK-001 (the "votes close the gap" claim), SK-023 | read from `Parameters.scala`; a devnet vote run not executed | to assign |
-| F6 | Script cost accounting at the node: the fixed per-transaction charge, relay cap versus block cap | SK-001, all capacity figures | **executed** (q2 devnet runs, 12,200 residual on every run) | not needed |
-| F7 | Indexer and explorer behavior: an explorer that misfiles var-126 P2SH boxes and times out on submits; a node without `extraIndex` has no address lookup | SK-005, SK-007, SK-018, every off-chain client | observed on testnet; not characterized | tooling, skunkyard (SK-020) |
-| F8 | Relay of large or unusual transactions: 2,345-byte and 4 KB-box transactions, the 96 KB relay cap, fee-per-byte ranking (ergo_logic E-066 is adjacent) | SK-001 (capacity), oneshot | observed on devnet and testnet for 2,345 bytes; the cap and ranking not measured | to assign |
+| F1 | Storage rent collection: the guard is not evaluated, registers are kept, `creationHeight` resets, value falls by the fee, a box below the fee is consumed; what each deployed contract type looks like after one collection | SK-005, SK-006, SK-008, SK-019, SK-021, oneshot boxes | read from docs and the rent code; not executed | registered upstream (ergo_logic): rent-collection scenario, later |
+| F2 | Clock bounds: how far a miner can push the pre-header timestamp and what the consensus rule is; `HEIGHT` monotonicity; how `creationHeight` is validated against the block height | SK-019, SK-022 | read; not executed | registered upstream (ergo_logic): clock-bounds scenario, later |
+| F3 | Mempool and candidate policy: which outputs count as a fee (the standard fee script bytes only?), ordering by fee rate, minimum fee, cleanup of transactions whose scripts become invalid with height, chained unconfirmed spends, acceptance of a second transaction replacing a rejected one | SK-005, SK-007, SK-008, SK-009 (I1 to I3), SK-017, SK-019 | partly executed (txload, txchain scenarios exist in peeryard); fee recognition and height-dependent cleanup not | registered upstream (ergo_logic): mempool and candidate-policy scenario, later |
+| F4 | Input-block ordering at block version 4: which input block a transaction lands in and what "before" means for chained transactions | SK-009 (I3), SK-001's mempool-window claim | peeryard matrix scenarios exist; the ordering question is not asked by them | registered upstream (ergo_logic, Matrix subject): input-block ordering scenario, later |
+| F5 | Parameter voting mechanics: step per epoch, epochs of sustained voting to move a parameter by a given factor, who votes | SK-001 (the "votes close the gap" claim), SK-023 | read from `Parameters.scala`; a devnet vote run not executed | registered upstream (ergo_logic): parameter-voting scenario, later |
+| F6 | Script cost accounting at the node: the fixed per-transaction charge, relay cap versus block cap | SK-001, all capacity figures | **executed** (q2 devnet runs, 12,200 residual on every run) | registered upstream as verified by this measurement |
+| F7 | Indexer and explorer behavior: an explorer that misfiles var-126 P2SH boxes and times out on submits; a node without `extraIndex` has no address lookup | SK-005, SK-007, SK-018, every off-chain client | observed on testnet; not characterized | tooling here (SK-020); the node-side `extraIndex` part registered upstream, optional |
+| F8 | Relay of large or unusual transactions: 2,345-byte and 4 KB-box transactions, the 96 KB relay cap, fee-per-byte ranking | SK-001 (capacity), oneshot | observed on devnet and testnet for 2,345 bytes; the cap and ranking not measured | registered upstream (ergo_logic): large-transaction relay scenario, later |
 
 ## Done
 
