@@ -22,7 +22,9 @@ remote yet.
    and ready to file from the clone `~/bin/sigma-rust-pr` (branch `fix/p2sh-script-form`, three commits; attach
    `captures/`); decide on the private note to kushti first (REVIEW.md, last section). Draft and file a Fleet issue for
    `toP2SH()` hashing the tree instead of the proposition. Put the issue numbers into the post's section 4 and ask 3.
-4. Post. Then the Q1 final run and the oneshot results as replies.
+4. Posted 2026-10-02 to ergoforum.org (https://www.ergoforum.org/t/post-quantum-readiness-on-ergo-measured-exposure-a-no-fork-hash-based-spend-and-what-it-costs/5369) and summarized in the developer chat. Preregistered reads
+   (`research/pq/DECISIONS.md`): Node B at four weeks, 2026-10-30; program kill check at eight weeks, 2026-11-27.
+   Replies to make: the Q1 final run at the tip when the node syncs; the oneshot results already in the post.
 
 ## oneshot (`skunks/oneshot/CHARTER.md`)
 

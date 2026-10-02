@@ -81,3 +81,4 @@ qubits or a maintainer request.
   for a P2SH spend against the 10 MB threshold. The wallet ask is therefore one item (a sigmastate-js reduction path in
   Nautilus with the page as reference), plus the two defects the step surfaced (Fleet `toP2SH()`, sigma-rust's P2SH
   script), the latter with an issue and a fix prepared for sigma-rust.
+- **Posted 2026-10-02** (https://www.ergoforum.org/t/post-quantum-readiness-on-ergo-measured-exposure-a-no-fork-hash-based-spend-and-what-it-costs/5369); Node B read due 2026-10-30; eight-week check 2026-11-27.
