@@ -1,8 +1,10 @@
-# P2SH box script from `Address::script()` cannot be spent on the reference node, and does not parse back in sigma-rust
+# P2SH box script from `Address::script()` is rejected by an ergo 6.0.6 devnet node, and does not parse back in sigma-rust
+
+Prepared with Claude Code (Anthropic, Claude Opus 5.5) for cafebedouin, using peeryard v0.1.0 (ba56b25) on 6.0.6 (21b9023933b1); the devnet runs are the skunkyard project's.
 
 ## Summary
 
-For a P2SH address, `Address::script()` (`ergotree-ir/src/chain/address.rs`, the `Address::P2SH` arm, lines 220-263 on `develop` at 1633e018) writes a box script that hashes the `Option` returned by `GetVar(1)` instead of the `Coll[Byte]` inside it. ergo 6.0.6 rejects every spend of such a box. sigma-rust's own parser also rejects the tree bytes. The reference (sigma-state 6.x) and Fleet SDK both write `OptionGet` before `CalcBlake2b256`, and their trees spend.
+The P2SH box script that `Address::script()` writes was rejected by an ergo 6.0.6 devnet node (`ergo-6.0.6.jar`, sha256 `21b9023933b1...`, block version 4): two spends were submitted and both were rejected. The script (`ergotree-ir/src/chain/address.rs`, the `Address::P2SH` arm, lines 220-263 on `develop` at 1633e018) hashes the `Option` returned by `GetVar(1)` instead of the `Coll[Byte]` inside it. sigma-rust's own parser also rejects the tree bytes. The reference (sigma-state 6.x) and Fleet SDK both write `OptionGet` before `CalcBlake2b256`, and their trees spend.
 
 ## What sigma-rust writes
 
@@ -22,13 +24,25 @@ ErgoTree header `0x00`. For testnet address `qQqAgn6N6hrNTTu2s19HJg52NK37GENqoeo
 
 ## What the node does with it
 
-ergo 6.0.6 devnet, block version 4. The box carried these bytes unchanged, and the spend had `08cd ++ pk` in variable 1 plus a valid `proveDlog(pk)` proof. `POST /transactions` answered:
+A one-node devnet of ergo 6.0.6 (block version 4). The box carried these bytes unchanged, and each spend had `08cd ++ pk` in variable 1 plus a valid `proveDlog(pk)` proof over the bytes to sign (one proof made by ergo-lib-wasm, one by sigmastate-js). `POST /transactions` answered the first:
 
 ```
 HTTP 400 { "error" : 400, "reason" : "bad.request", "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 69b1541e55f3da470a22105241ed1ba0007a74d666db81301561e1c406bf921b: #0 => Failure(java.lang.ClassCastException: class scala.Some cannot be cast to class sigma.Coll (scala.Some and sigma.Coll are in unnamed module of loader 'app'))" }
 ```
 
-The node accepted the box when it was created, so a payer using sigma-rust can lock funds in a box that no prover can spend.
+The second (tx `b7a5410e...7284`) got the same `ClassCastException`. The node accepted the box when it was created, so a payer using sigma-rust can lock funds in a box that no prover can spend.
+
+<details>
+<summary>The first rejected transaction, as submitted</summary>
+
+Address `rNoPVtL9L9cuzgqQqkPsqo9VginDU6dBAtBamSU` (testnet), pk `0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4`, hash `c0a470aaba05a2ea5af472095898300cf8ca7707244df4f9`. Box script written by ergo-lib-wasm 0.28.0 `Address.from_base58(addr).to_ergo_tree()`: `00ea02d193b4cbe3010e040004300e18c0a470aaba05a2ea5af472095898300cf8ca7707244df4f9d40801`. Box `ff5dec6a...` of funding tx `b3a15c7173e2666113e6a1deb213cddee9c13128c7db6344387b1d11d4a1d023`; extension variable 1 is `0e23 ++ 08cd ++ pk`; proof by ergo-lib-wasm `sign_message_using_p2pk` over the bytes to sign.
+
+```json
+{"inputs":[{"boxId":"ff5dec6a1d1817562dcfa67e9657d8655832fae4fae09ec43cc64e01b8433a0f","spendingProof":{"proofBytes":"c095798b35617b031ca2dd720dea095407d8cef2198bcdcad8ff3a61ab7c0a32ac2d433f8df8ba8ea05697edac5f282884a1735b904598ab","extension":{"1":"0e2308cd0254e96de17274a4e0ba3c61b95ed96ee6104f0baa52fd7c5e73a8b946d67d06b4"}}}],"dataInputs":[],"outputs":[{"value":999000000,"ergoTree":"0008cd038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c","assets":[],"additionalRegisters":{},"creationHeight":24},{"value":1000000,"ergoTree":"1005040004000e351002041408cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304","assets":[],"additionalRegisters":{},"creationHeight":24}],"id":"69b1541e55f3da470a22105241ed1ba0007a74d666db81301561e1c406bf921b"}
+```
+
+The box id, the funding transaction and the proof are specific to that devnet. To re-run on another node, fund a box with the tree above, build the same one-input spend, and sign its bytes to sign with the secret of pk. The reproduction without a node is the run card below.
+</details>
 
 ## What the reference and Fleet write
 
@@ -76,7 +90,7 @@ fn main() {
 }
 ```
 
-Expected output on `develop` 1633e018 (verbatim, `cargo run -q`):
+Output on `develop` 1633e018 (`cargo run -q`). The stable parts are `InvalidArgument`, expected `SColl(SByte)`, got `SOption(SColl(SByte))`, and `Ok(false)`; the error wrapping may differ between builds:
 
 ```
 script() bytes: 00ea02d193b4cbe3010e040004300e1862d1e48400494bfedf9bf70d4af152428fb46f32bf05d199d40801
@@ -84,11 +98,9 @@ parse back:     Err(InvalidArgument(InvalidArgumentError("InvalidExprEvalTypeErr
 recreate(6.x reference tree) is P2SH: Ok(false)
 ```
 
-There is also a JavaScript reproduction against ergo-lib-wasm-nodejs 0.28.0: `skunks/oneshot/scripts/sigma-rust-p2sh-repro.cjs` in the skunkyard project. It was not re-run for this report.
-
 ## Evidence: P2SH forms on a node
 
-The skunkyard project ran this test (2026-10-02; one ergo 6.0.6 node, block version 4; three runs with the same verdicts; run 3 shown). It used one P2SH address of `proveDlog(pk)`, pk `0254e96d...7d06b4`, hash `c0a470aaba05a2ea5af472095898300cf8ca7707244df4f9`. The node wallet paid 1 ERG to each tree.
+A one-node devnet of ergo 6.0.6 (2026-10-02; block version 4; three runs with the same verdicts; run 3 shown). It used one P2SH address of `proveDlog(pk)`, pk `0254e96d...7d06b4`, hash `c0a470aaba05a2ea5af472095898300cf8ca7707244df4f9`. The node wallet paid 1 ERG to each tree.
 
 | form | writer | var | signed by | node response | confirmed |
 |---|---|---|---|---|---|
@@ -101,17 +113,7 @@ The skunkyard project ran this test (2026-10-02; one ergo 6.0.6 node, block vers
 
 ## Prior reports searched
 
-All searches were run on 2026-10-02 against ergoplatform/sigma-rust:
-- `gh issue list` and `gh pr list` with `--state all --search` for `P2SH`, `Pay2SH`, `DeserializeContext`, `GetVar 126`, `OptionGet`, and `scriptId`.
-- `gh api search/issues` for `P2SH`, `Pay2SH`, `pay to script hash`, `p2sh script`, `ClassCastException`, `NonConsumedBytes`, and `scala.Some`.
-- `git log` of `address.rs` on `develop`, including `-L` over the P2SH arm.
-
-Hits:
-- #337 (closed): the issue that asked for `Address::Pay2Sh`.
-- #407 (merged 2021-09-23): the implementation. Commits c80c5a6c and 52b7a1f5 wrote `var_id: 1` without `OptionGet`, and the form has not changed since.
-- #879 (open): `DeserializeContext` substitution when a variable is absent. It is related to `DeserializeContext` but not to this defect.
-
-No hit reports the missing `OptionGet` or the variable-126 change.
+Issues, pull requests and the `address.rs` history of ergoplatform/sigma-rust were searched on 2026-10-02 for P2SH, `DeserializeContext`, `OptionGet`, the variable id and the node's error text. The hits are #337 (the request for `Address::Pay2Sh`), #407 (its implementation, which wrote `var_id: 1` without `OptionGet`; unchanged since) and #879 (open, `DeserializeContext` substitution, unrelated), and none reports this defect.
 
 ## Proposed fix
 
@@ -120,6 +122,8 @@ Build the sigma-state 6.x form in `Address::script()`:
 - `SigmaAnd` with `DeserializeContext(126, SigmaProp)`.
 - Header `0x00`, no constant segregation.
 
-The variable id should be a named constant that cites `Pay2SHAddress.scriptId` and the 5.x to 6.x change. `recreate_from_ergo_tree` should accept variable 126 and the legacy variable 1, so that addresses are still recognized for boxes already on chain.
+The variable id should be a named constant that cites `Pay2SHAddress.scriptId` and the 5.x to 6.x change. `recreate_from_ergo_tree` should recognize P2SH when the hashed input is `OptionGet(GetVar(id))` and `DeserializeContext` reads the same id, 126 or 1, so that boxes in the 5.x/Fleet form (variable 1 with `OptionGet`) are still recognized. The bytes sigma-rust wrote through 0.28.0 would still not parse and would come back as P2S.
+
+`script()` cannot know which form guards an existing box, so a spender of a variable-1 box reads the box script and populates variable 1.
 
 Not covered by this fix: the old sigma-rust bytes stay unparseable by sigma-rust's stricter `CalcBlake2b256` type check. The reference parser accepts them and fails only at evaluation, so whether sigma-rust should parse such trees is a separate question.
