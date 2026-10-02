@@ -6,7 +6,8 @@ remote yet.
 ## SK-026 done 2026-10-02
 
 `research/lattice/RESULT.md`: ML-DSA-65 verifies at 0.97× the `proveDlog` commitment on the node's own jar;
-lattice spends are byte-bound. Next in that line: SK-027 (keys outside the proposition, q2 harness), then SK-028.
+lattice spends are byte-bound. SK-027 done the same day (`research/lattice/RESULT-keyout.md`). Next in that line:
+SK-028, the `Global.verify*` method spec with the measured costs.
 
 ## Pending checks
 

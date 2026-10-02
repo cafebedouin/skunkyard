@@ -1,0 +1,66 @@
+[rig] scratch: /tmp/peeryard-rig.kkOxwO
+[rig] chain preset current: blockInterval=2s minerRewardDelay=10 v4=early (soft-fork voting 4/1/1)
+rig/rig.sh: line 186: 597688 Killed                  ip netns exec "${NS[$n]}" bash -c "cd '${RT_CWD[$n]}' && exec '$JAVA_BIN' $JAVA_OPTS -Djava.io.tmpdir='$pdir/tmp' -jar '${NODE_JAR[$n]}' $NET_ARGS -c '$conf'" > "$plog" 2>&1
+[rig] genesis state digest for minerRewardDelay=10 derived from a probe start: c01a142d004a917b…
+[rig] java: openjdk version "21.0.12.1" 2026-08-18 (java, opts: -Xmx512m)
+[rig] effective configuration: /tmp/peeryard-rig.kkOxwO/out/effective.json ({"chain":"current","nodes":["A:ergo-6.0.6.jar"],"links":0})
+[rig] launched A (ns=ns_A ip=100.64.0.1 p2p=9021 rest=9052 kind=jvm jar=ergo-6.0.6.jar pid=598083)
+[rig] A pid=598083 cpus_applied=0-11 gc=G1GC
+[rig] A REST up
+[rig] bring-up: every link connected
+[rig] === handing off to hook: /home/scott/bin/skunkyard/research/lattice/devnet/keyout.sh ===
+[ko] blockVersion=4 at height 17
+[ko] repo /home/scott/bin/skunkyard (9c36d05); chain minerRewardDelay=10; key_bytes=1952; variants: r4key single ring:32 ring:1024
+[ko] A balance 472500000000 nanoERG at height 17
+[ko:r4key] keygen mode=r4key key_bytes=1952 n=1 tree_bytes=69 address_chars=101
+[ko:r4key] funding via /wallet/transaction/send with R4 (1955 bytes): 15e4561af49386a5a939dc3519a4865427cf87639371f3fab4f835048236fa13
+[ko:r4key] funded at height 20; box 60f1a554ee3bf1807011dfb9fbbca6d0de6871621bcaac50295fa45d79357e07; registers: ["R4"]
+[ko:r4key] LOCAL-EVAL mode=r4key how=valid n=1 result=Success(true) cost=Success(68) tx_id=874d330245ea361763e14cbda67aaee6dab2646b3eedb7ef5cd36e9495124112 tx_bytes=192 ext_bytes=0 box_bytes=2065 tree_bytes=69 key_bytes=1952
+[ko:r4key] VALID POST -> HTTP 200, tx 874d330245ea361763e14cbda67aaee6dab2646b3eedb7ef5cd36e9495124112; mempool size=192 cost=12268
+[ko:r4key] VALID confirmed at height 28; block tx size 192 bytes
+[ko:r4key] RESULT variant=r4key key_bytes=1952 cost=Success(68) tx_bytes=192 ext_bytes=0 box_bytes=2065 tree_bytes=69 mempool_size=192 mempool_cost=12268 block_tx_bytes=192 forged_rejected=n/a
+[ko:single] keygen mode=single key_bytes=1952 n=1 tree_bytes=68 address_chars=100
+[ko:single] funding via /wallet/payment/send: 4a826a4577986f3b8b5c388ac61d744f0dd2c9ccaebfa07172a5466875aa4ba3
+[ko:single] funded at height 30; box 1e2ca83b9861c9b2a4953a8a675659975708cef70bc5ed57a0f4a5ea5a65f694; registers: []
+[ko:single] LOCAL-EVAL mode=single how=forged n=1 result=Success(false) cost=Success(21) tx_id=cce66344cdae6fe549863b2578de749fc5ee3bfa9ada4a0cbccf887f5e21b1a7 tx_bytes=2148 ext_bytes=1955 box_bytes=109 tree_bytes=68 key_bytes=1952
+[ko:single] FORGED POST -> HTTP 400: {
+  "error" : 400,
+  "reason" : "bad.request",
+  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. cce66344cdae6fe549863b2578de749fc5ee3bfa9ada4a0cbccf887f5e21b1a7: #0 => Success((false,21))"
+}
+[ko:single] LOCAL-EVAL mode=single how=valid n=1 result=Success(true) cost=Success(63) tx_id=24e3b42dcae1fa0487dd92704b3be705e5936deadd24d8a3a3e459dc7b147cf5 tx_bytes=2148 ext_bytes=1955 box_bytes=109 tree_bytes=68 key_bytes=1952
+[ko:single] VALID POST -> HTTP 200, tx 24e3b42dcae1fa0487dd92704b3be705e5936deadd24d8a3a3e459dc7b147cf5; mempool size=2148 cost=12263
+[ko:single] VALID confirmed at height 34; block tx size 2148 bytes
+[ko:single] RESULT variant=single key_bytes=1952 cost=Success(63) tx_bytes=2148 ext_bytes=1955 box_bytes=109 tree_bytes=68 mempool_size=2148 mempool_cost=12263 block_tx_bytes=2148 forged_rejected=yes
+[ko:ring:32] keygen mode=ring key_bytes=1952 n=32 tree_bytes=79 proof_bytes=237 address_chars=115
+[ko:ring:32] funding via /wallet/payment/send: b8085ffb0afb2226c12144d5fd11d278f45f565e03fcdee3eb9fd6f25a732098
+[ko:ring:32] funded at height 37; box 9912a641a666aedfda7d2e5abd510042d6dd6e3386b7e79745af363960a21899; registers: []
+[ko:ring:32] LOCAL-EVAL mode=ring how=forged n=32 result=Success(false) cost=Success(51) tx_id=949331958b582571870972527e5d27b55d6e55c3848a8a62a38c48abec046c15 tx_bytes=2389 ext_bytes=2195 box_bytes=120 tree_bytes=79 key_bytes=1952
+[ko:ring:32] FORGED POST -> HTTP 400: {
+  "error" : 400,
+  "reason" : "bad.request",
+  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 949331958b582571870972527e5d27b55d6e55c3848a8a62a38c48abec046c15: #0 => Success((false,51))"
+}
+[ko:ring:32] LOCAL-EVAL mode=ring how=valid n=32 result=Success(true) cost=Success(93) tx_id=b2b7c15f08f0d1e97d2d48f26f52be9457c4bc3b9242867e2b8890bac7732a8e tx_bytes=2389 ext_bytes=2195 box_bytes=120 tree_bytes=79 key_bytes=1952
+[ko:ring:32] VALID POST -> HTTP 200, tx b2b7c15f08f0d1e97d2d48f26f52be9457c4bc3b9242867e2b8890bac7732a8e; mempool size=2389 cost=12293
+[ko:ring:32] VALID confirmed at height 40; block tx size 2389 bytes
+[ko:ring:32] RESULT variant=ring:32 key_bytes=1952 cost=Success(93) tx_bytes=2389 ext_bytes=2195 box_bytes=120 tree_bytes=79 mempool_size=2389 mempool_cost=12293 block_tx_bytes=2389 forged_rejected=yes
+[ko:ring:1024] keygen mode=ring key_bytes=1952 n=1024 tree_bytes=79 proof_bytes=408 address_chars=115
+[ko:ring:1024] funding via /wallet/payment/send: 91c7e0a1e529c654345066dceedf539023469f95f9f0d7bbfa282e16ddc34160
+[ko:ring:1024] funded at height 43; box e62776cd04a7fe4a68cc8cb26f66a41017902c9a1abfb2de443d6b21043b7dd6; registers: []
+[ko:ring:1024] LOCAL-EVAL mode=ring how=forged n=1024 result=Success(false) cost=Success(63) tx_id=dd4981e84741ec9da4cd74b2c2255786093f8b8f1f5975ebf34ec5ab5682d584 tx_bytes=2560 ext_bytes=2366 box_bytes=120 tree_bytes=79 key_bytes=1952
+[ko:ring:1024] FORGED POST -> HTTP 400: {
+  "error" : 400,
+  "reason" : "bad.request",
+  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. dd4981e84741ec9da4cd74b2c2255786093f8b8f1f5975ebf34ec5ab5682d584: #0 => Success((false,63))"
+}
+[ko:ring:1024] LOCAL-EVAL mode=ring how=valid n=1024 result=Success(true) cost=Success(105) tx_id=cf2948a08970bc65e56438285a4e6873161fefef657307593e8d64514c215829 tx_bytes=2560 ext_bytes=2366 box_bytes=120 tree_bytes=79 key_bytes=1952
+[ko:ring:1024] VALID POST -> HTTP 200, tx cf2948a08970bc65e56438285a4e6873161fefef657307593e8d64514c215829; mempool size=2560 cost=12305
+[ko:ring:1024] VALID confirmed at height 46; block tx size 2560 bytes
+[ko:ring:1024] RESULT variant=ring:1024 key_bytes=1952 cost=Success(105) tx_bytes=2560 ext_bytes=2366 box_bytes=120 tree_bytes=79 mempool_size=2560 mempool_cost=12305 block_tx_bytes=2560 forged_rejected=yes
+[ko] /info parameters: {"outputCost":100,"tokenAccessCost":100,"maxBlockCost":1000000,"height":44,"maxBlockSize":524288,"dataInputCost":100,"blockVersion":4,"inputCost":2000,"storageFeeFactor":1250000,"subblocksPerBlock":30,"minValuePerByte":360}
+KEYOUT: PASS
+[rig] COSTS no recovery events
+[rig] === hook done (verdict: PASS) ===
+[rig] all nodes stopped
+rig exit 0
