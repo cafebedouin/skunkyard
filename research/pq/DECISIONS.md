@@ -82,3 +82,5 @@ qubits or a maintainer request.
   Nautilus with the page as reference), plus the two defects the step surfaced (Fleet `toP2SH()`, sigma-rust's P2SH
   script), the latter with an issue and a fix prepared for sigma-rust.
 - **Posted 2026-10-02** (https://www.ergoforum.org/t/post-quantum-readiness-on-ergo-measured-exposure-a-no-fork-hash-based-spend-and-what-it-costs/5369); Node B read due 2026-10-30; eight-week check 2026-11-27.
+
+- 2026-10-02: Node D's many-time-keys arm was executed ahead of the read as SK-029 (`skunks/manytime/RESULT.md`, PASS); the read on 2026-10-30 now decides the TSNP pilot only.

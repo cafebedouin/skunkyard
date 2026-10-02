@@ -1,0 +1,40 @@
+[rig] scratch: /tmp/peeryard-rig.6g4bEb
+[rig] chain preset current: blockInterval=2s minerRewardDelay=10 v4=early (soft-fork voting 4/1/1)
+rig/rig.sh: line 186: 605731 Killed                  ip netns exec "${NS[$n]}" bash -c "cd '${RT_CWD[$n]}' && exec '$JAVA_BIN' $JAVA_OPTS -Djava.io.tmpdir='$pdir/tmp' -jar '${NODE_JAR[$n]}' $NET_ARGS -c '$conf'" > "$plog" 2>&1
+[rig] genesis state digest for minerRewardDelay=10 derived from a probe start: c01a142d004a917b…
+[rig] java: openjdk version "21.0.12.1" 2026-08-18 (java, opts: -Xmx512m)
+[rig] effective configuration: /tmp/peeryard-rig.6g4bEb/out/effective.json ({"chain":"current","nodes":["A:ergo-6.0.6.jar"],"links":0})
+[rig] launched A (ns=ns_A ip=100.64.0.1 p2p=9021 rest=9052 kind=jvm jar=ergo-6.0.6.jar pid=605996)
+[rig] A pid=605996 cpus_applied=0-11 gc=G1GC
+[rig] A REST up
+[rig] bring-up: every link connected
+[rig] === handing off to hook: /home/scott/bin/skunkyard/skunks/manytime/manytime.sh ===
+[mt] blockVersion=4 at height 16; repo /home/scott/bin/skunkyard (7cf92f9); n=32 w=16 h=4
+[mt] A balance 405000000000 nanoERG at height 16
+[mt] keygen n=32 w=16 h=4 leaves=16 chains=67 tree_bytes=910 digest=87df72b0890e5af63853f9785207d8755b48ae99775fc2c502038fb575c11ae805 address_chars=1249
+[mt] funding with R4=0400: d88972ca764fe157a6a028860ee88ca19ed315aba8fb2d3448e4aac601152841
+[mt] funded at height 24; box0 0dd7e909c9f7ba17cf36506ecba7e2cc71f93e980ad61d4ba8f8b0a833532ecb R4=0400
+[mt:forged] LOCAL-EVAL how=forged r4=0 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(37860) tx_id=b094175b3a210ddcb42709dcd686e1e2ba13b446a167bf3d6d248a36d02d524f tx_bytes=3450 sig_bytes=2144 proof_bytes=187 box_bytes=953 tree_bytes=910
+[mt:forged] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. b094175b3a210ddcb42709dcd686e1e2ba13b446a167bf3d6d248a36d02d524f: #0 => Success((false,37860))"}
+[mt:forged] REJECTED local_cost=cost=Success(37860) node_verdict=Success((false,37860))
+[mt:wrongindex] LOCAL-EVAL how=wrongindex r4=0 leaf=0 next=0 leaves=16 result=Success(false) cost=Success(38) tx_id=d6ddd69b903566f04dd7e240234d13d1e7bd4a4e72dba48450ef1dccfcb1e942 tx_bytes=3450 sig_bytes=2144 proof_bytes=187 box_bytes=953 tree_bytes=910
+[mt:wrongindex] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. d6ddd69b903566f04dd7e240234d13d1e7bd4a4e72dba48450ef1dccfcb1e942: #0 => Success((false,38))"}
+[mt:wrongindex] REJECTED local_cost=cost=Success(38) node_verdict=Success((false,38))
+[mt:valid0] LOCAL-EVAL how=valid r4=0 leaf=0 next=1 leaves=16 result=Success(true) cost=Success(37860) tx_id=19c20255b4f86b94295409eb64d4c8267a8dbb3dcf373bef264d1035fab78fe8 tx_bytes=3450 sig_bytes=2144 proof_bytes=187 box_bytes=953 tree_bytes=910
+[mt:valid0] POST -> HTTP 200, tx 19c20255b4f86b94295409eb64d4c8267a8dbb3dcf373bef264d1035fab78fe8; mempool size=3450 cost=50160
+[mt:valid0] confirmed at height 32; block tx size 3450; recreated box R4=0402
+[mt:valid0] RESULT leaf=0 next=1 cost=Success(37860) tx_bytes=3450 sig_bytes=2144 proof_bytes=187 box_bytes=953 tree_bytes=910 mempool_cost=50160 block_tx_bytes=3450
+[mt] box1 c52e5bedb1213ef228057a877f55df44471fa443fa11be8536c50e15ac950c8b R4=0402
+[mt:staleleaf] LOCAL-EVAL how=staleleaf r4=1 leaf=0 next=2 leaves=16 result=Failure(java.lang.reflect.InvocationTargetException) cost=Failure(java.lang.reflect.InvocationTargetException) tx_id=551e6ac4fcfdf372bc258a9410c521c7ffc53f8bc928fcba8076e46948b6e46d tx_bytes=3450 sig_bytes=2144 proof_bytes=187 box_bytes=953 tree_bytes=910
+[mt:staleleaf] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 551e6ac4fcfdf372bc258a9410c521c7ffc53f8bc928fcba8076e46948b6e46d: #0 => Failure(java.lang.reflect.InvocationTargetExcep
+[mt:staleleaf] REJECTED local_cost=cost=Failure(java.lang.reflect.InvocationTargetException) node_verdict=Failure(java.lang.reflect.InvocationTargetException)
+[mt:valid1] LOCAL-EVAL how=valid r4=1 leaf=1 next=2 leaves=16 result=Success(true) cost=Success(37749) tx_id=1c58ea9afceada7539c8b4c3ea7a58b31bb34ad72d2b292e1b5d58536223d2ef tx_bytes=3450 sig_bytes=2144 proof_bytes=187 box_bytes=953 tree_bytes=910
+[mt:valid1] POST -> HTTP 200, tx 1c58ea9afceada7539c8b4c3ea7a58b31bb34ad72d2b292e1b5d58536223d2ef; mempool size=3450 cost=50049
+[mt:valid1] confirmed at height 36; block tx size 3450; recreated box R4=0404
+[mt:valid1] RESULT leaf=1 next=2 cost=Success(37749) tx_bytes=3450 sig_bytes=2144 proof_bytes=187 box_bytes=953 tree_bytes=910 mempool_cost=50049 block_tx_bytes=3450
+[mt] /info parameters: {"outputCost":100,"tokenAccessCost":100,"maxBlockCost":1000000,"height":36,"maxBlockSize":524288,"dataInputCost":100,"blockVersion":4,"inputCost":2000,"storageFeeFactor":1250000,"subblocksPerBlock":30,"minValuePerByte":360}
+MANYTIME: PASS (forged_rejected=yes wrongindex_rejected=yes staleleaf_rejected=yes spend0_confirmed=yes spend1_confirmed=yes)
+[rig] COSTS no recovery events
+[rig] === hook done (verdict: PASS) ===
+[rig] all nodes stopped
+rig exit 0

@@ -23,7 +23,6 @@ is not scheduled before that foundation has a measured answer.
 | SK-002 | research | chain | Q1 final census at the tip | run `q1/run.sh` when the mainnet node reaches ~1,885,000; reply in 5369 | none | `q1/`, `NEXT.md` |
 | SK-003 | upstream | tooling | sigma-rust #928 / PR #929: respond to review; watch #860 and #879 which affect two tests | reply within the maintainers' cadence | none | `posts/sigma-rust/` |
 | SK-004 | upstream | tooling | Fleet #219 (`toP2SH()` hashes the tree, not the proposition) | respond to review | none | `posts/fleet/ISSUE.md` |
-| SK-029 | skunk | script | Many-time hash-based keys, no fork (SK-006 made concrete, pulled forward because SK-027 built the AVL plumbing): a box carrying the AVL digest of 2^h WOTS public-key hashes and the next-leaf index in a register; a spend supplies leaf i's key, its membership proof and its WOTS signature, and must recreate the box with the same digest, the same script and index i+1; costed on the rig with `q2`'s verifier; the stuck-transaction rule (never re-sign leaf i; fee bump by the pinned-fee output) stated, since the index advances only on confirmation | write the script; one or two rig sessions | F1 (the box persists for years; rent recreates it with its registers) | `research/pq/DECISIONS.md` Node D; `research/lattice/RESULT-keyout.md` for the ring plumbing |
 | SK-005 | research | script | The on-chain spending policy for autonomous agents ("fence") | write the policy contract; cost it; devnet attacks | F1 (the interval uses the creation height rent resets), F3 | `research/agents/README.md` |
 
 ## Next
@@ -83,6 +82,7 @@ repository; the registration prompt is `prompts/peeryard-foundations.md`.
 | SK-101 | skunk | oneshot steps 1 to 4 on devnet and public testnet; Node A = A1 | handed off in the post; page live |
 | SK-102 | upstream | sigma-rust P2SH script unspendable: issue #928, PR #929 (five review passes) | filed 2026-10-02 |
 | SK-103 | upstream | Fleet `toP2SH()`: issue #219 | filed 2026-10-02 |
+| SK-108 | skunk | SK-029, many-time hash-based keys with no fork, on a devnet: 16 WOTS leaves under an AVL root, index in R4 advanced by every spend; forged, wrong-index and stale-leaf spends rejected (wrong index at 38 units with checks ordered), two consecutive spends confirmed; 37,860 units, 3,450 bytes per spend | `skunks/manytime/RESULT.md`, 2026-10-02 |
 | SK-107 | upstream | SK-028, the `Global.verifyMLDSA` / `verifyFalcon` method spec in the 6.0 `checkPow` pattern, costs from SK-026 (worst-case bound still to be derived on reference hardware); held as a note until the 2026-10-30 read, EIP only if a maintainer asks | `research/lattice/SPEC-verify-method.md`, 2026-10-02 |
 | SK-106 | research | SK-027, keys outside the proposition on a devnet: key from the context extension 63 block units, AVL ring of 1,024 keys 105, box 109 to 120 bytes, forged keys rejected | `research/lattice/RESULT-keyout.md`, 2026-10-02 |
 | SK-105 | research | SK-026, verification benchmark on the node's jar: ML-DSA-65 0.97× the `proveDlog` commitment, Falcon-512 0.28×, SLH-DSA-128s 5.5×; lattice spends are byte-bound | `research/lattice/RESULT.md`, 2026-10-02 |

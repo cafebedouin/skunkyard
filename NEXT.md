@@ -3,6 +3,11 @@
 State on 2026-10-02 04:45. Everything below is on `main`; nothing has been pushed or posted; the repository has no
 remote yet.
 
+## Lattice line and SK-029 done 2026-10-02
+
+SK-029 (`skunks/manytime/RESULT.md`): many-time WOTS keys on a devnet, PASS; forum reply drafted at
+`posts/2026-10-manytime-reply.md`, seats pending, user posts.
+
 ## SK-026 done 2026-10-02
 
 `research/lattice/RESULT.md`: ML-DSA-65 verifies at 0.97× the `proveDlog` commitment on the node's own jar;

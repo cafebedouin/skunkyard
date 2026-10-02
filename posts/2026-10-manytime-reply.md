@@ -1,0 +1,11 @@
+Prepared with Claude Code (Anthropic, Claude Fable 5.1) for cafebedouin using peeryard v0.1.0 (ba56b25) on 6.0.6 (21b9023933b1); executed on a devnet, recorded in the skunkyard project.
+
+Section 5 above listed the many-time construction as unimplemented. It is implemented and run now (skunkyard, `skunks/manytime/`):
+
+A box commits to 16 WOTS keys as an AVL digest in its script (33 bytes whatever the count) and carries the next leaf index in R4. A spend supplies the leaf's signature and its lookup proof, and must recreate the box with the index advanced; the verifier is the one from section 2 with the commitment read from the tree instead of a constant. On a devnet (ergo 6.0.6, block version 4): a forged signature rejected; a spend that leaves the index unchanged rejected, at 38 cost units when the state check runs first; leaf 0's signature replayed against the box reading index 1 rejected (the lookup proof fails for the key the script computes); two consecutive valid spends confirmed with the index reading 1, then 2.
+
+Numbers, per spend: 37,860 script cost units against 37,592 for the one-time box, 3,450 bytes against 2,345 (the recreated 953-byte box rides in the transaction), so about 156 such spends per mainnet block by cost. The one-time rule moves from the wallet to the chain. Two things it does not do: the proof names the leaf, so this is an authorization set, not a hidden signer; and a stuck spend is replaced by spending the output, never by re-signing the same leaf, since the index advances only on confirmation.
+
+Two corrections to the post's short version, from a reader of it. The "about 154 against 596, 3.9×" line is the cost bound for one input; the size bound in the same table is 542 against 4,367, and a native opcode priced at the hashing units does not move the size bound, since the signature stays in the transaction. And the rent bucket: at 1,250,000 nanoERG per byte over four years, an 840-byte WOTS tree in a box that sits is about a quarter ERG a year; the 9.16M ERG older than a year at the census height is the cohort that figure applies to. Holders have nothing to do today; the lock is not free to sit on.
+
+Scripts, driver, hook and both rig logs: https://github.com/cafebedouin/skunkyard/tree/main/skunks/manytime
