@@ -1,0 +1,18 @@
+BouncyCastle: BouncyCastle Security Provider v1.86-SNAPSHOT
+Java: 21.0.12.1  cores: 12
+proveDlog computeCommitment (sigma) ok=true  median    156.4 us  p95    210.3 us  mean    167.4 us  (n=5000, warm=2000)
+  one exponentiate g^z (sigma)     ok=true  median     70.8 us  p95     96.9 us  mean     74.8 us  (n=5000, warm=2000)
+ml-dsa-44: pk 1312 B, sig 2420 B
+ml-dsa-44 verify                   ok=true  median     95.3 us  p95    114.3 us  mean     99.3 us  (n=5000, warm=2000)
+ml-dsa-65: pk 1952 B, sig 3309 B
+ml-dsa-65 verify                   ok=true  median    152.3 us  p95    174.0 us  mean    157.1 us  (n=5000, warm=2000)
+ml-dsa-87: pk 2592 B, sig 4627 B
+ml-dsa-87 verify                   ok=true  median    247.4 us  p95    278.2 us  mean    255.7 us  (n=5000, warm=2000)
+falcon-512: pk 896 B, sig 653 B
+falcon-512 verify                  ok=true  median     42.5 us  p95     47.0 us  mean     43.3 us  (n=5000, warm=2000)
+falcon-1024: pk 1792 B, sig 1266 B
+falcon-1024 verify                 ok=true  median     86.9 us  p95     98.5 us  mean     88.3 us  (n=5000, warm=2000)
+sha2-128s: pk 32 B, sig 7856 B
+sha2-128s verify                   ok=true  median    867.9 us  p95    938.0 us  mean    880.7 us  (n=500, warm=100)
+sha2-128f: pk 32 B, sig 17088 B
+sha2-128f verify                   ok=true  median   2366.3 us  p95   2433.0 us  mean   2381.2 us  (n=500, warm=100)

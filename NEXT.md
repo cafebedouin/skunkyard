@@ -3,19 +3,10 @@
 State on 2026-10-02 04:45. Everything below is on `main`; nothing has been pushed or posted; the repository has no
 remote yet.
 
-## First thing next session: SK-026, the verification benchmark
+## SK-026 done 2026-10-02
 
-Held on 2026-10-02 until the other instance finishes its GitHub PR and comment backlog; then run. Plan (about two
-hours of session time, minutes of machine time, the mainnet node may keep running):
-
-1. Harness on the node's fat jar (`~/bin/ergo-node/ergo-6.0.6.jar`) as classpath; if its Bouncy Castle predates
-   ML-DSA, put `~/.cache/coursier/.../bcprov-jdk15to18-1.85.1.jar` first. Keys and signatures for ML-DSA-65,
-   Falcon-512, SLH-DSA-128s; verification timed in a warmed loop, median and p95.
-2. Baseline: `DLogProver.computeCommitment` through sigma itself (the 3,400-JIT `ComputeCommitments_Schnorr`
-   charge), so the ratio is against what the node costs.
-3. Write-up in `research/lattice/RESULT.md`: the ratio table, implied JIT cost per verifier, per-block count by
-   cost beside the by-size figures. Decision threshold is a 62× ratio to `proveDlog` (byte-bound below it);
-   expected result is single digits.
+`research/lattice/RESULT.md`: ML-DSA-65 verifies at 0.97× the `proveDlog` commitment on the node's own jar;
+lattice spends are byte-bound. Next in that line: SK-027 (keys outside the proposition, q2 harness), then SK-028.
 
 ## Pending checks
 
