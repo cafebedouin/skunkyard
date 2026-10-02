@@ -109,12 +109,43 @@ which matters below.
 Exact proofs by Stern's protocol were 2.3 to 4.3 MB; Beullens' cut-and-choose brought an exact SIS proof to 233 KB
 (ePrint 2019/490, Table 6 p.27). That is the "tens of kilobytes and up" world kushti's 2020 answer came from.
 
-## Against Ergo's limits
+## Against Ergo's limits, sorted by who can move them
 
-Limits as recorded in `LITERATURE.md` ("Ergo cost and size limits"): box and proposition 4,096 bytes each
-(`SigmaConstants.scala`), relay transaction size 98,304 bytes (`application.conf`), block transactions section
-1,271,009 bytes (mainnet parameter 3). The public key lives in the box's proposition; the proof lives in the
-spending transaction.
+Read from the node at `ergo_logic/subjects/ergo-v6.0.7` (tag v6.0.7) and the vendored sigma 6.0.3 sources
+(`ergo_logic/vendor/sigma-state-6.0.3`; the 6.0.7 node builds against sigma 6.0.7, `build.sbt:45`, so line numbers
+below are from 6.0.3 and the constants were not re-checked against 6.0.7). The limits fall into three tiers:
+
+| Tier | Limit | Value | Who moves it |
+|---|---|---|---|
+| consensus constant | box bytes, proposition bytes | 4,096 each (`SigmaConstants.scala`, rules `txBoxSize`, `txBoxPropositionSize`) | a fork |
+| consensus constant | challenge width | 192 bits (`CryptoConstants.scala:29`, "DO NOT change ... without implementing polynomials over GF(2^soundnessBits) first", line 25) | a fork |
+| consensus constant | the leaf set | `ProveDlogCode` 93, `ProveDiffieHellmanTupleCode` 94 (`SigmaPropCodes.scala:18-19`) | a soft fork (new `ergoTreeVersion`, `VersionContext.scala`) |
+| miner vote | block transactions bytes, parameter 3 | 1,271,009 on mainnet; min 16,384, no ceiling (`Parameters.scala:315-316, 350-361`) | +1% per epoch |
+| miner vote | block cost, parameter 4 | 8,001,091; min 16,384, no ceiling | +1% per epoch |
+| miner vote | input, data-input, output, token costs, parameters 5-8 | 2,407 / 100 / 298 / 100 | +1% per epoch |
+| node config | transaction bytes accepted by the API and relayed by P2P | 98,304 (`application.conf:53`; checked in `TransactionsApiRoute.scala:167` and `ErgoNodeViewSynchronizer.scala:786`) | each operator |
+| node config | transaction cost accepted into the mempool | 4,900,000 (`mainnet.conf`; `ErgoMemPool.scala:286`, `CleanupWorker.scala:90`) | each operator |
+
+The vote mechanics (`Parameters.scala:155-176`, `VotingSettings.scala:11`): a parameter moves one step at an epoch
+boundary when more than half of the epoch's 1,024 blocks voted for it (`count > votingLength / 2`); the step is
+`currentValue / 100` for parameters 3 to 8 (only storage fee, min value per byte and sub-blocks have fixed steps,
+`stepsTable`), and a block carries at most two votes (`ParamVotesCount = 2`). Doubling block size or block cost
+therefore takes about 70 epochs of sustained majority voting (1.01^70 ≈ 2.0), about 71,700 blocks or 100 days at
+two-minute blocks; mainnet's block cost is already about eight times its launch default by this route. A soft fork
+(a new leaf opcode) needs more than 90% of blocks across its voting epochs (`softForkApproved`, line 9).
+
+Consequences for the arithmetic below: there is **no consensus rule on a single transaction's size**; a
+transaction is bounded only by the block it must fit (parameter 3) and the P2P modifier message
+(`ModifiersSpec.maxMessageSize` 2,048,576). The 98,304-byte figure is what stock nodes relay and accept over the
+API; a miner with a raised `maxTransactionSize` can include a larger transaction, and every other node accepts
+the block. The two caps that no vote reaches are the box and proposition bytes, where the public key lives, and the
+leaf set itself.
+
+The public key lives in the box's proposition; the proof lives in the spending transaction. One more code fact:
+`MaxSigmaPropSizeInBytes = 1024` (`SigmaConstants.scala:53`) is only a type-size constant (`SType.scala:622`,
+`methods.scala:699`); the only enforced `MaxSizeInBytes` checks in sigma 6.0.3 are the BigInt ones
+(`CoreDataSerializer.scala:113`, `CSigmaDslBuilder.scala:250-256`). A lattice key inside a sigma proposition is
+bounded by the 4,096-byte proposition rule, not by 1,024.
 
 **Box (public keys).** ML-DSA-65: one key fits, two fit with little room (3,904 B plus tree bytes), three do not
 (5,856 B). ML-DSA-44: three fit. Falcon-512: four. Picnic/FAEST: a hundred, which is the one family where the box
@@ -128,7 +159,7 @@ through data inputs or the context extension (no per-variable cap, bounded by th
 | 1-of-1 | 56 B | 3.3 KB | n/a |
 | 2-of-2 (AND) | 112 B | 6.5 KB | n/a |
 | 1-of-5 (OR) | 280 B | 16.3 KB | SMILE at 2^5: 16.0 KB |
-| 1-of-32 (OR) | 1.8 KB | 104 KB, **over the 98,304-byte relay cap** | SMILE: 16.0 KB |
+| 1-of-32 (OR) | 1.8 KB | 104 KB, over what stock nodes relay (98,304, config); fits a block | SMILE: 16.0 KB |
 | 2-of-3 threshold | 168 B | 9.8 KB | n/a (TRaccoon: 12.7 KB, interactive, any T ≤ 1024) |
 
 Per-leaf ratio ML-DSA-65 to `proveDlog`: about 58×. (The unverified "60×" caption in `LITERATURE.md` line 199 is
@@ -138,7 +169,17 @@ beats CDS-composed ML-DSA leaves is N ≈ 5.
 **Block, by size only** (cost is unmeasurable without an implementation): a 1-in/2-out spend of an ML-DSA-65 box,
 32 B input id + 3,309 B proof + 1,952 B new key box + ~50 B fee box ≈ 5.4 KB, so about 235 per 1,271,009-byte
 block; Falcon-512 ≈ 1.65 KB, about 770; the measured WOTS spend is 2,345 B, about 540 by size (its cost-bound
-figure in `q2/RESULT.md` is 154). Today's P2PK spend is about 250 B.
+figure in `q2/RESULT.md` is 154). Today's P2PK spend is about 250 B. Both the byte bound and the cost bound are
+votable, so these are today's numbers, not ceilings: at +1% per epoch each doubles in about 100 days of sustained
+majority voting, and parameter 4 has already moved about eightfold since launch.
+
+**Cost, the comparison point.** A `proveDlog` leaf costs `ParseChallenge_ProveDlog` 10 + `ComputeCommitments_Schnorr`
+3,400 + the Fiat-Shamir bytes, in JIT units (`Interpreter.scala:537-540`, `SigSerializer.scala:134`), about 341
+block-cost units per leaf after the ÷10. The hook a lattice leaf would use is the same: `computeCommitments`
+(`Interpreter.scala:407-421`) recomputes each leaf's commitment from its challenge and response, `checkCommitments`
+(line 388) hashes all commitments with the message and compares to the root challenge, and `estimateCryptoVerifyCost`
+(lines 567-568) charges a fixed cost per leaf type. A new leaf is a new `SigmaBoolean` case, a serializer case
+(`SigmaBoolean.scala:74-79`), a `computeCommitment` and a cost constant, behind a new tree version.
 
 ## What this settles, and what it does not
 
@@ -150,9 +191,10 @@ Settled from the literature:
   Falcon, picnic3 and FAEST would be boolean opcodes.
 - ML-DSA-65's 192-bit challenge seed equals Ergo's `SOUNDNESS_BITS`; the tree's XOR and GF(2^192) composition would
   take such a leaf unchanged.
-- A single lattice leaf fits every limit. A 32-way OR of lattice leaves does not fit the relay cap; the succinct
-  lattice proofs that would (16 KB) are not leaves. Composition past about five keys needs a different proof system,
-  not a bigger box.
+- A single lattice leaf fits every limit. A 32-way OR of lattice leaves is above what stock nodes relay (a config
+  value) but inside a block; the succinct lattice proofs that cost 16 KB at that size are not leaves. Composition
+  past about five keys needs a different proof system; the limits a vote can move (block bytes, block cost) are not
+  the binding ones, the two it cannot (proposition bytes, the leaf set) are.
 
 Open (each a candidate follow-on):
 
@@ -186,4 +228,6 @@ Implementing any scheme; proposing an opcode; isogeny and multivariate schemes b
 - Picnic specification v3.0, https://github.com/microsoft/Picnic/raw/master/spec/spec-v3.0.pdf; https://faest.info/;
   https://raccoonfamily.org/.
 - sigma-rust `ergotree-interpreter/src/sigma_protocol/{sigma_protocol.rs,challenge.rs,prover.rs}` at develop
-  1633e018; `LITERATURE.md` in this repository for the Ergo limits and their source lines.
+  1633e018; sigma 6.0.3 sources (`ergo_logic/vendor/sigma-state-6.0.3`, Maven sources jar, sha256 in its
+  PROVENANCE.txt); ergo node v6.0.7 (`ergo_logic/subjects/ergo-v6.0.7`, 3a6b00d37); `LITERATURE.md` in this
+  repository for the mainnet parameter values.
