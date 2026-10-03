@@ -1,2 +1,2 @@
-LOCAL-EVAL input=0 kind=deposit how=nostate r4=-1 leaf=-1 next=-1 leaves=16 result=Success(false) cost=Success(21) box_bytes=190 tree_bytes=147
-LOCAL-EVAL summary how=nostate inputs=1 signed_over=1 all_ok=false total_cost=21 tx_id=9a9c605274ba8d4cad9aea38ff341126afd1f9ded9aba74e8a220e9bd206715f tx_bytes=197 out0_id=6b3f8c0d89a69fa445e8ccdde16c377ad7dc1135965dc7ad8dcd108bba0f0ab8 out0_bytes=79
+LOCAL-EVAL input=0 kind=deposit how=nostate r4=-1 leaf=-1 next=-1 leaves=16 result=Success(false) cost=Success(21) box_bytes=208 tree_bytes=166
+LOCAL-EVAL summary how=nostate inputs=1 signed_over=1 all_ok=false total_cost=21 tx_id=b1d6494d652dc7786a40a40ffd7c0c7518f53083a29c3e9f10a8ca7f90106fa9 tx_bytes=196 out0_id=25a2ad751f4e59b4cae4317e689f59024a4ce9b61234043338e43a8e20dc1346 out0_bytes=78

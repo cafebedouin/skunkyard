@@ -138,5 +138,10 @@ index or changed the script against the token-carrying input", is satisfiable on
 script ran, because rent collection may change neither. The same trap applies to any Ergo contract that gates on
 "a box with NFT X is an input" without also requiring that box to have changed; oracle-pool and bank contracts
 avoid it by reading the state box as a data input or by checking its registers moved. The hazard that remains is
-loss, not theft: a singleton collected whole (value below the fee) strands the token and every deposit, so a wallet
-spends or refreshes the singleton within four years.
+theft, not loss (fifth seat round): a singleton collected whole, because its value is below the fee, puts the token
+in the collector's hands under a script of their own, which satisfies the deposit rule's "script changed" branch, so
+every deposit present and future follows the token. The wallet rule is two-sided: value above the rent fee by a
+margin (the factor is miner-votable), and a refresh within four years.
+
+Not searched either: Ergo's own forum, Telegram and Discord, and the ergoplatform GitHub organization, for stateful-counter
+contracts (noted by the fourth seat round).

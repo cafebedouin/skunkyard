@@ -6,7 +6,7 @@
 set -uo pipefail
 NODE=${NODE:-http://128.253.41.110:9052}; REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"; TN="$REPO/skunks/manytime/testnet"; ART="$TN/v3-artifacts"; mkdir -p "$ART"
 KEYS="${KEYS:-$TN/keys-v3}"; KEYSB="${KEYSB:-$TN/keys-v3B}"; TO=${TO_ADDR:-3WxtnwJojAm4C9DJtgNHs5zawzD44yE6cKyGM7NeHf7Cw1yP7XBU}   # the project's testnet wallet
-FEE=1100000; AMT=100000000; DELAY=720; FUND_S=1000000000; FUND_D=300000000
+FEE=1100000; AMT=50000000; DELAY=720; FUND_S=4000000000; FUND_D=100000000   # v3.3: the singleton must exceed 2.5M nanoERG per byte
 cli(){ (cd "$REPO" && java -Dmanytime.dir=skunks/manytime -cp "$(cat skunks/manytime/target-tn/cp.txt)" "$@"); }
 fund(){ (cd "$REPO/skunks/oneshot" && node scripts/fund-any.mjs "$@"); }
 log(){ echo "[tn $(date -u +%H:%M:%SZ)] $*" >&2; }

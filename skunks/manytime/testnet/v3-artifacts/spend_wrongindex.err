@@ -1,3 +1,3 @@
-LOCAL-EVAL input=0 kind=state how=wrongindex r4=0 leaf=0 next=0 leaves=16 result=Success(false) cost=Success(75) box_bytes=1312 tree_bytes=1234
-LOCAL-EVAL input=1 kind=deposit how=wrongindex r4=0 leaf=0 next=0 leaves=16 result=Success(false) cost=Success(66) box_bytes=190 tree_bytes=147
-LOCAL-EVAL summary how=wrongindex inputs=2 signed_over=2 all_ok=false total_cost=141 tx_id=05e47c8ca4abd5d81f0d60f0e1f317d87c0ff801d18647cb7ef343a2bf6d7eb8 tx_bytes=3852 out0_id=487b6a678ac10fa16329b02a941eabbf92ae4198672cc13d812a07b3d12bd8b4 out0_bytes=1312
+LOCAL-EVAL input=0 kind=state how=wrongindex r4=0 leaf=0 next=0 leaves=16 result=Success(false) cost=Success(75) box_bytes=1331 tree_bytes=1253
+LOCAL-EVAL input=1 kind=deposit how=wrongindex r4=0 leaf=0 next=0 leaves=16 result=Success(false) cost=Success(77) box_bytes=208 tree_bytes=166
+LOCAL-EVAL summary how=wrongindex inputs=2 signed_over=2 all_ok=false total_cost=152 tx_id=1356bd7a1e05528a1af5516021c3be377e322ac65747b854b343a16ca0fbf5a1 tx_bytes=3871 out0_id=8a6f059f7d87b9979a9db1b5d22747a1998e62e694ac04d96bef11dafe9c643c out0_bytes=1331

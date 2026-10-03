@@ -1,2 +1,2 @@
-LOCAL-EVAL input=0 kind=state how=lastsame r4=4 leaf=15 next=16 leaves=16 result=Success(false) cost=Success(67) box_bytes=1312 tree_bytes=1234
-LOCAL-EVAL summary how=lastsame inputs=1 signed_over=1 all_ok=false total_cost=67 tx_id=8d0607040e7a221f99ceb2a927ce3d99cfc0fb3e7d88589081e1b1fe9869c7f6 tx_bytes=3852 out0_id=b871d9f7a9d932bb4b05855658f721aa04464314a4daa564301018d2acecec5b out0_bytes=1312
+LOCAL-EVAL input=0 kind=state how=lastsame r4=4 leaf=15 next=16 leaves=16 result=Success(false) cost=Success(67) box_bytes=1331 tree_bytes=1253
+LOCAL-EVAL summary how=lastsame inputs=1 signed_over=1 all_ok=false total_cost=67 tx_id=283bc53fd163f4886709db903da78be8d56ee61346b7957da0758f6ce3a2ed19 tx_bytes=3871 out0_id=92ab573d9c454adc39c32125d6a01c11d760aaeb18dda7bff1a6bf8962eb559d out0_bytes=1331

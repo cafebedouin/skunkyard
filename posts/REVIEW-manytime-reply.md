@@ -202,3 +202,35 @@ column's other shares); RESULT's rent paragraph lagged v3.1 (fixed).
 Criterion for the final text: a confirmed testnet spend of the deposit, or a transaction the scripts accept on a
 devnet or in the harness, that carries no valid signature of an unused leaf of key set B; or an argument that a
 sentence under "What the chain enforces" is false, which this round's rent finding would have met.
+
+# Round 5: four seats on v7 (commit 91466fd), 2026-10-03
+
+Outputs in `posts/seats/manytime-reply/v7/`. Two Claude seats (Opus 5.5), Gemini and Grok.
+
+**A break, again (both Claude seats, by reading of `ErgoInterpreter.checkExpiredBox`, confirmed in the subject
+source: `storageFeeNotCovered = box.value - storageFee <= 0`, and then no constraint on the outputs).** v3.2 closed
+the rent path only for a singleton whose value covers its fee. A singleton below its fee is consumed whole; the
+collector takes the token under a script of their own, which satisfies the deposit rule's "script changed" branch,
+so every deposit present and future follows the token. v7 had called this stranding; it is theft. Every testnet
+singleton so far (1 to 1.5 ERG against a 1.64 ERG fee) was in that state, the break-it singleton included. Response,
+v3.3 (`deposit.es`): the token-carrying input's value must exceed `StorageFeeFactorMax` (2,500,000 nanoERG per byte,
+`Parameters.scala`) times its size, so every rent spend of a singleton that deposits could follow is a covered one;
+a singleton below the floor makes deposits unsweepable until topped up, which fails safe. Runs 14 (devnet) and 15
+(testnet) fund the singleton with 4 ERG. Also from the attacker seat: a token returned to a used root at index 0
+reopens that root's leaves (the "never-used root" wallet duty gets its qualifier in "What the chain enforces"); the
+script forbids "two byte strings", not "the two worst destinations" (a re-encoded deposit script or `sigmaProp(true)`
+is as bad); deposits owe rent too (about 0.24 ERG per four years at 190 bytes; a deposit below that is consumed);
+the creation-height refresh, the `OUTPUTS(0)` order and a depositor's supply check belong in the wallet duties;
+full ids and the address in a code block for the break-it box; the explorer sample JSON prints one address's
+449,999-transaction maximum (a count, no address; left in the data, not quoted).
+
+**Fidelity seat.** All figures of runs 12 and 13 verified; labels added (200 to 500, 1.64, 2^17, several deposits by
+reading); "nobody ran" → "no competing spend confirmed"; the deposit address is in the run log, not the result file;
+"neither source read in full"; the extension-malleability sentence moved to the wallet duties; "five rounds".
+
+**Grok** (v7): the figures check; 27.4% rather than 27%; the oracle-pool analogy has no witness in the tree (softened);
+extension malleability is by reading only (kept, marked); "which is to say the script ran" needs the token-custody
+qualifier in the same sentence; "every future deposit" follows only on the last leaf; "at least two valid
+signatures"; the factor of four behind the 400 visible; section 5's sketch had the digest in a register, this has
+the index in a box; the cost-46 case is a false, not an exception; 87,909 in the sentence. **Gemini** (v7): no
+output returned (0 bytes).

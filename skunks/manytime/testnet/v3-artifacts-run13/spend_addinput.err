@@ -1,0 +1,3 @@
+LOCAL-EVAL input=0 kind=state how=addinput r4=0 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(37864) box_bytes=1312 tree_bytes=1234
+LOCAL-EVAL input=1 kind=deposit how=addinput r4=0 leaf=0 next=1 leaves=16 result=Success(true) cost=Success(66) box_bytes=190 tree_bytes=147
+LOCAL-EVAL summary how=addinput inputs=2 signed_over=1 all_ok=false total_cost=37930 tx_id=0e759a1ba08fbfb1e159d129c76ba0bac0d1292e66f0b732c76e941c5490915a tx_bytes=3852 out0_id=c2b9965674095b916fc1f12e180bb8922aece8ba1d90d4992717101e47d0bc4b out0_bytes=1312

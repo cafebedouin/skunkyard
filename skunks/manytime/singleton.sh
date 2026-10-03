@@ -9,7 +9,7 @@
 # to the deposit script), rotate (leaf 15 with the token moved to key set B's singleton at index 0; must confirm), and
 # a sweep of D3 by key set B's singleton with its leaf 0 (must confirm: the deposit address survives rotation).
 # PASS = eight rejections, four confirmations, three deposits gone.
-MT_N=${MT_N:-32}; MT_W=${MT_W:-16}; MT_H=${MT_H:-4}; FUND=${MT_FUND:-1000000000}; FEE=${MT_FEE:-1000000}; AMT=${MT_AMOUNT:-100000000}
+MT_N=${MT_N:-32}; MT_W=${MT_W:-16}; MT_H=${MT_H:-4}; FUND=${MT_FUND:-4000000000}; FEE=${MT_FEE:-1000000}; AMT=${MT_AMOUNT:-100000000}
 MTD="$(dirname "$RIG_HOOK")"; REPO="$(cd "$MTD/../.." && pwd)"
 CPF="$MTD/target/cp.txt"; WD="$SCRATCH/singleton"; mkdir -p "$WD"; DELAY="${REWARD_DELAY:-720}"
 mt_cli(){ (cd "$REPO" && java -Dmanytime.dir="$MTD" -cp "$(cat "$CPF")" "$@"); }

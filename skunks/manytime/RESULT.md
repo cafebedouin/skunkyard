@@ -250,7 +250,74 @@ deposit funded afterwards at the deposit address as the "break it" box (transact
 `f1c89ea66467114a488840983bce850b8374bf8591de638be35436f7b34d2a54`; `testnet/v3-artifacts/breakit-fund.log` and its
 UTXO witness `box-f1c89ea6….json`). The deposit address (P2S, 207 characters) is in the funding log; the token id is
 `96806629e03c8a42700da954e95c92c75b776d6828fa4991563a564d86349e5b`. Procedure note as for run 11: the test handed the public node four leaf-0 and
-two leaf-15 signatures before the corresponding spends confirmed; a wallet must never do that.
+two leaf-15 signatures before the corresponding spends confirmed; a wallet must never do that. S4 holds 1.4956 ERG,
+below its 1.64 ERG rent fee, so at testnet height 1,629,050 (577,850 + 1,051,200, derived) a rent collector could take
+the token and with it the break-it deposit; the challenge stands until then.
+
+## Run 14: v3.3 on the devnet, `runs/singleton-v33-20261003.log`, PASS
+
+After the fifth seat round: `deposit.es` v3.3 also requires the token-carrying input's value to exceed
+`StorageFeeFactorMax` (2,500,000 nanoERG per byte, `Parameters.scala` in the ergo 6.0.7 source) times its size, so a
+rent spend of a singleton that deposits could follow is always a covered one (the node's `checkExpiredBox` consumes
+a box whole, with no constraint on the outputs, only when `value - storageFee <= 0`). The hook funds every box with
+4 ERG. Same rig and parameters otherwise. State tree 1,253 bytes, deposit tree 166; singleton box 1,329, deposit box
+207; every spend 3,864 bytes. All sixteen flags `yes`.
+
+| round | inputs | node verdict | script cost |
+|---|---|---|---|
+| forged | S0 | rejected, `Success((false,38030))` | 38,030 |
+| wrongindex | S0 + D1 | rejected, `Success((false,75))`; the deposit's own verdict locally `false` at 77 | 75 |
+| nostate | D1 | rejected, `Success((false,21))` | 21 |
+| addinput | S0 + D1 | rejected, `Success((false,37989))` | 37,989 |
+| notoken | P0 | rejected, `Success((false,23))` | 23 |
+| valid, leaf 0 | S0 + D1 | confirmed, S1 at index 1, D1 gone | 37,732 (mempool 52,432) |
+| staleleaf | S1 | rejected, `Success((false,46))` | 46 |
+| skip, leaf 3 | S1 + D2 | confirmed, S2 at index 4, D2 gone | 37,954 (mempool 52,654) |
+| overindex | S2 | rejected, `Success((false,84))` | 84 |
+| lastsame | S2 | rejected, `Success((false,67))` | 67 |
+| lastdeposit | S2 | rejected, `Success((false,66))` | 66 |
+| rotate, leaf 15 | S2 | confirmed, S3 under key set B at index 0 | 37,790 (mempool 50,490) |
+| after rotation | S3 + D3 | confirmed, S4 at index 1, D3 gone | 38,200 (mempool 52,900) |
+
+Not run: a singleton below the floor (the deposit rule would refuse the sweep; by reading).
+
+## Run 15: v3.3 on public testnet, `testnet/v3-artifacts/run-v33.log`, PASS
+
+2026-10-03 04:17 to 04:25 UTC, the same public testnet node, fresh key sets A and B under one token (`f3485248…`,
+box `6c881fa7…`), funding transaction `d52870f6…`: S0 4 ERG (token, R4 = 0), D1 to D3 0.1 ERG each, P0 0.1 ERG.
+Artifacts in `testnet/v3-artifacts/` (run 13's moved to `testnet/v3-artifacts-run13/`). Singleton box 1,331 bytes,
+deposit box 208; every spend 3,871 bytes.
+
+| round | inputs | node verdict | script cost | artifact |
+|---|---|---|---|---|
+| forged | S0 | rejected, `Success((false,37611))` | 37,611 | |
+| wrongindex | S0 + D1 | rejected, `Success((false,75))`; the deposit's own verdict, locally, `false` at 77 | 75 | |
+| nostate | D1 | rejected, `Success((false,21))` | 21 | |
+| addinput | S0 + D1 | rejected, `Success((false,37987))` | 37,987 | |
+| notoken | P0 | rejected, `Success((false,23))` | 23 | |
+| valid, leaf 0 | S0 + D1 | confirmed; S1 R4 `0402`, height 577,967; D1 gone | 38,064 | tx `9a561b2fbc9825c53a5a7c3ce39bb0380f1f1959ba8cb2cb632ecea8df2afd8e` |
+| staleleaf | S1 | rejected, `Success((false,46))` | 46 | |
+| skip, leaf 3 | S1 + D2 | confirmed; S2 R4 `0408`, height 577,969; D2 gone | 37,794 | tx `bd58119c6f01a4214a39f60b4c81ce0ea12a94977901d389f92e1e2b6c62cba8` |
+| overindex | S2 | rejected, `Success((false,84))` | 84 | |
+| lastsame | S2 | rejected, `Success((false,67))` | 67 | |
+| lastdeposit | S2 | rejected, `Success((false,66))` | 66 | |
+| rotate, leaf 15 | S2 | confirmed; S3 under key set B (`tree_is_B True`), R4 `0400`, height 577,971 | 37,925 | tx `de6bf92264839bfcfd94d7f3e4e7b41acec98c89c1f2944b9787a65fdcfd801a`, box `4e70fc87cdd77c51f720bd3ec09fe1117580cc5301041714601cecc4c758a735` |
+| after rotation, B's leaf 0 | S3 + D3 | confirmed; S4 R4 `0402`, height 577,973; D3 gone | 37,943 | tx `66963ab831e36dd007b215cb5cb46611120e9f361db762fc268fce9d4bff77e9`, box `e55b03bbfc7466785e0b5f58c7f5a4e587b7754a98beafec089366e06a6910d9` |
+
+All sixteen flags `yes`. Left on testnet: S4 (key set B's singleton at index 1, about 4.1 ERG, above its largest
+votable rent fee of 3.33 ERG, holding token `f3485248dfb91f1a4074d88e5815da041c8b4724af77c8668a9adf120b4f833c`),
+P0, and a 0.3 ERG deposit funded afterwards at the deposit address as the "break it" box (transaction
+`98014e55c823e5b16a04f8cce4524c40fff9facdc0541f421f97292f08afafdb`, box
+`7627ad1fcd14959907cb26b22dde99355ff3bc79d4e86ca3abf83bd04e101354`; `testnet/v3-artifacts/breakit-fund.log` and
+its UTXO witness). The deposit address (P2S) is printed in `run-v33.log` and below. Procedure note as for runs 11
+and 13: at least two valid signatures of leaf 0 and of leaf 15 reached the public node before the corresponding
+spends confirmed; a wallet must never do that.
+
+Deposit address of run 15 (key sets A and B, token `f3485248…`):
+
+```
+dnav7UZh5pNnEvVCHB9uqaWM8hHERvCHNofCbufsK5QXvhcPojBuueQaoqY2R4RMDCMSStwhHeKX4WNDAYRakfQCAkrw9GEhEa7w7zP4ezdXmihev9Vpcr7PWoBeqGkUaXEyhsqW4fRxSWCaxLQ5guZgbmb7u5Nqztm1kAyAL5UHjqgQStH2XX7myk9FzVcsjCgMXDDkx3ftbsPAoMwegDLraxeLaQ8wqVMpmhnra
+```
 
 ## Earlier runs under the v1 rules (R4 required, leaf = index, index + 1)
 
@@ -330,22 +397,23 @@ testnet. Verdicts and costs match the devnet run to within the message-dependent
 
 ## What it settles, in one table against the one-time pilot
 
-| | one-time WOTS box (`q2`, the post) | many-time, v2 (runs 5 to 7) | many-time, v3.2 singleton (runs 12 and 13) |
+| | one-time WOTS box (`q2`, the post) | many-time, v2 (runs 5 to 7) | many-time, v3.3 singleton (runs 14 and 15) |
 |---|---|---|---|
 | keys per box | 1 | 2^h (16 here; the digest is 33 bytes at any h) | 2^h per key set, one singleton plus any number of deposits; the deposit address survives rotation |
-| proposition bytes | 840 (constant form) | 934 | 1,234 state, 147 deposit |
-| box bytes | 866 (constant form, the post) | 975 to 979 | 1,310 to 1,312 singleton, 188 to 190 deposit |
-| spend bytes | 2,345 (testnet) / 2,340 (devnet) | 3,477 to 3,484 | 3,845 (devnet) to 3,852 (testnet) with one deposit |
-| script cost, valid spend | 37,592 | 37,644 to 37,876 | devnet 37,954 to 38,212, testnet 37,516 to 38,187 (the deposit's script 66) |
-| mainnet cost per spend (derived; 10,000 + 2,407 per input + 298 per output + 400 token access as the devnet charged) | 50,595 (37,592 + 13,003, 1 in / 2 out) | 51,177 (37,876 + 13,301, 1 in / 3 out) | 54,320 (38,212 + 15,708 + 400, 2 in / 3 out) |
-| per block, by cost (8,001,091) / by size (1,271,009 bytes), derived, floors | 158 / 542 | 156 / 365 | 147 / 329 |
-| index enforced by | n/a | the chain, per box; across boxes the wallet | the chain, per key set: a deposit moves only in a transaction where the singleton's script ran and advanced the index (or rotated), which storage-rent collection cannot produce |
+| proposition bytes | 840 (constant form) | 934 | 1,253 state, 166 deposit |
+| box bytes | 866 (constant form, the post) | 975 to 979 | 1,329 to 1,331 singleton, 207 to 208 deposit |
+| spend bytes | 2,345 (testnet) / 2,340 (devnet) | 3,477 to 3,484 | 3,864 (devnet) to 3,871 (testnet) with one deposit |
+| script cost, valid spend | 37,592 | 37,644 to 37,876 | devnet 37,732 to 38,200, testnet 37,794 to 38,064 (the deposit's script 77) |
+| mainnet cost per spend (derived; 10,000 + 2,407 per input + 298 per output + 400 token access as the devnet charged) | 50,595 (37,592 + 13,003, 1 in / 2 out) | 51,177 (37,876 + 13,301, 1 in / 3 out) | 54,308 (38,200 + 15,708 + 400, 2 in / 3 out) |
+| per block, by cost (8,001,091) / by size (1,271,009 bytes), derived, floors | 158 / 542 | 156 / 365 | 147 / 328 |
+| singleton value floor | n/a | n/a | above 2,500,000 nanoERG per byte (about 3.33 ERG at 1,331 bytes) or deposits cannot be swept |
+| index enforced by | n/a | the chain, per box; across boxes the wallet | the chain, per key set: a deposit moves only in a transaction where the singleton's script ran and advanced the index (or rotated), and the floor keeps every rent spend of it a covered one, which recreates it unchanged (by reading of `checkExpiredBox`) |
 
 Cost-bound, like the pilot: the interpreter's WOTS cost dominates and the many-time machinery adds under two percent
 (v3's second input adds 2,407 of fixed charge). The rent of the box that persists, derived at mainnet's factor of
 1,250,000 nanoERG per byte per four years: 1.22 ERG for the v2 box (977 bytes), 1.38 ERG for the v3 singleton
-(1,102 to 1,104 bytes), 1.51 ERG for the v3.1 singleton (1,207 to 1,209 bytes), 1.64 ERG for the v3.2 singleton (1,310 to 1,312 bytes); a
-deposit box is 188 to 190 bytes under v3.2 and persists only until swept.
+(1,102 to 1,104 bytes), 1.51 ERG for the v3.1 singleton (1,207 to 1,209 bytes), 1.64 ERG for the v3.2 singleton (1,310 to 1,312 bytes), 1.66 ERG for the v3.3 singleton (1,329 to 1,331 bytes); a
+deposit box is 207 to 208 bytes under v3.3 and owes rent on the same terms (0.26 ERG per four years).
 
 ## Not shown, stated once
 

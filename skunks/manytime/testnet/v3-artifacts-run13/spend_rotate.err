@@ -1,0 +1,2 @@
+LOCAL-EVAL input=0 kind=state how=rotate r4=4 leaf=15 next=0 leaves=16 result=Success(true) cost=Success(37516) box_bytes=1312 tree_bytes=1234
+LOCAL-EVAL summary how=rotate inputs=1 signed_over=1 all_ok=true total_cost=37516 tx_id=45116cb39ed245c7898b7439bd136cca3c7d8155036899f4b4f0c69cee6eff09 tx_bytes=3852 out0_id=1e178ab04086a73e3dfc3a4f3e77253167fe0b83fac7f5f4a487ae763810bde2 out0_bytes=1312

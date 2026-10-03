@@ -1,0 +1,8 @@
+seat:    agy (1.2.14)
+model:   tool default
+utc:     20261003T040528Z
+slice:   /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/reply-slice7
+slice-git: not a git checkout
+web:     UNCONTROLLED (no flag)
+jail:    tools/seat-jail
+prompt-sha256: 7063b820f5b87e25c72a88e82f4c8f9a6694c9fff6935b2eda8529b18000c6fc
