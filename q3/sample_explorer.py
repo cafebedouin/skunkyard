@@ -24,6 +24,7 @@ for h in heights:
     blk = get(f"/blocks/{item['id']}"); time.sleep(0.25)
     if not blk: continue
     blocks_ok += 1
+    print(f'block {h} ok ({blocks_ok}/{len(heights)}), signers so far {len(addrs)}', file=sys.stderr, flush=True)
     for tx in blk.get("block", {}).get("blockTransactions", []):
         seen = set()
         for inp in tx.get("inputs", []):
@@ -32,6 +33,7 @@ for h in heights:
                 seen.add(a); inputs_p2pk += 1; addrs[a] = addrs.get(a, 0) + 1
 totals = {}
 for i, a in enumerate(addrs):
+    if i % 25 == 0: print(f'address lookups {i}/{len(addrs)}', file=sys.stderr, flush=True)
     d = get(f"/addresses/{a}/transactions?limit=1"); time.sleep(0.3)
     if d and isinstance(d.get("total"), int): totals[a] = d["total"]
 counts = sorted(totals.values())
