@@ -7,3 +7,5 @@ web:     disabled
 sandbox: read-only
 jail:    tools/seat-jail
 prompt-sha256: 63c8de050b02c237a3f6499cb2084ce4508d8fc10a27767e4f566821147578e6
+exit:    0
+model-reported: grok-4.7-build
