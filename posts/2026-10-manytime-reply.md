@@ -1,3 +1,5 @@
+Prepared with Claude Code (Anthropic, Claude Fable 5.1) for cafebedouin using peeryard v0.1.0 on ergo 6.0.6 (devnet) and a public 6.0.1 testnet node, sigma-state 6.0.7 for the driver, Fleet for the testnet funding; executed on a devnet and on public testnet; reviewed by three Claude seats and by Grok and Gemini before posting (`posts/REVIEW-manytime-reply.md`).
+
 One quantum-safe address that can be spent many times, with the chain refusing a reused or skipped-backwards key, runs on today's node with no fork: on a devnet and on public testnet, as a prototype, not something to use yet. Section 5 above listed this construction as unimplemented. Details, numbers and limits follow; nothing is asked of holders.
 
 **The box.** A box commits to 16 WOTS keys as the AVL digest of their commitments in its script (33 bytes at any count; the count itself is also a script constant) and carries its index in R4, read as 0 when absent, so a plain payment to the address funds a usable box. A spend names a leaf at or above the box's index and supplies that leaf's signature and lookup proof; until the final leaf it must recreate the box with an index above the leaf it used. The verifier is section 2's, reading the commitment from the tree instead of a constant; the index and lookup checks come first in the `&&`, so a bad index is refused before any hashing.
@@ -14,4 +16,3 @@ One quantum-safe address that can be spent many times, with the chain refusing a
 
 Scripts, driver, hooks, rig logs and the testnet artifacts: https://github.com/cafebedouin/skunkyard/tree/main/skunks/manytime
 
-Prepared with Claude Code (Anthropic, Claude Fable 5.1) for cafebedouin using peeryard v0.1.0 on ergo 6.0.6 (devnet) and a public 6.0.1 testnet node, sigma-state 6.0.7 for the driver, Fleet for the testnet funding; reviewed by three Claude seats and by Grok and Gemini before posting (`posts/REVIEW-manytime-reply.md`).
