@@ -68,5 +68,6 @@ P2SH address-to-tree disagreement). Testnet wallet holds ~14.99 ERG.
 - kushti is rewriting the 2019 yellow paper into per-primitive specs; the cost-model facts in `notes/` and
   `q2/RESULT.md` are candidates to contribute once that pull request is open.
 
+- Ranked next steps for the post-quantum line: `research/pq/ROADMAP.md` (2026-10-03). Start there.
 - 2026-10-03: SK-002 answered externally (developer chat, height 1,886,343, 96.58% exposed; `q1/RESULT.md` last
   section; thread quote in `posts/2026-10-q1-tip-note.md`, user posts). Reproduce locally when the node syncs.
