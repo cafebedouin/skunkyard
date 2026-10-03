@@ -1,0 +1,46 @@
+[rig] scratch: /tmp/peeryard-rig.iwrfbD
+[rig] chain preset current: blockInterval=2s minerRewardDelay=10 v4=early (soft-fork voting 4/1/1)
+rig/rig.sh: line 186: 620274 Killed                  ip netns exec "${NS[$n]}" bash -c "cd '${RT_CWD[$n]}' && exec '$JAVA_BIN' $JAVA_OPTS -Djava.io.tmpdir='$pdir/tmp' -jar '${NODE_JAR[$n]}' $NET_ARGS -c '$conf'" > "$plog" 2>&1
+[rig] genesis state digest for minerRewardDelay=10 derived from a probe start: c01a142d004a917b…
+[rig] java: openjdk version "21.0.12.1" 2026-08-18 (java, opts: -Xmx512m)
+[rig] effective configuration: /tmp/peeryard-rig.iwrfbD/out/effective.json ({"chain":"current","nodes":["A:ergo-6.0.6.jar"],"links":0})
+[rig] launched A (ns=ns_A ip=100.64.0.1 p2p=9021 rest=9052 kind=jvm jar=ergo-6.0.6.jar pid=620817)
+[rig] A pid=620817 cpus_applied=0-11 gc=G1GC
+[rig] A REST up
+[rig] bring-up: every link connected
+[rig] === handing off to hook: /home/scott/bin/skunkyard/skunks/manytime/manytime.sh ===
+[mt] blockVersion=4 at height 16; repo /home/scott/bin/skunkyard (84e72fb); n=32 w=16 h=4
+[mt] A balance 405000000000 nanoERG at height 16
+[mt] keygen mode=hybrid n=32 w=16 h=4 leaves=16 chains=67 tree_bytes=949 digest=e2b2dd632fbbe11c15bdbb4c5e3831c0d0c8f25449e0420435ad35e3a5edb4d305 address_chars=1303
+[mt] funding with R4=0400: d71c93b38651f1ee8e35188ab33dae74d6c4b8c1c5a3cabcf7ca63b032b33df4
+[mt] funded at height 19; box0 e1d58761098d4dd7dd9536c7cb51de75221982b8e3c6285e9cf1bc6e1ff6a058 R4=0400
+[mt:nodlog] LOCAL-EVAL mode=hybrid how=nodlog r4=0 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(38351) tx_id=2e377ea8492ffb3ffbe610cee3334c7cb7cf0a4ace73427b17597aa77a0eb015 proof_bytes_dlog=0 tx_bytes=3489 sig_bytes=2144 proof_bytes=187 box_bytes=992 tree_bytes=949
+[mt:nodlog] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 2e377ea8492ffb3ffbe610cee3334c7cb7cf0a4ace73427b17597aa77a0eb015: #0 => Success((false,38351))"}
+[mt:nodlog] REJECTED local_cost=cost=Success(38351) node_verdict=Success((false,38351))
+[mt:forged] LOCAL-EVAL mode=hybrid how=forged r4=0 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(37953) tx_id=cd0e3f6a4d178f10c7c0eb7162eaf5e66f6bd39cc955803548d716e37f042bb5 proof_bytes_dlog=0 tx_bytes=3489 sig_bytes=2144 proof_bytes=187 box_bytes=992 tree_bytes=949
+[mt:forged] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. cd0e3f6a4d178f10c7c0eb7162eaf5e66f6bd39cc955803548d716e37f042bb5: #0 => Success((false,37953))"}
+[mt:forged] REJECTED local_cost=cost=Success(37953) node_verdict=Success((false,37953))
+[mt:wrongindex] LOCAL-EVAL mode=hybrid how=wrongindex r4=0 leaf=0 next=0 leaves=16 result=Success(false) cost=Success(39) tx_id=9207fa3ee412a3abd78fac6b86d18b143695444e1607c201037f421ff1f58763 proof_bytes_dlog=0 tx_bytes=3489 sig_bytes=2144 proof_bytes=187 box_bytes=992 tree_bytes=949
+[mt:wrongindex] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 9207fa3ee412a3abd78fac6b86d18b143695444e1607c201037f421ff1f58763: #0 => Success((false,39))"}
+[mt:wrongindex] REJECTED local_cost=cost=Success(39) node_verdict=Success((false,39))
+[mt:valid0] LOCAL-EVAL mode=hybrid how=valid r4=0 leaf=0 next=1 leaves=16 result=Success(true) cost=Success(38351) tx_id=2e377ea8492ffb3ffbe610cee3334c7cb7cf0a4ace73427b17597aa77a0eb015 proof_bytes_dlog=56 tx_bytes=3545 sig_bytes=2144 proof_bytes=187 box_bytes=992 tree_bytes=949
+[mt:valid0] POST -> HTTP 200, tx 2e377ea8492ffb3ffbe610cee3334c7cb7cf0a4ace73427b17597aa77a0eb015; mempool size=3545 cost=50651
+[mt:valid0] confirmed at height 24; block tx size 3545; recreated box R4=0402
+[mt:valid0] RESULT leaf=0 next=1 cost=Success(38351) tx_bytes=3545 sig_bytes=2144 proof_bytes=187 box_bytes=992 tree_bytes=949 mempool_cost=50651 block_tx_bytes=3545
+[mt] box1 06c0c1b48223b2ba4e924acf77992920546f67356b53379a0cf21359b294aaad R4=0402
+[mt:staleleaf] LOCAL-EVAL mode=hybrid how=staleleaf r4=1 leaf=0 next=2 leaves=16 result=Failure(java.lang.reflect.InvocationTargetException) cost=Failure(java.lang.reflect.InvocationTargetException) tx_id=eac428dd6d955c6e58a7d61ee2ed00c2ecb1410fe56cea06dc130a8b6d13ab0c proof_bytes_dlog=0 tx_bytes=3489 sig_bytes=2144 proof_bytes=187 box_bytes=992 tree_bytes=949
+[mt:staleleaf] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. eac428dd6d955c6e58a7d61ee2ed00c2ecb1410fe56cea06dc130a8b6d13ab0c: #0 => Failure(java.lang.reflect.InvocationTargetExcep
+[mt:staleleaf] REJECTED local_cost=cost=Failure(java.lang.reflect.InvocationTargetException) node_verdict=Failure(java.lang.reflect.InvocationTargetException)
+[mt:valid1] LOCAL-EVAL mode=hybrid how=valid r4=1 leaf=1 next=2 leaves=16 result=Success(true) cost=Success(38263) tx_id=b0c1372421282e5a264893416b2ecec3fe5472f42f53f32e225cae99bc502646 proof_bytes_dlog=56 tx_bytes=3545 sig_bytes=2144 proof_bytes=187 box_bytes=992 tree_bytes=949
+[mt:valid1] POST -> HTTP 200, tx b0c1372421282e5a264893416b2ecec3fe5472f42f53f32e225cae99bc502646; mempool size=3545 cost=50563
+[mt:valid1] confirmed at height 29; block tx size 3545; recreated box R4=0404
+[mt:valid1] RESULT leaf=1 next=2 cost=Success(38263) tx_bytes=3545 sig_bytes=2144 proof_bytes=187 box_bytes=992 tree_bytes=949 mempool_cost=50563 block_tx_bytes=3545
+[mt] /info parameters: {"outputCost":100,"tokenAccessCost":100,"maxBlockCost":1000000,"height":28,"maxBlockSize":524288,"dataInputCost":100,"blockVersion":4,"inputCost":2000,"storageFeeFactor":1250000,"subblocksPerBlock":30,"minValuePerByte":360}
+/home/scott/bin/skunkyard/skunks/manytime/manytime.sh: line 78: conditional binary operator expected
+/home/scott/bin/skunkyard/skunks/manytime/manytime.sh: line 78: expected `)'
+/home/scott/bin/skunkyard/skunks/manytime/manytime.sh: line 78: syntax error near `$rej_nodlog'
+/home/scott/bin/skunkyard/skunks/manytime/manytime.sh: line 78: `if [[ "${rig_verdict:-}" != FAIL && $rej_forged == yes && $rej_wrongindex == yes && $rej_stale == yes && $conf1 == yes && $conf2 == yes && ( [[ $rej_nodlog == n/a ]] || [[ $rej_nodlog == yes ]] ) ]]; then rig_verdict=PASS; else rig_verdict=FAIL; fi'
+[rig] COSTS no recovery events
+[rig] === hook done (verdict: none) ===
+[rig] all nodes stopped
+rig exit 0

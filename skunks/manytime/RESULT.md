@@ -38,6 +38,27 @@ is by exception: the lookup key the script computes from `SELF.R4` is not the ke
 the expression `root.get(...).get` fails, whether inside the proof verification or as `None.get` the node's
 message does not say. ErgoScript has no catch, so the rejection stays an exception; the node rejects it either way.
 
+## Run 3: the hybrid, `proveDlog(ownerPk) && (many-time lock)`, `runs/manytime-hybrid-20261003.log`, PASS
+
+`hybrid.es` is `manytime.es` with `proveDlog(ownerPk) &&` in front; the driver signs the sigma leaf with the
+interpreter's own prover (`ProverInterpreter`, the owner's secret) and the hash side as before. Tree 949 bytes
+(the 33-byte key plus the AND node); box 992 bytes; spend 3,545 bytes (the 56-byte Schnorr proof added).
+
+| spend | box R4 before | what it does | node verdict | script cost (block units) |
+|---|---|---|---|---|
+| nodlog | 0 | valid WOTS signature and proof, empty sigma proof | rejected, `Success((false,38351))`: the hash side passes in full, then the curve leaf has no proof | 38,351 |
+| forged | 0 | one WOTS bit flipped, no sigma proof | rejected, `Success((false,37953))` | 37,953 |
+| wrongindex | 0 | recreated box keeps R4 = 0 | rejected, `Success((false,39))` | 39 |
+| valid, leaf 0 | 0 | both proofs | confirmed (mempool cost 50,651), R4 → 1 | 38,351 |
+| staleleaf | 1 | leaf 0 against R4 = 1 | rejected by exception, as in run 2 | not reported |
+| valid, leaf 1 | 1 | both proofs | confirmed (mempool cost 50,563), R4 → 2 | 38,263 |
+
+The AND costs about 500 units over the pure hash lock (the `proveDlog` leaf's 341 plus the conjunction) and 95
+bytes. What the hybrid buys: a holder loses nothing today's key gives, since the curve key must still sign; what
+it does not buy: protection of that curve key, which is as exposed as any P2PK key and whose compromise is
+harmless only because the hash side is also required. The migration reading is the post's: hybrid now, hash-only
+when the holder chooses.
+
 ## What it settles, in one table against the one-time pilot
 
 | | one-time WOTS box (`q2`, the post) | many-time box, this skunk |
