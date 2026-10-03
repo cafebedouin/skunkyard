@@ -5,8 +5,10 @@ remote yet.
 
 ## Lattice line and SK-029 done 2026-10-02
 
-SK-029 (`skunks/manytime/RESULT.md`): many-time WOTS keys on a devnet, PASS; forum reply drafted at
-`posts/2026-10-manytime-reply.md`, seats pending, user posts.
+SK-029 (`skunks/manytime/RESULT.md`, runs 1 to 9): many-time WOTS keys, v3 singleton design PASS on devnet and public
+testnet; forum reply v5 at `posts/2026-10-manytime-reply.md` after three seat rounds (`posts/REVIEW-manytime-reply.md`);
+the user posts it, with `posts/2026-10-post-errata.md` as an edit of the original post. Open: last-leaf rotation run
+(SK-032), h > 4 sizes, several deposits per spend, hybrid under v3, q3 rerun at the tip.
 
 ## SK-026 done 2026-10-02
 

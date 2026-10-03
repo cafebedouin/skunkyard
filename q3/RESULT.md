@@ -55,7 +55,9 @@ transactions, maximum 449,999. Reweighted per-address estimate among addresses a
 transactions, 90th percentile 210, 99th 1,562; 44.5% at most 16, 55.5% above 16, 1.9% above 1,024. Read against
 the full scan of the first era: the later era's active addresses are heavier (the scan's median is 2 inputs; the
 sample's median 24 transactions, an upper bound), and the share above 1,024 is 1.9% of active addresses against
-0.37% of all keys. Caveats: 267 addresses is a small sample; the explorer's count is transactions touching the
+0.37% of all keys. A second independent draw of 40 heights (`out/explorer-sample-20261003b.json`: 172 addresses,
+169 with a count) gives reweighted median 18, 90th percentile 184, 99th 1,562, 49.1% at most 16, 2.0% above 1,024,
+so the two draws agree within their size. Caveats: 267 addresses is a small sample; the explorer's count is transactions touching the
 address, not inputs signed; addresses that sign nothing in the sampled blocks are not represented (the scan
 represents every key that ever signed); a rerun of `run.sh` at the tip remains the exact answer.
 

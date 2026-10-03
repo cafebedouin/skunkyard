@@ -1,0 +1,26 @@
+{
+ "range": [
+  790000,
+  1886000
+ ],
+ "blocks_sampled": 40,
+ "inputs_seen": 714,
+ "p2pk_signer_appearances": 216,
+ "distinct_signing_addresses": 172,
+ "addresses_with_total": 169,
+ "lifetime_tx_total_per_address_lengthbiased": {
+  "median": 1040,
+  "mean": 13261.60946745562,
+  "max": 376823
+ },
+ "per_address_estimate_reweighted": {
+  "median": 18,
+  "p90": 184,
+  "p99": 1562,
+  "share_1": 0.0,
+  "share_le_16": 0.4913183816020681,
+  "share_gt_16": 0.508681618397932,
+  "share_gt_1024": 0.02024766791251852
+ },
+ "note": "a block sample over-represents frequent signers; the reweighted block estimates the per-address distribution among addresses active in the sampled range; 'total' counts transactions involving the address (as input or output), an upper bound on signings"
+}
