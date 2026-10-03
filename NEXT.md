@@ -67,3 +67,6 @@ P2SH address-to-tree disagreement). Testnet wallet holds ~14.99 ERG.
   lacks, from source, so the wallet ask names the exact gap. Note kushti's 0.29 adds `insertOrUpdate`.
 - kushti is rewriting the 2019 yellow paper into per-primitive specs; the cost-model facts in `notes/` and
   `q2/RESULT.md` are candidates to contribute once that pull request is open.
+
+- 2026-10-03: SK-002 answered externally (developer chat, height 1,886,343, 96.58% exposed; `q1/RESULT.md` last
+  section; thread quote in `posts/2026-10-q1-tip-note.md`, user posts). Reproduce locally when the node syncs.
