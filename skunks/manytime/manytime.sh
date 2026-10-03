@@ -29,9 +29,9 @@ if [[ "${rig_verdict:-}" != FAIL ]]; then
   ADDR_A=""; end=$((SECONDS + 60)); while [[ -z "$ADDR_A" && $SECONDS -lt $end ]]; do ADDR_A=$(address A 2>/dev/null); [[ -n "$ADDR_A" ]] || sleep 2; done
   [[ -n "$ADDR_A" ]] || { echo "[mt] FAIL: no wallet address"; rig_verdict=FAIL; }
 fi
-rej_forged=no; rej_wrongindex=no; rej_stale=no; conf1=no; conf2=no
+rej_forged=no; rej_wrongindex=no; rej_stale=no; rej_nodlog=n/a; [[ "${MT_MODE:-manytime}" == hybrid ]] && rej_nodlog=no; conf1=no; conf2=no
 if [[ "${rig_verdict:-}" != FAIL ]]; then
-  mt_cli keygen "$WD/keys" "$MT_N" "$MT_W" "$MT_H" 2>&1 | sed 's/^/[mt] /'
+  mt_cli keygen "$WD/keys" "$MT_N" "$MT_W" "$MT_H" "${MT_MODE:-manytime}" 2>&1 | sed 's/^/[mt] /'
   P2S=$(cat "$WD/keys/address"); TREE=$(cat "$WD/keys/tree.hex"); R4=$(cat "$WD/keys/r4-0.hex")
   h0=$(full_height A)
   req="{\"requests\":[{\"address\":\"$P2S\",\"value\":$FUND,\"registers\":{\"R4\":\"$R4\"}}],\"fee\":$FEE}"
@@ -65,6 +65,7 @@ spend_round(){ # <boxfile> <how> <tag> ; sets LAST_TX, LAST_BLOCK
   echo "[mt:$tag] FAIL: not confirmed (HTTP $code: $(tr -d '\n' <<< "$body" | cut -c1-200))"; return 1
 }
 if [[ "${rig_verdict:-}" != FAIL ]]; then
+  if [[ "${MT_MODE:-manytime}" == hybrid ]]; then spend_round "$WD/box0.json" nodlog nodlog && rej_nodlog=yes; fi
   spend_round "$WD/box0.json" forged forged && rej_forged=yes
   spend_round "$WD/box0.json" wrongindex wrongindex && rej_wrongindex=yes
   if spend_round "$WD/box0.json" valid valid0; then conf1=yes
@@ -74,5 +75,5 @@ if [[ "${rig_verdict:-}" != FAIL ]]; then
   fi
 fi
 echo "[mt] /info parameters: $(rest A /info | jq -c '.parameters')"
-if [[ "${rig_verdict:-}" != FAIL && $rej_forged == yes && $rej_wrongindex == yes && $rej_stale == yes && $conf1 == yes && $conf2 == yes ]]; then rig_verdict=PASS; else rig_verdict=FAIL; fi
-echo "MANYTIME: $rig_verdict (forged_rejected=$rej_forged wrongindex_rejected=$rej_wrongindex staleleaf_rejected=$rej_stale spend0_confirmed=$conf1 spend1_confirmed=$conf2)"
+if [[ "${rig_verdict:-}" != FAIL && $rej_forged == yes && $rej_wrongindex == yes && $rej_stale == yes && $conf1 == yes && $conf2 == yes && ( [[ $rej_nodlog == n/a ]] || [[ $rej_nodlog == yes ]] ) ]]; then rig_verdict=PASS; else rig_verdict=FAIL; fi
+echo "MANYTIME: $rig_verdict (mode=${MT_MODE:-manytime} nodlog_rejected=$rej_nodlog forged_rejected=$rej_forged wrongindex_rejected=$rej_wrongindex staleleaf_rejected=$rej_stale spend0_confirmed=$conf1 spend1_confirmed=$conf2)"
