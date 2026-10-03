@@ -1,0 +1,1 @@
+19:04:38.710 INFO  [main] scorex.db.LDBFactory$ - Loaded org.fusesource.leveldbjni.JniDBFactory with leveldbjni version 1.8

@@ -1,0 +1,16 @@
+19:14:26.968 INFO  [main] scorex.db.LDBFactory$ - Loaded org.fusesource.leveldbjni.JniDBFactory with leveldbjni version 1.8
+pass A: index entries=9605739 best headers=1886143 57s
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+	at org.fusesource.leveldbjni.internal.NativeSlice.toByteArray(NativeSlice.java:142)
+	at org.fusesource.leveldbjni.internal.NativeIterator.value(NativeIterator.java:186)
+	at org.fusesource.leveldbjni.internal.JniDBIterator.peekNext(JniDBIterator.java:87)
+	at org.fusesource.leveldbjni.internal.JniDBIterator.next(JniDBIterator.java:98)
+	at org.fusesource.leveldbjni.internal.JniDBIterator.next(JniDBIterator.java:45)
+	at scorex.db.KVStoreReader.getWithFilter(KVStoreReader.scala:50)
+	at scorex.db.KVStoreReader.getWithFilter$(KVStoreReader.scala:42)
+	at scorex.db.LDBKVStore.getWithFilter(LDBKVStore.scala:15)
+	at scorex.db.KVStoreReader.getAll(KVStoreReader.scala:66)
+	at scorex.db.KVStoreReader.getAll$(KVStoreReader.scala:66)
+	at scorex.db.LDBKVStore.getAll(LDBKVStore.scala:15)
+	at q3.SpendsPerKey$.main(SpendsPerKey.scala:53)
+	at q3.SpendsPerKey.main(SpendsPerKey.scala)

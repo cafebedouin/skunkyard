@@ -1,0 +1,6 @@
+19:11:45.411 INFO  [main] scorex.db.LDBFactory$ - Loaded org.fusesource.leveldbjni.JniDBFactory with leveldbjni version 1.8
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+	at q3.SpendsPerKey$LLMap.rehash(SpendsPerKey.scala:28)
+	at q3.SpendsPerKey$LLMap.put(SpendsPerKey.scala:22)
+	at q3.SpendsPerKey$.main(SpendsPerKey.scala:45)
+	at q3.SpendsPerKey.main(SpendsPerKey.scala)

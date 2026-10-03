@@ -1,0 +1,24 @@
+pass A: index entries=9605739 best headers=1886143 47s
+pass B: objects entries=3470347 best-chain headers=1886143 660s
+pass C: blocks=791286 txs=3526670 p2pk outputs=12177447 other outputs=6730622 highest=1886143 1615s
+pass D: bucket 0 records=57878 unspent_p2pk=160 keys=151 1629s
+pass D: bucket 1 records=57610 unspent_p2pk=354 keys=295 1629s
+pass D: bucket 2 records=59698 unspent_p2pk=651 keys=372 1629s
+pass D: bucket 3 records=124944 unspent_p2pk=1133 keys=546 1630s
+pass D: bucket 4 records=460521 unspent_p2pk=5372 keys=2405 1630s
+pass D: bucket 5 records=490966 unspent_p2pk=6562 keys=4963 1632s
+pass D: bucket 6 records=489176 unspent_p2pk=20968 keys=6615 1632s
+pass D: bucket 7 records=774792 unspent_p2pk=31665 keys=9225 1634s
+pass D: bucket 8 records=1052066 unspent_p2pk=90429 keys=16859 1635s
+pass D: bucket 9 records=1957579 unspent_p2pk=204255 keys=42529 1638s
+pass D: bucket 10 records=2775580 unspent_p2pk=526237 keys=73403 1641s
+pass D: bucket 11 records=4238436 unspent_p2pk=626665 keys=129405 1645s
+pass D: bucket 12 records=4797504 unspent_p2pk=862839 keys=174688 1649s
+pass D: bucket 13 records=4192523 unspent_p2pk=1245071 keys=206291 1653s
+pass D: bucket 14 records=4564990 unspent_p2pk=1438185 keys=242228 1657s
+pass D: bucket 15 records=3244781 unspent_p2pk=1646205 keys=262754 1660s
+pass D: bucket 37 records=60068 unspent_p2pk=1655452 keys=263160 1660s
+height=1886143 blocks=791286 txs=3526670 outputs_p2pk=12177447 outputs_other=6730622 inputs_p2pk=10521995 inputs_other=6699670 unspent_p2pk_tracked=1655452 seconds=1660
+transactions_per_key: keys=263160 mean=30.99 median=2 p90=48 p99=486 p999=1788 max=87909 keys_signing_once=124126 keys_over_16=47499 keys_over_1024=776
+inputs_per_key: keys=263160 mean=39.98 median=2 p90=64 p99=557 p999=2064 max=138346 keys_signing_once=107159 keys_over_16=57966 keys_over_1024=978
+exit 0
