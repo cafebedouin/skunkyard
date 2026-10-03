@@ -1,0 +1,54 @@
+with-lock: waiting for /tmp/peeryard.lock (0 min; queue 1; held by: )
+[rig] scratch: /tmp/peeryard-rig.cOyKYO
+[rig] chain preset current: blockInterval=2s minerRewardDelay=10 v4=early (soft-fork voting 4/1/1)
+[rig] genesis state digest for minerRewardDelay=10 derived from a probe start: c01a142d004a917b…
+[rig] java: openjdk version "21.0.12.1" 2026-08-18 (java, opts: -Xmx512m)
+[rig] effective configuration: /tmp/peeryard-rig.cOyKYO/out/effective.json ({"chain":"current","nodes":["A:ergo-6.0.6.jar"],"links":0})
+[rig] launched A (ns=ns_A ip=100.64.0.1 p2p=9021 rest=9052 kind=jvm jar=ergo-6.0.6.jar pid=628240)
+[rig] A pid=628240 cpus_applied=0-11 gc=G1GC
+[rig] A REST up
+[rig] bring-up: every link connected
+[rig] === handing off to hook: /home/scott/bin/skunkyard/skunks/manytime/manytime.sh ===
+[mt] blockVersion=4 at height 17; repo /home/scott/bin/skunkyard (b53c255); n=32 w=16 h=4
+[mt] A balance 472500000000 nanoERG at height 17
+[mt] keygen mode=hybrid n=32 w=16 h=4 leaves=16 chains=67 tree_bytes=973 digest=2f3248a926533efc4e60f50a74764a632d0ec9c0c0ecc576fba05b7e22ba003605 address_chars=1335
+[mt] funding with R4=0400: 820691ef470234270a732710006dc7b307578e3ec15c4cc45642b9037f64f299
+[mt] funded at height 20; box0 3180460cecbb3443fb4af3e413490e7e204c207650dd619769b637386976c9eb R4=0400
+[mt:nodlog] LOCAL-EVAL mode=hybrid how=nodlog r4=0 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(38282) tx_id=34a55a99591d872e31d811367d6da3dcf2cdb6e90dc03b096830dee5bb97284b proof_bytes_dlog=0 out0_id=a1cda7eac4283a8ab6240f0ce617df1003e5b8e969f8485c2fcc462ce2574780 tx_bytes=3516 sig_bytes=2144 proof_bytes=187 box_bytes=1016 tree_bytes=973
+[mt:nodlog] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 34a55a99591d872e31d811367d6da3dcf2cdb6e90dc03b096830dee5bb97284b: #0 => Success((false,38282))"}
+[mt:nodlog] REJECTED local_cost=cost=Success(38282) node_verdict=Success((false,38282))
+[mt:forged] LOCAL-EVAL mode=hybrid how=forged r4=0 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(37749) tx_id=d0c9ec648c07ad87af3b18be835d672f278fdc571184b238df8e474a35aa3d20 proof_bytes_dlog=0 out0_id=51501e99cef7f65a5cda893d4f67b0bd71b72f1a3f1508c017e7c77cf79bee77 tx_bytes=3516 sig_bytes=2144 proof_bytes=187 box_bytes=1016 tree_bytes=973
+[mt:forged] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. d0c9ec648c07ad87af3b18be835d672f278fdc571184b238df8e474a35aa3d20: #0 => Success((false,37749))"}
+[mt:forged] REJECTED local_cost=cost=Success(37749) node_verdict=Success((false,37749))
+[mt:wrongindex] LOCAL-EVAL mode=hybrid how=wrongindex r4=0 leaf=0 next=0 leaves=16 result=Success(false) cost=Success(54) tx_id=64222456f82e15399f9473b9fdf59c9e2925e71922024f9037e57d6068a3ddf7 proof_bytes_dlog=0 out0_id=eefbc4b0958b6ddfef397e375ffae66f237627e867fd0b786a325ee12aad39b6 tx_bytes=3516 sig_bytes=2144 proof_bytes=187 box_bytes=1016 tree_bytes=973
+[mt:wrongindex] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 64222456f82e15399f9473b9fdf59c9e2925e71922024f9037e57d6068a3ddf7: #0 => Success((false,54))"}
+[mt:wrongindex] REJECTED local_cost=cost=Success(54) node_verdict=Success((false,54))
+[mt:valid0] LOCAL-EVAL mode=hybrid how=valid r4=0 leaf=0 next=1 leaves=16 result=Success(true) cost=Success(38159) tx_id=a09899d584c81f0fc8cca8317638693d7c3227508b40901c5afa8f49a196614e proof_bytes_dlog=56 out0_id=8c7ea47b133a2f543ecf90171be0506308e38bd5f17e778d90f5ed90afe37c04 tx_bytes=3572 sig_bytes=2144 proof_bytes=187 box_bytes=1016 tree_bytes=973
+[mt:valid0] POST -> HTTP 200, tx a09899d584c81f0fc8cca8317638693d7c3227508b40901c5afa8f49a196614e; mempool size=3572 cost=50459
+[mt:valid0] confirmed at height 25; block tx size 3572; recreated box R4=0402
+[mt:valid0] RESULT leaf=0 next=1 cost=Success(38159) tx_bytes=3572 sig_bytes=2144 proof_bytes=187 box_bytes=1016 tree_bytes=973 mempool_cost=50459 block_tx_bytes=3572
+[mt] box1 8c7ea47b133a2f543ecf90171be0506308e38bd5f17e778d90f5ed90afe37c04 R4=0402
+[mt:staleleaf] LOCAL-EVAL mode=hybrid how=staleleaf r4=1 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(30) tx_id=2d34fd1d45f03f28a50fa06cf0880c44862cd92c72b968e4157bfeee0bdd76a7 proof_bytes_dlog=0 out0_id=2e0735d2aa6b299dcd65eb7e0c2a09d1bfcde5169dfd1f77f7dab057d1ae60e2 tx_bytes=3516 sig_bytes=2144 proof_bytes=187 box_bytes=1016 tree_bytes=973
+[mt:staleleaf] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 2d34fd1d45f03f28a50fa06cf0880c44862cd92c72b968e4157bfeee0bdd76a7: #0 => Success((false,30))"}
+[mt:staleleaf] REJECTED local_cost=cost=Success(30) node_verdict=Success((false,30))
+[mt:below] LOCAL-EVAL mode=hybrid how=valid r4=1 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(30) tx_id=2d34fd1d45f03f28a50fa06cf0880c44862cd92c72b968e4157bfeee0bdd76a7 proof_bytes_dlog=0 out0_id=2e0735d2aa6b299dcd65eb7e0c2a09d1bfcde5169dfd1f77f7dab057d1ae60e2 tx_bytes=3516 sig_bytes=2144 proof_bytes=187 box_bytes=1016 tree_bytes=973
+jq: parse error: Invalid numeric literal at line 1, column 8
+jq: parse error: Invalid numeric literal at line 1, column 8
+[mt:below] POST -> HTTP 400, tx {"error":400,"reason":"bad.request","detail":"Malformed transaction: Scripts of all transaction inputs should pass verification. 2d34fd1d45f03f28a50fa06cf0880c44862cd92c72b968e4157bfeee0bdd76a7: #0 => Success((false,30))"}; mempool size= cost=
+[mt:below] FAIL: not confirmed (HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 2d34fd1d45f03f28a50fa06cf0880c44862cd92c72b968e4157bfeee0bd)
+[mt:skip] LOCAL-EVAL mode=hybrid how=valid r4=1 leaf=3 next=4 leaves=16 result=Success(true) cost=Success(38072) tx_id=6f011273b8d4d1187ffeea6316323355d819f2e816977e222237c0e31ed5d163 proof_bytes_dlog=56 out0_id=981afafc951efcd74ea4652562d259a37831ab7cbcf01573c2ca22d8fe431b9f tx_bytes=3572 sig_bytes=2144 proof_bytes=187 box_bytes=1016 tree_bytes=973
+[mt:skip] POST -> HTTP 200, tx 6f011273b8d4d1187ffeea6316323355d819f2e816977e222237c0e31ed5d163; mempool size=3572 cost=50372
+[mt:skip] confirmed at height 29; block tx size 3572; recreated box R4=0408
+[mt:skip] RESULT leaf=3 next=4 cost=Success(38072) tx_bytes=3572 sig_bytes=2144 proof_bytes=187 box_bytes=1016 tree_bytes=973 mempool_cost=50372 block_tx_bytes=3572
+[mt] box2 981afafc951efcd74ea4652562d259a37831ab7cbcf01573c2ca22d8fe431b9f R4=0408
+[mt] second plain box 266017e8813ebaebc688b3f01115abe736e65f1e523c6c01a00ce1ea11f6e134 registers: []
+[mt:plain2] LOCAL-EVAL mode=hybrid how=valid r4=0 leaf=4 next=5 leaves=16 result=Success(true) cost=Success(38209) tx_id=587bdc8810c421add25834ea967186aa6d96a45a70eabbc16bbeca11b06acabc proof_bytes_dlog=56 out0_id=659d35730370c85c720ba55f37c434b93281fbfc7610bfc2487300c0a4ef18e8 tx_bytes=3572 sig_bytes=2144 proof_bytes=187 box_bytes=1014 tree_bytes=973
+[mt:plain2] POST -> HTTP 200, tx 587bdc8810c421add25834ea967186aa6d96a45a70eabbc16bbeca11b06acabc; mempool size=3572 cost=50509
+[mt:plain2] confirmed at height 34; block tx size 3572; recreated box R4=040a
+[mt:plain2] RESULT leaf=4 next=5 cost=Success(38209) tx_bytes=3572 sig_bytes=2144 proof_bytes=187 box_bytes=1014 tree_bytes=973 mempool_cost=50509 block_tx_bytes=3572
+[mt] /info parameters: {"outputCost":100,"tokenAccessCost":100,"maxBlockCost":1000000,"height":32,"maxBlockSize":524288,"dataInputCost":100,"blockVersion":4,"inputCost":2000,"storageFeeFactor":1250000,"subblocksPerBlock":30,"minValuePerByte":360}
+MANYTIME: PASS (mode=hybrid nodlog_rejected=yes forged_rejected=yes wrongindex_rejected=yes staleleaf_rejected=yes below_rejected=yes spend0_confirmed=yes skip_spend_confirmed=yes second_plain_box_confirmed=yes)
+[rig] COSTS no recovery events
+[rig] === hook done (verdict: PASS) ===
+[rig] all nodes stopped
+rig exit 0

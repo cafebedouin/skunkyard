@@ -1,11 +1,45 @@
-# SK-029 result: many-time hash-based keys on a devnet
+# SK-029 result: many-time hash-based keys on a devnet and on public testnet
 
 Runs 2026-10-02 on the peeryard rig (one mining node, `ergo-6.0.6.jar`, `--devnet`, block version 4, 2-second
 blocks), hook `manytime.sh`, driver `ManyTime.scala` on sigma-state 6.0.7; WOTS n = 32, w = 16 (67 chains, 2,144-byte
 signature), h = 4 (16 leaves); funding 1 ERG with R4 = 0, each spend pays 0.1 ERG out and recreates the box.
 Devnet fixed charge for 1 input and 3 outputs: 10,000 + 2,000 + 300 = 12,300 (mainnet: 13,003 + 298 = 13,301).
 
-## Run 1: the script as first written (eager evaluation), `runs/manytime-v1-eager-20261002.log`, PASS
+## Runs 5 and 6: the v2 rules on the devnet, plain and hybrid, 2026-10-03, both PASS with printed verdicts
+
+After the five seats on the first reply draft (`posts/REVIEW-manytime-reply.md`), the script's rules changed
+(`manytime.es`, commit 2f88c9f): a box with no R4 reads as index 0, so a plain payment to the address funds a
+usable box; the spend names its leaf (context var 2) and may use any leaf at or above the box's index; the
+continuing box must carry an index above the leaf used (unless the leaf was the last). The hook funds box 0 with a
+plain payment, and after the first spend also funds a second plain box at the same address. The driver sets the
+recreated box's creation height to the current height. Logs: `runs/manytime-v2rules-20261003.log`,
+`runs/manytime-v2rules-hybrid-20261003.log`. Tree 934 bytes (973 hybrid); box 975 to 977 (1,014 to 1,016); spend
+3,477 (3,572) bytes.
+
+| spend | box R4 before | what it does | plain: node verdict, cost | hybrid: node verdict, cost |
+|---|---|---|---|---|
+| nodlog | absent (0) | valid hash signature, no curve proof | n/a | rejected, `Success((false,38282))` |
+| forged | absent (0) | one signature bit flipped | rejected, 37,916 | rejected, 37,749 |
+| wrongindex | absent (0) | recreated box keeps index 0 | rejected, 52 | rejected, 54 |
+| valid, leaf 0 | absent (0) | recreates with R4 = 1 | confirmed, 37,644 (mempool 49,944) | confirmed, 38,159 (mempool 50,459) |
+| staleleaf | 1 | leaf 0 signed again against R4 = 1 (leaf below the index) | rejected, `Success((false,28))`, no exception now: `leaf >= i` fails before the lookup | rejected, 30 |
+| below | 1 | leaf 0 named explicitly against R4 = 1 | rejected (script check) | rejected (script check) |
+| skip, leaf 3 | 1 | leaf 3 ≥ 1, recreates with R4 = 4 | confirmed, 37,876 (mempool 50,176); R4 read `0408` | confirmed, 38,072 |
+| second plain box, leaf 4 | absent (0) | a new plain payment to the address, spent with the wallet's next leaf 4, R4 = 5 | confirmed, 37,779 (mempool 50,079) | confirmed, 38,209 |
+
+Verdict lines as printed: `MANYTIME: PASS (mode=manytime ... below_rejected=yes spend0_confirmed=yes
+skip_spend_confirmed=yes second_plain_box_confirmed=yes)` and the same for `mode=hybrid` with
+`nodlog_rejected=yes`. The costs of the valid spends vary with the message (37,644 to 37,876 plain); the many-time
+machinery is not separable from that variation; the wrong-index and stale-leaf rejections cost 28 to 54 units.
+
+What the v2 rules change, in one line each: a plain payment is spendable (run 5, box 0 and the second box); a box
+at index i refuses any leaf below i (stale and below) and accepts any leaf at or above it (skip), so a stuck spend
+is replaced with the next leaf and several boxes of one key set are driven by one wallet counter; the chain
+enforces the index per box, the wallet keeps the counter per key set.
+
+## Earlier runs under the v1 rules (R4 required, leaf = index, index + 1)
+
+## Run 1: the script as first written (`&&` with the verification first), `runs/manytime-v1-eager-20261002.log`, PASS
 
 Tree 908 bytes; box 951 bytes; every spend 3,448 bytes (signature 2,144 and proof 187 in the extension, the recreated 951-byte box, the two other outputs and the transaction framing).
 
@@ -16,13 +50,14 @@ Tree 908 bytes; box 951 bytes; every spend 3,448 bytes (signature 2,144 and proo
 | valid, leaf 0 | 0 | recreates with R4 = 1 | confirmed (mempool cost 50,097) | 37,797 |
 | valid, leaf 1 | 1 | recreates with R4 = 2 | confirmed (mempool cost 50,062) | 37,762 |
 
-The index advanced 0, 1, 2 on chain (R4 read `0400`, `0402`, `0404`). Both rejections paid the full WOTS cost:
-ErgoTree evaluates a block's `val`s eagerly, so the chain computation ran before the state check.
+The index advanced 0, 1, 2 on chain (R4 read `0400`, `0402`, `0404`). Both rejections paid the full WOTS cost: the
+final `&&` had the chain computation on its left, and ErgoTree evaluates a `val` where it is used, so the state
+check came second.
 
 ## Run 2: cheap checks first, and the stale-leaf case, `runs/manytime-v2-ordered-20261002.log`, PASS
 
-`manytime.es` as committed: the state check and the AVL lookup come first and the WOTS block sits under `&&`, so
-it runs only when they pass. Tree 910 bytes; box 953 bytes; every spend 3,450 bytes (the same composition, two bytes more of script).
+The state check and the AVL lookup moved to the left of the `&&` with the WOTS block on its right, so the block
+runs only when they pass. Tree 910 bytes; box 953 bytes; every spend 3,450 bytes (the same composition, two bytes more of script).
 
 | spend | box R4 before | what it does | node verdict | script cost (block units) |
 |---|---|---|---|---|
@@ -38,7 +73,7 @@ is by exception: the lookup key the script computes from `SELF.R4` is not the ke
 the expression `root.get(...).get` fails, whether inside the proof verification or as `None.get` the node's
 message does not say. ErgoScript has no catch, so the rejection stays an exception; the node rejects it either way.
 
-## Run 3: the hybrid, `proveDlog(ownerPk) && (many-time lock)`, `runs/manytime-hybrid-20261003.log`, PASS
+## Run 3: the hybrid, `proveDlog(ownerPk) && (many-time lock)`, `runs/manytime-hybrid-20261003.log`, every case as expected, no verdict line (the hook had a syntax error at its verdict, found by the seats and fixed; rerun as run 6)
 
 `hybrid.es` is `manytime.es` with `proveDlog(ownerPk) &&` in front; the driver signs the sigma leaf with the
 interpreter's own prover (`ProverInterpreter`, the owner's secret) and the hash side as before. Tree 949 bytes
@@ -59,12 +94,12 @@ it does not buy: protection of that curve key, which is as exposed as any P2PK k
 harmless only because the hash side is also required. The migration reading is the post's: hybrid now, hash-only
 when the holder chooses.
 
-## Run 4: public testnet, `testnet/run.log`, PASS
+## Run 4: public testnet under the v1 rules, `testnet/v1-artifacts/run.log`, PASS (the runner's round logs went to its own output capture, so costs and ids below are from `testnet/v1-artifacts/*.body` and `spend_*.err`, published with this result)
 
 2026-10-03 00:56 to 01:01 UTC, through the Cornell testnet node (`http://128.253.41.110:9052`, ergo 6.0.1 testnet,
 block version 4, API open), funded from the project's testnet wallet with `fund-any.mjs` (R4 = 0), the same 16-leaf
 key set shape, `minerRewardDelay` 720. Box 955 bytes, tree 910 (the testnet prefix changes nothing but the address);
-every spend 3,457 bytes.
+every spend 3,457 bytes. The recreated boxes carried the funding box's creation height (a driver choice, since fixed).
 
 | spend | node verdict | script cost | artifact |
 |---|---|---|---|

@@ -1,0 +1,51 @@
+[rig] scratch: /tmp/peeryard-rig.1Wp8et
+[rig] chain preset current: blockInterval=2s minerRewardDelay=10 v4=early (soft-fork voting 4/1/1)
+rig/rig.sh: line 186: 625561 Killed                  ip netns exec "${NS[$n]}" bash -c "cd '${RT_CWD[$n]}' && exec '$JAVA_BIN' $JAVA_OPTS -Djava.io.tmpdir='$pdir/tmp' -jar '${NODE_JAR[$n]}' $NET_ARGS -c '$conf'" > "$plog" 2>&1
+[rig] genesis state digest for minerRewardDelay=10 derived from a probe start: c01a142d004a917b…
+[rig] java: openjdk version "21.0.12.1" 2026-08-18 (java, opts: -Xmx512m)
+[rig] effective configuration: /tmp/peeryard-rig.1Wp8et/out/effective.json ({"chain":"current","nodes":["A:ergo-6.0.6.jar"],"links":0})
+[rig] launched A (ns=ns_A ip=100.64.0.1 p2p=9021 rest=9052 kind=jvm jar=ergo-6.0.6.jar pid=626197)
+[rig] A pid=626197 cpus_applied=0-11 gc=G1GC
+[rig] A REST up
+[rig] bring-up: every link connected
+[rig] === handing off to hook: /home/scott/bin/skunkyard/skunks/manytime/manytime.sh ===
+[mt] blockVersion=4 at height 16; repo /home/scott/bin/skunkyard (b53c255); n=32 w=16 h=4
+[mt] A balance 405000000000 nanoERG at height 16
+[mt] keygen mode=manytime n=32 w=16 h=4 leaves=16 chains=67 tree_bytes=934 digest=aef479bd5f81c05200890c455511a97703949ff1e15586d5e2547b5f523be97405 address_chars=1282
+[mt] funding with R4=0400: 803d0f9d12275e33e6b41a83d38fde70ddcbde175115496e9c93fa5a9bca1c05
+[mt] funded at height 19; box0 3934387caec617e65021d51954daabca9839ab6296f87b8a03bbb3aab5749e73 R4=0400
+[mt:forged] LOCAL-EVAL mode=manytime how=forged r4=0 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(37916) tx_id=6af34aade6f48b7e7e4f582cb42de3d16b11812e88865d4c16a0a7e92b837413 proof_bytes_dlog=0 out0_id=7fcebfe95a706a50f357466cebb41f98f4386d05ecdb5d456ce36cf1ab3cf128 tx_bytes=3477 sig_bytes=2144 proof_bytes=187 box_bytes=977 tree_bytes=934
+[mt:forged] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 6af34aade6f48b7e7e4f582cb42de3d16b11812e88865d4c16a0a7e92b837413: #0 => Success((false,37916))"}
+[mt:forged] REJECTED local_cost=cost=Success(37916) node_verdict=Success((false,37916))
+[mt:wrongindex] LOCAL-EVAL mode=manytime how=wrongindex r4=0 leaf=0 next=0 leaves=16 result=Success(false) cost=Success(52) tx_id=96d96d487d0198bb9db6fb75e3dc2c9ad7918782e40d41c05c66507ba45e5e04 proof_bytes_dlog=0 out0_id=21eec2e61990fec3b3fc8733d5a51cff295a774e6b439186dac15a6c47c49f01 tx_bytes=3477 sig_bytes=2144 proof_bytes=187 box_bytes=977 tree_bytes=934
+[mt:wrongindex] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 96d96d487d0198bb9db6fb75e3dc2c9ad7918782e40d41c05c66507ba45e5e04: #0 => Success((false,52))"}
+[mt:wrongindex] REJECTED local_cost=cost=Success(52) node_verdict=Success((false,52))
+[mt:valid0] LOCAL-EVAL mode=manytime how=valid r4=0 leaf=0 next=1 leaves=16 result=Success(true) cost=Success(37644) tx_id=d3495d2b95ba913665366773b07ca54bda8d0428d2e0d650d2346a3bb873061c proof_bytes_dlog=0 out0_id=aebcd7768ae5fd5bae6482ea6eb825fc46447d3eb0957a195abe60c89bd97688 tx_bytes=3477 sig_bytes=2144 proof_bytes=187 box_bytes=977 tree_bytes=934
+[mt:valid0] POST -> HTTP 200, tx d3495d2b95ba913665366773b07ca54bda8d0428d2e0d650d2346a3bb873061c; mempool size=3477 cost=49944
+[mt:valid0] confirmed at height 27; block tx size 3477; recreated box R4=0402
+[mt:valid0] RESULT leaf=0 next=1 cost=Success(37644) tx_bytes=3477 sig_bytes=2144 proof_bytes=187 box_bytes=977 tree_bytes=934 mempool_cost=49944 block_tx_bytes=3477
+[mt] box1 aebcd7768ae5fd5bae6482ea6eb825fc46447d3eb0957a195abe60c89bd97688 R4=0402
+[mt:staleleaf] LOCAL-EVAL mode=manytime how=staleleaf r4=1 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(28) tx_id=3e0ee2981390248f750d00242bcc892943e793f4ea6359a4aec333210a99052f proof_bytes_dlog=0 out0_id=536d0d58ac75b6c2b59759ef5ed3501706821ac45af5a2cc1468f4ec1fc32360 tx_bytes=3477 sig_bytes=2144 proof_bytes=187 box_bytes=977 tree_bytes=934
+[mt:staleleaf] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 3e0ee2981390248f750d00242bcc892943e793f4ea6359a4aec333210a99052f: #0 => Success((false,28))"}
+[mt:staleleaf] REJECTED local_cost=cost=Success(28) node_verdict=Success((false,28))
+[mt:below] LOCAL-EVAL mode=manytime how=valid r4=1 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(28) tx_id=3e0ee2981390248f750d00242bcc892943e793f4ea6359a4aec333210a99052f proof_bytes_dlog=0 out0_id=536d0d58ac75b6c2b59759ef5ed3501706821ac45af5a2cc1468f4ec1fc32360 tx_bytes=3477 sig_bytes=2144 proof_bytes=187 box_bytes=977 tree_bytes=934
+jq: parse error: Invalid numeric literal at line 1, column 8
+jq: parse error: Invalid numeric literal at line 1, column 8
+[mt:below] POST -> HTTP 400, tx {"error":400,"reason":"bad.request","detail":"Malformed transaction: Scripts of all transaction inputs should pass verification. 3e0ee2981390248f750d00242bcc892943e793f4ea6359a4aec333210a99052f: #0 => Success((false,28))"}; mempool size= cost=
+[mt:below] FAIL: not confirmed (HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 3e0ee2981390248f750d00242bcc892943e793f4ea6359a4aec333210a9)
+[mt:skip] LOCAL-EVAL mode=manytime how=valid r4=1 leaf=3 next=4 leaves=16 result=Success(true) cost=Success(37876) tx_id=82e30fe9ed4c7f0aaa7ceb4fc65a0a4e173b9b0823911f2a7e9db74e399c2cf7 proof_bytes_dlog=0 out0_id=5228208ab44b23da663f34dcc83a135282375c3fb5384eeacc0c6c7c7be054b8 tx_bytes=3477 sig_bytes=2144 proof_bytes=187 box_bytes=977 tree_bytes=934
+[mt:skip] POST -> HTTP 200, tx 82e30fe9ed4c7f0aaa7ceb4fc65a0a4e173b9b0823911f2a7e9db74e399c2cf7; mempool size=3477 cost=50176
+[mt:skip] confirmed at height 31; block tx size 3477; recreated box R4=0408
+[mt:skip] RESULT leaf=3 next=4 cost=Success(37876) tx_bytes=3477 sig_bytes=2144 proof_bytes=187 box_bytes=977 tree_bytes=934 mempool_cost=50176 block_tx_bytes=3477
+[mt] box2 5228208ab44b23da663f34dcc83a135282375c3fb5384eeacc0c6c7c7be054b8 R4=0408
+[mt] second plain box 6f580a16cd3e6bb8b708769faf2f6c99572e8d653bab79ca2089115af563798b registers: []
+[mt:plain2] LOCAL-EVAL mode=manytime how=valid r4=0 leaf=4 next=5 leaves=16 result=Success(true) cost=Success(37779) tx_id=b47b7e768ee326b461f22a536dc5d09206912d1484021c8327251a58b3220ef7 proof_bytes_dlog=0 out0_id=c65f898da0749021e1c050c32213fdab35aaddc03e0e0eabbe6a4085efa78742 tx_bytes=3477 sig_bytes=2144 proof_bytes=187 box_bytes=975 tree_bytes=934
+[mt:plain2] POST -> HTTP 200, tx b47b7e768ee326b461f22a536dc5d09206912d1484021c8327251a58b3220ef7; mempool size=3477 cost=50079
+[mt:plain2] confirmed at height 35; block tx size 3477; recreated box R4=040a
+[mt:plain2] RESULT leaf=4 next=5 cost=Success(37779) tx_bytes=3477 sig_bytes=2144 proof_bytes=187 box_bytes=975 tree_bytes=934 mempool_cost=50079 block_tx_bytes=3477
+[mt] /info parameters: {"outputCost":100,"tokenAccessCost":100,"maxBlockCost":1000000,"height":32,"maxBlockSize":524288,"dataInputCost":100,"blockVersion":4,"inputCost":2000,"storageFeeFactor":1250000,"subblocksPerBlock":30,"minValuePerByte":360}
+MANYTIME: PASS (mode=manytime nodlog_rejected=n/a forged_rejected=yes wrongindex_rejected=yes staleleaf_rejected=yes below_rejected=yes spend0_confirmed=yes skip_spend_confirmed=yes second_plain_box_confirmed=yes)
+[rig] COSTS no recovery events
+[rig] === hook done (verdict: PASS) ===
+[rig] all nodes stopped
+rig exit 0

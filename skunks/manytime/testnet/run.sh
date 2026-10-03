@@ -17,7 +17,7 @@ round(){ # <boxfile> <how> <tag> [leaf]; logs go to stderr so the caller can cap
   echo "$code"
 }
 log "box0 $BOX0; node $(curl -s --max-time 10 $NODE/info | python3 -c 'import sys,json; d=json.load(sys.stdin); print(d["appVersion"], "height", d["fullHeight"], "blockVersion", d["parameters"]["blockVersion"])')"
-wait_box "$BOX0" 60 || { log "box0 not in UTXO"; exit 1; }
+wait_box "$BOX0" 900 || { log "box0 not in UTXO"; exit 1; }
 B0="$TN/box-$BOX0.json"
 c=$(round "$B0" forged forged); [[ "$c" == 400 ]] && grep -q 'should pass verification' "$TN/tx_forged.json.body" && R1=yes || R1=no
 c=$(round "$B0" wrongindex wrongindex); [[ "$c" == 400 ]] && grep -q 'should pass verification' "$TN/tx_wrongindex.json.body" && R2=yes || R2=no
