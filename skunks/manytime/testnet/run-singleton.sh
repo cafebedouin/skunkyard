@@ -51,7 +51,7 @@ wait_box "$S0" 1200 || { log "S0 not in UTXO"; exit 1; }; for b in $P0 $D1 $D2 $
 log "S0 in UTXO: creationHeight $(python3 -c "import json; d=json.load(open('$ART/box-$S0.json')); print(d['creationHeight'], 'R4', d['additionalRegisters'].get('R4'), 'assets', d['assets'])")"
 SF="$ART/box-$S0.json"; PF="$ART/box-$P0.json"; D1F="$ART/box-$D1.json"; D2F="$ART/box-$D2.json"; D3F="$ART/box-$D3.json"
 R1=$(rejected "$(round "$SF" none forged forged)" forged)
-R2=$(rejected "$(round "$SF" none wrongindex wrongindex)" wrongindex)
+R2=$(rejected "$(round "$SF" "$D1F" wrongindex wrongindex)" wrongindex)
 R3=$(rejected "$(round none "$D1F" nostate nostate)" nostate)
 R4=$(rejected "$(round "$SF" "$D1F" addinput addinput)" addinput)
 R5=$(rejected "$(round "$PF" none valid notoken)" notoken)

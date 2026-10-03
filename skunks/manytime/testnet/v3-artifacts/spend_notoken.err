@@ -1,2 +1,2 @@
-LOCAL-EVAL input=0 kind=state how=valid r4=0 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(23) box_bytes=1174 tree_bytes=1131
-LOCAL-EVAL summary how=valid inputs=1 signed_over=1 all_ok=false total_cost=23 tx_id=fcafbede01b9999c1fb6930865350ebf6baad8ae73d2a878368cdd07762da94d tx_bytes=3680 out0_id=2a07b087e977f68a7ea2de830fefaef48b43b2e50302dacbc716b48202832521 out0_bytes=1175
+LOCAL-EVAL input=0 kind=state how=valid r4=0 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(23) box_bytes=1277 tree_bytes=1234
+LOCAL-EVAL summary how=valid inputs=1 signed_over=1 all_ok=false total_cost=23 tx_id=a131d2bf730b1937f3a35bea55a30d35dc706c5ea99e4d18c18c63fa5434d2bc tx_bytes=3783 out0_id=251f116dba0f88682484c7300355b4974f6272997b19afff4eeb2a2568cf9760 out0_bytes=1278

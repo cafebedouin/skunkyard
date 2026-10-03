@@ -96,10 +96,11 @@ repository was read in full):
   whose authorized signer rotates after every transaction, storing only a hash-derived value of the next key. These
   are proposals and prototypes; whether any is deployed on mainnet was not checked.
 
-What this skunk does that neither does: the counter over 2^h keys lives in the UTXO's own register, the deposit
-address is fixed while the key set and even the singleton rotate behind it, and the enforcement is the stock
-script interpreter, not a deployed program. The claim in the reply is scoped accordingly: a many-time counter
-enforced by a box script on a UTXO chain, with no "first".
+What this skunk does that neither does: the counter over 2^h keys lives in the UTXO's own register, and the
+enforcement is the stock script interpreter, not a deployed program. A stable receiving address that outlives the
+signing key is shared with the Ethereum proposals (a contract wallet's address stays while its signer rotates), so
+it is not the distinguishing part. The claim in the reply is scoped accordingly: a many-time counter enforced by a
+box script on a UTXO chain, with no "first".
 
 ## The v3 singleton against QRL's per-address bitfield
 
@@ -125,3 +126,17 @@ keeping a bitfield only.
   (`sigma/data/CBox.scala`), so under v2 an EIP-4 mint to the address (R4 holds a name as `Coll[Byte]`) or a payer's
   memo made a box unspendable. v3's deposit script reads no register; only the singleton, which the wallet alone
   creates, has one.
+
+## The storage-rent path (fourth seat round, 2026-10-03)
+
+Ergo's storage rent lets anyone spend a box that has sat unspent for 1,051,200 blocks by recreating it minus the fee,
+with the same script, registers and tokens, and the box's script is not evaluated on that spend (`WORKLIST.md` F1;
+node code read, not run here). For a singleton-token state box this means the token moves, unguarded, once every
+four years of inactivity, and a deposit script that asked only "is the token among the inputs" (v3.1) would have let
+the rent collector attach every deposit to that spend. v3.2's deposit rule, "the token-carrying output advanced the
+index or changed the script against the token-carrying input", is satisfiable only by a spend in which the state
+script ran, because rent collection may change neither. The same trap applies to any Ergo contract that gates on
+"a box with NFT X is an input" without also requiring that box to have changed; oracle-pool and bank contracts
+avoid it by reading the state box as a data input or by checking its registers moved. The hazard that remains is
+loss, not theft: a singleton collected whole (value below the fee) strands the token and every deposit, so a wallet
+spends or refreshes the singleton within four years.

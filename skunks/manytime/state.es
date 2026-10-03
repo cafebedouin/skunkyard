@@ -4,8 +4,8 @@
 // passes through the singleton, and its index is enforced by the chain for the key set, not per box. v2 rules
 // kept: a missing R4 reads as 0; the spend names its leaf (var 2) at or above the index; the continuing box
 // carries an index above the leaf used. New: SELF and OUTPUTS(0) must carry the token (a box at this address
-// without the token is not the singleton and is unspendable); on the last leaf OUTPUTS(0) may be any script
-// (rotation: the token moves to the next key set's singleton); the message covers every INPUT id, so a deposit
+// without the token is not the singleton and is unspendable); on the last leaf OUTPUTS(0) must be another script at
+// index 0 (rotation: the token moves to the next key set's singleton, v3.1/v3.2 rules below); the message covers every INPUT id, so a deposit
 // cannot be added to or removed from a signed transaction, and every data-input id (third seat round: a relay could
 // otherwise add a data input, which changes the transaction id and so the recreated singleton's box id).
 {
@@ -23,7 +23,8 @@
   val stateOk = selfHasToken && outHasToken && leaf >= i && leaf < leaves && (if (leaf + 1 < leaves) {
     out.propositionBytes == SELF.propositionBytes && out.R4[Int].get >= leaf + 1 && out.R4[Int].get < leaves
   } else {
-    out.propositionBytes != SELF.propositionBytes && out.propositionBytes != depositTree
+    // v3.2: the next singleton starts at index 0 (a wrong-typed R4 throws here and the spend is refused)
+    out.propositionBytes != SELF.propositionBytes && out.propositionBytes != depositTree && out.R4[Int].getOrElse(0) == 0
   })
   sigmaProp(stateOk && {
     val leafCommitment = root.get(longToByteArray((leaf + 1).toLong), proof).get

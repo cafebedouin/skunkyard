@@ -91,7 +91,7 @@ spend_round(){ # <stateFile|none> <depositFiles|none> <how> <tag> <expect: rejec
 }
 if [[ "${rig_verdict:-}" != FAIL ]]; then
   spend_round "$WD/S0.json" none forged forged reject && rej_forged=yes
-  spend_round "$WD/S0.json" none wrongindex wrongindex reject && rej_wrongindex=yes
+  spend_round "$WD/S0.json" "$WD/D1.json" wrongindex wrongindex reject && rej_wrongindex=yes   # with D1 attached: the deposit script prints its own verdict (false: the index did not advance)
   spend_round none "$WD/D1.json" nostate nostate reject && rej_nostate=yes
   spend_round "$WD/S0.json" "$WD/D1.json" addinput addinput reject && rej_addinput=yes
   spend_round "$WD/P0.json" none valid notoken reject && rej_notoken=yes

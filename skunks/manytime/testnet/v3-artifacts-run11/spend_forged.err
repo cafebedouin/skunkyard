@@ -1,0 +1,2 @@
+LOCAL-EVAL input=0 kind=state how=forged r4=0 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(37918) box_bytes=1209 tree_bytes=1131
+LOCAL-EVAL summary how=forged inputs=1 signed_over=1 all_ok=false total_cost=37918 tx_id=420d110e80ea35e3aee33c9cfcd9c2d1583c9ac598ad6d6d0be1f51849848006 tx_bytes=3715 out0_id=ac2d48095003771695cb153413f7f12e59ce32cc5aa093c8120648eb314dce1a out0_bytes=1209

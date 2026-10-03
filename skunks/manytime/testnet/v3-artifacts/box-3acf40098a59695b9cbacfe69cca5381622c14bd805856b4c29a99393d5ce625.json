@@ -1,0 +1,19 @@
+{
+  "boxId" : "3acf40098a59695b9cbacfe69cca5381622c14bd805856b4c29a99393d5ce625",
+  "value" : 100000000,
+  "ergoTree" : "0008cd032d0c040f8ef24535cab2ee8529631bc60111095b3770dddc27f314aaca841a29",
+  "assets" : [
+    {
+      "tokenId" : "96806629e03c8a42700da954e95c92c75b776d6828fa4991563a564d86349e5b",
+      "amount" : 1
+    }
+  ],
+  "creationHeight" : 577840,
+  "additionalRegisters" : {
+    "R4" : "0e0f736b3032392d73696e676c65746f6e",
+    "R5" : "0e00",
+    "R6" : "0e0130"
+  },
+  "transactionId" : "d0317fcd4bba41b1caa2c9b25de3d2d79f83fb04519b486bee4ab51226fa6d6c",
+  "index" : 0
+}

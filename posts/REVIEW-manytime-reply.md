@@ -161,3 +161,44 @@ only on confirmation" (the chain's does; the wallet's counter moves at signing) 
 itself handed a public node several leaf-0 signatures before the index passed 0 (wrongindex, addinput, notoken);
 harmless because nothing spent in the interval, and stated in the reply as the window the design closes at
 confirmation. A funded deposit left beside the rotated singleton on testnet is the "break it" ask.
+
+# Round 4: four seats on v6 (commit 048681e), 2026-10-03
+
+Outputs in `posts/seats/manytime-reply/v6/`. Two Claude seats (Opus 5.5: fidelity; recipients and attacker), Gemini,
+Grok (pending at the time of writing).
+
+**A break (recipients' seat).** Storage-rent collection spends a box past 1,051,200 blocks without running its
+script, recreating it minus the fee with the same script, registers and tokens (`WORKLIST.md` F1 says the same:
+"the guard is not evaluated, registers are kept"). Under v3.1 the deposit script asked only that a token-carrying box
+be among the inputs, so a rent spend of an old singleton could attach every deposit and send them anywhere, whatever
+the singleton's value; the draft's rent rule ("keep the value above the fee") was wrong, and "nothing at the deposit
+address moves without the singleton" was literally true and misleading. Not runnable on testnet for about a million
+blocks. Response, v3.2 (`deposit.es`): the token-carrying OUTPUTS(0) must advance the index or change the script
+against the token-carrying input, which rent collection cannot do, so the rule holds only when the singleton's
+script ran; the wrongindex round now carries a deposit so the deposit script prints its own refusal. Also from this
+seat: at rotation the new singleton's R4 was unchecked (v3.2: must read 0; a wrong type throws); the script forbids
+two exact byte strings at the last leaf, not every bad destination (a wallet rule: a singleton with the same token
+id, a never-used root, index 0); the transaction id stays malleable through context extensions even with data inputs
+signed (by reading), so a wallet must never pre-sign a child against a predicted singleton id; restore needs the
+token id; the deposit address is P2S, which some exchanges may refuse; a forged spend still costs the node the full
+verification with no fee.
+
+**Fidelity seat.** The run-9 key set's secret keys had been committed in 048681e (`testnet/keys-v3-run9/`, untracked in
+5fcb846; run 9's testnet singleton is spendable by anyone, 1.4 testnet ERG, not key set B); the test handed the
+public node four leaf-0 signatures (the forged one is a bit-flip away from valid) and two leaf-15 signatures
+(lastsame, lastdeposit) before the rotation, which the procedure note now says; the break-it box needs a UTXO
+witness (added, height 577,824); "keys' public parts" overstated what is published (the digests in the scripts and
+the commitments revealed by spends); "about 150" of message variation had no witness (cut); "three rounds" (four at
+posting); by transactions the maximum is 87,909, so height 17 covers every key (height 20 was the inputs figure);
+paragraphs carrying several concerns split; claims by reading marked (data-input coverage, window closing, last-leaf
+forgery, the Solana program "not read in full").
+
+**Gemini.** "Harmless because nothing spent" dismissed an open forgery race (reworded); no leaf may be signed twice,
+the last leaf only adds the token to what a forger takes; the window closes at confirmation depth, not at one
+block, on a proof-of-work chain; the 27% share had no witness in `q3/RESULT.md` (added, with the transactions
+column's other shares); RESULT's rent paragraph lagged v3.1 (fixed).
+
+**Break-it (recipients' seat).** The post gave full ids and three routes; the reply gave a prefix and one route.
+Criterion for the final text: a confirmed testnet spend of the deposit, or a transaction the scripts accept on a
+devnet or in the harness, that carries no valid signature of an unused leaf of key set B; or an argument that a
+sentence under "What the chain enforces" is false, which this round's rent finding would have met.

@@ -53,3 +53,6 @@ without the token. Results: `RESULT.md` run 8 (devnet) and run 9 (public testnet
 must leave this script and may not go to the deposit script; before it the continuing index must stay below the leaf
 count; data-input ids are in the message; runs 10 and 11 add the rotation to a second key set's singleton and a sweep
 by that key set, so the deposit address is shown to survive rotation.
+v3.2 (fourth seat round): storage-rent collection runs no script, so a deposit now requires the token-carrying
+OUTPUTS(0) to advance the index or change the script against the token-carrying input; the rotation's new singleton
+must read index 0. Runs 12 (devnet) and 13 (public testnet).
