@@ -26,6 +26,17 @@ a "none found" is checkable.
   fallback leaf that extends the chain for more signatures. State: the signer's; the ledger shortens the path, it
   does not police reuse.
 
+## QRL: chain-enforced OTS indices at the protocol level (found by the recipients' seat, checked 2026-10-03)
+
+The Quantum Resistant Ledger (XMSS addresses since 2018) keeps a per-address OTS bitfield in its state and its
+nodes reject a transaction that reuses an OTS index "during routine State verification when a block is added"
+(https://docs.theqrl.org/build/fundamentals/ots-keys/, https://docs-archive.theqrl.org/developers/ots/; the
+bitfield tracks the first 8,192 indices). That is consensus-level enforcement of one-time use, by a protocol rule
+written for one signature scheme and one address type. The earlier line in this note calling QRL's state
+"signer-side" was wrong and is withdrawn. What the many-time box adds is the same enforcement expressed as a box
+script on a general-purpose chain whose protocol knows nothing about the scheme: any script can carry it, any
+height, any hash, no rule in the node.
+
 ## What the search did not find
 
 No construction in which a script rule rejects a spend that reuses or fails to advance the leaf index: WOTS-Tree
@@ -40,7 +51,7 @@ above, BIP-360, SPHINCS and WOTS+ security papers, four patents on signer-side s
 2607.02677 SpendableStore); alphaXiv discovery with keywords XMSS, stateful, UTXO, covenant (hits: NIST SHBS
 benchmark data arXiv 2502.06033, a commit-reveal alternative 2605.06853, "Staged Multi-step UTXO Workflows via
 Recursive Invariants" 2609.26305, none about signature state). Not searched: the bitcoin-dev and Lightning
-mailing lists directly, QRL's documentation (QRL uses XMSS with signer-side state), IOTA's key-reuse history.
+mailing lists directly, IOTA's key-reuse history; QRL's documentation was read after the seats raised it (above).
 
 ## What this changes in the claim
 
