@@ -145,3 +145,13 @@ margin (the factor is miner-votable), and a refresh within four years.
 
 Not searched either: Ergo's own forum, Telegram and Discord, and the ergoplatform GitHub organization, for stateful-counter
 contracts (noted by the fourth seat round).
+
+## Multi-device wallets (user question, 2026-10-03)
+
+Stateful signatures and several devices sharing one seed are the classic failure (Kudinov and Nick's reason for
+rejecting the family). A register cannot warn a device, because the chain knows only confirmed spends and the hazard
+is the unconfirmed window. The "at or above" rule gives a construction instead: partition the leaves by device, leaf
+mod k for k devices, each taking the lowest leaf of its class at or above the singleton's index. Two devices signing
+at once produce two spends of the same singleton, of which one confirms; the other's leaf is disclosed once, which
+is safe, and the loser re-reads the index. No leaf is ever signed twice across devices; the cost is the other
+classes' leaves burned as the index passes them (k − 1 of every k). Registered as SK-037.
