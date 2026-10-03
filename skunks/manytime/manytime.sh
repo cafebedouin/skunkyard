@@ -29,7 +29,7 @@ if [[ "${rig_verdict:-}" != FAIL ]]; then
   ADDR_A=""; end=$((SECONDS + 60)); while [[ -z "$ADDR_A" && $SECONDS -lt $end ]]; do ADDR_A=$(address A 2>/dev/null); [[ -n "$ADDR_A" ]] || sleep 2; done
   [[ -n "$ADDR_A" ]] || { echo "[mt] FAIL: no wallet address"; rig_verdict=FAIL; }
 fi
-rej_forged=no; rej_wrongindex=no; rej_stale=no; rej_nodlog=n/a; [[ "${MT_MODE:-manytime}" == hybrid ]] && rej_nodlog=no; conf1=no; conf2=no
+rej_forged=no; rej_wrongindex=no; rej_stale=no; rej_below=no; conf3=no; rej_nodlog=n/a; [[ "${MT_MODE:-manytime}" == hybrid ]] && rej_nodlog=no; conf1=no; conf2=no
 if [[ "${rig_verdict:-}" != FAIL ]]; then
   mt_cli keygen "$WD/keys" "$MT_N" "$MT_W" "$MT_H" "${MT_MODE:-manytime}" 2>&1 | sed 's/^/[mt] /'
   P2S=$(cat "$WD/keys/address"); TREE=$(cat "$WD/keys/tree.hex"); R4=$(cat "$WD/keys/r4-0.hex")
@@ -42,9 +42,9 @@ if [[ "${rig_verdict:-}" != FAIL ]]; then
     rest A "/utxo/byId/$BOX" > "$WD/box0.json"; echo "[mt] funded at height $fh; box0 $BOX R4=$(jq -r .additionalRegisters.R4 "$WD/box0.json")"
   else echo "[mt] FAIL: funding did not confirm"; rig_verdict=FAIL; fi
 fi
-spend_round(){ # <boxfile> <how> <tag> ; sets LAST_TX, LAST_BLOCK
-  local bf="$1" how="$2" tag="$3" hb code body vid
-  mt_cli spend "$WD/keys" "$bf" "$ADDR_A" "$FEE" "$AMT" "$how" "$DELAY" > "$WD/tx_$tag.json" 2> "$WD/spend_$tag.err"
+spend_round(){ # <boxfile> <how> <tag> [leaf] ; sets LAST_BOX
+  local bf="$1" how="$2" tag="$3" leaf="${4:-}" hb code body vid
+  mt_cli spend "$WD/keys" "$bf" "$ADDR_A" "$FEE" "$AMT" "$how" "$DELAY" "$(full_height A)" $leaf > "$WD/tx_$tag.json" 2> "$WD/spend_$tag.err"
   grep -v '^\s*at ' "$WD/spend_$tag.err" | cut -c1-420 | sed "s/^/[mt:$tag] /"
   [[ -s "$WD/tx_$tag.json" ]] || { echo "[mt:$tag] FAIL: no transaction built"; return 1; }
   hb=$(full_height A); code=$(post_json A /transactions "$WD/tx_$tag.json"); body=$(cat "$WD/tx_$tag.json.body")
@@ -71,9 +71,19 @@ if [[ "${rig_verdict:-}" != FAIL ]]; then
   if spend_round "$WD/box0.json" valid valid0; then conf1=yes
     rest A "/utxo/byId/$LAST_BOX" > "$WD/box1.json"; echo "[mt] box1 $LAST_BOX R4=$(jq -r .additionalRegisters.R4 "$WD/box1.json")"
     spend_round "$WD/box1.json" staleleaf staleleaf && rej_stale=yes
-    spend_round "$WD/box1.json" valid valid1 && conf2=yes
+    spend_round "$WD/box1.json" valid below 0 && rej_below=no || rej_below=yes   # leaf 0 named explicitly against R4 = 1: must be rejected
+    if spend_round "$WD/box1.json" valid skip 3; then conf2=yes   # leaf 3 >= 1: allowed, next index 4
+      rest A "/utxo/byId/$LAST_BOX" > "$WD/box2.json"; echo "[mt] box2 $LAST_BOX R4=$(jq -r .additionalRegisters.R4 "$WD/box2.json")"
+      # a second plain box at the same address (no R4), spent with the wallet counter leaf 4: the per-box index is 0, the wallet's is 4
+      hb=$(full_height A); f2=$(wallet A /wallet/payment/send "[{\"address\":\"$P2S\",\"value\":$FUND}]" | jq -r 'if type == "string" then . else (.detail // .reason // tojson) end')
+      if [[ "$f2" =~ ^[0-9a-f]{64}$ ]] && fh2=$(find_tx A "$f2" "$hb" 120); then
+        B3=$(tx_in_block A "$fh2" "$f2" | jq -r --arg t "$TREE" '.outputs[] | select(.ergoTree == $t) | .boxId'); rest A "/utxo/byId/$B3" > "$WD/box3.json"
+        echo "[mt] second plain box $B3 registers: $(jq -c '.additionalRegisters | keys' "$WD/box3.json")"
+        spend_round "$WD/box3.json" valid plain2 4 && conf3=yes
+      else echo "[mt] second plain funding did not confirm"; fi
+    fi
   fi
 fi
 echo "[mt] /info parameters: $(rest A /info | jq -c '.parameters')"
-if [[ "${rig_verdict:-}" != FAIL && $rej_forged == yes && $rej_wrongindex == yes && $rej_stale == yes && $conf1 == yes && $conf2 == yes && ( [[ $rej_nodlog == n/a ]] || [[ $rej_nodlog == yes ]] ) ]]; then rig_verdict=PASS; else rig_verdict=FAIL; fi
-echo "MANYTIME: $rig_verdict (mode=${MT_MODE:-manytime} nodlog_rejected=$rej_nodlog forged_rejected=$rej_forged wrongindex_rejected=$rej_wrongindex staleleaf_rejected=$rej_stale spend0_confirmed=$conf1 spend1_confirmed=$conf2)"
+if [[ "${rig_verdict:-}" != FAIL && $rej_forged == yes && $rej_wrongindex == yes && $rej_stale == yes && $conf1 == yes && $conf2 == yes && $rej_below == yes && $conf3 == yes && ( $rej_nodlog == n/a || $rej_nodlog == yes ) ]]; then rig_verdict=PASS; else rig_verdict=FAIL; fi
+echo "MANYTIME: $rig_verdict (mode=${MT_MODE:-manytime} nodlog_rejected=$rej_nodlog forged_rejected=$rej_forged wrongindex_rejected=$rej_wrongindex staleleaf_rejected=$rej_stale below_rejected=$rej_below spend0_confirmed=$conf1 skip_spend_confirmed=$conf2 second_plain_box_confirmed=$conf3)"

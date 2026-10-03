@@ -1,0 +1,1 @@
+LOCAL-EVAL mode=manytime how=wrongindex r4=0 leaf=0 next=0 leaves=16 result=Success(false) cost=Success(38) tx_id=56afb244d2abd4ac80ad8e72b56f89781ac92e4632e4bc6936b788c172028f97 proof_bytes_dlog=0 out0_id=26faea7630482b93cbb8e142bb67740ab967a02697eb3ddbea42914da01ba58a tx_bytes=3457 sig_bytes=2144 proof_bytes=187 box_bytes=955 tree_bytes=910

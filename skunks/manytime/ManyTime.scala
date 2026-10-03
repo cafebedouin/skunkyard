@@ -67,7 +67,7 @@ object ManyTime {
     System.err.println(s"keygen mode=$mode n=$n w=$w h=$h leaves=$leaves chains=${l1 + l2} tree_bytes=${tree.bytes.length} digest=${hex(p.digest)} address_chars=${enc.toString(Pay2SAddress(tree)).length}")
   }
 
-  def spend(keyDir: File, boxJson: String, toAddress: String, fee: Long, amount: Long, how: String, rewardDelay: Int): Unit = {
+  def spend(keyDir: File, boxJson: String, toAddress: String, fee: Long, amount: Long, how: String, rewardDelay: Int, heightOpt: Option[Int], leafOpt: Option[Int]): Unit = {
     val Array(n, w, h) = read(keyDir, "params").split(" ").map(_.toInt); val leaves = 1 << h
     val mode = if (new File(keyDir, "mode").exists) read(keyDir, "mode") else "manytime"
     val owner = if (mode == "hybrid") Some(DLogProverInput(new java.math.BigInteger(read(keyDir, "owner-w.hex"), 16))) else None
@@ -75,16 +75,15 @@ object ManyTime {
     val json = io.circe.parser.parse(boxJson).fold(e => sys.error(s"box json: $e"), identity)
     val box = json.as[ErgoBox](Codecs.ergoBoxDecoder).fold(e => sys.error(s"box decode: $e"), identity)
     require(hex(box.ergoTree.bytes) == read(keyDir, "tree.hex"), "box is not locked by this key's tree")
-    val i = box.get(ErgoBox.R4) match { case Some(IntConstant(v)) => v; case other => sys.error(s"R4 is not an Int: $other") }
-    require(i < leaves, s"leaf index $i beyond $leaves leaves")
-    val leaf = if (how == "staleleaf") i - 1 else i
-    require(leaf >= 0, "staleleaf needs R4 >= 1")
+    val i = box.get(ErgoBox.R4) match { case Some(IntConstant(v)) => v; case None => 0; case other => sys.error(s"R4 is not an Int: $other") }
+    val leaf = leafOpt.getOrElse(if (how == "staleleaf") i - 1 else i)
+    require(leaf >= 0 && leaf < leaves, s"leaf $leaf out of range (R4 $i, $leaves leaves)")
     val sk = read(keyDir, s"sk-$leaf.hex").split("\n").map(unhex)
     val p = prover(hashes); p.performOneOperation(Lookup(ADKey @@ idxKey(leaf))).get; val proof = p.generateProof()
-    val nextI = if (how == "wrongindex") i else i + 1
+    val nextI = if (how == "wrongindex") leaf else leaf + 1
     val toTree = enc.fromString(toAddress).get.script
     val feeTree = ErgoTreePredef.feeProposition(rewardDelay)
-    val hgt = box.creationHeight
+    val hgt = heightOpt.getOrElse(box.creationHeight)   // the recreated box's creation height: the current height when given, so the rent clock resets
     val regs: Map[ErgoBox.NonMandatoryRegisterId, EvaluatedValue[_ <: SType]] = Map(ErgoBox.R4 -> IntConstant(nextI))
     val outputs = IndexedSeq(
       new ErgoBoxCandidate(box.value - amount - fee, box.ergoTree, hgt, Colls.emptyColl, regs),
@@ -93,7 +92,7 @@ object ManyTime {
     val msg = Blake2b256.hash(box.id ++ outputs.flatMap(_.bytesWithNoRef)).take(n)
     val sig = Runner6.wotsSign(sk, msg, n, w)
     if (how == "forged") sig(0) = (sig(0) ^ 0x01).toByte else require(Set("valid", "wrongindex", "staleleaf", "nodlog")(how), s"valid|forged|wrongindex|staleleaf|nodlog, got $how")
-    val ext = ContextExtension(Map(0.toByte -> ByteArrayConstant(sig), 1.toByte -> ByteArrayConstant(proof)))
+    val ext = ContextExtension(Map(0.toByte -> ByteArrayConstant(sig), 1.toByte -> ByteArrayConstant(proof), 2.toByte -> IntConstant(leaf)))
     val tx = new ErgoLikeTransaction(IndexedSeq(new Input(box.id, ProverResult(Array.emptyByteArray, ext))), IndexedSeq.empty, outputs)
     val ctx = new ErgoLikeContext(
       lastBlockUtxoRoot = AvlTreeData.dummy, headers = Colls.emptyColl[Header], preHeader = Runner6.preHeader,
@@ -116,7 +115,7 @@ object ManyTime {
       val r = c.additionalRegisters.map { case (k, v) => s""""R${k.number}":"${hex(ValueSerializer.serialize(v))}"""" }.mkString("{", ",", "}")
       s"""{"value":${c.value},"ergoTree":"${hex(c.ergoTree.bytes)}","creationHeight":${c.creationHeight},"assets":[],"additionalRegisters":$r}"""
     }
-    val extJson = s"""{"0":"${hex(ValueSerializer.serialize(ByteArrayConstant(sig)))}","1":"${hex(ValueSerializer.serialize(ByteArrayConstant(proof)))}"}"""
+    val extJson = s"""{"0":"${hex(ValueSerializer.serialize(ByteArrayConstant(sig)))}","1":"${hex(ValueSerializer.serialize(ByteArrayConstant(proof)))}","2":"${hex(ValueSerializer.serialize(IntConstant(leaf)))}"}"""
     println(s"""{"inputs":[{"boxId":"${hex(box.id)}","spendingProof":{"proofBytes":"${hex(proofBytes)}","extension":$extJson}}],"dataInputs":[],"outputs":[${outputs.map(out).mkString(",")}]}""")
   }
 
@@ -124,7 +123,7 @@ object ManyTime {
     case "keygen" :: dir :: n :: w :: h :: rest => keygen(new File(dir), n.toInt, w.toInt, h.toInt, rest.headOption.getOrElse("manytime"))
     case "spend" :: dir :: boxFile :: to :: fee :: amount :: how :: rest =>
       val boxJson = if (boxFile == "-") Source.stdin.mkString else new String(Files.readAllBytes(Paths.get(boxFile)), UTF_8)
-      spend(new File(dir), boxJson, to, fee.toLong, amount.toLong, how, rest.headOption.map(_.toInt).getOrElse(720))
+      spend(new File(dir), boxJson, to, fee.toLong, amount.toLong, how, rest.headOption.map(_.toInt).getOrElse(720), rest.drop(1).headOption.map(_.toInt), rest.drop(2).headOption.map(_.toInt))
     case _ => System.err.println("usage: ManyTime keygen <outdir> <n> <w> <h> [manytime|hybrid] | ManyTime spend <keydir> <boxJson|-> <toAddress> <fee> <amount> <valid|forged|wrongindex|staleleaf> [minerRewardDelay]"); sys.exit(2)
   }
 }

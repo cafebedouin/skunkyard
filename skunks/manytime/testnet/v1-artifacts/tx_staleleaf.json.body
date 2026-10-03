@@ -1,0 +1,5 @@
+{
+  "error" : 400,
+  "reason" : "bad.request",
+  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 59a726083c4ddbaeb50ff79b122400ea1195abbfc041728175c32247af43a580: #0 => Failure(java.lang.reflect.InvocationTargetException)"
+}

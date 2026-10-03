@@ -9,14 +9,19 @@
 // box's registers are signed too. One leaf, one signature: a replacement transaction for the same box must
 // not re-sign leaf i (the index advances only on confirmation); bump the fee through the pinned fee output.
 {
-  // cheap checks first: the continuing box and the leaf lookup; the WOTS verification runs only if they pass
-  val i = SELF.R4[Int].get
+  // cheap checks first: the continuing box and the leaf lookup; the WOTS verification runs only if they pass.
+  // v2 rules (after the seats on v1): a box with no R4 (a plain payment to the address) reads as index 0; the spend
+  // names its leaf in var 2 and may use any leaf at or above the box's index (so a stuck spend is replaced with a
+  // fresh leaf, and several boxes of one key set can be spent with one wallet counter); the continuing box must
+  // carry an index above the leaf used, unless the leaf was the last.
+  val i = SELF.R4[Int].getOrElse(0)
+  val leaf = getVar[Int](2).get
   val proof = getVar[Coll[Byte]](1).get
-  val leafCommitment = root.get(longToByteArray((i + 1).toLong), proof).get
+  val leafCommitment = root.get(longToByteArray((leaf + 1).toLong), proof).get
   val out = OUTPUTS(0)
-  val stateOk = if (i + 1 < leaves) {
-    out.propositionBytes == SELF.propositionBytes && out.R4[Int].get == i + 1
-  } else { true }
+  val stateOk = leaf >= i && leaf < leaves && (if (leaf + 1 < leaves) {
+    out.propositionBytes == SELF.propositionBytes && out.R4[Int].get >= leaf + 1
+  } else { true })
   proveDlog(ownerPk) && sigmaProp(stateOk && {
 
     val powers4 = Coll(1, 4, 16, 64)

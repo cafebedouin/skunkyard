@@ -1,0 +1,1 @@
+LOCAL-EVAL mode=manytime how=forged r4=0 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(37997) tx_id=1c84c39211bd89424e3645bbb10d497c0f3fac8c3b79c3cb875f6cfc90315d0b proof_bytes_dlog=0 out0_id=9b5d7cb26201e75692c3f6bc45db709c78df06d801b287697b3a007fd79bd453 tx_bytes=3457 sig_bytes=2144 proof_bytes=187 box_bytes=955 tree_bytes=910

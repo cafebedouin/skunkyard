@@ -1,0 +1,4 @@
+[fund-any] wallet 3WxtnwJojAm4C9DJtgNHs5zawzD44yE6cKyGM7NeHf7Cw1yP7XBU; height 577689; unspent 1 boxes, 13988400000 nanoERG
+[fund-any] built tx dc2cba875cc7486cb4293f0540fc23f9441acc18bfe9f1cf409f7ca304d9a042: output 0 value 1000000000 R4 0400 tree 105304020400042001010400...; box id bd12f74eb91f6daa98dc3cc53f34388d55c3ca39c8fe7531159951f490d1d35b
+[fund-any] submit (http://128.253.41.110:9052/transactions) -> HTTP 200: "dc2cba875cc7486cb4293f0540fc23f9441acc18bfe9f1cf409f7ca304d9a042"
+{"txId":"dc2cba875cc7486cb4293f0540fc23f9441acc18bfe9f1cf409f7ca304d9a042","boxId":"bd12f74eb91f6daa98dc3cc53f34388d55c3ca39c8fe7531159951f490d1d35b"}
