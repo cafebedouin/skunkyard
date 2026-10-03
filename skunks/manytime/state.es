@@ -1,37 +1,31 @@
-// SK-029 hybrid: today's key AND the many-time hash lock. Everything below is manytime.es with `proveDlog(ownerPk) &&`
-// in front: a spend needs the owner's Schnorr proof on the sigma leaf and the WOTS signature for leaf i in the extension.
-// SK-029: many-time hash-based keys, no fork. The box commits (as the constant `root`) to an AVL tree of
-// `leaves` WOTS public-key commitments, key = 8-byte big-endian (leaf index + 1), since the tree reserves the zero key; value = blake2b256(pk_i). R4 holds
-// the next leaf index i. A spend supplies the WOTS signature of leaf i (context var 0) and the AVL lookup proof
-// for i (var 1); the verifier below is q2/wots-constant.es unchanged except that the commitment it compares
-// against comes from the tree instead of a constant. The spend must recreate the box as OUTPUTS(0): same
-// script, R4 = i + 1, unless i was the last leaf. The message binds SELF.id and every output, so the recreated
-// box's registers are signed too. One leaf, one signature: a replacement transaction for the same box must
-// not re-sign leaf i (the index advances only on confirmation); bump the fee through the pinned fee output.
+// SK-029 v3 ("singleton"): the per-key-set index lives in ONE box, marked by a token of supply 1 minted once per
+// key set (`tokenId`, a constant of this script). Deposits go to the deposit address (`deposit.es`), whose only
+// rule is that this singleton is spent in the same transaction; so every spend of anything the key set owns
+// passes through the singleton, and its index is enforced by the chain for the key set, not per box. v2 rules
+// kept: a missing R4 reads as 0; the spend names its leaf (var 2) at or above the index; the continuing box
+// carries an index above the leaf used. New: SELF and OUTPUTS(0) must carry the token (a box at this address
+// without the token is not the singleton and is unspendable); on the last leaf OUTPUTS(0) may be any script
+// (rotation: the token moves to the next key set's singleton); the message covers every INPUT id, so a deposit
+// cannot be added to or removed from a signed transaction.
 {
-  // the index and continuing-box checks fail before any hashing; the lookup's val is evaluated in the final comparison.
-  // v2 rules (after the seats on v1): a box with no R4 (a plain payment to the address) reads as index 0; the spend
-  // names its leaf in var 2 and may use any leaf at or above the box's index (so a stuck spend is replaced with a
-  // fresh leaf, and several boxes of one key set can be spent with one wallet counter); the continuing box must
-  // carry an index above the leaf used, unless the leaf was the last.
   val i = SELF.R4[Int].getOrElse(0)
   val leaf = getVar[Int](2).get
   val proof = getVar[Coll[Byte]](1).get
-  val leafCommitment = root.get(longToByteArray((leaf + 1).toLong), proof).get
   val out = OUTPUTS(0)
-  val stateOk = leaf >= i && leaf < leaves && (if (leaf + 1 < leaves) {
+  val selfHasToken = SELF.tokens.exists({ (t: (Coll[Byte], Long)) => t._1 == tokenId })
+  val outHasToken = out.tokens.exists({ (t: (Coll[Byte], Long)) => t._1 == tokenId })
+  val stateOk = selfHasToken && outHasToken && leaf >= i && leaf < leaves && (if (leaf + 1 < leaves) {
     out.propositionBytes == SELF.propositionBytes && out.R4[Int].get >= leaf + 1
   } else { true })
-  proveDlog(ownerPk) && sigmaProp(stateOk && {
-
+  sigmaProp(stateOk && {
+    val leafCommitment = root.get(longToByteArray((leaf + 1).toLong), proof).get
     val powers4 = Coll(1, 4, 16, 64)
-
     val sig = getVar[Coll[Byte]](0).get
 
-    // Message binding
+    // Message binding: every input id and every output
+    val inBytes = INPUTS.flatMap({ (b: Box) => b.id })
     val txBytes = OUTPUTS.flatMap({ (b: Box) => b.bytesWithoutRef })
-    val msg = blake2b256(SELF.id ++ txBytes).slice(0, n)
-
+    val msg = blake2b256(inBytes ++ txBytes).slice(0, n)
     // 2. Compute Winternitz checksum
     val cSum = if (w == 256) {
       msg.fold(0, { (acc: Int, b: Byte) =>

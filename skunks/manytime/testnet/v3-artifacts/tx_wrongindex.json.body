@@ -1,0 +1,5 @@
+{
+  "error" : 400,
+  "reason" : "bad.request",
+  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 74fba296e53a6146f58d019be1df6002b56cd4614a101dc5e98f7f1fcf677c03: #0 => Success((false,73))"
+}

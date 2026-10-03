@@ -7,3 +7,5 @@ web:     disabled
 sandbox: read-only
 jail:    tools/seat-jail
 prompt-sha256: 45c773e26ea75444f13376cba624f99bc0a1bc37c4c00547a7e6db8f1938e4bc
+exit:    124
+model-reported: NOT REPORTED BY TOOL (pass an explicit model to record one)

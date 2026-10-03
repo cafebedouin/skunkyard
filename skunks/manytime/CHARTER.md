@@ -39,3 +39,14 @@ proof), an active-user profile (h = 16, about a minute, about 600 bytes) and a m
 (h = 20, XMSS's largest standard height, a few minutes, about 700 bytes) with rotation automatic at the last leaf.
 Leaves derive from one seed and the index, as in XMSS, so the wallet stores a seed and a counter. SK-033's scan
 and sample set where the default sits.
+
+## Revision 3 (2026-10-03, after the second seat round): the singleton
+
+The v2 rules enforced the index per box. Any plain payment to the address was a fresh box at index 0 that accepted a
+leaf another box had used, so across a key set the one-time property was the wallet's. v3 (`state.es`,
+`deposit.es`, `Singleton.scala`, `singleton.sh`, `testnet/run-singleton.sh`): one singleton box per key set, marked by
+a token of supply 1, holds the index; deposits go to a 61-byte script whose only rule is that the singleton is spent
+in the same transaction; the message covers every input id. The deposit address is the one a holder publishes; it
+never changes when the key set rotates (the token moves to the next key set's singleton at the last leaf). Checks
+added: a deposit spent without the singleton, a signed transaction padded with a deposit, a box at the state address
+without the token. Results: `RESULT.md` run 8 (devnet) and run 9 (public testnet).

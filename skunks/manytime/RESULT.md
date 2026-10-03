@@ -11,7 +11,7 @@ After the five seats on the first reply draft (`posts/REVIEW-manytime-reply.md`)
 (`manytime.es`, commit 2f88c9f): a box with no R4 reads as index 0, so a plain payment to the address funds a
 usable box; the spend names its leaf (context var 2) and may use any leaf at or above the box's index; the
 continuing box must carry an index above the leaf used (unless the leaf was the last). The hook funds box 0 with a
-plain payment, and after the first spend also funds a second plain box at the same address. The driver sets the
+plain payment in the testnet run (run 7); on the devnet the hook still funds box 0 with R4 = 0, and after the first spend funds a second plain box at the same address, which is the devnet's plain-payment witness. The driver sets the
 recreated box's creation height to the current height. Logs: `runs/manytime-v2rules-20261003.log`,
 `runs/manytime-v2rules-hybrid-20261003.log`. Tree 934 bytes (973 hybrid); box 975 to 977 (1,014 to 1,016); spend
 3,477 (3,572) bytes.
@@ -59,6 +59,43 @@ Verdict line as printed: `TESTNET-MANYTIME: forged_rejected=yes wrongindex_rejec
 staleleaf_rejected=yes below_rejected=yes skip_leaf3_confirmed=yes`. The box carrying index 4 is left unspent on
 testnet. Devnet and testnet agree on every verdict and on the rejection costs; the valid spends differ by the
 message-dependent hash count.
+
+## Run 8: v3, the singleton design, on the devnet, `runs/singleton-20261003.log`, PASS
+
+After the second seat round on the reply draft (`posts/REVIEW-manytime-reply.md`, round 2): under the v2 rules the
+index was enforced per box, so a fresh box at the same address (any plain payment) started at 0 and accepted a leaf
+another box had used; the one-time property across a key set rested on the wallet's counter. v3 moves the index
+into one box per key set. `state.es`: the singleton, marked by a token of supply 1 minted once per key set (its id
+is a constant of both scripts); SELF and OUTPUTS(0) must carry the token; the v2 rules otherwise (missing R4 reads
+0, the spend names a leaf at or above the index, the continuing box carries an index above it; on the last leaf
+OUTPUTS(0) may be any script, so the token can move to a new key set's singleton); the message covers every input
+id and every output. `deposit.es` (61 bytes): a box here is spendable only in a transaction that also spends a box
+carrying the token. Deposits are plain payments to the deposit address; the state address is never published.
+Driver `Singleton.scala`, hook `singleton.sh`. One mining node, ergo 6.0.6, block version 4; n = 32, w = 16,
+h = 4; the wallet issued the token (`1c41655b…`, height 19) and funded, in one transaction at height 21, the
+singleton S0 (token, R4 = 0), two plain deposits D1 and D2 and a plain box P0 at the state address without the
+token. State tree 1,026 bytes; singleton box 1,102 bytes; deposit box 102 bytes.
+
+| round | inputs | what | node verdict | script cost |
+|---|---|---|---|---|
+| forged | S0 | one signature bit flipped | rejected, `Success((false,37904))` | 37,904 |
+| wrongindex | S0 | continuing box keeps index 0 | rejected, `Success((false,73))` | 73 |
+| nostate | D1 | a deposit spent alone, no singleton in the transaction | rejected, `Success((false,7))` | 7 |
+| addinput | S0 + D1 | signed over S0 alone, posted with D1 added | rejected, `Success((false,37602))` | 37,602 |
+| notoken | P0 | a box at the state address without the token, valid signature | rejected, `Success((false,23))` | 23 |
+| valid, leaf 0 | S0 + D1 | sweep D1, pay 0.1 ERG, recreate S1 with R4 = 1 | confirmed at height 32, D1 gone from the UTXO set | 38,007 (state 37,996 + deposit 11); mempool 52,707 |
+| staleleaf | S1 | leaf 0 again against index 1 | rejected, `Success((false,46))` | 46 |
+| skip, leaf 3 | S1 + D2 | sweep D2, recreate S2 with R4 = 4 | confirmed, S2 R4 `0408` with the token, D2 gone | 38,204 (state 38,193 + deposit 11); mempool 52,904 |
+
+Every spend with one deposit is 3,637 bytes (the 1,102-byte singleton rides along; the deposit input adds its 32-byte
+id and an empty proof). Verdict line: `SINGLETON: PASS (forged_rejected=yes wrongindex_rejected=yes
+nostate_rejected=yes addinput_rejected=yes notoken_rejected=yes spend0_confirmed=yes staleleaf_rejected=yes
+skip_spend_confirmed=yes deposit1_spent=yes deposit2_spent=yes)`. What run 8 adds to runs 5 to 7: the counter is
+one per key set and the chain enforces it for every box the key set owns, because nothing at the deposit address
+moves without the singleton; a used leaf cannot be replayed on a fresh deposit (nostate: 7 units); a signed
+transaction cannot be padded with a deposit (addinput); a plain payment to the state address is inert (notoken).
+Not run: the last-leaf branch (the token moving to a new key set), heights above 4, several deposits in one spend,
+a bad lookup proof at a legal index (still the exception path, by reading), hybrid mode under v3.
 
 ## Earlier runs under the v1 rules (R4 required, leaf = index, index + 1)
 
@@ -138,16 +175,16 @@ testnet. Verdicts and costs match the devnet run to within the message-dependent
 
 ## What it settles, in one table against the one-time pilot
 
-| | one-time WOTS box (`q2`, the post) | many-time box, this skunk |
-|---|---|---|
-| keys per box | 1 | 2^h (16 here; the digest is 33 bytes at any h) |
-| proposition bytes | 833 | 910 |
-| box bytes | 866 (constant form) | 953 |
-| spend bytes | 2,345 | 3,450 (the extension's signature and proof, the recreated 953-byte box, two other outputs, framing) |
-| script cost, valid spend | 37,592 | 37,749 to 37,860 across the valid spends (the WOTS cost moves with the message; the lookup and state check add on the order of 150 to 270) |
-| mainnet cost per spend | 50,595 (37,592 + 13,003 for 1 in / 2 out; the post's 51,893 used the harness worst case 38,890) | 51,161 (37,860 + 13,301 for 1 in / 3 out) |
-| per block, by cost (8,001,091) / by size (1,271,009 bytes) | 158 / 542 | 156 / 368 |
-| index enforced by | n/a | the chain (R4 must read i + 1 in the continuing box, on every spend but the last) |
+| | one-time WOTS box (`q2`, the post) | many-time, v2 (runs 5 to 7) | many-time, v3 singleton (run 8) |
+|---|---|---|---|
+| keys per box | 1 | 2^h (16 here; the digest is 33 bytes at any h) | 2^h per key set, one singleton plus any number of deposits |
+| proposition bytes | 840 (constant form) | 934 | 1,026 state, 61 deposit |
+| box bytes | 866 (constant form, the post) | 975 to 979 | 1,102 singleton, 102 deposit |
+| spend bytes | 2,345 (testnet) / 2,340 (devnet) | 3,477 to 3,484 | 3,637 with one deposit |
+| script cost, valid spend | 37,592 | 37,644 to 37,876 | 38,007 to 38,204 (the deposit's script 11) |
+| mainnet cost per spend (derived; 10,000 + 2,407 per input + 298 per output) | 50,595 (37,592 + 13,003 for 1 in / 2 out) | 51,177 (37,876 + 13,301 for 1 in / 3 out) | 53,912 (38,204 + 15,708 for 2 in / 3 out) |
+| per block, by cost (8,001,091) / by size (1,271,009 bytes), derived | 158 / 542 | 156 / 365 | 148 / 349 |
+| index enforced by | n/a | the chain, per box; across boxes the wallet | the chain, per key set (every spend passes through the singleton) |
 
 Cost-bound, like the pilot: the interpreter's WOTS cost dominates and the many-time machinery adds under one percent. The
 rent of the box that persists is 953 × 1,250,000 nanoERG = 1.19 ERG per four years at mainnet's factor.

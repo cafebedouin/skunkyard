@@ -25,7 +25,7 @@ per-box model, since every box spent is one signature).
 | keys over 65,536 | 2 | 8 |
 
 Share of all signings by key class (inputs): keys that sign over 1,024 times make up 0.37% of keys and 33% of all
-inputs signed; keys over 16, 22% of keys and 90% of inputs.
+inputs signed; keys over 16, 22% of keys and 94% of inputs.
 
 ## What it sets
 
@@ -43,9 +43,25 @@ remaining 0.4% are the pools, exchanges and scripts whose counts run to 138,346,
 automatic rotation. The median key signs twice, and nearly half sign once: for most holders the one-time lock
 would already have been enough, and the counter is for the other half.
 
+## The explorer block sample over the later era (2026-10-03)
+
+`sample_explorer.py` drew 60 heights uniformly from 790,000 to 1,886,000 through the public explorer API, read each
+block's transactions, and for every P2PK address that signed an input in those blocks fetched the explorer's
+lifetime transaction count for the address (transactions in which it appears as input or output, so an upper bound
+on signings); a block sample is length-biased toward frequent signers, so the per-address distribution is estimated
+by weighting each address by 1 / count. `out/explorer-sample-20261003.json`: 1,093 inputs in the 60 blocks, 341 of
+them P2PK signatures from 267 distinct addresses, 263 with a count. Length-biased (as sampled): median 755
+transactions, maximum 449,999. Reweighted per-address estimate among addresses active in that era: median 24
+transactions, 90th percentile 210, 99th 1,562; 44.5% at most 16, 55.5% above 16, 1.9% above 1,024. Read against
+the full scan of the first era: the later era's active addresses are heavier (the scan's median is 2 inputs; the
+sample's median 24 transactions, an upper bound), and the share above 1,024 is 1.9% of active addresses against
+0.37% of all keys. Caveats: 267 addresses is a small sample; the explorer's count is transactions touching the
+address, not inputs signed; addresses that sign nothing in the sampled blocks are not represented (the scan
+represents every key that ever signed); a rerun of `run.sh` at the tip remains the exact answer.
+
 ## Caveats
 
-- The first 791,286 blocks of 1,886,143: the 2019 to 2022 era, 42% of today's height. Later usage (DeFi, pools,
+- 791,286 blocks of 1,886,143 (789,437 contiguous from genesis, plus 1,849 near the tip): the 2019 to 2022 era, 42% of today's height. Later usage (DeFi, pools,
   bots) shifts the tail; the explorer block sample over heights 790,000 to 1,886,000 (`out/explorer-sample-*.json`,
   `sample_explorer.py`) is the check, and a rerun of `run.sh` at the tip the exact answer. Anyone with a synced node
   can run it: stop the node, point `run.sh` at the history directory, one command, aggregates only.

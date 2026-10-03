@@ -64,4 +64,50 @@ transactions metric together (v4 says which).
 
 ## Grok (v3)
 
-(recorded when its run returns)
+The run timed out (exit 124 after 30 turns, no output); Grok reviewed v4 instead, below.
+
+# Round 2: five seats on v4 (commit a2d8301), 2026-10-03
+
+Outputs in `posts/seats/manytime-reply/v4/`. All five agree on one design finding and on the same text errors.
+
+**The design finding (every seat).** The v2 script enforces the index per box, not per key set: a plain payment to
+the address is a new box reading index 0, which accepts any leaf, including one already used on another box. So the
+headline "the chain refusing a reused key" held only along one box's lineage, and a wallet restored from an old
+backup could get a second signature of leaf 0 confirmed on a fresh deposit. The recipients' seat adds that the
+testnet run itself handed a public node three leaf-0 signatures (valid0 on chain, wrongindex and staleleaf to the
+node); harmless on testnet, but the hazard in the open. Gemini adds a second hazard: replacing a stuck spend with
+leaf k+1 discloses k+1 off the ledger if the first spend then confirms, so chain-scan recovery cannot be trusted
+after a replacement (a restored wallet should skip ahead, which the "at or above" rule allows). Response: the v3
+design (`state.es` + `deposit.es`): one singleton box per key set, marked by a token of supply 1, holds the index;
+deposits go to a 61-byte script whose only rule is that the singleton is spent in the same transaction; the
+message covers every input id. Every spend of anything the key set owns then passes through the one chain-enforced
+counter. Run 8 (devnet) and run 9 (testnet) in `skunks/manytime/RESULT.md`.
+
+**Text errors (seats concur).** `[SAMPLE LINE]` placeholder left in; "the index and lookup checks come first in
+the `&&`" (only the index does; the lookup's `val` is used in the last line, after the hashing; a bad proof at a
+legal index is untested and still the exception path); staleleaf and below are the same transaction (one test,
+posted twice); "the same six verdicts" (the devnet and testnet lists differ); "95 (the Schnorr proof)" (56 bytes
+of proof plus the 39-byte larger box); the hybrid's cost is 196 to 565 units above the plain range, not inside
+message variation (RESULT run 3 says about 500); 2,340 bytes against 542 mixes the devnet and testnet one-time
+baselines (543 for 2,340); 13,301 + 37,592 gives 157, not 158; "few hundred heavy keys" (978); "a few near the
+tip" (1,849 blocks); "the rent clock resets" is the driver's choice of creation height, not the script's;
+"quantum-safe address" names no level and n = 32, w = 16 is never stated; QRL "the same enforcement" (QRL's
+bitfield is per address across all transactions, and tracks 8,192 indices; "since 2018" is an inference); the
+credit line cites a Grok review that had not returned, names Fable where the seats were Opus, and omits the q3
+scan; unlabeled derived figures (99.6%, a third, 0.37%, 42%, 39, 95); 138,346 fingerprints one key (cut).
+
+**Hazards to state (recipients' seat).** A box whose R4 is 16 or more, or holds a non-Int (an EIP-4 mint to the
+address writes R4 as Coll[Byte]; `getReg` throws `InvalidType` on a wrong type, `CBox.scala:41`), is unspendable
+under v2; an exhausted address keeps accepting payments it cannot spend; h = 10 or 20 is a projection, no run
+above h = 4; rotation is not implemented. v3 answers the first and the second for deposits (the deposit script
+reads no register; the token can move to a new key set's singleton at the last leaf).
+
+**Prior art gap (recipients' seat, confirmed by search).** Contract-enforced one-time hash signatures exist on
+account chains: the Solana Winternitz vault (deanmlittle, January 2025; one WOTS key per vault, funds move to a
+next key) and Ethereum Lamport-signature contract wallets. The novelty sentence is scoped to a UTXO box script
+with a many-time counter, and the note records both.
+
+**Repository contradictions to fix before linking (derivation seat).** `RESULT.md` said devnet box 0 was a plain
+payment (the log shows `R4=0400`; only the second box was plain); the "What it settles" table carried v1 figures;
+the script and hook header comments described v1; `q3/RESULT.md` said 90% where the CSV gives 93.9%, and "the
+first 791,286 blocks" for 789,437 contiguous plus 1,849 near the tip. All fixed in the v3 commit.

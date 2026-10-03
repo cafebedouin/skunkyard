@@ -1,13 +1,15 @@
-// SK-029: many-time hash-based keys, no fork. The box commits (as the constant `root`) to an AVL tree of
-// `leaves` WOTS public-key commitments, key = 8-byte big-endian (leaf index + 1), since the tree reserves the zero key; value = blake2b256(pk_i). R4 holds
-// the next leaf index i. A spend supplies the WOTS signature of leaf i (context var 0) and the AVL lookup proof
-// for i (var 1); the verifier below is q2/wots-constant.es unchanged except that the commitment it compares
-// against comes from the tree instead of a constant. The spend must recreate the box as OUTPUTS(0): same
-// script, R4 = i + 1, unless i was the last leaf. The message binds SELF.id and every output, so the recreated
-// box's registers are signed too. One leaf, one signature: a replacement transaction for the same box must
-// not re-sign leaf i (the index advances only on confirmation); bump the fee through the pinned fee output.
+// SK-029 (v2 rules, runs 5 to 7): many-time hash-based keys, no fork. The box commits (as the constant `root`) to an
+// AVL tree of `leaves` WOTS public-key commitments, key = 8-byte big-endian (leaf index + 1), since the tree
+// reserves the zero key; value = blake2b256(pk_i). R4 holds the box's leaf index i (a missing R4 reads as 0, so a
+// plain payment to the address is a usable box). A spend names its leaf (context var 2), any leaf at or above i,
+// and supplies that leaf's WOTS signature (var 0) and AVL lookup proof (var 1); the verifier is q2/wots-constant.es
+// with the commitment read from the tree. The spend must recreate the box as OUTPUTS(0) with the same script and
+// an index above the leaf used, unless the leaf was the last. The message binds SELF.id and every output. Known
+// limit (the second seat round): the index is enforced per box, so a fresh box at the same address starts at 0 and
+// accepts a leaf another box has used; v3 (`state.es` + `deposit.es`) moves the index into one singleton box.
 {
-  // cheap checks first: the continuing box and the leaf lookup; the WOTS verification runs only if they pass.
+  // the index and continuing-box checks sit on the left of the && and fail before any hashing; the leaf lookup's
+  // val is evaluated where it is used, in the final comparison, after the hash chains.
   // v2 rules (after the seats on v1): a box with no R4 (a plain payment to the address) reads as index 0; the spend
   // names its leaf in var 2 and may use any leaf at or above the box's index (so a stuck spend is replaced with a
   // fresh leaf, and several boxes of one key set can be spent with one wallet counter); the continuing box must

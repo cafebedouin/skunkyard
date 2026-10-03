@@ -55,10 +55,14 @@ mailing lists directly, IOTA's key-reuse history; QRL's documentation was read a
 
 ## What this changes in the claim
 
-The construction is XMSS's idea in a box; the contribution is that the index lives in the box and every spend must
+The construction is XMSS's idea in a box; the contribution is that the index lives in a box and every spend must
 advance it, so the failure mode Kudinov and Nick reject the whole stateful family for, a restored backup reusing a
-leaf, becomes a transaction the node rejects (the stale-leaf case in `RESULT.md`). The reply says "implemented and
-run" and, with this note, "the closest prior work keeps the state with the signer"; it does not say "first".
+leaf, becomes a transaction the node rejects (the stale-leaf case in `RESULT.md`). Under the v2 rules that held per
+box only (a fresh deposit at the same address started at 0); under v3 it holds per key set, because every spend
+passes through the singleton. What the chain still cannot see is a second signature that never reaches it (a
+replacement that lost the race): the wallet's counter and the skip-ahead rule below cover that. The reply says
+"implemented and run" and, with this note, "the closest prior work keeps the state with the signer, or enforces it
+at the protocol"; it does not say "first".
 
 ## Refinements to carry into the next version (from the papers)
 
@@ -76,3 +80,42 @@ run" and, with this note, "the closest prior work keeps the state with the signe
    Ergo the cost model charges what runs, so an early exit is a feature, not a denial-of-service hole, but the
    forged-signature case still pays the full verification either way.
 5. **Fallback / extension leaf** (BPQS-EXT): the last leaf's spend creating the next key set is SK-032's rotation.
+
+## Contract-enforced one-time hash signatures on account chains (found by the second seat round, checked 2026-10-03)
+
+Two deployed designs enforce one-time use of a hash-based key by contract logic on a chain whose protocol knows
+nothing about the scheme, which is the property this skunk claimed as new in the v3 draft:
+
+- The Solana Winternitz vault (deanmlittle, `solana-winternitz-vault`, January 2025): a program holding a vault keyed
+  by one WOTS public key (truncated Keccak-256, 224-bit preimage resistance); a spend verifies one signature and
+  moves the remaining funds to a new vault under a new key. One key per vault, so the "many-time" part is the
+  wallet's chain of vaults, not a counter the program keeps.
+- Ethereum "quantum-safe wallet" designs (2025 to 2026): a contract wallet with a stable address whose authorized
+  signer rotates after every transaction, or a Lamport-signature wallet contract that stores the next public-key hash.
+
+What this skunk does that neither does: the counter over 2^h keys lives in the UTXO's own register, the deposit
+address is fixed while the key set and even the singleton rotate behind it, and the enforcement is the stock
+script interpreter, not a deployed program. What they do that this skunk does not: run on mainnet. The claim in the
+reply is scoped accordingly: a many-time counter enforced by a box script on a UTXO chain, with no "first".
+
+## The v3 singleton against QRL's per-address bitfield
+
+QRL keeps, in consensus state, one bitfield per address recording which XMSS indices have been used. A UTXO script
+cannot see other boxes at its own address, which is why the v2 design enforced the index per box and why a fresh
+deposit reopened the reuse window (seat round 2). The v3 singleton is the UTXO form of QRL's bitfield: one box per
+key set holds the counter, and a deposit script makes every spend pass through it. The analogy is exact for the
+monotone part (QRL's bitfield also rejects a lower index) and not for the "skipped index" part: QRL records each
+index individually, so a skipped index stays usable later; here the counter is a lower bound, so a skipped leaf is
+burned. The burn is the price of a 4-byte register instead of a 2^h-bit field.
+
+## Two refinements from the second seat round
+
+- **Skip ahead on restore.** A replacement transaction signed with leaf k + 1 discloses k + 1 off the ledger if the
+  original (leaf k) then confirms (Gemini, round 2). The chain index is therefore a lower bound on the leaves
+  disclosed, and chain-scan recovery (WOTS-Tree's model) is unsafe after any replacement. The "at or above" rule gives
+  the remedy: a restored wallet jumps to a leaf comfortably above the chain index, burning the gap. With h = 10 a
+  jump of 16 costs 1.6% of the tree.
+- **The register can hold the wrong type.** `getReg[Int]` on a register of another type throws `InvalidType`
+  (`sigma/data/CBox.scala`), so under v2 an EIP-4 mint to the address (R4 holds a name as `Coll[Byte]`) or a payer's
+  memo made a box unspendable. v3's deposit script reads no register; only the singleton, which the wallet alone
+  creates, has one.

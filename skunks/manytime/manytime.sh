@@ -1,10 +1,9 @@
-# manytime: SK-029, many-time hash-based keys with no fork (skunks/manytime/). One mining node A at block
-# version 4. keygen 2^H WOTS leaves (n=32, w=16) under one AVL root; fund the box with R4 = 0 (leaf index);
-# on the funded box post: forged (one signature bit flipped; must be rejected by the script check), wrongindex
-# (recreated box keeps R4 = i; must be rejected), valid (must confirm, recreating the box with R4 = 1); then on the
-# recreated box: staleleaf (leaf 0's signature and proof against R4 = 1; must be rejected), valid with leaf 1 (must
-# confirm, R4 = 2). Each rejection prints the local cost and the node's verdict. PASS = three rejections, two
-# confirmations.
+# manytime: SK-029, many-time hash-based keys with no fork (skunks/manytime/), v2 rules. One mining node A at block
+# version 4. keygen 2^H WOTS leaves (n=32, w=16) under one AVL root; fund box 0 with R4 = 0; post forged (one
+# signature bit flipped), wrongindex (recreated box keeps the index), valid leaf 0 (confirms, R4 = 1); on the
+# recreated box: staleleaf (leaf 0 again), below (leaf 0 named), skip (leaf 3, confirms with R4 = 4); then a second
+# plain payment to the address (no R4), spent with the wallet's next leaf 4. MT_MODE=hybrid adds the nodlog round.
+# Each rejection prints the local cost and the node's verdict. PASS = the rejections and the three confirmations.
 MT_N=${MT_N:-32}; MT_W=${MT_W:-16}; MT_H=${MT_H:-4}; FUND=${MT_FUND:-1000000000}; FEE=${MT_FEE:-1000000}; AMT=${MT_AMOUNT:-100000000}
 MTD="$(dirname "$RIG_HOOK")"; REPO="$(cd "$MTD/../.." && pwd)"
 CPF="$MTD/target/cp.txt"; WD="$SCRATCH/manytime"; mkdir -p "$WD"; DELAY="${REWARD_DELAY:-720}"

@@ -1,0 +1,57 @@
+### Review of `REPLY.md`
+
+1. **ERROR**
+   > Quote: `"Repository q3/, aggregates only; the scanner runs on a stopped node's history store in one command. [SAMPLE LINE] So a height of 10 covers nearly every key of that era, and the few hundred heavy keys want height 20 or rotation at the last leaf; both are wallet settings in the sense that the chain enforces them whatever the height."`
+   > 
+   > The text contains an unexpanded draft placeholder (`[SAMPLE LINE]`). Per `Q3-RESULT.md` (line 49), this was intended to describe the explorer block sample over heights 790,000 to 1,886,000 that is currently running to check the later era. Leaving the bracketed placeholder in the final draft is an error.
+
+2. **ERROR**
+   > Quote: `"The hybrid proveDlog(owner) && (this lock) ran on the devnet: a valid hash signature with no curve proof is rejected, both proofs confirm; the box grows 39 bytes and the spend 95 (the Schnorr proof), the cost difference inside the message-dependent variation of the hash verifier."`
+   > 
+   > Attributing all 95 bytes of spend growth solely to "(the Schnorr proof)" is factually incorrect. According to [RESULT.md](file:///tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/reply-slice3/RESULT.md#L103) (lines 16–17, 103, 114), the Schnorr proof itself adds exactly 56 bytes to the input witness. The spend transaction as a whole grows by 95 bytes because it carries the recreated continuing output box, which itself grew by 39 bytes ($56 + 39 = 95$ bytes).
+
+3. **ERROR**
+   > Quote: `"Script cost 37,644 to 37,876 units for the devnet's valid spends against 37,592 for the one-time box on the same devnet, the difference inside message variation; 3,477 bytes against 2,340, because the recreated 977-byte box rides along with the signature and proof; per mainnet block about 156 by cost (8,001,091 ÷ (13,301 + cost)) and 365 by size (1,271,009 ÷ 3,477), against 158 and 542 for the one-time box, where the post's 154 used the harness worst case and 158 the measured cost."`
+   > 
+   > This sentence introduces an internal inconsistency between the baseline spend size and the baseline block capacity. The figure of 2,340 bytes is the devnet spend from Section 2 of [ORIGINAL-POST.md](file:///tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/reply-slice3/ORIGINAL-POST.md#L49), whereas the capacity figure of 542 spends per block was derived in Section 3 Table 2 from the 2,345-byte testnet spend ($1,271,009 \div 2,345 = 542.0$; dividing by 2,340 bytes yields 543). [RESULT.md](file:///tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/reply-slice3/RESULT.md#L146) (line 146) explicitly tabulates the baseline one-time spend at 2,345 bytes. Quoting 2,340 bytes against 542 mixes the two figures and prevents a reader from verifying the size capacity from the original post's tables.
+
+4. **ERROR**
+   > Quote: `"One quantum-safe address that can be spent many times, with the chain refusing a reused or skipped-backwards key, runs on today's node with no fork: on a devnet and on public testnet, as a prototype, not something to use yet."`
+   > 
+   > Claiming without qualification that the chain refuses a reused key is cryptographically inaccurate. The script in [`manytime.es`](file:///tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/reply-slice3/manytime.es#L15-L22) enforces index progression strictly *per box lineage* via `SELF.R4`. The node and consensus have no global or address-level index tracker. Because plain payments to the address fund boxes with no R4 (which evaluate to index 0), multiple boxes can exist concurrently at the same address, each accepting leaf 0. If a user spends two such boxes with leaf 0, the blockchain will accept both. The chain refuses reuse *along a box lineage*, but preventing key reuse across multiple boxes depends entirely on the wallet maintaining an off-chain monotonic counter per key set.
+
+5. **ERROR**
+   > Quote: `"The verifier is section 2's, reading the commitment from the tree instead of a constant; the index and lookup checks come first in the &&, so a bad index is refused before any hashing."`
+   > 
+   > The statement that "the index and lookup checks come first in the `&&`" is inaccurate regarding the script's actual execution structure. In [`manytime.es`](file:///tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/reply-slice3/manytime.es#L18-L23) (lines 18–23, 98), `leafCommitment` is only evaluated when checking `blake2b256(concat) == leafCommitment`. What comes first in the `&&` is `stateOk` (`leaf >= i && leaf < leaves && ...`). As [RESULT.md](file:///tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/reply-slice3/RESULT.md#L25) (line 25) notes, when `leaf < i`, evaluation short-circuits to `false` *before* any AVL tree lookup. If the lookup check actually came first, an out-of-range leaf could fail by an unhandled `InvocationTargetException` on `root.get(...).get`.
+
+6. **UNSUPPORTED**
+   > Quote: `"per mainnet block about 156 by cost (8,001,091 ÷ (13,301 + cost)) and 365 by size (1,271,009 ÷ 3,477), against 158 and 542 for the one-time box, where the post's 154 used the harness worst case and 158 the measured cost."`
+   > 
+   > The two "corrections to the short version" are not presented in a self-contained, easily verifiable manner. While the cost capacity correction (154 vs. 158) is explained qualitatively, it leaves the calculation implicit ($8,001,091 \div (37,592 + 13,003) = 158.13$) without directing the reader to Section 2 for 37,592 or Section 3 Table 2 for 13,003. Furthermore, any second correction regarding the short version's claims (such as reconciling the devnet 2,340 bytes vs. testnet 2,345 bytes, the resulting 542 vs. 543 size-bound capacity, or the 3.9x capacity ratio) is completely omitted. A reader cannot verify both adjustments from the original post's tables alone.
+
+7. **SUGGESTION**
+   > Quote: `"The wallet therefore keeps one counter per key set, never decremented, and uses a fresh leaf for any replacement, which the "at or above" rule allows: a stuck spend is replaced by signing the next leaf, never the same one again."`
+   > 
+   > From a cryptographic perspective, replacing a stuck spend by signing the next leaf off-chain introduces a critical state-recovery caveat. If a wallet signs `leaf k` for Tx1 and replaces it with `leaf k+1` for Tx2, and Tx1 is subsequently confirmed, `leaf k+1`'s signature has been disclosed to the network while remaining absent from the blockchain ledger. If the wallet is later restored by scanning the chain (the recovery model used in WOTS-Tree), the scanner will see the on-chain box at index $k+1$ and assume `leaf k+1` is fresh. Signing `leaf k+1` again would cause a catastrophic two-message WOTS key reuse. The text should explicitly hedge that replacement-by-incrementing requires durable local wallet state and precludes relying solely on chain-scanning recovery.
+
+8. **SUGGESTION**
+   > Quote: `"So a wallet restored from an old backup that signs a leaf the box has moved past exposes a leaf that can no longer spend that box."`
+   > 
+   > Framing this failure solely as exposing a leaf that "can no longer spend that box" understates the cryptographic consequence. If that leaf was previously used in the valid transaction that advanced the box, broadcasting an old transaction from backup produces a *second public signature* for that leaf on a different message. In WOTS, two signatures from one key compromise the underlying hash chains. While the stale transaction cannot spend the advanced box, the cryptographic secrecy of that leaf is permanently broken.
+
+9. **SUGGESTION**
+   > Quote: `"Not shown: hiding which leaf signed (R4 and the proof name it, and the proof's sibling hashes are public; they reveal nothing about unused leaves' secrets, by reading, not by test);"`
+   > 
+   > The phrasing "by reading, not by test" is informal for a cryptographic discussion. Sibling hashes not revealing unused leaf secrets is a direct mathematical reduction to the preimage resistance and collision resistance of Blake2b256, rather than an observation derived from "reading" code. It would be clearer to state this as standard cryptographic one-wayness, while acknowledging that omitting domain separation in hash chains leaves multi-target preimage considerations unaddressed.
+
+10. **SUGGESTION**
+    > Quote: `"leaf 0 signed again against the box reading 1, and leaf 0 named explicitly against it, both rejected at 28;"`
+    > 
+    > In [RESULT.md](file:///tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/reply-slice3/RESULT.md#L26) (line 26), the devnet verdict for `below` is recorded as `rejected (script check)` without an explicit cost figure of 28 (unlike testnet in line 55, which explicitly logged cost 28, and line 33, which gave the rejection range as 28 to 54 units). To align strictly with the written devnet table, clarify that the cost of 28 was explicitly measured on testnet, while devnet rejected both via the same script check.
+
+---
+
+### Conclusion
+
+**Post with the listed fixes.** The tone is neutral, dispassionate, and free of advocacy or roadmap commitments; the measured execution costs and Q3 chain distribution figures are accurate and well-documented. However, the reply cannot be posted in its current form due to the `[SAMPLE LINE]` placeholder, the attribution error on the 95-byte spend growth, the baseline spend size inconsistency (2,340 vs. 2,345 bytes), the overbroad claim regarding consensus-level key reuse prevention, and the omission of key cryptographic caveats regarding WOTS state recovery and off-chain replacement. Correcting these specific items will ensure the reply is cryptographically sound, fully supported by the test artifacts, and directly verifiable by thread participants.

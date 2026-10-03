@@ -31,10 +31,14 @@ for h in heights:
             a = inp.get("address") or ""; inputs_total += 1
             if a.startswith("9") and len(a) == 51 and a not in seen:
                 seen.add(a); inputs_p2pk += 1; addrs[a] = addrs.get(a, 0) + 1
+import os
+alist = os.environ.get('Q3_ADDR_LIST')
+if alist: open(alist, 'w').write('\n'.join(addrs))
 totals = {}
 for i, a in enumerate(addrs):
-    if i % 25 == 0: print(f'address lookups {i}/{len(addrs)}', file=sys.stderr, flush=True)
+    t0 = time.time()
     d = get(f"/addresses/{a}/transactions?limit=1"); time.sleep(0.3)
+    print(f'lookup {i+1}/{len(addrs)} {"ok" if d else "fail"} {time.time()-t0:.1f}s', file=sys.stderr, flush=True)
     if d and isinstance(d.get("total"), int): totals[a] = d["total"]
 counts = sorted(totals.values())
 n = len(counts)

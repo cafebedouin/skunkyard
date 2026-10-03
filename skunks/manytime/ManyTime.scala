@@ -1,9 +1,10 @@
-// SK-029 driver. keygen <outdir> <n> <w> <h>: 2^h WOTS leaves (fresh SecureRandom), the AVL tree of their
-// commitments (key = 8-byte index, value = blake2b256(pk_i), inserted in index order), the compiled tree, its
-// devnet P2S address, and R4 for leaf 0. spend <keydir> <boxJson|-> <toAddress> <feeNanoErg> <amountNanoErg>
-// <valid|forged|wrongindex|staleleaf> [minerRewardDelay]: reads i from the box's R4, signs with leaf i, recreates the
-// box as OUTPUTS(0) with R4 = i + 1 (wrongindex: R4 = i), pays amount to toAddress and the fee; evaluates
-// locally (stderr LOCAL-EVAL) and prints the JSON for POST /transactions.
+// SK-029 driver (v2 rules). keygen <outdir> <n> <w> <h> [manytime|hybrid]: 2^h WOTS leaves (fresh SecureRandom), the
+// AVL tree of their commitments (key = 8-byte index + 1, value = blake2b256(pk_i)), the compiled tree, its P2S
+// address, and R4 for index 0. spend <keydir> <boxJson|-> <toAddress> <feeNanoErg> <amountNanoErg>
+// <valid|forged|wrongindex|staleleaf|nodlog> [minerRewardDelay] [creationHeight] [leaf]: reads i from the box's R4
+// (absent = 0), signs with the named leaf (default i; staleleaf i - 1), recreates the box as OUTPUTS(0) with
+// R4 = leaf + 1 (wrongindex: leaf), pays amount to toAddress and the fee; evaluates locally (stderr LOCAL-EVAL) and
+// prints the JSON for POST /transactions. The singleton variant (v3) is Singleton.scala.
 package manytime
 import java.io.File
 import java.nio.file.{Files, Paths}
