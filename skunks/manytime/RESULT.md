@@ -59,6 +59,25 @@ it does not buy: protection of that curve key, which is as exposed as any P2PK k
 harmless only because the hash side is also required. The migration reading is the post's: hybrid now, hash-only
 when the holder chooses.
 
+## Run 4: public testnet, `testnet/run.log`, PASS
+
+2026-10-03 00:56 to 01:01 UTC, through the Cornell testnet node (`http://128.253.41.110:9052`, ergo 6.0.1 testnet,
+block version 4, API open), funded from the project's testnet wallet with `fund-any.mjs` (R4 = 0), the same 16-leaf
+key set shape, `minerRewardDelay` 720. Box 955 bytes, tree 910 (the testnet prefix changes nothing but the address);
+every spend 3,457 bytes.
+
+| spend | node verdict | script cost | artifact |
+|---|---|---|---|
+| forged | rejected, `Success((false,37997))` | 37,997 | |
+| wrongindex | rejected, `Success((false,38))` | 38 | |
+| valid, leaf 0 | confirmed, R4 → 1 | 37,997 | tx `8185de6dc06b28eecf8b1f6393e337ef1aa93c3b672579e823e86f552c49e6eb`, box `eb8987a55198cd1d402ce128e8c640a3654d21780c797ea233f85566232bf3f6` |
+| staleleaf (against the new box) | rejected, `Failure(InvocationTargetException)` | not reported | |
+| valid, leaf 1 | confirmed, R4 → 2 | 37,550 | tx `1634f45e8e96f52fa529e7df6a342f5034bcae7b7d774985093b6be849c8063e`, box `1b7823189bd260605a163e1d5c4593cec106b14ff7e1f951d15b1f4009df0fc0` |
+
+Funding transaction `dc2cba875cc7486cb4293f0540fc23f9441acc18bfe9f1cf409f7ca304d9a042`, box
+`bd12f74eb91f6daa98dc3cc53f34388d55c3ca39c8fe7531159951f490d1d35b`. The box carrying index 2 is left unspent on
+testnet. Verdicts and costs match the devnet run to within the message-dependent WOTS variation.
+
 ## What it settles, in one table against the one-time pilot
 
 | | one-time WOTS box (`q2`, the post) | many-time box, this skunk |

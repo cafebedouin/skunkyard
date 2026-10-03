@@ -1,0 +1,7 @@
+[tn 00:56:47Z] box0 bd12f74eb91f6daa98dc3cc53f34388d55c3ca39c8fe7531159951f490d1d35b; node 6.0.1-1-91aa8056-SNAPSHOT height 577691 blockVersion 4
+[tn 00:57:00Z] waiting for box1 eb8987a55198cd1d402ce128e8c640a3654d21780c797ea233f85566232bf3f6
+[tn 01:00:01Z] box1 confirmed: height 577689 R4 0402
+[tn 01:00:05Z] waiting for box2 1b7823189bd260605a163e1d5c4593cec106b14ff7e1f951d15b1f4009df0fc0
+[tn 01:01:06Z] box2 confirmed: height 577689 R4 0404
+[tn 01:01:06Z] TESTNET-MANYTIME: forged_rejected=yes wrongindex_rejected=yes valid0_confirmed=yes staleleaf_rejected=yes valid1_confirmed=yes
+exit 0
