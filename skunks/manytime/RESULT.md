@@ -37,6 +37,29 @@ at index i refuses any leaf below i (stale and below) and accepts any leaf at or
 is replaced with the next leaf and several boxes of one key set are driven by one wallet counter; the chain
 enforces the index per box, the wallet keeps the counter per key set.
 
+## Run 7: the v2 rules on public testnet, `testnet/v2-artifacts/run-v2.log`, PASS
+
+2026-10-03 01:25 to 01:30 UTC, the same public testnet node (ergo 6.0.1, block version 4), a fresh 16-leaf key
+set, box 0 funded by a plain payment with no register (transaction
+`c4b2d677a82f5e3fd647c27067635aaf6d24e413c8968f84a2fcfa534413caaa`, box
+`c5bff21b6020af06277b3298e7e95ab60aaafb5d700340322c544e3d33321ce1`), 1 ERG. Every round's node response and the
+driver's figures are in `testnet/v2-artifacts/` (`tx_*.json`, `*.body`, `spend_*.err`, `box-*.json`). Box 977 to 979
+bytes; every spend 3,484 bytes.
+
+| spend | box R4 before | node verdict | script cost | artifact |
+|---|---|---|---|---|
+| forged | absent (0) | rejected, `Success((false,37854))` | 37,854 | |
+| wrongindex | absent (0) | rejected, `Success((false,52))` | 52 | |
+| valid, leaf 0 | absent (0) | confirmed, R4 → 1, creation height 577,730 | 37,854 | tx `e9d0108c08259bb4cbf09275bffeb75618b9e51c46180d0a1a674698d6328359`, box `53c93614cf2ae16ef71e1e3f2287da10ee4507c511d5d6e652547b457820dc3f` |
+| staleleaf (leaf 0 signed again) | 1 | rejected, `Success((false,28))` | 28 | |
+| below (leaf 0 named) | 1 | rejected, `Success((false,28))` | 28 | |
+| skip, leaf 3 | 1 | confirmed, R4 → 4 (`0408`), creation height 577,733 | 37,781 | tx `118c911e57a9bace5efd30ffda96c481e6fa0d8467dd0711fb91c28f84530251`, box `9c80ebb0934fff52ffaccd8d4f14b6c1753fe138117cb03ddb843f2b6c2ee533` |
+
+Verdict line as printed: `TESTNET-MANYTIME: forged_rejected=yes wrongindex_rejected=yes valid0_confirmed=yes
+staleleaf_rejected=yes below_rejected=yes skip_leaf3_confirmed=yes`. The box carrying index 4 is left unspent on
+testnet. Devnet and testnet agree on every verdict and on the rejection costs; the valid spends differ by the
+message-dependent hash count.
+
 ## Earlier runs under the v1 rules (R4 required, leaf = index, index + 1)
 
 ## Run 1: the script as first written (`&&` with the verification first), `runs/manytime-v1-eager-20261002.log`, PASS
