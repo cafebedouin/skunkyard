@@ -9,4 +9,4 @@ if [ ! -f "$T/q3/SpendsPerKey.class" ] || [ "$D/SpendsPerKey.scala" -nt "$T/q3/S
   "$CS" launch "scalac:${SCALA_VERSION}" -- -nowarn -cp "$NODE_JAR" -d "$T" "$D/SpendsPerKey.scala" >&2
 fi
 [ -d "$D/work/history/objects" ] || { echo "no copy at $D/work/history (copy the node's .ergo/history there while the node is stopped)" >&2; exit 1; }
-java -Xmx1500m -cp "$T:$NODE_JAR" q3.SpendsPerKey "$D/work/history" "$OUT" "${1:-2147483647}" 2>&1 | tee "$OUT/run-$(date -u +%Y%m%dT%H%M%SZ).txt"
+java -Xmx1800m -cp "$T:$NODE_JAR" q3.SpendsPerKey "$D/work/history" "$OUT" "${1:-4000000}" 2>&1 | tee "$OUT/run-$(date -u +%Y%m%dT%H%M%SZ).txt"

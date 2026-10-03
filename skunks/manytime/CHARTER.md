@@ -32,3 +32,10 @@ and index 0, in two forms a wallet can switch between like Nautilus's fresh-addr
 constant (a new address per key set) or in a register (one address, a new digest). Height is a parameter; XMSS's
 standard heights are 10, 16 and 20. How many times a typical address signs on mainnet is unmeasured and would set
 the default height; a chain scan answers it.
+
+**Height as a wallet profile (user, 2026-10-02).** The chain sees only the digest, so height is a wallet setting
+like the address-reuse toggle: a holder profile (h = 10, 1,024 leaves, about a second to generate, about a 400-byte
+proof), an active-user profile (h = 16, about a minute, about 600 bytes) and a miner, pool or script profile
+(h = 20, XMSS's largest standard height, a few minutes, about 700 bytes) with rotation automatic at the last leaf.
+Leaves derive from one seed and the index, as in XMSS, so the wallet stores a seed and a counter. SK-033's scan
+and sample set where the default sits.
