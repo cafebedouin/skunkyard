@@ -17,3 +17,25 @@
 [tn:addinput] LOCAL-EVAL input=1 kind=deposit how=addinput r4=0 leaf=0 next=1 leaves=16 result=Success(true) cost=Success(11) box_bytes=104 tree_bytes=61
 [tn:addinput] LOCAL-EVAL summary how=addinput inputs=2 signed_over=1 all_ok=false total_cost=38008 tx_id=fc536a8f65273e571b1b202125c797f2107f3003d063f1e264130f7a426a57e6 tx_bytes=3644 out0_id=5a77eb0c1c1a9ff597a7a059ed61e3412133f9e1571b9bc96078454fa2cd08fb out0_bytes=1104
 [tn 02:00:38Z] addinput POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. fc536a8f65273e571b1b202125c797f2107f3003d063f1e264130f7a426a57e6: #0 => Success((false,37997))"}
+[tn:notoken] LOCAL-EVAL input=0 kind=state how=valid r4=0 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(23) box_bytes=1069 tree_bytes=1026
+[tn:notoken] LOCAL-EVAL summary how=valid inputs=1 signed_over=1 all_ok=false total_cost=23 tx_id=54d0096b3445016edc7a31c2c1502ce6c0230c2e63760586ae56d2bb1c10e2e0 tx_bytes=3575 out0_id=8c6fa8a66663f52e1aa468cf7a478d8d1b6596cc1546592624de79bbd0a64cae out0_bytes=1070
+[tn 02:00:40Z] notoken POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 54d0096b3445016edc7a31c2c1502ce6c0230c2e63760586ae56d2bb1c10e2e0: #0 => Success((false,23))"}
+[tn:valid0] LOCAL-EVAL input=0 kind=state how=valid r4=0 leaf=0 next=1 leaves=16 result=Success(true) cost=Success(37775) box_bytes=1104 tree_bytes=1026
+[tn:valid0] LOCAL-EVAL input=1 kind=deposit how=valid r4=0 leaf=0 next=1 leaves=16 result=Success(true) cost=Success(11) box_bytes=104 tree_bytes=61
+[tn:valid0] LOCAL-EVAL summary how=valid inputs=2 signed_over=2 all_ok=true total_cost=37786 tx_id=1ccc214bdb96d64e6f56cc51c40c90fc4c30cb84dd7e00b15f4f349a592bd40f tx_bytes=3644 out0_id=a7b813ac67ff9473d7f58e51be2f49fa472dc99f33bad8d4fdaad7796b1dff47 out0_bytes=1104
+[tn 02:00:42Z] valid0 POST -> HTTP 200: "1ccc214bdb96d64e6f56cc51c40c90fc4c30cb84dd7e00b15f4f349a592bd40f"
+[tn 02:00:42Z] waiting for S1 a7b813ac67ff9473d7f58e51be2f49fa472dc99f33bad8d4fdaad7796b1dff47
+[tn 02:02:23Z] S1 in UTXO: creationHeight 577790 R4 0402 assets [{'tokenId': 'f60cfae92b018d080064295ecacba3f57679d7c492871fe4f64234c8799382a2', 'amount': 1}]
+[tn 02:02:23Z] D1 spent: yes
+[tn:staleleaf] LOCAL-EVAL input=0 kind=state how=staleleaf r4=1 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(46) box_bytes=1104 tree_bytes=1026
+[tn:staleleaf] LOCAL-EVAL summary how=staleleaf inputs=1 signed_over=1 all_ok=false total_cost=46 tx_id=3ec37ce201140b1e8e68e9fc9a1f477787dc6ca450c0d134ff1eb0fbb72a439b tx_bytes=3610 out0_id=3b9f5a5854f3abdaec398a93d0c4dba24250509c1de9136a2976396d59380a7a out0_bytes=1104
+[tn 02:02:25Z] staleleaf POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 3ec37ce201140b1e8e68e9fc9a1f477787dc6ca450c0d134ff1eb0fbb72a439b: #0 => Success((false,46))"}
+[tn:skip] LOCAL-EVAL input=0 kind=state how=valid r4=1 leaf=3 next=4 leaves=16 result=Success(true) cost=Success(37751) box_bytes=1104 tree_bytes=1026
+[tn:skip] LOCAL-EVAL input=1 kind=deposit how=valid r4=1 leaf=3 next=4 leaves=16 result=Success(true) cost=Success(11) box_bytes=104 tree_bytes=61
+[tn:skip] LOCAL-EVAL summary how=valid inputs=2 signed_over=2 all_ok=true total_cost=37762 tx_id=f08692435c16f283bee3ac8e15f83370da14c63bba96c9965cd1d47730c4844d tx_bytes=3644 out0_id=f87401e1b6254964a090e05bd5583f5f65c6e8ab2cd61164a6a7f4630525c79e out0_bytes=1104
+[tn 02:02:27Z] skip POST -> HTTP 200: "f08692435c16f283bee3ac8e15f83370da14c63bba96c9965cd1d47730c4844d"
+[tn 02:02:27Z] waiting for S2 f87401e1b6254964a090e05bd5583f5f65c6e8ab2cd61164a6a7f4630525c79e (leaf 3 used; R4 should read 4)
+[tn 02:03:28Z] S2 in UTXO: creationHeight 577793 R4 0408 assets [{'tokenId': 'f60cfae92b018d080064295ecacba3f57679d7c492871fe4f64234c8799382a2', 'amount': 1}]
+[tn 02:03:28Z] D2 spent: yes
+[tn 02:03:28Z] TESTNET-SINGLETON: forged_rejected=yes wrongindex_rejected=yes nostate_rejected=yes addinput_rejected=yes notoken_rejected=yes valid0_confirmed=yes deposit1_spent=yes staleleaf_rejected=yes skip_leaf3_confirmed=yes deposit2_spent=yes
+exit 0

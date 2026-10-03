@@ -97,6 +97,32 @@ transaction cannot be padded with a deposit (addinput); a plain payment to the s
 Not run: the last-leaf branch (the token moving to a new key set), heights above 4, several deposits in one spend,
 a bad lookup proof at a legal index (still the exception path, by reading), hybrid mode under v3.
 
+## Run 9: v3 on public testnet, `testnet/v3-artifacts/run-v3.log`, PASS
+
+2026-10-03 01:58 to 02:03 UTC, the same public testnet node (ergo 6.0.1, block version 4), a fresh 16-leaf key set.
+The project's testnet wallet minted the token (`f60cfae9…`, box `79946aa7…`, through Fleet's `mintToken`), the
+scripts were compiled with it, and one Fleet transaction (`5147e6a0…`) funded S0 (1 ERG, token, R4 = 0), D1 and D2
+(0.3 ERG each, plain payments to the deposit address) and P0 (0.3 ERG, plain, at the state address). Every node
+response and driver line is in `testnet/v3-artifacts/`. Singleton box 1,104 bytes; every spend with one deposit
+3,644 bytes.
+
+| round | inputs | node verdict | script cost | artifact |
+|---|---|---|---|---|
+| forged | S0 | rejected, `Success((false,37915))` | 37,915 | |
+| wrongindex | S0 | rejected, `Success((false,73))` | 73 | |
+| nostate | D1 | rejected, `Success((false,7))` | 7 | |
+| addinput | S0 + D1 | rejected, `Success((false,37997))` | 37,997 | |
+| notoken | P0 | rejected, `Success((false,23))` | 23 | |
+| valid, leaf 0 | S0 + D1 | confirmed; S1 R4 `0402` with the token, creation height 577,790; D1 gone | 37,786 | tx `1ccc214bdb96d64e6f56cc51c40c90fc4c30cb84dd7e00b15f4f349a592bd40f`, box `a7b813ac67ff9473d7f58e51be2f49fa472dc99f33bad8d4fdaad7796b1dff47` |
+| staleleaf | S1 | rejected, `Success((false,46))` | 46 | |
+| skip, leaf 3 | S1 + D2 | confirmed; S2 R4 `0408` with the token, creation height 577,793; D2 gone | 37,762 | tx `f08692435c16f283bee3ac8e15f83370da14c63bba96c9965cd1d47730c4844d`, box `f87401e1b6254964a090e05bd5583f5f65c6e8ab2cd61164a6a7f4630525c79e` |
+
+Verdict line: `TESTNET-SINGLETON: forged_rejected=yes wrongindex_rejected=yes nostate_rejected=yes
+addinput_rejected=yes notoken_rejected=yes valid0_confirmed=yes deposit1_spent=yes staleleaf_rejected=yes
+skip_leaf3_confirmed=yes deposit2_spent=yes`. S2 (index 4, with the token) and P0 are left on testnet. Devnet and
+testnet agree on every verdict and on every rejection cost but the forged and addinput ones, which carry the
+message-dependent hash count.
+
 ## Earlier runs under the v1 rules (R4 required, leaf = index, index + 1)
 
 ## Run 1: the script as first written (`&&` with the verification first), `runs/manytime-v1-eager-20261002.log`, PASS
@@ -180,8 +206,8 @@ testnet. Verdicts and costs match the devnet run to within the message-dependent
 | keys per box | 1 | 2^h (16 here; the digest is 33 bytes at any h) | 2^h per key set, one singleton plus any number of deposits |
 | proposition bytes | 840 (constant form) | 934 | 1,026 state, 61 deposit |
 | box bytes | 866 (constant form, the post) | 975 to 979 | 1,102 singleton, 102 deposit |
-| spend bytes | 2,345 (testnet) / 2,340 (devnet) | 3,477 to 3,484 | 3,637 with one deposit |
-| script cost, valid spend | 37,592 | 37,644 to 37,876 | 38,007 to 38,204 (the deposit's script 11) |
+| spend bytes | 2,345 (testnet) / 2,340 (devnet) | 3,477 to 3,484 | 3,637 to 3,644 with one deposit |
+| script cost, valid spend | 37,592 | 37,644 to 37,876 | 37,762 to 38,204 (the deposit's script 11) |
 | mainnet cost per spend (derived; 10,000 + 2,407 per input + 298 per output) | 50,595 (37,592 + 13,003 for 1 in / 2 out) | 51,177 (37,876 + 13,301 for 1 in / 3 out) | 53,912 (38,204 + 15,708 for 2 in / 3 out) |
 | per block, by cost (8,001,091) / by size (1,271,009 bytes), derived | 158 / 542 | 156 / 365 | 148 / 349 |
 | index enforced by | n/a | the chain, per box; across boxes the wallet | the chain, per key set (every spend passes through the singleton) |
