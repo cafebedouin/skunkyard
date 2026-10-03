@@ -1,0 +1,2 @@
+LOCAL-EVAL input=0 kind=state how=valid r4=0 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(23) box_bytes=1069 tree_bytes=1026
+LOCAL-EVAL summary how=valid inputs=1 signed_over=1 all_ok=false total_cost=23 tx_id=54d0096b3445016edc7a31c2c1502ce6c0230c2e63760586ae56d2bb1c10e2e0 tx_bytes=3575 out0_id=8c6fa8a66663f52e1aa468cf7a478d8d1b6596cc1546592624de79bbd0a64cae out0_bytes=1070

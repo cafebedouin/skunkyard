@@ -83,30 +83,36 @@ at the protocol"; it does not say "first".
 
 ## Contract-enforced one-time hash signatures on account chains (found by the second seat round, checked 2026-10-03)
 
-Two deployed designs enforce one-time use of a hash-based key by contract logic on a chain whose protocol knows
-nothing about the scheme, which is the property this skunk claimed as new in the v3 draft:
+Two designs enforce one-time use of a hash-based key by contract logic on a chain whose protocol knows nothing
+about the scheme, which is the property this skunk claimed as new in the v3 draft (web search 2026-10-03; neither
+repository was read in full):
 
-- The Solana Winternitz vault (deanmlittle, `solana-winternitz-vault`, January 2025): a program holding a vault keyed
-  by one WOTS public key (truncated Keccak-256, 224-bit preimage resistance); a spend verifies one signature and
-  moves the remaining funds to a new vault under a new key. One key per vault, so the "many-time" part is the
-  wallet's chain of vaults, not a counter the program keeps.
-- Ethereum "quantum-safe wallet" designs (2025 to 2026): a contract wallet with a stable address whose authorized
-  signer rotates after every transaction, or a Lamport-signature wallet contract that stores the next public-key hash.
+- The Solana Winternitz vault (Dean Little, https://github.com/deanmlittle/solana-winternitz-vault, January 2025,
+  a deployed program on Solana): a vault keyed by one WOTS public key (truncated Keccak-256, 224-bit preimage
+  resistance); a spend verifies one signature and moves the remaining funds to a new vault under a new key. One key
+  per vault, so the "many-time" part is the wallet's chain of vaults, not a counter the program keeps.
+- Ethereum "quantum-safe wallet" proposals (2025 to 2026, e.g. the ephemeral-key-rotation scheme reported at
+  https://en.cryptonomist.ch/2026/03/04/quantum-safe-wallet-ethereum/): a contract wallet with a stable address
+  whose authorized signer rotates after every transaction, storing only a hash-derived value of the next key. These
+  are proposals and prototypes; whether any is deployed on mainnet was not checked.
 
 What this skunk does that neither does: the counter over 2^h keys lives in the UTXO's own register, the deposit
 address is fixed while the key set and even the singleton rotate behind it, and the enforcement is the stock
-script interpreter, not a deployed program. What they do that this skunk does not: run on mainnet. The claim in the
-reply is scoped accordingly: a many-time counter enforced by a box script on a UTXO chain, with no "first".
+script interpreter, not a deployed program. The claim in the reply is scoped accordingly: a many-time counter
+enforced by a box script on a UTXO chain, with no "first".
 
 ## The v3 singleton against QRL's per-address bitfield
 
-QRL keeps, in consensus state, one bitfield per address recording which XMSS indices have been used. A UTXO script
-cannot see other boxes at its own address, which is why the v2 design enforced the index per box and why a fresh
-deposit reopened the reuse window (seat round 2). The v3 singleton is the UTXO form of QRL's bitfield: one box per
-key set holds the counter, and a deposit script makes every spend pass through it. The analogy is exact for the
-monotone part (QRL's bitfield also rejects a lower index) and not for the "skipped index" part: QRL records each
-index individually, so a skipped index stays usable later; here the counter is a lower bound, so a skipped leaf is
-burned. The burn is the price of a 4-byte register instead of a 2^h-bit field.
+QRL keeps, in consensus state, per address, a bitfield over the first 8,192 XMSS indices (which may be used in any
+order) and above that an `ots_counter`: once past the bitfield, indices must be used in ascending order and the last
+valid position is the counter (QRL docs, "OTS Key Index", https://docs-archive.theqrl.org/developers/ots/ and the
+`AddressState` API, read 2026-10-03). A UTXO script cannot see other boxes at its own address, which is why the v2
+design enforced the index per box and why a fresh deposit reopened the reuse window (seat round 2). The v3 singleton
+is the UTXO form of QRL's counter: one box per key set holds it, and a deposit script makes every spend pass through
+it. The analogy is exact for the counter part (a lower index is rejected, a skipped index is burned, in both) and
+absent for the bitfield part: QRL's first 8,192 indices may be used in any order and a skipped one stays usable; here
+every leaf is under the counter. The third seat round corrected an earlier version of this paragraph that had QRL
+keeping a bitfield only.
 
 ## Two refinements from the second seat round
 

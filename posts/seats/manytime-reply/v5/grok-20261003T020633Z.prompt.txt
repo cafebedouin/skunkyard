@@ -1,0 +1,10 @@
+You are an outside reviewer with a cryptography and blockchain background. /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/reply-slice5/REPLY.md is a draft reply to a
+public forum thread about post-quantum readiness on Ergo; /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/reply-slice5/RESULT.md, /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/reply-slice5/LITERATURE.md and /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/reply-slice5/Q3-RESULT.md are the measured results and prior-art note it summarizes, /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/reply-slice5/ORIGINAL-POST.md is the post it replies to, and
+/tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/reply-slice5/state.es and deposit.es the two scripts that ran (v3, the singleton design). No web access. Check: (1) every number in REPLY.md against RESULT.md;
+(2) every claim in REPLY.md is supported by RESULT.md or the script, and every non-claim RESULT.md makes is kept;
+(3) whether the two "corrections to the short version" are stated so a reader of the original post can verify them
+from its own tables (you cannot see the post; judge whether the sentences are self-contained and hedged where they
+depend on it); (4) tone: neutral, no advocacy, no promise; (5) anything a cryptographer would object to, in
+particular about the one-time rule, the stale-leaf rejection by exception, and whether seeing used leaves exposes
+unused ones. Output: a numbered list tagged ERROR / UNSUPPORTED / SUGGESTION with the sentence quoted, then one
+paragraph: post as is, post with the listed fixes, or do not post.

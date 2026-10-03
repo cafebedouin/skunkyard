@@ -1,0 +1,2 @@
+LOCAL-EVAL input=0 kind=state how=lastdeposit r4=4 leaf=15 next=16 leaves=16 result=Success(false) cost=Success(64) box_bytes=1209 tree_bytes=1131
+LOCAL-EVAL summary how=lastdeposit inputs=1 signed_over=1 all_ok=false total_cost=64 tx_id=6ff2ae1726444472276a205996fa3e8e6ad3ca4d3203fc73e1ce616b9bd700fd tx_bytes=2677 out0_id=292593f94fe7a4af6f7bb04a9a7ee3db9a6bca017120143cdbeea9bedc753078 out0_bytes=137

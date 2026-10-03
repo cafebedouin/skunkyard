@@ -1,2 +1,2 @@
-LOCAL-EVAL input=0 kind=state how=staleleaf r4=1 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(46) box_bytes=1104 tree_bytes=1026
-LOCAL-EVAL summary how=staleleaf inputs=1 signed_over=1 all_ok=false total_cost=46 tx_id=3ec37ce201140b1e8e68e9fc9a1f477787dc6ca450c0d134ff1eb0fbb72a439b tx_bytes=3610 out0_id=3b9f5a5854f3abdaec398a93d0c4dba24250509c1de9136a2976396d59380a7a out0_bytes=1104
+LOCAL-EVAL input=0 kind=state how=staleleaf r4=1 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(46) box_bytes=1209 tree_bytes=1131
+LOCAL-EVAL summary how=staleleaf inputs=1 signed_over=1 all_ok=false total_cost=46 tx_id=3101247511e21bccee7c675e613fbcf10ad946e55a85a79576b1c274fa39b670 tx_bytes=3715 out0_id=24391202efc71d92f9f0b67b0f06efcdeb453a0b1c9eeba3fab2c9db1465fc1e out0_bytes=1209

@@ -97,14 +97,14 @@ transaction cannot be padded with a deposit (addinput); a plain payment to the s
 Not run: the last-leaf branch (the token moving to a new key set), heights above 4, several deposits in one spend,
 a bad lookup proof at a legal index (still the exception path, by reading), hybrid mode under v3.
 
-## Run 9: v3 on public testnet, `testnet/v3-artifacts/run-v3.log`, PASS
+## Run 9: v3 on public testnet, `testnet/v3-artifacts-run9/run-v3.log`, PASS
 
 2026-10-03 01:58 to 02:03 UTC, the same public testnet node (ergo 6.0.1, block version 4), a fresh 16-leaf key set.
 The project's testnet wallet minted the token (`f60cfae9…`, box `79946aa7…`, through Fleet's `mintToken`), the
 scripts were compiled with it, and one Fleet transaction (`5147e6a0…`) funded S0 (1 ERG, token, R4 = 0), D1 and D2
 (0.3 ERG each, plain payments to the deposit address) and P0 (0.3 ERG, plain, at the state address). Every node
-response and driver line is in `testnet/v3-artifacts/`. Singleton box 1,104 bytes; every spend with one deposit
-3,644 bytes.
+response and driver line is in `testnet/v3-artifacts-run9/`. Singleton box 1,104 bytes, deposit box 104; every spend
+with one deposit 3,644 bytes.
 
 | round | inputs | node verdict | script cost | artifact |
 |---|---|---|---|---|
@@ -122,6 +122,73 @@ addinput_rejected=yes notoken_rejected=yes valid0_confirmed=yes deposit1_spent=y
 skip_leaf3_confirmed=yes deposit2_spent=yes`. S2 (index 4, with the token) and P0 are left on testnet. Devnet and
 testnet agree on every verdict and on every rejection cost but the forged and addinput ones, which carry the
 message-dependent hash count.
+
+## Run 10: v3.1 on the devnet, with rotation, `runs/singleton-v31-20261003.log`, PASS
+
+After the third seat round (`posts/REVIEW-manytime-reply.md`, round 3). `state.es` v3.1: before the last leaf the
+continuing index must also stay below the leaf count; on the last leaf OUTPUTS(0) must be neither this script nor the
+deposit script (the deposit script's bytes are a constant of the state script); the message covers every data-input
+id. The hook now generates a second key set B, compiled with the same token, whose deposit address is the same as
+A's (printed: "key set B shares the deposit address"), and funds three deposits. Same rig, ergo 6.0.6, block version 4,
+n = 32, w = 16, h = 4. State tree 1,131 bytes; singleton box 1,207; deposit box 102; every spend 3,742 bytes.
+
+| round | inputs | what | node verdict | script cost |
+|---|---|---|---|---|
+| forged | S0 | one signature bit flipped | rejected, `Success((false,37913))` | 37,913 |
+| wrongindex | S0 | continuing index stays 0 | rejected, `Success((false,75))` | 75 |
+| nostate | D1 | a deposit alone | rejected, `Success((false,7))` | 7 |
+| addinput | S0 + D1 | signed over S0 alone, posted with D1 | rejected, `Success((false,37737))` | 37,737 |
+| notoken | P0 | the state address without the token | rejected, `Success((false,23))` | 23 |
+| valid, leaf 0 | S0 + D1 | sweep D1, S1 at index 1 | confirmed, D1 gone | 38,141 (mempool 52,841) |
+| staleleaf | S1 | leaf 0 against index 1 | rejected, `Success((false,46))` | 46 |
+| skip, leaf 3 | S1 + D2 | sweep D2, S2 at index 4 | confirmed, S2 R4 `0408`, D2 gone | 38,179 (mempool 52,879) |
+| overindex | S2 | leaf 4, continuing index written as 16 | rejected, `Success((false,84))` | 84 |
+| lastsame | S2 | leaf 15, token kept under this script | rejected, `Success((false,65))` | 65 |
+| lastdeposit | S2 | leaf 15, token sent to the deposit script | rejected, `Success((false,64))` | 64 |
+| rotate | S2 | leaf 15, token to key set B's singleton at index 0 | confirmed, S3 under B's tree (`tree_is_B=yes`), R4 `0400` | 38,046 (mempool 50,746) |
+| after rotation | S3 + D3 | key set B's leaf 0 sweeps D3 | confirmed, S4 R4 `0402`, D3 gone | 37,994 (mempool 52,694) |
+
+Verdict line: `SINGLETON: PASS (… overindex_rejected=yes lastleaf_same_script_rejected=yes
+lastleaf_to_deposit_rejected=yes rotate_confirmed=yes sweep_after_rotation_confirmed=yes deposit3_spent=yes)`.
+What run 10 adds: the last-leaf branch ran (rotation to a second key set, SK-032), and a deposit made before the
+rotation was swept by the second key set, so the deposit address survives a key-set change; the two ways a wallet
+could have misused the last leaf, and the one way it could have stranded the token early, are refused at 64 to 84
+units. The node's charge above script cost is 14,700 for two inputs and three outputs and 12,700 for one input and
+three outputs, 400 above the input/output formula in both shapes (devnet inputCost 2,000, outputCost 100), which
+by inference is token access (`tokenAccessCost` 100); the mainnet derivation adds the same 400.
+
+## Run 11: v3.1 on public testnet, with rotation, `testnet/v3-artifacts/run-v31.log`, PASS
+
+2026-10-03 02:16 to 02:27 UTC, the same public testnet node (ergo 6.0.1, block version 4), fresh key sets A and B
+compiled with one token (`b9463e54…`, minted in its own transaction, box `5155b410…`); one funding transaction
+(`1f86e5ef…`) for S0 (1 ERG, token, R4 = 0), D1, D2, D3 (0.3 ERG each, plain) and P0 (0.3 ERG, plain, at A's state
+address). Artifacts in `testnet/v3-artifacts/`. Singleton box 1209 bytes, deposit box 104; every spend 3,749 bytes.
+
+| round | inputs | node verdict | script cost | artifact |
+|---|---|---|---|---|
+| forged | S0 | rejected, `Success((false,37918))` | 37,918 | |
+| wrongindex | S0 | rejected, `Success((false,75))` | 75 | |
+| nostate | D1 | rejected, `Success((false,7))` | 7 | |
+| addinput | S0 + D1 | rejected, `Success((false,37948))` | 37,948 | |
+| notoken | P0 | rejected, `Success((false,23))` | 23 | |
+| valid, leaf 0 | S0 + D1 | confirmed; S1 R4 `0402`, token, creation height 577,813; D1 gone | 37,959 | tx `908e055e53d85c65f662358d884b65968fcdcf0596d0241e87873c03a7a1f984` |
+| staleleaf | S1 | rejected, `Success((false,46))` | 46 | |
+| skip, leaf 3 | S1 + D2 | confirmed; S2 R4 `0408`, token, height 577,816; D2 gone | 37,896 | tx `2c3675deb6602644e7b25d2229b1116fce7a5b06079c97af81e311d560d56390` |
+| overindex | S2 | rejected, `Success((false,84))` | 84 | |
+| lastsame | S2 | rejected, `Success((false,65))` | 65 | |
+| lastdeposit | S2 | rejected, `Success((false,64))` | 64 | |
+| rotate, leaf 15 | S2 | confirmed; S3 under key set B's tree (`tree_is_B True`), R4 `0400`, token, height 577,818 | 37,910 | tx `b88aa7569982de804fff39362b5386fc69de1d99bc0a70e8eba96f7e6d545874`, box `5e6b5bc2a78394e3bc5c5ab713bc062f2cf15eba4ae24ed57aed86f8f470c291` |
+| after rotation, B's leaf 0 | S3 + D3 | confirmed; S4 R4 `0402`, token, height 577,822; D3 gone | 37,773 | tx `da38a18b7b33ee888f2cbf9455022aa963a736f98e7dfcbe62bba3a4fba3c316`, box `cb1b87b903a4da219a3229ef3f150338a645872acde82642b82046194d9cda6b` |
+
+Verdict line: all sixteen flags `yes` (`TESTNET-SINGLETON: … rotate_confirmed=yes sweep_after_rotation_confirmed=yes
+deposit3_spent=yes`). Devnet and testnet agree on every verdict and on every rejection cost except forged and
+addinput (message-dependent). Left on testnet: S4 (key set B's singleton at index 1, holding the token), P0, and a
+0.5 ERG deposit funded afterwards at the deposit address (`testnet/v3-artifacts/breakit-fund.log`, box
+`6a09d6453c4ac2a0df692404426e922bd95647ab3082b089ecd9a0a5cef62168`) as the "break it" box: spending it without key
+set B's next leaf is the challenge. Note on procedure: as in run 9, several transactions carrying a valid leaf-0
+signature over distinct messages (wrongindex, addinput, notoken) were handed to the public node before the leaf-0
+spend confirmed; harmless because nothing spent in that interval and the index then passed 0, which is the window
+the design closes at confirmation.
 
 ## Earlier runs under the v1 rules (R4 required, leaf = index, index + 1)
 
@@ -201,23 +268,27 @@ testnet. Verdicts and costs match the devnet run to within the message-dependent
 
 ## What it settles, in one table against the one-time pilot
 
-| | one-time WOTS box (`q2`, the post) | many-time, v2 (runs 5 to 7) | many-time, v3 singleton (run 8) |
+| | one-time WOTS box (`q2`, the post) | many-time, v2 (runs 5 to 7) | many-time, v3.1 singleton (runs 10 and 11) |
 |---|---|---|---|
-| keys per box | 1 | 2^h (16 here; the digest is 33 bytes at any h) | 2^h per key set, one singleton plus any number of deposits |
-| proposition bytes | 840 (constant form) | 934 | 1,026 state, 61 deposit |
-| box bytes | 866 (constant form, the post) | 975 to 979 | 1,102 singleton, 102 deposit |
-| spend bytes | 2,345 (testnet) / 2,340 (devnet) | 3,477 to 3,484 | 3,637 to 3,644 with one deposit |
-| script cost, valid spend | 37,592 | 37,644 to 37,876 | 37,762 to 38,204 (the deposit's script 11) |
-| mainnet cost per spend (derived; 10,000 + 2,407 per input + 298 per output) | 50,595 (37,592 + 13,003 for 1 in / 2 out) | 51,177 (37,876 + 13,301 for 1 in / 3 out) | 53,912 (38,204 + 15,708 for 2 in / 3 out) |
-| per block, by cost (8,001,091) / by size (1,271,009 bytes), derived | 158 / 542 | 156 / 365 | 148 / 349 |
-| index enforced by | n/a | the chain, per box; across boxes the wallet | the chain, per key set (every spend passes through the singleton) |
+| keys per box | 1 | 2^h (16 here; the digest is 33 bytes at any h) | 2^h per key set, one singleton plus any number of deposits; the deposit address survives rotation |
+| proposition bytes | 840 (constant form) | 934 | 1,131 state, 61 deposit |
+| box bytes | 866 (constant form, the post) | 975 to 979 | 1,207 to 1209 singleton, 102 to 104 deposit |
+| spend bytes | 2,345 (testnet) / 2,340 (devnet) | 3,477 to 3,484 | 3,742 (devnet) to 3,749 (testnet) with one deposit |
+| script cost, valid spend | 37,592 | 37,644 to 37,876 | devnet 37,994 to 38,179, testnet 37,773 to 37,959 (the deposit's script 11) |
+| mainnet cost per spend (derived; 10,000 + 2,407 per input + 298 per output + 400 token access as the devnet charged) | 50,595 (37,592 + 13,003, 1 in / 2 out) | 51,177 (37,876 + 13,301, 1 in / 3 out) | 54,287 (38,179 + 15,708 + 400, 2 in / 3 out) |
+| per block, by cost (8,001,091) / by size (1,271,009 bytes), derived, floors | 158 / 542 | 156 / 365 | 147 / 339 |
+| index enforced by | n/a | the chain, per box; across boxes the wallet | the chain, per key set, while the token stays in a singleton (every spend passes through it); at the last leaf the token must leave to another script |
 
-Cost-bound, like the pilot: the interpreter's WOTS cost dominates and the many-time machinery adds under one percent. The
-rent of the box that persists is 953 × 1,250,000 nanoERG = 1.19 ERG per four years at mainnet's factor.
+Cost-bound, like the pilot: the interpreter's WOTS cost dominates and the many-time machinery adds under two percent
+(v3's second input adds 2,407 of fixed charge). The rent of the box that persists, derived at mainnet's factor of
+1,250,000 nanoERG per byte per four years: 1.22 ERG for the v2 box (977 bytes), 1.38 ERG for the v3 singleton
+(1,102 to 1,104 bytes); a v3 deposit box is 102 bytes and persists only until swept.
 
 ## Not shown, stated once
 
-The index is public (R4 names the next leaf, the proof names the one used) and the unused commitments stay inside the digest: a used leaf's proof carries its own commitment and sibling hashes, nothing about unused leaves. This is not a hidden signer. A stuck spend of leaf n is
-replaced by spending the output, never by re-signing leaf n over different outputs; the index advances only on
-confirmation, so the wallet still has one rule to keep. The message binds `SELF.id` and the outputs, not other
-inputs, as in the post. The tree is built off chain and read-only; adding leaves is a different script.
+The index is public (R4 names the next leaf, the proof names the one used) and the unused commitments stay inside the digest: a used leaf's proof carries its own commitment and sibling hashes, nothing about unused leaves. This is not a hidden signer. The chain's index moves only when a spend
+confirms; the wallet's counter must move when it signs, because a signature that never confirms (a replacement that
+lost the race) is still public to whoever saw it, so the wallet keeps one counter per key set, never decremented, and
+a wallet rebuilt from the chain skips ahead past the index by a margin (`LITERATURE.md`, refinements). Under v1 and
+v2 the message bound `SELF.id` and the outputs; under v3 it binds every input id and every output, and under v3.1
+every data-input id as well. The tree is built off chain and read-only; adding leaves is a different script.

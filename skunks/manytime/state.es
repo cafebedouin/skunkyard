@@ -6,7 +6,8 @@
 // carries an index above the leaf used. New: SELF and OUTPUTS(0) must carry the token (a box at this address
 // without the token is not the singleton and is unspendable); on the last leaf OUTPUTS(0) may be any script
 // (rotation: the token moves to the next key set's singleton); the message covers every INPUT id, so a deposit
-// cannot be added to or removed from a signed transaction.
+// cannot be added to or removed from a signed transaction, and every data-input id (third seat round: a relay could
+// otherwise add a data input, which changes the transaction id and so the recreated singleton's box id).
 {
   val i = SELF.R4[Int].getOrElse(0)
   val leaf = getVar[Int](2).get
@@ -14,18 +15,26 @@
   val out = OUTPUTS(0)
   val selfHasToken = SELF.tokens.exists({ (t: (Coll[Byte], Long)) => t._1 == tokenId })
   val outHasToken = out.tokens.exists({ (t: (Coll[Byte], Long)) => t._1 == tokenId })
+  // v3.1 (third seat round): before the last leaf the continuing index must also stay below the leaf count, so a
+  // wallet cannot strand the token (and every deposit) by writing an index past the tree; on the last leaf the token
+  // must leave this script (the same script at index 0 would reopen every leaf) and may not go to the deposit script
+  // (a deposit box carrying the token would satisfy its own check and be spendable by anyone). Where it goes is
+  // otherwise the wallet's choice: the intended place is the next key set's singleton.
   val stateOk = selfHasToken && outHasToken && leaf >= i && leaf < leaves && (if (leaf + 1 < leaves) {
-    out.propositionBytes == SELF.propositionBytes && out.R4[Int].get >= leaf + 1
-  } else { true })
+    out.propositionBytes == SELF.propositionBytes && out.R4[Int].get >= leaf + 1 && out.R4[Int].get < leaves
+  } else {
+    out.propositionBytes != SELF.propositionBytes && out.propositionBytes != depositTree
+  })
   sigmaProp(stateOk && {
     val leafCommitment = root.get(longToByteArray((leaf + 1).toLong), proof).get
     val powers4 = Coll(1, 4, 16, 64)
     val sig = getVar[Coll[Byte]](0).get
 
-    // Message binding: every input id and every output
+    // Message binding: every input id, every data-input id, every output
     val inBytes = INPUTS.flatMap({ (b: Box) => b.id })
+    val diBytes = CONTEXT.dataInputs.flatMap({ (b: Box) => b.id })
     val txBytes = OUTPUTS.flatMap({ (b: Box) => b.bytesWithoutRef })
-    val msg = blake2b256(inBytes ++ txBytes).slice(0, n)
+    val msg = blake2b256(inBytes ++ diBytes ++ txBytes).slice(0, n)
     // 2. Compute Winternitz checksum
     val cSum = if (w == 256) {
       msg.fold(0, { (acc: Int, b: Byte) =>

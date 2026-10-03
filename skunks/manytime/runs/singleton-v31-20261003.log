@@ -1,0 +1,95 @@
+[rig] scratch: /tmp/peeryard-rig.TxY4zf
+[rig] chain preset current: blockInterval=2s minerRewardDelay=10 v4=early (soft-fork voting 4/1/1)
+rig/rig.sh: line 186: 640358 Killed                  ip netns exec "${NS[$n]}" bash -c "cd '${RT_CWD[$n]}' && exec '$JAVA_BIN' $JAVA_OPTS -Djava.io.tmpdir='$pdir/tmp' -jar '${NODE_JAR[$n]}' $NET_ARGS -c '$conf'" > "$plog" 2>&1
+[rig] genesis state digest for minerRewardDelay=10 derived from a probe start: c01a142d004a917b…
+[rig] java: openjdk version "21.0.12.1" 2026-08-18 (java, opts: -Xmx512m)
+[rig] effective configuration: /tmp/peeryard-rig.TxY4zf/out/effective.json ({"chain":"current","nodes":["A:ergo-6.0.6.jar"],"links":0})
+[rig] launched A (ns=ns_A ip=100.64.0.1 p2p=9021 rest=9052 kind=jvm jar=ergo-6.0.6.jar pid=640961)
+[rig] A pid=640961 cpus_applied=0-11 gc=G1GC
+[rig] A REST up
+[rig] bring-up: every link connected
+[rig] === handing off to hook: /home/scott/bin/skunkyard/skunks/manytime/singleton.sh ===
+[sg] blockVersion=4 at height 16; repo /home/scott/bin/skunkyard (850c67c); n=32 w=16 h=4
+[sg] A balance 405000000000 nanoERG at height 16
+[sg] keygen mode=manytime n=32 w=16 h=4 leaves=16 chains=67 tree_bytes=934 digest=5700482de4f605adc864b11dabb12fd48b085f1fcb4230a23a658e5682506d0605 address_chars=1282
+[sg:B] keygen mode=manytime n=32 w=16 h=4 leaves=16 chains=67 tree_bytes=934 digest=50df72e567092980d511f1baf88afe07067709e5eb1bf68766b413453da40e8f05 address_chars=1282
+[sg] token issue: 5dbcebfbb1ffd33806ac069d7f9e0626a5ae8916376236437bfc94748736ab5c
+[sg] token 1c41655be23d3d1c5271d0b25ff0ce11ddf7c8738a3b647ee31577c1bade8dd4 issued at height 21
+[sg] address token=1c41655be23d3d1c5271d0b25ff0ce11ddf7c8738a3b647ee31577c1bade8dd4 state_tree_bytes=1131 deposit_tree_bytes=61 state=MrWWvaHYN4QRDyEgzCTjP4xBuUdWHwvAckAZxLGRg9UuJnBrwgtq3t4iRrwRrxyokefCe3EtVG5GJrGZcqfDJQMECCzDTPaNEVr3jecd1NduyDDZaMANE2KHEouwrWx2UBbbtuSCiK7XSxaPbzRQgNPqr6wfdR7VdLpWgdpDx3qKs95q7BB7J6EnXainhGiEKeDkHmDTFeDehfiD4xQkgp22UCiYMum9QaXsVHqAuGRCy6PCdP2wibdQPMhUoxnTbayq7p6623cxrFGFZz1TAetP1Rjq9tSUTA6P6E2d2RkZ2SJVDEL1qHxi5vEzn5Bhei5JiF7xugkJ47nELPLV1EHAcpSNWPNbGGfPhhGfodEisaB7RUSKP2FjKWws7SUCbRPANZb5zF2FSg2Cqx8rFL6vnueZEbma9UUTNgVM79SJKkg7Hw7sYeELYNxjMQ7DZBapeGtmYi7ipckhCaziTx5GVqxMr4y7Zj3soAFhADKGdVp8sWUofJcK2hTeHW7kMTzc1gMxPv7evijphXH5y96F5xiv9rfuhRmdEJL2vDgJQgwJHpAh7HfbLwV2USazW44cU9RmHMHc6o9sbWtvVYazhfCpkT8gzxQc6RJcGRY5yWnjxuunrg2t7XhR8df3b7eRhYgx2rQhPjAFxnY4mT3Vy4kCVc21GfvAMAJNGjGFv8wSzuChwC4EeCVGh2m6rY2ABGomEbhhPcdVUDRyc6KDchR6CTDKP2yFGteQcujLnt485WEEcwk32oeqEnDNhARVBLUaKqUs1a44YvwbLsAXfKz96HWLDV2KUkbAjFCJoyEXU91xFH5vUrk9jdQ28y6b8LKGLpeDr3gaDwGeex1HZjfYbwAfmY5xyRarsLudRc6CJBLBVK5nMb4CAaeCCAP19Y14BWerGXoghAEsTjadXtBkkpumV8jdZBuxjyyiKTLWQZibLwAVDnPit9R5oTPeirKE9tfzAbCqK6EL3xLyp3fcc55sSRhxQFYaQsCw2K9Lns2JBagbRyM3mi9SBgHL2QLgwB8nibMsLqYSNtGGBK3WMHwbH1oD2vJqdzJZrPBByFCPC3Y8Du4ruu5achV4AA4udorjZhJCReqVwXFCVbiJDJsusYAds1Ymdh7AZvinKygWjHPTV5gmsRQg1Ve2ChyYiKnAnbjJGWvUy1CKny2NSq2vqxNCh9mHQaA5NqZskTqQVbooddUW7gCnx9ZtNZ264aXXPCB4hVoFwYPNMSiBnXgK9m9z8vQCnoCT1LwuLjniRk7gViFuyhfYFo1EkLhHe7dUY9tem849ecoxoAkkjtjMqfzeiJ2azFUsZv7TGvvYqCBer7X6jms8XCJudyC1syaQZztXxSH6SEcMaoPdPUaCVUXPLDEDyqFhvscT6dnmQp4RkurUbUu5UwvZvCs1CjKSGTFgmynkHfw9VveB4H6YS54ALgdaFS1c8EcCGCAchxQRKvc2mxoEouavebbSu92TzTLy7VYML2sdmn38Tfg8ooRZuQuWCovKu6TNcUNcoBHVDw2qGfPGw2gBALzSiyAQH3u deposit=8Re8XGTxYo5EQdZYwVVaJvu4rLdkvLUSa3S5qadBkHYu1jMFeyfcXpStQ2L44c2cQXM41irUPxeF7i3m1sZuxf7BfB
+[sg:B] address token=1c41655be23d3d1c5271d0b25ff0ce11ddf7c8738a3b647ee31577c1bade8dd4 state_tree_bytes=1131 deposit_tree_bytes=61 state=MrWWvaHYN4QRDyEgzCTjP4xBuUdWHwvAckAZxLGRg9UuJnBrwgtq3t4iRrwRrxyokefCe3EtVG5GJrGZcqfDJQMECCzDTPaNEVr3jecd1NduyDDZaMANE2KHEouwrWx2UBbbtuSCiK7XSxaPbzRQgNPqr6wfdR7VdLpWgdpDx3qKs95q7BB7J6EnXainhGiEKeDkHmDTFeDehfiD4xQkgp22UCiYMum9QaXsVHqAuGRCy6PCdP2wibdQPMhUoxnTbayq7p6623cxrFGFZz1TAetP1Rjq9tSUTA6P6E2d2RkZ2SJVDEL1qHxi5vEzn5Bhei5JiF7xugkJ47nELPLV1EHAcpSNWPNbGGfPhhGfodEisaB7RUSKP2FjKWws7SUCbRPANZb5zF2FSg2Cqx8rFL6vnueZEbma9UUTNgVM79SJKkg7Hw7sYeELYNxjMQ7DZBapeGtmYi7ipckhCaziTx5GVqxMr4y7Zj3soAFhADKGdVp8sWUofJcK2hTeBSeTCcn1YAngAemEdgigfdxiKfMxf42GDj72xzdpL9SNoEZTPxFGAqtppZJsWdYSvMSkvUCyaNdi1ptzZMehPLGg75vKX9BVfaqzG2ybyMAZa2Wk8zaMsudQ87PFXhmGXxSvhM3VGkUYG7Ut98F4hwGY3jNELzSaQv7bn13L85wk47xh9LJD2SFF1YiGjvwT6XTmHcLg98xkg5fwmLbhZD14hCKfsWaM6KQg5A17yVUva125n3FG6hHWamuLqQEMscu1WPxbV3PPSxissjAWJ6yNxgMsxD5Rekh6h4tvyzmhjtdp1STHV7HY9Xw6wc3BX8gw2JiddUMbt7TfbGhmyD8HoRYBi4vfDqGt7LaDWjHSnN7UU2KEWT5Smb54zuk9HUAB3d99jYCPbXLJ2nawt6zFUVgtFPbWi3FdnDzyUPFvqUNQx1u3nYJ6J1986r87NRr3x2j7SRciqWehiFS8rY35sHSVkT6S1P1AWNCWk7DXPh8crNidBEVDUZ768CUCqBnSeapPLdFe59dyQ9aVPgYDZoJYP5qFhEaGTkCNwK3tUWZW57nVBkkmKXXhkRoVWWUh3WeMLzU64pSrViZ27Lajrh38yrdSQrZjAoXB2SCiBW1PAcJ7SLdx4LEZNzG8fdWGdGKtEtJLWLoR81RB2dDUuoNTR2BmZJKqG2BCZosL7C67kUcnQudUaLaNJFbwV1Pcn5Nb4NixVPvj76bP6n13RM6c1zPc5EfXmkqmLQMWncmpMzfHkr1fY9HNXHfomioaVdohLF3yHL4xKnGLr5V6WrxCYRkWLDu9MeabcXV5HD5trH7qnhirsukZA9K4btKAdy1BmtFBS2LJigY3TuZHNXp9SurQVbE6iLeXo4TdHnzLoFSS8jk8QBu1cAu8tHBYpgAfiLRT1iLpphkruhwANLvjX7WAaMnsjWBDp99RiTKxxzQdbqE8geCiSdt6zY3TDN2xQeFNJHizjn72vvGUMzHN5bJBKWs8yChtkHzTkrKyfQqHaDAbUEQL3fur3RDpnDc7ZzMjQSj52Tm deposit=8Re8XGTxYo5EQdZYwVVaJvu4rLdkvLUSa3S5qadBkHYu1jMFeyfcXpStQ2L44c2cQXM41irUPxeF7i3m1sZuxf7BfB
+[sg] key set B shares the deposit address (same token)
+[sg] funding S (token, R4=0400), D1, D2, D3, P: fa2bc8686b591f7e30dab651b226aeeb50fbbd5885f5ffe628c6d06f3e0cc316
+[sg] funded at height 24: S0 7ae4fa159fcc60d1438ee4cb94ddb01e3dd3ee75dc218f92d957edb4f9ba4a14 R4=0400 assets=[{"tokenId":"1c41655be23d3d1c5271d0b25ff0ce11ddf7c8738a3b647ee31577c1bade8dd4","amount":1}]; P0 895c8957547867f7059d398748ce2a0fc4867be3418c539cf8d456ac9302fa80 assets=[]; D1 349d0f20ac7513b22be8cdf7a199e1e71707077f2492bcc15d2031f72d2a47f7 registers=[]; D2 18bf4c7df5425bb2ea6a46ab252fb2c0a1090818ebd6b14640e1389945f21cbe
+[sg:forged] LOCAL-EVAL input=0 kind=state how=forged r4=0 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(37913) box_bytes=1207 tree_bytes=1131
+[sg:forged] LOCAL-EVAL summary how=forged inputs=1 signed_over=1 all_ok=false total_cost=37913 tx_id=d595b2e5c10743501db722711a4362ecfe19826b7f081c86ec0f65deaebedc9b tx_bytes=3708 out0_id=be167cab14646f61fa300456f36f5bee7776439d1bb1b0bdbcf9ea610539b5bd out0_bytes=1207
+[sg:forged] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. d595b2e5c10743501db722711a4362ecfe19826b7f081c86ec0f65deaebedc9b: #0 => Success((false,37913))"}
+[sg:forged] REJECTED local=total_cost=37913 node_verdict=Success((false,37913))
+[sg:wrongindex] LOCAL-EVAL input=0 kind=state how=wrongindex r4=0 leaf=0 next=0 leaves=16 result=Success(false) cost=Success(75) box_bytes=1207 tree_bytes=1131
+[sg:wrongindex] LOCAL-EVAL summary how=wrongindex inputs=1 signed_over=1 all_ok=false total_cost=75 tx_id=b08a468ffe7c9a6fce4dbd824a765620f38ec64781b6fe621d617e9322492113 tx_bytes=3708 out0_id=344b352a8a1334049bea1eb39834c2f5b32f4046bb855073481d92ca82513ff1 out0_bytes=1207
+[sg:wrongindex] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. b08a468ffe7c9a6fce4dbd824a765620f38ec64781b6fe621d617e9322492113: #0 => Success((false,75))"}
+[sg:wrongindex] REJECTED local=total_cost=75 node_verdict=Success((false,75))
+[sg:nostate] LOCAL-EVAL input=0 kind=deposit how=nostate r4=-1 leaf=-1 next=-1 leaves=16 result=Success(false) cost=Success(7) box_bytes=102 tree_bytes=61
+[sg:nostate] LOCAL-EVAL summary how=nostate inputs=1 signed_over=1 all_ok=false total_cost=7 tx_id=2f4afd6bec7207377f5232a08b37a9e3c5b9a7906e33fccc39eb51a841634ffb tx_bytes=192 out0_id=c1aba7de9283611ab9cac332472c175d506a14b826bbaa3ae3a3aa1aedeee4c7 out0_bytes=77
+[sg:nostate] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 2f4afd6bec7207377f5232a08b37a9e3c5b9a7906e33fccc39eb51a841634ffb: #0 => Success((false,7))"}
+[sg:nostate] REJECTED local=total_cost=7 node_verdict=Success((false,7))
+[sg:addinput] LOCAL-EVAL input=0 kind=state how=addinput r4=0 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(37737) box_bytes=1207 tree_bytes=1131
+[sg:addinput] LOCAL-EVAL input=1 kind=deposit how=addinput r4=0 leaf=0 next=1 leaves=16 result=Success(true) cost=Success(11) box_bytes=102 tree_bytes=61
+[sg:addinput] LOCAL-EVAL summary how=addinput inputs=2 signed_over=1 all_ok=false total_cost=37748 tx_id=76c83b7953fcbba7449deda1da1f9a07d1dc994ccf14a1cf7ecafacab2d31576 tx_bytes=3742 out0_id=dbe537e4eecca2dc81956c784d46e0449714a9a466553fa2cdf14130f8ee1fa0 out0_bytes=1207
+[sg:addinput] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 76c83b7953fcbba7449deda1da1f9a07d1dc994ccf14a1cf7ecafacab2d31576: #0 => Success((false,37737))"}
+[sg:addinput] REJECTED local=total_cost=37748 node_verdict=Success((false,37737))
+[sg:notoken] LOCAL-EVAL input=0 kind=state how=valid r4=0 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(23) box_bytes=1172 tree_bytes=1131
+[sg:notoken] LOCAL-EVAL summary how=valid inputs=1 signed_over=1 all_ok=false total_cost=23 tx_id=bb51e56bd66c728d14934944493094b89b7c448a91414f4761ac4313641a9a7d tx_bytes=3674 out0_id=5279405ce16826d1ef550ef2a666f78ff6c8dcfd07dd4ee20b6b73d48121a48c out0_bytes=1174
+[sg:notoken] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. bb51e56bd66c728d14934944493094b89b7c448a91414f4761ac4313641a9a7d: #0 => Success((false,23))"}
+[sg:notoken] REJECTED local=total_cost=23 node_verdict=Success((false,23))
+[sg:valid0] LOCAL-EVAL input=0 kind=state how=valid r4=0 leaf=0 next=1 leaves=16 result=Success(true) cost=Success(38130) box_bytes=1207 tree_bytes=1131
+[sg:valid0] LOCAL-EVAL input=1 kind=deposit how=valid r4=0 leaf=0 next=1 leaves=16 result=Success(true) cost=Success(11) box_bytes=102 tree_bytes=61
+[sg:valid0] LOCAL-EVAL summary how=valid inputs=2 signed_over=2 all_ok=true total_cost=38141 tx_id=b87c0c4d40588871b3e2bcb9acfa31a3f54f9d99cccdefa15b9c72442ad4cf56 tx_bytes=3742 out0_id=83c6ece77bc6e6a719f287bd9831f61e0b56d950a9ab44364cb6e3e5d46b48c4 out0_bytes=1207
+[sg:valid0] POST -> HTTP 200, tx b87c0c4d40588871b3e2bcb9acfa31a3f54f9d99cccdefa15b9c72442ad4cf56; mempool size=3742 cost=52841
+[sg:valid0] confirmed at height 38; block tx size 3742; inputs 2; singleton' R4=0402 assets=[{"tokenId":"1c41655be23d3d1c5271d0b25ff0ce11ddf7c8738a3b647ee31577c1bade8dd4","amount":1}]
+[sg:valid0] RESULT leaf=0 next=1 leaf=0 next=1 total_cost=38141 tx_bytes=3742 out0_bytes=1207 mempool_cost=52841 block_tx_bytes=3742
+[sg] S1 83c6ece77bc6e6a719f287bd9831f61e0b56d950a9ab44364cb6e3e5d46b48c4 R4=0402 assets=[{"tokenId":"1c41655be23d3d1c5271d0b25ff0ce11ddf7c8738a3b647ee31577c1bade8dd4","amount":1}]
+[sg] D1 spent (gone from UTXO)
+[sg:staleleaf] LOCAL-EVAL input=0 kind=state how=staleleaf r4=1 leaf=0 next=1 leaves=16 result=Success(false) cost=Success(46) box_bytes=1207 tree_bytes=1131
+[sg:staleleaf] LOCAL-EVAL summary how=staleleaf inputs=1 signed_over=1 all_ok=false total_cost=46 tx_id=fe48db8df1dfda4c920114654404043063f0ce1ce288fb476936515b4f6f400c tx_bytes=3708 out0_id=2aefce421a4850ed5faa2c8d5e1f7b729df5074d43eb55ec0dd7d3590bafb3f9 out0_bytes=1207
+[sg:staleleaf] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. fe48db8df1dfda4c920114654404043063f0ce1ce288fb476936515b4f6f400c: #0 => Success((false,46))"}
+[sg:staleleaf] REJECTED local=total_cost=46 node_verdict=Success((false,46))
+[sg:skip] LOCAL-EVAL input=0 kind=state how=valid r4=1 leaf=3 next=4 leaves=16 result=Success(true) cost=Success(38168) box_bytes=1207 tree_bytes=1131
+[sg:skip] LOCAL-EVAL input=1 kind=deposit how=valid r4=1 leaf=3 next=4 leaves=16 result=Success(true) cost=Success(11) box_bytes=102 tree_bytes=61
+[sg:skip] LOCAL-EVAL summary how=valid inputs=2 signed_over=2 all_ok=true total_cost=38179 tx_id=02670f6b1170be71cb909fea23f1d2be576fb6b62a9b66271bbbd27fd705a691 tx_bytes=3742 out0_id=cce39347f3f5e1d978142a78cfec90e0b18e3c59bfa55bc4734cbda36b6ea8e9 out0_bytes=1207
+[sg:skip] POST -> HTTP 200, tx 02670f6b1170be71cb909fea23f1d2be576fb6b62a9b66271bbbd27fd705a691; mempool size=3742 cost=52879
+[sg:skip] confirmed at height 42; block tx size 3742; inputs 2; singleton' R4=0408 assets=[{"tokenId":"1c41655be23d3d1c5271d0b25ff0ce11ddf7c8738a3b647ee31577c1bade8dd4","amount":1}]
+[sg:skip] RESULT leaf=3 next=4 leaf=3 next=4 total_cost=38179 tx_bytes=3742 out0_bytes=1207 mempool_cost=52879 block_tx_bytes=3742
+[sg] S2 cce39347f3f5e1d978142a78cfec90e0b18e3c59bfa55bc4734cbda36b6ea8e9 R4=0408 assets=[{"tokenId":"1c41655be23d3d1c5271d0b25ff0ce11ddf7c8738a3b647ee31577c1bade8dd4","amount":1}]
+[sg] D2 spent (gone from UTXO)
+[sg:overindex] LOCAL-EVAL input=0 kind=state how=overindex r4=4 leaf=4 next=16 leaves=16 result=Success(false) cost=Success(84) box_bytes=1207 tree_bytes=1131
+[sg:overindex] LOCAL-EVAL summary how=overindex inputs=1 signed_over=1 all_ok=false total_cost=84 tx_id=c5bfafc0e97cb14286233f09ea7db615b4b3c8704680299a09cc3d3381f3ea40 tx_bytes=3708 out0_id=504dc428944775f97601da312c7278b461f0955c23f2767d4cc5926fe9527728 out0_bytes=1207
+[sg:overindex] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. c5bfafc0e97cb14286233f09ea7db615b4b3c8704680299a09cc3d3381f3ea40: #0 => Success((false,84))"}
+[sg:overindex] REJECTED local=total_cost=84 node_verdict=Success((false,84))
+[sg:lastsame] LOCAL-EVAL input=0 kind=state how=lastsame r4=4 leaf=15 next=16 leaves=16 result=Success(false) cost=Success(65) box_bytes=1207 tree_bytes=1131
+[sg:lastsame] LOCAL-EVAL summary how=lastsame inputs=1 signed_over=1 all_ok=false total_cost=65 tx_id=4b89669b50563444da777552ebd702e7f3c3018fb17a347f6552527555be27c7 tx_bytes=3742 out0_id=8cd8fcd9217daaa47525f1a4f51675d154ca4789fd5982c70f32036b8b3a1fe5 out0_bytes=1207
+[sg:lastsame] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 4b89669b50563444da777552ebd702e7f3c3018fb17a347f6552527555be27c7: #0 => Success((false,65))"}
+[sg:lastsame] REJECTED local=total_cost=65 node_verdict=Success((false,65))
+[sg:lastdeposit] LOCAL-EVAL input=0 kind=state how=lastdeposit r4=4 leaf=15 next=16 leaves=16 result=Success(false) cost=Success(64) box_bytes=1207 tree_bytes=1131
+[sg:lastdeposit] LOCAL-EVAL summary how=lastdeposit inputs=1 signed_over=1 all_ok=false total_cost=64 tx_id=8e809459367dc6f68005875d328d36560eb74e29d3940c993f1406939b340034 tx_bytes=2670 out0_id=83ac003a8dc8c92ed87f17a6b5b0326743161f54b9b91bca5c2a568233ee24e9 out0_bytes=135
+[sg:lastdeposit] POST -> HTTP 400: {  "error" : 400,  "reason" : "bad.request",  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 8e809459367dc6f68005875d328d36560eb74e29d3940c993f1406939b340034: #0 => Success((false,64))"}
+[sg:lastdeposit] REJECTED local=total_cost=64 node_verdict=Success((false,64))
+[sg:rotate] LOCAL-EVAL input=0 kind=state how=rotate r4=4 leaf=15 next=0 leaves=16 result=Success(true) cost=Success(38046) box_bytes=1207 tree_bytes=1131
+[sg:rotate] LOCAL-EVAL summary how=rotate inputs=1 signed_over=1 all_ok=true total_cost=38046 tx_id=b227a25eee74827da513d05899768b3eee62ad199d9dbc90ae6c6a6d7c329ded tx_bytes=3742 out0_id=4f0c09773d422cf10262f8a72935d6c09ce4b58459fb93e91ee5858a06295d86 out0_bytes=1207
+[sg:rotate] POST -> HTTP 200, tx b227a25eee74827da513d05899768b3eee62ad199d9dbc90ae6c6a6d7c329ded; mempool size=3742 cost=50746
+[sg:rotate] confirmed at height 48; block tx size 3742; inputs 1; singleton' R4=0400 assets=[{"tokenId":"1c41655be23d3d1c5271d0b25ff0ce11ddf7c8738a3b647ee31577c1bade8dd4","amount":1}]
+[sg:rotate] RESULT leaf=15 next=0 total_cost=38046 tx_bytes=3742 out0_bytes=1207 mempool_cost=50746 block_tx_bytes=3742
+[sg] S3 4f0c09773d422cf10262f8a72935d6c09ce4b58459fb93e91ee5858a06295d86 (key set B) R4=0400 assets=[{"tokenId":"1c41655be23d3d1c5271d0b25ff0ce11ddf7c8738a3b647ee31577c1bade8dd4","amount":1}] tree_is_B=yes
+[sg:after] LOCAL-EVAL input=0 kind=state how=valid r4=0 leaf=0 next=1 leaves=16 result=Success(true) cost=Success(37983) box_bytes=1207 tree_bytes=1131
+[sg:after] LOCAL-EVAL input=1 kind=deposit how=valid r4=0 leaf=0 next=1 leaves=16 result=Success(true) cost=Success(11) box_bytes=102 tree_bytes=61
+[sg:after] LOCAL-EVAL summary how=valid inputs=2 signed_over=2 all_ok=true total_cost=37994 tx_id=4032d545f32e0d998c0d051c42201a9523c4ebc9aee55f67a8a446613fe72c08 tx_bytes=3742 out0_id=c6b7bbc8ef375a441b6af86d185bf49ec3fabdab6921a2ba89c39e06fb3cda9a out0_bytes=1207
+[sg:after] POST -> HTTP 200, tx 4032d545f32e0d998c0d051c42201a9523c4ebc9aee55f67a8a446613fe72c08; mempool size=3742 cost=52694
+[sg:after] confirmed at height 51; block tx size 3742; inputs 2; singleton' R4=0402 assets=[{"tokenId":"1c41655be23d3d1c5271d0b25ff0ce11ddf7c8738a3b647ee31577c1bade8dd4","amount":1}]
+[sg:after] RESULT leaf=0 next=1 leaf=0 next=1 total_cost=37994 tx_bytes=3742 out0_bytes=1207 mempool_cost=52694 block_tx_bytes=3742
+[sg] S4 c6b7bbc8ef375a441b6af86d185bf49ec3fabdab6921a2ba89c39e06fb3cda9a (key set B) R4=0402 assets=[{"tokenId":"1c41655be23d3d1c5271d0b25ff0ce11ddf7c8738a3b647ee31577c1bade8dd4","amount":1}]
+[sg] D3 spent by key set B's singleton (gone from UTXO)
+[sg] /info parameters: {"outputCost":100,"tokenAccessCost":100,"maxBlockCost":1000000,"height":48,"maxBlockSize":524288,"dataInputCost":100,"blockVersion":4,"inputCost":2000,"storageFeeFactor":1250000,"subblocksPerBlock":30,"minValuePerByte":360}
+SINGLETON: PASS (forged_rejected=yes wrongindex_rejected=yes nostate_rejected=yes addinput_rejected=yes notoken_rejected=yes spend0_confirmed=yes staleleaf_rejected=yes skip_spend_confirmed=yes deposit1_spent=yes deposit2_spent=yes overindex_rejected=yes lastleaf_same_script_rejected=yes lastleaf_to_deposit_rejected=yes rotate_confirmed=yes sweep_after_rotation_confirmed=yes deposit3_spent=yes)
+[rig] COSTS no recovery events
+[rig] === hook done (verdict: PASS) ===
+[rig] all nodes stopped
+exit 0

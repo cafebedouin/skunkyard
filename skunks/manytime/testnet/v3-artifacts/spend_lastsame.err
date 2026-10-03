@@ -1,0 +1,2 @@
+LOCAL-EVAL input=0 kind=state how=lastsame r4=4 leaf=15 next=16 leaves=16 result=Success(false) cost=Success(65) box_bytes=1209 tree_bytes=1131
+LOCAL-EVAL summary how=lastsame inputs=1 signed_over=1 all_ok=false total_cost=65 tx_id=2ab5ba2f67819e280e007b1c52eca3cfb62340e3de4d6f0417046600e61aca90 tx_bytes=3749 out0_id=9d6ab0e0261c34bf27c7401debd927c0dc20ad09799e3ea600f11f707945286c out0_bytes=1209

@@ -111,3 +111,52 @@ with a many-time counter, and the note records both.
 payment (the log shows `R4=0400`; only the second box was plain); the "What it settles" table carried v1 figures;
 the script and hook header comments described v1; `q3/RESULT.md` said 90% where the CSV gives 93.9%, and "the
 first 791,286 blocks" for 789,437 contiguous plus 1,849 near the tip. All fixed in the v3 commit.
+
+# Round 3: five seats on v5 (commit fca7efa), 2026-10-03
+
+Outputs in `posts/seats/manytime-reply/v5/`. Three Claude seats (Opus 5.5), Gemini and Grok on the singleton draft.
+
+**Script holes (every Claude seat, by reading).** (1) The last-leaf branch let OUTPUTS(0) be any script carrying the
+token: the same state script at index 0 would reopen every leaf, so "the index never moves backwards" was false at
+the last leaf; the token sent to the deposit address would make every deposit anyone-can-spend; the token sent to a
+P2PK box would put the deposits back under secp256k1. (2) A wallet could write an index at or past the leaf count on
+a non-last leaf, stranding the token and with it every deposit, present and future. (3) Data inputs were outside
+the message, so a relay could change the transaction id (and the recreated singleton's box id) by adding one, which
+breaks a child pinned to that id and tempts a re-sign. Response, v3.1 (`state.es`): on the last leaf OUTPUTS(0) must
+be neither this script nor the deposit script; before it the continuing index must stay below the leaf count; the
+message covers every data-input id. Runs 10 (devnet) and 11 (testnet) add overindex, last-leaf-same-script and
+last-leaf-to-deposit rejections, a rotation to a second key set's singleton at index 0, and a sweep of a deposit by
+the second key set, so the rotation branch (SK-032) now ran.
+
+**Hazards that stay the wallet's (stated in the reply).** The token is the key to the deposits: mint exactly one
+(public in the mint transaction); keep the singleton's value above its rent fee or spend it within four years,
+since rent on an underfunded box hands the box and the token to the collector (node rule, read; not run); at the
+last leaf send the token only to a singleton compiled with the same token id; never pay the state address (a
+payment there without the token is lost, and the address is visible on chain); never put a non-Int in the
+singleton's R4 (an EIP-4 mint straight into the singleton would); never sign a leaf twice, above all not the last
+leaf, since two signatures on the last leaf let a forger choose where the token goes; the counter moves at signing,
+not at confirmation. The window-closing property the draft had left out: a forged signature of leaf k is useless
+once the index has passed k, which is what the chain adds over signer-side state.
+
+**Metric (every Claude seat).** Under the singleton one signature sweeps any number of deposits, so leaves consumed
+are transactions signed, not inputs: the q3 transactions column (median 2, 47.2% once, 776 keys above 1,024,
+0.29%, 27.4% of signings) replaces the inputs column in the reply.
+
+**Text errors.** "348" not 349 (floor); the deposit box is 104 bytes on testnet; devnet and testnet cost ranges
+separated; mint and funding were two transactions; the mainnet fixed charge omits a token-access term (the devnet
+charged 400 above the input/output formula; by inference 4 × tokenAccessCost 100), so 147 rather than 148 by cost;
+148 against 154 compared a measured cost with the post's harness worst case (158 is the like-for-like figure);
+"196 to 565" was a cross-message range (matched rounds 196 to 515, about 500 with message variation of about 150
+inside it); skip-ahead is a rule a wallet would need, not something implemented; "sizes at 10 or 20 are projections"
+had no referent; the sibling-hash clause misattributed section 2's domain-separation note; 42% and the 2019 to 2022
+era are derived from heights; the sample's estimates are over 263 addresses with a count; "want" leans; inconsistent
+id truncation; "Section 5 above" reads better as "the post's section 5"; name the pattern (a singleton-token state
+box, as oracle pools and SigmaUSD use). QRL: above its 8,192-index bitfield QRL keeps an ascending `ots_counter`,
+so the singleton is the counter form of QRL's design, not a departure from it (LITERATURE corrected, URL added);
+the Solana vault and the Ethereum proposals now have URLs; LITERATURE's "run on mainnet" was unsupported for
+Ethereum (cut); "also rejects a lower index" for a bitfield was wrong (cut). RESULT: run 9's log path, the stale
+rent line, "the message binds SELF.id and the outputs, not other inputs" (v1 and v2 only), and "the index advances
+only on confirmation" (the chain's does; the wallet's counter moves at signing) all corrected. The test procedure
+itself handed a public node several leaf-0 signatures before the index passed 0 (wrongindex, addinput, notoken);
+harmless because nothing spent in the interval, and stated in the reply as the window the design closes at
+confirmation. A funded deposit left beside the rotated singleton on testnet is the "break it" ask.

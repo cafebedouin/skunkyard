@@ -5,7 +5,9 @@
 // inputs = [singleton] ++ deposits; outputs = [singleton' (same tokens, R4 = leaf + 1), payment, fee]; the WOTS
 // signature over every input id and every output goes in the singleton's extension (vars 0 sig, 1 proof, 2 leaf).
 // nostate: the deposits alone, no singleton, no signature. addinput: signed over the singleton alone, posted with
-// the deposits added. Every input's script is evaluated locally (stderr LOCAL-EVAL, one line per input).
+// the deposits added. overindex: the continuing index written as the leaf count. lastsame / lastdeposit / rotate: the
+// last leaf with OUTPUTS(0) under this same script / the deposit script / the next key set's singleton ($ROTATE_KEYS,
+// index 0). Every input's script is evaluated locally (stderr LOCAL-EVAL, one line per input).
 package manytime
 import java.io.File
 import java.nio.file.{Files, Paths}
@@ -30,9 +32,9 @@ object Singleton {
     val Array(n, w, h) = read(keyDir, "params").split(" ").map(_.toInt); val leaves = 1 << h
     val data = AvlTreeData(Colls.fromArray(unhex(read(keyDir, "digest.hex"))), AvlTreeFlags.ReadOnly, 8, Some(32))
     val tok = Colls.fromArray(tokenId)
-    val envS = Runner6.wotsEnv(n, w) + ("root" -> CAvlTree(data)) + ("leaves" -> leaves) + ("tokenId" -> tok)
-    val s = ErgoTree.fromProposition(Runner6.compiler.compile(envS, Source.fromFile(s"$here/state.es").mkString).buildTree.toSigmaProp)
     val d = ErgoTree.fromProposition(Runner6.compiler.compile(Map("tokenId" -> tok), Source.fromFile(s"$here/deposit.es").mkString).buildTree.toSigmaProp)
+    val envS = Runner6.wotsEnv(n, w) + ("root" -> CAvlTree(data)) + ("leaves" -> leaves) + ("tokenId" -> tok) + ("depositTree" -> Colls.fromArray(d.bytes))
+    val s = ErgoTree.fromProposition(Runner6.compiler.compile(envS, Source.fromFile(s"$here/state.es").mkString).buildTree.toSigmaProp)
     (s, d)
   }
   def address(keyDir: File, tokenHex: String): Unit = {
@@ -64,16 +66,22 @@ object Singleton {
         require(leaf >= 0 && leaf < leaves, s"leaf $leaf out of range (R4 $i, $leaves leaves)")
         val sk = read(keyDir, s"sk-$leaf.hex").split("\n").map(unhex)
         val p = prover(hashes); p.performOneOperation(Lookup(ADKey @@ idxKey(leaf))).get; val proof = p.generateProof()
-        val nextI = if (how == "wrongindex") leaf else leaf + 1
-        val regs: Map[ErgoBox.NonMandatoryRegisterId, EvaluatedValue[_ <: SType]] = Map(ErgoBox.R4 -> IntConstant(nextI))
+        val nextI = how match { case "wrongindex" => leaf; case "overindex" => leaves; case "rotate" => 0; case _ => leaf + 1 }
+        val regs: Map[ErgoBox.NonMandatoryRegisterId, EvaluatedValue[_ <: SType]] = if (how == "lastdeposit") Map.empty else Map(ErgoBox.R4 -> IntConstant(nextI))
+        // the continuing box's script: this singleton's (default and lastsame), the deposit script (lastdeposit), or the
+        // next key set's singleton (rotate: ROTATE_KEYS names its key directory, compiled with the same token)
+        val out0Tree = how match {
+          case "lastdeposit" => dTree
+          case "rotate" => trees(new File(sys.env.getOrElse("ROTATE_KEYS", sys.error("rotate needs ROTATE_KEYS"))), unhex(read(keyDir, "token.hex")))._1
+          case _ => s.ergoTree }
         val outs = IndexedSeq(
-          new ErgoBoxCandidate(total - amount - fee, s.ergoTree, hgt, s.additionalTokens, regs),
+          new ErgoBoxCandidate(total - amount - fee, out0Tree, hgt, s.additionalTokens, regs),
           new ErgoBoxCandidate(amount, toTree, hgt),
           new ErgoBoxCandidate(fee, feeTree, hgt))
         val signed = if (how == "addinput") Seq(s) else s +: deposits
-        val msg = Blake2b256.hash(signed.flatMap(_.id).toArray ++ outs.flatMap(_.bytesWithNoRef)).take(n)
+        val msg = Blake2b256.hash(signed.flatMap(_.id).toArray ++ outs.flatMap(_.bytesWithNoRef)).take(n)   // no data inputs in this driver, so their part of the message is empty
         val sig = Runner6.wotsSign(sk, msg, n, w)
-        if (how == "forged") sig(0) = (sig(0) ^ 0x01).toByte else require(Set("valid", "wrongindex", "staleleaf", "addinput")(how), s"valid|forged|wrongindex|staleleaf|nostate|addinput, got $how")
+        if (how == "forged") sig(0) = (sig(0) ^ 0x01).toByte else require(Set("valid", "wrongindex", "overindex", "staleleaf", "addinput", "lastsame", "lastdeposit", "rotate")(how), s"valid|forged|wrongindex|overindex|staleleaf|nostate|addinput|lastsame|lastdeposit|rotate, got $how")
         val ext = ContextExtension(Map(0.toByte -> ByteArrayConstant(sig), 1.toByte -> ByteArrayConstant(proof), 2.toByte -> IntConstant(leaf)))
         (outs, signed, s +: deposits, ext, i, leaf, nextI)
     }
