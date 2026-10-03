@@ -185,10 +185,14 @@ deposit3_spent=yes`). Devnet and testnet agree on every verdict and on every rej
 addinput (message-dependent). Left on testnet: S4 (key set B's singleton at index 1, holding the token), P0, and a
 0.5 ERG deposit funded afterwards at the deposit address (`testnet/v3-artifacts/breakit-fund.log`, box
 `6a09d6453c4ac2a0df692404426e922bd95647ab3082b089ecd9a0a5cef62168`) as the "break it" box: spending it without key
-set B's next leaf is the challenge. Note on procedure: as in run 9, several transactions carrying a valid leaf-0
-signature over distinct messages (wrongindex, addinput, notoken) were handed to the public node before the leaf-0
-spend confirmed; harmless because nothing spent in that interval and the index then passed 0, which is the window
-the design closes at confirmation.
+set B's next leaf is the challenge. Note on procedure (fourth seat round): the test handed the public node four leaf-0 signatures over distinct
+messages (forged, with one bit flipped, which is trivially repaired; wrongindex; addinput; notoken) before the leaf-0
+spend confirmed, and two leaf-15 signatures (lastsame, lastdeposit) before the rotation was posted. In an adversarial
+setting that is the forgery window open: anyone holding two signatures of a leaf can sign a spend of their own at
+that index until a spend with that leaf confirms. Nothing did, because nobody was watching a testnet node's mempool
+for this; a production wallet must never do what the test did. The run-9 key set's secret keys were committed by
+mistake in 048681e (`testnet/keys-v3-run9/`, untracked since); run 9's singleton S2 on testnet is therefore
+spendable by anyone, which is a testnet box of 1.4 ERG and does not touch key set B of run 11.
 
 ## Earlier runs under the v1 rules (R4 required, leaf = index, index + 1)
 
@@ -282,7 +286,8 @@ testnet. Verdicts and costs match the devnet run to within the message-dependent
 Cost-bound, like the pilot: the interpreter's WOTS cost dominates and the many-time machinery adds under two percent
 (v3's second input adds 2,407 of fixed charge). The rent of the box that persists, derived at mainnet's factor of
 1,250,000 nanoERG per byte per four years: 1.22 ERG for the v2 box (977 bytes), 1.38 ERG for the v3 singleton
-(1,102 to 1,104 bytes); a v3 deposit box is 102 bytes and persists only until swept.
+(1,102 to 1,104 bytes), 1.51 ERG for the v3.1 singleton (1,207 to 1,209 bytes); a deposit box is 102 to 104 bytes and
+persists only until swept.
 
 ## Not shown, stated once
 

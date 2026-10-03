@@ -1,0 +1,13 @@
+{
+  "boxId" : "6a09d6453c4ac2a0df692404426e922bd95647ab3082b089ecd9a0a5cef62168",
+  "value" : 500000000,
+  "ergoTree" : "10010e20b9463e54dd531825cb51228546e86a5999defd81815c140620fc72f704829d73d1aea4d9010163aedb63087201d901034d0e938c7203017300",
+  "assets" : [
+  ],
+  "creationHeight" : 577824,
+  "additionalRegisters" : {
+    
+  },
+  "transactionId" : "577d0fd63211a33f2513532b6da18fada614ea8eb55381c251ebcb9ac0dcbe8e",
+  "index" : 0
+}

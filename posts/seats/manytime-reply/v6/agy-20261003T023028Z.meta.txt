@@ -1,0 +1,10 @@
+seat:    agy (1.2.14)
+model:   tool default
+utc:     20261003T023028Z
+slice:   /tmp/claude-1000/-home-scott-bin-skunkyard/75b0b235-829f-46eb-8d04-11e83d2a336f/scratchpad/reply-slice6
+slice-git: not a git checkout
+web:     UNCONTROLLED (no flag)
+jail:    tools/seat-jail
+prompt-sha256: dc0a9e6b3aa4512236d8e23f772e5275876a0a73942d7762a4a854a8e3131bbc
+exit:    0
+model-reported: gemini-3.8-flash(x22),gemini-3.8-flash-high(x2) [from 3c7e5f25-693f-4854-8433-c09d9d028428.db]

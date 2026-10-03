@@ -24,7 +24,8 @@ per-box model, since every box spent is one signature).
 | keys over 1,024 | 776 (0.29%) | 978 (0.37%) |
 | keys over 65,536 | 2 | 8 |
 
-Share of all signings by key class (inputs): keys that sign over 1,024 times make up 0.37% of keys and 33% of all
+Share of all signings by key class (transactions, `out/transactions_per_key.csv`): keys over 1,024 are 0.29% of keys and
+27.4% of all transactions signed; keys over 16 are 18.0% of keys and 92.8% of transactions. By inputs: keys that sign over 1,024 times make up 0.37% of keys and 33% of all
 inputs signed; keys over 16, 22% of keys and 94% of inputs.
 
 ## What it sets

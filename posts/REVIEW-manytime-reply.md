@@ -114,7 +114,8 @@ first 791,286 blocks" for 789,437 contiguous plus 1,849 near the tip. All fixed 
 
 # Round 3: five seats on v5 (commit fca7efa), 2026-10-03
 
-Outputs in `posts/seats/manytime-reply/v5/`. Three Claude seats (Opus 5.5), Gemini and Grok on the singleton draft.
+Outputs in `posts/seats/manytime-reply/v5/`. Three Claude seats (Opus 5.5) and Gemini on the singleton draft; the Grok
+seat timed out with no output (exit 124, as on v3), so it is four seats here.
 
 **Script holes (every Claude seat, by reading).** (1) The last-leaf branch let OUTPUTS(0) be any script carrying the
 token: the same state script at index 0 would reopen every leaf, so "the index never moves backwards" was false at
