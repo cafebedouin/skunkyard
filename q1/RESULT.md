@@ -96,3 +96,28 @@ Same scripts after the scanner gained an aggregate line (the ranked list stays u
 `out/scan-783047.txt`; wall-clock copy 48 s, scan 103 s at 1,649,000 boxes (`out/timing.txt`). All checks pass.
 Exposed 96.0967% of non-protocol ERG (p2pk 95.4235%, p2s_no_key 3.9033%); pay-to-re-emission 1,774 boxes, 57,204 ERG.
 Printed: `top 20 exposed boxes together: 13997362.597567807 ERG = 26.2259% of exposed ERG, 25.2022% of non-protocol ERG`.
+
+## Replication at the tip, height 1,886,343 (2026-10-03, external, reported in the developer chat)
+
+A community member re-ran `q1/run.sh` unmodified (skunkyard at 28331fe, `ergo-6.0.6.jar` matching the pin) on the
+state of a stopped synced 6.0.6 mainnet node, scanned on a separate machine, and posted the aggregates in the
+developer chat with leave to quote them (they could not log into the forum). Reported as received; this repository
+has not reproduced the run. Checks they report: tip 1,886,343, header `c331d6a6…cbba`; traversed root equals the
+stored root `870e5a8d…b419` (`match=true`), 6,383,135 nodes, 0 label mismatches; the sum of all boxes equals the
+genesis sum, 97,739,925 ERG (`equal=true`); 3,191,567 boxes.
+
+| category | boxes | ERG | % of non-protocol ERG |
+|---|---|---|---|
+| p2pk | 3,085,017 | 77,564,654.894 | 92.8412 |
+| mining reward | 28,231 | 216,889.959 | 0.2596 |
+| p2s with key | 37,027 | 2,907,737.890 | 3.4804 |
+| p2s without key | 40,682 | 2,856,229.091 | 3.4188 |
+| protocol | 592 | 14,194,406.781 | (excluded) |
+| other (3 p2pk-other, 2 p2sh, 13 unparseable) | 18 | about 6.4 | |
+| **EXPOSED** | **3,150,278** | **80,689,282.857** | **96.5812** |
+
+So 96.58% of non-protocol ERG sits under a visible key at the tip, against 96.54% in the dry run at height 753,934
+and 96.10% at 783,047: the share has not moved in the intervening 1.1 million blocks. Exposed and storage-rent
+eligible (age at least 1,051,200 blocks): 231 boxes, 1,450.94 ERG, which is the cohort the original post's rent
+line pointed at, and it is small. The top 20 exposed boxes hold 17.06% of exposed ERG; per-box detail was not
+posted and is not wanted here. The reporter offered further aggregate breakdowns.
