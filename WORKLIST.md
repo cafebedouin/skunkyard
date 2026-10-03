@@ -24,6 +24,7 @@ is not scheduled before that foundation has a measured answer.
 | SK-003 | upstream | tooling | sigma-rust #928 / PR #929: respond to review; watch #860 and #879 which affect two tests | reply within the maintainers' cadence | none | `posts/sigma-rust/` |
 | SK-004 | upstream | tooling | Fleet #219 (`toP2SH()` hashes the tree, not the proposition) | respond to review | none | `posts/fleet/ISSUE.md` |
 | SK-032 | skunk | script | Many-time keys, rotation as an option (from SK-029): on the last leaf the script requires the continuing box to carry a fresh tree and index 0, in two forms the wallet can switch between like Nautilus's fresh-address toggle: digest as a script constant (new address per key set) and digest in a register (one address, new digest); both measured on the SK-029 harness, with the receiving-side tooling gap (payers must set registers) stated | a rig session | F1 | `skunks/manytime/CHARTER.md`, next step |
+| SK-033 | research | chain | Spends per P2PK key: a pass over the node's history store counting, per key, inputs signed and transactions signed, as aggregate distributions only; sets the default height for many-time keys (SK-029/032). Running 2026-10-02 on a copy at height 789,437 of 1,886,143 (the node was 42% synced); rerun at the tip later | running; `q3/run.sh` | none | `q3/` |
 | SK-005 | research | script | The on-chain spending policy for autonomous agents ("fence") | write the policy contract; cost it; devnet attacks | F1 (the interval uses the creation height rent resets), F3 | `research/agents/README.md` |
 
 ## Next
