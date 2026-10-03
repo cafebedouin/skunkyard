@@ -5,9 +5,10 @@ remote yet.
 
 ## Lattice line and SK-029 done 2026-10-02
 
-SK-029 (`skunks/manytime/RESULT.md`, runs 1 to 11): many-time WOTS keys, v3.1 singleton design with rotation PASS on
-devnet and public testnet; forum reply v6 at `posts/2026-10-manytime-reply.md` after four seat rounds
-(`posts/REVIEW-manytime-reply.md`); break-it deposit `6a09d645…` on testnet, key set B's keys in `testnet/keys-v3B/` (gitignored);
+SK-029 (`skunks/manytime/RESULT.md`, runs 1 to 13): many-time WOTS keys, v3.2 singleton design (rent-safe deposit rule,
+rotation) PASS on devnet and public testnet; forum reply v7 at `posts/2026-10-manytime-reply.md` after five seat rounds
+(`posts/REVIEW-manytime-reply.md`); break-it deposit `f1c89ea6…` on testnet, key set B's keys in `testnet/keys-v3B/`
+(gitignored); the run-9 key set leaked in 048681e (untracked since; testnet only);
 the user posts it, with `posts/2026-10-post-errata.md` as an edit of the original post. Open: h > 4 sizes, several deposits
 per spend, hybrid under v3.1, a second rotation, q3 rerun at the tip.
 
