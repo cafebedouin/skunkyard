@@ -1,0 +1,4 @@
+indicator,boxes,ERG
+create_prove_dh_tuple,47,17.663423164
+create_prove_dlog,9156,189791.733616989
+prove_dlog,27824,2717928.492891836
