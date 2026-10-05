@@ -101,3 +101,31 @@ self-determined shape to justify a standard.
   executed by a generic executor.
 - **U4. The header accumulator.** Cost per block of one keyless append; cost of proving an old header with it,
   against a NiPoPoW (W7).
+
+## Framing: upkeep as a maintenance problem, like storage rent and like running a node (2026-10-05)
+
+From a discussion with the user; ideas, not results.
+
+- **Same kind of problem as storage rent.** Rent exists because a long-lived chain accumulates state nobody owns but
+  everyone pays to keep; Ergo made cleaning it up a paid job for the block builder. Upkeep is the same shape on the
+  transaction side: due work nobody owns (stalled peg triggers, expired refunds, price gaps, fresh proofs), done today
+  by a few bots with their own keys and capital. The user's intuition: upkeep is inevitable in some form.
+- **Same kind of problem as running a node.** Nodes are public infrastructure nobody is paid to run directly; they get
+  run anyway by groups (e.g. the Sigmanauts) and individuals. Upkeep can be carried the same way: community groups,
+  individuals, and the existing bot operators, alongside Lithos miners — not only by miners.
+- **Precedent (general knowledge, not checked here):** on Ethereum, keeper networks came first and block builders later
+  absorbed arbitrage and liquidations, because whoever orders the block does that work first and cheapest. The work
+  did not disappear; it moved to whoever builds the block.
+- **Where the rent analogy breaks — the questions the form will hinge on:**
+  1. Rent is one universal rule; upkeep jobs are protocol-specific. Hence a market or opt-in binding (with miner
+     collateral, as the Lithos maintainer noted) rather than a protocol rule — and the generic due-job box is the attempt
+     to give upkeep rent's uniformity (one format, any executor, no protocol-specific code).
+  2. Rent pays for itself out of the stored value; many liveness jobs (a peg trigger) carry no revenue, and rational
+     executors pick by revenue. Such jobs need a payment design (a job box that carries its own fee) or a carrier who
+     runs them as a service, as node operators do.
+  3. The builder position that does upkeep can also extract (front-running users). Rent has no such side. Any design
+     needs a stance on which actions are service and which are extraction — a governance question as much as a
+     technical one.
+- **Census questions this adds** (for the revenue census, U1): how much due work is universal vs protocol-specific;
+  how much pays for itself vs needs a payment design or a volunteer carrier; how much of what bots do today is upkeep
+  vs extraction.
