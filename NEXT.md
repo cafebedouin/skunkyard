@@ -1,5 +1,8 @@
 # Next session
 
+> **FIRST, at the next post-quantum session (planned Thursday 2026-10-08): follow up on the census heads-up.** Details outside git. Then: (1) restore the specific identification in public files only per their answer (it is kept outside git in ~/bin/skunkyard-private/); (2) decide the push of the unpushed commits (wording 'bridge custody' vs 'custody' multisig) — the replicator needs commit bc92d1e pushed to run C1 at the tip.
+
+
 State on 2026-10-02 04:45. Everything below is on `main`; nothing has been pushed or posted; the repository has no
 remote yet.
 
