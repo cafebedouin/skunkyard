@@ -263,3 +263,69 @@ eb41912d6e04773acdf12e669d21a7c5925ee8e09fd1e2f56c7cd6dc529a3ee6  12345678901234
 CSV files in `out/`: `by_category.csv`, `by_category_age.csv`, `protocol.csv`, `p2s_with_key_indicators.csv`,
 `p2s_with_key_top_templates.csv`, `p2s_no_key_top_templates.csv`, `top_tokens_by_boxes.csv`,
 `top_tokens_by_amount.csv`, `totals.csv` (`top_boxes.csv` only with `Q1_TOP_BOXES=1`).
+
+## C1 mode (`Q1_C1=1`): full sigma-leaf composition (research/curve, question C1)
+
+Added 2026-10-05. Off by default: without `Q1_C1=1` the scan's stdout and every CSV above are byte-identical to the
+scanner before the change (checked by an A/B diff on a real state at height 836,808: stdout and all nine CSVs
+identical, only log timestamps on stderr differ). With `Q1_C1=1` the q1 report is unchanged as well; a C1 section is
+appended to stdout and seven CSVs are written to `out/c1/`.
+
+Why: q1 records only the *first* key indicator it meets in a tree. A tree like `proveDlog(a) || proveDHTuple(...)`
+is filed under `prove_dlog` or `create_prove_dlog`, so q1's `create_prove_dh_tuple` row undercounts every DH-bearing
+contract (the ErgoMixer full-mix box among them). C1 walks the whole tree.
+
+Per box (proposition with constants substituted, `tree.toProposition(replaceConstants = true)`), C1 counts:
+`ProveDlog` and `ProveDHTuple` leaves inside SigmaProp constants (including inside compound constants: CAND, COR,
+CTHRESHOLD are counted too), `CreateProveDlog` and `CreateProveDHTuple` nodes (keys built at spend time), SigmaProps
+read from a register or context variable (`ExtractRegisterAs`/`GetVar`/`DeserializeRegister`/`DeserializeContext`/
+`getReg`/`getVar` of type SigmaProp), the sigma connectives `SigmaAnd`, `SigmaOr`, `AtLeast`, and GroupElement
+constants not used directly as a key-constructor argument. For every key leaf it records where the key comes from:
+`constant`, `register`, `context`, or `computed` (box or transaction data, or a lambda argument such as the
+`row` in `R4.map { row => proveDlog(decodePoint(row)) }`); `ValUse` is resolved through its `ValDef`.
+
+Class, first match wins: `no_key` (no key leaf, no loose GroupElement), `group_element_only`, `dh_tuple` (any DH
+leaf), `threshold` (any `AtLeast`/CTHRESHOLD), `and_or` (two or more key leaves and a sigma AND/OR),
+`sigmaprop_from_data` / `single_dlog` (exactly one key leaf), `multi_key_no_connective` (several key leaves in
+different branches of ordinary logic), `unparseable`. P2PK boxes take a fast path (`single_dlog`, `constant`), which
+the unit test checks equals the walker's result on a P2PK tree.
+
+Outputs (`out/c1/`, aggregates only): `c1_by_class.csv`, `c1_by_class_source.csv`, `c1_by_category_class.csv`
+(q1 category x class), `c1_dh_check.csv` (p2s_with_key by q1's first indicator x whether any DH leaf is present: the
+direct answer to the undercount), `c1_leaf_totals.csv`, `c1_top_templates.csv` (top `Q1_C1_TOP`, default 20,
+templates by ERG per class, P2PK excluded, with q1's template id, the explorer's template hash, the composition of
+the first box seen and whether it varies within the template), `c1_template_bytes.csv` (template hex for those
+top templates that are constant-segregated and have at least `Q1_C1_MIN_BOXES`, default 10, boxes).
+
+Template ids. q1's id is `blake2b256(ErgoTree.template)`, first 8 bytes in hex. `ErgoTree.template` is the
+serialized root expression without the header and constants segment, so for a constant-segregated tree it carries
+no keys or other constants. The public explorer's `ergoTreeTemplateHash` is `sha256` of the same bytes
+(explorer-backend `protocol/sigma.scala`, `deriveErgoTreeTemplateHash`), so both are printed. Holder-safety rules
+in the output: template bytes are written only for segregated trees (an unsegregated template inlines its
+constants, keys included) and only above the box threshold; in `c1_top_templates.csv` the explorer hash is
+`withheld` below the threshold, because for a template with one to a few boxes it points at those boxes.
+
+Limits: counts are syntactic occurrences, not evaluated leaves (a `proveDlog` in a lambda mapped over ten keys
+counts once, with source `computed`); a key compared as bytes (for example `OUTPUTS(0).propositionBytes ==
+SELF.R4[Coll[Byte]].get`) is not a sigma leaf and is not counted; protocol boxes are classified like any other
+(the emission box's miner-output `CreateProveDlog` makes it `single_dlog`); use `c1_by_category_class.csv` to
+separate them. The compiler folds `proveDlog(constant)` into a ProveDlog constant, so a constructed key over a
+constant point shows up as `prove_dlog_const`.
+
+Test (25 synthetic trees, compiled with the jar's own ErgoScript compiler, serialized and parsed back; one or more
+per class, including a DH tuple behind a dlog that q1 files under `prove_dlog`, and a 6-of-10 constant-key
+threshold whose template id must be `4d0028d7861677d9`):
+
+```bash
+bash q1/test-c1.sh          # prints PASS/FAIL per case; exits non-zero on any failure
+```
+
+Run (same preconditions as above: node stopped, pinned jar; the state is copied, never opened in place):
+
+```bash
+Q1_C1=1 bash q1/run.sh <path to .ergo/state>      # q1 tables + C1 section on stdout; CSVs in q1/out/ and q1/out/c1/
+```
+
+Optional: `Q1_C1_TOP=<n>` (templates per class, default 20), `Q1_C1_MIN_BOXES=<n>` (default 10). Runtime at height
+836,808 (1,888,905 boxes): 107 and 127 s for two C1 scans, 123 to 162 s for three default scans on the same
+machine; the difference is within run-to-run variation. Memory: `run.sh` already gives the JVM 4 GB.
