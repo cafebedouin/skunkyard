@@ -41,3 +41,43 @@ named as the revenue candidates. The upkeep ideas listed: tranches of programmed
 accumulator, a generic due-job box. Proposed order: (1) revenue census, (2) Dexy keeper once the next contracts
 exist, (3) a generic job format if the census supports it. Open questions to him: does the order suit the client;
 does DexyGold's LP share the USE swap contract. Awaiting reply.
+
+## Reply from cheese, received 2026-10-05 (relayed by the user)
+
+> I believe Dexy and USE are the same contracts but not entirely sure. Some implementation details may change now that
+> they are being relaunched. As for the upkeep layer idea, yea that is something we would like to more fully implement
+> in the future. Lithos miners are in a unique place to be able to do that sort of job.
+>
+> Essentially they can replace the job of any offchain bot on Ergo, though rational miners may and pick and choose based
+> on potential revenue gain. Future contracts that miners opt-in to could bind specific miners to place a protocols
+> transactions into blocks. Though this would require some collateral on the miner side (miner can always just stop
+> mining blocks under that key otherwise).
+>
+> Plan looks good. If you end up finding it to be worth it then feel free to make a PR. I was going to add some form of
+> Dexy integration once the contracts are relaunched anyway, so it works out well.
+
+Read from it:
+- The order is accepted ("Plan looks good"): (1) revenue census, (2) Dexy keeper once the relaunched contracts exist,
+  (3) a generic job format if the census supports it. A PR to Lithos is welcome if the census says it is worth it.
+- DexyGold vs USE contracts: probably the same, not confirmed; the relaunch may change details -> build the keeper
+  against the relaunched contracts, not today's; check the relaunched code before any implementation.
+- Coordination: cheese planned "some form of Dexy integration" himself after the relaunch -> before starting SK-039,
+  agree with him who builds what (avoid two Dexy integrations).
+- New idea from him: opt-in contracts binding specific miners to include a protocol's transactions, backed by miner
+  collateral (a miner could otherwise stop mining under that key). That is the inclusion-deal instrument of SK-017
+  (research/inclusion/README.md I4) seen from the Lithos side — link the two.
+
+## His second reply, 2026-10-05 (paraphrased)
+
+- He believes Dexy (DexyGold) and USE run the same contracts, not certain; details may change in the relaunch.
+- The upkeep layer is something Lithos wants to implement more fully later: miners can replace the job of any
+  off-chain bot on Ergo, and rational miners will pick jobs by revenue.
+- New idea from him: contracts miners opt into that bind specific miners to include a protocol's transactions,
+  which needs collateral on the miner's side (otherwise a miner just stops mining under that key). This is
+  `research/inclusion/` I1 and I4 (the collateral contract's `LenderPK == minerPk` pattern) from the protocol's side.
+- Plan accepted; a pull request is welcome if the census shows it is worth it. He intends to add some Dexy
+  integration himself once the contracts are relaunched, so our Dexy keeper should be coordinated with his rather
+  than built in parallel.
+
+The user answered that they will, that session limits are the constraint across several threads, and that they
+see this capability, like storage rent, as key to maintaining infrastructure and a priority.

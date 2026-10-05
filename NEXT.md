@@ -4,7 +4,7 @@
 
 
 > **Agents line (2026-10-05):** Lithos keeper agreed in principle with cheese, every executor off by default; reply
-> awaited on the order of work and on DexyGold's LP (`notes/2026-10-05-lithos-reply.md`). Next here: the revenue census
+> RECEIVED 2026-10-05 (order accepted; PR welcome if the census supports it; Dexy relaunch pending; cheese plans a Dexy integration — agree who builds what; his opt-in miner-collateral binding idea links to SK-017) — was awaited on the order of work and on DexyGold's LP (`notes/2026-10-05-lithos-reply.md`). Next here: the revenue census
 > (`research/agents/UPKEEP.md` U1, SK-042). The USE LP was drained 2026-09-08 (`notes/2026-10-05-use-lp-drain.md`).
 
 State on 2026-10-02 04:45. Everything below is on `main`; nothing has been pushed or posted; the repository has no

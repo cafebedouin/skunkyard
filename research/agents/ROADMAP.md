@@ -49,6 +49,11 @@ the client: ask that the new contracts carry (a) NFT binding of every box read b
 and (b) a stale path anyone may execute, so liveness does not depend on a bot. The client adapter follows the new
 contracts. Check DexyGold's LP first: if it shares the swap contract it may share the flaw.
 
+**Second reply (2026-10-05).** DexyGold and USE probably share contracts; details may change in the relaunch. The
+Lithos lead developer plans his own Dexy integration after the relaunch, so phase 1 and 2 become a coordination with
+him, not a separate build. He also proposed miner-bonded inclusion (a miner posts collateral and commits to include a
+protocol's transactions), which joins SK-009 I1/I4. A PR is welcome if the census (SK-042) shows the upkeep is worth it.
+
 Phases:
 0. **Scope, one session.** Read Dexy's contracts (the ergoplatform dexy repository; not among `~/bin/ergo_logic/subjects/`, whose `lithos/Lithos-Client` is a current copy to build against) and list every maintenance
    transition: trackers 95, 98 and 101, intervention, any others; which need nothing but a fee. Ask the Lithos
