@@ -30,6 +30,18 @@ wallet side is a driver, not a wallet. Ranked by what each step buys toward some
 
 Evidence bar for 1 and 2 (added 2026-10-04): item 1 is checked against the RFC 8391 test vectors as an executed conformance test alongside the devnet runs, so "the shape the standard proofs cover" is shown, not asserted. Item 2 gets a no-context review and a seat with cryptography expertise before it is posted, and is framed as an argument with stated assumptions unless the reduction is written out in full.
 
+**Option comparison (added 2026-10-04):** before SK-028 fixes a shape, test which verifier option fits Ergo best, on
+measured criteria rather than preference: (a) deployability — no fork (script only), soft fork (a new method in the
+6.0 pattern, old nodes skip it), or hard fork; (b) implementation size in sigmastate and in a wallet; (c) security —
+assumptions (hash-only vs lattice), stateful counter risk, the standard proof the construction falls under;
+(d) cost — script cost units and bytes per spend, in script today and as a native method (estimated); (e) agility —
+whether the scheme can change without another fork (the generic-primitive route Sui reportedly takes). Candidates:
+plain WOTS (measured), WOTS+/XMSS (item 1), LMS, SHRINCS-style stateful/stateless hybrids, SLH-DSA (stateless,
+8-30 KB), and a generic hash-chain/verify primitive that lets scripts build any of these. Script-only candidates are
+measured on the devnet like q2; native ones are sized from their specs plus the measured hashing cost. Output: a table,
+one row per option, and a recommendation; it shapes the kushti answer's follow-up and item 7. Sources for the
+non-Ergo options are in LITERATURE.md (verified section only).
+
 Peeryard's side, in parallel: F3 (how the stock node penalizes a peer relaying script-invalid transactions; a forged
 hash-based spend costs about 38,000 units of verification and pays nothing) and F1 (storage rent on a token-carrying
 state box, executed rather than read). The reply states both by reading.

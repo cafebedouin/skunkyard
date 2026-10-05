@@ -334,3 +334,30 @@ The exact sequence of parameter-4 votes that produced 8,001,091. Not decoded fro
 `MaxBoxSizeWithoutRefs` (4,062) as an enforced rule. Constant only.
 
 How many Blake2b256 calls fit in 8,001,091 after `interpreterInitCost` and the per-input costs. The table above is enough to compute it; it was not computed here. `interpreterInitCost = 10000` was read from `Interpreter.scala` during the search (recorded at line 513) and was not re-opened while writing.
+
+## Unverified leads (added 2026-10-04 from an outside-model landscape summary; check every item against its primary source before anything quotes it)
+
+None of these has been read here. Each needs the primary source (BIP text, research post, EF/Foundation announcement,
+paper, repository) and its date confirmed; drop any that do not check out.
+
+- **Bitcoin.** Blockstream Research argued (reported May 2026) for a native hash-based opcode, `OP_CHECKSHRINCS`, built
+  on SHRINCS and SHRIMPS, with SHRINCS reportedly demonstrated on Liquid. Bitcoin Optech's quantum-resistance topic page
+  (BIP-361, a SHRINCS draft BIP, lattice proposals, commit/reveal rescue schemes). Relevance: precedent for the native
+  verifier question (SK-028) and a third "shape" (stateful/stateless hybrid) beside WOTS+/XMSS and SLH-DSA.
+- **Bitcoin exposure figure.** "About 7.1 million BTC, roughly 35% of supply, at addresses whose pubkey is already
+  revealed", from a weekly UTXO walk. Needs the source and its definition of "revealed" (P2PK outputs, reused P2PKH,
+  Taproot key-path) before any comparison with our 96.58% of non-protocol ERG; published estimates vary widely with
+  the definition.
+- **Ethereum.** A Foundation post-quantum team (January 2026); a December 2029 target for a quantum-resistant L1
+  (reported September 2026); consensus aimed at leanXMSS (stateful hash-based) with zkVM aggregation; user accounts via
+  account abstraction (EIP-8141, aimed at the Hegotá fork) and verification precompiles. Relevance: the precompile route
+  is the same opcode question at protocol scale; leanXMSS supports the stateful line.
+- **Solana.** Winternitz vault (January 2025) — already cited in skunks/manytime/LITERATURE.md; the new leads are
+  Winterwallet, later tokens on the primitive, and a Project Eleven post-quantum signature testnet.
+- **Sui.** NIST ML-DSA-65 for native accounts (testnet late 2026, mainnet early 2027 reported) and SLH-DSA verified
+  inside Move contracts for large-value vaults, "so the hash scheme can change without a core upgrade". Relevance:
+  argues for a generic primitive over a fixed WOTS opcode (ROADMAP item 7).
+- **Algorand.** Falcon-signed state proofs; Falcon transactions on mainnet; a 2027 resilience roadmap.
+- **QRL.** XMSS since 2018 (already cited); 2.0 testnet reportedly moving toward ML-DSA — check, it bears on the
+  stateful-vs-lattice choice.
+- **Aptos.** Grouped with Solana in hardening coverage — vague; find a primary source or drop.
