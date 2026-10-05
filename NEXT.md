@@ -84,3 +84,4 @@ P2SH address-to-tree disagreement). Testnet wallet holds ~14.99 ERG.
 - Pending next week: quote the replication in thread 5369 (credit per the replicator's answer), per the ROADMAP's
   short-reply plan.
 - Follow-up policy (operator 2026-10-04): no follow-up on the kushti ask; wait for the dialogue (no-nudge rule; checkpoint at 30 days, 2026-11-03). Run the ROADMAP option comparison regardless, so his preference, when it comes, can be placed against the other options.
+- 2026-10-05: a heads-up went out on the curve census; details outside git. Public wording stays at template level until an answer.
