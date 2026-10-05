@@ -71,3 +71,15 @@ P2SH address-to-tree disagreement). Testnet wallet holds ~14.99 ERG.
 - Ranked next steps for the post-quantum line: `research/pq/ROADMAP.md` (2026-10-03). Start there.
 - 2026-10-03: SK-002 answered externally (developer chat, height 1,886,343, 96.58% exposed; `q1/RESULT.md` last
   section; thread quote in `posts/2026-10-q1-tip-note.md`, user posts). Reproduce locally when the node syncs.
+
+## 2026-10-04: asks out (operator posted, developer chat)
+- To kushti: scoping question — would a native hash-based verifier (boolean opcode, EIP-0045 verifyStark shape) be
+  considered; if so, is WOTS+/XMSS (RFC 8391) the accepted shape. Figures cited: ~50,600 cost units per plain-ErgoScript
+  spend (skunks/manytime/RESULT.md:407, 50,595 derived); ~2,700 hashing units as the native floor (forum post).
+  Answer reorders ROADMAP items 4-7.
+- To the census replicator: thanks + credit question for the forum quote; asked for four aggregate files from the same
+  q1 run at 28331fe (p2s_with_key_indicators.csv, p2s_with_key_top_templates.csv, p2s_no_key_top_templates.csv,
+  by_category_age.csv; not top_boxes.csv) as the first cut of SK-036 C1. The AND/OR/threshold breakdown needs a scanner
+  extension (to publish at a fixed commit, then ask separately). Fallback: run it ourselves on a synced node.
+- Pending next week: quote the replication in thread 5369 (credit per the replicator's answer), per the ROADMAP's
+  short-reply plan.
