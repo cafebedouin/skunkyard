@@ -28,6 +28,8 @@ wallet side is a driver, not a wallet. Ranked by what each step buys toward some
    verifier is WOTS+ and the cost is known. A native method takes a spend from tens of thousands of units to
    hundreds; nothing above waits on it.
 
+Evidence bar for 1 and 2 (added 2026-10-04): item 1 is checked against the RFC 8391 test vectors as an executed conformance test alongside the devnet runs, so "the shape the standard proofs cover" is shown, not asserted. Item 2 gets a no-context review and a seat with cryptography expertise before it is posted, and is framed as an argument with stated assumptions unless the reduction is written out in full.
+
 Peeryard's side, in parallel: F3 (how the stock node penalizes a peer relaying script-invalid transactions; a forged
 hash-based spend costs about 38,000 units of verification and pays nothing) and F1 (storage rent on a token-carrying
 state box, executed rather than read). The reply states both by reading.
