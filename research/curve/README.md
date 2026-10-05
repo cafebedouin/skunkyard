@@ -59,3 +59,11 @@ closes.
 
 Building any replacement for the mixer or stealth addresses; mainnet deployment; anything about Autolykos (a hash
 puzzle) or the P2P layer.
+
+## Status
+
+- 2026-10-05: C1 first cut from the external run at height 1,886,343 (`c1-replication-odiseus-1886343/`), with the
+  top templates identified at template level (a bridge custody 6-of-10 multisig, a bridge lock wallet, ErgoMixer
+  full-mix, SigmaUSD bank, ErgoDEX pool). The scanner's C1 mode (`q1/README.md`, "C1 mode"; skunkyard `bc92d1e`) is
+  built and unit-tested and was validated on a stale state at height 836,808 (`c1-validation-836808/`); the C1
+  answer at the tip waits for a C1 run on a synced state.

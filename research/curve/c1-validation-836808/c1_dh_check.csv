@@ -1,0 +1,6 @@
+q1_first_indicator,dh,boxes,ERG
+create_prove_dh_tuple,dh_present,58,17.146500000
+create_prove_dlog,dh_present,1313,45832.912500000
+create_prove_dlog,no_dh,4146,404.076635680
+group_element_value,no_dh,5,0.050000000
+prove_dlog,no_dh,3098,8763.730406165

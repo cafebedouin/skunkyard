@@ -1,0 +1,16 @@
+q1_category,class,boxes,ERG
+p2pk,single_dlog,1824283,56321120.986301520
+mining_reward,single_dlog,20354,269090.085571137
+protocol,single_dlog,4,37703918.790000000
+protocol,sigmaprop_from_data,7,967718.918690072
+protocol,no_key,19460,685201.000000000
+p2s_with_key,single_dlog,6454,4419.585018890
+p2s_with_key,and_or,412,414.612174431
+p2s_with_key,threshold,80,4126.138085831
+p2s_with_key,dh_tuple,1371,45850.059000000
+p2s_with_key,multi_key_no_connective,303,207.521762693
+p2s_no_key,sigmaprop_from_data,243,1.197423456
+p2s_no_key,and_or,3,0.031000000
+p2s_no_key,multi_key_no_connective,6,0.745000000
+p2s_no_key,no_key,15924,1737855.328971970
+unparseable,unparseable,1,0.001000000

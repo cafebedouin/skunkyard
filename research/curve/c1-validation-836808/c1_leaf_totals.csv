@@ -1,0 +1,13 @@
+leaf,occurrences,boxes,ERG
+prove_dlog_const,1848821,1847736,56599039.803278822
+prove_dh_tuple_const,0,0,0.000000000
+create_prove_dlog,5538,5481,37750168.829135680
+create_prove_dh_tuple,1526,1371,45850.059000000
+sigmaprop_from_register_or_context,481,344,967781.032399359
+sigma_and,23574,23187,1285629.006615438
+sigma_or,4120,3704,48903.942549704
+atleast,80,79,4125.040351151
+cand_const,0,0,0.000000000
+cor_const,0,0,0.000000000
+cthreshold_const,2,2,1.098000000
+group_element_const_loose,8,2,0.040000000

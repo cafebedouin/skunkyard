@@ -1,0 +1,7 @@
+# state context height (tip used for ages): 836808
+# state context last header id: 896efe7070afba244cf23ef4028ae8e3e8c17427092e22dac0a21bf457bcb6df
+stored root digest:    b9f8a3f891e03fb9195e83fe39ca01607bc4e6ec544bbb96b4b210408a9eab2e19
+traversed root digest: b9f8a3f891e03fb9195e83fe39ca01607bc4e6ec544bbb96b4b210408a9eab2e19  match=true
+total boxes: 1888905  total box bytes: 179348848
+supply check: sum of all box values = 97739925000000000 nanoERG = 97739925.000000000 ERG; genesis sum = 97739925000000000; equal=true
+supply check: sum excluding the no-premine-proof box (b8ce8cfe331e5ead..., 1000000000 nanoERG, present=true) = 97739924000000000 nanoERG = 97739924.000000000 ERG; brief figure 97739924000000000; equal=true
