@@ -72,7 +72,9 @@ miner without knowing the protocol, provided the box fully determines its own su
 height, its tip, and the exact output it must become (the same script with a register updated to `HEIGHT`, or a
 fixed payout). Heartbeats, tranches, stream pulls, expiry refunds and the header accumulator all fit. Jobs that need
 search (arbitrage, solving an outcome box) stay protocol-specific. The question is whether enough upkeep fits the
-self-determined shape to justify a standard.
+self-determined shape to justify a standard. The Lithos client's Mutations layer already offers the other route, a
+registry of per-template mutators with prerequisites (`research/agents/ROADMAP.md` R1); the on-chain standard is
+only worth it for jobs that must be added without a client release.
 
 ## Limits
 

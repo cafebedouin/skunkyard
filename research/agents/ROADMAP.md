@@ -54,6 +54,22 @@ Lithos lead developer plans his own Dexy integration after the relaunch, so phas
 him, not a separate build. He also proposed miner-bonded inclusion (a miner posts collateral and commits to include a
 protocol's transactions), which joins SK-009 I1/I4. A PR is welcome if the census (SK-042) shows the upkeep is worth it.
 
+**Mutations, the client's transaction layer (read 2026-10-05).** `Lithos-Protocol/Mutations` (2023, 324 lines) is
+a library where a `Contract` carries `Mutator`s, functions from a transaction context to output boxes, and
+`TxBuilder.mutateOutputs` folds every input's mutators into the outputs. The client vendors and extends it
+(`lithos-lib/src/main/scala/mutations/`: `BoxLoader`, `UTXOSelector`, `NodeWallet`, `Eip27Adjustment`), and its
+`Mutator` gained prerequisites (`preReqs`, checked before `mutation`; `asPreRequisite` chains one mutation's result
+into the next). The ErgoDEX executor builds with it (`ErgoDexExecution.scala:12`, `TxBuilder`, `InputUTXO`), as do
+Lithos's own rollup, collateral and evaluation contracts. Consequences:
+- The keeper is written as mutators on the Dexy contracts, in the client's own idiom, which is what makes it
+  reviewable; a Batcher subclass only discovers boxes and calls them.
+- A due-job maps onto it directly: the job's template is a `Contract`, "due" is a `preReq` (height against a
+  register), the successor is the `mutation`. Chained arbitrage legs are `asPreRequisite` chains.
+- That splits the generic-job idea in two. **A mutator registry** (each protocol contributes a reviewed mutator for
+  its template; miners opt in per job) needs no on-chain standard and fits the client now. **Self-describing
+  due-job boxes** (the box determines its successor, any miner executes any such box with no new code) are only
+  needed for jobs added without a client release. Start with the registry.
+
 Phases:
 0. **Scope, one session.** Read Dexy's contracts (the ergoplatform dexy repository; not among `~/bin/ergo_logic/subjects/`, whose `lithos/Lithos-Client` is a current copy to build against) and list every maintenance
    transition: trackers 95, 98 and 101, intervention, any others; which need nothing but a fee. Ask the Lithos
