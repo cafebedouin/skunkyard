@@ -3,6 +3,12 @@
 > **FIRST, at the next post-quantum session (planned Thursday 2026-10-08): follow up on the census heads-up.** Details outside git. Then: (1) restore the specific identification in public files only per their answer (it is kept outside git in ~/bin/skunkyard-private/); (2) decide the push of the unpushed commits (wording 'bridge custody' vs 'custody' multisig) — the replicator needs commit bc92d1e pushed to run C1 at the tip.
 
 
+> **Lithos upkeep adapter (2026-10-08, SK-043):** worktree `~/bin/lithos-upkeep` (branch `upkeep-adapter`, pushed to
+> the fork `cafebedouin/Lithos-Client`). Brief `UPKEEP-BRIEF.md`, prompts `prompts/phase-1..3.md`, `prompts/fix-round.md`.
+> Loop: the user runs `claude --cloud` there with a phase prompt; then `git pull fork upkeep-adapter`, compile with
+> Java 17 (`JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64`; sbt 1.6.2 breaks on Java 21), `sbt -batch "testOnly
+> transactions.upkeep.*"`, send errors back with the fix-round prompt. Working files come out before the PR.
+
 > **Agents line (2026-10-05):** Lithos keeper agreed in principle with cheese, every executor off by default; reply
 > RECEIVED 2026-10-05 (order accepted; PR welcome if the census supports it; Dexy relaunch pending; cheese plans a Dexy integration — agree who builds what; his opt-in miner-collateral binding idea links to SK-017) — was awaited on the order of work and on DexyGold's LP (`notes/2026-10-05-lithos-reply.md`). Next here: the revenue census
 > (`research/agents/UPKEEP.md` U1, SK-042). The USE LP was drained 2026-09-08 (`notes/2026-10-05-use-lp-drain.md`).
