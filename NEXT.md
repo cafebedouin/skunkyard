@@ -5,6 +5,7 @@
 
 > **Lithos upkeep adapter (2026-10-08, SK-043):** worktree `~/bin/lithos-upkeep` (branch `upkeep-adapter`, pushed to
 > the fork `cafebedouin/Lithos-Client`). Brief `UPKEEP-BRIEF.md`, prompts `prompts/phase-1..3.md`, `prompts/fix-round.md`.
+> Phases 1-3 done 2026-10-08 (f87bab94; one trivial fix). Next: `prompts/phase-4-shape.md`, then finalize + devnet box.
 > Loop: the user runs `claude --cloud` there with a phase prompt; then `git pull fork upkeep-adapter`, compile with
 > Java 17 (`JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64`; sbt 1.6.2 breaks on Java 21), `sbt -batch "testOnly
 > transactions.upkeep.*"`, send errors back with the fix-round prompt. Working files come out before the PR.
