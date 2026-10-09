@@ -59,3 +59,12 @@ fixes"; Gemini and Grok pending.
 | Eager parsing in both modes (every round) | CONFIRMED, bounded | Comment corrected to include configured ids |
 | Ancestors counted twice in the demand (Derivation) | CONFIRMED, overstates only | Not changed |
 | A `CandidateBuilder` test with the widened allowance (Maintainer, every round) | Gap | Not done; stated |
+
+## PR 2: Gemini and Grok (landed after the table above)
+
+Both "merge with fixes". Gemini's new point: `opportunistic` raised a configured count of 0 to the cap, so a source
+the builder was told never to ask would build successors the builder then refused (CONFIRMED; **fixed:** a count of
+0 never grows; spec). Its other three (no reserve for the node's transactions, offset paging, sequential latency) and
+Grok's three (the reserve, paging under-count, the class doc) are the points fixed above, except the paging
+under-count, which stays stated: no snapshot endpoint exists, and Grok's `unconfirmedTransactionIds` count before and
+after would itself race.
