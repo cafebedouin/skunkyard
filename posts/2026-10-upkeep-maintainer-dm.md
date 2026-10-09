@@ -34,7 +34,10 @@ What I would ask you to review, in order:
    package, only that the height was dropped. `verifyWithNode` narrows it for upkeep; rent has the same exposure.
 
 Evidence: full suite on Java 17, 2,698 tests, only the known load-sensitive snapshot spec flaking. A due-job box is live
-on testnet, box `e5d9d2c2…`. [Observe-mode log against it: pending.] [Devnet candidate carrying a beat: pending.] The
+on testnet, box `e5d9d2c2…`. On a devnet with a full deployment made by the new deployer, the client joined the
+collateral queue with its own ERG and LIT, built its genesis, and block 573 carries that genesis and the upkeep beat
+together (`skunks/upkeep/devnet/block-573.json`). Mainnet has 30 Lithos blocks so far between 1,888,828 and
+1,890,575, about 1.7% of blocks, read from the collateral token's spends. The
 review record with every finding and its disposition is public in the skunkyard repo under `skunks/upkeep/SEATS.md`.
 
 One obvious extension I have left for a follow-on PR rather than this one: blocks are mostly empty, so upkeep could be

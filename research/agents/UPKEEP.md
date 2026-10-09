@@ -155,3 +155,16 @@ What the chain can and cannot enforce:
   that pays the gap to the block (`minerPk`) or to its own LPs is the clean version: the pool decides who gets it.
 
 Banked as SK-045; measure first with the census (U1) whether the gaps are worth a fraud rule.
+
+## U2 measured: Lithos blocks on mainnet (2026-10-09, explorer read)
+
+Method: every box carrying the mainnet collateral token `a8a790e7…` through the explorer API (473 boxes, 160 holding
+exactly one), the spent ones resolved to their spending transaction. A Lithos block is one whose genesis spends a
+collateral box: transaction index 1, seven outputs, a five-register input. The other spends (one register, four
+outputs, any index) retire proof-of-spend boxes and are not blocks.
+
+Result: **30 Lithos blocks between heights 1,888,828 and 1,890,575**, a span of 1,748 blocks: a share of about 1.7%,
+so the expected wait for upkeep done only in Lithos blocks is about 58 blocks, roughly two hours, at today's share.
+The first mainnet Lithos block is 1,888,828. The scan is `research/agents/lithos-blocks-mainnet.py` (to be written as
+the U2 script); this first number is from the one-off read above. The devnet proof of concept (block 573,
+`skunks/upkeep/devnet/`) reproduces the genesis shape exactly.
