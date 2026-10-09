@@ -1,0 +1,907 @@
+{
+ "atTip": 1891059,
+ "explorer": "https://api.ergo.aap.cornell.edu/api/v1",
+ "templates": [
+  {
+   "group": "executor",
+   "name": "ErgoDEX N2T SwapSell v1 (nativeFee)",
+   "templateHash": "36d1944fe6d743312e93541a1daf5592519772310ce924b2ec10e3f9b450e13a",
+   "unspent": 36,
+   "nanoErg": 577955127660,
+   "fetched": 36,
+   "olderThan1Block": 36,
+   "olderThan720": 36,
+   "ageMedianBlocks": 478596,
+   "sample": [
+    "0d667712959d0bfefdf72e057850ff84a63baa7314c24e1de43a29c649b89880",
+    "d67e2461fd1c6e77bc4a052a0f3722551b0c8d0bf762f2e37507db536805da88",
+    "03fcb8da2c4c29dfa0680a646adaf11ba2faada09a9e720bf7616dff3a8eec6b"
+   ],
+   "executable": [
+    {
+     "box": "0d667712959d0bfefdf72e057850ff84a63baa7314c24e1de43a29c649b89880",
+     "valueNanoErg": 12007260000,
+     "baseNanoErg": 12000000000,
+     "pool": "8355156ed23f7d26ed6a477b12476a0a63ded7bbb63c37b955168d9c0269de90",
+     "minQuote": 1724079719,
+     "quoteNow": 1609815489,
+     "executable": false,
+     "shortfallPct": 6.63,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "d67e2461fd1c6e77bc4a052a0f3722551b0c8d0bf762f2e37507db536805da88",
+     "valueNanoErg": 286861560,
+     "baseNanoErg": 279001560,
+     "pool": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "minQuote": 5238318380,
+     "quoteNow": 2100640277,
+     "executable": false,
+     "shortfallPct": 59.9,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "03fcb8da2c4c29dfa0680a646adaf11ba2faada09a9e720bf7616dff3a8eec6b",
+     "valueNanoErg": 100007260000,
+     "baseNanoErg": 100000000000,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 11509289,
+     "quoteNow": 2152753,
+     "executable": false,
+     "shortfallPct": 81.3,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "d517e6b5a3722838e753eea5dd0b784c517a648b58c54a61b83eb57980b4831f",
+     "valueNanoErg": 1007260000,
+     "baseNanoErg": 1000000000,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 104897,
+     "quoteNow": 21988,
+     "executable": false,
+     "shortfallPct": 79.04,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "aa5de162829c95234220ea848ec969f43b7bca79822653922b39a642c4b50952",
+     "valueNanoErg": 107260000,
+     "baseNanoErg": 100000000,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 10135,
+     "quoteNow": 2199,
+     "executable": false,
+     "shortfallPct": 78.3,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "bb03870bfd7ea6ff409e83df7117710d453cde486fd06b7c97f56d6c5bb0c828",
+     "valueNanoErg": 1007260000,
+     "baseNanoErg": 1000000000,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 94811,
+     "quoteNow": 21988,
+     "executable": false,
+     "shortfallPct": 76.81,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "09363bc6b28e68e77afd172443c83f2835cc58bcd6a0c69a242ba881d556b27d",
+     "valueNanoErg": 200063564392,
+     "baseNanoErg": 200056304392,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 16688546,
+     "quoteNow": 4217357,
+     "executable": false,
+     "shortfallPct": 74.73,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "c7046a0e198322d2fdfc428fa9f2bdd4766de3b9566dcd73af589bef913829d0",
+     "valueNanoErg": 1007260000,
+     "baseNanoErg": 1000000000,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 78856,
+     "quoteNow": 21988,
+     "executable": false,
+     "shortfallPct": 72.12,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "5ab6ac4b942bcbf41d404c68f1995574dd11efc3a4c1d30eda345635e2461a48",
+     "valueNanoErg": 34147267664,
+     "baseNanoErg": 34140007664,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 2427191,
+     "quoteNow": 745345,
+     "executable": false,
+     "shortfallPct": 69.29,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "d34f8665542d0c9018869567a8d73fd286084d34d2b46da8af43a45ae6da5170",
+     "valueNanoErg": 10012060000,
+     "baseNanoErg": 10000000000,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 657087,
+     "quoteNow": 219457,
+     "executable": false,
+     "shortfallPct": 66.6,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "c5d61f06402d93615486365a9a6f0394b0e1d418f600d47d82c634c45c048821",
+     "valueNanoErg": 1345793252,
+     "baseNanoErg": 1338533252,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 97087,
+     "quoteNow": 29430,
+     "executable": false,
+     "shortfallPct": 69.69,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "8fbb4ce9ae6dda2f77e189269b25bf78863eff3b0101f7dd36e82468a512c5d7",
+     "valueNanoErg": 507260000,
+     "baseNanoErg": 500000000,
+     "pool": "7194cb66dd2dfaa7e302d214294467aa34a62e2c9b3952bd884a691395674b2f",
+     "minQuote": 5638,
+     "quoteNow": 633,
+     "executable": false,
+     "shortfallPct": 88.77,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "b325ae7d6152b1ea0c3aee3e779daf47011e40dada0335d0c34cea627c39449c",
+     "valueNanoErg": 2080560315,
+     "baseNanoErg": 2073300315,
+     "pool": "821e9b67d88041854afd00441f947eaa381ff20502c9bacbb48afb09219f219f",
+     "minQuote": 93583,
+     "quoteNow": 84333,
+     "executable": false,
+     "shortfallPct": 9.88,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "a22fc5c2bfe057536746c1c2cd7c46399c88ef17b546ffb95f2cf74974322e06",
+     "valueNanoErg": 17260000,
+     "baseNanoErg": 10000000,
+     "pool": "4bd26ac78f66e4e450048fa188f24ad3cd8ae5f61beff6ef6f2317f8d633ebc3",
+     "minQuote": 30801,
+     "quoteNow": 4,
+     "executable": false,
+     "shortfallPct": 99.99,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "e3d3028742520f846b942f700dc406f16079fd057e71291cf3a3fa93f349ed65",
+     "valueNanoErg": 19751389,
+     "baseNanoErg": 12491389,
+     "pool": "9eccc846606c4a34e2e3ac189041a8f41e3dc1681f61bb0c5e1f6d3cb9c380af",
+     "minQuote": 1,
+     "quoteNow": 0,
+     "executable": false,
+     "shortfallPct": 100.0,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "dfcdd0006d70d1744aa65abcde8b923d5721ab2ba6eb85a64238a88a32ba7858",
+     "valueNanoErg": 2007260000,
+     "baseNanoErg": 2000000000,
+     "pool": "d6f5d7e7588d903efd353b75e26520e6d1200f2af7afb1b21f69cba6896dc2d2",
+     "minQuote": 56971405,
+     "quoteNow": 28231852,
+     "executable": false,
+     "shortfallPct": 50.45,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "f041febd5ab3e3e41994457178cd4a6e60a0fd907f60aea9902a5689196443ac",
+     "valueNanoErg": 10007260000,
+     "baseNanoErg": 10000000000,
+     "pool": "5a7da76e1a541c25f41c7c5e87a56ca36942030e7d2600561c3580774812b36e",
+     "minQuote": 4658070,
+     "quoteNow": 1413305,
+     "executable": false,
+     "shortfallPct": 69.66,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "a4ae4119c63a58a6c5dbd230cde0ded9c22933ca88cd3dbde794eb599b44db03",
+     "valueNanoErg": 507260000,
+     "baseNanoErg": 500000000,
+     "pool": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "minQuote": 56520300,
+     "quoteNow": 11566,
+     "executable": false,
+     "shortfallPct": 99.98,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "fd6486b987cf704dbcd158556790299ac4319556beaf70563832721655d7ad82",
+     "valueNanoErg": 208460000,
+     "baseNanoErg": 200000000,
+     "pool": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "minQuote": 8427591,
+     "quoteNow": 4626,
+     "executable": false,
+     "shortfallPct": 99.95,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "d4e8c7d1a26e0dea3547be3e5758b4942f30ec50f3c839356954e1c609d0d625",
+     "valueNanoErg": 3008460000,
+     "baseNanoErg": 3000000000,
+     "pool": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "minQuote": 25156529,
+     "quoteNow": 69367,
+     "executable": false,
+     "shortfallPct": 99.72,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "787b16e29600c5283e88f4d732da2212c0e3e134f3c6c8f745554be166d9c3f1",
+     "valueNanoErg": 1008460000,
+     "baseNanoErg": 1000000000,
+     "pool": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "minQuote": 8897620,
+     "quoteNow": 23131,
+     "executable": false,
+     "shortfallPct": 99.74,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "a734ce6c2479500a1167e18479c34c885243b50b0a51f9b0ff4419dc86f8ed77",
+     "valueNanoErg": 5007260000,
+     "baseNanoErg": 5000000000,
+     "pool": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "minQuote": 16003232,
+     "quoteNow": 115567,
+     "executable": false,
+     "shortfallPct": 99.28,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "979df7d26771d7726bbf4a98f31beec933e0f1ebb385758a60dc011faa74b3cc",
+     "valueNanoErg": 1007200000,
+     "pool": "0202020202020202020202020202020202020202020202020202020202020202",
+     "status": "pool not live"
+    },
+    {
+     "box": "fc24df0f7f9624df31776e19281abcf40367d89e24208b4562bb9881fd8898ac",
+     "valueNanoErg": 3294284510,
+     "baseNanoErg": 3287024510,
+     "pool": "7f1759300b19287adbbcd03c877eae6c6de60f4c2962b1fc5ae2c6e2a684220c",
+     "minQuote": 303429181,
+     "quoteNow": 168228597,
+     "executable": false,
+     "shortfallPct": 44.56,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "018b764c996e30c0f8ddb0012d83f9afe8084d5b3f2e48f11052350ef886fac8",
+     "valueNanoErg": 7260001,
+     "baseNanoErg": 1,
+     "pool": "c085c14f5695004c5ea7eb39dbb1017136876430e088f7a28fc59b8761015991",
+     "minQuote": 12,
+     "quoteNow": 9,
+     "executable": false,
+     "shortfallPct": 25.0,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "afe10a6e3da81c7b64fdbff2df4d8f0e9554a64248e31ee072e5837a4c844a4e",
+     "valueNanoErg": 24007260000,
+     "baseNanoErg": 24000000000,
+     "pool": "3d4fdb931917647f4755ada29d13247686df84bd8aea060d22584081bd11ba69",
+     "minQuote": 2301,
+     "quoteNow": 1759,
+     "executable": false,
+     "shortfallPct": 23.55,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "3d23b62b325144f3121017e6a4686ceb22c18f7e9d0704eeba0b4fa7f3f515de",
+     "valueNanoErg": 60007260000,
+     "baseNanoErg": 60000000000,
+     "pool": "3d4fdb931917647f4755ada29d13247686df84bd8aea060d22584081bd11ba69",
+     "minQuote": 5568,
+     "quoteNow": 4292,
+     "executable": false,
+     "shortfallPct": 22.92,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "c1a6974d11750b7b7cfa6f3811f5253614faaaa4917c029c23fae6a1c24c8369",
+     "valueNanoErg": 1017260000,
+     "baseNanoErg": 1010000000,
+     "pool": "2994c61ef6962c43a4b972791597f2e3b2c439a297e2c2b698d772795a8ea022",
+     "minQuote": 4881190,
+     "quoteNow": 4725422,
+     "executable": false,
+     "shortfallPct": 3.19,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "26be014d8ffcbfb4bb920488d315e48bf30864f82d515faa59274a9fadf0bcc9",
+     "valueNanoErg": 20007260000,
+     "baseNanoErg": 20000000000,
+     "pool": "3eb10b2fe3e1df37b6166c957109bf5f2e7510bc508e4b76708a56f8a52babff",
+     "minQuote": 641959,
+     "quoteNow": 21592,
+     "executable": false,
+     "shortfallPct": 96.64,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "974193c93ac5cbd7b5ad94873ed51471f1d81c91939c4849b725faa51e40bd8c",
+     "valueNanoErg": 10007260000,
+     "baseNanoErg": 10000000000,
+     "pool": "3eb10b2fe3e1df37b6166c957109bf5f2e7510bc508e4b76708a56f8a52babff",
+     "minQuote": 309822,
+     "quoteNow": 10956,
+     "executable": false,
+     "shortfallPct": 96.46,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "a5ec9d241aa274d0dedb69e3951778809bfccb485c450be7c627b6cd3121b3a3",
+     "valueNanoErg": 2002000000,
+     "baseNanoErg": 2000000000,
+     "pool": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "minQuote": 260466,
+     "quoteNow": 46253,
+     "executable": false,
+     "shortfallPct": 82.24,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "59bcc41997e710906dbbd727a20f83ccb386f4fcc73f4f377b963001e77acc47",
+     "valueNanoErg": 102000000,
+     "baseNanoErg": 100000000,
+     "pool": "a8a2275ff1660b6ceb6e4c977f4359c6c51b53b0a4e0f446496108770ed6a893",
+     "minQuote": 978253099,
+     "quoteNow": 112690262715,
+     "executable": true,
+     "shortfallPct": null,
+     "executorNanoErg": 900000
+    },
+    {
+     "box": "02def9a4cac70d6252b9213b7fc54abbb0f9a517edc1d96f0531b642286d67b7",
+     "valueNanoErg": 697260000,
+     "baseNanoErg": 690000000,
+     "pool": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "minQuote": 19169,
+     "quoteNow": 15961,
+     "executable": false,
+     "shortfallPct": 16.74,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "4e1bf0c615c021b8f4c1c2f236237c6529da1cfc59d893006b5f2ec6f41b3a9c",
+     "valueNanoErg": 40007260000,
+     "baseNanoErg": 40000000000,
+     "pool": "35bc71897cd44d1a624285c54a0be66b69d1c61674603ed89dfe136f32035f0e",
+     "minQuote": 2493,
+     "quoteNow": 1117,
+     "executable": false,
+     "shortfallPct": 55.19,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "bd5dac2045611ae396d0c3dbd97b7c07e66ad7d5c955cc7f1bd28711d89b70b8",
+     "valueNanoErg": 5001500000,
+     "baseNanoErg": 5000000000,
+     "pool": "9916d75132593c8b07fe18bd8d583bda1652eed7565cf41a4738ddd90fc992ec",
+     "minQuote": 96,
+     "quoteNow": 144,
+     "executable": true,
+     "shortfallPct": null,
+     "executorNanoErg": -1100000
+    },
+    {
+     "box": "4ae31ae0f1d8a425e63ec45ab3984d0ad0abd3293dfadfe4f9028339b91fecf1",
+     "valueNanoErg": 25411704577,
+     "baseNanoErg": 25404444577,
+     "pool": "3d4fdb931917647f4755ada29d13247686df84bd8aea060d22584081bd11ba69",
+     "minQuote": 2000,
+     "quoteNow": 1860,
+     "executable": false,
+     "shortfallPct": 7.0,
+     "executorNanoErg": 0
+    }
+   ]
+  },
+  {
+   "group": "executor",
+   "name": "ErgoDEX N2T SwapBuy v1 (nativeFee)",
+   "templateHash": "be1312f720ad4de7a8528a0306478292e48fdc996d44e9014f704632b512b691",
+   "unspent": 141,
+   "nanoErg": 1180060000,
+   "fetched": 141,
+   "olderThan1Block": 141,
+   "olderThan720": 141,
+   "ageMedianBlocks": 579687,
+   "sample": [
+    "d3b1c858dbb07ce48ba46e7156076d76eb2e6a50f527607bc3c3b5e108a98d76",
+    "f0452f7ae0eb531dc579131793f25ffc60d3d0ffe0e2a741be398afc2394cfac",
+    "9f71dfbfe0466c88f50a87e0e0465e035360805290dd33577f30b27d5a170517"
+   ]
+  },
+  {
+   "group": "executor",
+   "name": "ErgoDEX N2T Deposit v1",
+   "templateHash": "ff225395cd40e9eb7eef266c5c8709877a0b6de8dbea64843b5e076cacf59803",
+   "unspent": 0,
+   "nanoErg": 0,
+   "fetched": 0,
+   "olderThan1Block": 0,
+   "olderThan720": 0,
+   "ageMedianBlocks": null,
+   "sample": []
+  },
+  {
+   "group": "executor",
+   "name": "ErgoDEX N2T Redeem v1",
+   "templateHash": "1f1b05c2f728f0cbc800c2015a13dcbc92820f1d768bf81b266bddf6cc6a2056",
+   "unspent": 31,
+   "nanoErg": 191800000,
+   "fetched": 31,
+   "olderThan1Block": 31,
+   "olderThan720": 31,
+   "ageMedianBlocks": 481849,
+   "sample": [
+    "4eea2104333c68e20a10e163348cf4c7f04a3874261c49cce90e728cc138ca99",
+    "144144b3932b8faaa74d34a763cfa6c8493db6f92b047c84a43b5060c383dd04",
+    "fa6e2c89085e699e64e89a0b02379e636f1434de7ef74ebe946c7312b5faa22e"
+   ]
+  },
+  {
+   "group": "executor",
+   "name": "ErgoDEX N2T SwapSell v3 (spfFee)",
+   "templateHash": "e661fcbb86610a83caf6d1ad150cf65851728e2c29a65a39d3d4983e9b3936c1",
+   "unspent": 15,
+   "nanoErg": 370751201351,
+   "fetched": 15,
+   "olderThan1Block": 15,
+   "olderThan720": 15,
+   "ageMedianBlocks": 732223,
+   "sample": [
+    "fda669dfc9c13eb4e3e9de0a0591117b7e54ef34fafcd0b752bbdf19c3725cd1",
+    "8435ba29ba38dc9b0b1db22e1e343e1bca30557d187c0de9d139d7ebb4e3b6dc",
+    "9c2fe60ad5796d899d0f5ea1b5ccf26c60439c7d403411d3de4a801fd901e282"
+   ]
+  },
+  {
+   "group": "executor",
+   "name": "ErgoDEX N2T SwapBuy v3 (spfFee)",
+   "templateHash": "8d1fd21c5a78ac5a44193622a691696955fe2eccf0f46a664285895fb78d2d50",
+   "unspent": 12,
+   "nanoErg": 4620000,
+   "fetched": 12,
+   "olderThan1Block": 12,
+   "olderThan720": 12,
+   "ageMedianBlocks": 575025,
+   "sample": [
+    "ff05c9f4b4ed2d3ed531771572c0c509a1795296be942158cd502ee85f9a8aeb",
+    "8db6a8d879dec325fe901d1409f00de2db9dc6669ec9efc57d5b73fac4ed7dd1",
+    "ed7a2a7d094ba2d1afefd206e85261e40905109ceb3938335b3ac4c816ab38be"
+   ]
+  },
+  {
+   "group": "executor",
+   "name": "ErgoDEX N2T Deposit v3",
+   "templateHash": "bd026b0f0a506e7053a0be4c370962e3b236da49497e93901c56bf1b5a700c25",
+   "unspent": 4,
+   "nanoErg": 24736351683,
+   "fetched": 4,
+   "olderThan1Block": 4,
+   "olderThan720": 4,
+   "ageMedianBlocks": 807028,
+   "sample": [
+    "48ac38dc9dec3fe77be11d1482585193ad727de289aaf10f94539716cec37a4f",
+    "4949304820b8dd19a6bfdb41cd2bfce68aabefa2225f3afe5b056073d7b983e4",
+    "47b4b41ffff90573e1fedf1b3339b46288467eef80992775b0c04e27fcd5d36b"
+   ]
+  },
+  {
+   "group": "executor",
+   "name": "ErgoDEX N2T Redeem v3",
+   "templateHash": "bc3e2c2cbeb5ae97ba8f05e91899120f24777de87c9ba4cf9a740c3f0ad7a723",
+   "unspent": 1,
+   "nanoErg": 400000,
+   "fetched": 1,
+   "olderThan1Block": 1,
+   "olderThan720": 1,
+   "ageMedianBlocks": 772959,
+   "sample": [
+    "4183350ed3319631eb565d76b8739fef3d63b05b0137d97baea7ceb93c91e3c0"
+   ]
+  },
+  {
+   "group": "executor",
+   "name": "ErgoDEX N2T SwapSell multiAddressV2",
+   "templateHash": "6fae4e763dc69d6f439afcd36bfc763c8a413c71cb1b15590886f7ce2c753150",
+   "unspent": 0,
+   "nanoErg": 0,
+   "fetched": 0,
+   "olderThan1Block": 0,
+   "olderThan720": 0,
+   "ageMedianBlocks": null,
+   "sample": []
+  },
+  {
+   "group": "executor",
+   "name": "ErgoDEX N2T SwapBuy multiAddressV2",
+   "templateHash": "84af94fed6ce9dd8f7ddde4a99eeb667c212ee3ec82a469c926b6a32edbaa268",
+   "unspent": 0,
+   "nanoErg": 0,
+   "fetched": 0,
+   "olderThan1Block": 0,
+   "olderThan720": 0,
+   "ageMedianBlocks": null,
+   "sample": []
+  },
+  {
+   "group": "executor",
+   "name": "ErgoDEX T2T Swap v1",
+   "templateHash": "36f6a0189fed7a2962def808a838dc609cb7f64398b073cf179397fef61efdeb",
+   "unspent": 28,
+   "nanoErg": 215260000,
+   "fetched": 28,
+   "olderThan1Block": 28,
+   "olderThan720": 28,
+   "ageMedianBlocks": 671218,
+   "sample": [
+    "ab31f9cede4786df8f4abf4d3973e5f24882d27659216304b7fc2f5c4a95f0ee",
+    "31ee3eb1ed3226a9de1be8476b7722dc82938d801caf87d387795a421fa6c210",
+    "89d3ec09a7ba709b02a595e3c102914db394758edd3d4aa9d0073b30e5b2cfd8"
+   ]
+  },
+  {
+   "group": "executor",
+   "name": "ErgoDEX T2T Deposit v1",
+   "templateHash": "b51efb4e720155eb8e49d5d17855473e0c8e967215ca2e93ededf60696c87d06",
+   "unspent": 4,
+   "nanoErg": 24240000,
+   "fetched": 4,
+   "olderThan1Block": 4,
+   "olderThan720": 4,
+   "ageMedianBlocks": 638375,
+   "sample": [
+    "2a71c0d6afeb8edb26340d4c3cd5ad195782d718edeb5fe10107e29a600e0c4f",
+    "d21a88694539ff8277d4d8476e12c3d9e7d4d1783eedbc646d18330826a9c13a",
+    "d4086d3f136fe11c7b7476d4c36aa38a2fc7662d7965ea44fbe94ecf7ef68958"
+   ]
+  },
+  {
+   "group": "executor",
+   "name": "ErgoDEX T2T Redeem v1",
+   "templateHash": "4149cdf2030dfdbba140219cc86d4b4295a2b0feb9fc8fb1ae1dfc5859371b11",
+   "unspent": 4,
+   "nanoErg": 24240000,
+   "fetched": 4,
+   "olderThan1Block": 4,
+   "olderThan720": 4,
+   "ageMedianBlocks": 496934,
+   "sample": [
+    "200b375a50eec0b3712c2cbafcdb3404ef1e48faa006ac153ef22fe9de7cef6d",
+    "8cd622887ae5304c8642be84f3c90781b6f2351a77250fa580d4c1618365f0ae",
+    "2f2efd84af695288f43fcb547fb2d07b942f9003559839515f7e43d3f194b70d"
+   ]
+  },
+  {
+   "group": "executor",
+   "name": "ErgoDEX T2T Swap v3",
+   "templateHash": "9f5823754068bb19579412172d63894bb92d1419968e1f9d5ea161dd4ca83b13",
+   "unspent": 6,
+   "nanoErg": 2400000,
+   "fetched": 6,
+   "olderThan1Block": 6,
+   "olderThan720": 6,
+   "ageMedianBlocks": 717622,
+   "sample": [
+    "88ef199bfd4e29d0ce1725f78af3da85798e24e280acb356e3eca4f3847774ae",
+    "f5a733b6a7c7779c456cb8fa7de68cde684211112b641808aa5c1efbb450fd25",
+    "3ef8852fa85c458117752461af4f2a91b66bd3070639e8ea4e2b432aa50a8450"
+   ]
+  },
+  {
+   "group": "executor",
+   "name": "ErgoDEX T2T Deposit v3",
+   "templateHash": "3c2e8c1c0f9f2b1d225cb5989e1f8e0c7736ade34e2a257af140f70a3364e36b",
+   "unspent": 0,
+   "nanoErg": 0,
+   "fetched": 0,
+   "olderThan1Block": 0,
+   "olderThan720": 0,
+   "ageMedianBlocks": null,
+   "sample": []
+  },
+  {
+   "group": "executor",
+   "name": "ErgoDEX T2T Redeem v3",
+   "templateHash": "19aa1949f4cbdff649345954c87081af490b53deb69eef1104d51ccacc33939f",
+   "unspent": 0,
+   "nanoErg": 0,
+   "fetched": 0,
+   "olderThan1Block": 0,
+   "olderThan720": 0,
+   "ageMedianBlocks": null,
+   "sample": []
+  },
+  {
+   "group": "executor",
+   "name": "ErgoDEX T2T Swap v2 (multiAddress)",
+   "templateHash": "d7d4d43a39940b217c6a351398d793fba301893d4515c503af25081e1ce825b9",
+   "unspent": 0,
+   "nanoErg": 0,
+   "fetched": 0,
+   "olderThan1Block": 0,
+   "olderThan720": 0,
+   "ageMedianBlocks": null,
+   "sample": []
+  },
+  {
+   "group": "executor",
+   "name": "LithosDex SwapSell order",
+   "templateHash": "b4fd5d9be2ed32a5cc516e431bf317033d1033078026bb04baf7ae355c665dfc",
+   "unspent": 2,
+   "nanoErg": 70008000000,
+   "fetched": 2,
+   "olderThan1Block": 2,
+   "olderThan720": 2,
+   "ageMedianBlocks": 14888,
+   "sample": [
+    "2bab3f9b5bdbdedff3ca2135a42de4bf5aaef421dbafa56a37ee761947413429",
+    "baeb86e09c6e91bce1847eb8b3051f39a47d9e42e7e7788b8f63f97c55973f4a"
+   ]
+  },
+  {
+   "group": "executor",
+   "name": "LithosDex SwapBuy order",
+   "templateHash": "7122d56978cf08f66ff5168a160e9e750002c62e79a6d985503da8ad02f11a98",
+   "unspent": 5,
+   "nanoErg": 5000000,
+   "fetched": 5,
+   "olderThan1Block": 5,
+   "olderThan720": 5,
+   "ageMedianBlocks": 4020,
+   "sample": [
+    "9b9aa969efb679c3f380def0cce436660fc9a6e203e138d50584bdbc57c65098",
+    "26a6a74ef8b588336d62bfbf822849ab8fd1ecc2a46798452f51b71568d4d750",
+    "8439c2232ca0eb1a6f0f37c5b200c50ab439d92c6ece538682dfadb5774c82fa"
+   ]
+  },
+  {
+   "group": "executor",
+   "name": "LithosDex Deposit order",
+   "templateHash": "28027ccf9c2a5ac3d31178e97a387aae3207ddec642b5662e63af30bbe642c17",
+   "unspent": 0,
+   "nanoErg": 0,
+   "fetched": 0,
+   "olderThan1Block": 0,
+   "olderThan720": 0,
+   "ageMedianBlocks": null,
+   "sample": []
+  },
+  {
+   "group": "executor",
+   "name": "LithosDex Redeem order",
+   "templateHash": "d67c6f6e4dfaba9b7aefce23c63add22dbc5fdd34a27946771965be943baeb04",
+   "unspent": 0,
+   "nanoErg": 0,
+   "fetched": 0,
+   "olderThan1Block": 0,
+   "olderThan720": 0,
+   "ageMedianBlocks": null,
+   "sample": []
+  },
+  {
+   "group": "executor",
+   "name": "Spectrum LM pool (simple, pays execFee)",
+   "templateHash": "f9c2257908ba4f5894f78de8334108ae6dc26a97f2342f3913c650f8407e3d62",
+   "unspent": 2,
+   "nanoErg": 2500000,
+   "fetched": 2,
+   "olderThan1Block": 2,
+   "olderThan720": 2,
+   "ageMedianBlocks": 969471,
+   "sample": [
+    "7153d14ec1fad42943102cc0541c96e44549f5c4e496e27f43b0885fd4a9fd43",
+    "02f3a00879812244911a4e3075470d605d100bb02c13d7f4152083a6c8f096ae"
+   ]
+  },
+  {
+   "group": "executor",
+   "name": "Spectrum LM pool self-hosted (managed)",
+   "templateHash": "728bc5b8f6244f191bd5c6b783b7895981dc37f1504458d0fc8e02754ecb3eff",
+   "unspent": 37,
+   "nanoErg": 1018614080,
+   "fetched": 37,
+   "olderThan1Block": 37,
+   "olderThan720": 37,
+   "ageMedianBlocks": 491402,
+   "sample": [
+    "117c1ea29c5a68f0342c74221439509d979bffdfbf26b12b6d2734ccb800decb",
+    "c520651604becd637858957117447e01079518a0041d834f21904fe5acf910da",
+    "41656e829f86f48bb73f8896a1968284362b2aa831513c8290663ae20ffd43a3"
+   ]
+  },
+  {
+   "group": "executor",
+   "name": "Spectrum LM staking bundle / deposit proxy",
+   "templateHash": "e82488a77c6ab9cb032cc15739170b35daaba166d069bded29507bbf7de951ca",
+   "unspent": 147,
+   "nanoErg": 470400000,
+   "fetched": 147,
+   "olderThan1Block": 147,
+   "olderThan720": 147,
+   "ageMedianBlocks": 908601,
+   "sample": [
+    "dd8d870b1c12a2e489c703c60ec2ce382629c01381c03d6c4666f10466af92fa",
+    "dffd7a2bbb4634e5fc635ed3688e48f382b0f5f6125c53b9b88bc255beb24c86",
+    "9ce21ab7615a52d056bbf00a2f056b363529051051477cebce3571209acab8f7"
+   ]
+  },
+  {
+   "group": "executor",
+   "name": "Spectrum LM redeem proxy",
+   "templateHash": "f624989acb298aeb9094312d89e9902061df72598639d55ae320db6a99b26c5a",
+   "unspent": 27,
+   "nanoErg": 75600000,
+   "fetched": 27,
+   "olderThan1Block": 27,
+   "olderThan720": 27,
+   "ageMedianBlocks": 301734,
+   "sample": [
+    "67dedfb06f2df2b976b0e101f6609b15e682887b82eff20755dfc4b25f9ebf97",
+    "711d6195ec32db7d541598bfc9607311fe1f1c86b207ed18f4c22dc70a6f3fd6",
+    "7eadd7bdfadfac7593f99b02475241d3452bda53cb6f44338cc6a93a7cabd37c"
+   ]
+  },
+  {
+   "group": "liquidation",
+   "name": "Duckpools collateral (ERG pool)",
+   "templateHash": "5d5dcacf1e30f2ba5e1f4a3dccd82bba76ebb8ae4055865fc1632c3607d084a7",
+   "unspent": 0,
+   "nanoErg": 0,
+   "fetched": 0,
+   "olderThan1Block": 0,
+   "olderThan720": 0,
+   "ageMedianBlocks": null,
+   "sample": []
+  },
+  {
+   "group": "liquidation",
+   "name": "Duckpools collateral (token pools)",
+   "templateHash": "db697243c2c862454a4be4c7cebf5cdb75a9d360e9297cb1543acfb0a32c5bd0",
+   "unspent": 21,
+   "nanoErg": 31788625432615,
+   "fetched": 21,
+   "olderThan1Block": 21,
+   "olderThan720": 21,
+   "ageMedianBlocks": 11651,
+   "sample": [
+    "31ccfcbc249392121a32ff704d58f6e8054fb3c17cabf0d1c7432736c3e3932e",
+    "9b06f503d99d31f928abe227c458a1cfa585b43fde33eee37fc9ae3716ac0936",
+    "0d65eb2b44b4bfc64993dd1bb1608e5e63966222005069fd85ae90a8caf85e47"
+   ]
+  },
+  {
+   "group": "liquidation",
+   "name": "SigmaFi ERG bond",
+   "templateHash": "44830db1e02ba3fecd33028c463bebdcb55b2a6c6e3b0cc70ebb4ffa654fe3aa",
+   "unspent": 15,
+   "nanoErg": 5326000000,
+   "fetched": 15,
+   "olderThan1Block": 15,
+   "olderThan720": 15,
+   "ageMedianBlocks": 172168,
+   "sample": [
+    "5335fa98ee05818e9336e126e8c2fcb80aa3c18f42449296d7828f10ece97946",
+    "a26803d8650476abe5d81c31f8ebdc1143b8c986f04fe248e89e4456c4df7ae3",
+    "89aaf33da32c739498dcce54c5722cf8a792faaec74bc51f205735af27bdd40d"
+   ],
+   "maturedNow": 15,
+   "maturedNanoErg": 5326000000
+  },
+  {
+   "group": "bank",
+   "name": "hodlERG bank",
+   "templateHash": "8b5dac35309da7996c2b39b7010a9ec9d46a8b6e80387e0b949db7a3ec4df156",
+   "unspent": 5,
+   "nanoErg": 57097182398698,
+   "fetched": 5,
+   "olderThan1Block": 5,
+   "olderThan720": 5,
+   "ageMedianBlocks": 829683,
+   "sample": [
+    "1a095fd18d2b3dafafdf3a3a39c393395d93dcbe167b78d693cd35b53fba46d6",
+    "1ca23159b4795f7da0339ba4bfc54e681f3127120aa57ade569b578934be9b72",
+    "edd3c9b2bc41a90ef248184f34a3f604728c53854d9e27a3a0c6dc26dc781700"
+   ]
+  },
+  {
+   "group": "auction",
+   "name": "ErgoAuctionHouse auction",
+   "templateHash": "3d578e5cfa4a4314f18d7f716e442c79709e36bd861a7ebc1617fa0b122a0d68",
+   "unspent": 3,
+   "nanoErg": 102846750000,
+   "fetched": 3,
+   "olderThan1Block": 3,
+   "olderThan720": 3,
+   "ageMedianBlocks": 99977,
+   "sample": [
+    "130fef3107c9a8db661adb0dba5fe8f1dbb7e0e99355297937eddeeb7f068e5b",
+    "76c33c80d84b9efd0e7fb7fbf945ecd35927f4716e8afcd8761b98b563d2df27",
+    "133ea262194a3eddfdc51b4e08a0fb7e6a733fd13408fb2ebe3387ea84456ea0"
+   ]
+  },
+  {
+   "group": "auction",
+   "name": "SkyHarbor ERG sale",
+   "templateHash": "f9f76671e416a0bb9e41d3c719ad4f5cc318f3fdd5df40b8a1d3c115c13835bd",
+   "unspent": 2771,
+   "nanoErg": 33279000000,
+   "fetched": 2771,
+   "olderThan1Block": 2771,
+   "olderThan720": 2771,
+   "ageMedianBlocks": 997895,
+   "sample": [
+    "89459d5be3d12607d116adc8431470167c14725704f3f07ad92749825e7775eb",
+    "e4ac04a53118fc168bf69cf5c50a19228849de118b11a45605d69bf8aaeb8997",
+    "31dc261c581ec564f1873ba9f6af4fc787d19dbdc1bf5e0b68055f58c2493c14"
+   ]
+  },
+  {
+   "group": "auction",
+   "name": "SkyHarbor SigUSD sale",
+   "templateHash": "8bd9b67b983e8d10d5637e205c4050f6564e0dc00564fa60918f6055b31418c7",
+   "unspent": 1,
+   "nanoErg": 3000000,
+   "fetched": 1,
+   "olderThan1Block": 1,
+   "olderThan720": 1,
+   "ageMedianBlocks": 879556,
+   "sample": [
+    "c46ff317cd610de4ff2e60e7af12d882fd0ad0c3e1663359ebf25439c0ffba57"
+   ]
+  },
+  {
+   "group": "pool",
+   "name": "Dexy LP (SDK n2dexyGOLD, testnet ids)",
+   "templateHash": "2cf12e36bda2712c72da5f8710cbcbd5d6c3ad689e72741b9eac4996ed9b1d3e",
+   "unspent": 3,
+   "nanoErg": 5004000000,
+   "fetched": 3,
+   "olderThan1Block": 3,
+   "olderThan720": 3,
+   "ageMedianBlocks": 22855,
+   "sample": [
+    "33c83f051f410c4da7b31d6f1d76895a6f2242d4a908a6f5f5eedcaa05748858",
+    "661fd7516b4a834073396862616f6f7ad5183fd9e693bb54804fb910b6e1598c",
+    "e6e004401703ab4c44ae707485387f8efa16131294b3f3c2d5cb7f8b7f27da78"
+   ]
+  },
+  {
+   "group": "pool",
+   "name": "LithosDex liquidity pool",
+   "templateHash": "2de640e37a49cc9d95a08f2678da9f5e9aba56e08dfbc0662a64d225093156e3",
+   "unspent": 4,
+   "nanoErg": 4328642693859,
+   "fetched": 4,
+   "olderThan1Block": 4,
+   "olderThan720": 2,
+   "ageMedianBlocks": 971,
+   "sample": [
+    "855b17781309c105c42359612df1e05f469e0b5292949d4bcf4fbbda4e6bf7c8",
+    "3e3d2c44f5d42981e25ae1859694ebb24e1a6406fa2a3e5fae108b57c0cef368",
+    "09abbab9031dde3bf68609de6c7ad027a7ccdf00a07286be354ea77135858e1f"
+   ]
+  }
+ ],
+ "requests": {
+  "net": 93,
+  "cache": 0
+ }
+}

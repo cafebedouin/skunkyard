@@ -1,0 +1,73 @@
+{
+ "from": 1869418,
+ "to": 1891017,
+ "pools": {
+  "9916d75132593c8b07fe18bd8d583bda1652eed7565cf41a4738ddd90fc992ec": {
+   "fee": 995,
+   "blocks": 21600,
+   "medianAbsGap": 0.043133242834566765,
+   "meanAbsGap": 0.053281352233119396,
+   "meanSignedGap": 0.04925734181221125,
+   "blocksPoolAboveOracleBeyondFee": 18209,
+   "blocksGapAboveFee": 20555,
+   "maxGap": 0.22079373428305793,
+   "ergDepthMaxNanoErg": 148234721735798
+  },
+  "bee300e9c81e48d7ab5fc29294c7bbb536cf9dcd9c91ee3be9898faec91b11b6": {
+   "fee": 995,
+   "blocks": 21600,
+   "medianAbsGap": 0.07163312829555646,
+   "meanAbsGap": 0.07410308538843406,
+   "meanSignedGap": 0.057299426681161024,
+   "blocksPoolAboveOracleBeyondFee": 15651,
+   "blocksGapAboveFee": 20403,
+   "maxGap": 0.2618158458464832,
+   "ergDepthMaxNanoErg": 9756143838
+  },
+  "931f133cdd56902cff8870a71cd8562fd9721037b5c713a516fbdda976ba1cf0": {
+   "fee": 997,
+   "blocks": 21600,
+   "medianAbsGap": 0.05204017028636565,
+   "meanAbsGap": 0.1079122236164688,
+   "meanSignedGap": 0.08232943564504662,
+   "blocksPoolAboveOracleBeyondFee": 13209,
+   "blocksGapAboveFee": 21066,
+   "maxGap": 0.38537255829257466,
+   "ergDepthMaxNanoErg": 969008863
+  },
+  "eb9095b54760703c90a076cd9d3a5f839b5c6213eb829f383934f9e0bab181db": {
+   "fee": 997,
+   "blocks": 15943,
+   "medianAbsGap": 0.8590055788040455,
+   "meanAbsGap": 0.8537234559800686,
+   "meanSignedGap": -0.8537234559800686,
+   "blocksPoolAboveOracleBeyondFee": 0,
+   "blocksGapAboveFee": 15943,
+   "maxGap": 0.8815673454979605,
+   "ergDepthMaxNanoErg": 10015023
+  },
+  "03b695cd465285b05ce99755046e93910f78dfa869b444427cf1a10388d4aea5": {
+   "fee": 980,
+   "blocks": 19057,
+   "medianAbsGap": 0.8467602209229926,
+   "meanAbsGap": 0.8505705901487443,
+   "meanSignedGap": -0.8505705901487443,
+   "blocksPoolAboveOracleBeyondFee": 0,
+   "blocksGapAboveFee": 19057,
+   "maxGap": 0.880550494403827,
+   "ergDepthMaxNanoErg": 10101011
+  },
+  "9eccc846606c4a34e2e3ac189041a8f41e3dc1681f61bb0c5e1f6d3cb9c380af": {
+   "fee": 590,
+   "blocks": 21600,
+   "medianAbsGap": 0.808063248581082,
+   "meanAbsGap": 0.8131208866809854,
+   "meanSignedGap": -0.8131208866809854,
+   "blocksPoolAboveOracleBeyondFee": 0,
+   "blocksGapAboveFee": 21600,
+   "maxGap": 0.8512515646469827,
+   "ergDepthMaxNanoErg": 12578617
+  }
+ },
+ "oracleBoxes": 3210
+}

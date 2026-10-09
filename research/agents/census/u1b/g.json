@@ -1,0 +1,1056 @@
+{
+ "atTip": 1891056,
+ "explorer": "https://api.ergo.aap.cornell.edu/api/v1",
+ "unspent": {
+  "babel": 22,
+  "otg": 14,
+  "kushti": 5,
+  "machina-limit": 7,
+  "machina-grid": 4
+ },
+ "n2tPoolsLive": 285,
+ "sequential": {
+  "totalNanoErg": 7462910137,
+  "takes": [
+   {
+    "offerBox": "2e80fc743a9a34a6dad71d9dbd519d17c5cca01de492297f3e9897fff32adfdd",
+    "kind": "babel",
+    "token": "d71693c49a84fbbecd4908c94813b46514b18b67a99952dc1e6e4791556de413",
+    "poolNft": "d7868533f26db1b1728c1f85c2326a3c0327b57ddab14e41a2b77a5d4c20f4b2",
+    "profitNanoErg": 7441174809,
+    "tokens": 197736,
+    "in": 72793191,
+    "detail": {
+     "side": "bid",
+     "price": 38000,
+     "ergFromOffer": 7513968000
+    }
+   },
+   {
+    "offerBox": "e0fdb55463ddd599278db8cda72d96e16487779d79572ad5847846501b949d6f",
+    "kind": "machina-grid",
+    "token": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+    "poolNft": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+    "profitNanoErg": 7341776,
+    "tokens": 1,
+    "in": 43224,
+    "detail": {
+     "side": "bid",
+     "price": 31743000,
+     "ergFromOffer": 7385000
+    }
+   },
+   {
+    "offerBox": "c175dbff7d9fac42588ed4869767527de41d01ec56a98721e4ea0020721d0204",
+    "kind": "machina-grid",
+    "token": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+    "poolNft": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+    "profitNanoErg": 7221776,
+    "tokens": 1,
+    "in": 43224,
+    "detail": {
+     "side": "bid",
+     "price": 31207000,
+     "ergFromOffer": 7265000
+    }
+   },
+   {
+    "offerBox": "588ee84e4e77d4f4aab7f1e753e87007e17de3b9c33911ca6d3edc3459420ee7",
+    "kind": "machina-grid",
+    "token": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+    "poolNft": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+    "profitNanoErg": 7171776,
+    "tokens": 1,
+    "in": 43224,
+    "detail": {
+     "side": "bid",
+     "price": 31337000,
+     "ergFromOffer": 7215000
+    }
+   }
+  ],
+  "byToken": {
+   "d71693c49a84fbbecd4908c94813b46514b18b67a99952dc1e6e4791556de413": {
+    "nanoErg": 7441174809,
+    "takes": 1
+   },
+   "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8": {
+    "nanoErg": 21735328,
+    "takes": 3
+   }
+  }
+ },
+ "offers": [
+  {
+   "kind": "babel",
+   "boxId": "2e80fc743a9a34a6dad71d9dbd519d17c5cca01de492297f3e9897fff32adfdd",
+   "token": "d71693c49a84fbbecd4908c94813b46514b18b67a99952dc1e6e4791556de413",
+   "valueNanoErg": 7514968000,
+   "tokensHeld": 2264,
+   "created": 1778481,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 38000,
+     "cap": 7513968000
+    }
+   ],
+   "n2tPools": 2,
+   "deepestPoolNanoErgPerUnit": 366.5708150002695,
+   "best": {
+    "profitNanoErg": 7441174809,
+    "in": 72793191,
+    "tokens": 197736,
+    "detail": {
+     "side": "bid",
+     "price": 38000,
+     "ergFromOffer": 7513968000
+    },
+    "poolBox": "0ee64897ebf1eb145924b8349e9a58e84ac276b43bb67dede73d43d5554f3e5a",
+    "poolNft": "d7868533f26db1b1728c1f85c2326a3c0327b57ddab14e41a2b77a5d4c20f4b2",
+    "poolX": 295716689678,
+    "poolY": 806710948,
+    "poolFee": 996
+   }
+  },
+  {
+   "kind": "machina-grid",
+   "boxId": "e0fdb55463ddd599278db8cda72d96e16487779d79572ad5847846501b949d6f",
+   "token": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+   "valueNanoErg": 8385000,
+   "tokensHeld": 205,
+   "created": 1884388,
+   "legs": [
+    {
+     "side": "ask",
+     "price": 33414000,
+     "cap": 205
+    },
+    {
+     "side": "bid",
+     "price": 31743000,
+     "cap": 7385000
+    }
+   ],
+   "n2tPools": 1,
+   "deepestPoolNanoErgPerUnit": 41926.479088431886,
+   "best": {
+    "profitNanoErg": 7341776,
+    "in": 43224,
+    "tokens": 1,
+    "detail": {
+     "side": "bid",
+     "price": 31743000,
+     "ergFromOffer": 7385000
+    },
+    "poolBox": "a3df60903ea63276f323125a1971afbfe6ffd43bf692c3af1f917cfc0bc120b1",
+    "poolNft": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+    "poolX": 5020053724886,
+    "poolY": 119734684,
+    "poolFee": 970
+   }
+  },
+  {
+   "kind": "machina-grid",
+   "boxId": "c175dbff7d9fac42588ed4869767527de41d01ec56a98721e4ea0020721d0204",
+   "token": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+   "valueNanoErg": 8265000,
+   "tokensHeld": 205,
+   "created": 1884388,
+   "legs": [
+    {
+     "side": "ask",
+     "price": 32850000,
+     "cap": 205
+    },
+    {
+     "side": "bid",
+     "price": 31207000,
+     "cap": 7265000
+    }
+   ],
+   "n2tPools": 1,
+   "deepestPoolNanoErgPerUnit": 41926.479088431886,
+   "best": {
+    "profitNanoErg": 7221776,
+    "in": 43224,
+    "tokens": 1,
+    "detail": {
+     "side": "bid",
+     "price": 31207000,
+     "ergFromOffer": 7265000
+    },
+    "poolBox": "a3df60903ea63276f323125a1971afbfe6ffd43bf692c3af1f917cfc0bc120b1",
+    "poolNft": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+    "poolX": 5020053724886,
+    "poolY": 119734684,
+    "poolFee": 970
+   }
+  },
+  {
+   "kind": "machina-grid",
+   "boxId": "588ee84e4e77d4f4aab7f1e753e87007e17de3b9c33911ca6d3edc3459420ee7",
+   "token": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+   "valueNanoErg": 8215000,
+   "tokensHeld": 205,
+   "created": 1884388,
+   "legs": [
+    {
+     "side": "ask",
+     "price": 32986000,
+     "cap": 205
+    },
+    {
+     "side": "bid",
+     "price": 31337000,
+     "cap": 7215000
+    }
+   ],
+   "n2tPools": 1,
+   "deepestPoolNanoErgPerUnit": 41926.479088431886,
+   "best": {
+    "profitNanoErg": 7171776,
+    "in": 43224,
+    "tokens": 1,
+    "detail": {
+     "side": "bid",
+     "price": 31337000,
+     "ergFromOffer": 7215000
+    },
+    "poolBox": "a3df60903ea63276f323125a1971afbfe6ffd43bf692c3af1f917cfc0bc120b1",
+    "poolNft": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+    "poolX": 5020053724886,
+    "poolY": 119734684,
+    "poolFee": 970
+   }
+  },
+  {
+   "kind": "babel",
+   "boxId": "fc3aa86922611be22ce5a1ab844add3c0b4f72aaee5657be3158c462e4e209fe",
+   "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+   "valueNanoErg": 10001000000,
+   "tokensHeld": 0,
+   "created": 873596,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 1000000,
+     "cap": 10000000000
+    }
+   ],
+   "n2tPools": 4,
+   "deepestPoolNanoErgPerUnit": 34386864.15799904,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "b94f0852d6d15a8be0f38fb410b7c6b5f1298b4e8147800e576e4635c65fbbbc",
+   "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+   "valueNanoErg": 335000000,
+   "tokensHeld": 19,
+   "created": 902285,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 4000000,
+     "cap": 334000000
+    }
+   ],
+   "n2tPools": 4,
+   "deepestPoolNanoErgPerUnit": 34386864.15799904,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "7a26228288cc14a6426045a1cdde46ca8cfba35a49fc05520cda83c1a9593c98",
+   "token": "3120bf3812fd29b31bc8ead614393e8be01978fa6e083f7b899d2372c960d2a5",
+   "valueNanoErg": 201000000,
+   "tokensHeld": 0,
+   "created": 986568,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 2,
+     "cap": 200000000
+    }
+   ],
+   "n2tPools": 1,
+   "deepestPoolNanoErgPerUnit": 9.512083342266246,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "e62170e9bca016a91d25181c6aafc90dc9ad47e5d8fe30ed07e8739977442df6",
+   "token": "3405d8f709a19479839597f9a22a7553bdfc1a590a427572787d7c44a88b6386",
+   "valueNanoErg": 41000000,
+   "tokensHeld": 0,
+   "created": 1072197,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 2000000,
+     "cap": 40000000
+    }
+   ],
+   "n2tPools": 1,
+   "deepestPoolNanoErgPerUnit": 2392280.7784058247,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "fcb6bfb0539266bedb69aee3832e9eb99b594e934c860ad0039da4e4444a411d",
+   "token": "e023c5f382b6e96fbd878f6811aac73345489032157ad5affb84aefd4956c297",
+   "valueNanoErg": 1001000000,
+   "tokensHeld": 0,
+   "created": 1209149,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 200,
+     "cap": 1000000000
+    }
+   ],
+   "n2tPools": 2,
+   "deepestPoolNanoErgPerUnit": 756.3087361276446,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "f43225ccfbc78394b24653de0d70a49b74ede387a88e5d6438eabd38f62742b6",
+   "token": "e023c5f382b6e96fbd878f6811aac73345489032157ad5affb84aefd4956c297",
+   "valueNanoErg": 5001000000,
+   "tokensHeld": 0,
+   "created": 1209152,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 100,
+     "cap": 5000000000
+    }
+   ],
+   "n2tPools": 2,
+   "deepestPoolNanoErgPerUnit": 756.3087361276446,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "aa54c6cbd0a1d1ceaeb905eb8fa42f680bebd090a9221151a8ba3f20216bc6ca",
+   "token": "e023c5f382b6e96fbd878f6811aac73345489032157ad5affb84aefd4956c297",
+   "valueNanoErg": 3492199600,
+   "tokensHeld": 25144,
+   "created": 1213144,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 350,
+     "cap": 3491199600
+    }
+   ],
+   "n2tPools": 2,
+   "deepestPoolNanoErgPerUnit": 756.3087361276446,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "06e73cd4093331c15b0e65bcb4399329c9b92c612fadb2c98b21236e7ff27a87",
+   "valueNanoErg": 300000,
+   "unparsed": "TypeError(\"int() argument must be a string, a bytes-like object or a real number",
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "9c1675394a1858191bbf7519ef52a474a7d553e56bee036ea576c68547d8aa7e",
+   "valueNanoErg": 300000,
+   "unparsed": "TypeError(\"int() argument must be a string, a bytes-like object or a real number",
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "cc5be410947d4fa720ac473be350e305841c362f8e9ffeec4a56188726e7907d",
+   "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+   "valueNanoErg": 289000000,
+   "tokensHeld": 28,
+   "created": 1392905,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 4000000,
+     "cap": 288000000
+    }
+   ],
+   "n2tPools": 4,
+   "deepestPoolNanoErgPerUnit": 34386864.15799904,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "e1d76f13796719bb9989fd777b693408f8b100e6f5a9f9953de05f4f824bbc93",
+   "token": "272a4aeba6d1596ee0405b13fa223074077fd31f2d519fcd2f7b1656596db029",
+   "valueNanoErg": 99528000000,
+   "tokensHeld": 4730,
+   "created": 1611981,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 100000,
+     "cap": 99527000000
+    }
+   ],
+   "n2tPools": 0,
+   "deepestPoolNanoErgPerUnit": null,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "9630ca6e72632f16eaf42ef988f8551a8cd04b5237ff34e873ecb4f938cc7f7a",
+   "token": "f100123eb4161919bc5e5b2ffe5fb91f7c93b524f372cbba5c7d6b004efa8106",
+   "valueNanoErg": 1977168750,
+   "tokensHeld": 95325,
+   "created": 1666560,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 250,
+     "cap": 1976168750
+    }
+   ],
+   "n2tPools": 1,
+   "deepestPoolNanoErgPerUnit": 1261.323496531899,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "f7bd31a272893417daf603fdd955a69dcef7a09649d43803fc9404d278ccbd69",
+   "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+   "valueNanoErg": 9901000000,
+   "tokensHeld": 10,
+   "created": 1674802,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 10000000,
+     "cap": 9900000000
+    }
+   ],
+   "n2tPools": 4,
+   "deepestPoolNanoErgPerUnit": 34386864.15799904,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "997cf8c583e6dec9372effe4568e6ac13da9c580cee50270b899a7a06fc3c517",
+   "token": "8b08cdd5449a9592a9e79711d7d79249d7a03c535d17efaee83e216e80a44c4b",
+   "valueNanoErg": 28699000,
+   "tokensHeld": 44602,
+   "created": 1674873,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 500,
+     "cap": 27699000
+    }
+   ],
+   "n2tPools": 3,
+   "deepestPoolNanoErgPerUnit": 45519.47455373625,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "a81698b56a0cd241d9412e533fb054c1413217f05e028ab7d14bce7fec0ca61a",
+   "token": "a55b8735ed1a99e46c2c89f8994aacdf4b1109bdcf682f1e5b34479c6e392669",
+   "valueNanoErg": 3963600000,
+   "tokensHeld": 16,
+   "created": 1850269,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 4000000,
+     "cap": 3962600000
+    }
+   ],
+   "n2tPools": 0,
+   "deepestPoolNanoErgPerUnit": null,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "bd7618459dd241b91cb0c465e140a304a3ce9df3b05892b7d5c3924dc1c32ea4",
+   "token": "8b08cdd5449a9592a9e79711d7d79249d7a03c535d17efaee83e216e80a44c4b",
+   "valueNanoErg": 2488900000,
+   "tokensHeld": 2420,
+   "created": 1850517,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 5000,
+     "cap": 2487900000
+    }
+   ],
+   "n2tPools": 3,
+   "deepestPoolNanoErgPerUnit": 45519.47455373625,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "c2e70f977e65565b254d1be985b11d55fcba4f9773cb37c28e7f516d50cc2530",
+   "token": "003bd19d0187117f130b62e1bcab0939929ff5c7709f843c5c4dd158949285d0",
+   "valueNanoErg": 1001000000,
+   "tokensHeld": 0,
+   "created": 1884992,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 100000,
+     "cap": 1000000000
+    }
+   ],
+   "n2tPools": 1,
+   "deepestPoolNanoErgPerUnit": 193934.677861972,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "25a2357679a6e0d4f47df4cf5ef35d23e26e3ce12d0f4dd843c00c4f38478f56",
+   "token": "d71693c49a84fbbecd4908c94813b46514b18b67a99952dc1e6e4791556de413",
+   "valueNanoErg": 1000000,
+   "tokensHeld": 1250000,
+   "created": 1891043,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 8000,
+     "cap": 0
+    }
+   ],
+   "n2tPools": 2,
+   "deepestPoolNanoErgPerUnit": 366.5708150002695,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "ce8cdb127f0a806a433e977fcbb0808407af70b0f03382a7c77837be4fddec45",
+   "token": "01dce8a5632d19799950ff90bca3b5d0ca3ebfa8aaafd06f0cc6dd1e97150e7f",
+   "valueNanoErg": 1000000,
+   "tokensHeld": 929,
+   "created": 1891043,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 270270,
+     "cap": 0
+    }
+   ],
+   "n2tPools": 2,
+   "deepestPoolNanoErgPerUnit": 20.075265037944824,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "f2697b69e20e2fc796ca2f87872c245c8ca1d1bc50e0ab3c2173e189ddbaaad0",
+   "token": "3405d8f709a19479839597f9a22a7553bdfc1a590a427572787d7c44a88b6386",
+   "valueNanoErg": 1000000,
+   "tokensHeld": 77,
+   "created": 1891044,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 12328166,
+     "cap": 0
+    }
+   ],
+   "n2tPools": 1,
+   "deepestPoolNanoErgPerUnit": 2392280.7784058247,
+   "best": null
+  },
+  {
+   "kind": "babel",
+   "boxId": "6e53fcf87bd9356f82fb4460c3c8866c99dd5c48b755f79fe8d7a405aa8bdf74",
+   "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+   "valueNanoErg": 1000000,
+   "tokensHeld": 100000,
+   "created": 1891045,
+   "legs": [
+    {
+     "side": "bid",
+     "price": 6000,
+     "cap": 0
+    }
+   ],
+   "n2tPools": 3,
+   "deepestPoolNanoErgPerUnit": 5943.989279352632,
+   "best": null
+  },
+  {
+   "kind": "otg",
+   "boxId": "5f290790933e34b0b9bfb78b5d8f8b823c8b5b61f9ebded823797c31cf6858d7",
+   "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+   "valueNanoErg": 107540799,
+   "tokensHeld": 394200,
+   "created": 1304382,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 50,
+     "buyLots": 0,
+     "sellLots": 50,
+     "bestBuyUnit": null,
+     "bestSellUnit": 33806.626083333336
+    }
+   ],
+   "n2tPools": 3,
+   "deepestPoolNanoErgPerUnit": 5943.989279352632,
+   "best": null
+  },
+  {
+   "kind": "otg",
+   "boxId": "b4e002ea6a4776217ef85c2ebd9c0d585294603d811913f23a02eaffe0b44046",
+   "valueNanoErg": 300000,
+   "unparsed": "KeyError('R5')",
+   "best": null
+  },
+  {
+   "kind": "otg",
+   "boxId": "35d1877edd6afbf357474acee7bc1277deca43f75c1342c0a7dd31ca9b3bf32f",
+   "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+   "valueNanoErg": 148376423,
+   "tokensHeld": 608000,
+   "created": 1409583,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 50,
+     "buyLots": 0,
+     "sellLots": 50,
+     "bestBuyUnit": null,
+     "bestSellUnit": 20325.20325
+    }
+   ],
+   "n2tPools": 3,
+   "deepestPoolNanoErgPerUnit": 5943.989279352632,
+   "best": null
+  },
+  {
+   "kind": "otg",
+   "boxId": "c1cfb74ac577505cdb6cf164416bd4ef88040573107260d360f4b0a725c3d93d",
+   "token": "01dce8a5632d19799950ff90bca3b5d0ca3ebfa8aaafd06f0cc6dd1e97150e7f",
+   "valueNanoErg": 2680426587,
+   "tokensHeld": 136275000,
+   "created": 1431639,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 10,
+     "buyLots": 0,
+     "sellLots": 10,
+     "bestBuyUnit": null,
+     "bestSellUnit": 139.86013982608696
+    }
+   ],
+   "n2tPools": 2,
+   "deepestPoolNanoErgPerUnit": 20.075265037944824,
+   "best": null
+  },
+  {
+   "kind": "otg",
+   "boxId": "16ab8ae2839cb66487039ffa7dbc532c0597365905564bc9752d2e4bcff33e9c",
+   "token": "8b08cdd5449a9592a9e79711d7d79249d7a03c535d17efaee83e216e80a44c4b",
+   "valueNanoErg": 1000000,
+   "tokensHeld": 503124,
+   "created": 1572690,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 4,
+     "buyLots": 0,
+     "sellLots": 4,
+     "bestBuyUnit": null,
+     "bestSellUnit": 45977.011488
+    }
+   ],
+   "n2tPools": 3,
+   "deepestPoolNanoErgPerUnit": 45519.47455373625,
+   "best": null
+  },
+  {
+   "kind": "otg",
+   "boxId": "cc20e4997f67dfc5c61ae46618b55514400126d017e44c2a45be278616605ad7",
+   "token": "8b08cdd5449a9592a9e79711d7d79249d7a03c535d17efaee83e216e80a44c4b",
+   "valueNanoErg": 1000000,
+   "tokensHeld": 20000,
+   "created": 1572690,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 4,
+     "buyLots": 0,
+     "sellLots": 4,
+     "bestBuyUnit": null,
+     "bestSellUnit": 45977.0114
+    }
+   ],
+   "n2tPools": 3,
+   "deepestPoolNanoErgPerUnit": 45519.47455373625,
+   "best": null
+  },
+  {
+   "kind": "otg",
+   "boxId": "649b65b1ceedac305a3f8fa616d74d137967a5a7d4d9bd435426e4c676cefd0a",
+   "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+   "valueNanoErg": 36970256884,
+   "tokensHeld": 0,
+   "created": 1579635,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 50,
+     "buyLots": 50,
+     "sellLots": 0,
+     "bestBuyUnit": 9803921.56,
+     "bestSellUnit": null
+    }
+   ],
+   "n2tPools": 4,
+   "deepestPoolNanoErgPerUnit": 34386864.15799904,
+   "best": null
+  },
+  {
+   "kind": "otg",
+   "boxId": "7e51a0f6fcc302a17246540347e2a9cd088f7c20b0c5fd39cb7e5501a24690a7",
+   "token": "a55b8735ed1a99e46c2c89f8994aacdf4b1109bdcf682f1e5b34479c6e392669",
+   "valueNanoErg": 4427970323,
+   "tokensHeld": 54,
+   "created": 1824703,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 2,
+     "buyLots": 1,
+     "sellLots": 1,
+     "bestBuyUnit": 4531187.638689867,
+     "bestSellUnit": 233717569.03703704
+    }
+   ],
+   "n2tPools": 0,
+   "deepestPoolNanoErgPerUnit": null,
+   "best": null
+  },
+  {
+   "kind": "otg",
+   "boxId": "8422586db322ef3a888e3fe396becc3c5b8107fdf4adcf4d6e5d112b85c8f7b7",
+   "token": "a55b8735ed1a99e46c2c89f8994aacdf4b1109bdcf682f1e5b34479c6e392669",
+   "valueNanoErg": 4225963676,
+   "tokensHeld": 0,
+   "created": 1824713,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 2,
+     "buyLots": 1,
+     "sellLots": 1,
+     "bestBuyUnit": 4533222.828326181,
+     "bestSellUnit": null
+    }
+   ],
+   "n2tPools": 0,
+   "deepestPoolNanoErgPerUnit": null,
+   "best": null
+  },
+  {
+   "kind": "otg",
+   "boxId": "337a82014957bdda672e62f302dab14a288f08b4c7255f0d87eb3a213a4aedb3",
+   "token": "a55b8735ed1a99e46c2c89f8994aacdf4b1109bdcf682f1e5b34479c6e392669",
+   "valueNanoErg": 4033168533,
+   "tokensHeld": 0,
+   "created": 1824724,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 2,
+     "buyLots": 1,
+     "sellLots": 1,
+     "bestBuyUnit": 4545849.529875986,
+     "bestSellUnit": null
+    }
+   ],
+   "n2tPools": 0,
+   "deepestPoolNanoErgPerUnit": null,
+   "best": null
+  },
+  {
+   "kind": "otg",
+   "boxId": "b57c270d7e1c8f2444404b87585c6b783fdbb7f91360f3fb84d8320ab31bc4b3",
+   "token": "a55b8735ed1a99e46c2c89f8994aacdf4b1109bdcf682f1e5b34479c6e392669",
+   "valueNanoErg": 3849164848,
+   "tokensHeld": 0,
+   "created": 1824727,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 2,
+     "buyLots": 1,
+     "sellLots": 1,
+     "bestBuyUnit": 4548658.212765957,
+     "bestSellUnit": null
+    }
+   ],
+   "n2tPools": 0,
+   "deepestPoolNanoErgPerUnit": null,
+   "best": null
+  },
+  {
+   "kind": "otg",
+   "boxId": "ae34058c84c2ab14e6c99ef62df1c1c29ae60b6f43b0a48f77587bada3380608",
+   "token": "a55b8735ed1a99e46c2c89f8994aacdf4b1109bdcf682f1e5b34479c6e392669",
+   "valueNanoErg": 3673551731,
+   "tokensHeld": 0,
+   "created": 1824738,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 2,
+     "buyLots": 1,
+     "sellLots": 1,
+     "bestBuyUnit": 4556515.79528536,
+     "bestSellUnit": null
+    }
+   ],
+   "n2tPools": 0,
+   "deepestPoolNanoErgPerUnit": null,
+   "best": null
+  },
+  {
+   "kind": "otg",
+   "boxId": "eacf9245bcb3fd10b88b8455b236cdf938d547ff4ac5fed7ea38bf838594e161",
+   "token": "a55b8735ed1a99e46c2c89f8994aacdf4b1109bdcf682f1e5b34479c6e392669",
+   "valueNanoErg": 3505946572,
+   "tokensHeld": 0,
+   "created": 1824739,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 2,
+     "buyLots": 1,
+     "sellLots": 1,
+     "bestBuyUnit": 4557797.8829648895,
+     "bestSellUnit": null
+    }
+   ],
+   "n2tPools": 0,
+   "deepestPoolNanoErgPerUnit": null,
+   "best": null
+  },
+  {
+   "kind": "otg",
+   "boxId": "678f011af6548a4d80c498e6e484d8e40432139f9803076828943c17fb666064",
+   "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+   "valueNanoErg": 72263223302,
+   "tokensHeld": 31344,
+   "created": 1888903,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 50,
+     "buyLots": 2,
+     "sellLots": 48,
+     "bestBuyUnit": 33783783.78278688,
+     "bestSellUnit": 34722222.222222224
+    }
+   ],
+   "n2tPools": 4,
+   "deepestPoolNanoErgPerUnit": 34386864.15799904,
+   "best": null
+  },
+  {
+   "kind": "kushti",
+   "boxId": "9176888c2e324c8836bd456725dc0b4f67bcb1f0662dec9f6ef640da64513496",
+   "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+   "valueNanoErg": 100000000000,
+   "tokensHeld": 0,
+   "created": 1220655,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 1,
+     "buyLots": 1,
+     "sellLots": 0,
+     "bestBuyUnit": 4118566.0,
+     "bestSellUnit": null
+    }
+   ],
+   "n2tPools": 4,
+   "deepestPoolNanoErgPerUnit": 34386864.15799904,
+   "best": null
+  },
+  {
+   "kind": "kushti",
+   "boxId": "0d6b6c1a8b266c41be3493a18ec69c024e549c6631b974becc07f11a29c1f741",
+   "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+   "valueNanoErg": 101979907940,
+   "tokensHeld": 0,
+   "created": 1221607,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 1,
+     "buyLots": 1,
+     "sellLots": 0,
+     "bestBuyUnit": 4266412.0,
+     "bestSellUnit": null
+    }
+   ],
+   "n2tPools": 4,
+   "deepestPoolNanoErgPerUnit": 34386864.15799904,
+   "best": null
+  },
+  {
+   "kind": "kushti",
+   "boxId": "088968edb7e59aa1eb2c9dcef3de16c42cb6916f787580c4e8ecc4ad1f952586",
+   "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+   "valueNanoErg": 101979984130,
+   "tokensHeld": 0,
+   "created": 1221609,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 1,
+     "buyLots": 1,
+     "sellLots": 0,
+     "bestBuyUnit": 4311322.0,
+     "bestSellUnit": null
+    }
+   ],
+   "n2tPools": 4,
+   "deepestPoolNanoErgPerUnit": 34386864.15799904,
+   "best": null
+  },
+  {
+   "kind": "kushti",
+   "boxId": "a9b14b2aae54797ae5f7cb338478a42a23fe9ae72b1ac1efc08ae13d25f90c3a",
+   "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+   "valueNanoErg": 101979960675,
+   "tokensHeld": 0,
+   "created": 1883480,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 1,
+     "buyLots": 1,
+     "sellLots": 0,
+     "bestBuyUnit": 4356232.0,
+     "bestSellUnit": null
+    }
+   ],
+   "n2tPools": 4,
+   "deepestPoolNanoErgPerUnit": 34386864.15799904,
+   "best": null
+  },
+  {
+   "kind": "kushti",
+   "boxId": "60d1b2032a6956df0084a432a3257cc91a610f3855b70fe4beb2e5dd25058bfd",
+   "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+   "valueNanoErg": 101979961192,
+   "tokensHeld": 0,
+   "created": 1883481,
+   "legs": [
+    {
+     "side": "lots",
+     "n": 1,
+     "buyLots": 1,
+     "sellLots": 0,
+     "bestBuyUnit": 4401141.0,
+     "bestSellUnit": null
+    }
+   ],
+   "n2tPools": 4,
+   "deepestPoolNanoErgPerUnit": 34386864.15799904,
+   "best": null
+  },
+  {
+   "kind": "machina-limit",
+   "boxId": "5fd7f82abac738baf77c49d03c6bea840776f9a8a7b88d0429106e42adffc68b",
+   "token": "6c35aa395c7c75b0f67f7804d6930f0e11ef93c3387dc1faa86498d54af7962c",
+   "valueNanoErg": 145800,
+   "tokensHeld": 100,
+   "created": 1782451,
+   "legs": [
+    {
+     "side": "ask",
+     "price": 100000,
+     "cap": 100
+    }
+   ],
+   "n2tPools": 1,
+   "deepestPoolNanoErgPerUnit": 51.06067108063785,
+   "best": null
+  },
+  {
+   "kind": "machina-limit",
+   "boxId": "578b07241157b1252821425581cf3fc7ff184ed016764290805b1b801b22e19a",
+   "valueNanoErg": 20000000000,
+   "unparsed": "ValueError('no R6[Boolean]: not fillable')",
+   "best": null
+  },
+  {
+   "kind": "machina-limit",
+   "boxId": "fc2c0537756bba7f4de4a9832a1246a577455865f04b2323cd85aedb9ec9cb8b",
+   "valueNanoErg": 20000000000,
+   "unparsed": "ValueError('no R6[Boolean]: not fillable')",
+   "best": null
+  },
+  {
+   "kind": "machina-limit",
+   "boxId": "0a826675630237dd8e75c74b137c41bcf77978eb099bcd55cb01fd74a3bc7d12",
+   "valueNanoErg": 20000000000,
+   "unparsed": "ValueError('no R6[Boolean]: not fillable')",
+   "best": null
+  },
+  {
+   "kind": "machina-limit",
+   "boxId": "31bd3b60aad8dda6642448c86a2bcc77ad86b49ecb0310463462580912adc4c6",
+   "valueNanoErg": 20000000000,
+   "unparsed": "ValueError('no R6[Boolean]: not fillable')",
+   "best": null
+  },
+  {
+   "kind": "machina-limit",
+   "boxId": "d7670069f331f1deb9432308bfad8ff9d81fefe0e55e6d4ef1e2206447e3c97d",
+   "valueNanoErg": 20000000000,
+   "unparsed": "ValueError('no R6[Boolean]: not fillable')",
+   "best": null
+  },
+  {
+   "kind": "machina-limit",
+   "boxId": "9149215c0c11ea77ea5182f7c3d10bca99837e44b999be07c0a8db80e7945728",
+   "valueNanoErg": 20000000000,
+   "unparsed": "ValueError('no R6[Boolean]: not fillable')",
+   "best": null
+  },
+  {
+   "kind": "machina-grid",
+   "boxId": "6cfbcbfcbf702d16b61866ec74dc9443d21a4f596541d70f6e106c77433a4695",
+   "token": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+   "valueNanoErg": 1000000,
+   "tokensHeld": 119800,
+   "created": 1890744,
+   "legs": [
+    {
+     "side": "ask",
+     "price": 1000000,
+     "cap": 119800
+    },
+    {
+     "side": "bid",
+     "price": 10000,
+     "cap": 0
+    }
+   ],
+   "n2tPools": 1,
+   "deepestPoolNanoErgPerUnit": 41926.479088431886,
+   "best": null
+  }
+ ],
+ "requests": {
+  "net": 15,
+  "cache": 0
+ }
+}

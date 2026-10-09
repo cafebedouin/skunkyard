@@ -1,0 +1,2046 @@
+{
+ "atTip": 1891063,
+ "capNanoErg": 10000000000,
+ "txFeeNanoErg": 1100000,
+ "takes": [
+  {
+   "line": "c pool-pool",
+   "token": "28bd64421838751c96eddc09d7c990fde5c0d307b774463b448bf71d33dba324",
+   "txs": 2,
+   "netNanoErg": 83902910,
+   "capitalNanoErg": 70,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "768b479c009efc144370420cdd349248be1efa5f6a0157cc07651ea6c00effc4",
+     "nft": "413df2fcfceace41b993c9cd7824926b9528fa89feb3399c0d8818826dd915fe",
+     "ergIn": 70,
+     "tokensOut": 862733431
+    },
+    {
+     "tx": 2,
+     "pool": "f2ad67343e8d84db56ea7da708470cd66d67555d7977a547a0ecb86a1dbaee34",
+     "nft": "5e2c58b9a7c5e9e61eb68d545d9b6e392bb827a4cb07fffcf75d14314ec5575b",
+     "tokensIn": 862733431,
+     "ergOut": 86102980
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 862733431,
+    "token": "28bd64421838751c96eddc09d7c990fde5c0d307b774463b448bf71d33dba324",
+    "sellBackNanoErg": 60,
+    "lossIfSoldBackNanoErg": 1100010
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "2a7dd90423a26e477922bace8a3a4517db186706fe31ac908525aacbc1ba14a9/944f72c571f7e894fe75fe5b351cdc67ea2fa6daa538321d72f759d551b1d147",
+   "txs": 3,
+   "netNanoErg": 39633754,
+   "capitalNanoErg": 14278337,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "777f003afe2563f0d51b449a02362d22af3c0066a0b080a080dc42edd00fe022",
+     "ergIn": 14278337,
+     "tokensOut": 7048532157
+    },
+    {
+     "tx": 2,
+     "pool": "56314e5b2f523ec262e344decfddf1b59029d8414224ba409376f937032dd620",
+     "t2t": "2dca578d03be68276ea0d420a6456b2a565c2e6ae9ba88d127019f3504136b64",
+     "tokensIn": 7048532157,
+     "tokensOut": 2852778161
+    },
+    {
+     "tx": 3,
+     "pool": "b4e8beb67c87c3beee31d2dd575fd8b4a024e41afa6be939ebf4b28ec2afae1f",
+     "tokensIn": 2852778161,
+     "ergOut": 57212091
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 7048532157,
+    "token": "2a7dd90423a26e477922bace8a3a4517db186706fe31ac908525aacbc1ba14a9",
+    "sellBackNanoErg": 14159463,
+    "lossIfSoldBackNanoErg": 1218874
+   }
+  },
+  {
+   "line": "c pool-pool",
+   "token": "aa589fd5a6572ba57b64a882c6c69856904b0facb23f5280c50fc8a053d865c2",
+   "txs": 2,
+   "netNanoErg": 32535020,
+   "capitalNanoErg": 2014979,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "a554dfb03f519421c11e88090021402a8fa0f0f7e56f08ab15cca292136ad794",
+     "nft": "ed840f98975459f07ce94dc205e9395095cc24d4ced4f00ffdd25e6c277095ff",
+     "ergIn": 2014979,
+     "tokensOut": 133
+    },
+    {
+     "tx": 2,
+     "pool": "8ca787518ec8a1b68dfa218062c4ca914ed91543926af768a012e2714943adae",
+     "nft": "627c99b55de80993d15b514a7fbfaf25c01fb45b3413c9ad95f32b74b8ed40ec",
+     "tokensIn": 133,
+     "ergOut": 36749999
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 133,
+    "token": "aa589fd5a6572ba57b64a882c6c69856904b0facb23f5280c50fc8a053d865c2",
+    "sellBackNanoErg": 2002913,
+    "lossIfSoldBackNanoErg": 1112066
+   }
+  },
+  {
+   "line": "c pool-pool",
+   "token": "8e0cd39c6fba31c419df790a99f2a70d1d81dc549c9f9d09ea2d17b1dfb8c097",
+   "txs": 2,
+   "netNanoErg": 17433893,
+   "capitalNanoErg": 118360,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "843848b2f87f03f8860f2f7ad97187e0fc40a54f3cb3ce7efc30039053407385",
+     "nft": "9b3f2d880d451faadeafa4fd5fc812aacc979832237af5016f03b23e762b06a3",
+     "ergIn": 118360,
+     "tokensOut": 2538
+    },
+    {
+     "tx": 2,
+     "pool": "fe903a5020c80682c61db241f967ba260530a542b20a0373ff7ec109f970ef1b",
+     "nft": "e070e3451350595c725754c2c1c2bca689075d412921399524b734c4ed7a092f",
+     "tokensIn": 2538,
+     "ergOut": 19752253
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 2538,
+    "token": "8e0cd39c6fba31c419df790a99f2a70d1d81dc549c9f9d09ea2d17b1dfb8c097",
+    "sellBackNanoErg": 117650,
+    "lossIfSoldBackNanoErg": 1100710
+   }
+  },
+  {
+   "line": "c pool-pool",
+   "token": "472c3d4ecaa08fb7392ff041ee2e6af75f4a558810a74b28600549d5392810e8",
+   "txs": 2,
+   "netNanoErg": 13795084,
+   "capitalNanoErg": 11612,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "1d373dbc269914af20557e9be5e4d71e1a7c8863a1689af412f9c1da325ad3f4",
+     "nft": "7601494c813a7b1acbdecc042d9eb337ea79a556221c9567685f82077cea7b20",
+     "ergIn": 11612,
+     "tokensOut": 16066371
+    },
+    {
+     "tx": 2,
+     "pool": "2e4c66704cb362cbeb082b84e48ddf15a60f3fd3166fea5fee89835ab4d39a18",
+     "nft": "edca8164231dccffeacf4d923267e91aa192961c38c815ec3b9893d93dc629df",
+     "tokensIn": 16066371,
+     "ergOut": 16006696
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 16066371,
+    "token": "472c3d4ecaa08fb7392ff041ee2e6af75f4a558810a74b28600549d5392810e8",
+    "sellBackNanoErg": 11542,
+    "lossIfSoldBackNanoErg": 1100070
+   }
+  },
+  {
+   "line": "c pool-pool",
+   "token": "472c3d4ecaa08fb7392ff041ee2e6af75f4a558810a74b28600549d5392810e8",
+   "txs": 2,
+   "netNanoErg": 13794687,
+   "capitalNanoErg": 12009,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "19d3e73d55f2bbe436697b66a0fa56bb1ca9df9b08f1b3afaa6454bced5aa458",
+     "nft": "7d2e28431063cbb1e9e14468facc47b984d962532c19b0b14f74d0ce9ed459be",
+     "ergIn": 12009,
+     "tokensOut": 16066371
+    },
+    {
+     "tx": 2,
+     "pool": "2e4c66704cb362cbeb082b84e48ddf15a60f3fd3166fea5fee89835ab4d39a18",
+     "nft": "edca8164231dccffeacf4d923267e91aa192961c38c815ec3b9893d93dc629df",
+     "tokensIn": 16066371,
+     "ergOut": 16006696
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 16066371,
+    "token": "472c3d4ecaa08fb7392ff041ee2e6af75f4a558810a74b28600549d5392810e8",
+    "sellBackNanoErg": 11912,
+    "lossIfSoldBackNanoErg": 1100097
+   }
+  },
+  {
+   "line": "c pool-pool",
+   "token": "472c3d4ecaa08fb7392ff041ee2e6af75f4a558810a74b28600549d5392810e8",
+   "txs": 2,
+   "netNanoErg": 13794436,
+   "capitalNanoErg": 12260,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "efdee2439f0b3577df3ffc27877a03e3a3c25242d0290b70c5de924a9ffab561",
+     "nft": "53ac87304709dd4a697e38b52ea0d2e862e3827415809230f20bc580baee9586",
+     "ergIn": 12260,
+     "tokensOut": 16066371
+    },
+    {
+     "tx": 2,
+     "pool": "2e4c66704cb362cbeb082b84e48ddf15a60f3fd3166fea5fee89835ab4d39a18",
+     "nft": "edca8164231dccffeacf4d923267e91aa192961c38c815ec3b9893d93dc629df",
+     "tokensIn": 16066371,
+     "ergOut": 16006696
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 16066371,
+    "token": "472c3d4ecaa08fb7392ff041ee2e6af75f4a558810a74b28600549d5392810e8",
+    "sellBackNanoErg": 12210,
+    "lossIfSoldBackNanoErg": 1100050
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "46700be1c5b9287acb6c7664e72883c967574db4332a3bfec59cece33b5a3177/8b08cdd5449a9592a9e79711d7d79249d7a03c535d17efaee83e216e80a44c4b",
+   "txs": 3,
+   "netNanoErg": 13644418,
+   "capitalNanoErg": 51255388,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "5fc975b72b9e5c41c9f2e242568847345c28d814b347b1c11ed500a5c70dd531",
+     "ergIn": 51255388,
+     "tokensOut": 57
+    },
+    {
+     "tx": 2,
+     "pool": "626fd8e5cda87b98b9bdb9436978ad5b973cda2bc5d34da6b8cd04733b56731a",
+     "t2t": "3825b487b6e360ec909be55b22c5a81d79bed94376f1effed6b81bd361f6d46a",
+     "tokensIn": 57,
+     "tokensOut": 1509
+    },
+    {
+     "tx": 3,
+     "pool": "419341b8a27c69a525f231afbd5c1643b108a30468da9565e3b2a0701f8d48ce",
+     "tokensIn": 1509,
+     "ergOut": 68199806
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 57,
+    "token": "46700be1c5b9287acb6c7664e72883c967574db4332a3bfec59cece33b5a3177",
+    "sellBackNanoErg": 48226421,
+    "lossIfSoldBackNanoErg": 4128967
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "46700be1c5b9287acb6c7664e72883c967574db4332a3bfec59cece33b5a3177/8b08cdd5449a9592a9e79711d7d79249d7a03c535d17efaee83e216e80a44c4b",
+   "txs": 3,
+   "netNanoErg": 13446591,
+   "capitalNanoErg": 51255388,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "5fc975b72b9e5c41c9f2e242568847345c28d814b347b1c11ed500a5c70dd531",
+     "ergIn": 51255388,
+     "tokensOut": 57
+    },
+    {
+     "tx": 2,
+     "pool": "626fd8e5cda87b98b9bdb9436978ad5b973cda2bc5d34da6b8cd04733b56731a",
+     "t2t": "3825b487b6e360ec909be55b22c5a81d79bed94376f1effed6b81bd361f6d46a",
+     "tokensIn": 57,
+     "tokensOut": 1509
+    },
+    {
+     "tx": 3,
+     "pool": "39c2796258cbf67c0b7ca4b69b9d4ed700801248bda9e7ca6557a908176df30e",
+     "tokensIn": 1509,
+     "ergOut": 68001979
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 57,
+    "token": "46700be1c5b9287acb6c7664e72883c967574db4332a3bfec59cece33b5a3177",
+    "sellBackNanoErg": 48226421,
+    "lossIfSoldBackNanoErg": 4128967
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "46700be1c5b9287acb6c7664e72883c967574db4332a3bfec59cece33b5a3177/8b08cdd5449a9592a9e79711d7d79249d7a03c535d17efaee83e216e80a44c4b",
+   "txs": 3,
+   "netNanoErg": 12830212,
+   "capitalNanoErg": 46758985,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "5fc975b72b9e5c41c9f2e242568847345c28d814b347b1c11ed500a5c70dd531",
+     "ergIn": 46758985,
+     "tokensOut": 52
+    },
+    {
+     "tx": 2,
+     "pool": "626fd8e5cda87b98b9bdb9436978ad5b973cda2bc5d34da6b8cd04733b56731a",
+     "t2t": "3825b487b6e360ec909be55b22c5a81d79bed94376f1effed6b81bd361f6d46a",
+     "tokensIn": 52,
+     "tokensOut": 1407
+    },
+    {
+     "tx": 3,
+     "pool": "e0f44ca657acbbbdd00194c87eb720e2025ef7332ffe56f8b4824166d0b795cc",
+     "tokensIn": 1407,
+     "ergOut": 62889197
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 52,
+    "token": "46700be1c5b9287acb6c7664e72883c967574db4332a3bfec59cece33b5a3177",
+    "sellBackNanoErg": 43995717,
+    "lossIfSoldBackNanoErg": 3863268
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "d71693c49a84fbbecd4908c94813b46514b18b67a99952dc1e6e4791556de413/472c3d4ecaa08fb7392ff041ee2e6af75f4a558810a74b28600549d5392810e8",
+   "txs": 3,
+   "netNanoErg": 12691650,
+   "capitalNanoErg": 15046,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "4fcd8259771876f9c48b9f3694f34f2c8eeebe4d0a0eb1352d6902861d5e2fa1",
+     "ergIn": 15046,
+     "tokensOut": 45
+    },
+    {
+     "tx": 2,
+     "pool": "97669f59db405f4fac4c16b3fdd06d858808ed85c02cebd06282b07c0d417373",
+     "t2t": "5703a5b955c4902f165215f5ce1426816b4c6dca5300cfae35c8a35649287154",
+     "tokensIn": 45,
+     "tokensOut": 16067699
+    },
+    {
+     "tx": 3,
+     "pool": "2e4c66704cb362cbeb082b84e48ddf15a60f3fd3166fea5fee89835ab4d39a18",
+     "tokensIn": 16067699,
+     "ergOut": 16006696
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 45,
+    "token": "d71693c49a84fbbecd4908c94813b46514b18b67a99952dc1e6e4791556de413",
+    "sellBackNanoErg": 14925,
+    "lossIfSoldBackNanoErg": 1100121
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "d71693c49a84fbbecd4908c94813b46514b18b67a99952dc1e6e4791556de413/472c3d4ecaa08fb7392ff041ee2e6af75f4a558810a74b28600549d5392810e8",
+   "txs": 3,
+   "netNanoErg": 12690134,
+   "capitalNanoErg": 16562,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "0ee64897ebf1eb145924b8349e9a58e84ac276b43bb67dede73d43d5554f3e5a",
+     "ergIn": 16562,
+     "tokensOut": 45
+    },
+    {
+     "tx": 2,
+     "pool": "97669f59db405f4fac4c16b3fdd06d858808ed85c02cebd06282b07c0d417373",
+     "t2t": "5703a5b955c4902f165215f5ce1426816b4c6dca5300cfae35c8a35649287154",
+     "tokensIn": 45,
+     "tokensOut": 16067699
+    },
+    {
+     "tx": 3,
+     "pool": "2e4c66704cb362cbeb082b84e48ddf15a60f3fd3166fea5fee89835ab4d39a18",
+     "tokensIn": 16067699,
+     "ergOut": 16006696
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 45,
+    "token": "d71693c49a84fbbecd4908c94813b46514b18b67a99952dc1e6e4791556de413",
+    "sellBackNanoErg": 16429,
+    "lossIfSoldBackNanoErg": 1100133
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "003bd19d0187117f130b62e1bcab0939929ff5c7709f843c5c4dd158949285d0/472c3d4ecaa08fb7392ff041ee2e6af75f4a558810a74b28600549d5392810e8",
+   "txs": 3,
+   "netNanoErg": 12511786,
+   "capitalNanoErg": 194910,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "e1d985a2f5ce49934cedf326b2efbcc090854c6f6d784733a4ac38bf61936868",
+     "ergIn": 194910,
+     "tokensOut": 1
+    },
+    {
+     "tx": 2,
+     "pool": "e71dd53c1b835d58e056ba7d06373369572f5ba2d8bf0b3259c1e82eb038c7c8",
+     "t2t": "7f4fee37314500f977b26d8ed70caa64a0c71d348a73af200fb21bb864cc74aa",
+     "tokensIn": 1,
+     "tokensOut": 231035451
+    },
+    {
+     "tx": 3,
+     "pool": "2e4c66704cb362cbeb082b84e48ddf15a60f3fd3166fea5fee89835ab4d39a18",
+     "tokensIn": 231035451,
+     "ergOut": 16006696
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1,
+    "token": "003bd19d0187117f130b62e1bcab0939929ff5c7709f843c5c4dd158949285d0",
+    "sellBackNanoErg": 192965,
+    "lossIfSoldBackNanoErg": 1101945
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b/472c3d4ecaa08fb7392ff041ee2e6af75f4a558810a74b28600549d5392810e8",
+   "txs": 3,
+   "netNanoErg": 12349192,
+   "capitalNanoErg": 357504,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "6a5caa6fc22f48ac56875f47915a24ed79db1062f74074bfb6dbd7c20f49da4a",
+     "ergIn": 357504,
+     "tokensOut": 78
+    },
+    {
+     "tx": 2,
+     "pool": "d53b2e2bbebcde0e55aae2a7bcefb42ed34b7e44bf3b6027770c6d4cbaa3ab35",
+     "t2t": "be05dc76dcea4dd693a60573a614685efe4e08c35042e1c107fb7d1be9a5bad1",
+     "tokensIn": 78,
+     "tokensOut": 16115171
+    },
+    {
+     "tx": 3,
+     "pool": "2e4c66704cb362cbeb082b84e48ddf15a60f3fd3166fea5fee89835ab4d39a18",
+     "tokensIn": 16115171,
+     "ergOut": 16006696
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 78,
+    "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+    "sellBackNanoErg": 350402,
+    "lossIfSoldBackNanoErg": 1107102
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b/472c3d4ecaa08fb7392ff041ee2e6af75f4a558810a74b28600549d5392810e8",
+   "txs": 3,
+   "netNanoErg": 12241669,
+   "capitalNanoErg": 465027,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "dbfb8a2dfbecdccc0799dd40427f4cc7993aa3c9339621158186ce3cc51a0ec9",
+     "ergIn": 465027,
+     "tokensOut": 78
+    },
+    {
+     "tx": 2,
+     "pool": "d53b2e2bbebcde0e55aae2a7bcefb42ed34b7e44bf3b6027770c6d4cbaa3ab35",
+     "t2t": "be05dc76dcea4dd693a60573a614685efe4e08c35042e1c107fb7d1be9a5bad1",
+     "tokensIn": 78,
+     "tokensOut": 16115171
+    },
+    {
+     "tx": 3,
+     "pool": "2e4c66704cb362cbeb082b84e48ddf15a60f3fd3166fea5fee89835ab4d39a18",
+     "tokensIn": 16115171,
+     "ergOut": 16006696
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 78,
+    "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+    "sellBackNanoErg": 462240,
+    "lossIfSoldBackNanoErg": 1102787
+   }
+  },
+  {
+   "line": "c pool-pool",
+   "token": "45623c86e3b301157ebefab7901465a2b458be2e8f4e3b64c35e329b43068ef0",
+   "txs": 2,
+   "netNanoErg": 12053812,
+   "capitalNanoErg": 1760804,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "a7f1436ee6550c311ac81ee66fb2fbb7e053b152dbae2898fb1e0ab4568fe0d6",
+     "nft": "e40647533280058e640a28fb917fd9e73d5ecccc8be97f38aefe7315739f30ac",
+     "ergIn": 1760804,
+     "tokensOut": 35523
+    },
+    {
+     "tx": 2,
+     "pool": "c99f3fd1dd4af7abacf17ca5d96ccb90153b89238bd180cf6dfc38993551a77e",
+     "nft": "10cda33aebb7c480a0944aeb8e0ba9738cb6ac6d9848fb8df6ad0cc059e2028a",
+     "tokensIn": 35523,
+     "ergOut": 16014616
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 35523,
+    "token": "45623c86e3b301157ebefab7901465a2b458be2e8f4e3b64c35e329b43068ef0",
+    "sellBackNanoErg": 1750349,
+    "lossIfSoldBackNanoErg": 1110455
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b/472c3d4ecaa08fb7392ff041ee2e6af75f4a558810a74b28600549d5392810e8",
+   "txs": 3,
+   "netNanoErg": 11927815,
+   "capitalNanoErg": 778881,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "ae17e0b780eaa9c2b6eea87825c3f5cfbd8b002c0365f97b69e8367644bdca7d",
+     "ergIn": 778881,
+     "tokensOut": 78
+    },
+    {
+     "tx": 2,
+     "pool": "d53b2e2bbebcde0e55aae2a7bcefb42ed34b7e44bf3b6027770c6d4cbaa3ab35",
+     "t2t": "be05dc76dcea4dd693a60573a614685efe4e08c35042e1c107fb7d1be9a5bad1",
+     "tokensIn": 78,
+     "tokensOut": 16115171
+    },
+    {
+     "tx": 3,
+     "pool": "2e4c66704cb362cbeb082b84e48ddf15a60f3fd3166fea5fee89835ab4d39a18",
+     "tokensIn": 16115171,
+     "ergOut": 16006696
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 78,
+    "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+    "sellBackNanoErg": 774458,
+    "lossIfSoldBackNanoErg": 1104423
+   }
+  },
+  {
+   "line": "c pool-pool",
+   "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+   "txs": 2,
+   "netNanoErg": 10695229,
+   "capitalNanoErg": 21319690,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "e4aa53051215c729496dc217d448a1a8eac82b28d25aec1f7600637c8ebed24f",
+     "nft": "9eccc846606c4a34e2e3ac189041a8f41e3dc1681f61bb0c5e1f6d3cb9c380af",
+     "ergIn": 21319690,
+     "tokensOut": 1
+    },
+    {
+     "tx": 2,
+     "pool": "bc257d05c9a5fb8ae9b2674bc484bdf5fdda8c5d78784266c0036c7a95cae9af",
+     "nft": "9916d75132593c8b07fe18bd8d583bda1652eed7565cf41a4738ddd90fc992ec",
+     "tokensIn": 1,
+     "ergOut": 34214919
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1,
+    "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+    "sellBackNanoErg": 12578617,
+    "lossIfSoldBackNanoErg": 9841073
+   }
+  },
+  {
+   "line": "b bank-pool",
+   "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+   "txs": 2,
+   "netNanoErg": 10579627,
+   "capitalNanoErg": 21319690,
+   "direction": "pool->redeem",
+   "units": 1,
+   "pool": "e4aa53051215c729496dc217d448a1a8eac82b28d25aec1f7600637c8ebed24f",
+   "bankBox": "add58ca40e21db2211a4467a078177110cfbcdbc2ac8bfffb1fc73234615c597",
+   "oracleBox": "c1736abf283697218a2fe5cdbe2e2e91c3e5100028e5b755e9ceabd88401eb54"
+  },
+  {
+   "line": "h triangle",
+   "token": "bd0c25c373ad606d78412ae1198133f4573b4e4c2d4ed3fc4c2a4547c6c6e12e/ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35",
+   "txs": 3,
+   "netNanoErg": 10519967,
+   "capitalNanoErg": 221646252,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "26a007f08bba24871c7293297c03b2117b432421d37c88f6e7be05b8f21cc488",
+     "ergIn": 221646252,
+     "tokensOut": 1670256019
+    },
+    {
+     "tx": 2,
+     "pool": "7a5b0fb5ee80a6bcf7a668b76ca6f8fe26f32e771c00bcd277ec464e7db10c09",
+     "t2t": "258ef8b9b701d141cbfdb88cd1463936b207d827ed7dfa64cee31838348d686d",
+     "tokensIn": 1670256019,
+     "tokensOut": 2544881
+    },
+    {
+     "tx": 3,
+     "pool": "ffe0007f10653d510677ac9114f1d5fe86fc18385c3a0cc01e3302872600ba98",
+     "tokensIn": 2544881,
+     "ergOut": 235466219
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1670256019,
+    "token": "bd0c25c373ad606d78412ae1198133f4573b4e4c2d4ed3fc4c2a4547c6c6e12e",
+    "sellBackNanoErg": 220322819,
+    "lossIfSoldBackNanoErg": 2423433
+   }
+  },
+  {
+   "line": "c pool-pool",
+   "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+   "txs": 2,
+   "netNanoErg": 9559049,
+   "capitalNanoErg": 21319690,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "e4aa53051215c729496dc217d448a1a8eac82b28d25aec1f7600637c8ebed24f",
+     "nft": "9eccc846606c4a34e2e3ac189041a8f41e3dc1681f61bb0c5e1f6d3cb9c380af",
+     "ergIn": 21319690,
+     "tokensOut": 1
+    },
+    {
+     "tx": 2,
+     "pool": "82fea928765b009f525c45e1a4fabceebbbf1b3f0f7534780b52c9241f5f5ab8",
+     "nft": "bee300e9c81e48d7ab5fc29294c7bbb536cf9dcd9c91ee3be9898faec91b11b6",
+     "tokensIn": 1,
+     "ergOut": 33078739
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1,
+    "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+    "sellBackNanoErg": 12578617,
+    "lossIfSoldBackNanoErg": 9841073
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35/bd0c25c373ad606d78412ae1198133f4573b4e4c2d4ed3fc4c2a4547c6c6e12e",
+   "txs": 3,
+   "netNanoErg": 6622215,
+   "capitalNanoErg": 80031,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "ffe0007f10653d510677ac9114f1d5fe86fc18385c3a0cc01e3302872600ba98",
+     "ergIn": 80031,
+     "tokensOut": 855
+    },
+    {
+     "tx": 2,
+     "pool": "10dd75fb7d0c8707b541562ec0a7ae3d49f8f9fa7b28450bb088f72ac2f7886b",
+     "t2t": "961a6dc6f61bbd9b8deb4a729478f7c7b99e5fcb7bc9adc1f470423ce5fed48e",
+     "tokensIn": 855,
+     "tokensOut": 76095413
+    },
+    {
+     "tx": 3,
+     "pool": "26a007f08bba24871c7293297c03b2117b432421d37c88f6e7be05b8f21cc488",
+     "tokensIn": 76095413,
+     "ergOut": 10002246
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 855,
+    "token": "ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35",
+    "sellBackNanoErg": 79551,
+    "lossIfSoldBackNanoErg": 1100480
+   }
+  },
+  {
+   "line": "c pool-pool",
+   "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+   "txs": 2,
+   "netNanoErg": 6608516,
+   "capitalNanoErg": 21319690,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "e4aa53051215c729496dc217d448a1a8eac82b28d25aec1f7600637c8ebed24f",
+     "nft": "9eccc846606c4a34e2e3ac189041a8f41e3dc1681f61bb0c5e1f6d3cb9c380af",
+     "ergIn": 21319690,
+     "tokensOut": 1
+    },
+    {
+     "tx": 2,
+     "pool": "8bfb5503eed9492466e76343ffdd562ce7ead4cb819053e704efa66451d46aae",
+     "nft": "931f133cdd56902cff8870a71cd8562fd9721037b5c713a516fbdda976ba1cf0",
+     "tokensIn": 1,
+     "ergOut": 30128206
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1,
+    "token": "03faf2cb329f2e90d6d23b58d91bbb6c046aa143261cc21f52fbe2824bfcbf04",
+    "sellBackNanoErg": 12578617,
+    "lossIfSoldBackNanoErg": 9841073
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "6c35aa395c7c75b0f67f7804d6930f0e11ef93c3387dc1faa86498d54af7962c/f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+   "txs": 3,
+   "netNanoErg": 6381923,
+   "capitalNanoErg": 3982717,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "81084319cf6148962bdfc55e58c6e2d2512a2de5762af891f88caad9daa9f1f6",
+     "ergIn": 3982717,
+     "tokensOut": 77160
+    },
+    {
+     "tx": 2,
+     "pool": "e7233ad474c6fadfceb792df43954ff4b726dac179da0b71ad8d183b5f78a5e5",
+     "t2t": "70fbe87edf0324ae996130df9490c2284b0617f1c9c4815ac5e405a21eccf922",
+     "tokensIn": 77160,
+     "tokensOut": 336
+    },
+    {
+     "tx": 3,
+     "pool": "a3df60903ea63276f323125a1971afbfe6ffd43bf692c3af1f917cfc0bc120b1",
+     "tokensIn": 336,
+     "ergOut": 13664640
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 77160,
+    "token": "6c35aa395c7c75b0f67f7804d6930f0e11ef93c3387dc1faa86498d54af7962c",
+    "sellBackNanoErg": 3903521,
+    "lossIfSoldBackNanoErg": 1179196
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35/d1d2ae2ac0456aa43550dd4fda45e4f866d523be9170d3a3e4cab43a83926334",
+   "txs": 3,
+   "netNanoErg": 6370431,
+   "capitalNanoErg": 4349414,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "ffe0007f10653d510677ac9114f1d5fe86fc18385c3a0cc01e3302872600ba98",
+     "ergIn": 4349414,
+     "tokensOut": 46462
+    },
+    {
+     "tx": 2,
+     "pool": "fd7065ef20bd8efb1f6ecf27638c0216120cdfc63e07661981f27f179e0c70dd",
+     "t2t": "b16b875782988852109a181b928b00bee53cc1fe4783f514b03930a8a435fd9f",
+     "tokensIn": 46462,
+     "tokensOut": 56
+    },
+    {
+     "tx": 3,
+     "pool": "1e0c80ce0b34b5d1971786e002c09865fc5d3f01e1ca25159547677a1f01f45f",
+     "tokensIn": 56,
+     "ergOut": 14019845
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 46462,
+    "token": "ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35",
+    "sellBackNanoErg": 4323359,
+    "lossIfSoldBackNanoErg": 1126055
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35/a61253416f1f79bf8af3b98138e6a56229ad047a368376466a7924e7344504a2",
+   "txs": 3,
+   "netNanoErg": 6351197,
+   "capitalNanoErg": 96973,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "ffe0007f10653d510677ac9114f1d5fe86fc18385c3a0cc01e3302872600ba98",
+     "ergIn": 96973,
+     "tokensOut": 1036
+    },
+    {
+     "tx": 2,
+     "pool": "aa433a5dd914e35dca34bf3d517e4ac896dbf89ed325ab967f0a1b18b6108080",
+     "t2t": "8e75e2ea00264658b386af6a64d8a779e354c61a7e8c9fd4300b24c6f49bd6e3",
+     "tokensIn": 1036,
+     "tokensOut": 208283
+    },
+    {
+     "tx": 3,
+     "pool": "877dd4c290c841566e049600cc9570f85734992d7430c8567978104a360c79e7",
+     "tokensIn": 208283,
+     "ergOut": 9748170
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1036,
+    "token": "ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35",
+    "sellBackNanoErg": 96391,
+    "lossIfSoldBackNanoErg": 1100582
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "bd0c25c373ad606d78412ae1198133f4573b4e4c2d4ed3fc4c2a4547c6c6e12e/af1a2e8005f6ffc9e291e121d1fb08795c5a079409b8ca56e20eb2f4f6f8553b",
+   "txs": 3,
+   "netNanoErg": 5822655,
+   "capitalNanoErg": 313884626,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "26a007f08bba24871c7293297c03b2117b432421d37c88f6e7be05b8f21cc488",
+     "ergIn": 313884626,
+     "tokensOut": 2362031092
+    },
+    {
+     "tx": 2,
+     "pool": "a375126dcae77fd72f2ec3c19858a70fb0e2f52af6b25967c6fdec1d2d53d89f",
+     "t2t": "6a531f5e997bf862889d6cb4130f61e0f81da4e3bee7b8753267868cd4be0a79",
+     "tokensIn": 2362031092,
+     "tokensOut": 63751770200
+    },
+    {
+     "tx": 3,
+     "pool": "d008ad44d424f8b843dd9c68a169113fdad179bcaca8dc8877127a5d8c3d4063",
+     "tokensIn": 63751770200,
+     "ergOut": 323007281
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 2362031092,
+    "token": "bd0c25c373ad606d78412ae1198133f4573b4e4c2d4ed3fc4c2a4547c6c6e12e",
+    "sellBackNanoErg": 312013055,
+    "lossIfSoldBackNanoErg": 2971571
+   }
+  },
+  {
+   "line": "c pool-pool",
+   "token": "c0bfa5ebb35e9f12d072ed938349d938cb0fd07cb25da7df1de21c9113cb58db",
+   "txs": 2,
+   "netNanoErg": 4622459,
+   "capitalNanoErg": 25679753,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "8eec1b19b549353d3d4e5306841152d24e69b9f6d5bc026b1cd33b5b9cc98690",
+     "nft": "643068568273d28c9588e658d8b86bc888644fb945b11ac3615eda2c1306888e",
+     "ergIn": 25679753,
+     "tokensOut": 87
+    },
+    {
+     "tx": 2,
+     "pool": "14ca1548002e1646d3547ec58bf1cb70de49747579913f4e1c7fd225a1dd6474",
+     "nft": "a7d1d136d0c12fd53e7135c546eef9b2d2d0fbff43198a583f75c664760cca23",
+     "tokensIn": 87,
+     "ergOut": 32502212
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 87,
+    "token": "c0bfa5ebb35e9f12d072ed938349d938cb0fd07cb25da7df1de21c9113cb58db",
+    "sellBackNanoErg": 25557176,
+    "lossIfSoldBackNanoErg": 1222577
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35/185e217d80d797800bfa699afda708ee101ae664f8ea237d9fc3a3824b7c3ecb",
+   "txs": 3,
+   "netNanoErg": 4434766,
+   "capitalNanoErg": 1154808,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "ffe0007f10653d510677ac9114f1d5fe86fc18385c3a0cc01e3302872600ba98",
+     "ergIn": 1154808,
+     "tokensOut": 12337
+    },
+    {
+     "tx": 2,
+     "pool": "069358af98fbbe6915f5eb6573277978c0818d80341e4f83da09015c4b442547",
+     "t2t": "0acf45b352eff80875eccf99bfb87325b6125df2349c7cd7d8a2450e1d951775",
+     "tokensIn": 12337,
+     "tokensOut": 510
+    },
+    {
+     "tx": 3,
+     "pool": "5f0a5ee33b171433bbcb057377bb29805d43a33d5ec954e46e73958bbc71896c",
+     "tokensIn": 510,
+     "ergOut": 8889574
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 12337,
+    "token": "ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35",
+    "sellBackNanoErg": 1147889,
+    "lossIfSoldBackNanoErg": 1106919
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "46700be1c5b9287acb6c7664e72883c967574db4332a3bfec59cece33b5a3177/a399dcd79a68eea82df4e9b30a11c61a96a671e767924c0cef2148fec9270df6",
+   "txs": 3,
+   "netNanoErg": 4161001,
+   "capitalNanoErg": 62946323,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "5fc975b72b9e5c41c9f2e242568847345c28d814b347b1c11ed500a5c70dd531",
+     "ergIn": 62946323,
+     "tokensOut": 70
+    },
+    {
+     "tx": 2,
+     "pool": "5d6c802067c818a2f9f66a1a2220d2409311e62a853032faa6891a04c9c7a3e3",
+     "t2t": "4ec4c2c7a9d2d768e7b0ba1da8ce6c04908724aa7d56e1b27f5719e83e4898aa",
+     "tokensIn": 70,
+     "tokensOut": 194
+    },
+    {
+     "tx": 3,
+     "pool": "4a188b2029311bba9b3c0d11e30f76b3483d2ee27ac87f984d3822ada1d8cd14",
+     "tokensIn": 194,
+     "ergOut": 70407324
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 70,
+    "token": "46700be1c5b9287acb6c7664e72883c967574db4332a3bfec59cece33b5a3177",
+    "sellBackNanoErg": 59226537,
+    "lossIfSoldBackNanoErg": 4819786
+   }
+  },
+  {
+   "line": "c pool-pool",
+   "token": "0fdb7ff8b37479b6eb7aab38d45af2cfeefabbefdc7eebc0348d25dd65bc2c91",
+   "txs": 2,
+   "netNanoErg": 3799891,
+   "capitalNanoErg": 109,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "a03571d390ae4b9b7476773250ea13c428926406e580b1532848c42bb7880d37",
+     "nft": "15242ab98f89db195faa9115acb4beebb0defe4827689b82e8ba92f81d88ddfb",
+     "ergIn": 109,
+     "tokensOut": 3
+    },
+    {
+     "tx": 2,
+     "pool": "3035fa517cccb410a2fb9e247d33a32735eb0068ec8da5de1fbd694692386c05",
+     "nft": "0552a55b7be746facf061f9720a9b3053cab4d6dc65103727452528e3c395b94",
+     "tokensIn": 3,
+     "ergOut": 6000000
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 3,
+    "token": "0fdb7ff8b37479b6eb7aab38d45af2cfeefabbefdc7eebc0348d25dd65bc2c91",
+    "sellBackNanoErg": 107,
+    "lossIfSoldBackNanoErg": 1100002
+   }
+  },
+  {
+   "line": "c pool-pool",
+   "token": "0fdb7ff8b37479b6eb7aab38d45af2cfeefabbefdc7eebc0348d25dd65bc2c91",
+   "txs": 2,
+   "netNanoErg": 3744531,
+   "capitalNanoErg": 55469,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "2492d52be51a8a7017973c60c158629833d1834c62a1ba240d1157ea3629b472",
+     "nft": "8ae87e4d0e97b8e253701176e54f6fb535a603ae714f50f1724acc5a26fb211d",
+     "ergIn": 55469,
+     "tokensOut": 3
+    },
+    {
+     "tx": 2,
+     "pool": "3035fa517cccb410a2fb9e247d33a32735eb0068ec8da5de1fbd694692386c05",
+     "nft": "0552a55b7be746facf061f9720a9b3053cab4d6dc65103727452528e3c395b94",
+     "tokensIn": 3,
+     "ergOut": 6000000
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 3,
+    "token": "0fdb7ff8b37479b6eb7aab38d45af2cfeefabbefdc7eebc0348d25dd65bc2c91",
+    "sellBackNanoErg": 55138,
+    "lossIfSoldBackNanoErg": 1100331
+   }
+  },
+  {
+   "line": "c pool-pool",
+   "token": "ef802b475c06189fdbf844153cdc1d449a5ba87cce13d11bb47b5a539f27f12b",
+   "txs": 2,
+   "netNanoErg": 3510144,
+   "capitalNanoErg": 8090286,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "7515d56c24c8bd5937a27fd6b4d5cd5a482382a613f3d05b30efa456e0d477aa",
+     "nft": "61ae855c62440c0ec8429f1a31d956d9aaf9d8727b89cc26fd894126d9cbce06",
+     "ergIn": 8090286,
+     "tokensOut": 1442196791359205
+    },
+    {
+     "tx": 2,
+     "pool": "7e0c23d93eff33be2da7eeead9b054890f30ef895ee65135c752badb1377257f",
+     "nft": "952b82f60fbaeba29fd6eae87743857f6e1227c290105fb4150f9d3f4f34c6b0",
+     "tokensIn": 1442196791359205,
+     "ergOut": 13800430
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1442196791359205,
+    "token": "ef802b475c06189fdbf844153cdc1d449a5ba87cce13d11bb47b5a539f27f12b",
+    "sellBackNanoErg": 8057582,
+    "lossIfSoldBackNanoErg": 1132704
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35/0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+   "txs": 3,
+   "netNanoErg": 3232262,
+   "capitalNanoErg": 851709,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "ffe0007f10653d510677ac9114f1d5fe86fc18385c3a0cc01e3302872600ba98",
+     "ergIn": 851709,
+     "tokensOut": 9099
+    },
+    {
+     "tx": 2,
+     "pool": "83455fd07bbfd1e0bc13ff690d1be3bc0201bd26ed472bb5fb0a513cfbfba5af",
+     "t2t": "a725808e435436220a43ca40c28d12ff5d31c4978cad9cc294eadc3778074290",
+     "tokensIn": 9099,
+     "tokensOut": 1246
+    },
+    {
+     "tx": 3,
+     "pool": "dbfb8a2dfbecdccc0799dd40427f4cc7993aa3c9339621158186ce3cc51a0ec9",
+     "tokensIn": 1246,
+     "ergOut": 7383971
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 9099,
+    "token": "ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35",
+    "sellBackNanoErg": 846605,
+    "lossIfSoldBackNanoErg": 1105104
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35/6c35aa395c7c75b0f67f7804d6930f0e11ef93c3387dc1faa86498d54af7962c",
+   "txs": 3,
+   "netNanoErg": 2874040,
+   "capitalNanoErg": 43752829,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "ffe0007f10653d510677ac9114f1d5fe86fc18385c3a0cc01e3302872600ba98",
+     "ergIn": 43752829,
+     "tokensOut": 466951
+    },
+    {
+     "tx": 2,
+     "pool": "fb43aa93221ecc0729a09f3ae8e633bdefeb163cf5b6ae24f342b9876d42efbe",
+     "t2t": "ef04599954450696c0ea8b42083256d6587d3e05547e31761360ab73808d1b05",
+     "tokensIn": 466951,
+     "tokensOut": 997444
+    },
+    {
+     "tx": 3,
+     "pool": "81084319cf6148962bdfc55e58c6e2d2512a2de5762af891f88caad9daa9f1f6",
+     "tokensIn": 997444,
+     "ergOut": 49926869
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 466951,
+    "token": "ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35",
+    "sellBackNanoErg": 43490974,
+    "lossIfSoldBackNanoErg": 1361855
+   }
+  },
+  {
+   "line": "c pool-pool",
+   "token": "a399dcd79a68eea82df4e9b30a11c61a96a671e767924c0cef2148fec9270df6",
+   "txs": 2,
+   "netNanoErg": 2715682,
+   "capitalNanoErg": 406890245,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "2a35254d02ef232fdb631d3a7907c6ddef43b8a2f42e7af873e170c54bbecb37",
+     "nft": "b98a03dcfc2094fe83fecafc9b1a4a6064c177f5e63ffadbb9621c32f7dd78a0",
+     "ergIn": 406890245,
+     "tokensOut": 1146
+    },
+    {
+     "tx": 2,
+     "pool": "4a188b2029311bba9b3c0d11e30f76b3483d2ee27ac87f984d3822ada1d8cd14",
+     "nft": "7096d932acbee72bc1584dc10175d4dbee96fa5dc234f858b4a2421c6cb21a06",
+     "tokensIn": 1146,
+     "ergOut": 411805927
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1146,
+    "token": "a399dcd79a68eea82df4e9b30a11c61a96a671e767924c0cef2148fec9270df6",
+    "sellBackNanoErg": 398793630,
+    "lossIfSoldBackNanoErg": 9196615
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b/0fdb7ff8b37479b6eb7aab38d45af2cfeefabbefdc7eebc0348d25dd65bc2c91",
+   "txs": 3,
+   "netNanoErg": 2695424,
+   "capitalNanoErg": 4576,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "6a5caa6fc22f48ac56875f47915a24ed79db1062f74074bfb6dbd7c20f49da4a",
+     "ergIn": 4576,
+     "tokensOut": 1
+    },
+    {
+     "tx": 2,
+     "pool": "ddb02f14c9d3c0db364571fd65edae131e1dc54b22daf2f7e197b4abafd50cab",
+     "t2t": "4a317915177e54d47fbdb2f132b71dbb6cabdc891f4dfb3fb13a034494f6211a",
+     "tokensIn": 1,
+     "tokensOut": 25823
+    },
+    {
+     "tx": 3,
+     "pool": "3035fa517cccb410a2fb9e247d33a32735eb0068ec8da5de1fbd694692386c05",
+     "tokensIn": 25823,
+     "ergOut": 6000000
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1,
+    "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+    "sellBackNanoErg": 4484,
+    "lossIfSoldBackNanoErg": 1100092
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b/0fdb7ff8b37479b6eb7aab38d45af2cfeefabbefdc7eebc0348d25dd65bc2c91",
+   "txs": 3,
+   "netNanoErg": 2694038,
+   "capitalNanoErg": 5962,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "dbfb8a2dfbecdccc0799dd40427f4cc7993aa3c9339621158186ce3cc51a0ec9",
+     "ergIn": 5962,
+     "tokensOut": 1
+    },
+    {
+     "tx": 2,
+     "pool": "ddb02f14c9d3c0db364571fd65edae131e1dc54b22daf2f7e197b4abafd50cab",
+     "t2t": "4a317915177e54d47fbdb2f132b71dbb6cabdc891f4dfb3fb13a034494f6211a",
+     "tokensIn": 1,
+     "tokensOut": 25823
+    },
+    {
+     "tx": 3,
+     "pool": "3035fa517cccb410a2fb9e247d33a32735eb0068ec8da5de1fbd694692386c05",
+     "tokensIn": 25823,
+     "ergOut": 6000000
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1,
+    "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+    "sellBackNanoErg": 5926,
+    "lossIfSoldBackNanoErg": 1100036
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b/0fdb7ff8b37479b6eb7aab38d45af2cfeefabbefdc7eebc0348d25dd65bc2c91",
+   "txs": 3,
+   "netNanoErg": 2690532,
+   "capitalNanoErg": 9468,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "ae17e0b780eaa9c2b6eea87825c3f5cfbd8b002c0365f97b69e8367644bdca7d",
+     "ergIn": 9468,
+     "tokensOut": 1
+    },
+    {
+     "tx": 2,
+     "pool": "ddb02f14c9d3c0db364571fd65edae131e1dc54b22daf2f7e197b4abafd50cab",
+     "t2t": "4a317915177e54d47fbdb2f132b71dbb6cabdc891f4dfb3fb13a034494f6211a",
+     "tokensIn": 1,
+     "tokensOut": 25823
+    },
+    {
+     "tx": 3,
+     "pool": "3035fa517cccb410a2fb9e247d33a32735eb0068ec8da5de1fbd694692386c05",
+     "tokensIn": 25823,
+     "ergOut": 6000000
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1,
+    "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+    "sellBackNanoErg": 9411,
+    "lossIfSoldBackNanoErg": 1100057
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "bd0c25c373ad606d78412ae1198133f4573b4e4c2d4ed3fc4c2a4547c6c6e12e/91903bfb15c2bb5b69062d6fbfb61db45ac6db97870f47999f99c092196cc103",
+   "txs": 3,
+   "netNanoErg": 2611529,
+   "capitalNanoErg": 1844501,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "26a007f08bba24871c7293297c03b2117b432421d37c88f6e7be05b8f21cc488",
+     "ergIn": 1844501,
+     "tokensOut": 13946064
+    },
+    {
+     "tx": 2,
+     "pool": "29bcd6c3fe520df8ff191efc6e8636d11642897019c0df8441b550f20ef5a139",
+     "t2t": "5d3cb2ead41058620aed5cb4e0781fb9b069a6796a6d9ede1705248afc784ea1",
+     "tokensIn": 13946064,
+     "tokensOut": 85079449
+    },
+    {
+     "tx": 3,
+     "pool": "892eda20e643b050e6d2f89ad738c9cef080a076ba64c5a5fe734aa5ab9b8819",
+     "tokensIn": 85079449,
+     "ergOut": 7756030
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 13946064,
+    "token": "bd0c25c373ad606d78412ae1198133f4573b4e4c2d4ed3fc4c2a4547c6c6e12e",
+    "sellBackNanoErg": 1833450,
+    "lossIfSoldBackNanoErg": 1111051
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "d71693c49a84fbbecd4908c94813b46514b18b67a99952dc1e6e4791556de413/0fdb7ff8b37479b6eb7aab38d45af2cfeefabbefdc7eebc0348d25dd65bc2c91",
+   "txs": 3,
+   "netNanoErg": 2587592,
+   "capitalNanoErg": 112408,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "4fcd8259771876f9c48b9f3694f34f2c8eeebe4d0a0eb1352d6902861d5e2fa1",
+     "ergIn": 112408,
+     "tokensOut": 336
+    },
+    {
+     "tx": 2,
+     "pool": "cd9d075eeedb8ea0ed87ba0cb33b092fac1fbe8abdcf6c296968dcb17b669bab",
+     "t2t": "250001313671cb53c6c48400f514766953ff35aa22653ba5b2932d63efd96f2a",
+     "tokensIn": 336,
+     "tokensOut": 3
+    },
+    {
+     "tx": 3,
+     "pool": "3035fa517cccb410a2fb9e247d33a32735eb0068ec8da5de1fbd694692386c05",
+     "tokensIn": 3,
+     "ergOut": 6000000
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 336,
+    "token": "d71693c49a84fbbecd4908c94813b46514b18b67a99952dc1e6e4791556de413",
+    "sellBackNanoErg": 111510,
+    "lossIfSoldBackNanoErg": 1100898
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "d71693c49a84fbbecd4908c94813b46514b18b67a99952dc1e6e4791556de413/0fdb7ff8b37479b6eb7aab38d45af2cfeefabbefdc7eebc0348d25dd65bc2c91",
+   "txs": 3,
+   "netNanoErg": 2576337,
+   "capitalNanoErg": 123663,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "0ee64897ebf1eb145924b8349e9a58e84ac276b43bb67dede73d43d5554f3e5a",
+     "ergIn": 123663,
+     "tokensOut": 336
+    },
+    {
+     "tx": 2,
+     "pool": "cd9d075eeedb8ea0ed87ba0cb33b092fac1fbe8abdcf6c296968dcb17b669bab",
+     "t2t": "250001313671cb53c6c48400f514766953ff35aa22653ba5b2932d63efd96f2a",
+     "tokensIn": 336,
+     "tokensOut": 3
+    },
+    {
+     "tx": 3,
+     "pool": "3035fa517cccb410a2fb9e247d33a32735eb0068ec8da5de1fbd694692386c05",
+     "tokensIn": 3,
+     "ergOut": 6000000
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 336,
+    "token": "d71693c49a84fbbecd4908c94813b46514b18b67a99952dc1e6e4791556de413",
+    "sellBackNanoErg": 122675,
+    "lossIfSoldBackNanoErg": 1100988
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "d1d2ae2ac0456aa43550dd4fda45e4f866d523be9170d3a3e4cab43a83926334/0fdb7ff8b37479b6eb7aab38d45af2cfeefabbefdc7eebc0348d25dd65bc2c91",
+   "txs": 3,
+   "netNanoErg": 2431154,
+   "capitalNanoErg": 268846,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "1e0c80ce0b34b5d1971786e002c09865fc5d3f01e1ca25159547677a1f01f45f",
+     "ergIn": 268846,
+     "tokensOut": 1
+    },
+    {
+     "tx": 2,
+     "pool": "22db0e9f82c0fe9004e497e37b6a1059ccd9cf5913f1c96a0bec5f5e4318fa59",
+     "t2t": "4b22fe0fe013110733648bda29e6d57bc8416337ae8693e30afb0780f2388c1a",
+     "tokensIn": 1,
+     "tokensOut": 2149
+    },
+    {
+     "tx": 3,
+     "pool": "3035fa517cccb410a2fb9e247d33a32735eb0068ec8da5de1fbd694692386c05",
+     "tokensIn": 2149,
+     "ergOut": 6000000
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1,
+    "token": "d1d2ae2ac0456aa43550dd4fda45e4f866d523be9170d3a3e4cab43a83926334",
+    "sellBackNanoErg": 250355,
+    "lossIfSoldBackNanoErg": 1118491
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "c64e773d944593fdc1b8c08558c0219e2c6432d1820f56079abde85902a5a3e3/18c938e1924fc3eadc266e75ec02d81fe73b56e4e9f4e268dffffcb30387c42d",
+   "txs": 3,
+   "netNanoErg": 2332170,
+   "capitalNanoErg": 35390025,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "16969061bf2dd785042a708e2f86504d0a412b1b82563a229d62df016c228e21",
+     "ergIn": 35390025,
+     "tokensOut": 1323804
+    },
+    {
+     "tx": 2,
+     "pool": "e7ec59003d4c1f10eb35ffd71ce7acf586308008746cf1e0eada03b478c31eeb",
+     "t2t": "83a8866224dbe7bbca07f515f45c8a3be8595d821a0218640574c93b1eb27aef",
+     "tokensIn": 1323804,
+     "tokensOut": 11928074
+    },
+    {
+     "tx": 3,
+     "pool": "6cf4c1e8ec32735a1e6dc883f159e73413d30dbdb46cf6002619779f9ca9e6d3",
+     "tokensIn": 11928074,
+     "ergOut": 41022195
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1323804,
+    "token": "c64e773d944593fdc1b8c08558c0219e2c6432d1820f56079abde85902a5a3e3",
+    "sellBackNanoErg": 32323896,
+    "lossIfSoldBackNanoErg": 4166129
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "6c35aa395c7c75b0f67f7804d6930f0e11ef93c3387dc1faa86498d54af7962c/8b08cdd5449a9592a9e79711d7d79249d7a03c535d17efaee83e216e80a44c4b",
+   "txs": 3,
+   "netNanoErg": 2292039,
+   "capitalNanoErg": 3305438,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "81084319cf6148962bdfc55e58c6e2d2512a2de5762af891f88caad9daa9f1f6",
+     "ergIn": 3305438,
+     "tokensOut": 64047
+    },
+    {
+     "tx": 2,
+     "pool": "eabdf30db36a13bd031ff53f7a87ec69ac8250863f70d60e81aa09dbb4e77974",
+     "t2t": "2dc6a828452bbc4be4f8a0ff20aeb00a869cccd081e58259a3ceffbef8bacd55",
+     "tokensIn": 64047,
+     "tokensOut": 188
+    },
+    {
+     "tx": 3,
+     "pool": "e0f44ca657acbbbdd00194c87eb720e2025ef7332ffe56f8b4824166d0b795cc",
+     "tokensIn": 188,
+     "ergOut": 8897477
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 64047,
+    "token": "6c35aa395c7c75b0f67f7804d6930f0e11ef93c3387dc1faa86498d54af7962c",
+    "sellBackNanoErg": 3239700,
+    "lossIfSoldBackNanoErg": 1165738
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "91289d5cefb9d78e3ea248d4e9c5b0e3c3de54f64bfae85c0070580961995262/0fdb7ff8b37479b6eb7aab38d45af2cfeefabbefdc7eebc0348d25dd65bc2c91",
+   "txs": 3,
+   "netNanoErg": 2160444,
+   "capitalNanoErg": 539556,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "25813f3c1a9ed966ef9bd09d3b72a5f7eb7de82d402f356f6250be5e9c38cb99",
+     "ergIn": 539556,
+     "tokensOut": 1
+    },
+    {
+     "tx": 2,
+     "pool": "63aef88fc6986372c2d947a58a8589d443504ecc93e1fc38d3807bc941ccff5a",
+     "t2t": "eb17baf4a17667cb480ba109a053f8f2c650e167ce7b44e6547ff2b2b0ef2e72",
+     "tokensIn": 1,
+     "tokensOut": 5626
+    },
+    {
+     "tx": 3,
+     "pool": "3035fa517cccb410a2fb9e247d33a32735eb0068ec8da5de1fbd694692386c05",
+     "tokensIn": 5626,
+     "ergOut": 6000000
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1,
+    "token": "91289d5cefb9d78e3ea248d4e9c5b0e3c3de54f64bfae85c0070580961995262",
+    "sellBackNanoErg": 528818,
+    "lossIfSoldBackNanoErg": 1110738
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "6c35aa395c7c75b0f67f7804d6930f0e11ef93c3387dc1faa86498d54af7962c/8b08cdd5449a9592a9e79711d7d79249d7a03c535d17efaee83e216e80a44c4b",
+   "txs": 3,
+   "netNanoErg": 1891400,
+   "capitalNanoErg": 3305438,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "81084319cf6148962bdfc55e58c6e2d2512a2de5762af891f88caad9daa9f1f6",
+     "ergIn": 3305438,
+     "tokensOut": 64047
+    },
+    {
+     "tx": 2,
+     "pool": "eabdf30db36a13bd031ff53f7a87ec69ac8250863f70d60e81aa09dbb4e77974",
+     "t2t": "2dc6a828452bbc4be4f8a0ff20aeb00a869cccd081e58259a3ceffbef8bacd55",
+     "tokensIn": 64047,
+     "tokensOut": 188
+    },
+    {
+     "tx": 3,
+     "pool": "419341b8a27c69a525f231afbd5c1643b108a30468da9565e3b2a0701f8d48ce",
+     "tokensIn": 188,
+     "ergOut": 8496838
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 64047,
+    "token": "6c35aa395c7c75b0f67f7804d6930f0e11ef93c3387dc1faa86498d54af7962c",
+    "sellBackNanoErg": 3239700,
+    "lossIfSoldBackNanoErg": 1165738
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "6c35aa395c7c75b0f67f7804d6930f0e11ef93c3387dc1faa86498d54af7962c/8b08cdd5449a9592a9e79711d7d79249d7a03c535d17efaee83e216e80a44c4b",
+   "txs": 3,
+   "netNanoErg": 1867544,
+   "capitalNanoErg": 3259476,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "81084319cf6148962bdfc55e58c6e2d2512a2de5762af891f88caad9daa9f1f6",
+     "ergIn": 3259476,
+     "tokensOut": 63157
+    },
+    {
+     "tx": 2,
+     "pool": "eabdf30db36a13bd031ff53f7a87ec69ac8250863f70d60e81aa09dbb4e77974",
+     "t2t": "2dc6a828452bbc4be4f8a0ff20aeb00a869cccd081e58259a3ceffbef8bacd55",
+     "tokensIn": 63157,
+     "tokensOut": 187
+    },
+    {
+     "tx": 3,
+     "pool": "39c2796258cbf67c0b7ca4b69b9d4ed700801248bda9e7ca6557a908176df30e",
+     "tokensIn": 187,
+     "ergOut": 8427020
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 63157,
+    "token": "6c35aa395c7c75b0f67f7804d6930f0e11ef93c3387dc1faa86498d54af7962c",
+    "sellBackNanoErg": 3194652,
+    "lossIfSoldBackNanoErg": 1164824
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "0779ec04f2fae64e87418a1ad917639d4668f78484f45df962b0dec14a2591d2/ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35",
+   "txs": 3,
+   "netNanoErg": 1738780,
+   "capitalNanoErg": 11436638,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "87e2449011fc65d4f086b82eebfb73c5fe53c2690bf4b0ceb04b798525ac1379",
+     "ergIn": 11436638,
+     "tokensOut": 196912
+    },
+    {
+     "tx": 2,
+     "pool": "70e978834222d5d07bebd22718e1f6bbd640b9ba5f4ee1c9f1ee35dad77a846b",
+     "t2t": "ebe650dfafdce787e58494f1846b5fd02609892ccc650141589a18843c33c2d1",
+     "tokensIn": 196912,
+     "tokensOut": 177144
+    },
+    {
+     "tx": 3,
+     "pool": "ffe0007f10653d510677ac9114f1d5fe86fc18385c3a0cc01e3302872600ba98",
+     "tokensIn": 177144,
+     "ergOut": 16475418
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 196912,
+    "token": "0779ec04f2fae64e87418a1ad917639d4668f78484f45df962b0dec14a2591d2",
+    "sellBackNanoErg": 11322624,
+    "lossIfSoldBackNanoErg": 1214014
+   }
+  },
+  {
+   "line": "c pool-pool",
+   "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+   "txs": 2,
+   "netNanoErg": 1519959,
+   "capitalNanoErg": 26923846,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "6a5caa6fc22f48ac56875f47915a24ed79db1062f74074bfb6dbd7c20f49da4a",
+     "nft": "ddcfb0239162a95ebd9265563d58366693882582ba87ad4d1a29425596936ae1",
+     "ergIn": 26923846,
+     "tokensOut": 5171
+    },
+    {
+     "tx": 2,
+     "pool": "dbfb8a2dfbecdccc0799dd40427f4cc7993aa3c9339621158186ce3cc51a0ec9",
+     "nft": "1f01dc8e29806d96ca0b79f8e798cd8cfce51c0e676aaedf6ab3464b37da9dfd",
+     "tokensIn": 5171,
+     "ergOut": 30643805
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 5171,
+    "token": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+    "sellBackNanoErg": 26452493,
+    "lossIfSoldBackNanoErg": 1571353
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "00b1e236b60b95c2c6f8007a9d89bc460fc9e78f98b09faec9449007b40bccf3/0fdb7ff8b37479b6eb7aab38d45af2cfeefabbefdc7eebc0348d25dd65bc2c91",
+   "txs": 3,
+   "netNanoErg": 1495787,
+   "capitalNanoErg": 537546,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "0d24b9f2fb767ebe8c2fb839cda81e0f830c161a860ec6e111b0e7f55d7a46ff",
+     "ergIn": 537546,
+     "tokensOut": 939503
+    },
+    {
+     "tx": 2,
+     "pool": "84e562e13c870d629d8f593b325b16d915e5f65bef6c2a4ff73e3ed1ea3e180c",
+     "t2t": "d727f580b2042f0280af6ab148667d809d3be3ea7b6c337d182b273e980556fb",
+     "tokensIn": 939503,
+     "tokensOut": 2
+    },
+    {
+     "tx": 3,
+     "pool": "3035fa517cccb410a2fb9e247d33a32735eb0068ec8da5de1fbd694692386c05",
+     "tokensIn": 2,
+     "ergOut": 5333333
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 939503,
+    "token": "00b1e236b60b95c2c6f8007a9d89bc460fc9e78f98b09faec9449007b40bccf3",
+    "sellBackNanoErg": 533254,
+    "lossIfSoldBackNanoErg": 1104292
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "46700be1c5b9287acb6c7664e72883c967574db4332a3bfec59cece33b5a3177/a399dcd79a68eea82df4e9b30a11c61a96a671e767924c0cef2148fec9270df6",
+   "txs": 3,
+   "netNanoErg": 1439460,
+   "capitalNanoErg": 46758985,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "5fc975b72b9e5c41c9f2e242568847345c28d814b347b1c11ed500a5c70dd531",
+     "ergIn": 46758985,
+     "tokensOut": 52
+    },
+    {
+     "tx": 2,
+     "pool": "5d6c802067c818a2f9f66a1a2220d2409311e62a853032faa6891a04c9c7a3e3",
+     "t2t": "4ec4c2c7a9d2d768e7b0ba1da8ce6c04908724aa7d56e1b27f5719e83e4898aa",
+     "tokensIn": 52,
+     "tokensOut": 148
+    },
+    {
+     "tx": 3,
+     "pool": "2a35254d02ef232fdb631d3a7907c6ddef43b8a2f42e7af873e170c54bbecb37",
+     "tokensIn": 148,
+     "ergOut": 51498445
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 52,
+    "token": "46700be1c5b9287acb6c7664e72883c967574db4332a3bfec59cece33b5a3177",
+    "sellBackNanoErg": 43995717,
+    "lossIfSoldBackNanoErg": 3863268
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8/46700be1c5b9287acb6c7664e72883c967574db4332a3bfec59cece33b5a3177",
+   "txs": 3,
+   "netNanoErg": 1393516,
+   "capitalNanoErg": 31682781,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "a3df60903ea63276f323125a1971afbfe6ffd43bf692c3af1f917cfc0bc120b1",
+     "ergIn": 31682781,
+     "tokensOut": 733
+    },
+    {
+     "tx": 2,
+     "pool": "10cba63c837f25b7dbeab5c4f3c04415a4a15dbb5de3b93b6e4b312af2085a17",
+     "t2t": "333c2d771d4e171c4fecc651888f7683c3372c6b9e3b8d70fd442ce8ebd246fd",
+     "tokensIn": 733,
+     "tokensOut": 43
+    },
+    {
+     "tx": 3,
+     "pool": "5fc975b72b9e5c41c9f2e242568847345c28d814b347b1c11ed500a5c70dd531",
+     "tokensIn": 43,
+     "ergOut": 36376297
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 733,
+    "token": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+    "sellBackNanoErg": 29810339,
+    "lossIfSoldBackNanoErg": 2972442
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35/0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+   "txs": 3,
+   "netNanoErg": 1303906,
+   "capitalNanoErg": 664871,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "ffe0007f10653d510677ac9114f1d5fe86fc18385c3a0cc01e3302872600ba98",
+     "ergIn": 664871,
+     "tokensOut": 7103
+    },
+    {
+     "tx": 2,
+     "pool": "83455fd07bbfd1e0bc13ff690d1be3bc0201bd26ed472bb5fb0a513cfbfba5af",
+     "t2t": "a725808e435436220a43ca40c28d12ff5d31c4978cad9cc294eadc3778074290",
+     "tokensIn": 7103,
+     "tokensOut": 1208
+    },
+    {
+     "tx": 3,
+     "pool": "6a5caa6fc22f48ac56875f47915a24ed79db1062f74074bfb6dbd7c20f49da4a",
+     "tokensIn": 1208,
+     "ergOut": 5268777
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 7103,
+    "token": "ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35",
+    "sellBackNanoErg": 660887,
+    "lossIfSoldBackNanoErg": 1103984
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "c64e773d944593fdc1b8c08558c0219e2c6432d1820f56079abde85902a5a3e3/00b42b41cb438c41d0139aa8432eb5eeb70d5a02d3df891f880d5fe08670c365",
+   "txs": 3,
+   "netNanoErg": 1211525,
+   "capitalNanoErg": 34565140,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "16969061bf2dd785042a708e2f86504d0a412b1b82563a229d62df016c228e21",
+     "ergIn": 34565140,
+     "tokensOut": 1294088
+    },
+    {
+     "tx": 2,
+     "pool": "95f1bd6c003aa75bd60ce173636434ec54216703864e19c7ca1376eb69c642cd",
+     "t2t": "90ac7e80194708d42d23ce1ed135061ea252680079d8e48be7bf793dc9a24b3d",
+     "tokensIn": 1294088,
+     "tokensOut": 304321
+    },
+    {
+     "tx": 3,
+     "pool": "a8d6cf3048bec0b66c8c628d84739b382b2bce0eea3481230a8872927cc9b02e",
+     "tokensIn": 304321,
+     "ergOut": 39076665
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1294088,
+    "token": "c64e773d944593fdc1b8c08558c0219e2c6432d1820f56079abde85902a5a3e3",
+    "sellBackNanoErg": 31567955,
+    "lossIfSoldBackNanoErg": 4097185
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "185e217d80d797800bfa699afda708ee101ae664f8ea237d9fc3a3824b7c3ecb/d1d2ae2ac0456aa43550dd4fda45e4f866d523be9170d3a3e4cab43a83926334",
+   "txs": 3,
+   "netNanoErg": 880934,
+   "capitalNanoErg": 73427672,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "5f0a5ee33b171433bbcb057377bb29805d43a33d5ec954e46e73958bbc71896c",
+     "ergIn": 73427672,
+     "tokensOut": 3945
+    },
+    {
+     "tx": 2,
+     "pool": "aeae5f45db785803e3e91682f6369bd769b5156a028085822522c972088a2c24",
+     "t2t": "171e7c7a33278319fe126f3b8cdfd0f3f98f01e372e59eaebd5e2137703ed819",
+     "tokensIn": 3945,
+     "tokensOut": 310
+    },
+    {
+     "tx": 3,
+     "pool": "1e0c80ce0b34b5d1971786e002c09865fc5d3f01e1ca25159547677a1f01f45f",
+     "tokensIn": 310,
+     "ergOut": 77608606
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 3945,
+    "token": "185e217d80d797800bfa699afda708ee101ae664f8ea237d9fc3a3824b7c3ecb",
+    "sellBackNanoErg": 73010404,
+    "lossIfSoldBackNanoErg": 1517268
+   }
+  },
+  {
+   "line": "c pool-pool",
+   "token": "34d449dc84a27d0f8fb2166d415a7223604f6426fb2d83ee099f2312182d575d",
+   "txs": 2,
+   "netNanoErg": 823395,
+   "capitalNanoErg": 51016789,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "58d4df95c5c6a00ef4eb353d6f63a197d0f2618b8d2c6c01dc7e507318bc5a33",
+     "nft": "d5077d8991925e30077a73eef3db94191de1b1c1605c3ed0e66ce809ae4bc6d9",
+     "ergIn": 51016789,
+     "tokensOut": 1044629542725
+    },
+    {
+     "tx": 2,
+     "pool": "9a2a1b1012df395b504da3d171fb7f1a587f43c899384eb80cb21de2fc0c634b",
+     "nft": "8e6386b31b14e22e5f2ae65db82abce8431d85e8a65c0cac684ae1c12af0639b",
+     "tokensIn": 1044629542725,
+     "ergOut": 54040184
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1044629542725,
+    "token": "34d449dc84a27d0f8fb2166d415a7223604f6426fb2d83ee099f2312182d575d",
+    "sellBackNanoErg": 49096663,
+    "lossIfSoldBackNanoErg": 3020126
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "01dce8a5632d19799950ff90bca3b5d0ca3ebfa8aaafd06f0cc6dd1e97150e7f/b0b312cde931c8bbdac0dac5bfd8e2c03bf4611275dc967988c8d15bd5ec20e0",
+   "txs": 3,
+   "netNanoErg": 746479,
+   "capitalNanoErg": 216966654,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "b6e5f09ecb63ab0667add1ee2c4088907a4987660f02e00a97d0a3ee53c5dff4",
+     "ergIn": 216966654,
+     "tokensOut": 11110370
+    },
+    {
+     "tx": 2,
+     "pool": "4e75b9dc972a6123b38bf9fff5ff5a248f07d5c8344c1b3f991194c54d5dc46a",
+     "t2t": "dfb048f01faecc5c1369a06c79d9b8ee5e0db7caba40f1cc19821234009d1538",
+     "tokensIn": 11110370,
+     "tokensOut": 9082
+    },
+    {
+     "tx": 3,
+     "pool": "3c961fc3d5da71f11e1aefa5788ca9817a9752abdf1cc25cfba598fda437a142",
+     "tokensIn": 9082,
+     "ergOut": 221013133
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 11110370,
+    "token": "01dce8a5632d19799950ff90bca3b5d0ca3ebfa8aaafd06f0cc6dd1e97150e7f",
+    "sellBackNanoErg": 215666856,
+    "lossIfSoldBackNanoErg": 2399798
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35/0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+   "txs": 3,
+   "netNanoErg": 637575,
+   "capitalNanoErg": 80031,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "ffe0007f10653d510677ac9114f1d5fe86fc18385c3a0cc01e3302872600ba98",
+     "ergIn": 80031,
+     "tokensOut": 855
+    },
+    {
+     "tx": 2,
+     "pool": "83455fd07bbfd1e0bc13ff690d1be3bc0201bd26ed472bb5fb0a513cfbfba5af",
+     "t2t": "a725808e435436220a43ca40c28d12ff5d31c4978cad9cc294eadc3778074290",
+     "tokensIn": 855,
+     "tokensOut": 599
+    },
+    {
+     "tx": 3,
+     "pool": "ae17e0b780eaa9c2b6eea87825c3f5cfbd8b002c0365f97b69e8367644bdca7d",
+     "tokensIn": 599,
+     "ergOut": 4017606
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 855,
+    "token": "ac992a1ca8494be17a29c79c9bc7f2aeacf75cf3826d62f95cc921cf463c3f35",
+    "sellBackNanoErg": 79551,
+    "lossIfSoldBackNanoErg": 1100480
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "46700be1c5b9287acb6c7664e72883c967574db4332a3bfec59cece33b5a3177/01dce8a5632d19799950ff90bca3b5d0ca3ebfa8aaafd06f0cc6dd1e97150e7f",
+   "txs": 3,
+   "netNanoErg": 617007,
+   "capitalNanoErg": 4495770,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "5fc975b72b9e5c41c9f2e242568847345c28d814b347b1c11ed500a5c70dd531",
+     "ergIn": 4495770,
+     "tokensOut": 5
+    },
+    {
+     "tx": 2,
+     "pool": "b4fafbb268cb0363fa6c06b747e04a7495fc721c53190c2ca0c1316c55ad7cbc",
+     "t2t": "8e8e3dd8cd3958e6fb7aba32872f558b4295e9169af0328d662197ed4259d347",
+     "tokensIn": 5,
+     "tokensOut": 432023
+    },
+    {
+     "tx": 3,
+     "pool": "be4e8098d40b7cfa6a454fda0cc35f52cffd120996e40e6ee2679b7af2dd7804",
+     "tokensIn": 432023,
+     "ergOut": 8412777
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 5,
+    "token": "46700be1c5b9287acb6c7664e72883c967574db4332a3bfec59cece33b5a3177",
+    "sellBackNanoErg": 4230071,
+    "lossIfSoldBackNanoErg": 1365699
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "46700be1c5b9287acb6c7664e72883c967574db4332a3bfec59cece33b5a3177/01dce8a5632d19799950ff90bca3b5d0ca3ebfa8aaafd06f0cc6dd1e97150e7f",
+   "txs": 3,
+   "netNanoErg": 590022,
+   "capitalNanoErg": 4495770,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "5fc975b72b9e5c41c9f2e242568847345c28d814b347b1c11ed500a5c70dd531",
+     "ergIn": 4495770,
+     "tokensOut": 5
+    },
+    {
+     "tx": 2,
+     "pool": "b4fafbb268cb0363fa6c06b747e04a7495fc721c53190c2ca0c1316c55ad7cbc",
+     "t2t": "8e8e3dd8cd3958e6fb7aba32872f558b4295e9169af0328d662197ed4259d347",
+     "tokensIn": 5,
+     "tokensOut": 432023
+    },
+    {
+     "tx": 3,
+     "pool": "b6e5f09ecb63ab0667add1ee2c4088907a4987660f02e00a97d0a3ee53c5dff4",
+     "tokensIn": 432023,
+     "ergOut": 8385792
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 5,
+    "token": "46700be1c5b9287acb6c7664e72883c967574db4332a3bfec59cece33b5a3177",
+    "sellBackNanoErg": 4230071,
+    "lossIfSoldBackNanoErg": 1365699
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "c64e773d944593fdc1b8c08558c0219e2c6432d1820f56079abde85902a5a3e3/1fd6e032e8476c4aa54c18c1a308dce83940e8f4a28f576440513ed7326ad489",
+   "txs": 3,
+   "netNanoErg": 283667,
+   "capitalNanoErg": 49284018,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "16969061bf2dd785042a708e2f86504d0a412b1b82563a229d62df016c228e21",
+     "ergIn": 49284018,
+     "tokensOut": 1816576
+    },
+    {
+     "tx": 2,
+     "pool": "77f1a8626491c86439120abcd2a269ac83ddeba04d190f6a689d52815de43769",
+     "t2t": "ecd533d786dc9efc4541d7111620fb98e79d0da5c1a0b9b1f274eae3eeab3c85",
+     "tokensIn": 1816576,
+     "tokensOut": 943575
+    },
+    {
+     "tx": 3,
+     "pool": "d0fb5a491b6ac2176ff5cde91bdbfd56586c3ff18a7fe5bcfb3c86d59a54996b",
+     "tokensIn": 943575,
+     "ergOut": 52867685
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 1816576,
+    "token": "c64e773d944593fdc1b8c08558c0219e2c6432d1820f56079abde85902a5a3e3",
+    "sellBackNanoErg": 45073827,
+    "lossIfSoldBackNanoErg": 5310191
+   }
+  },
+  {
+   "line": "h triangle",
+   "token": "bd0c25c373ad606d78412ae1198133f4573b4e4c2d4ed3fc4c2a4547c6c6e12e/694200e819b76d6f636d7d24004b7ec992a0832e56c65654a9a3db87e8afbce8",
+   "txs": 3,
+   "netNanoErg": 246756,
+   "capitalNanoErg": 115039,
+   "legs": [
+    {
+     "tx": 1,
+     "pool": "26a007f08bba24871c7293297c03b2117b432421d37c88f6e7be05b8f21cc488",
+     "ergIn": 115039,
+     "tokensOut": 869819
+    },
+    {
+     "tx": 2,
+     "pool": "1733dfb9cd4f1b279e7687edf15fcab78210f43ddd892c0fff9a5c5cf7aa9bbd",
+     "t2t": "6f07966951ea089caf2f03ecaec4e2b01627ffc10a4e301ef7f00ebd0cf983c8",
+     "tokensIn": 869819,
+     "tokensOut": 1281214
+    },
+    {
+     "tx": 3,
+     "pool": "8b7cd9e3d4ec508efc07481ee73a5ee32d5f8d58474be0cf07349ea3a3633ed0",
+     "tokensIn": 1281214,
+     "ergOut": 3661795
+    }
+   ],
+   "ifLeg2Fails": {
+    "held": 869819,
+    "token": "bd0c25c373ad606d78412ae1198133f4573b4e4c2d4ed3fc4c2a4547c6c6e12e",
+    "sellBackNanoErg": 114349,
+    "lossIfSoldBackNanoErg": 1100690
+   }
+  }
+ ],
+ "requests": {
+  "net": 11,
+  "cache": 0
+ }
+}

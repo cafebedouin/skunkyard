@@ -1,0 +1,126 @@
+{
+ "from": 1869418,
+ "to": 1891017,
+ "blocks": 21600,
+ "meanNanoErg": 98454231,
+ "meanExact": 98454231.8938426,
+ "medianNanoErg": 1500000,
+ "maxNanoErg": 241623615524,
+ "minNanoErg": 0,
+ "zeroFeeBlocks": 9525,
+ "percentiles": {
+  "10": 0,
+  "25": 0,
+  "50": 1500000,
+  "75": 17700000,
+  "90": 70100000,
+  "95": 250600000,
+  "99": 1608518370
+ },
+ "histogram": [
+  {
+   "fromNanoErg": 0,
+   "belowNanoErg": 1000000,
+   "blocks": 9525
+  },
+  {
+   "fromNanoErg": 1000000,
+   "belowNanoErg": 1100001,
+   "blocks": 854
+  },
+  {
+   "fromNanoErg": 1100001,
+   "belowNanoErg": 2000000,
+   "blocks": 662
+  },
+  {
+   "fromNanoErg": 2000000,
+   "belowNanoErg": 5000000,
+   "blocks": 1741
+  },
+  {
+   "fromNanoErg": 5000000,
+   "belowNanoErg": 10000000,
+   "blocks": 1757
+  },
+  {
+   "fromNanoErg": 10000000,
+   "belowNanoErg": 50000000,
+   "blocks": 4301
+  },
+  {
+   "fromNanoErg": 50000000,
+   "belowNanoErg": 100000000,
+   "blocks": 928
+  },
+  {
+   "fromNanoErg": 100000000,
+   "belowNanoErg": 1000000000,
+   "blocks": 1483
+  },
+  {
+   "fromNanoErg": 1000000000,
+   "belowNanoErg": 1000000000000000000,
+   "blocks": 349
+  }
+ ],
+ "totalNanoErg": 2126611408907,
+ "rewardMeanNanoErg": 3000000000,
+ "rewardPlusFeeMeanNanoErg": 3098454231,
+ "u1SampleMeanNanoErg": 68993820,
+ "u1SampleMedianNanoErg": 1500000,
+ "u1SampleBlocks": 2160,
+ "txPerBlockMean": 6.155324074074074,
+ "topBlocks": [
+  {
+   "height": 1873987,
+   "feeNanoErg": 241623615524,
+   "txs": 41
+  },
+  {
+   "height": 1870975,
+   "feeNanoErg": 187314171763,
+   "txs": 57
+  },
+  {
+   "height": 1875614,
+   "feeNanoErg": 130983302291,
+   "txs": 8
+  },
+  {
+   "height": 1882736,
+   "feeNanoErg": 28075138226,
+   "txs": 33
+  },
+  {
+   "height": 1880727,
+   "feeNanoErg": 14473184292,
+   "txs": 59
+  },
+  {
+   "height": 1880466,
+   "feeNanoErg": 13805666320,
+   "txs": 32
+  },
+  {
+   "height": 1888458,
+   "feeNanoErg": 13412568973,
+   "txs": 3
+  },
+  {
+   "height": 1886667,
+   "feeNanoErg": 11736173669,
+   "txs": 38
+  },
+  {
+   "height": 1882743,
+   "feeNanoErg": 9960485278,
+   "txs": 26
+  },
+  {
+   "height": 1872070,
+   "feeNanoErg": 8360786517,
+   "txs": 27
+  }
+ ]
+}

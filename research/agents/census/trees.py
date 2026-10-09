@@ -33,25 +33,114 @@ def _vlq(b, i):
             return r, i
 
 
-def _skip_const(b, i):
-    t = b[i]; i += 1
-    if t in (4, 5, 3):          # Int, Long, Short: zigzag VLQ
-        _, i = _vlq(b, i)
-    elif t == 1 or t == 2:      # Boolean, Byte
-        i += 1
-    elif t == 0x0e or t == 0x06:  # Coll[Byte], BigInt
-        n, i = _vlq(b, i); i += n
-    elif t == 0x10:             # Coll[Int]
+def _parse_type(b, i):
+    """Serialized SType -> (type, i). Primitive codes 1..9; collections, options and pairs are encoded on top of
+    them (sigmastate TypeSerializer)."""
+    c = b[i]; i += 1
+    if 1 <= c <= 9:
+        return ("p", c), i
+    if c in range(97, 107):                     # Any, Unit, Box, AvlTree, Context, String, Header, PreHeader...
+        return ("x", c), i
+    if c == 96:                                 # STuple: n then n types
+        n = b[i]; i += 1
+        ts = []
+        for _ in range(n):
+            t, i = _parse_type(b, i)
+            ts.append(t)
+        return ("tuple", ts), i
+    k, r = divmod(c, 12)
+    def inner(i):
+        return _parse_type(b, i) if r == 0 else (("p", r), i)
+    if k == 1:
+        t, i = inner(i); return ("coll", t), i
+    if k == 2:
+        t, i = inner(i); return ("coll", ("coll", t)), i
+    if k == 3:
+        t, i = inner(i); return ("opt", t), i
+    if k == 4:
+        t, i = inner(i); return ("opt", ("coll", t)), i
+    if k == 5:                                  # Pair1: (prim r or type, type)
+        t1, i = inner(i); t2, i = _parse_type(b, i); return ("tuple", [t1, t2]), i
+    if k == 6:                                  # Pair2: (type, prim r or type)
+        if r == 0:
+            t1, i = _parse_type(b, i); t2, i = _parse_type(b, i)
+        else:
+            t1, i = _parse_type(b, i); t2 = ("p", r)
+        return ("tuple", [t1, t2]), i
+    if k == 7:                                  # PairSymmetric
+        t, i = inner(i); return ("tuple", [t, t]), i
+    if k == 8:                                  # Triple / Quadruple via r
+        raise ValueError(f"type code {c} not handled")
+    raise ValueError(f"type code {c} not handled")
+
+
+def _skip_sigma(b, i):
+    op = b[i]; i += 1
+    if op == 0xcd:                              # ProveDlog
+        return i + 33
+    if op == 0xce:                              # ProveDHTuple
+        return i + 4 * 33
+    if op in (0x96, 0x97):                      # CAND, COR: n children
         n, i = _vlq(b, i)
         for _ in range(n):
+            i = _skip_sigma(b, i)
+        return i
+    if op == 0x98:                              # CTHRESHOLD: k, n children
+        _, i = _vlq(b, i); n, i = _vlq(b, i)
+        for _ in range(n):
+            i = _skip_sigma(b, i)
+        return i
+    if op in (0x7f, 0x80):                      # TrivialProp true/false
+        return i
+    raise ValueError(f"sigma op {op:#x} not handled")
+
+
+def _skip_value(b, i, t):
+    kind = t[0]
+    if kind == "p":
+        c = t[1]
+        if c in (1, 2):
+            return i + 1
+        if c in (3, 4, 5):
+            _, i = _vlq(b, i); return i
+        if c in (6, 9):
+            n, i = _vlq(b, i); return i + n
+        if c == 7:
+            return i + 33
+        if c == 8:
+            return _skip_sigma(b, i)
+    if kind == "coll":
+        n, i = _vlq(b, i)
+        et = t[1]
+        if et == ("p", 1):                      # Coll[Boolean]: bit-packed
+            return i + (n + 7) // 8
+        if et == ("p", 2):
+            return i + n
+        for _ in range(n):
+            i = _skip_value(b, i, et)
+        return i
+    if kind == "opt":
+        f = b[i]; i += 1
+        return _skip_value(b, i, t[1]) if f else i
+    if kind == "tuple":
+        for et in t[1]:
+            i = _skip_value(b, i, et)
+        return i
+    if kind == "x" and t[1] == 100:             # AvlTree: digest, flags, keyLength, valueLengthOpt
+        i += 33 + 1
+        _, i = _vlq(b, i)
+        f = b[i]; i += 1
+        if f:
             _, i = _vlq(b, i)
-    elif t == 0x08:             # SigmaProp: ProveDlog only
-        assert b[i] == 0xcd; i += 34
-    elif t == 0x07:             # GroupElement
-        i += 33
-    else:
-        raise ValueError(f"constant type {t:#x} not handled")
-    return i
+        return i
+    if kind == "x" and t[1] == 98:              # Unit
+        return i
+    raise ValueError(f"value of type {t} not handled")
+
+
+def _skip_const(b, i):
+    t, i = _parse_type(b, i)
+    return _skip_value(b, i, t)
 
 
 def template_bytes(tree_hex):
@@ -119,3 +208,56 @@ ERGODEX_N2T_ORDERS = [
     ("Redeem", "legacyV0", "d802d6017300d602b2a4730100eb027201d195ed93b1a4730293b1db630872027303d806d603db63087202d604b2a5730400d605b2db63087204730500d606b27203730600d6077e8cb2db6308a77307000206d6087e9973088cb272037309000206edededed938cb27203730a0001730b93c27204d07201938c7205018c720601927e9a99c17204c1a7730c069d9c72077ec17202067208927e8c720502069d9c72077e8c720602067208730d"),
 ]
 ORDER_TEMPLATE_HASHES = {hashlib.sha256(bytes.fromhex(h)).hexdigest(): (k, v) for k, v, h in ERGODEX_N2T_ORDERS}
+
+
+# ---- addresses (U1b): the /blocks/{id} endpoint gives an input's address, not its tree ----------------------
+
+_B58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+
+
+def address_bytes(addr):
+    n = 0
+    for ch in addr:
+        n = n * 58 + _B58.index(ch)
+    raw = n.to_bytes((n.bit_length() + 7) // 8, "big")
+    return b"\x00" * (len(addr) - len(addr.lstrip("1"))) + raw
+
+
+def address_tree(addr):
+    """ErgoTree hex for a mainnet address, or None for pay-to-script-hash (the tree is not in the address).
+    Layout: network+type byte, content, 4-byte checksum; type 1 P2PK (content = 33-byte key), 2 P2SH, 3 P2S."""
+    b = address_bytes(addr)
+    kind, content = b[0] & 0x0F, b[1:-4]
+    if kind == 1:
+        return "0008cd" + content.hex()
+    if kind == 3:
+        return content.hex()
+    return None
+
+
+def grid_orders(serialized):
+    """Off the Grid R5, Coll[((Long, Boolean), (Long, Long))] serialized: [(amount, isBuy, buyTotal, sellTotal)].
+    The type descriptor is skipped by finding the offset whose count and items consume the register exactly."""
+    b = bytes.fromhex(serialized)
+
+    def zz(i):
+        v, i = _vlq(b, i)
+        return (v >> 1) ^ -(v & 1), i
+
+    for start in range(2, 12):
+        try:
+            n, i = _vlq(b, start)
+            out = []
+            for _ in range(n):
+                amt, i = zz(i)
+                if b[i] not in (0, 1):
+                    raise ValueError
+                st = b[i] == 1; i += 1
+                buy, i = zz(i)
+                sell, i = zz(i)
+                out.append((amt, st, buy, sell))
+            if i == len(b) and n > 0:
+                return out
+        except (IndexError, ValueError):
+            continue
+    return None
