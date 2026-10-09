@@ -37,4 +37,10 @@ Evidence: full suite on Java 17, 2,698 tests, only the known load-sensitive snap
 on testnet, box `e5d9d2c2…`. [Observe-mode log against it: pending.] [Devnet candidate carrying a beat: pending.] The
 review record with every finding and its disposition is public in the skunkyard repo under `skunks/upkeep/SEATS.md`.
 
+One obvious extension I have left for a follow-on PR rather than this one: blocks are mostly empty, so upkeep could be
+opportunistic about space. Two parts: order due work across jobs by tip per byte and cost so leftover space takes the
+best-paying maintenance first (small, self-contained in upkeep), and let the upkeep share grow into whatever the
+mempool's fee-paying demand would leave empty, read from the node's pool histogram, shrinking back when demand rises.
+The second touches every source's budget, so it is your call on policy before anyone writes it.
+
 Branch: `upkeep-adapter` on my fork. Happy to split it however you prefer.
