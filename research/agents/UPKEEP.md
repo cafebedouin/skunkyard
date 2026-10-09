@@ -248,3 +248,47 @@ control: (census), 1, none, none, none, nobody.
 
 Prompts: census `prompts/census-u1.md`; client job `~/bin/lithos-upkeep/prompts/phase-8-babel-arb.md`; devnet hook
 `prompts/peeryard-babel-arb.md`.
+
+## U1b checked: "rent only" was a sampling label, not a script fact (2026-10-09)
+
+U1b (`research/agents/CENSUS-U1B.md`, branch `census-u1b`) marked a template "spent here only as rent" when its 12
+sampled keyless spends were all at rent age. That says who spent the boxes in the window, not whether the script has
+a keyless path. Reading the scripts of the large rent-only templates (decompiled in `census/u1b/f.json`, constants
+decoded from live boxes):
+
+| template | boxes / ERG | keyless path now? |
+|---|---|---|
+| `278ccff2…` staking incentive (NETA `9e5e5e0a`/`3f38af5d` and three other ErgoPad-style staking setups; 4 trees) | 4,043 / 273.6 | **yes**: consolidation bounty |
+| `b924a4f7…` staking incentive, newer version (one setup, stake NFT `b682ad9e`) | 2,804 / 166.7 | **yes**: the same bounty |
+| `f9f76671…` SkyHarbor ERG sale | 2,771 | **yes**: anyone buys at the listed price (R4) paying the seller (R5) and the market fee; a fixed-price sell offer U1b's line g did not cover |
+| `d5f0be11…` raffle | 1,626 | no: a ticket token input, or the owner's key after expiry |
+| `b05e92b9…` | 943 | no: `proveDlog` or a DH tuple |
+| `b30dd99a…` ErgoPad vesting | 344 | no: the owner's key token at `INPUTS(0)` |
+| `84d846df…` | 227 | no: `R5[SigmaProp]` |
+
+**The consolidation bounty.** Every input of the script holds at most 0.1 ERG and `OUTPUTS.size == 3`: output 0 the
+same script with more value than each input, output 1 exactly 0.0005 ERG per input of the script (script free: the
+executor's), output 2 exactly 0.001 ERG (script free: usable as the miner fee). Same constants on all five trees.
+Each box is about 770 bytes, so a rent claim (~0.96 ERG at today's factor) takes it whole: the 1,199 such spends U1b
+saw in the window were rent claims eating the staking setups' bot funds. 1,433 more reach rent age within 30 days
+(1,097 and 336), the oldest at about 1,891,508. Merging saves the value for the protocol, restarts its rent clock,
+and pays the executor 0.0005 ERG per box: about 3.4 ERG over all 6,847 boxes. Builder:
+`skunks/upkeep/mainnet/consolidate.py` (oldest first, node check, `--submit` only on request); not yet run.
+
+**Consolidation bounties as a defence against storage rent (the user, 2026-10-09).** Any protocol that holds value
+in many small boxes loses them to rent every four years unless someone respends them. A keyless consolidation path
+with a per-box bounty turns that into upkeep anyone (a Lithos miner first and cheapest) does before the rent clock
+runs out: the protocol keeps its value, the executor is paid, the chain's state shrinks. It is the due-job shape
+(U3) with a deadline set by rent age, and the census can list due boxes by template and age.
+
+## Miners with their own capital (the user, 2026-10-09)
+
+The mainnet wallet bootstrapped from keyless takes alone (10.28 ERG, `skunks/upkeep/mainnet/README.md`); from there
+it can fund takes that need capital, if each improves the net amount after the transaction. A miner can do the same:
+start from keyless upkeep, then commit some of its own wallet to two-leg takes in its own block, where the legs
+cannot be split. Two configuration ideas for the client: the miner names the tokens it is willing to hold, in
+addition to ERG (a take that ends in inventory is accepted only in those tokens), and a cap on capital per block. With
+enough miners doing it, miner capital could cushion a large dump (the 2014 "bearwhale" sale on Bitcoin is the
+picture): back-running a whale's sale in the same block buys the dip from the pools the sale moved, which narrows the
+gap other traders see, as liquidity of last resort rather than extraction. [Idea, not measured: U1b line j sizes
+capital takes only up to 10 ERG.]
