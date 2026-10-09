@@ -1,0 +1,100 @@
+{
+ "tree": "198d010704500428058092f4010414040804500100d802d601e4c6a70408d602e30004eb027201d195e67202d801d603b2a5e47202009683080192a3999a8cc7a7017300730193c27203c2a793db63087203db6308a793e4c672030408720193e4c67203050ec5a792c1720399c1a77302928cc772030199a3730390b1c372039ab1c3a795e6c6a7050e730473057306",
+ "token": "042b52b451153f53d5f76f080d55212a325ef7143e0aff8131573835fc9bf62b",
+ "vaults": [
+  "be9db1014998be12f91e526961e3f972d49adcb822777e341a867ed134e4dc55",
+  "13b745b216e8c60e8cb384ebbc96d7a0a59f2d80eb6290b28364b42c5835fcee",
+  "3e064c7534334b9e6d1752bbd10746ac58f63fac7b120446199d42373aa657f7"
+ ],
+ "refreshed": "affb88104a48f46a7463ae6f8e9fb7fdee2ca0d77b2c11d4c4b5a5cde74e7770",
+ "results": [
+  {
+   "case": 1,
+   "label": "refresh before the window",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. dbfc9371c9c67ade26a0f1d6d20e5d91c305179d57d340220b2a58ce8dd83540: #0 => Success((false,520))\" }"
+  },
+  {
+   "case": 3,
+   "label": "a successor without the token",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 9b6f673719f1c9df6568bde144088ea49f768cc204b1253670a3c0096f08267c: #0 => Success((false,516))\" }"
+  },
+  {
+   "case": 4,
+   "label": "a successor taking bounty + 1",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. ca1d583538d0292df7e2eaa31f61dabd02857360f213a77680a4511a7cd8db04: #0 => Success((false,520))\" }"
+  },
+  {
+   "case": 5,
+   "label": "a successor with another owner",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. af815d1cfa28cd185b3e1a9d8eb6e6c9feff8bb71b81c45ff46e4d7c27ed8fb6: #0 => Success((false,520))\" }"
+  },
+  {
+   "case": 6,
+   "label": "a successor whose R5 is not the spent box's id",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. dc1cebf217ff6c63098e654db928a0306cfbc1fc1bf50969e3c9ca350c969abb: #0 => Success((false,520))\" }"
+  },
+  {
+   "case": 7,
+   "label": "a successor dated SLACK + 1 blocks back",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 68c70fc1e7ca79568513eb525ce8a9f07ef079537bd32a21bc389db6ebc3a69a: #0 => Success((false,520))\" }"
+  },
+  {
+   "case": 8,
+   "label": "a successor padded with an R6",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 94fb11460f1194f05c2fe7128ac35cf4b3cb99c309cf6b2e0a1fc0495c594adb: #0 => Success((false,520))\" }"
+  },
+  {
+   "case": 9,
+   "label": "two identical vaults refreshed into one output",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. d2aa742958692c7306e02695c4660a49706edab89ff3527cbbc627b58522e675: #1 => Success((false,520))\" }"
+  },
+  {
+   "case": 2,
+   "label": "refresh in the window, honest",
+   "expect": "ACCEPT",
+   "got": "ACCEPT",
+   "ok": true,
+   "detail": "851926ba69e842cba94b0fab99d94b0a73629ed472bc6b0dc605ca7b3666d6de"
+  },
+  {
+   "case": 10,
+   "label": "the refreshed box refreshed again at once",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 4c2471d8efa6a677d05b7957ef0ce13f8112e497ae61c8fd04f2d59c2b7a9d1f: #0 => Success((false,520))\" }"
+  },
+  {
+   "case": 11,
+   "label": "the owner spends the refreshed box with its key",
+   "expect": "ACCEPT",
+   "got": "ACCEPT",
+   "ok": true,
+   "detail": "a7d83822ed58d2e0a090803c7e809d03897a765202809dbff1853da19b2aa8a3"
+  }
+ ]
+}
