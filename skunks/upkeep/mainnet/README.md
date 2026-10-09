@@ -20,9 +20,9 @@ payout went to the skunkyard mainnet test wallet `9gnBiuBAy4GgGEk1MZQ5f7aWWuQnyG
 | ergopad | `f0b47104…` | `77f452f2…` | 8,000 | 1,249,724 | 0.4592 | 9.5375 | `c5528c67490b6fd8173d697b16a5482fca8dbf8117b6d25b31c18727973c720d` | 1,891,043 |
 | love | `e3c1b6aa…` | `18c8a6d2…` | 12,328,166 | 68 | 0.1621 | 0.6751 | `7a56cbe8ded575aa8f86cf84bfa0c267b59d6f327c89b9170bb2418ad08fe8ab` | 1,891,044 |
 | CYPX | `ce3f7c61…` | `7452c121…` | 270,270 | 239 | 0.0000047 | 0.0634 | `e10ba04ebfc478f7517f7c5d00687f95a0a45aca9db86775fe955eeb71bf666e` | 1,891,043 |
-| COMET | `e10e342b…` | `eaf4873f…` | 6,000 | 45,755 | 0.2728 | 0.0007 | `799ad4b5219772b4382999ed5a19cb5a402399649d08356422cac802b0168234` | pending |
+| COMET | `e10e342b…` | `eaf4873f…` | 6,000 | 45,755 | 0.2728 | 0.0007 | `799ad4b5219772b4382999ed5a19cb5a402399649d08356422cac802b0168234` | 1,891,045 |
 
-Confirmed balance after the first three: 10.275994667 ERG.
+Confirmed balance after all four: 10.276667113 ERG.
 
 **Against the census.** U1 line a predicted, per take, the profit before the miner fee: ergopad 9.5386, love 0.6762,
 CYPX 0.0645 ERG. Payout plus the 0.0011 ERG fee: 9.5386, 0.6762, 0.0645. The census's numbers held on chain to the
