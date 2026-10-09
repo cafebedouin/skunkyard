@@ -3,7 +3,7 @@
 // Usage: node scripts/fund-any.mjs --address <addr> [--r4 <serialized constant hex>] [--amount <nanoErg>]
 //        [--submit <node base>] [--api <explorer base>] [--dry-run]
 //   or   --mint                        mint a token of supply 1 to the wallet itself (prints its id: the first input's box id)
-//   or   --out <addr>,<nanoErg>[,r4=<hex>][,token=<id>] (repeatable): several outputs in one transaction
+//   or   --out <addr>,<nanoErg>[,r4=<hex>][,r5=<hex>]...[,token=<id>] (repeatable): several outputs in one transaction (r4..r9 as serialized constant hex)
 import { register } from 'tsx/esm/api'; register();
 import { readFileSync } from 'node:fs'; import { homedir } from 'node:os'; import { join } from 'node:path';
 import { TransactionBuilder, OutputBuilder, RECOMMENDED_MIN_FEE_VALUE, Network } from '@fleet-sdk/core';
@@ -28,7 +28,8 @@ let builder = new TransactionBuilder(height).from(boxes);
 if (opt.mint) builder = builder.to(new OutputBuilder(amount, from).mintToken({ amount: 1n, name: 'sk029-singleton', decimals: 0 }));
 else if (outs.length) for (const spec of outs) {
   const [addr, val, ...kv] = spec.split(','); let o = new OutputBuilder(BigInt(val), addr);
-  for (const x of kv) { const [k, v] = x.split('='); if (k === 'r4') o = o.setAdditionalRegisters({ R4: v }); if (k === 'token') o = o.addTokens({ tokenId: v, amount: 1n }); }
+  const regs = {}; for (const x of kv) { const [k, v] = x.split('='); if (/^r[4-9]$/.test(k)) regs[k.toUpperCase()] = v; if (k === 'token') o = o.addTokens({ tokenId: v, amount: 1n }); }
+  if (Object.keys(regs).length) o = o.setAdditionalRegisters(regs);
   builder = builder.to(o); }
 else { let out = new OutputBuilder(amount, opt.address); if (opt.r4) out = out.setAdditionalRegisters({ R4: opt.r4 }); builder = builder.to(out); }
 const unsigned = builder.sendChangeTo(from).payFee(RECOMMENDED_MIN_FEE_VALUE).build();
