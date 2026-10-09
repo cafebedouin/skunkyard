@@ -3,6 +3,15 @@
 > **FIRST, at the next post-quantum session (planned Thursday 2026-10-08): follow up on the census heads-up.** Details outside git. Then: (1) restore the specific identification in public files only per their answer (it is kept outside git in ~/bin/skunkyard-private/); (2) decide the push of the unpushed commits (wording 'bridge custody' vs 'custody' multisig) — the replicator needs commit bc92d1e pushed to run C1 at the tip.
 
 
+> **Lithos upkeep, state 2026-10-09 ~01:40:** PoC block mined on the devnet (block 573, `skunks/upkeep/devnet/`);
+> mainnet has 30 Lithos blocks (U2, `research/agents/UPKEEP.md`). Branches: Lithos fork `upkeep-adapter` (phases 1-6,
+> c790ac66), `snapshot-spec-wait`, prompts for phase 7 (`upkeep-space`) ready; peeryard `lithos-devnet` (worktree
+> `~/bin/peeryard-lithos`, pushed through 3eb4d52; later commits unpushed) with `rig/examples/lithos-block.sh`.
+> **In flight:** rig run 4 of lithos-block (`skunks/upkeep/devnet/rig-run4/rig.out`; pid in the session scratchpad
+> `rig.pid`). **Next:** (1) get rig run to PASS, push peeryard; (2) phase 6 follow-ups + phase 7 in the cloud;
+> (3) strip working files, squash, second five-seat round, user's go for the PRs; (4) census first cut via explorer.
+> Process rule: pid files only, never pattern kills (`ergo_logic/docs/method/process-discipline.md`).
+
 > **Lithos upkeep adapter (2026-10-08, SK-043):** worktree `~/bin/lithos-upkeep` (branch `upkeep-adapter`, pushed to
 > the fork `cafebedouin/Lithos-Client`). Brief `UPKEEP-BRIEF.md`, prompts `prompts/phase-1..3.md`, `prompts/fix-round.md`.
 > Phases 1-3 done 2026-10-08 (f87bab94; one trivial fix). Next: `prompts/phase-4-shape.md`, then finalize + devnet box.
