@@ -165,6 +165,6 @@ outputs, any index) retire proof-of-spend boxes and are not blocks.
 
 Result: **30 Lithos blocks between heights 1,888,828 and 1,890,575**, a span of 1,748 blocks: a share of about 1.7%,
 so the expected wait for upkeep done only in Lithos blocks is about 58 blocks, roughly two hours, at today's share.
-The first mainnet Lithos block is 1,888,828. The scan is `research/agents/lithos-blocks-mainnet.py` (to be written as
-the U2 script); this first number is from the one-off read above. The devnet proof of concept (block 573,
+The first mainnet Lithos block is 1,888,828. The scan is `research/agents/lithos-blocks-mainnet.py` (`--json` keeps the
+list; `lithos-blocks-mainnet.json` is the read of 2026-10-09), rerun it for the current share. The devnet proof of concept (block 573,
 `skunks/upkeep/devnet/`) reproduces the genesis shape exactly.
