@@ -168,3 +168,12 @@ so the expected wait for upkeep done only in Lithos blocks is about 58 blocks, r
 The first mainnet Lithos block is 1,888,828. The scan is `research/agents/lithos-blocks-mainnet.py` (`--json` keeps the
 list; `lithos-blocks-mainnet.json` is the read of 2026-10-09), rerun it for the current share. The devnet proof of concept (block 573,
 `skunks/upkeep/devnet/`) reproduces the genesis shape exactly.
+
+## Design rule from the maintainer (2026-10-09)
+
+Communication between the candidate builder and the individual sources is to stay minimal: the stratum and the
+whole mining path are the client's latency-critical part. Resending a package to every source after a rejection
+is intended, since validation often depends on height. If a source ever needs a package result, a fire-and-forget
+Akka message or a shared thread-safe cache is the shape, never a reply the builder waits on. Any future upkeep job
+or source feature (the rejected-package feedback the reviews asked for, the opportunistic read's timing) is bound
+by this. Source: `notes/2026-10-09-lithos-reply.md`.
