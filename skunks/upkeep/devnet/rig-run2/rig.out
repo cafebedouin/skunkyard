@@ -1,0 +1,18 @@
+[rig] scratch: /tmp/peeryard-rig.vqXNoq
+[rig] chain preset current: blockInterval=20s minerRewardDelay=10 v4=early (soft-fork voting 4/1/1)
+[rig] genesis state digest for minerRewardDelay=10 derived from a probe start: c01a142d004a917b…
+[rig] java: openjdk version "17.0.20.1" 2026-08-18 (java, opts: -Xmx512m)
+[rig] effective configuration: /tmp/peeryard-rig.vqXNoq/out/effective.json ({"chain":"current","nodes":["A:ergo-6.0.7.jar"],"links":0})
+[rig] bring-up: every link connected
+[rig] === handing off to hook: /home/scott/bin/peeryard-lithos/rig/examples/lithos-block.sh ===
+[rig] launched A (ns=ns_A ip=100.64.0.1 p2p=9021 rest=9052 kind=jvm jar=ergo-6.0.7.jar pid=704366)
+[rig] A pid=704366 cpus_applied=0-11 gc=G1GC
+[rig] A REST up
+[lb] A's wallet restored ("OK"); wallet 3WxtnwJojAm4C9DJtgNHs5zawzD44yE6cKyGM7NeHf7Cw1yP7XBU; miner key 032d0c040f8ef24535cab2ee8529631bc60111095b3770dddc27f314aaca841a29
+[rig] companion miner started (pid 704561, in A, log /tmp/peeryard-rig.vqXNoq/out/companion_miner.log)
+[lb] FAIL: block version 4 did not activate
+[rig] CAUSE NO_PEERS: 0 connected peers for 3 rounds: A[running] headers=-:- full=-:- peers=0 mining=true
+[rig] COSTS no recovery events
+[rig] === hook done (verdict: FAIL) ===
+[rig] companion miner stopped
+[rig] all nodes stopped

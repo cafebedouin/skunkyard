@@ -1,0 +1,34 @@
+[rig] scratch: /tmp/peeryard-rig.gVTjG3
+[rig] chain preset current: blockInterval=20s minerRewardDelay=10 v4=early (soft-fork voting 4/1/1)
+[rig] genesis state digest for minerRewardDelay=10 derived from a probe start: c01a142d004a917b…
+[rig] java: openjdk version "17.0.20.1" 2026-08-18 (java, opts: -Xmx512m)
+[rig] effective configuration: /tmp/peeryard-rig.gVTjG3/out/effective.json ({"chain":"current","nodes":["A:ergo-6.0.7.jar"],"links":0})
+[rig] bring-up: every link connected
+[rig] === handing off to hook: /home/scott/bin/peeryard-lithos/rig/examples/lithos-block.sh ===
+[rig] launched A (ns=ns_A ip=100.64.0.1 p2p=9021 rest=9052 kind=jvm jar=ergo-6.0.7.jar pid=713407)
+[rig] A pid=713407 cpus_applied=0-11 gc=G1GC
+[rig] A REST up
+[lb] A's wallet restored ("OK"); wallet 3WxtnwJojAm4C9DJtgNHs5zawzD44yE6cKyGM7NeHf7Cw1yP7XBU
+[rig] launched A (ns=ns_A ip=100.64.0.1 p2p=9021 rest=9052 kind=jvm jar=ergo-6.0.7.jar pid=714754)
+[rig] A pid=714754 cpus_applied=0-11 gc=G1GC
+[rig] A REST up
+[lb] A relaunched; miner key 032d0c040f8ef24535cab2ee8529631bc60111095b3770dddc27f314aaca841a29
+[rig] companion miner started (pid 714948, in A, log /tmp/peeryard-rig.gVTjG3/out/companion_miner.log)
+[rig] companion proxy started (pid 714976, in A, log /tmp/peeryard-rig.gVTjG3/out/companion_proxy.log)
+[lb] 150 ERG paid to a plain box of the key: 5cc874eb585159c296b267bd04e5916cfb9482f131477d25b6372010a82cb788
+  
+2026-10-09 01:04:53 [INFO] [DeployProtocol] Wrote /tmp/peeryard-rig.gVTjG3/lithos/deployment.json 
+  
+2026-10-09 01:04:53 [INFO] [DeployProtocol] Deployment complete: /tmp/peeryard-rig.gVTjG3/lithos/deployment.json (emission box b899688146083265c87d863877fddf2f2ce5b1d99586e5ed055d06d9280dad54) 
+  
+[lb] deployed: collateral token bb581a3fb920188153917039acbb9767b816dfd70e6132961f54cfc7b4bdb4fc, LIT da345ae51e021f0733a401de0381b1b3e1c222b45c478cd0d0d4f8ac1cfa1bc6, at height 52
+[lb] due-job box funded at height 52: tx 8c836bfd837bec1c9818c0f7e788a43124e9cecc30120f17de71d1540aedeea7
+[rig] companion client started (pid 716377, in A, log /tmp/peeryard-rig.gVTjG3/out/companion_client.log)
+[lb] FAIL: no Lithos block carrying a beat within 30 minutes
+[rig] companion client stopped
+[rig] companion proxy stopped
+[rig] companion miner stopped
+[rig] CAUSE NO_PEERS: 0 connected peers for 3 rounds: A[running] headers=198:55f5b1a5 full=198:55f5b1a5 peers=0 mining=true
+[rig] COSTS relaunch A (mining=cfg poll=cfg): censored no_peer
+[rig] === hook done (verdict: FAIL) ===
+[rig] all nodes stopped

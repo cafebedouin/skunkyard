@@ -1,0 +1,48 @@
+[rig] scratch: /tmp/peeryard-rig.PF9QFp
+[rig] chain preset current: blockInterval=20s minerRewardDelay=10 v4=early (soft-fork voting 4/1/1)
+[rig] genesis state digest for minerRewardDelay=10 derived from a probe start: c01a142d004a917b…
+[rig] java: openjdk version "17.0.20.1" 2026-08-18 (java, opts: -Xmx512m)
+[rig] effective configuration: /tmp/peeryard-rig.PF9QFp/out/effective.json ({"chain":"current","nodes":["A:ergo-6.0.7.jar"],"links":0})
+[rig] bring-up: every link connected
+[rig] === handing off to hook: /home/scott/bin/peeryard-lithos/rig/examples/lithos-block.sh ===
+[rig] launched A (ns=ns_A ip=100.64.0.1 p2p=9021 rest=9052 kind=jvm jar=ergo-6.0.7.jar pid=743119)
+[rig] A pid=743119 cpus_applied=0-11 gc=G1GC
+[rig] A REST up
+[lb] A's wallet restored ("OK"); wallet 3WxtnwJojAm4C9DJtgNHs5zawzD44yE6cKyGM7NeHf7Cw1yP7XBU
+[rig] launched A (ns=ns_A ip=100.64.0.1 p2p=9021 rest=9052 kind=jvm jar=ergo-6.0.7.jar pid=744354)
+[rig] A pid=744354 cpus_applied=0-11 gc=G1GC
+[rig] A REST up
+[lb] A relaunched; miner key 032d0c040f8ef24535cab2ee8529631bc60111095b3770dddc27f314aaca841a29
+[rig] companion miner started (pid 744544, in A, log /tmp/peeryard-rig.PF9QFp/out/companion_miner.log)
+[rig] companion proxy started (pid 744572, in A, log /tmp/peeryard-rig.PF9QFp/out/companion_proxy.log)
+[lb] 150 ERG paid to a plain box of the key: 5cc874eb585159c296b267bd04e5916cfb9482f131477d25b6372010a82cb788
+  
+2026-10-09 01:40:31 [INFO] [DeployProtocol] Wrote /tmp/peeryard-rig.PF9QFp/lithos/deployment.json 
+  
+2026-10-09 01:40:31 [INFO] [DeployProtocol] Deployment complete: /tmp/peeryard-rig.PF9QFp/lithos/deployment.json (emission box 12c37f0f01d36b7c6351d0bd07d225ebbebf248f8b26a4c5fb53cc00a062eac2) 
+  
+[lb] deployed: collateral token 6ef496eb7d85ad230c94df1142c1e34aa46781bcf4a482514e8516bb58f330db, LIT da345ae51e021f0733a401de0381b1b3e1c222b45c478cd0d0d4f8ac1cfa1bc6, at height 55
+[lb] due-job box funded at height 55: tx 910292ebe5ac2756b1fac38169c2640e23caeb0f6b1e4f29e6aa9b53d29a8ee3
+[rig] companion client started (pid 745899, in A, log /tmp/peeryard-rig.PF9QFp/out/companion_client.log)
+[lb] Lithos block at 71: genesis c1ff3def spends collateral box 12c37f0f01d36b7c6351d0bd07d225ebbebf248f8b26a4c5fb53cc00a062eac2; beats in block: 0
+[lb] Lithos block at 74: genesis cdb98c9d spends collateral box a0af64fc9f4e370f23b74bbcbbd09445c60c73388100f92b813b5389c52f5b0d; beats in block: 0
+[lb] Lithos block at 76: genesis 49171968 spends collateral box 9a8cdf236a86237a48e2530fe9b7adae019134673e8bc066f30948889d7f2d6f; beats in block: 1
+2026-10-09 01:42:10 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 78: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+2026-10-09 01:42:11 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 78: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+2026-10-09 01:42:11 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 78: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+2026-10-09 01:42:17 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 79: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+2026-10-09 01:42:17 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 79: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+2026-10-09 01:42:17 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 79: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+[lb] PASS: Lithos block 76 carries the client's genesis and its upkeep beat
+[rig] companion client stopped
+[rig] companion proxy stopped
+[rig] companion miner stopped
+[rig] COSTS relaunch A (mining=cfg poll=cfg): censored no_peer
+[rig] === hook done (verdict: PASS) ===
+[rig] all nodes stopped

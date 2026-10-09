@@ -121,3 +121,26 @@ carries the heartbeat beat `aa88e373…`, the very transaction the client logged
 solved by the rig's CPU miner (`miner-run9.log`). Everything on the chain was created tonight: the deployment by the
 client's own deployer, the collateral by the client's own self-join, the beat by the upkeep source, the block by a
 candidate the client submitted.
+
+Rig run 2 (`rig-run2/`): FAIL before any block. A fresh devnet's first work messages carry no height (`WorkMessage.h`
+is "presented in V2 only"): the early blocks are Autolykos v1 work, which needs the miner's secret and which the
+external CPU miner does not do, so a node started in external-miner mode from genesis never mines. The hand-driven
+chain had been mined internally to block version 4 before the switch. The hook now does the same: internal mining
+until block version 4, then `relaunch A` with `useExternalMiner = true` and `miningPubKeyHex` through the rig's
+`CONF_OVR`, then the miner companion.
+
+Rig run 3 (`rig-run3/`): FAIL at the client. The stage launcher pins `user.dir` to the stage directory, so every
+client run shares one `.lithos` store there, and a client JVM from an earlier run still held the NISP LevelDB lock
+(the launcher script's pid is not the JVM's, so a plain `kill` of the companion left the JVM). Fixes: the hook starts
+the client by classpath (`java -cp lib/* … play.core.server.ProdServerStart`) from the run directory, and the rig's
+companions are started with `setsid` and stopped as a process group.
+
+Rig run 4 (`rig-run4/`): **PASS**, one command from a wiped chain.
+`bash rig/rig.sh rig/examples/lithos-block.json rig/examples/lithos-block.sh` with LITHOS_STAGE, LITHOS_KEYSTORE,
+LITHOS_PASS, LITHOS_MNEMONIC, LITHOS_PUBKEY, PEERYARD_JAR=ergo-6.0.7.jar, RIG_PROBE_TIMEOUT_S=180. Sequence: A mines
+internally through the v1 blocks to block version 4 and 400 ERG; relaunch in external-miner mode under the client's
+key; CPU miner, proxy; plain 150 ERG box to the key; deployer (collateral token `6ef496eb…`, height 55); due-job box
+funded at 55; client joins with its own ERG and LIT; Lithos blocks at 71, 74 (no beat yet) and **76: genesis
+`49171968` spends collateral `9a8cdf23…`, one beat at the DueJob tree**. About 40 minutes wall clock, most of it the
+400 ERG wait. Noise after the block: `CollateralNotFoundException: no usable collateral boxes: 0 live` while the
+client's spent collateral recycles; harmless here, worth a look at how fast the client re-collateralizes.
