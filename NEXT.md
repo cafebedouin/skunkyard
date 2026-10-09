@@ -12,6 +12,8 @@
 > `~/bin/lithos-upkeep/prompts/phase-8-babel-arb.md` (cloud, branch `upkeep-babel-arb` from `upkeep-source`);
 > (3) devnet hook `prompts/peeryard-babel-arb.md` (cloud writes, run locally on peeryard). Devnet only, no testnet.
 > Every other arbitrage idea is scored against the control (scorecard in `UPKEEP.md`).
+> Correction sent to Cheese 2026-10-09 (the user's words: Babel box against a v1 pool as the first arb job, on the
+> upkeep PR; pool against bank as the natural next case). Census worktree `~/bin/skunkyard-census`, branch `census-u1`.
 
 > **Lithos upkeep, state 2026-10-09 ~01:40:** PoC block mined on the devnet (block 573, `skunks/upkeep/devnet/`);
 > mainnet has 30 Lithos blocks (U2, `research/agents/UPKEEP.md`). Branches: Lithos fork `upkeep-adapter` (phases 1-6,
