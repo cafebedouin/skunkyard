@@ -36,3 +36,21 @@ benign if the transition it allows is a rebalance toward the oracle price, not a
 licence to sandwich.
 
 Banked as SK-046 alongside SK-045; the one-transaction version on a devnet would be the first measurement.
+
+## Follow-ups banked 2026-10-09 (from the discussion)
+
+- **The CDF without a fork.** (a) A table of Φ sampled every hundredth in a shared immutable data-input box, read with
+  linear interpolation: two lookups and a few integer operations; (b) a minimax rational approximation in fixed point
+  on `BigInt`, no external box. Measure (a) in the Q2 harness first. A native `Global.normalCdf` by the 6.0 soft-fork
+  method mechanism (the shape of `research/lattice/SPEC-verify-method.md`) is the follow-on once a deployed contract
+  shows the cost; it would also serve Black-Scholes pricing and volatility products. SK-047.
+- **Existing pools or new ones.** Back-running existing ErgoDEX pools and keeping the gap (SK-045 base) needs no
+  change. The MEV tax that returns the gap to LPs lives in the pool script, so new pool versions; LithosDex first.
+- **Only Lithos miners at first.** Capture is bounded by Lithos's block share (U2), but the tax applies to whoever
+  rebalances; Lithos miners are only the lowest-cost executor. LPs gain from the script regardless of who executes.
+- **Right of first refusal.** The pool reserves the first rebalance after a dislocation to the block's `minerPk` for
+  that block, then opens to all: the inclusion instrument (`research/inclusion/` I1) from the pool's side.
+- **Oracle-anchored repricing.** With an EIP-23 box as data input, the pool reprices itself to the oracle at the first
+  trade after a new epoch and charges that trader a service fee; the arbitrageur takes only the residual.
+- **Liquidity scheduling as upkeep for any pool**, not only pm-AMM: the box states its withdrawal curve, any miner
+  advances it.
