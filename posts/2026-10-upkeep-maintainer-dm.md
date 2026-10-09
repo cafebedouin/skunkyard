@@ -1,50 +1,29 @@
-# DM to the Lithos lead developer: the upkeep source, before the PR (draft, 2026-10-08)
+# DM to the Lithos lead developer: the upkeep source (final, 2026-10-09)
 
-Status: draft; the user sends it after the second seat round. The acceptance results are in (testnet box, devnet block
-76 by one rig command, mainnet share; `skunks/upkeep/testnet/README.md`, `skunks/upkeep/devnet/`). Earlier dialogue: `notes/2026-10-05-lithos-reply.md`.
+Status: sent by the user after five independent reviews; the overview issue is
+https://github.com/Lithos-Protocol/Lithos-Client/issues/13. Earlier dialogue: `notes/2026-10-05-lithos-reply.md`.
 
 ---
 
-Following up on the keeper-executor thread. The upkeep source is built and I would like your eyes on it before I open
-the PR.
+Following up on the keeper-executor thread. The upkeep source is built, reviewed and pushed; I opened an issue with the overview rather than PRs, so you can take it in whatever order suits you: https://github.com/Lithos-Protocol/Lithos-Client/issues/13
 
-What it adds: a new candidate source, `upkeep`, in `app/transactions/upkeep`. It mirrors the storage-rent source: a scan
-timer that keeps box ids per job, a build on the candidate path that reads the boxes back, sizes each against the
-source's share, has the job sign a fee-less successor with a prover holding no secret, and answers through
-`CandidatePreparation`. Jobs implement one trait; a `ScriptJob` base covers the common case of boxes at one known script
-with a fixed successor, so a new protocol is one small file plus a registry entry and a config block. Off by default,
-every job too, same config shape as the other sources. Two safety features: `verifyWithNode` runs each admitted
-successor through the node's transaction check at prepare time, and an `observe` mode builds and checks everything but
-offers nothing, for soaking a job before a miner has blocks.
+Three stacked branches on my fork, each one squashed commit, kept apart from your development work:
 
-The first job is a reference contract, `DueJob.ergo`, in `lithos-lib` resources: a box that states its own period and
-tip in R4 to R6 and lets anyone recreate it once due. Tree pinned as a constant with a spec that the source still
-compiles to it.
+1. `deployment-override`: a descriptor that installs a private chain's protocol ids in place of the network constants (empty by default, refused on mainnet without allowOnMainnet), a deployer that mints the tokens and creates the protocol boxes with the client's own contract code, and every protocol contract's tree pinned on both networks. This is what let the rest be tested end to end on a devnet.
+2. `upkeep-source` (on 1): the upkeep candidate source, modelled on your rent source: a job registry, a ScriptJob base for boxes at one script with a fixed successor, a reference heartbeat job for a due-job box (R4 last beat, R5 period, R6 tip; tree pinned, source kept with the tests), the node's check on every successor, and an observe mode. Off by default, every job too.
+3. `upkeep-space-option` (on 2): two more options, off by default: an order by what a beat would actually pay, and an opportunistic count when the mempool leaves room.
 
-What I would ask you to review, in order:
+Plus `snapshot-spec-wait`, one line for the flaky snapshot spec.
 
-1. The contract. Five independent reviews went over the branch; all five found the same defect in the first version, a
-   merge of two boxes against one `OUTPUTS(0)`. It is fixed with the `INPUTS(0).id == SELF.id` idiom from your
-   collateral contracts, plus a fresh creation height and Long arithmetic, each with a refusing spec. Worth your own
-   read anyway.
-2. Whether the contract belongs in the client at all, or only its tree. I kept it in so the framework can be tested end
-   to end.
-3. The trait and base class shape, since your Dexy job would subclass `ScriptJob`.
-4. One client-wide gap the reviews surfaced: sources never learn which transaction the node refused in a rejected
-   package, only that the height was dropped. `verifyWithNode` narrows it for upkeep; rent has the same exposure.
+Evidence: full suite on Java 17, 2,772 tests at upkeep-source, 2,800 with the options. On a devnet with 20 s blocks, the deployer deployed the protocol, the client self-joined the collateral queue and a block carried its genesis and an upkeep beat together. A due-job box is live on testnet at the heartbeat's script; since you run testnet, I have left a candidate-mode block carrying a beat there to you.
 
-Evidence: full suite on Java 17, 2,698 tests, only the known load-sensitive snapshot spec flaking. A due-job box is live
-on testnet, box `e5d9d2c2…`. On a devnet with a full deployment made by the new deployer, the client joined the
-collateral queue with its own ERG and LIT, built its genesis, and block 573 carries that genesis and the upkeep beat
-together (`skunks/upkeep/devnet/block-573.json`). Mainnet has 30 Lithos blocks so far between 1,888,828 and
-1,890,575, about 1.7% of blocks, read from the collateral token's spends. The
-review record with every finding and its disposition is public in the skunkyard repo under `skunks/upkeep/SEATS.md`.
+What holds by construction: nothing changes with the shipped config; no upkeep transaction can spend a box its job did not report and the build did not read back, or one at the wallet's keys, or pay a fee, or send value anywhere but the box's own script or the miner's collection output; bounds match rent's.
 
-One obvious extension I have left for a follow-on PR rather than this one: blocks are mostly empty, so upkeep could be
-opportunistic about space. Two parts: order due work across jobs by tip per byte and cost so leftover space takes the
-best-paying maintenance first (small, self-contained in upkeep), and let the upkeep share grow into whatever the
-mempool's fee-paying demand would leave empty, read from the node's pool histogram, shrinking back when demand rises.
-The second touches every source's budget, so it is your call on policy. Both are written and tested on a second
-branch, `upkeep-space`, stacked on this one and independent of it: merge it, close it, or take the first part only.
+Open questions, yours to decide, each a cheap change either way:
 
-Branch: `upkeep-adapter` on my fork. Happy to split it however you prefer.
+1. Do you want the framework before a real protocol job exists? The heartbeat proves it works; a protocol job (your Dexy one) is what proves it is worth having, and it would shape ScriptJob.
+2. Where should the reference contract and the box recipe live: with the tests in the client, as now, or in a contract repo the client points to?
+3. Opportunistic mode: at the defaults it amounts to maxTxs raised to 20 with a back-off when the mempool is busy. Would you rather have that as a plain congested count below maxTxs, with no mempool read on the build path?
+4. A client-wide gap the work surfaced: a rejected package is reported to the sources only as a dropped height, so a successor the node's check accepted and block validation refused is rebuilt next block. Rent has the same exposure. Separate issue?
+
+The whole review record, five independent read-throughs with every finding and what was done about it, is public in my skunkyard repo under skunks/upkeep/. Say the word and I open the PRs in that order, or take the branches directly.
