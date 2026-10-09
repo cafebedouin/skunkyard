@@ -542,6 +542,18 @@ def write_csv(path, head, rows):
     return os.path.getsize(path)
 
 
+def write_states(path, head, rows):
+    """The per-block rows run-length encoded: one row per run of consecutive blocks with identical fields."""
+    out = []
+    for r in sorted(rows, key=lambda r: (r[1:], r[0])):
+        if out and out[-1][2:] == r[1:] and out[-1][1] == r[0] - 1:
+            out[-1][1] = r[0]
+        else:
+            out.append([r[0], r[0]] + r[1:])
+    out.sort(key=lambda r: (r[0], r[2]))
+    return write_csv(path, ["fromHeight", "toHeight"] + head[1:], out)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--from", dest="lo", type=int)
@@ -576,6 +588,8 @@ def main():
     log(f"babel boxes {len(boxes)}, spends {len(spends)}")
     ra, rows_a = line_a(boxes, tl, lo, hi)
     taken = babel_taken(spends, lo, hi)
+    taken["babelBoxesCreatedInWindow"] = sum(1 for b in boxes if lo <= b["created"] <= hi)
+    taken["babelBoxesLiveAtEnd"] = len(babel_live(boxes, hi + 1))
     log("line a done")
     rb, rows_b, bank_info = line_b(tl, lo, hi)
     log("line b done")
@@ -631,21 +645,22 @@ def main():
     }
     if a.csv_dir:
         os.makedirs(a.csv_dir, exist_ok=True)
-        sizes = {
-            "a": write_csv(os.path.join(a.csv_dir, "u1-a-babel.csv"),
-                           ["height", "token", "poolNft", "bidNanoErgPerUnit", "poolNanoErgPerUnit", "xNanoErg",
-                            "profitNanoErg"], rows_a),
-            "b": write_csv(os.path.join(a.csv_dir, "u1-b-bank.csv"),
-                           ["height", "coin", "poolNft", "direction", "bankPriceNanoErg", "poolNanoErgPerUnit",
-                            "reserveRatioPct", "capitalNanoErg", "profitNanoErg"], rows_b),
-            "c": write_csv(os.path.join(a.csv_dir, "u1-c-pools.csv"),
-                           ["height", "token", "buyPoolNft", "sellPoolNft", "buyFee", "sellFee", "capitalNanoErg",
-                            "profitNanoErg"], rows_c),
-            "d": write_csv(os.path.join(a.csv_dir, "u1-d-per-day.csv"),
-                           ["day", "swap", "swap_direct", "swap_order", "deposit", "redeem", "other"],
-                           [[d] + [c.get(k, 0) for k in ("swap", "swap_direct", "swap_order", "deposit", "redeem",
-                                                          "other")] for d, c in de_day.items()]),
-        }
+        heads = {
+            "a-babel": ["height", "token", "poolNft", "bidNanoErgPerUnit", "poolNanoErgPerUnit", "xNanoErg",
+                        "profitNanoErg"],
+            "b-bank": ["height", "coin", "poolNft", "direction", "bankPriceNanoErg", "poolNanoErgPerUnit",
+                       "reserveRatioPct", "capitalNanoErg", "profitNanoErg"],
+            "c-pools": ["height", "token", "buyPoolNft", "sellPoolNft", "buyFee", "sellFee", "capitalNanoErg",
+                        "profitNanoErg"]}
+        sizes = {}
+        for (k, head), rows in zip(heads.items(), (rows_a, rows_b, rows_c)):
+            sizes[k + "-blocks"] = write_csv(os.path.join(a.csv_dir, f"u1-{k}-blocks.csv"), head, rows)
+            sizes[k + "-states"] = write_states(os.path.join(a.csv_dir, f"u1-{k}-states.csv"), head, rows)
+        sizes["d-per-day"] = write_csv(os.path.join(a.csv_dir, "u1-d-per-day.csv"),
+                                       ["day", "swap", "swap_direct", "swap_order", "deposit", "redeem", "other"],
+                                       [[d] + [c.get(k, 0) for k in ("swap", "swap_direct", "swap_order",
+                                                                      "deposit", "redeem", "other")]
+                                        for d, c in de_day.items()])
         out["csvBytes"] = sizes
     s = json.dumps(out, indent=1, default=str)
     if a.json:
