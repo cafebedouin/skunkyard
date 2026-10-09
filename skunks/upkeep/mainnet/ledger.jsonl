@@ -1,1 +1,2 @@
 {"time":"2026-10-09T22:32:55.013Z","id":"4b3a2493d5b2b37a4d09f1daaaec2b409127f8654f23a21a82f4bb1244102592","net":"-1110000","fee":"1100000","purpose":"hodlERG pool-to-pool leg 1: buy from pool 413df2fc for 10000 nanoERG (capital-take demo)"}
+{"time":"2026-10-09T22:34:44.539Z","id":"5e2f4b2e08336509341193c194eeb1ec282227e3ef9a7fa0e6c98a6adcb6498c","net":"85002980","fee":"1100000","purpose":"hodlERG pool-to-pool leg 2: sell 124409851208 units into pool 5e2c58b9, keeping its 0.01 ERG floor"}

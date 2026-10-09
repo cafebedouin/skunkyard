@@ -82,3 +82,23 @@ with an ErgoDEX pool, and each asks more than the pool pays. The other large "re
 
 **Wallet:** 21.140241922 ERG confirmed, reconciling to the nanoERG: 10.276667113 (round one) + 7.440074809 +
 3.4235.
+
+## Round three, 2026-10-09: the first take on the wallet's own capital (two transactions, signed)
+
+The two hodlERG (`28bd6442…`) pools U1b line j listed: pool `413df2fc…` (0.344 ERG against 4.6e15 units, fee 931)
+and pool `5e2c58b9…` (0.096 ERG against 9.99e7 units). Both take their successor at `OUTPUTS(0)`, so two
+transactions; the second spends the first's output, so it waited for the first to be mined.
+
+| leg | transaction | height | wallet net nanoERG |
+|---|---|---|---|
+| 1: 10,000 nanoERG into `413df2fc…` for 124,409,851,208 units | `4b3a2493d5b2b37a4d09f1daaaec2b409127f8654f23a21a82f4bb1244102592` | 1,891,122 | -1,110,000 |
+| 2: all of them into `5e2c58b9…`, which keeps 0.010000001 ERG | `5e2f4b2e08336509341193c194eeb1ec282227e3ef9a7fa0e6c98a6adcb6498c` | 1,891,123 | +85,002,980 |
+
+Net **+0.08389298 ERG** after both fees; U1b predicted 0.0839. The v1 pool requires its successor to hold more than
+0.01 ERG (`Pool.sc:4,27`, `MinStorageRent`), which bounds what leg 2 can take. Built by `swap.py`, signed and
+submitted by `skunks/oneshot/scripts/mainnet-sign.mjs` (wallet inputs only; outputs to the wallet, the fee contract
+or an input's own script; loss caps 0.5 ERG a transaction, 5 ERG a day; node check first; `ledger.jsonl`). Its first
+version rounded token amounts above 2^53 (this pool's LP reserve is ~9.2e18) and the node refused leg 1; it now
+parses and writes integers exactly.
+
+**Wallet: 21.224134902 ERG** confirmed (21.140241922 + 0.08389298).
