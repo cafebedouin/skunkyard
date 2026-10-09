@@ -21,9 +21,11 @@ What holds by construction: nothing changes with the shipped config; no upkeep t
 
 Open questions, yours to decide, each a cheap change either way:
 
-1. Do you want the framework before a real protocol job exists? The heartbeat proves it works; a protocol job (your Dexy one) is what proves it is worth having, and it would shape ScriptJob.
+1. Do you want the framework before a real protocol job exists? The heartbeat proves it works; a protocol job is what proves it is worth having, and it would shape ScriptJob. Three ways to go: land it now with the heartbeat as the reference job; wait for your Dexy job; or I write the first protocol job before it lands, a keyless executor for kushti's grid orders, which fits the ScriptJob shape as it stands, and the framework comes in with that instead.
 2. Where should the reference contract and the box recipe live: with the tests in the client, as now, or in a contract repo the client points to?
 3. Opportunistic mode: at the defaults it amounts to maxTxs raised to 20 with a back-off when the mempool is busy. Would you rather have that as a plain congested count below maxTxs, with no mempool read on the build path?
 4. A client-wide gap the work surfaced: a rejected package is reported to the sources only as a dropped height, so a successor the node's check accepted and block validation refused is rebuilt next block. Rent has the same exposure. Separate issue?
+
+What this unlocks, beyond the heartbeat: once a miner can carry keyless work in its own block, every keyless transition on the chain becomes something the block's builder does first and cheapest, with no bot, no key and no mempool fee. That is the upkeep nobody owns today (Dexy's triggers, expired refunds, rent, proofs that must be fresh), and it is also the revenue side: executor fees for grid and DEX orders, tips from boxes like the heartbeat's, and the arbitrage gap a swap opens, closed in the same block it opens in, from pooled deposits rather than the miner's own capital, with a pool script deciding whether that gap goes to the miner or to its LPs. The deployment branch is the other half: any of these can now be exercised end to end on a private chain before it touches mainnet.
 
 The whole review record, five independent read-throughs with every finding and what was done about it, is public in my skunkyard repo under skunks/upkeep/. Say the word and I open the PRs in that order, or take the branches directly.
