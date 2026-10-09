@@ -1,0 +1,23 @@
+[smoke] height 68; due-job box with R4=58 (0474), period 5, tip 0.01 ERG
+[smoke] funding tx dd778a256f563c397850be4888a5aa68a2a0450a0dc99a3e7819fe9d5fb9cc74
+[smoke] box c88a4b2e5ba9712433fcd7b8cb6a821765fbaa28f305bd25bcdabe9a0fe01179 listed by the index
+[smoke] client pid 193324
+2026-10-08 20:53:18 [INFO] [UpkeepSource] UpkeepSource started: mode=candidate, verifyWithNode=true, jobs=heartbeat, scanIntervalMs=10000, maxBoxesPerJob=256, retryAfterScans=10, share: txs=5, bytes=262144, cost=1000000;
+2026-10-08 20:53:20 [INFO] [CandidateBuilder] CandidateBuilder started: collateralPoolSize=100, blockTransactions=true, sources=[rollups:5, emissions:20, upkeep:5] 
+2026-10-08 20:53:20 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 79: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 20:53:20 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 79: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 20:53:20 [INFO] [UpkeepSource] Upkeep scan holds 1 boxes: heartbeat=1; 0 refused, 0 cannot pay 
+2026-10-08 20:53:20 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 79: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 20:53:22 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 80: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 20:53:22 [INFO] [UpkeepSource] Upkeep admits 1 of 1 due successors at 80: heartbeat:c88a4b2e; share used txs=1/5, bytes=245/262144, cost=12326/1000000 
+2026-10-08 20:53:22 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 80: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 20:53:22 [INFO] [UpkeepSource] Upkeep offers 1 of 1 successors at 80 after the node's check: heartbeat:c88a4b2e 
+2026-10-08 20:53:22 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 80: no usable collateral boxes: 0 live, 0 skipped this block 
+[smoke] proxy recorded 1 check body(ies)
+[smoke] replaying beat f56ce758e13708ee1d43ce1240d70ee61e53e9c8519763340cb352328258c8fa into the mempool
+[smoke] submit -> {
+  "error" : 400,
+  "reason" : "bad.request",
+  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. f56ce758e13708ee1d43ce1240d70ee61e53e9c8519763340cb352328258c8fa: #0 => Success((false,98))"
+}
+[smoke] FAIL: beat not mined within 60 s

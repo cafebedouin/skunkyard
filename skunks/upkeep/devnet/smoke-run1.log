@@ -1,0 +1,24 @@
+[smoke] height 50; due-job box with R4=40 (0450), period 5, tip 0.01 ERG
+[smoke] funding tx 31b818f00f36c211923ece45bbcb6b4d8cc3852eec3b78eca02533037b54c33b
+[smoke] box 6bec998a86376892694a7677895491aedc323f867f9179389b2c54c3fd23bfab listed by the index
+[smoke] client pid 183710
+2026-10-08 20:47:58 [INFO] [CandidateBuilder] CandidateBuilder started: collateralPoolSize=100, blockTransactions=true, sources=[rollups:5, emissions:20, upkeep:5] 
+2026-10-08 20:47:58 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 66: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 20:47:59 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 66: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 20:47:59 [INFO] [UpkeepSource] Upkeep admits 1 of 1 due successors at 66: heartbeat:6bec998a; share used txs=1/5, bytes=245/262144, cost=12326/1000000 
+2026-10-08 20:47:59 [WARN] [UpkeepSource] Upkeep heartbeat:6bec998a at 66 is refused by the node's check: node rejected the request: Malformed transaction: Scripts of all transaction inputs should pass verification. bd6e
+2026-10-08 20:47:59 [INFO] [UpkeepSource] Upkeep offers 0 of 1 successors at 66 after the node's check:  
+2026-10-08 20:47:59 [WARN] [UpkeepSource] Dropped 1 upkeep boxes whose builds were refused; holding 1 
+2026-10-08 20:47:59 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 67: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 20:47:59 [INFO] [UpkeepSource] Upkeep admits 1 of 1 due successors at 67: heartbeat:6bec998a; share used txs=1/5, bytes=245/262144, cost=12326/1000000 
+2026-10-08 20:47:59 [INFO] [UpkeepSource] Upkeep offers 1 of 1 successors at 67 after the node's check: heartbeat:6bec998a 
+2026-10-08 20:47:59 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 67: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 20:47:59 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 67: no usable collateral boxes: 0 live, 0 skipped this block 
+[smoke] proxy recorded 2 check body(ies)
+[smoke] replaying beat 2406cc1617b9a64630a5671461fc3d782366efbfafdb129a4ac73f2cd9b2b388 into the mempool
+[smoke] submit -> {
+  "error" : 400,
+  "reason" : "bad.request",
+  "detail" : "Min fee not met: 0.001 ergs required, 0.0 ergs given"
+}
+[smoke] FAIL: beat not mined within 60 s

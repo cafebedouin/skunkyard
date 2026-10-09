@@ -1,0 +1,19 @@
+[smoke] height 16; due-job box with R4=6 (040c), period 5, tip 0.01 ERG
+[smoke] funding tx 34f38a1a339582b3e18e76d254607bba043d3ebb274923061d4f27ac9128c87b
+[smoke] box cc7782f94b1cc8c8d4726fa93a225eedafd62bc9d3de2a49de43e98698594095 listed by the index
+[smoke] client pid 233102
+2026-10-08 21:12:49 [INFO] [UpkeepSource] UpkeepSource started: mode=candidate, verifyWithNode=true, jobs=heartbeat, scanIntervalMs=10000, maxBoxesPerJob=256, retryAfterScans=10, share: txs=5, bytes=262144, cost=1000000;
+2026-10-08 21:12:50 [INFO] [CandidateBuilder] CandidateBuilder started: collateralPoolSize=100, blockTransactions=true, sources=[rollups:5, emissions:20, upkeep:5] 
+2026-10-08 21:12:50 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 19: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 21:12:51 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 19: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 21:12:51 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 19: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 21:12:51 [INFO] [UpkeepSource] Upkeep scan holds 1 boxes: heartbeat=1; 0 refused, 0 cannot pay 
+2026-10-08 21:12:51 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 20: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 21:12:51 [INFO] [UpkeepSource] Upkeep admits 1 of 1 due successors at 20: heartbeat:cc7782f9; share used txs=1/5, bytes=244/262144, cost=12326/1000000 
+2026-10-08 21:12:51 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 20: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 21:12:51 [INFO] [UpkeepSource] Upkeep offers 1 of 1 successors at 20 after the node's check: heartbeat:cc7782f9 
+2026-10-08 21:12:52 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 20: no usable collateral boxes: 0 live, 0 skipped this block 
+[smoke] proxy recorded 1 check body(ies)
+[smoke] the proxy mirrored beat 0ee655a5d93ee787bd66b378c3e5cbc723faa5950b738d2b4f637a6f32da7571 into the mempool at its own height (see the proxy log)
+[smoke] successor fb64c2c377467543714baf5ce2065848b3898d6dd8818a12ab3adb2b7432a3a4 990000000 {'R4': '0428', 'R5': '040a', 'R6': '0580dac409'}
+[smoke] PASS: beat 0ee655a5d93ee787bd66b378c3e5cbc723faa5950b738d2b4f637a6f32da7571 mined at height 20 (client-built, node-checked, replayed)

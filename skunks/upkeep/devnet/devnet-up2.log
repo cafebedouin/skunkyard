@@ -1,0 +1,1 @@
+devnet 'upkeep' still starting after 60 s (rig alive); `devnet.sh status upkeep` will tell; rig.log: /home/scott/.peeryard/devnet/upkeep/rig.log

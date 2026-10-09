@@ -1,0 +1,19 @@
+[smoke] height 142; due-job box with R4=132 (048802), period 5, tip 0.01 ERG
+[smoke] funding tx a3ae8afecd21fc18a1e7aa7a22340c60634ef451737b601930426ad211d75005
+[smoke] box c88a4b2e5ba9712433fcd7b8cb6a821765fbaa28f305bd25bcdabe9a0fe01179 listed by the index
+[smoke] client pid 199597
+2026-10-08 20:55:47 [INFO] [UpkeepSource] Upkeep offers 2 of 2 successors at 152 after the node's check: heartbeat:af548afc, heartbeat:c88a4b2e 
+2026-10-08 20:55:47 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 152: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 20:55:49 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 153: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 20:55:49 [INFO] [UpkeepSource] Upkeep admits 2 of 2 due successors at 153: heartbeat:c88a4b2e, heartbeat:af548afc; share used txs=2/5, bytes=494/262144, cost=24652/1000000 
+2026-10-08 20:55:49 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 153: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 20:55:49 [INFO] [UpkeepSource] Upkeep offers 2 of 2 successors at 153 after the node's check: heartbeat:c88a4b2e, heartbeat:af548afc 
+2026-10-08 20:55:50 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 153: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 20:55:51 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 154: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 20:55:51 [INFO] [UpkeepSource] Upkeep admits 2 of 2 due successors at 154: heartbeat:af548afc, heartbeat:c88a4b2e; share used txs=2/5, bytes=494/262144, cost=24652/1000000 
+2026-10-08 20:55:51 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 154: no usable collateral boxes: 0 live, 0 skipped this block 
+2026-10-08 20:55:51 [INFO] [UpkeepSource] Upkeep offers 2 of 2 successors at 154 after the node's check: heartbeat:af548afc, heartbeat:c88a4b2e 
+2026-10-08 20:55:52 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 154: no usable collateral boxes: 0 live, 0 skipped this block 
+[smoke] proxy recorded 6 check body(ies)
+[smoke] the proxy mirrored beat c0335f69e72b1dfc767aee10c396450337b33f9be8742f6e0cb5974e94f1cb4c into the mempool at its own height (see the proxy log)
+[smoke] FAIL: beat not mined within 60 s
