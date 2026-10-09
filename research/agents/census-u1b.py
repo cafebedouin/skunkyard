@@ -18,6 +18,7 @@ import argparse, collections, importlib.util, json, os, sys, time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "census"))
+import amm as A  # noqa: E402
 import explorer as X  # noqa: E402
 import trees as T  # noqa: E402
 
@@ -615,6 +616,8 @@ def line_o(a):
         fee = gaps[-1][3]
         res[n] = {"fee": fee, "blocks": tot, "medianAbsGap": med,
                   "meanAbsGap": sum(g * w for g, w, _, _ in gaps) / tot,
+                  "meanSignedGap": sum(sg * w for _, w, sg, _ in gaps) / tot,
+                  "blocksPoolAboveOracleBeyondFee": sum(w for _, w, sg, f in gaps if sg > (1000 - f) / 1000),
                   "blocksGapAboveFee": sum(w for g, w, _, _ in gaps if g > (1000 - fee) / 1000),
                   "maxGap": max(g for g, _, _, _ in gaps), "ergDepthMaxNanoErg": max(depth)}
     save("o.json", {"from": a.lo, "to": a.hi, "pools": res, "oracleBoxes": len(oracle.h)})
@@ -727,6 +730,78 @@ def line_j(a):
         out["h"] = None
     save("j.json", {"from": a.lo, "to": a.hi, "capNanoErg": CAP, "txFeeNanoErg": TX_FEE, **out,
                     "requests": dict(X.stats)})
+
+
+def line_jnow(a):
+    """Line (j) at the tip: every capital take open now, capped at CAP, net of its transactions' fees, with the
+    boxes, the legs, and what is left after leg 1 if leg 2 fails (the token held and its value sold back into
+    the pool leg 1 bought from, after leg 1)."""
+    import capped as C
+    import routes as R
+    U = u1()
+    global A_POOL_MIN
+    A_POOL_MIN = U.A.POOL_MIN_VALUE
+    tip = X.tip()
+    n2t = {}
+    for b in unspent_boxes(T.N2T_POOL_TEMPLATE_HASH)[0]:
+        s = U.pool_state(b)
+        if ok_n2t(s):
+            n2t[s["nft"]] = dict(s, box=b["boxId"])
+    by_tok = collections.defaultdict(list)
+    for s in n2t.values():
+        by_tok[s["token"]].append(s)
+    takes = []
+    for tok, ps in by_tok.items():
+        for x in ps:
+            for y in ps:
+                if x is y:
+                    continue
+                r = C.pool_vs_pool((x["X"], x["Y"], x["fee"]), (y["X"], y["Y"], y["fee"]), CAP)
+                if not r or r[0] - 2 * TX_FEE <= 0:
+                    continue
+                p, cap, t = r
+                back = A.pool_erg_out(x["X"] + cap, x["Y"] - t, x["fee"], t)
+                takes.append({"line": "c pool-pool", "token": tok, "txs": 2, "netNanoErg": p - 2 * TX_FEE,
+                              "capitalNanoErg": cap, "legs": [
+                                  {"tx": 1, "pool": x["box"], "nft": x["nft"], "ergIn": cap, "tokensOut": t},
+                                  {"tx": 2, "pool": y["box"], "nft": y["nft"], "tokensIn": t, "ergOut": p + cap}],
+                              "ifLeg2Fails": {"held": t, "token": tok, "sellBackNanoErg": back,
+                                              "lossIfSoldBackNanoErg": cap + TX_FEE - back}})
+    # bank against pool
+    bank = X.get(f"/boxes/unspent/byTokenId/{U.BANK_NFT}?offset=0&limit=1", cache=False)["items"][0]
+    orc = X.get(f"/boxes/unspent/byTokenId/{U.ORACLE_NFT}?offset=0&limit=1", cache=False)["items"][0]
+    bk = A.Bank(bank["value"], int(U.reg(bank, "R4")), int(U.reg(bank, "R5")), int(U.reg(orc, "R4")))
+    for coin, tok in (("sc", U.SIGUSD), ("rc", U.SIGRSV)):
+        for s in by_tok.get(tok, []):
+            r = C.bank_vs_pool(bk, coin, (s["X"], s["Y"], s["fee"]), CAP)
+            if r and r[1] - 2 * TX_FEE > 0:
+                takes.append({"line": "b bank-pool", "token": tok, "txs": 2, "netNanoErg": r[1] - 2 * TX_FEE,
+                              "capitalNanoErg": r[2], "direction": r[0], "units": r[3], "pool": s["box"],
+                              "bankBox": bank["boxId"], "oracleBox": orc["boxId"]})
+    # triangles through T2T pools
+    for b in unspent_boxes(T2T_POOL_TEMPLATE_HASH)[0]:
+        s = t2t_state(b)
+        if not s or s["X"] <= 1 or s["Y"] <= 1:
+            continue
+        for first, second, a_is_x in ((s["x"], s["y"], True), (s["y"], s["x"], False)):
+            for p1 in by_tok.get(first, []):
+                for p3 in by_tok.get(second, []):
+                    r = R.cycle((p1["X"], p1["Y"], p1["fee"]), (s["X"], s["Y"], s["fee"]), a_is_x,
+                                (p3["X"], p3["Y"], p3["fee"]), CAP)
+                    if not r or r[0] - 3 * TX_FEE <= 0:
+                        continue
+                    p, x, ta, tb, out = r
+                    back = A.pool_erg_out(p1["X"] + x, p1["Y"] - ta, p1["fee"], ta)
+                    takes.append({"line": "h triangle", "token": f"{first}/{second}", "txs": 3,
+                                  "netNanoErg": p - 3 * TX_FEE, "capitalNanoErg": x, "legs": [
+                                      {"tx": 1, "pool": p1["box"], "ergIn": x, "tokensOut": ta},
+                                      {"tx": 2, "pool": b["boxId"], "t2t": s["nft"], "tokensIn": ta, "tokensOut": tb},
+                                      {"tx": 3, "pool": p3["box"], "tokensIn": tb, "ergOut": out}],
+                                  "ifLeg2Fails": {"held": ta, "token": first, "sellBackNanoErg": back,
+                                                  "lossIfSoldBackNanoErg": x + TX_FEE - back}})
+    takes.sort(key=lambda t: -t["netNanoErg"])
+    save("jnow.json", {"atTip": tip, "capNanoErg": CAP, "txFeeNanoErg": TX_FEE, "takes": takes,
+                       "requests": dict(X.stats)})
 
 
 def main():

@@ -1,0 +1,3282 @@
+{
+ "from": 1869418,
+ "to": 1891017,
+ "capNanoErg": 10000000000,
+ "txFeeNanoErg": 1100000,
+ "c": {
+  "fbbaac73": {
+   "blocksOpen": 14498,
+   "statesOpen": 31,
+   "lowerNanoErg": 283162973,
+   "upperNanoErg": 6515430529,
+   "maxNanoErg": 258804812,
+   "maxAt": 1876675,
+   "maxDetail": {
+    "buy": "53281ed72896dc0596262dab6e8840c88d11a4bbc1aa26c7ca21ad9bda5fd4d9",
+    "sell": "3d648a56fc4749fe7822a25c0abe6afba7965885880815ad4bfafae5dca7237f",
+    "capital": 296437191,
+    "T": 142000,
+    "gross": 261004812,
+    "sellErgForT": 557442003
+   },
+   "openBlocksSellPoolMovedNext": 54,
+   "riskShare": 0.003724651676093254
+  },
+  "RSN": {
+   "blocksOpen": 6130,
+   "statesOpen": 103,
+   "lowerNanoErg": 1305964318,
+   "upperNanoErg": 8168422234,
+   "maxNanoErg": 419396372,
+   "maxAt": 1883758,
+   "maxDetail": {
+    "buy": "cadac6db847a715e3577d8f2fbb2edfb2280f20924abf51bf83704a9ddc511b2",
+    "sell": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+    "capital": 9999988381,
+    "T": 227547,
+    "gross": 421596372,
+    "sellErgForT": 10421584753
+   },
+   "openBlocksSellPoolMovedNext": 158,
+   "riskShare": 0.025774877650897227
+  },
+  "34d449dc": {
+   "blocksOpen": 3984,
+   "statesOpen": 1,
+   "lowerNanoErg": 1453078,
+   "upperNanoErg": 1453078,
+   "maxNanoErg": 1453078,
+   "maxAt": 1886668,
+   "maxDetail": {
+    "buy": "d5077d8991925e30077a73eef3db94191de1b1c1605c3ed0e66ce809ae4bc6d9",
+    "sell": "8e6386b31b14e22e5f2ae65db82abce8431d85e8a65c0cac684ae1c12af0639b",
+    "capital": 55922238,
+    "T": 1145068851625,
+    "gross": 3653078,
+    "sellErgForT": 59575316
+   },
+   "openBlocksSellPoolMovedNext": 1,
+   "riskShare": 0.000251004016064257
+  },
+  "01dce8a5": {
+   "blocksOpen": 228,
+   "statesOpen": 11,
+   "lowerNanoErg": 322954008,
+   "upperNanoErg": 1391242501,
+   "maxNanoErg": 322954008,
+   "maxAt": 1887266,
+   "maxDetail": {
+    "buy": "7273ad23440f63c64beaa5950434e412bbfa59e8815f07aea7b11e47938119aa",
+    "sell": "7f1759300b19287adbbcd03c877eae6c6de60f4c2962b1fc5ae2c6e2a684220c",
+    "capital": 9999999974,
+    "T": 503701293,
+    "gross": 325154008,
+    "sellErgForT": 10325153982
+   },
+   "openBlocksSellPoolMovedNext": 17,
+   "riskShare": 0.07456140350877193
+  },
+  "SigUSD": {
+   "blocksOpen": 21600,
+   "statesOpen": 251,
+   "lowerNanoErg": 30899635,
+   "upperNanoErg": 5802416851,
+   "maxNanoErg": 30899635,
+   "maxAt": 1874002,
+   "maxDetail": {
+    "buy": "eb9095b54760703c90a076cd9d3a5f839b5c6213eb829f383934f9e0bab181db",
+    "sell": "bee300e9c81e48d7ab5fc29294c7bbb536cf9dcd9c91ee3be9898faec91b11b6",
+    "capital": 10045159,
+    "T": 1,
+    "gross": 33099635,
+    "sellErgForT": 43144794
+   },
+   "openBlocksSellPoolMovedNext": 193,
+   "riskShare": 0.008935185185185185
+  },
+  "7a51950e": {
+   "blocksOpen": 5113,
+   "statesOpen": 10,
+   "lowerNanoErg": 37807008,
+   "upperNanoErg": 58998250,
+   "maxNanoErg": 22442466,
+   "maxAt": 1884356,
+   "maxDetail": {
+    "buy": "47a811c68e49f6bfa6629602037ee65f8d175ddbc7b64bdb65ad40599b812fd0",
+    "sell": "3eeb0f5f3d1594a37ff71e25c9dd6f9dcb358e8592e48b002098264c4d659d61",
+    "capital": 65679332,
+    "T": 25,
+    "gross": 24642466,
+    "sellErgForT": 90321798
+   },
+   "openBlocksSellPoolMovedNext": 4,
+   "riskShare": 0.0007823195775474281
+  },
+  "0cd8c9f4": {
+   "blocksOpen": 6668,
+   "statesOpen": 17,
+   "lowerNanoErg": 22914227,
+   "upperNanoErg": 64305350,
+   "maxNanoErg": 22914227,
+   "maxAt": 1884350,
+   "maxDetail": {
+    "buy": "1f01dc8e29806d96ca0b79f8e798cd8cfce51c0e676aaedf6ab3464b37da9dfd",
+    "sell": "ddcfb0239162a95ebd9265563d58366693882582ba87ad4d1a29425596936ae1",
+    "capital": 63477526,
+    "T": 10452,
+    "gross": 25114227,
+    "sellErgForT": 88591753
+   },
+   "openBlocksSellPoolMovedNext": 33,
+   "riskShare": 0.004949010197960408
+  },
+  "d71693c4": {
+   "blocksOpen": 3775,
+   "statesOpen": 2,
+   "lowerNanoErg": 51051700,
+   "upperNanoErg": 91716013,
+   "maxNanoErg": 51051700,
+   "maxAt": 1869418,
+   "maxDetail": {
+    "buy": "d7868533f26db1b1728c1f85c2326a3c0327b57ddab14e41a2b77a5d4c20f4b2",
+    "sell": "61a579c46d92f2718576fc9839a2a1983f172e889ec234af8504b5bbf10edd89",
+    "capital": 74326668,
+    "T": 185655,
+    "gross": 53251700,
+    "sellErgForT": 127578368
+   },
+   "openBlocksSellPoolMovedNext": 3,
+   "riskShare": 0.0007947019867549669
+  },
+  "472c3d4e": {
+   "blocksOpen": 21600,
+   "statesOpen": 24,
+   "lowerNanoErg": 13795084,
+   "upperNanoErg": 331062227,
+   "maxNanoErg": 13795084,
+   "maxAt": 1887998,
+   "maxDetail": {
+    "buy": "7601494c813a7b1acbdecc042d9eb337ea79a556221c9567685f82077cea7b20",
+    "sell": "edca8164231dccffeacf4d923267e91aa192961c38c815ec3b9893d93dc629df",
+    "capital": 11612,
+    "T": 16066371,
+    "gross": 15995084,
+    "sellErgForT": 16006696
+   },
+   "openBlocksSellPoolMovedNext": 0,
+   "riskShare": 0.0
+  },
+  "1fd6e032": {
+   "blocksOpen": 14492,
+   "statesOpen": 6,
+   "lowerNanoErg": 129285132,
+   "upperNanoErg": 647688614,
+   "maxNanoErg": 129285132,
+   "maxAt": 1869418,
+   "maxDetail": {
+    "buy": "666be5df835a48b99c40a395a8aa3ea6ce39ede2cd77c02921d629b9baad8200",
+    "sell": "62adfb20a1b6c47c37b06c4703e2ebe984b1448b9fe1df258ef4d4622ca4c3f8",
+    "capital": 192697910,
+    "T": 3398776,
+    "gross": 131485132,
+    "sellErgForT": 324183042
+   },
+   "openBlocksSellPoolMovedNext": 5,
+   "riskShare": 0.0003450179409329285
+  },
+  "b0b312cd": {
+   "blocksOpen": 14499,
+   "statesOpen": 15,
+   "lowerNanoErg": 30681395,
+   "upperNanoErg": 460220925,
+   "maxNanoErg": 30681395,
+   "maxAt": 1869418,
+   "maxDetail": {
+    "buy": "8ab275797638edc699bd0b3ce4f5b19b7da69bea07e2e36d4af3d8e447f6d4c3",
+    "sell": "3b92a48cb02183ddb7ffccb8b52864c5c8c2d59b5c1227953695a5a02b57a635",
+    "capital": 16867348,
+    "T": 1000,
+    "gross": 32881395,
+    "sellErgForT": 49748743
+   },
+   "openBlocksSellPoolMovedNext": 1,
+   "riskShare": 6.897027381198704e-05
+  },
+  "64c8e086": {
+   "blocksOpen": 10114,
+   "statesOpen": 1,
+   "lowerNanoErg": 129170566,
+   "upperNanoErg": 129170566,
+   "maxNanoErg": 129170566,
+   "maxAt": 1873795,
+   "maxDetail": {
+    "buy": "5d9effa2470255827c62143255ea29b8e83cfd5db0c1368769d1061b47e9e8d2",
+    "sell": "96919e9f787bc68fedcddcb76ccf21a781171b86a959a99a2844f0cb6c18f76e",
+    "capital": 205862637,
+    "T": 46214,
+    "gross": 131370566,
+    "sellErgForT": 337233203
+   },
+   "openBlocksSellPoolMovedNext": 1,
+   "riskShare": 9.887284951552304e-05
+  },
+  "420690e7": {
+   "blocksOpen": 14495,
+   "statesOpen": 2,
+   "lowerNanoErg": 52569497,
+   "upperNanoErg": 102950745,
+   "maxNanoErg": 52569497,
+   "maxAt": 1875617,
+   "maxDetail": {
+    "buy": "d9fced5f497389a01b30f14f644473962df5939c66624e07a0e741bba9513e85",
+    "sell": "c57b16d84f5c74ce21b82376e49768e8b2880e49cb3e12f123da01edf5dddf0e",
+    "capital": 158777849,
+    "T": 2189402,
+    "gross": 54769497,
+    "sellErgForT": 213547346
+   },
+   "openBlocksSellPoolMovedNext": 1,
+   "riskShare": 6.89893066574681e-05
+  },
+  "9025a2fb": {
+   "blocksOpen": 9057,
+   "statesOpen": 9,
+   "lowerNanoErg": 924918393,
+   "upperNanoErg": 5712591434,
+   "maxNanoErg": 924918393,
+   "maxAt": 1869418,
+   "maxDetail": {
+    "buy": "bab175fa06bc7b0b47376c03742012959b95ae89582fc9ceba7b925d55f4d4f0",
+    "sell": "6297c73991562480a1df0a1077c6868c4a059d9a3fbd8ce71c2420398345e4d9",
+    "capital": 39701548,
+    "T": 224578,
+    "gross": 927118393,
+    "sellErgForT": 966819941
+   },
+   "openBlocksSellPoolMovedNext": 1,
+   "riskShare": 0.00011041183614883516
+  },
+  "a399dcd7": {
+   "blocksOpen": 5792,
+   "statesOpen": 6,
+   "lowerNanoErg": 7418458,
+   "upperNanoErg": 34974576,
+   "maxNanoErg": 7418458,
+   "maxAt": 1886655,
+   "maxDetail": {
+    "buy": "b98a03dcfc2094fe83fecafc9b1a4a6064c177f5e63ffadbb9621c32f7dd78a0",
+    "sell": "7096d932acbee72bc1584dc10175d4dbee96fa5dc234f858b4a2421c6cb21a06",
+    "capital": 567741214,
+    "T": 1599,
+    "gross": 9618458,
+    "sellErgForT": 577359672
+   },
+   "openBlocksSellPoolMovedNext": 2,
+   "riskShare": 0.0003453038674033149
+  },
+  "0fdb7ff8": {
+   "blocksOpen": 21600,
+   "statesOpen": 9,
+   "lowerNanoErg": 66782741,
+   "upperNanoErg": 404441221,
+   "maxNanoErg": 66782741,
+   "maxAt": 1879435,
+   "maxDetail": {
+    "buy": "15242ab98f89db195faa9115acb4beebb0defe4827689b82e8ba92f81d88ddfb",
+    "sell": "8ae87e4d0e97b8e253701176e54f6fb535a603ae714f50f1724acc5a26fb211d",
+    "capital": 17258,
+    "T": 478,
+    "gross": 68982741,
+    "sellErgForT": 68999999
+   },
+   "openBlocksSellPoolMovedNext": 1,
+   "riskShare": 4.6296296296296294e-05
+  },
+  "02ae765a": {
+   "blocksOpen": 14491,
+   "statesOpen": 1,
+   "lowerNanoErg": 114349987,
+   "upperNanoErg": 114349987,
+   "maxNanoErg": 114349987,
+   "maxAt": 1869418,
+   "maxDetail": {
+    "buy": "19e17567d43afb16519d2dad3522a3f3a25c71ac97812f429ab5eeb73cbb62d1",
+    "sell": "7a143d653152fcc0b1415b17f35812983c8d6579aece69951b9c6c541efd2c54",
+    "capital": 90977395,
+    "T": 59762241,
+    "gross": 116549987,
+    "sellErgForT": 207527382
+   },
+   "openBlocksSellPoolMovedNext": 1,
+   "riskShare": 6.900835001035126e-05
+  },
+  "54dde1f4": {
+   "blocksOpen": 14499,
+   "statesOpen": 1,
+   "lowerNanoErg": 10642618,
+   "upperNanoErg": 10642618,
+   "maxNanoErg": 10642618,
+   "maxAt": 1869418,
+   "maxDetail": {
+    "buy": "fcbb10ab3905601b9638b5c50e3e7faaf2d31d5cab28ac4b2a913b51136bc55d",
+    "sell": "6e55937e9b6fc4b6bae36726eed3f44c47e705aec1e0acdf01876eb0198fc075",
+    "capital": 52585059,
+    "T": 449310877612,
+    "gross": 12842618,
+    "sellErgForT": 65427677
+   },
+   "openBlocksSellPoolMovedNext": 1,
+   "riskShare": 6.897027381198704e-05
+  },
+  "fe40fc42": {
+   "blocksOpen": 21229,
+   "statesOpen": 1,
+   "lowerNanoErg": 7695945,
+   "upperNanoErg": 7695945,
+   "maxNanoErg": 7695945,
+   "maxAt": 1869418,
+   "maxDetail": {
+    "buy": "05cf7af440dd03716d1b34f9fe601be16d60d6069dc0fed7323d9621d74efa46",
+    "sell": "a80edf152f553a6691ff7132107c1dcbe7ebfb6845b044a2f56963edeba79406",
+    "capital": 104054,
+    "T": 10101008080809,
+    "gross": 9895945,
+    "sellErgForT": 9999999
+   },
+   "openBlocksSellPoolMovedNext": 1,
+   "riskShare": 4.710537472325592e-05
+  },
+  "aa589fd5": {
+   "blocksOpen": 21600,
+   "statesOpen": 1,
+   "lowerNanoErg": 32535020,
+   "upperNanoErg": 32535020,
+   "maxNanoErg": 32535020,
+   "maxAt": 1869418,
+   "maxDetail": {
+    "buy": "ed840f98975459f07ce94dc205e9395095cc24d4ced4f00ffdd25e6c277095ff",
+    "sell": "627c99b55de80993d15b514a7fbfaf25c01fb45b3413c9ad95f32b74b8ed40ec",
+    "capital": 2014979,
+    "T": 133,
+    "gross": 34735020,
+    "sellErgForT": 36749999
+   },
+   "openBlocksSellPoolMovedNext": 0,
+   "riskShare": 0.0
+  },
+  "28bd6442": {
+   "blocksOpen": 21600,
+   "statesOpen": 1,
+   "lowerNanoErg": 83902910,
+   "upperNanoErg": 83902910,
+   "maxNanoErg": 83902910,
+   "maxAt": 1869418,
+   "maxDetail": {
+    "buy": "413df2fcfceace41b993c9cd7824926b9528fa89feb3399c0d8818826dd915fe",
+    "sell": "5e2c58b9a7c5e9e61eb68d545d9b6e392bb827a4cb07fffcf75d14314ec5575b",
+    "capital": 70,
+    "T": 862733431,
+    "gross": 86102910,
+    "sellErgForT": 86102980
+   },
+   "openBlocksSellPoolMovedNext": 0,
+   "riskShare": 0.0
+  },
+  "8e0cd39c": {
+   "blocksOpen": 21600,
+   "statesOpen": 1,
+   "lowerNanoErg": 17433893,
+   "upperNanoErg": 17433893,
+   "maxNanoErg": 17433893,
+   "maxAt": 1869418,
+   "maxDetail": {
+    "buy": "9b3f2d880d451faadeafa4fd5fc812aacc979832237af5016f03b23e762b06a3",
+    "sell": "e070e3451350595c725754c2c1c2bca689075d412921399524b734c4ed7a092f",
+    "capital": 118360,
+    "T": 2538,
+    "gross": 19633893,
+    "sellErgForT": 19752253
+   },
+   "openBlocksSellPoolMovedNext": 0,
+   "riskShare": 0.0
+  },
+  "c0bfa5eb": {
+   "blocksOpen": 21600,
+   "statesOpen": 1,
+   "lowerNanoErg": 4622459,
+   "upperNanoErg": 4622459,
+   "maxNanoErg": 4622459,
+   "maxAt": 1869418,
+   "maxDetail": {
+    "buy": "643068568273d28c9588e658d8b86bc888644fb945b11ac3615eda2c1306888e",
+    "sell": "a7d1d136d0c12fd53e7135c546eef9b2d2d0fbff43198a583f75c664760cca23",
+    "capital": 25679753,
+    "T": 87,
+    "gross": 6822459,
+    "sellErgForT": 32502212
+   },
+   "openBlocksSellPoolMovedNext": 0,
+   "riskShare": 0.0
+  },
+  "ef802b47": {
+   "blocksOpen": 21600,
+   "statesOpen": 1,
+   "lowerNanoErg": 3510144,
+   "upperNanoErg": 3510144,
+   "maxNanoErg": 3510144,
+   "maxAt": 1869418,
+   "maxDetail": {
+    "buy": "61ae855c62440c0ec8429f1a31d956d9aaf9d8727b89cc26fd894126d9cbce06",
+    "sell": "952b82f60fbaeba29fd6eae87743857f6e1227c290105fb4150f9d3f4f34c6b0",
+    "capital": 8090286,
+    "T": 1442196791359205,
+    "gross": 5710144,
+    "sellErgForT": 13800430
+   },
+   "openBlocksSellPoolMovedNext": 0,
+   "riskShare": 0.0
+  },
+  "45623c86": {
+   "blocksOpen": 21600,
+   "statesOpen": 1,
+   "lowerNanoErg": 12053812,
+   "upperNanoErg": 12053812,
+   "maxNanoErg": 12053812,
+   "maxAt": 1869418,
+   "maxDetail": {
+    "buy": "e40647533280058e640a28fb917fd9e73d5ecccc8be97f38aefe7315739f30ac",
+    "sell": "10cda33aebb7c480a0944aeb8e0ba9738cb6ac6d9848fb8df6ad0cc059e2028a",
+    "capital": 1760804,
+    "T": 35523,
+    "gross": 14253812,
+    "sellErgForT": 16014616
+   },
+   "openBlocksSellPoolMovedNext": 0,
+   "riskShare": 0.0
+  }
+ },
+ "b": {
+  "sc": {
+   "blocksOpen": 21600,
+   "statesOpen": 3419,
+   "lowerNanoErg": 49597817,
+   "upperNanoErg": 61548467684,
+   "maxNanoErg": 49597817,
+   "maxAt": 1873807,
+   "maxDetail": {
+    "pool": "9916d75132593c8b07fe18bd8d583bda1652eed7565cf41a4738ddd90fc992ec",
+    "dir": "pool->redeem",
+    "capital": 9988704505,
+    "units": 252,
+    "gross": 51797817
+   },
+   "openBlocksSecondLegMovedNext": 6412,
+   "riskShare": 0.29685185185185187
+  },
+  "rc": {
+   "blocksOpen": 411,
+   "statesOpen": 114,
+   "lowerNanoErg": 1545820403,
+   "upperNanoErg": 2583420419,
+   "maxNanoErg": 350178831,
+   "maxAt": 1876025,
+   "maxDetail": {
+    "pool": "1d5afc59838920bb5ef2a8f9d63825a55b1d48e269d7cecee335d637c3ff5f3f",
+    "dir": "mint->pool",
+    "capital": 9999934980,
+    "units": 53096,
+    "gross": 352378831
+   },
+   "openBlocksSecondLegMovedNext": 33,
+   "riskShare": 0.08029197080291971
+  }
+ },
+ "h": {
+  "f0cac602/ebb40eca:91dcb971": {
+   "cap10": {
+    "blocksOpen": 2417,
+    "statesOpen": 41,
+    "lowerNanoErg": 613729181,
+    "upperNanoErg": 6084422008,
+    "maxNanoErg": 542100677,
+    "maxAt": 1884244,
+    "maxDetail": {
+     "buy": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "t2t": "91dcb9719b3eaea676b97742dd453953bc7ab10d513fc6e275d6c9672d69d48d",
+     "sell": "76882c04ad03a3224b4cc4e1608d94ff65e0c84eb3b225cb63e4efa97fe4064b",
+     "aIsX": true,
+     "capital": 7250093522,
+     "a": 153895,
+     "b": 80230961,
+     "ergOut": 7792194199,
+     "fees": [
+      970,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": 538800677
+  },
+  "f0cac602/01dce8a5:18e19b8f": {
+   "cap10": {
+    "blocksOpen": 2201,
+    "statesOpen": 46,
+    "lowerNanoErg": 2719217407,
+    "upperNanoErg": 16184920417,
+    "maxNanoErg": 1859399077,
+    "maxAt": 1876082,
+    "maxDetail": {
+     "buy": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "t2t": "18e19b8f4c930527693db521a8415d31e64b6411a2a3160dea740dbe373d87f2",
+     "sell": "7f1759300b19287adbbcd03c877eae6c6de60f4c2962b1fc5ae2c6e2a684220c",
+     "aIsX": true,
+     "capital": 9999858881,
+     "a": 210803,
+     "b": 416848046,
+     "ergOut": 11859257958,
+     "fees": [
+      970,
+      980,
+      997
+     ]
+    }
+   },
+   "net3txBest": 1856099077
+  },
+  "d1d2ae2a/843b5a2a:31ac0a34": {
+   "cap10": {
+    "blocksOpen": 6151,
+    "statesOpen": 12,
+    "lowerNanoErg": 5865991440,
+    "upperNanoErg": 17192966337,
+    "maxNanoErg": 5865991440,
+    "maxAt": 1884244,
+    "maxDetail": {
+     "buy": "68ed2d3b33624409830d877c6e6d431615862eabdcd660ddf30eee1972f1f858",
+     "t2t": "31ac0a34ae1aa473ddceabe1647449c9cfd84bab2e9d54dce0f2ff0abcd38c8a",
+     "sell": "4d808c641ffcdb9cab2eaf7e81696009b56b4ff78dd8f29d6b102b3ad65d177e",
+     "aIsX": true,
+     "capital": 9999327235,
+     "a": 38142,
+     "b": 126266567509268,
+     "ergOut": 15865318675,
+     "fees": [
+      965,
+      965,
+      958
+     ]
+    }
+   },
+   "net3txBest": 5862691440
+  },
+  "03faf2cb/003bd19d:080e4532": {
+   "cap10": {
+    "blocksOpen": 31,
+    "statesOpen": 9,
+    "lowerNanoErg": 4511928061,
+    "upperNanoErg": 4652898272,
+    "maxNanoErg": 1643512464,
+    "maxAt": 1875619,
+    "maxDetail": {
+     "buy": "1d5afc59838920bb5ef2a8f9d63825a55b1d48e269d7cecee335d637c3ff5f3f",
+     "t2t": "080e453271ff4d2f85f97569b09755e67537bf2a1bc1cd09411b459cf901b902",
+     "sell": "9916d75132593c8b07fe18bd8d583bda1652eed7565cf41a4738ddd90fc992ec",
+     "aIsX": false,
+     "capital": 9973011470,
+     "a": 65364,
+     "b": 293,
+     "ergOut": 11616523934,
+     "fees": [
+      995,
+      995,
+      995
+     ]
+    }
+   },
+   "net3txBest": 1640212464
+  },
+  "9a06d9e5/03faf2cb:cd57cdb9": {
+   "cap10": {
+    "blocksOpen": 24,
+    "statesOpen": 6,
+    "lowerNanoErg": 38309551,
+    "upperNanoErg": 73098274,
+    "maxNanoErg": 22958611,
+    "maxAt": 1888904,
+    "maxDetail": {
+     "buy": "f40afb6f877c40a30c8637dd5362227285738174151ce66d6684bc1b727ab6cf",
+     "t2t": "cd57cdb9c457589df31e7ca01871eaf7ee005cfdea4f75c8ec30df3a617936ad",
+     "sell": "9916d75132593c8b07fe18bd8d583bda1652eed7565cf41a4738ddd90fc992ec",
+     "aIsX": true,
+     "capital": 2408732898,
+     "a": 3173885400,
+     "b": 71,
+     "ergOut": 2431691509,
+     "fees": [
+      997,
+      997,
+      995
+     ]
+    }
+   },
+   "net3txBest": 19658611
+  },
+  "003bd19d/bd0c25c3:71164b72": {
+   "cap10": {
+    "blocksOpen": 4913,
+    "statesOpen": 68,
+    "lowerNanoErg": 706910035,
+    "upperNanoErg": 1500470478,
+    "maxNanoErg": 195420236,
+    "maxAt": 1875615,
+    "maxDetail": {
+     "buy": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "t2t": "71164b72728c735850b2b0ed9ab75c1447e5ab7e49669b3daba0d621c7ebd6e0",
+     "sell": "1d5afc59838920bb5ef2a8f9d63825a55b1d48e269d7cecee335d637c3ff5f3f",
+     "aIsX": false,
+     "capital": 2038650091,
+     "a": 14998473358,
+     "b": 12049,
+     "ergOut": 2234070327,
+     "fees": [
+      997,
+      970,
+      995
+     ]
+    }
+   },
+   "net3txBest": 192120236
+  },
+  "bd0c25c3/7a51950e:dc570764": {
+   "cap10": {
+    "blocksOpen": 1570,
+    "statesOpen": 17,
+    "lowerNanoErg": 93862030,
+    "upperNanoErg": 182044636,
+    "maxNanoErg": 34314249,
+    "maxAt": 1879246,
+    "maxDetail": {
+     "buy": "47a811c68e49f6bfa6629602037ee65f8d175ddbc7b64bdb65ad40599b812fd0",
+     "t2t": "dc5707645ef539ad6b6dcc5f277d2db6558c0d611dd1f734ae4d0ecb44c6fa28",
+     "sell": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "aIsX": false,
+     "capital": 1047719237,
+     "a": 419,
+     "b": 8254561258,
+     "ergOut": 1082033486,
+     "fees": [
+      990,
+      980,
+      997
+     ]
+    }
+   },
+   "net3txBest": 31014249
+  },
+  "03faf2cb/8b08cdd5:5317c628": {
+   "cap10": {
+    "blocksOpen": 2603,
+    "statesOpen": 61,
+    "lowerNanoErg": 115215728,
+    "upperNanoErg": 744986796,
+    "maxNanoErg": 55820629,
+    "maxAt": 1883760,
+    "maxDetail": {
+     "buy": "9916d75132593c8b07fe18bd8d583bda1652eed7565cf41a4738ddd90fc992ec",
+     "t2t": "5317c62831aad4ef28f2645b58d70867cbc16e97d16294a08247f60e7af4cbf5",
+     "sell": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "aIsX": true,
+     "capital": 1091005915,
+     "a": 34,
+     "b": 24990,
+     "ergOut": 1146826544,
+     "fees": [
+      995,
+      990,
+      997
+     ]
+    }
+   },
+   "net3txBest": 52520629
+  },
+  "bd0c25c3/48132396:22dadd2e": {
+   "cap10": {
+    "blocksOpen": 7489,
+    "statesOpen": 27,
+    "lowerNanoErg": 90318753,
+    "upperNanoErg": 239692446,
+    "maxNanoErg": 37266694,
+    "maxAt": 1884360,
+    "maxDetail": {
+     "buy": "ed4ac9cf07918b9b0519d0b120ffd70090b3390569ec028933b13309bf5670ad",
+     "t2t": "22dadd2e35015129f08de7e3ec01393b1a2b159d16e8b16d6cea5864bc891d51",
+     "sell": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "aIsX": false,
+     "capital": 863624802,
+     "a": 2681761,
+     "b": 6247227355,
+     "ergOut": 900891496,
+     "fees": [
+      990,
+      990,
+      997
+     ]
+    }
+   },
+   "net3txBest": 33966694
+  },
+  "203ef306/bd0c25c3:012f56cd": {
+   "cap10": {
+    "blocksOpen": 1738,
+    "statesOpen": 15,
+    "lowerNanoErg": 85066229,
+    "upperNanoErg": 275977224,
+    "maxNanoErg": 67229137,
+    "maxAt": 1884360,
+    "maxDetail": {
+     "buy": "f69a638ac40743f42bc709d533c7e6b271d5204a01b1234294cdbcacc12fa267",
+     "t2t": "012f56cd9d86f5deb819e04902e0f7580cd9968665e8ed254208a5559a3c65c5",
+     "sell": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "aIsX": true,
+     "capital": 1489978908,
+     "a": 242067,
+     "b": 10903450448,
+     "ergOut": 1557208045,
+     "fees": [
+      990,
+      980,
+      997
+     ]
+    }
+   },
+   "net3txBest": 63929137
+  },
+  "bd0c25c3/fbbaac73:fccfb896": {
+   "cap10": {
+    "blocksOpen": 16850,
+    "statesOpen": 63,
+    "lowerNanoErg": 322647605,
+    "upperNanoErg": 10870909031,
+    "maxNanoErg": 237611988,
+    "maxAt": 1882553,
+    "maxDetail": {
+     "buy": "53281ed72896dc0596262dab6e8840c88d11a4bbc1aa26c7ca21ad9bda5fd4d9",
+     "t2t": "fccfb896f1b366cf5ff4fe08ec341c454d293e44eae489472e0cbffe67d7d784",
+     "sell": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "aIsX": false,
+     "capital": 279976403,
+     "a": 137688,
+     "b": 3931978189,
+     "ergOut": 517588391,
+     "fees": [
+      996,
+      990,
+      997
+     ]
+    }
+   },
+   "net3txBest": 234311988
+  },
+  "00bd7624/bd0c25c3:2cbfec58": {
+   "cap10": {
+    "blocksOpen": 8928,
+    "statesOpen": 24,
+    "lowerNanoErg": 187780525,
+    "upperNanoErg": 320294003,
+    "maxNanoErg": 179341056,
+    "maxAt": 1884244,
+    "maxDetail": {
+     "buy": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "t2t": "2cbfec58d4ba674fd495aa88ae9eb654b5781ab1d8c0ea944eea620acde02c36",
+     "sell": "04f468174eddbc68bce3f0965dd14bc6ed1443f5a405ec7f7f9925d999370b97",
+     "aIsX": false,
+     "capital": 261667879,
+     "a": 1914985165,
+     "b": 1250815427,
+     "ergOut": 441008935,
+     "fees": [
+      997,
+      990,
+      997
+     ]
+    }
+   },
+   "net3txBest": 176041056
+  },
+  "bd0c25c3/af1a2e80:6a531f5e": {
+   "cap10": {
+    "blocksOpen": 8467,
+    "statesOpen": 30,
+    "lowerNanoErg": 89454840,
+    "upperNanoErg": 213533518,
+    "maxNanoErg": 26205627,
+    "maxAt": 1884360,
+    "maxDetail": {
+     "buy": "06c281e1ac790941c3f6c78ae10c25b0f2c55d6cfcc5070cccdc251ae8dc580a",
+     "t2t": "6a531f5e997bf862889d6cb4130f61e0f81da4e3bee7b8753267868cd4be0a79",
+     "sell": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "aIsX": false,
+     "capital": 538718004,
+     "a": 104405440081,
+     "b": 3898243368,
+     "ergOut": 564923631,
+     "fees": [
+      990,
+      997,
+      997
+     ]
+    }
+   },
+   "net3txBest": 22905627
+  },
+  "6fd53a3b/b0b312cd:cca58a6a": {
+   "cap10": {
+    "blocksOpen": 14499,
+    "statesOpen": 45,
+    "lowerNanoErg": 24981160,
+    "upperNanoErg": 1066733145,
+    "maxNanoErg": 24981160,
+    "maxAt": 1881379,
+    "maxDetail": {
+     "buy": "77c9b3d32fddd770351a206ae28cd5241b4e21953998a40bd671e8d027f2883a",
+     "t2t": "cca58a6a8820e202ec3ed0fe4f42e7e2cde115eebdd3602922d5f1dd95692e09",
+     "sell": "3b92a48cb02183ddb7ffccb8b52864c5c8c2d59b5c1227953695a5a02b57a635",
+     "aIsX": true,
+     "capital": 25065795,
+     "a": 232809360,
+     "b": 1012,
+     "ergOut": 50046955,
+     "fees": [
+      990,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": 21681160
+  },
+  "6fd53a3b/8b08cdd5:072bbf5d": {
+   "cap10": {
+    "blocksOpen": 11219,
+    "statesOpen": 128,
+    "lowerNanoErg": 1480713698,
+    "upperNanoErg": 16578029110,
+    "maxNanoErg": 689177587,
+    "maxAt": 1877505,
+    "maxDetail": {
+     "buy": "77c9b3d32fddd770351a206ae28cd5241b4e21953998a40bd671e8d027f2883a",
+     "t2t": "072bbf5d528e835104e67239a0a42469f26584272813f993bd167b0bedede841",
+     "sell": "cadac6db847a715e3577d8f2fbb2edfb2280f20924abf51bf83704a9ddc511b2",
+     "aIsX": true,
+     "capital": 9999436867,
+     "a": 94786002929,
+     "b": 296721,
+     "ergOut": 10688614454,
+     "fees": [
+      990,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": 685877587
+  },
+  "b0b312cd/01dce8a5:dfb048f0": {
+   "cap10": {
+    "blocksOpen": 18314,
+    "statesOpen": 71,
+    "lowerNanoErg": 162116511,
+    "upperNanoErg": 1814108359,
+    "maxNanoErg": 156345578,
+    "maxAt": 1876082,
+    "maxDetail": {
+     "buy": "821e9b67d88041854afd00441f947eaa381ff20502c9bacbb48afb09219f219f",
+     "t2t": "dfb048f01faecc5c1369a06c79d9b8ee5e0db7caba40f1cc19821234009d1538",
+     "sell": "7f1759300b19287adbbcd03c877eae6c6de60f4c2962b1fc5ae2c6e2a684220c",
+     "aIsX": true,
+     "capital": 1450000390,
+     "a": 54790,
+     "b": 56376525,
+     "ergOut": 1606345968,
+     "fees": [
+      997,
+      990,
+      997
+     ]
+    }
+   },
+   "net3txBest": 153045578
+  },
+  "f0cac602/34d449dc:8863cf71": {
+   "cap10": {
+    "blocksOpen": 4833,
+    "statesOpen": 10,
+    "lowerNanoErg": 3442200,
+    "upperNanoErg": 13867314,
+    "maxNanoErg": 1759758,
+    "maxAt": 1883761,
+    "maxDetail": {
+     "buy": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "t2t": "8863cf7154d042fb7ee0810ede13edb77acdfebdba07819654a957c70fc41f7d",
+     "sell": "8e6386b31b14e22e5f2ae65db82abce8431d85e8a65c0cac684ae1c12af0639b",
+     "aIsX": true,
+     "capital": 38572284,
+     "a": 857,
+     "b": 759206707863,
+     "ergOut": 40332042,
+     "fees": [
+      970,
+      980,
+      990
+     ]
+    }
+   },
+   "net3txBest": -1540242
+  },
+  "8b08cdd5/f0cac602:260f1b6a": {
+   "cap10": {
+    "blocksOpen": 11852,
+    "statesOpen": 169,
+    "lowerNanoErg": 60665213,
+    "upperNanoErg": 980131088,
+    "maxNanoErg": 38588770,
+    "maxAt": 1883761,
+    "maxDetail": {
+     "buy": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "t2t": "260f1b6a4cb3aa7f5195bff87f14d6fa02144bcecad59d5fc2de310359297b34",
+     "sell": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "aIsX": false,
+     "capital": 404789528,
+     "a": 8993,
+     "b": 9660,
+     "ergOut": 443378298,
+     "fees": [
+      970,
+      997,
+      997
+     ]
+    }
+   },
+   "net3txBest": 35288770
+  },
+  "e023c5f3/bd0c25c3:64e7fd69": {
+   "cap10": {
+    "blocksOpen": 6048,
+    "statesOpen": 55,
+    "lowerNanoErg": 397769827,
+    "upperNanoErg": 850572676,
+    "maxNanoErg": 92994490,
+    "maxAt": 1875638,
+    "maxDetail": {
+     "buy": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "t2t": "64e7fd698410fb2c4b7bf071c311df0193993e2fb1d4ae1de6a3021141bb4b4e",
+     "sell": "ae97c5eccd59a065cd973a8d6afb8bb79f9cc70368a7dcdf73aaeab1cedf6f6b",
+     "aIsX": false,
+     "capital": 1608025899,
+     "a": 11906185042,
+     "b": 2034758,
+     "ergOut": 1701020389,
+     "fees": [
+      997,
+      980,
+      997
+     ]
+    }
+   },
+   "net3txBest": 89694490
+  },
+  "e023c5f3/6de6f46e:cca03a61": {
+   "cap10": {
+    "blocksOpen": 8450,
+    "statesOpen": 51,
+    "lowerNanoErg": 402297534,
+    "upperNanoErg": 886514060,
+    "maxNanoErg": 290523736,
+    "maxAt": 1879508,
+    "maxDetail": {
+     "buy": "a8a2275ff1660b6ceb6e4c977f4359c6c51b53b0a4e0f446496108770ed6a893",
+     "t2t": "cca03a61ec4efca39d4dd6e56eeaeda05ae510ef4f5c5a2e789f964a57f22ba1",
+     "sell": "ae97c5eccd59a065cd973a8d6afb8bb79f9cc70368a7dcdf73aaeab1cedf6f6b",
+     "aIsX": false,
+     "capital": 848351306,
+     "a": 27822153387,
+     "b": 1695069,
+     "ergOut": 1138875042,
+     "fees": [
+      997,
+      997,
+      997
+     ]
+    }
+   },
+   "net3txBest": 287223736
+  },
+  "bd0c25c3/0779ec04:8b0c548f": {
+   "cap10": {
+    "blocksOpen": 5807,
+    "statesOpen": 22,
+    "lowerNanoErg": 34165425,
+    "upperNanoErg": 86033517,
+    "maxNanoErg": 13948181,
+    "maxAt": 1884364,
+    "maxDetail": {
+     "buy": "fff5e73c7c8c61335d8c4ab18a2d09029e1c9131ed195c4e0ceccf9dd0c03d7f",
+     "t2t": "8b0c548ff38752b4b41e319ca62659d9d25b4dcdf78601c77b78799a64c64dab",
+     "sell": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "aIsX": false,
+     "capital": 316703004,
+     "a": 5336962,
+     "b": 2288830379,
+     "ergOut": 330651185,
+     "fees": [
+      995,
+      980,
+      997
+     ]
+    }
+   },
+   "net3txBest": 10648181
+  },
+  "03faf2cb/fcfca765:60307430": {
+   "cap10": {
+    "blocksOpen": 309,
+    "statesOpen": 9,
+    "lowerNanoErg": 89058075,
+    "upperNanoErg": 195187924,
+    "maxNanoErg": 25278342,
+    "maxAt": 1879370,
+    "maxDetail": {
+     "buy": "9916d75132593c8b07fe18bd8d583bda1652eed7565cf41a4738ddd90fc992ec",
+     "t2t": "6030743005bf4d7ca049ceaf5edc4d14e050cc9c9397112708a018054631b2cc",
+     "sell": "94e7c5993db6bf42ec4473379f12194edab6eb0e858b3c256efd69fd786ef72a",
+     "aIsX": true,
+     "capital": 2164809800,
+     "a": 65,
+     "b": 3474873833,
+     "ergOut": 2190088142,
+     "fees": [
+      995,
+      997,
+      997
+     ]
+    }
+   },
+   "net3txBest": 21978342
+  },
+  "d1d2ae2a/185e217d:171e7c7a": {
+   "cap10": {
+    "blocksOpen": 17384,
+    "statesOpen": 18,
+    "lowerNanoErg": 108851634,
+    "upperNanoErg": 263940523,
+    "maxNanoErg": 94224005,
+    "maxAt": 1876931,
+    "maxDetail": {
+     "buy": "e59494b2056a3b05ccae7f01c9e9bba4e750fa452bc7835ef5ce5e2d88dbef44",
+     "t2t": "171e7c7a33278319fe126f3b8cdfd0f3f98f01e372e59eaebd5e2137703ed819",
+     "sell": "68ed2d3b33624409830d877c6e6d431615862eabdcd660ddf30eee1972f1f858",
+     "aIsX": false,
+     "capital": 303805655,
+     "a": 16587,
+     "b": 1432,
+     "ergOut": 398029660,
+     "fees": [
+      997,
+      990,
+      965
+     ]
+    }
+   },
+   "net3txBest": 90924005
+  },
+  "d71693c4/03faf2cb:f9b9fdc5": {
+   "cap10": {
+    "blocksOpen": 3775,
+    "statesOpen": 26,
+    "lowerNanoErg": 46745377,
+    "upperNanoErg": 1080121042,
+    "maxNanoErg": 46745377,
+    "maxAt": 1869418,
+    "maxDetail": {
+     "buy": "bee300e9c81e48d7ab5fc29294c7bbb536cf9dcd9c91ee3be9898faec91b11b6",
+     "t2t": "f9b9fdc5ed4cfed538e25146a929201d2622f1e63d7f8fd653f36e43267fe2a3",
+     "sell": "61a579c46d92f2718576fc9839a2a1983f172e889ec234af8504b5bbf10edd89",
+     "aIsX": false,
+     "capital": 78183627,
+     "a": 2,
+     "b": 179136,
+     "ergOut": 124929004,
+     "fees": [
+      995,
+      996,
+      996
+     ]
+    }
+   },
+   "net3txBest": 43445377
+  },
+  "8b08cdd5/18c938e1:ace2291c": {
+   "cap10": {
+    "blocksOpen": 9023,
+    "statesOpen": 128,
+    "lowerNanoErg": 1387567045,
+    "upperNanoErg": 14264591851,
+    "maxNanoErg": 533608131,
+    "maxAt": 1877505,
+    "maxDetail": {
+     "buy": "92b1600f001b3f03d7152d7da90ebe6b46fc43edd9f325adbf1677b443520dcb",
+     "t2t": "ace2291ce09ae456d80f986cbb6bbd06fda1c597548d0f2ac81fc46ee13cd034",
+     "sell": "cadac6db847a715e3577d8f2fbb2edfb2280f20924abf51bf83704a9ddc511b2",
+     "aIsX": false,
+     "capital": 9999900990,
+     "a": 3548413089,
+     "b": 292415,
+     "ergOut": 10533509121,
+     "fees": [
+      997,
+      970,
+      990
+     ]
+    }
+   },
+   "net3txBest": 530308131
+  },
+  "03faf2cb/8b08cdd5:9bdd98af": {
+   "cap10": {
+    "blocksOpen": 3015,
+    "statesOpen": 72,
+    "lowerNanoErg": 14964351,
+    "upperNanoErg": 427558251,
+    "maxNanoErg": 11453981,
+    "maxAt": 1883760,
+    "maxDetail": {
+     "buy": "9916d75132593c8b07fe18bd8d583bda1652eed7565cf41a4738ddd90fc992ec",
+     "t2t": "9bdd98afc8d3160972dc89f8e125cab95285a97193f3b093f42e06fdb6f7be0e",
+     "sell": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "aIsX": true,
+     "capital": 192528916,
+     "a": 6,
+     "b": 4444,
+     "ergOut": 203982897,
+     "fees": [
+      995,
+      995,
+      997
+     ]
+    }
+   },
+   "net3txBest": 8153981
+  },
+  "bd0c25c3/420690e7:1bc68493": {
+   "cap10": {
+    "blocksOpen": 14501,
+    "statesOpen": 28,
+    "lowerNanoErg": 67244671,
+    "upperNanoErg": 1387455014,
+    "maxNanoErg": 63165711,
+    "maxAt": 1879496,
+    "maxDetail": {
+     "buy": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "t2t": "1bc684931616d0ba6e58820f783cfee7824ca2393e1d8204363a1617b0ea1232",
+     "sell": "c57b16d84f5c74ce21b82376e49768e8b2880e49cb3e12f123da01edf5dddf0e",
+     "aIsX": true,
+     "capital": 177543417,
+     "a": 1419157609,
+     "b": 2562588,
+     "ergOut": 240709128,
+     "fees": [
+      997,
+      997,
+      970
+     ]
+    }
+   },
+   "net3txBest": 59865711
+  },
+  "b0b312cd/36aba4b4:6def0b35": {
+   "cap10": {
+    "blocksOpen": 14499,
+    "statesOpen": 29,
+    "lowerNanoErg": 12962653,
+    "upperNanoErg": 254074930,
+    "maxNanoErg": 12962653,
+    "maxAt": 1878049,
+    "maxDetail": {
+     "buy": "8ab275797638edc699bd0b3ce4f5b19b7da69bea07e2e36d4af3d8e447f6d4c3",
+     "t2t": "6def0b354c6fc495c5cb4ad893ad0224912111bb2a2938bb73e21546d5024437",
+     "sell": "3d4fdb931917647f4755ada29d13247686df84bd8aea060d22584081bd11ba69",
+     "aIsX": true,
+     "capital": 23932288,
+     "a": 1249,
+     "b": 3,
+     "ergOut": 36894941,
+     "fees": [
+      990,
+      990,
+      995
+     ]
+    }
+   },
+   "net3txBest": 9662653
+  },
+  "03faf2cb/0cd8c9f4:6085fe0a": {
+   "cap10": {
+    "blocksOpen": 2124,
+    "statesOpen": 15,
+    "lowerNanoErg": 28681654,
+    "upperNanoErg": 68656817,
+    "maxNanoErg": 25090935,
+    "maxAt": 1884350,
+    "maxDetail": {
+     "buy": "9916d75132593c8b07fe18bd8d583bda1652eed7565cf41a4738ddd90fc992ec",
+     "t2t": "6085fe0a4e45602bd638ac624f0165212519a77717b5eae387c35f7706de8cc6",
+     "sell": "ddcfb0239162a95ebd9265563d58366693882582ba87ad4d1a29425596936ae1",
+     "aIsX": true,
+     "capital": 96278026,
+     "a": 3,
+     "b": 16774,
+     "ergOut": 121368961,
+     "fees": [
+      995,
+      997,
+      990
+     ]
+    }
+   },
+   "net3txBest": 21790935
+  },
+  "fbbaac73/b0b312cd:66c572b5": {
+   "cap10": {
+    "blocksOpen": 21273,
+    "statesOpen": 63,
+    "lowerNanoErg": 284747065,
+    "upperNanoErg": 8041940123,
+    "maxNanoErg": 245443774,
+    "maxAt": 1878538,
+    "maxDetail": {
+     "buy": "53281ed72896dc0596262dab6e8840c88d11a4bbc1aa26c7ca21ad9bda5fd4d9",
+     "t2t": "66c572b5904714097ccd980c7ef88a736a3c6009495f8e393cc37e388ea860f4",
+     "sell": "821e9b67d88041854afd00441f947eaa381ff20502c9bacbb48afb09219f219f",
+     "aIsX": true,
+     "capital": 282744059,
+     "a": 138429,
+     "b": 19876,
+     "ergOut": 528187833,
+     "fees": [
+      996,
+      970,
+      997
+     ]
+    }
+   },
+   "net3txBest": 242143774
+  },
+  "46700be1/f0cac602:333c2d77": {
+   "cap10": {
+    "blocksOpen": 4364,
+    "statesOpen": 9,
+    "lowerNanoErg": 11636161,
+    "upperNanoErg": 36217992,
+    "maxNanoErg": 6942645,
+    "maxAt": 1886652,
+    "maxDetail": {
+     "buy": "3eb10b2fe3e1df37b6166c957109bf5f2e7510bc508e4b76708a56f8a52babff",
+     "t2t": "333c2d771d4e171c4fecc651888f7683c3372c6b9e3b8d70fd442ce8ebd246fd",
+     "sell": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "aIsX": true,
+     "capital": 37431909,
+     "a": 42,
+     "b": 987,
+     "ergOut": 44374554,
+     "fees": [
+      970,
+      990,
+      970
+     ]
+    }
+   },
+   "net3txBest": 3642645
+  },
+  "8b08cdd5/03faf2cb:b3e1a174": {
+   "cap10": {
+    "blocksOpen": 3706,
+    "statesOpen": 55,
+    "lowerNanoErg": 26830003,
+    "upperNanoErg": 404425297,
+    "maxNanoErg": 26830003,
+    "maxAt": 1883760,
+    "maxDetail": {
+     "buy": "9916d75132593c8b07fe18bd8d583bda1652eed7565cf41a4738ddd90fc992ec",
+     "t2t": "b3e1a1746ee177f9feddca6928e334a22809c6be2336f5f6740bb8b849760ec0",
+     "sell": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "aIsX": false,
+     "capital": 192528916,
+     "a": 6,
+     "b": 4779,
+     "ergOut": 219358919,
+     "fees": [
+      995,
+      997,
+      997
+     ]
+    }
+   },
+   "net3txBest": 23530003
+  },
+  "8b08cdd5/dede2cf5:0fa526e1": {
+   "cap10": {
+    "blocksOpen": 14681,
+    "statesOpen": 140,
+    "lowerNanoErg": 23609528,
+    "upperNanoErg": 667239703,
+    "maxNanoErg": 22590764,
+    "maxAt": 1883758,
+    "maxDetail": {
+     "buy": "d8f1fda6a7cef48928b77f62a3be820dac7ab638ef8fb1561679a755053d5835",
+     "t2t": "0fa526e14c45d489dacd38c453f7b4d307d595b5d6ec3038a6535c04fa96cd74",
+     "sell": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "aIsX": false,
+     "capital": 190342367,
+     "a": 17693,
+     "b": 4639,
+     "ergOut": 212933131,
+     "fees": [
+      997,
+      999,
+      997
+     ]
+    }
+   },
+   "net3txBest": 19290764
+  },
+  "d71693c4/03faf2cb:4e497db0": {
+   "cap10": {
+    "blocksOpen": 3775,
+    "statesOpen": 26,
+    "lowerNanoErg": 49032397,
+    "upperNanoErg": 1137723067,
+    "maxNanoErg": 49032397,
+    "maxAt": 1869418,
+    "maxDetail": {
+     "buy": "bee300e9c81e48d7ab5fc29294c7bbb536cf9dcd9c91ee3be9898faec91b11b6",
+     "t2t": "4e497db00769f6402580c351c092ec6ae0306f08575c7a9c719267c84049c840",
+     "sell": "61a579c46d92f2718576fc9839a2a1983f172e889ec234af8504b5bbf10edd89",
+     "aIsX": false,
+     "capital": 78183627,
+     "a": 2,
+     "b": 184752,
+     "ergOut": 127216024,
+     "fees": [
+      995,
+      996,
+      996
+     ]
+    }
+   },
+   "net3txBest": 45732397
+  },
+  "36aba4b4/fbbaac73:65fa572b": {
+   "cap10": {
+    "blocksOpen": 14497,
+    "statesOpen": 40,
+    "lowerNanoErg": 277394254,
+    "upperNanoErg": 7837835684,
+    "maxNanoErg": 263833681,
+    "maxAt": 1878712,
+    "maxDetail": {
+     "buy": "53281ed72896dc0596262dab6e8840c88d11a4bbc1aa26c7ca21ad9bda5fd4d9",
+     "t2t": "65fa572bc4a7007e5a6450c9af2bfa1594e6dfb43b667027f1930eefddeac7bf",
+     "sell": "3d4fdb931917647f4755ada29d13247686df84bd8aea060d22584081bd11ba69",
+     "aIsX": false,
+     "capital": 339512113,
+     "a": 152292,
+     "b": 45,
+     "ergOut": 603345794,
+     "fees": [
+      996,
+      996,
+      995
+     ]
+    }
+   },
+   "net3txBest": 260533681
+  },
+  "ac992a1c/6c35aa39:ef045999": {
+   "cap10": {
+    "blocksOpen": 6773,
+    "statesOpen": 23,
+    "lowerNanoErg": 165590191530,
+    "upperNanoErg": 794996173015,
+    "maxNanoErg": 163690281830,
+    "maxAt": 1884244,
+    "maxDetail": {
+     "buy": "beed0c492a92f48af41d5496522b01f973d80d2bf58ca0696125dc543ee651b5",
+     "t2t": "ef04599954450696c0ea8b42083256d6587d3e05547e31761360ab73808d1b05",
+     "sell": "02a3a726cbdf5d2c6ce2719e1c20cd2e9f3c6f3627dc5224550462dc4d3a336b",
+     "aIsX": true,
+     "capital": 2405781101,
+     "a": 24930339,
+     "b": 11115002,
+     "ergOut": 166096062931,
+     "fees": [
+      997,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": 163686981830
+  },
+  "f0cac602/6c35aa39:70fbe87e": {
+   "cap10": {
+    "blocksOpen": 12242,
+    "statesOpen": 50,
+    "lowerNanoErg": 6940030952,
+    "upperNanoErg": 136438714302,
+    "maxNanoErg": 6881914945,
+    "maxAt": 1884244,
+    "maxDetail": {
+     "buy": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "t2t": "70fbe87edf0324ae996130df9490c2284b0617f1c9c4815ac5e405a21eccf922",
+     "sell": "02a3a726cbdf5d2c6ce2719e1c20cd2e9f3c6f3627dc5224550462dc4d3a336b",
+     "aIsX": true,
+     "capital": 191678006,
+     "a": 4074,
+     "b": 88589,
+     "ergOut": 7073592951,
+     "fees": [
+      970,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": 6878614945
+  },
+  "46700be1/8b08cdd5:3825b487": {
+   "cap10": {
+    "blocksOpen": 4369,
+    "statesOpen": 12,
+    "lowerNanoErg": 106545680,
+    "upperNanoErg": 292766942,
+    "maxNanoErg": 104034223,
+    "maxAt": 1886652,
+    "maxDetail": {
+     "buy": "3eb10b2fe3e1df37b6166c957109bf5f2e7510bc508e4b76708a56f8a52babff",
+     "t2t": "3825b487b6e360ec909be55b22c5a81d79bed94376f1effed6b81bd361f6d46a",
+     "sell": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "aIsX": true,
+     "capital": 102502228,
+     "a": 115,
+     "b": 4561,
+     "ergOut": 206536451,
+     "fees": [
+      970,
+      990,
+      997
+     ]
+    }
+   },
+   "net3txBest": 100734223
+  },
+  "c64e773d/d71693c4:53bc2bde": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 23,
+    "lowerNanoErg": 56229800,
+    "upperNanoErg": 162574665,
+    "maxNanoErg": 56229800,
+    "maxAt": 1869418,
+    "maxDetail": {
+     "buy": "2c4a06de96f7f541c9aef13a2c5345b7b78d66f7c8053cbe99126d38c988f085",
+     "t2t": "53bc2bdef697656b69e9bb2d95e9f064b8bccd65565c8716a4887739e4883c93",
+     "sell": "61a579c46d92f2718576fc9839a2a1983f172e889ec234af8504b5bbf10edd89",
+     "aIsX": true,
+     "capital": 65629237,
+     "a": 2378153,
+     "b": 171817,
+     "ergOut": 121859037,
+     "fees": [
+      954,
+      990,
+      996
+     ]
+    }
+   },
+   "net3txBest": 52929800
+  },
+  "18c938e1/c64e773d:83a88662": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 31,
+    "lowerNanoErg": 10353565,
+    "upperNanoErg": 160335226,
+    "maxNanoErg": 10353565,
+    "maxAt": 1879398,
+    "maxDetail": {
+     "buy": "2c4a06de96f7f541c9aef13a2c5345b7b78d66f7c8053cbe99126d38c988f085",
+     "t2t": "83a8866224dbe7bbca07f515f45c8a3be8595d821a0218640574c93b1eb27aef",
+     "sell": "92b1600f001b3f03d7152d7da90ebe6b46fc43edd9f325adbf1677b443520dcb",
+     "aIsX": false,
+     "capital": 46118828,
+     "a": 1705589,
+     "b": 18196697,
+     "ergOut": 56472393,
+     "fees": [
+      954,
+      990,
+      997
+     ]
+    }
+   },
+   "net3txBest": 7053565
+  },
+  "d1d2ae2a/0fdb7ff8:4b22fe0f": {
+   "cap10": {
+    "blocksOpen": 21595,
+    "statesOpen": 21,
+    "lowerNanoErg": 135947668,
+    "upperNanoErg": 528742813,
+    "maxNanoErg": 68738488,
+    "maxAt": 1879808,
+    "maxDetail": {
+     "buy": "68ed2d3b33624409830d877c6e6d431615862eabdcd660ddf30eee1972f1f858",
+     "t2t": "4b22fe0fe013110733648bda29e6d57bc8416337ae8693e30afb0780f2388c1a",
+     "sell": "8ae87e4d0e97b8e253701176e54f6fb535a603ae714f50f1724acc5a26fb211d",
+     "aIsX": true,
+     "capital": 261511,
+     "a": 1,
+     "b": 2149,
+     "ergOut": 68999999,
+     "fees": [
+      965,
+      999,
+      997
+     ]
+    }
+   },
+   "net3txBest": 65438488
+  },
+  "0fdb7ff8/91289d5c:eb17baf4": {
+   "cap10": {
+    "blocksOpen": 21596,
+    "statesOpen": 11,
+    "lowerNanoErg": 79289589,
+    "upperNanoErg": 371275079,
+    "maxNanoErg": 68460062,
+    "maxAt": 1879429,
+    "maxDetail": {
+     "buy": "9f3e7d43dd9b32f4e493053756e3e29af352614ac9871cb43ac7e548a03b7da0",
+     "t2t": "eb17baf4a17667cb480ba109a053f8f2c650e167ce7b44e6547ff2b2b0ef2e72",
+     "sell": "8ae87e4d0e97b8e253701176e54f6fb535a603ae714f50f1724acc5a26fb211d",
+     "aIsX": false,
+     "capital": 539937,
+     "a": 1,
+     "b": 5626,
+     "ergOut": 68999999,
+     "fees": [
+      990,
+      999,
+      997
+     ]
+    }
+   },
+   "net3txBest": 65160062
+  },
+  "0cd8c9f4/0fdb7ff8:4a317915": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 46,
+    "lowerNanoErg": 68994603,
+    "upperNanoErg": 1264001623,
+    "maxNanoErg": 68994603,
+    "maxAt": 1879813,
+    "maxDetail": {
+     "buy": "1f01dc8e29806d96ca0b79f8e798cd8cfce51c0e676aaedf6ab3464b37da9dfd",
+     "t2t": "4a317915177e54d47fbdb2f132b71dbb6cabdc891f4dfb3fb13a034494f6211a",
+     "sell": "8ae87e4d0e97b8e253701176e54f6fb535a603ae714f50f1724acc5a26fb211d",
+     "aIsX": true,
+     "capital": 5396,
+     "a": 1,
+     "b": 25823,
+     "ergOut": 68999999,
+     "fees": [
+      997,
+      999,
+      997
+     ]
+    }
+   },
+   "net3txBest": 65694603
+  },
+  "0cd8c9f4/0779ec04:0e7ae6bc": {
+   "cap10": {
+    "blocksOpen": 18698,
+    "statesOpen": 48,
+    "lowerNanoErg": 3703465,
+    "upperNanoErg": 101607869,
+    "maxNanoErg": 3703465,
+    "maxAt": 1884356,
+    "maxDetail": {
+     "buy": "ddcfb0239162a95ebd9265563d58366693882582ba87ad4d1a29425596936ae1",
+     "t2t": "0e7ae6bcddac78ec42e218775e3dc2e87226cb09692d23242b4e13e435a4b588",
+     "sell": "fff5e73c7c8c61335d8c4ab18a2d09029e1c9131ed195c4e0ceccf9dd0c03d7f",
+     "aIsX": true,
+     "capital": 6695922,
+     "a": 1415,
+     "b": 162971,
+     "ergOut": 10399387,
+     "fees": [
+      990,
+      995,
+      995
+     ]
+    }
+   },
+   "net3txBest": 403465
+  },
+  "0cd8c9f4/6ad70cdb:66fd1a6e": {
+   "cap10": {
+    "blocksOpen": 10768,
+    "statesOpen": 24,
+    "lowerNanoErg": 29098546,
+    "upperNanoErg": 77528899,
+    "maxNanoErg": 25365739,
+    "maxAt": 1884350,
+    "maxDetail": {
+     "buy": "8d0658ec8717bd2a862bd791211da05b1d38b39c9f0fe07afb67a813b33c6988",
+     "t2t": "66fd1a6e49858a7e1ee12609057d407f2c3f96ce4e363e06d8dbae1468e01c64",
+     "sell": "ddcfb0239162a95ebd9265563d58366693882582ba87ad4d1a29425596936ae1",
+     "aIsX": false,
+     "capital": 63922297,
+     "a": 2476923,
+     "b": 10567,
+     "ergOut": 89288036,
+     "fees": [
+      970,
+      980,
+      990
+     ]
+    }
+   },
+   "net3txBest": 22065739
+  },
+  "0cd8c9f4/ac992a1c:a725808e": {
+   "cap10": {
+    "blocksOpen": 6668,
+    "statesOpen": 30,
+    "lowerNanoErg": 97290370,
+    "upperNanoErg": 443453436,
+    "maxNanoErg": 97290370,
+    "maxAt": 1884350,
+    "maxDetail": {
+     "buy": "beed0c492a92f48af41d5496522b01f973d80d2bf58ca0696125dc543ee651b5",
+     "t2t": "a725808e435436220a43ca40c28d12ff5d31c4978cad9cc294eadc3778074290",
+     "sell": "ddcfb0239162a95ebd9265563d58366693882582ba87ad4d1a29425596936ae1",
+     "aIsX": false,
+     "capital": 871214,
+     "a": 9545,
+     "b": 12098,
+     "ergOut": 98161584,
+     "fees": [
+      997,
+      997,
+      990
+     ]
+    }
+   },
+   "net3txBest": 93990370
+  },
+  "6c35aa39/8b08cdd5:2dc6a828": {
+   "cap10": {
+    "blocksOpen": 21086,
+    "statesOpen": 169,
+    "lowerNanoErg": 4492972645,
+    "upperNanoErg": 9744792679,
+    "maxNanoErg": 4466119992,
+    "maxAt": 1884244,
+    "maxDetail": {
+     "buy": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "t2t": "2dc6a828452bbc4be4f8a0ff20aeb00a869cccd081e58259a3ceffbef8bacd55",
+     "sell": "02a3a726cbdf5d2c6ce2719e1c20cd2e9f3c6f3627dc5224550462dc4d3a336b",
+     "aIsX": false,
+     "capital": 183837714,
+     "a": 4125,
+     "b": 57523,
+     "ergOut": 4649957706,
+     "fees": [
+      997,
+      997,
+      990
+     ]
+    }
+   },
+   "net3txBest": 4462819992
+  },
+  "ac992a1c/bdb6dbdf:22ad25b6": {
+   "cap10": {
+    "blocksOpen": 6295,
+    "statesOpen": 14,
+    "lowerNanoErg": 8432936,
+    "upperNanoErg": 117932629,
+    "maxNanoErg": 8432936,
+    "maxAt": 1884352,
+    "maxDetail": {
+     "buy": "beed0c492a92f48af41d5496522b01f973d80d2bf58ca0696125dc543ee651b5",
+     "t2t": "22ad25b679157336aae6d320200b83c5dcd2199870859d6692a93ba564415eb2",
+     "sell": "4c450f6345f7588fbf306a6f592ca28298e6e5b9ff3d33292af2e2ac39b25081",
+     "aIsX": true,
+     "capital": 277197,
+     "a": 3037,
+     "b": 182079,
+     "ergOut": 8710133,
+     "fees": [
+      997,
+      970,
+      947
+     ]
+    }
+   },
+   "net3txBest": 5132936
+  },
+  "fa990744/fffe6122:69b53802": {
+   "cap10": {
+    "blocksOpen": 14956,
+    "statesOpen": 12,
+    "lowerNanoErg": 220574573,
+    "upperNanoErg": 1042437970,
+    "maxNanoErg": 220574573,
+    "maxAt": 1884356,
+    "maxDetail": {
+     "buy": "c8793eb6b0800d8cfe9478a4c8be1c8f2d7c593509492aa7d0359692860d3a47",
+     "t2t": "69b53802934a6084065b3ac4976aeeeaa8cf85e74ad8c6c0feecc9b3e4fbdf9c",
+     "sell": "0292e48984ac66e49180320a31f5d6e71a2fe43d2019faf18a0195a32f8d1267",
+     "aIsX": false,
+     "capital": 1125923783,
+     "a": 925497767129992,
+     "b": 24269455190,
+     "ergOut": 1346498356,
+     "fees": [
+      997,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": 217274573
+  },
+  "843b5a2a/fffe6122:37b66dcd": {
+   "cap10": {
+    "blocksOpen": 128,
+    "statesOpen": 10,
+    "lowerNanoErg": 682960862,
+    "upperNanoErg": 2383033401,
+    "maxNanoErg": 682960862,
+    "maxAt": 1884356,
+    "maxDetail": {
+     "buy": "c8793eb6b0800d8cfe9478a4c8be1c8f2d7c593509492aa7d0359692860d3a47",
+     "t2t": "37b66dcdc32b1a69f0104bc179418bb29ed51a457792b39193ff8fdff0b696be",
+     "sell": "4d808c641ffcdb9cab2eaf7e81696009b56b4ff78dd8f29d6b102b3ad65d177e",
+     "aIsX": false,
+     "capital": 2400762607,
+     "a": 1853312840324167,
+     "b": 24075812483313,
+     "ergOut": 3083723469,
+     "fees": [
+      997,
+      980,
+      958
+     ]
+    }
+   },
+   "net3txBest": 679660862
+  },
+  "bd0c25c3/ac992a1c:961a6dc6": {
+   "cap10": {
+    "blocksOpen": 6664,
+    "statesOpen": 28,
+    "lowerNanoErg": 11039139,
+    "upperNanoErg": 292955812,
+    "maxNanoErg": 11039139,
+    "maxAt": 1884360,
+    "maxDetail": {
+     "buy": "beed0c492a92f48af41d5496522b01f973d80d2bf58ca0696125dc543ee651b5",
+     "t2t": "961a6dc6f61bbd9b8deb4a729478f7c7b99e5fcb7bc9adc1f470423ce5fed48e",
+     "sell": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "aIsX": false,
+     "capital": 84154,
+     "a": 922,
+     "b": 76140389,
+     "ergOut": 11123293,
+     "fees": [
+      997,
+      999,
+      997
+     ]
+    }
+   },
+   "net3txBest": 7739139
+  },
+  "ac992a1c/36aba4b4:a9ddaf47": {
+   "cap10": {
+    "blocksOpen": 10,
+    "statesOpen": 4,
+    "lowerNanoErg": 1031007921,
+    "upperNanoErg": 3764806365,
+    "maxNanoErg": 1031007921,
+    "maxAt": 1884356,
+    "maxDetail": {
+     "buy": "beed0c492a92f48af41d5496522b01f973d80d2bf58ca0696125dc543ee651b5",
+     "t2t": "a9ddaf4701b1185eb0bca5789d15ef0fd6fcb03de639555e3c1ade8a50d438dc",
+     "sell": "3d4fdb931917647f4755ada29d13247686df84bd8aea060d22584081bd11ba69",
+     "aIsX": true,
+     "capital": 47021189,
+     "a": 514598,
+     "b": 81,
+     "ergOut": 1078029110,
+     "fees": [
+      997,
+      997,
+      995
+     ]
+    }
+   },
+   "net3txBest": 1027707921
+  },
+  "843b5a2a/0779ec04:9a343b60": {
+   "cap10": {
+    "blocksOpen": 5625,
+    "statesOpen": 9,
+    "lowerNanoErg": 115978382,
+    "upperNanoErg": 192300730,
+    "maxNanoErg": 114842346,
+    "maxAt": 1884244,
+    "maxDetail": {
+     "buy": "fff5e73c7c8c61335d8c4ab18a2d09029e1c9131ed195c4e0ceccf9dd0c03d7f",
+     "t2t": "9a343b601f8faab5b936d037eb9815774e4e7ba22a3f3da2de635da8e34b97ad",
+     "sell": "4d808c641ffcdb9cab2eaf7e81696009b56b4ff78dd8f29d6b102b3ad65d177e",
+     "aIsX": false,
+     "capital": 329776184,
+     "a": 5496160,
+     "b": 3393162832078,
+     "ergOut": 444618530,
+     "fees": [
+      995,
+      997,
+      958
+     ]
+    }
+   },
+   "net3txBest": 111542346
+  },
+  "ac992a1c/0779ec04:ebe650df": {
+   "cap10": {
+    "blocksOpen": 21596,
+    "statesOpen": 28,
+    "lowerNanoErg": 850040375,
+    "upperNanoErg": 2507986236,
+    "maxNanoErg": 844744279,
+    "maxAt": 1884356,
+    "maxDetail": {
+     "buy": "beed0c492a92f48af41d5496522b01f973d80d2bf58ca0696125dc543ee651b5",
+     "t2t": "ebe650dfafdce787e58494f1846b5fd02609892ccc650141589a18843c33c2d1",
+     "sell": "fff5e73c7c8c61335d8c4ab18a2d09029e1c9131ed195c4e0ceccf9dd0c03d7f",
+     "aIsX": true,
+     "capital": 33671905,
+     "a": 368621,
+     "b": 14386565,
+     "ergOut": 878416184,
+     "fees": [
+      997,
+      997,
+      995
+     ]
+    }
+   },
+   "net3txBest": 841444279
+  },
+  "7a51950e/ac992a1c:5bfe6dc7": {
+   "cap10": {
+    "blocksOpen": 26,
+    "statesOpen": 12,
+    "lowerNanoErg": 295568262,
+    "upperNanoErg": 915951983,
+    "maxNanoErg": 295568262,
+    "maxAt": 1884361,
+    "maxDetail": {
+     "buy": "beed0c492a92f48af41d5496522b01f973d80d2bf58ca0696125dc543ee651b5",
+     "t2t": "5bfe6dc7cf60546b53832835d5ad238999f02449f4e3abc5c3714e1935c6cae8",
+     "sell": "47a811c68e49f6bfa6629602037ee65f8d175ddbc7b64bdb65ad40599b812fd0",
+     "aIsX": false,
+     "capital": 15993227,
+     "a": 175075,
+     "b": 121,
+     "ergOut": 311561489,
+     "fees": [
+      997,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": 292268262
+  },
+  "d1d2ae2a/ac992a1c:b16b8757": {
+   "cap10": {
+    "blocksOpen": 6659,
+    "statesOpen": 17,
+    "lowerNanoErg": 88617191,
+    "upperNanoErg": 416969765,
+    "maxNanoErg": 88617191,
+    "maxAt": 1884359,
+    "maxDetail": {
+     "buy": "beed0c492a92f48af41d5496522b01f973d80d2bf58ca0696125dc543ee651b5",
+     "t2t": "b16b875782988852109a181b928b00bee53cc1fe4783f514b03930a8a435fd9f",
+     "sell": "68ed2d3b33624409830d877c6e6d431615862eabdcd660ddf30eee1972f1f858",
+     "aIsX": false,
+     "capital": 6269161,
+     "a": 68676,
+     "b": 379,
+     "ergOut": 94886352,
+     "fees": [
+      997,
+      980,
+      965
+     ]
+    }
+   },
+   "net3txBest": 85317191
+  },
+  "1f649a75/843b5a2a:04960859": {
+   "cap10": {
+    "blocksOpen": 115,
+    "statesOpen": 3,
+    "lowerNanoErg": 151847847,
+    "upperNanoErg": 434490587,
+    "maxNanoErg": 151847847,
+    "maxAt": 1884244,
+    "maxDetail": {
+     "buy": "08697770512e32d3efeb2d6fb6bc0f7540a490d8c13c1242e4273117f15f0027",
+     "t2t": "0496085962fdf94660c9573bc83e4b00de4c7d22c288785810d2fd958e4e55c6",
+     "sell": "4d808c641ffcdb9cab2eaf7e81696009b56b4ff78dd8f29d6b102b3ad65d177e",
+     "aIsX": true,
+     "capital": 552833418,
+     "a": 1188269,
+     "b": 5381593959225,
+     "ergOut": 704681265,
+     "fees": [
+      970,
+      958,
+      958
+     ]
+    }
+   },
+   "net3txBest": 148547847
+  },
+  "bd0c25c3/ac992a1c:258ef8b9": {
+   "cap10": {
+    "blocksOpen": 7427,
+    "statesOpen": 30,
+    "lowerNanoErg": 949396424,
+    "upperNanoErg": 4755189337,
+    "maxNanoErg": 948173769,
+    "maxAt": 1884364,
+    "maxDetail": {
+     "buy": "beed0c492a92f48af41d5496522b01f973d80d2bf58ca0696125dc543ee651b5",
+     "t2t": "258ef8b9b701d141cbfdb88cd1463936b207d827ed7dfa64cee31838348d686d",
+     "sell": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "aIsX": false,
+     "capital": 1509070326,
+     "a": 15952807,
+     "b": 17554498704,
+     "ergOut": 2457244095,
+     "fees": [
+      997,
+      990,
+      997
+     ]
+    }
+   },
+   "net3txBest": 944873769
+  },
+  "a6125341/ac992a1c:8e75e2ea": {
+   "cap10": {
+    "blocksOpen": 6655,
+    "statesOpen": 13,
+    "lowerNanoErg": 9653568,
+    "upperNanoErg": 125452816,
+    "maxNanoErg": 9653568,
+    "maxAt": 1884363,
+    "maxDetail": {
+     "buy": "beed0c492a92f48af41d5496522b01f973d80d2bf58ca0696125dc543ee651b5",
+     "t2t": "8e75e2ea00264658b386af6a64d8a779e354c61a7e8c9fd4300b24c6f49bd6e3",
+     "sell": "8141d70847135850506fe96886ce9b1580b97ab45013fe20470502f191df90ce",
+     "aIsX": false,
+     "capital": 94695,
+     "a": 1037,
+     "b": 208285,
+     "ergOut": 9748263,
+     "fees": [
+      997,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": 6353568
+  },
+  "ac992a1c/185e217d:0acf45b3": {
+   "cap10": {
+    "blocksOpen": 6654,
+    "statesOpen": 15,
+    "lowerNanoErg": 8243491,
+    "upperNanoErg": 121166937,
+    "maxNanoErg": 8243491,
+    "maxAt": 1886892,
+    "maxDetail": {
+     "buy": "beed0c492a92f48af41d5496522b01f973d80d2bf58ca0696125dc543ee651b5",
+     "t2t": "0acf45b352eff80875eccf99bfb87325b6125df2349c7cd7d8a2450e1d951775",
+     "sell": "e59494b2056a3b05ccae7f01c9e9bba4e750fa452bc7835ef5ce5e2d88dbef44",
+     "aIsX": true,
+     "capital": 1127784,
+     "a": 12337,
+     "b": 510,
+     "ergOut": 9371275,
+     "fees": [
+      997,
+      997,
+      997
+     ]
+    }
+   },
+   "net3txBest": 4943491
+  },
+  "af1a2e80/ac992a1c:4835eef3": {
+   "cap10": {
+    "blocksOpen": 14,
+    "statesOpen": 8,
+    "lowerNanoErg": 125898682,
+    "upperNanoErg": 620960651,
+    "maxNanoErg": 120058060,
+    "maxAt": 1884370,
+    "maxDetail": {
+     "buy": "beed0c492a92f48af41d5496522b01f973d80d2bf58ca0696125dc543ee651b5",
+     "t2t": "4835eef3f293de3717c2c13c1b0710be2a21827d714125c267ba15411fd1a099",
+     "sell": "06c281e1ac790941c3f6c78ae10c25b0f2c55d6cfcc5070cccdc251ae8dc580a",
+     "aIsX": false,
+     "capital": 757488709,
+     "a": 8068084,
+     "b": 172050492761,
+     "ergOut": 877546769,
+     "fees": [
+      997,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": 116758060
+  },
+  "0779ec04/185e217d:922a3fb6": {
+   "cap10": {
+    "blocksOpen": 5249,
+    "statesOpen": 14,
+    "lowerNanoErg": 9746172,
+    "upperNanoErg": 42219920,
+    "maxNanoErg": 4779082,
+    "maxAt": 1876931,
+    "maxDetail": {
+     "buy": "e59494b2056a3b05ccae7f01c9e9bba4e750fa452bc7835ef5ce5e2d88dbef44",
+     "t2t": "922a3fb6f3d73925d22e3e67f47533f8b8db9d9fe72a99ff0b4568ed1301280b",
+     "sell": "fff5e73c7c8c61335d8c4ab18a2d09029e1c9131ed195c4e0ceccf9dd0c03d7f",
+     "aIsX": false,
+     "capital": 11353883,
+     "a": 766,
+     "b": 273836,
+     "ergOut": 16132965,
+     "fees": [
+      997,
+      990,
+      995
+     ]
+    }
+   },
+   "net3txBest": 1479082
+  },
+  "46700be1/a399dcd7:4ec4c2c7": {
+   "cap10": {
+    "blocksOpen": 4366,
+    "statesOpen": 6,
+    "lowerNanoErg": 218572028,
+    "upperNanoErg": 547484610,
+    "maxNanoErg": 218572028,
+    "maxAt": 1886652,
+    "maxDetail": {
+     "buy": "3eb10b2fe3e1df37b6166c957109bf5f2e7510bc508e4b76708a56f8a52babff",
+     "t2t": "4ec4c2c7a9d2d768e7b0ba1da8ce6c04908724aa7d56e1b27f5719e83e4898aa",
+     "sell": "7096d932acbee72bc1584dc10175d4dbee96fa5dc234f858b4a2421c6cb21a06",
+     "aIsX": true,
+     "capital": 266571985,
+     "a": 299,
+     "b": 1340,
+     "ergOut": 485144013,
+     "fees": [
+      970,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": 215272028
+  },
+  "46700be1/ae399fcb:bd0e5cd9": {
+   "cap10": {
+    "blocksOpen": 3,
+    "statesOpen": 2,
+    "lowerNanoErg": 2215296289,
+    "upperNanoErg": 4429779974,
+    "maxNanoErg": 2215296289,
+    "maxAt": 1886652,
+    "maxDetail": {
+     "buy": "3eb10b2fe3e1df37b6166c957109bf5f2e7510bc508e4b76708a56f8a52babff",
+     "t2t": "bd0e5cd9596e2d6c44ab80d430cb3c9f9bae2779ddcf372a6b0ed59c3108124b",
+     "sell": "35bc71897cd44d1a624285c54a0be66b69d1c61674603ed89dfe136f32035f0e",
+     "aIsX": true,
+     "capital": 2639503413,
+     "a": 2950,
+     "b": 140,
+     "ergOut": 4854799702,
+     "fees": [
+      970,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": 2211996289
+  },
+  "46700be1/d4f01926:abc24336": {
+   "cap10": {
+    "blocksOpen": 4366,
+    "statesOpen": 6,
+    "lowerNanoErg": 77985953,
+    "upperNanoErg": 240572460,
+    "maxNanoErg": 77985953,
+    "maxAt": 1886652,
+    "maxDetail": {
+     "buy": "3eb10b2fe3e1df37b6166c957109bf5f2e7510bc508e4b76708a56f8a52babff",
+     "t2t": "abc243365903e428b8481acc4ebe0b23ba4bd2074ea647231d50e01477b61a1a",
+     "sell": "2ade821e3b7e8ea1806f72a239eb4e123891cf486c51191f1b803e32ca4df497",
+     "aIsX": true,
+     "capital": 90913425,
+     "a": 102,
+     "b": 4212,
+     "ergOut": 168899378,
+     "fees": [
+      970,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": 74685953
+  },
+  "0cd8c9f4/ba553573:741ad843": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 38,
+    "lowerNanoErg": 2287103,
+    "upperNanoErg": 59303548,
+    "maxNanoErg": 2287103,
+    "maxAt": 1884350,
+    "maxDetail": {
+     "buy": "8355156ed23f7d26ed6a477b12476a0a63ded7bbb63c37b955168d9c0269de90",
+     "t2t": "741ad8430809814cf1c27521398c3115b98de2203adbf32b92ac7f5f4a8a5d45",
+     "sell": "ddcfb0239162a95ebd9265563d58366693882582ba87ad4d1a29425596936ae1",
+     "aIsX": false,
+     "capital": 258876,
+     "a": 36244,
+     "b": 217,
+     "ergOut": 2545979,
+     "fees": [
+      997,
+      997,
+      990
+     ]
+    }
+   },
+   "net3txBest": -1012897
+  },
+  "00b1e236/0fdb7ff8:d727f580": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 22,
+    "lowerNanoErg": 4795787,
+    "upperNanoErg": 105449098,
+    "maxNanoErg": 4795787,
+    "maxAt": 1888787,
+    "maxDetail": {
+     "buy": "9c1d78e53e7812df96bbb09b757ee1e059c5a298d85789b5c82a7222c34e8f61",
+     "t2t": "d727f580b2042f0280af6ab148667d809d3be3ea7b6c337d182b273e980556fb",
+     "sell": "0552a55b7be746facf061f9720a9b3053cab4d6dc65103727452528e3c395b94",
+     "aIsX": true,
+     "capital": 537546,
+     "a": 939503,
+     "b": 2,
+     "ergOut": 5333333,
+     "fees": [
+      996,
+      995,
+      500
+     ]
+    }
+   },
+   "net3txBest": 1495787
+  },
+  "f6fc7721/d1d2ae2a:81e70d52": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 17,
+    "lowerNanoErg": 1828741,
+    "upperNanoErg": 27841195,
+    "maxNanoErg": 1828741,
+    "maxAt": 1869418,
+    "maxDetail": {
+     "buy": "106edacc281a40aa134787b94bafc3cc7868f6508c729d867bf7cc122a3a0c68",
+     "t2t": "81e70d52ebfc459696cf0e937796941d53962397093df02ed1f9d84987e47127",
+     "sell": "68ed2d3b33624409830d877c6e6d431615862eabdcd660ddf30eee1972f1f858",
+     "aIsX": true,
+     "capital": 2350120,
+     "a": 13,
+     "b": 15,
+     "ergOut": 4178861,
+     "fees": [
+      985,
+      990,
+      965
+     ]
+    }
+   },
+   "net3txBest": -1471259
+  },
+  "fbbaac73/e023c5f3:23ce9c17": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 106,
+    "lowerNanoErg": 2239347,
+    "upperNanoErg": 190760414,
+    "maxNanoErg": 2239347,
+    "maxAt": 1869418,
+    "maxDetail": {
+     "buy": "53281ed72896dc0596262dab6e8840c88d11a4bbc1aa26c7ca21ad9bda5fd4d9",
+     "t2t": "23ce9c17b9641c8252e5bcd493ee4bff4a4d0c6f757e7f709f891ad1e75b514c",
+     "sell": "ae97c5eccd59a065cd973a8d6afb8bb79f9cc70368a7dcdf73aaeab1cedf6f6b",
+     "aIsX": true,
+     "capital": 758961,
+     "a": 681,
+     "b": 3418,
+     "ergOut": 2998308,
+     "fees": [
+      996,
+      990,
+      997
+     ]
+    }
+   },
+   "net3txBest": -1060653
+  },
+  "42042079/420690e7:157b0998": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 5,
+    "lowerNanoErg": 1890472,
+    "upperNanoErg": 9435549,
+    "maxNanoErg": 1890472,
+    "maxAt": 1875617,
+    "maxDetail": {
+     "buy": "d9fced5f497389a01b30f14f644473962df5939c66624e07a0e741bba9513e85",
+     "t2t": "157b0998c6c73136570758a408a8c203505d9185e56f2fded5891a5188ccba49",
+     "sell": "92765ba947ac4fe2faa52a4e401f84f871801628d2fccddf146b6ff6d7d7b877",
+     "aIsX": false,
+     "capital": 54980,
+     "a": 790,
+     "b": 44185,
+     "ergOut": 1945452,
+     "fees": [
+      997,
+      998,
+      997
+     ]
+    }
+   },
+   "net3txBest": -1409528
+  },
+  "d8691159/f6fc7721:6d854565": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 1,
+    "lowerNanoErg": 1333858,
+    "upperNanoErg": 1333858,
+    "maxNanoErg": 1333858,
+    "maxAt": 1869418,
+    "maxDetail": {
+     "buy": "c03b3923f92280ff752b17965825bc48713aabda05a44a497540182ff341b15a",
+     "t2t": "6d85456568610d8bbd1a87bd23f13de572689c620ee16dacfc12cc3426e3111d",
+     "sell": "106edacc281a40aa134787b94bafc3cc7868f6508c729d867bf7cc122a3a0c68",
+     "aIsX": true,
+     "capital": 420010,
+     "a": 206894,
+     "b": 10,
+     "ergOut": 1753868,
+     "fees": [
+      990,
+      990,
+      985
+     ]
+    }
+   },
+   "net3txBest": -1966142
+  },
+  "f6fc7721/a6125341:54459406": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 2,
+    "lowerNanoErg": 1917867,
+    "upperNanoErg": 3833407,
+    "maxNanoErg": 1917867,
+    "maxAt": 1869418,
+    "maxDetail": {
+     "buy": "8141d70847135850506fe96886ce9b1580b97ab45013fe20470502f191df90ce",
+     "t2t": "544594067bbf4714e68bb50ac284c7364f400f7b5c5fb00839f512c9fed40f86",
+     "sell": "106edacc281a40aa134787b94bafc3cc7868f6508c729d867bf7cc122a3a0c68",
+     "aIsX": false,
+     "capital": 1063663,
+     "a": 22283,
+     "b": 17,
+     "ergOut": 2981530,
+     "fees": [
+      990,
+      990,
+      985
+     ]
+    }
+   },
+   "net3txBest": -1382133
+  },
+  "694200e8/bd0c25c3:6f079669": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 44,
+    "lowerNanoErg": 3553381,
+    "upperNanoErg": 155983028,
+    "maxNanoErg": 3553381,
+    "maxAt": 1879496,
+    "maxDetail": {
+     "buy": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "t2t": "6f07966951ea089caf2f03ecaec4e2b01627ffc10a4e301ef7f00ebd0cf983c8",
+     "sell": "437dfc37b6dc734a52c480e2d206dc6469c461a4f6d3b267d9092a163c9c827f",
+     "aIsX": false,
+     "capital": 111798,
+     "a": 896120,
+     "b": 1282819,
+     "ergOut": 3665179,
+     "fees": [
+      997,
+      990,
+      900
+     ]
+    }
+   },
+   "net3txBest": 253381
+  },
+  "0cd8c9f4/472c3d4e:be05dc76": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 57,
+    "lowerNanoErg": 15649192,
+    "upperNanoErg": 889422768,
+    "maxNanoErg": 15649192,
+    "maxAt": 1884352,
+    "maxDetail": {
+     "buy": "ddcfb0239162a95ebd9265563d58366693882582ba87ad4d1a29425596936ae1",
+     "t2t": "be05dc76dcea4dd693a60573a614685efe4e08c35042e1c107fb7d1be9a5bad1",
+     "sell": "edca8164231dccffeacf4d923267e91aa192961c38c815ec3b9893d93dc629df",
+     "aIsX": true,
+     "capital": 357504,
+     "a": 78,
+     "b": 16115171,
+     "ergOut": 16006696,
+     "fees": [
+      990,
+      997,
+      997
+     ]
+    }
+   },
+   "net3txBest": 12349192
+  },
+  "472c3d4e/d71693c4:5703a5b9": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 42,
+    "lowerNanoErg": 15991650,
+    "upperNanoErg": 671640402,
+    "maxNanoErg": 15991650,
+    "maxAt": 1873193,
+    "maxDetail": {
+     "buy": "61a579c46d92f2718576fc9839a2a1983f172e889ec234af8504b5bbf10edd89",
+     "t2t": "5703a5b955c4902f165215f5ce1426816b4c6dca5300cfae35c8a35649287154",
+     "sell": "edca8164231dccffeacf4d923267e91aa192961c38c815ec3b9893d93dc629df",
+     "aIsX": false,
+     "capital": 15046,
+     "a": 45,
+     "b": 16067699,
+     "ergOut": 16006696,
+     "fees": [
+      996,
+      990,
+      997
+     ]
+    }
+   },
+   "net3txBest": 12691650
+  },
+  "0cd8c9f4/42042079:67c7997b": {
+   "cap10": {
+    "blocksOpen": 21598,
+    "statesOpen": 37,
+    "lowerNanoErg": 2151336,
+    "upperNanoErg": 39140206,
+    "maxNanoErg": 1120045,
+    "maxAt": 1884352,
+    "maxDetail": {
+     "buy": "ddcfb0239162a95ebd9265563d58366693882582ba87ad4d1a29425596936ae1",
+     "t2t": "67c7997bae75d6d26221c912dc8f1e03596ecd4f612e749f7d2faa96b746b161",
+     "sell": "92765ba947ac4fe2faa52a4e401f84f871801628d2fccddf146b6ff6d7d7b877",
+     "aIsX": true,
+     "capital": 550550,
+     "a": 120,
+     "b": 37750,
+     "ergOut": 1670595,
+     "fees": [
+      990,
+      990,
+      997
+     ]
+    }
+   },
+   "net3txBest": -2179955
+  },
+  "d71693c4/0fdb7ff8:25000131": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 31,
+    "lowerNanoErg": 17712440,
+    "upperNanoErg": 441446432,
+    "maxNanoErg": 17712440,
+    "maxAt": 1873193,
+    "maxDetail": {
+     "buy": "61a579c46d92f2718576fc9839a2a1983f172e889ec234af8504b5bbf10edd89",
+     "t2t": "250001313671cb53c6c48400f514766953ff35aa22653ba5b2932d63efd96f2a",
+     "sell": "8ae87e4d0e97b8e253701176e54f6fb535a603ae714f50f1724acc5a26fb211d",
+     "aIsX": true,
+     "capital": 3861462,
+     "a": 11283,
+     "b": 26,
+     "ergOut": 21573902,
+     "fees": [
+      996,
+      997,
+      997
+     ]
+    }
+   },
+   "net3txBest": 14412440
+  },
+  "f6fc7721/91903bfb:11f9b17b": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 1,
+    "lowerNanoErg": 1034978,
+    "upperNanoErg": 1034978,
+    "maxNanoErg": 1034978,
+    "maxAt": 1869418,
+    "maxDetail": {
+     "buy": "c085c14f5695004c5ea7eb39dbb1017136876430e088f7a28fc59b8761015991",
+     "t2t": "11f9b17bee8712dd5762e12c9d440959d7516c4e3d0d3201d600813d3c55c7fe",
+     "sell": "106edacc281a40aa134787b94bafc3cc7868f6508c729d867bf7cc122a3a0c68",
+     "aIsX": false,
+     "capital": 17352,
+     "a": 172213,
+     "b": 6,
+     "ergOut": 1052330,
+     "fees": [
+      997,
+      990,
+      985
+     ]
+    }
+   },
+   "net3txBest": -2265022
+  },
+  "a6125341/fe40fc42:086117b5": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 3,
+    "lowerNanoErg": 9903102,
+    "upperNanoErg": 22564360,
+    "maxNanoErg": 9903102,
+    "maxAt": 1869418,
+    "maxDetail": {
+     "buy": "8141d70847135850506fe96886ce9b1580b97ab45013fe20470502f191df90ce",
+     "t2t": "086117b597dd8fc13471c4fbf5b92b8ebddce8098c9cb307f2dc5d73f92e100f",
+     "sell": "a80edf152f553a6691ff7132107c1dcbe7ebfb6845b044a2f56963edeba79406",
+     "aIsX": true,
+     "capital": 96897,
+     "a": 2030,
+     "b": 10103740831557,
+     "ergOut": 9999999,
+     "fees": [
+      990,
+      997,
+      990
+     ]
+    }
+   },
+   "net3txBest": 6603102
+  },
+  "6c35aa39/01dce8a5:a600d3cb": {
+   "cap10": {
+    "blocksOpen": 754,
+    "statesOpen": 3,
+    "lowerNanoErg": 1091873,
+    "upperNanoErg": 3185413,
+    "maxNanoErg": 1091873,
+    "maxAt": 1876082,
+    "maxDetail": {
+     "buy": "02a3a726cbdf5d2c6ce2719e1c20cd2e9f3c6f3627dc5224550462dc4d3a336b",
+     "t2t": "a600d3cb4a66ff5e3cf8d21c4e7038557034d52aef2eb8ac2a47612ac66baa48",
+     "sell": "7f1759300b19287adbbcd03c877eae6c6de60f4c2962b1fc5ae2c6e2a684220c",
+     "aIsX": true,
+     "capital": 20651,
+     "a": 1356,
+     "b": 39036,
+     "ergOut": 1112524,
+     "fees": [
+      990,
+      997,
+      997
+     ]
+    }
+   },
+   "net3txBest": -2208127
+  },
+  "a6125341/d1d2ae2a:fc86e9bb": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 18,
+    "lowerNanoErg": 3242493,
+    "upperNanoErg": 53320806,
+    "maxNanoErg": 3242493,
+    "maxAt": 1869418,
+    "maxDetail": {
+     "buy": "8141d70847135850506fe96886ce9b1580b97ab45013fe20470502f191df90ce",
+     "t2t": "fc86e9bbcda80d6ed6adf1f4bc826a59b6aa2d8ea23b6b3e9a16c5169e61e400",
+     "sell": "68ed2d3b33624409830d877c6e6d431615862eabdcd660ddf30eee1972f1f858",
+     "aIsX": true,
+     "capital": 2329319,
+     "a": 48795,
+     "b": 20,
+     "ergOut": 5571812,
+     "fees": [
+      990,
+      990,
+      965
+     ]
+    }
+   },
+   "net3txBest": -57507
+  },
+  "91903bfb/0cd8c9f4:b9550029": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 38,
+    "lowerNanoErg": 2763318,
+    "upperNanoErg": 63016375,
+    "maxNanoErg": 2763318,
+    "maxAt": 1884350,
+    "maxDetail": {
+     "buy": "c085c14f5695004c5ea7eb39dbb1017136876430e088f7a28fc59b8761015991",
+     "t2t": "b9550029a52565de551d3f2414145865087e77f3b4b4bea0e9006bcfadacccd2",
+     "sell": "ddcfb0239162a95ebd9265563d58366693882582ba87ad4d1a29425596936ae1",
+     "aIsX": true,
+     "capital": 803350,
+     "a": 7901483,
+     "b": 305,
+     "ergOut": 3566668,
+     "fees": [
+      997,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": -536682
+  },
+  "91903bfb/bd0c25c3:5d3cb2ea": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 44,
+    "lowerNanoErg": 6018135,
+    "upperNanoErg": 258928375,
+    "maxNanoErg": 6018135,
+    "maxAt": 1879496,
+    "maxDetail": {
+     "buy": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "t2t": "5d3cb2ead41058620aed5cb4e0781fb9b069a6796a6d9ede1705248afc784ea1",
+     "sell": "c085c14f5695004c5ea7eb39dbb1017136876430e088f7a28fc59b8761015991",
+     "aIsX": false,
+     "capital": 1807143,
+     "a": 14484825,
+     "b": 85914561,
+     "ergOut": 7825278,
+     "fees": [
+      997,
+      990,
+      997
+     ]
+    }
+   },
+   "net3txBest": 2718135
+  },
+  "fe40fc42/b0b312cd:455253ae": {
+   "cap10": {
+    "blocksOpen": 21229,
+    "statesOpen": 23,
+    "lowerNanoErg": 13257983,
+    "upperNanoErg": 278084790,
+    "maxNanoErg": 13257983,
+    "maxAt": 1869418,
+    "maxDetail": {
+     "buy": "05cf7af440dd03716d1b34f9fe601be16d60d6069dc0fed7323d9621d74efa46",
+     "t2t": "455253ae45c4a6fb636e884116239a04057f877ccb857c62e1abc63f0084d972",
+     "sell": "3b92a48cb02183ddb7ffccb8b52864c5c8c2d59b5c1227953695a5a02b57a635",
+     "aIsX": true,
+     "capital": 14956054,
+     "a": 1449752865095794,
+     "b": 397,
+     "ergOut": 28214037,
+     "fees": [
+      997,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": 9957983
+  },
+  "1fd6e032/d71693c4:1fa41b31": {
+   "cap10": {
+    "blocksOpen": 16550,
+    "statesOpen": 26,
+    "lowerNanoErg": 9370775,
+    "upperNanoErg": 52144847,
+    "maxNanoErg": 9370775,
+    "maxAt": 1869418,
+    "maxDetail": {
+     "buy": "666be5df835a48b99c40a395a8aa3ea6ce39ede2cd77c02921d629b9baad8200",
+     "t2t": "1fa41b3113fe1419c772812285a9ab12f3aeaa993a2bed825e651956c6173389",
+     "sell": "61a579c46d92f2718576fc9839a2a1983f172e889ec234af8504b5bbf10edd89",
+     "aIsX": true,
+     "capital": 5247348,
+     "a": 92553,
+     "b": 13019,
+     "ergOut": 14618123,
+     "fees": [
+      997,
+      990,
+      996
+     ]
+    }
+   },
+   "net3txBest": 6070775
+  },
+  "d71693c4/003bd19d:a3ce4c78": {
+   "cap10": {
+    "blocksOpen": 3775,
+    "statesOpen": 17,
+    "lowerNanoErg": 5057798,
+    "upperNanoErg": 66990113,
+    "maxNanoErg": 5057798,
+    "maxAt": 1870171,
+    "maxDetail": {
+     "buy": "1d5afc59838920bb5ef2a8f9d63825a55b1d48e269d7cecee335d637c3ff5f3f",
+     "t2t": "a3ce4c78e853ed88cd2660465155f6c42d176d2765b8f3a7f42752333384fa1b",
+     "sell": "61a579c46d92f2718576fc9839a2a1983f172e889ec234af8504b5bbf10edd89",
+     "aIsX": false,
+     "capital": 5157191,
+     "a": 41,
+     "b": 8962,
+     "ergOut": 10214989,
+     "fees": [
+      995,
+      996,
+      996
+     ]
+    }
+   },
+   "net3txBest": 1757798
+  },
+  "e023c5f3/b0b312cd:976cfd93": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 86,
+    "lowerNanoErg": 18636045,
+    "upperNanoErg": 1087063419,
+    "maxNanoErg": 18636045,
+    "maxAt": 1879517,
+    "maxDetail": {
+     "buy": "ae97c5eccd59a065cd973a8d6afb8bb79f9cc70368a7dcdf73aaeab1cedf6f6b",
+     "t2t": "976cfd9327a15ffb158466824e48ec55735db6d90fc557533848c126e5a35963",
+     "sell": "3b92a48cb02183ddb7ffccb8b52864c5c8c2d59b5c1227953695a5a02b57a635",
+     "aIsX": true,
+     "capital": 4672721,
+     "a": 6913,
+     "b": 307,
+     "ergOut": 23308766,
+     "fees": [
+      997,
+      984,
+      990
+     ]
+    }
+   },
+   "net3txBest": 15336045
+  },
+  "d71693c4/007fd64d:2c7322d2": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 37,
+    "lowerNanoErg": 9524508,
+    "upperNanoErg": 75958272,
+    "maxNanoErg": 9524508,
+    "maxAt": 1869418,
+    "maxDetail": {
+     "buy": "a62a1603bae6c0d293f7b954672de6fa8eae9793d433cb02ee49dce736da54ac",
+     "t2t": "2c7322d272c31852bf7ca681a8e244eb770680618e336023071a3d9e2e6f209d",
+     "sell": "61a579c46d92f2718576fc9839a2a1983f172e889ec234af8504b5bbf10edd89",
+     "aIsX": false,
+     "capital": 4180918,
+     "a": 96402,
+     "b": 12168,
+     "ergOut": 13705426,
+     "fees": [
+      997,
+      997,
+      996
+     ]
+    }
+   },
+   "net3txBest": 6224508
+  },
+  "fffe6122/fe40fc42:cda0a8f9": {
+   "cap10": {
+    "blocksOpen": 21229,
+    "statesOpen": 11,
+    "lowerNanoErg": 9943839,
+    "upperNanoErg": 109349958,
+    "maxNanoErg": 9943839,
+    "maxAt": 1884356,
+    "maxDetail": {
+     "buy": "c8793eb6b0800d8cfe9478a4c8be1c8f2d7c593509492aa7d0359692860d3a47",
+     "t2t": "cda0a8f93984fdbaa2a0d7db2af6cd531d66172bace7a192b3b8a9738c1d61cc",
+     "sell": "a80edf152f553a6691ff7132107c1dcbe7ebfb6845b044a2f56963edeba79406",
+     "aIsX": true,
+     "capital": 56160,
+     "a": 48964975376,
+     "b": 10101066689817,
+     "ergOut": 9999999,
+     "fees": [
+      997,
+      997,
+      990
+     ]
+    }
+   },
+   "net3txBest": 6643839
+  },
+  "fbbaac73/003bd19d:2356e879": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 206,
+    "lowerNanoErg": 13328027,
+    "upperNanoErg": 1459377062,
+    "maxNanoErg": 13328027,
+    "maxAt": 1882553,
+    "maxDetail": {
+     "buy": "53281ed72896dc0596262dab6e8840c88d11a4bbc1aa26c7ca21ad9bda5fd4d9",
+     "t2t": "2356e879a2351d5631e7bb847ee3a305a43b4f6ca9d6e6688ff57a1bdec3c94d",
+     "sell": "1d5afc59838920bb5ef2a8f9d63825a55b1d48e269d7cecee335d637c3ff5f3f",
+     "aIsX": true,
+     "capital": 8448092,
+     "a": 7412,
+     "b": 102,
+     "ergOut": 21776119,
+     "fees": [
+      996,
+      910,
+      995
+     ]
+    }
+   },
+   "net3txBest": 10028027
+  },
+  "8b08cdd5/003bd19d:048f12e2": {
+   "cap10": {
+    "blocksOpen": 8856,
+    "statesOpen": 94,
+    "lowerNanoErg": 16734386,
+    "upperNanoErg": 161485243,
+    "maxNanoErg": 3287170,
+    "maxAt": 1889462,
+    "maxDetail": {
+     "buy": "1d5afc59838920bb5ef2a8f9d63825a55b1d48e269d7cecee335d637c3ff5f3f",
+     "t2t": "048f12e2d665fc2bbfd688d70694e6f0ca967f4e3b785670254b9c34c8238656",
+     "sell": "eba2184f6593cf53860a53e487eb608f0f9a433a60aa55dd8b755aec0b105f75",
+     "aIsX": false,
+     "capital": 17378039,
+     "a": 96,
+     "b": 442,
+     "ergOut": 20665209,
+     "fees": [
+      995,
+      990,
+      985
+     ]
+    }
+   },
+   "net3txBest": -12830
+  },
+  "2a7dd904/944f72c5:2dca578d": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 2,
+    "lowerNanoErg": 42933754,
+    "upperNanoErg": 48861112,
+    "maxNanoErg": 42933754,
+    "maxAt": 1885965,
+    "maxDetail": {
+     "buy": "2d97a2b2385ca12f0614578ab49db2ebf8f0c14ba634298c943ec24658c7b052",
+     "t2t": "2dca578d03be68276ea0d420a6456b2a565c2e6ae9ba88d127019f3504136b64",
+     "sell": "c0070feda814a6d74f97ac24444976a4d07aae9d2645874732df99e94617bfdb",
+     "aIsX": true,
+     "capital": 14278337,
+     "a": 7048532157,
+     "b": 2852778161,
+     "ergOut": 57212091,
+     "fees": [
+      990,
+      997,
+      990
+     ]
+    }
+   },
+   "net3txBest": 39633754
+  },
+  "472c3d4e/003bd19d:7f4fee37": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 182,
+    "lowerNanoErg": 15884164,
+    "upperNanoErg": 2878876010,
+    "maxNanoErg": 15884164,
+    "maxAt": 1873027,
+    "maxDetail": {
+     "buy": "1d5afc59838920bb5ef2a8f9d63825a55b1d48e269d7cecee335d637c3ff5f3f",
+     "t2t": "7f4fee37314500f977b26d8ed70caa64a0c71d348a73af200fb21bb864cc74aa",
+     "sell": "edca8164231dccffeacf4d923267e91aa192961c38c815ec3b9893d93dc629df",
+     "aIsX": false,
+     "capital": 122532,
+     "a": 1,
+     "b": 231035451,
+     "ergOut": 16006696,
+     "fees": [
+      995,
+      995,
+      997
+     ]
+    }
+   },
+   "net3txBest": 12584164
+  },
+  "af1a2e80/d1d2ae2a:c95603aa": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 24,
+    "lowerNanoErg": 2411959,
+    "upperNanoErg": 53690651,
+    "maxNanoErg": 2411959,
+    "maxAt": 1884370,
+    "maxDetail": {
+     "buy": "68ed2d3b33624409830d877c6e6d431615862eabdcd660ddf30eee1972f1f858",
+     "t2t": "c95603aa02c413fd17cc4552a5c3f5afbc1968ab78ce951d502c17619d77960f",
+     "sell": "06c281e1ac790941c3f6c78ae10c25b0f2c55d6cfcc5070cccdc251ae8dc580a",
+     "aIsX": false,
+     "capital": 1613073,
+     "a": 6,
+     "b": 781621862,
+     "ergOut": 4025032,
+     "fees": [
+      965,
+      997,
+      990
+     ]
+    }
+   },
+   "net3txBest": -888041
+  },
+  "bd0c25c3/d8691159:be7f99a4": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 44,
+    "lowerNanoErg": 4175939,
+    "upperNanoErg": 124353991,
+    "maxNanoErg": 4175939,
+    "maxAt": 1884360,
+    "maxDetail": {
+     "buy": "c03b3923f92280ff752b17965825bc48713aabda05a44a497540182ff341b15a",
+     "t2t": "be7f99a48a3fddc704d93f692ab0dd526b2dec58a34f4fdd6844b6a36412164e",
+     "sell": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "aIsX": false,
+     "capital": 12817044,
+     "a": 4817663,
+     "b": 116329063,
+     "ergOut": 16992983,
+     "fees": [
+      990,
+      997,
+      997
+     ]
+    }
+   },
+   "net3txBest": 875939
+  },
+  "d8691159/420690e7:8117af6a": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 5,
+    "lowerNanoErg": 15614678,
+    "upperNanoErg": 41826574,
+    "maxNanoErg": 15614678,
+    "maxAt": 1869418,
+    "maxDetail": {
+     "buy": "c03b3923f92280ff752b17965825bc48713aabda05a44a497540182ff341b15a",
+     "t2t": "8117af6a1f95e264b6bc2bc39e1e8fddfb07cf014acdf73975fbd0c3714c3f60",
+     "sell": "c57b16d84f5c74ce21b82376e49768e8b2880e49cb3e12f123da01edf5dddf0e",
+     "aIsX": true,
+     "capital": 22772672,
+     "a": 7191423,
+     "b": 317820,
+     "ergOut": 38387350,
+     "fees": [
+      990,
+      999,
+      970
+     ]
+    }
+   },
+   "net3txBest": 12314678
+  },
+  "f100123e/0779ec04:307ff159": {
+   "cap10": {
+    "blocksOpen": 5,
+    "statesOpen": 2,
+    "lowerNanoErg": 1370795,
+    "upperNanoErg": 2433244,
+    "maxNanoErg": 1370795,
+    "maxAt": 1884356,
+    "maxDetail": {
+     "buy": "0b3f3c7fd66bcf8c1e74f3389774b220e5450eddbc272251a65f50c9962f8fa4",
+     "t2t": "307ff1594544188509a21ee0a749b7412478d1ffc1bef1d5b9992daf3b7b75fe",
+     "sell": "fff5e73c7c8c61335d8c4ab18a2d09029e1c9131ed195c4e0ceccf9dd0c03d7f",
+     "aIsX": true,
+     "capital": 27074981,
+     "a": 21247,
+     "b": 446180,
+     "ergOut": 28445776,
+     "fees": [
+      990,
+      958,
+      995
+     ]
+    }
+   },
+   "net3txBest": -1929205
+  },
+  "886b7721/7a51950e:1ed566ca": {
+   "cap10": {
+    "blocksOpen": 2,
+    "statesOpen": 1,
+    "lowerNanoErg": 1850977,
+    "upperNanoErg": 1850977,
+    "maxNanoErg": 1850977,
+    "maxAt": 1884357,
+    "maxDetail": {
+     "buy": "3eeb0f5f3d1594a37ff71e25c9dd6f9dcb358e8592e48b002098264c4d659d61",
+     "t2t": "1ed566ca1ec176da854372af53d7b65f5fb0780ef7a61ab137b24deb50a542a7",
+     "sell": "96a80f3ff1764192205b665f313b080db7ce537316785cf67342024884d42141",
+     "aIsX": false,
+     "capital": 4439828,
+     "a": 2,
+     "b": 43846,
+     "ergOut": 6290805,
+     "fees": [
+      990,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": -1449023
+  },
+  "ebb40eca/8b08cdd5:54f6c271": {
+   "cap10": {
+    "blocksOpen": 4366,
+    "statesOpen": 9,
+    "lowerNanoErg": 1150112,
+    "upperNanoErg": 9953760,
+    "maxNanoErg": 1150112,
+    "maxAt": 1886668,
+    "maxDetail": {
+     "buy": "76882c04ad03a3224b4cc4e1608d94ff65e0c84eb3b225cb63e4efa97fe4064b",
+     "t2t": "54f6c271a0429c378018ab671b707702dd9d31104ab7e2af3870d85615a866d1",
+     "sell": "eba2184f6593cf53860a53e487eb608f0f9a433a60aa55dd8b755aec0b105f75",
+     "aIsX": true,
+     "capital": 1041953,
+     "a": 12615,
+     "b": 46,
+     "ergOut": 2192065,
+     "fees": [
+      990,
+      997,
+      985
+     ]
+    }
+   },
+   "net3txBest": -2149888
+  },
+  "6c35aa39/ebb40eca:b1093451": {
+   "cap10": {
+    "blocksOpen": 116,
+    "statesOpen": 18,
+    "lowerNanoErg": 23692210,
+    "upperNanoErg": 359469366,
+    "maxNanoErg": 23692210,
+    "maxAt": 1884316,
+    "maxDetail": {
+     "buy": "76882c04ad03a3224b4cc4e1608d94ff65e0c84eb3b225cb63e4efa97fe4064b",
+     "t2t": "b10934510972c8d6bcdb95791a24609a5f1c1a13fcb731023842da7391c4ce1b",
+     "sell": "02a3a726cbdf5d2c6ce2719e1c20cd2e9f3c6f3627dc5224550462dc4d3a336b",
+     "aIsX": false,
+     "capital": 2613896,
+     "a": 27056,
+     "b": 318,
+     "ergOut": 26306106,
+     "fees": [
+      990,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": 20392210
+  },
+  "c64e773d/9a06d9e5:ff3174bd": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 23,
+    "lowerNanoErg": 1905973,
+    "upperNanoErg": 42797475,
+    "maxNanoErg": 1905973,
+    "maxAt": 1873989,
+    "maxDetail": {
+     "buy": "2c4a06de96f7f541c9aef13a2c5345b7b78d66f7c8053cbe99126d38c988f085",
+     "t2t": "ff3174bd04b410bbf1de70e243e27c97fb53e15a7e359dedfd4fe0cb52681edf",
+     "sell": "f40afb6f877c40a30c8637dd5362227285738174151ce66d6684bc1b727ab6cf",
+     "aIsX": true,
+     "capital": 18404148,
+     "a": 701144,
+     "b": 26836389,
+     "ergOut": 20310121,
+     "fees": [
+      954,
+      990,
+      997
+     ]
+    }
+   },
+   "net3txBest": -1394027
+  },
+  "46700be1/01dce8a5:8e8e3dd8": {
+   "cap10": {
+    "blocksOpen": 4366,
+    "statesOpen": 25,
+    "lowerNanoErg": 6151667,
+    "upperNanoErg": 113231222,
+    "maxNanoErg": 6151667,
+    "maxAt": 1886652,
+    "maxDetail": {
+     "buy": "3eb10b2fe3e1df37b6166c957109bf5f2e7510bc508e4b76708a56f8a52babff",
+     "t2t": "8e8e3dd8cd3958e6fb7aba32872f558b4295e9169af0328d662197ed4259d347",
+     "sell": "7f1759300b19287adbbcd03c877eae6c6de60f4c2962b1fc5ae2c6e2a684220c",
+     "aIsX": true,
+     "capital": 5347156,
+     "a": 6,
+     "b": 466794,
+     "ergOut": 11498823,
+     "fees": [
+      970,
+      990,
+      997
+     ]
+    }
+   },
+   "net3txBest": 2851667
+  },
+  "003bd19d/c64e773d:567c2354": {
+   "cap10": {
+    "blocksOpen": 15019,
+    "statesOpen": 123,
+    "lowerNanoErg": 9057257,
+    "upperNanoErg": 496103922,
+    "maxNanoErg": 6735584,
+    "maxAt": 1884485,
+    "maxDetail": {
+     "buy": "2c4a06de96f7f541c9aef13a2c5345b7b78d66f7c8053cbe99126d38c988f085",
+     "t2t": "567c23546ea6db294bc83e6a76ab95d3b4868d5607bb88e7af01337d621d346b",
+     "sell": "1d5afc59838920bb5ef2a8f9d63825a55b1d48e269d7cecee335d637c3ff5f3f",
+     "aIsX": false,
+     "capital": 23995300,
+     "a": 908626,
+     "b": 139,
+     "ergOut": 30730884,
+     "fees": [
+      954,
+      980,
+      995
+     ]
+    }
+   },
+   "net3txBest": 3435584
+  },
+  "00b42b41/c64e773d:90ac7e80": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 8,
+    "lowerNanoErg": 4772029,
+    "upperNanoErg": 25203282,
+    "maxNanoErg": 4772029,
+    "maxAt": 1890169,
+    "maxDetail": {
+     "buy": "2c4a06de96f7f541c9aef13a2c5345b7b78d66f7c8053cbe99126d38c988f085",
+     "t2t": "90ac7e80194708d42d23ce1ed135061ea252680079d8e48be7bf793dc9a24b3d",
+     "sell": "74c1a266dbd6384a4edd2e494f19458daa1e41002dfef5f7f0047022a800d654",
+     "aIsX": false,
+     "capital": 35559257,
+     "a": 1329894,
+     "b": 312038,
+     "ergOut": 40331286,
+     "fees": [
+      954,
+      990,
+      997
+     ]
+    }
+   },
+   "net3txBest": 1472029
+  },
+  "b0b312cd/0779ec04:0cf5ac6a": {
+   "cap10": {
+    "blocksOpen": 14502,
+    "statesOpen": 24,
+    "lowerNanoErg": 21408957,
+    "upperNanoErg": 463751734,
+    "maxNanoErg": 20407286,
+    "maxAt": 1878994,
+    "maxDetail": {
+     "buy": "fff5e73c7c8c61335d8c4ab18a2d09029e1c9131ed195c4e0ceccf9dd0c03d7f",
+     "t2t": "0cf5ac6ade8cff08b401e2ee6e150db7309625ba58bd0442290e5f4e3af29993",
+     "sell": "3b92a48cb02183ddb7ffccb8b52864c5c8c2d59b5c1227953695a5a02b57a635",
+     "aIsX": false,
+     "capital": 21908947,
+     "a": 371100,
+     "b": 741,
+     "ergOut": 42316233,
+     "fees": [
+      995,
+      980,
+      990
+     ]
+    }
+   },
+   "net3txBest": 17107286
+  },
+  "c64e773d/1fd6e032:ecd533d7": {
+   "cap10": {
+    "blocksOpen": 21600,
+    "statesOpen": 18,
+    "lowerNanoErg": 118771228,
+    "upperNanoErg": 648864415,
+    "maxNanoErg": 118771228,
+    "maxAt": 1869418,
+    "maxDetail": {
+     "buy": "2c4a06de96f7f541c9aef13a2c5345b7b78d66f7c8053cbe99126d38c988f085",
+     "t2t": "ecd533d786dc9efc4541d7111620fb98e79d0da5c1a0b9b1f274eae3eeab3c85",
+     "sell": "62adfb20a1b6c47c37b06c4703e2ebe984b1448b9fe1df258ef4d4622ca4c3f8",
+     "aIsX": true,
+     "capital": 145681354,
+     "a": 4875267,
+     "b": 2462967,
+     "ergOut": 264452582,
+     "fees": [
+      954,
+      990,
+      990
+     ]
+    }
+   },
+   "net3txBest": 115471228
+  },
+  "03faf2cb/1fd6e032:6a4e5c0f": {
+   "cap10": {
+    "blocksOpen": 14492,
+    "statesOpen": 188,
+    "lowerNanoErg": 44548704,
+    "upperNanoErg": 7176218376,
+    "maxNanoErg": 44548704,
+    "maxAt": 1880467,
+    "maxDetail": {
+     "buy": "9916d75132593c8b07fe18bd8d583bda1652eed7565cf41a4738ddd90fc992ec",
+     "t2t": "6a4e5c0fba5a413fdd242d1fd8d61fad1b357447350dac158b19c71f5ee89e52",
+     "sell": "62adfb20a1b6c47c37b06c4703e2ebe984b1448b9fe1df258ef4d4622ca4c3f8",
+     "aIsX": true,
+     "capital": 32538841,
+     "a": 1,
+     "b": 589856,
+     "ergOut": 77087545,
+     "fees": [
+      995,
+      997,
+      990
+     ]
+    }
+   },
+   "net3txBest": 41248704
+  }
+ },
+ "requests": {
+  "net": 75,
+  "cache": 24
+ }
+}
