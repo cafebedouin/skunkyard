@@ -119,3 +119,56 @@ ERGODEX_N2T_ORDERS = [
     ("Redeem", "legacyV0", "d802d6017300d602b2a4730100eb027201d195ed93b1a4730293b1db630872027303d806d603db63087202d604b2a5730400d605b2db63087204730500d606b27203730600d6077e8cb2db6308a77307000206d6087e9973088cb272037309000206edededed938cb27203730a0001730b93c27204d07201938c7205018c720601927e9a99c17204c1a7730c069d9c72077ec17202067208927e8c720502069d9c72077e8c720602067208730d"),
 ]
 ORDER_TEMPLATE_HASHES = {hashlib.sha256(bytes.fromhex(h)).hexdigest(): (k, v) for k, v, h in ERGODEX_N2T_ORDERS}
+
+
+# ---- addresses (U1b): the /blocks/{id} endpoint gives an input's address, not its tree ----------------------
+
+_B58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+
+
+def address_bytes(addr):
+    n = 0
+    for ch in addr:
+        n = n * 58 + _B58.index(ch)
+    raw = n.to_bytes((n.bit_length() + 7) // 8, "big")
+    return b"\x00" * (len(addr) - len(addr.lstrip("1"))) + raw
+
+
+def address_tree(addr):
+    """ErgoTree hex for a mainnet address, or None for pay-to-script-hash (the tree is not in the address).
+    Layout: network+type byte, content, 4-byte checksum; type 1 P2PK (content = 33-byte key), 2 P2SH, 3 P2S."""
+    b = address_bytes(addr)
+    kind, content = b[0] & 0x0F, b[1:-4]
+    if kind == 1:
+        return "0008cd" + content.hex()
+    if kind == 3:
+        return content.hex()
+    return None
+
+
+def grid_orders(serialized):
+    """Off the Grid R5, Coll[((Long, Boolean), (Long, Long))] serialized: [(amount, isBuy, buyTotal, sellTotal)].
+    The type descriptor is skipped by finding the offset whose count and items consume the register exactly."""
+    b = bytes.fromhex(serialized)
+
+    def zz(i):
+        v, i = _vlq(b, i)
+        return (v >> 1) ^ -(v & 1), i
+
+    for start in range(2, 12):
+        try:
+            n, i = _vlq(b, start)
+            out = []
+            for _ in range(n):
+                amt, i = zz(i)
+                if b[i] not in (0, 1):
+                    raise ValueError
+                st = b[i] == 1; i += 1
+                buy, i = zz(i)
+                sell, i = zz(i)
+                out.append((amt, st, buy, sell))
+            if i == len(b) and n > 0:
+                return out
+        except (IndexError, ValueError):
+            continue
+    return None
