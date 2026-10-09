@@ -19,5 +19,6 @@ a block the client built carrying its genesis and the beat (`devnet/FINDINGS.md`
 the rig lives in peeryard `rig/examples/lithos-block.{json,sh}`); mainnet has 30 Lithos blocks, a 1.6% share
 (`research/agents/lithos-blocks-mainnet.py`). A seventh cloud session wrote the stacked follow-on (`upkeep-space`:
 value-per-byte ordering, an opportunistic share). PR branches, stripped and squashed: `pr/upkeep`, `pr/upkeep-space`,
-`snapshot-spec-wait`; texts in `pr/`. Second seat round on both PRs: `seats/2026-10-09/`. Contract v2 question: an
+`snapshot-spec-wait`; texts in `pr/`. Seat rounds two to five on both PRs: `seats/2026-10-09*/`, dispositions in `SEATS-2.md` to `SEATS-5.md`; the
+operator called five rounds enough. A split layout (`pr/deploy` + `pr/upkeep-only`) is built alongside the combined one. Contract v2 question: an
 optional owner path (R7) for creators who want an exit. The observe-mode log on testnet is optional and not done.
