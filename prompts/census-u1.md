@@ -16,7 +16,10 @@ census also checks two figures from a design analysis that nobody has verified: 
 
 - Evidence only. Every number in the result comes from the script's output at a fixed height range. Mark anything
   inferred as inferred, and anything you could not measure [UNVERIFIED]. Do not restate this prompt as findings.
-- Use the public explorer API only (`https://api.ergoplatform.com/api/v1`); no node. Be polite: no more than about
+- Use an explorer API only; no node. The cloud sandbox reaches the Cornell mirror
+  (`https://api.ergo.aap.cornell.edu/api/v1`, backup `https://api.ergobackup.aap.cornell.edu/api/v1`), not
+  `api.ergoplatform.com`; checked against the public explorer 2026-10-09 (same tip id, same Babel and collateral box
+  totals, same block 21,600 back). Name the endpoint you used in the result. Be polite: no more than about
   5 requests a second, with retries and backoff. Cache raw responses under `research/agents/census/raw/` and add
   that directory to `.gitignore`. Commit the scripts, the summary and per-block CSVs only if each CSV is under 5 MB.
 - Window: the 21,600 blocks (about 30 days) ending at the tip when you start. Write both heights into the result.
