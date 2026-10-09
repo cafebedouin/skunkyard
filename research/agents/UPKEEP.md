@@ -301,7 +301,7 @@ the last 40 bank transactions. At one height it mints SigRSV at the bank and sel
 such blocks (1,738,107 to 1,888,826) it netted 142.8 ERG on 9,290 ERG minted, 1.54%; its last pair was at 1,888,826.
 At 1,891,100 nothing was open: reserve ratio 296% (SigUSD mint and SigRSV redeem locked below 400%), ERG/USD
 $0.2915 by the oracle, the main SigUSD pool 0.25% above the bank's redeem price, the SigRSV pool 2.02% below the
-bank's mint price. A Lithos miner beats the bot by ordering: in a block it builds, its own mint-and-sell goes first
+bank's NAV (about 4% below its mint price, NAV + 2%). A Lithos miner beats the bot by ordering: in a block it builds, its own mint-and-sell goes first
 and the bot's legs fail; and only there are the two legs sure to land together. At today's 1.5% block share that is
 about 2 ERG of the bot's 142.8; it scales with Lithos's hashrate, and needs a few hundred ERG per take (the vault,
 SK-045). The trigger is an oracle refresh: when ERG falls, the bank's SigRSV price falls about 1.5 times as fast (the
@@ -316,3 +316,11 @@ ERG, natural ERG longs); the pool gains a buyer of last resort; at RR >= 400% th
 mint-and-sell above, one block builder works both edges of the band.
 Census item: the SigRSV pool's discount to the bank's NAV per block over a long window (depth, duration, and what
 RR did meanwhile).
+
+**Checked against the bot's last trade (1,888,826).** It minted at 210,330 nanoERG/SigRSV (NAV 206,206 + 2%) and
+sold into the pool (`1d5afc59…`) as it moved 212,157 -> 211,385: the pool sat ~2.5% above NAV, at the bot's
+break-even, as the model says. Since then to ~1,891,100: ERG/USD 0.3177 -> 0.2888 (-9%), NAV 206,200 -> ~197,000
+(-4.5%), pool 211,400 -> ~194,000 (-8.3%): from a 2.5% premium to a ~1.5% discount. The bot never sells below its
+break-even, so other holders sold the pool below NAV; the bot only caps the band from above, and with redemption
+locked nothing defends it from below. (A per-height NAV/pool table computed the same session picked wrong pool boxes
+for past heights and was discarded; the tip values agree with live reads.)
