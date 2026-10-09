@@ -8,9 +8,9 @@ over the span from the first Lithos block to the chain tip.
 
 usage: lithos-blocks-mainnet.py [--token <id>] [--json out.json]
 """
-import argparse, json, sys, time, urllib.request
+import argparse, json, os, sys, time, urllib.request
 
-EXPLORER = "https://api.ergoplatform.com/api/v1"
+EXPLORER = os.environ.get("ERGO_EXPLORER", "https://api.ergoplatform.com/api/v1")
 COLLAT = "a8a790e784e93ac0e68649181ae3d251e84fb5c741624100e7e945ae1e82dc98"
 
 def get(path):
