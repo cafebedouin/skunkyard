@@ -131,3 +131,27 @@ From a discussion with the user; ideas, not results.
 - **Census questions this adds** (for the revenue census, U1): how much due work is universal vs protocol-specific;
   how much pays for itself vs needs a payment design or a volunteer carrier; how much of what bots do today is upkeep
   vs extraction.
+
+## Idea: the miner arbitrages the swap it includes, from pooled deposits (user, 2026-10-09)
+
+A Lithos miner sees every swap it is about to include and therefore knows the pool's post-swap price before anyone
+else; it can append its own arbitrage legs in the same block, the "close the gap in the block where it opens" row of
+the menu above. Two additions in the idea: (1) **a deposit vault** so the miner needs no capital of its own: a box
+anyone may spend in a transaction that returns at least principal plus a fee to the same script, the rest to the
+block's `minerPk`; (2) **a last-price box** the miner updates, as a record of what the block saw.
+
+What the chain can and cannot enforce:
+- Within **one transaction** the vault is enforceable by script (inputs include the vault, outputs recreate it richer).
+  That covers an arbitrage that fits one transaction: LithosDex orders, or pools whose contracts do not pin the
+  successor to `OUTPUTS(0)`.
+- ErgoDEX v1 pools take their successor at `OUTPUTS(0)`, so a two-pool cycle is **two transactions**, and no script
+  can force a miner to include the second once it has included the first. Either the miner's own capital carries
+  the leg (the maintainer's point, `notes/2026-10-05-lithos-reply.md`), or Lithos's collateral does: a fraud rule
+  "vault opened in block B and not closed in block B" slashes the miner's collateral, which is what Lithos's
+  fraud-proof set exists for. That would be the first fraud proof about block content rather than block form.
+- The last-price box is not needed for the arbitrage (the pool boxes carry the price) and a miner-written price is
+  manipulable by that miner; as a *record* it is an upkeep job, as an *oracle* it is not safe.
+- Back-running the swap it includes is benign; sandwiching it is not, and the same code can do both. A pool script
+  that pays the gap to the block (`minerPk`) or to its own LPs is the clean version: the pool decides who gets it.
+
+Banked as SK-045; measure first with the census (U1) whether the gaps are worth a fraud rule.
