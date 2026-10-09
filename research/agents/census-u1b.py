@@ -74,6 +74,8 @@ def line_f(a):
     import names as N
     X.MIN_INTERVAL = 0.12
     r = K.scan(a.lo, a.hi, a.workers, log)
+    # rent claims: what each claim took (box value minus the recreated box) and where it went
+    rent = r["rentTxs"]
     # the pass's aggregate (about 25 MB, so in the git-ignored census/out/); (k) reads its fees
     with open(os.path.join(HERE, "census", "out", "scan-raw.json"), "w") as fh:
         json.dump(r, fh)
@@ -93,7 +95,7 @@ def line_f(a):
         rows.append({"templateHash": th, "keylessSpends": t["keyless"], "keylessTxs": t["txs"],
                      "signedSpends": t["signed"], "keylessNanoErg": t["keylessNanoErg"],
                      "firstKeyless": t["firstKeyless"], "lastKeyless": t["lastKeyless"],
-                     "unspentNow": unspent_total(th) if th != "p2sh-unresolved" else None,
+                     "unspentNow": unspent_total(th) if len(th) == 64 else None,
                      "name": N.name(th, t["tree"]), "spentWith": t["with"], "samples": t["samples"][:4],
                      "treeBytes": len(t["tree"]) // 2 if t["tree"] else None,
                      "samplesChecked": len(ages), "samplesRentAge": sum(1 for x in ages if x >= RENT_PERIOD),
@@ -108,9 +110,41 @@ def line_f(a):
                           "unspentNow": unspent_total(th)})
     save("f.json", {"from": a.lo, "to": a.hi, "explorer": X.EXPLORER, "keylessTxs": r["keylessTxs"],
                     "templates": rows, "neverSpentKeyless": extra,
+                    "rent": {"txs": len(rent), "boxes": sum(x["boxes"] for x in rent),
+                             "boxNanoErg": sum(x["boxNanoErg"] for x in rent),
+                             "takenNanoErg": sum(x["boxNanoErg"] - x["recreatedNanoErg"] for x in rent),
+                             "consumedWhole": sum(x["consumedWhole"] for x in rent),
+                             "minerFeeNanoErg": sum(x["paid"].get("fee", 0) for x in rent),
+                             "blocks": len({x["height"] for x in rent}),
+                             "byMiner": rent_by_miner(rent, r["headers"]),
+                             "byThird": rent_by_third(rent, a.lo, a.hi)},
                     "p2pkRent": {"spends": len(r["p2pkKeyless"]),
                                  "nanoErg": sum(x["value"] for x in r["p2pkKeyless"]),
                                  "blocks": len({x["height"] for x in r["p2pkKeyless"]})}, "requests": dict(X.stats)})
+
+
+def rent_by_miner(rent, hdr):
+    """Per block-miner address: blocks mined in the window, blocks carrying rent claims, ERG the claims took."""
+    mined = collections.Counter(v["miner"] for v in hdr.values())
+    took, blocks, last = collections.Counter(), collections.defaultdict(set), {}
+    for x in rent:
+        took[x["miner"]] += x["boxNanoErg"] - x["recreatedNanoErg"]
+        blocks[x["miner"]].add(x["height"])
+        last[x["miner"]] = max(last.get(x["miner"], 0), x["height"])
+    return sorted([{"miner": m, "blocksMined": mined[m], "rentBlocks": len(blocks[m]), "takenNanoErg": took[m],
+                    "lastRentBlock": last[m]} for m in took], key=lambda d: -d["takenNanoErg"])
+
+
+def rent_by_third(rent, lo, hi):
+    step = (hi - lo + 1) // 3
+    out = []
+    for k in range(3):
+        a, b = lo + k * step, (hi if k == 2 else lo + (k + 1) * step - 1)
+        S = [x for x in rent if a <= x["height"] <= b]
+        out.append({"from": a, "to": b, "txs": len(S), "takenNanoErg": sum(x["boxNanoErg"] - x["recreatedNanoErg"]
+                                                                           for x in S),
+                    "miners": len({x["miner"] for x in S})})
+    return out
 
 
 # ---- line k --------------------------------------------------------------------------------------------------
