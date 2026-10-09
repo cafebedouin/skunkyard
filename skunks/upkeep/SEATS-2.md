@@ -78,3 +78,19 @@ fixes".
 | Spec "demand over the package budget" also covers a remainder below the configured share; "fail when a page cannot be read" fails every page, so a partial-sum bug would pass; "grow into the remainder" checks only the count (Grok, Gemini) | CONFIRMED | **Fix:** names and assertions |
 | Eager parsing of every offered box for ranking (Gemini) | CONFIRMED; bounded by `maxBoxesPerJob` per job, each parse small | No change; noted in the doc |
 | Up to 20 sequential mempool pages inside the build (Gemini) | CONFIRMED; bounded, early stop, within the source deadline (Grok checked: no concern) | No change |
+
+## What changed after round two
+
+On `upkeep-adapter` (1289845d, 7f4ee654, PR text): a box below its successor's floor is declined (held as
+exhausted); a build stops after 16 successors signed and not admitted; observe mode holds nothing back; the
+heartbeat's `minTip`; the pinned tree parsed lazily; config validation decoupled from the registry
+(`UpkeepConfig.JobCheck`, handed in by `Module`); configured box lists capped at 256; the deployer refuses mainnet
+without `--allow-mainnet` and polls the index for the dictionary box; the doc comments, the contract header
+(what the script leaves free), the README, DEVNET.md and the PR text reworded as the seats asked, process leaks
+removed; `DueJobSpec` gains the negative-tip property. On `upkeep-space` (rebased, 3d15d5a3): the share grows only
+when the waiting transactions fit in the block beside a full package; a transaction without size or cost fails the
+read; sums saturate; the ordering's effect in fixed mode is stated. Affected suites: 124/124 upkeep, contract,
+deployer and config specs; the full suite is rerun on the rebased tree.
+
+Round three runs on the rebuilt `pr/upkeep` and `pr/upkeep-space` (`seats/2026-10-09-r3/`), the inside seats on
+the login since the API key's credits ran out, Grok with 60 turns.
