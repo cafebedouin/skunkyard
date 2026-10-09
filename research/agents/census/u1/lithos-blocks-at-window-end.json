@@ -1,0 +1,211 @@
+{
+ "readAt": "2026-10-09T19:04:15Z",
+ "tip": 1891017,
+ "tokenBoxes": 484,
+ "collateralOrProofBoxes": 166,
+ "spent": 66,
+ "lithosBlocks": 33,
+ "firstLithosBlock": 1888828,
+ "spanBlocks": 2190,
+ "share": 0.015068493150684932,
+ "blocks": [
+  {
+   "height": 1888828,
+   "genesisTx": "7766ce855f358344838911171401487127e89a9efcb1df1b049dc1440656749a",
+   "collateralBox": "87b38418268828829eeb0a6a40f0a6996437a5884e8cc469bfc9b38dfcff0101",
+   "blockId": "1311cf57afea7a0d25a4bb8bd3cb39051e598a4599963c9eb74fd573c631327b"
+  },
+  {
+   "height": 1888839,
+   "genesisTx": "2487c8e54277793d60857a76658103a9069bf1f0dee3cfa68985c0253c674011",
+   "collateralBox": "d228689a3acbe3d8e30126e34c9b58fa218812e341c90e92899a599609cd5b64",
+   "blockId": "c604408cb1b332c25d37557f0917c6a13fef91451617e1db3687ac8b1cd111d0"
+  },
+  {
+   "height": 1888956,
+   "genesisTx": "71782b0109d430c318a5756502587d6b13354020ad734dbbea2f53c32f467b9c",
+   "collateralBox": "ff84aed219ed74bc61b7c6f6f5a1bc298cd37dff59bcde89a346eedad53c4350",
+   "blockId": "942ed8ac91e838b1cbcb26b3c335478cf1fa868421da3c0e49543ee7cdebd282"
+  },
+  {
+   "height": 1889212,
+   "genesisTx": "789ca1204493837b85ff785b4bc03a2d82e12b77c64e47e5274dd4e7ad03d788",
+   "collateralBox": "9c37f36564de57c13e11441859d9088febeec76ea83ec5e2730310fbe28f46a6",
+   "blockId": "b812fa1e1c90efb1ad5fa9a2eb0761611b66a33ae516bbf40607e193d0af7793"
+  },
+  {
+   "height": 1889469,
+   "genesisTx": "683a8f6d2715ffeca07d95b095aa7f1aead5d189ae10051d005a693e3c18334d",
+   "collateralBox": "5e669667f14e25987c527ec30b2dd82ac294659065b6eddf5e1ca577d49695cd",
+   "blockId": "5ccab8fb5260c18a49350fecce1e6cf52e0d508f1c733541f934e2eef26d03e0"
+  },
+  {
+   "height": 1889481,
+   "genesisTx": "4ad67eb36de276cff82d1437d7d5dbb08d53333cb598018d2c3a4a0f19730b04",
+   "collateralBox": "76e410cf905f885f184d7553cd51819bb30448017e5256ba366a636e678f9e4f",
+   "blockId": "e4b6db82b18dd44b3c97c051af4c602d03173b76031ff63ee137db32e9431356"
+  },
+  {
+   "height": 1889487,
+   "genesisTx": "b9dcee73e62756c0b2124e1d179c748ccd6a77825454a419e2b5ea555a2d98b0",
+   "collateralBox": "db270832841c872d03b9fac633e93cff93dda5e2ba8f93e51a09f6fbeb3481cf",
+   "blockId": "3aaf7be6043f98adac2c19c7757bfbd29c5fa3eb2bd004765c017b8bc8e5f37b"
+  },
+  {
+   "height": 1889492,
+   "genesisTx": "50328bd1b7cd85afefb4b91baa6deebeb769ef6ab2e6a11188cccc67fc6ac4fe",
+   "collateralBox": "7181a101987d917f5463f36956e4cd91302aa19ec2215c5b7ced14fc134a2e07",
+   "blockId": "3d769d0017bde03b3c75dce3a02b15e25a6c944a03c7191523f6c41fef472462"
+  },
+  {
+   "height": 1889568,
+   "genesisTx": "dc1fbc71d16c4e1be1739258b0d1f47b40c96a9411d7ca959da952ab557692d4",
+   "collateralBox": "85688c2a7ffb0f38a2b3154269a06d1916ed9d0d4b07f6c4fc1ea9bb61e5e3f8",
+   "blockId": "5301006f68c894019374e99b8fffa3948bde3f40e9b36aceae43285cd03f391f"
+  },
+  {
+   "height": 1889578,
+   "genesisTx": "0241ea0e0bce14efa88ea19b993ae1fdcc470d13ad607df9af7cf6b56fc03d61",
+   "collateralBox": "9e8323bbf9d938b5fb782e2cbda631f5cee19ce445ea4ec06b92df92fe2392fa",
+   "blockId": "29159bc23250bf26e388d96e1c542b2b6a9e16acb44a2c5809b3e532448d5aa1"
+  },
+  {
+   "height": 1889585,
+   "genesisTx": "abbbe7b470da910f1a41f9d29922efc4f4aae9cc1324a30aca6149be9488e89d",
+   "collateralBox": "a573fcf51ef08260092b1f1dba922c230c363a3f874f76b95cb6e13457f4c9b6",
+   "blockId": "81d7f269798a0d1d00b0d37bce4f6faaa3a39b3bdecfc14ccdc12ba85f62c7d1"
+  },
+  {
+   "height": 1889589,
+   "genesisTx": "e09a64ace6f50b2af9b339b28850dbc42b2c26b43071bfd49a05aa3d6a627b81",
+   "collateralBox": "0932f05593a227ea109d1d3c5b91d621da6a0008bf695c42b8342a6baa17201c",
+   "blockId": "8d603135f49aac9a8a1f6e23484325a798942e28389e8775bfb2a80d49072d3d"
+  },
+  {
+   "height": 1889643,
+   "genesisTx": "30a509d6c08ff56f86b3558d8c09e74a3f0ca5b398d55120b0f150680596c630",
+   "collateralBox": "c3353bf9c7ee9717547e41db77d6ee1c572db59161256433d81e792d20e22a57",
+   "blockId": "737e4b87b4c4bad887b2fbcc594f255a7373cc63992080931fbfaf08f478575a"
+  },
+  {
+   "height": 1889656,
+   "genesisTx": "0d190fabaa51ec84e175d0b5c13d855f8bd90e669b740952ab4eb9aeacf248b2",
+   "collateralBox": "3189da590049ae1dd4448cc7541409522cfc592ce49689230ece6bbba28465ea",
+   "blockId": "8e670316ecbe01e14e761a7691e64cde9a927af45e6b1a6a8918dd50186b5b7a"
+  },
+  {
+   "height": 1889673,
+   "genesisTx": "f5669e0ce84ca1286182c0044806c2b71df6a441d3bee1338d65912cc6c1933b",
+   "collateralBox": "23497881a5553b600abfadbd3e0e1294a64406c0350dd3411363a1374aaa39bc",
+   "blockId": "261a32b0498532b7774fc2cf698fd90169aa759dff91079937f10390d70ed4e3"
+  },
+  {
+   "height": 1889710,
+   "genesisTx": "edbc2be7346f0b7bea1a9507fbe602b1e4bb62da71c91a17ff6bcbabf9695744",
+   "collateralBox": "18f88552fbfadda5e6323af8dd8951ec018904d58860f2ad087e6ef6c895d213",
+   "blockId": "b743dce9894bd562613d148e69e73beb5d00b529efa5ef13f64bd9406ceae0b0"
+  },
+  {
+   "height": 1889725,
+   "genesisTx": "4a9deecd81481903b8233f4b6fb854023508fc7d936147321e9fb0be1c2f4ccd",
+   "collateralBox": "62a7a9fffa4bd070364ac613d0150dafeade440ea89dc63943d7776e048cffed",
+   "blockId": "383e6848b53e5177622d423a14fe6f33da8ff311d05d29c3d884ed6acd34b999"
+  },
+  {
+   "height": 1889764,
+   "genesisTx": "8ddeea096e5da99faec7f480ef5ecb7a8ab1e5071732b8ce86b61a1a041457de",
+   "collateralBox": "4674aa8eacba5202209e6600071fe84f0cf05ce58c17d58d40654c1fd4a2b698",
+   "blockId": "344344e0d9007f2f69470d39c3d21918c953022250ccf04071f443badd9a0382"
+  },
+  {
+   "height": 1889846,
+   "genesisTx": "d11e844d76ceb7c1261605d746436eda2440d54f7ccd1ebfc53b20edcea4f75e",
+   "collateralBox": "5b096307c2b9f9aaa749e6d8ab5f67e5b9a21db103fdac626afb775f0f0b6dfa",
+   "blockId": "a1650db014358d065d3ae1c724048632150f66164fa4deaf61602dc0d07614c2"
+  },
+  {
+   "height": 1889987,
+   "genesisTx": "0f57d45a8321bd6c11b39b9c677e558d62c744407633dedbd8cd7a33ec163a38",
+   "collateralBox": "ad3226edada65d704b212335a0f2d69a957906d6cc9b1b4c311a7a91e29bcbdf",
+   "blockId": "5305b26c8278883d4c1a90325369aa81730a9300965c3cfab4b17f7057ce3d86"
+  },
+  {
+   "height": 1890052,
+   "genesisTx": "4217c1a9f4db0b7d63f6c54fabee1a996f3630c35649421d4c255d84012d3db0",
+   "collateralBox": "6da5745714d9e9137b30470c63cb9ede87fe2604315ea0e3354ab1d676c10ed1",
+   "blockId": "e72a963ab65d7a616a8960bc1458c32bf85fe4d4fe764d428601247c77f38f0f"
+  },
+  {
+   "height": 1890181,
+   "genesisTx": "f4dc41693afa3861707b2b0acd387dabe49eaf951a3e02e62422c73f5e5e6384",
+   "collateralBox": "fcf7144177d4cf2ee4c2c8a4747380d66f6c55fd589a1fa2d0aa3ef92e49991a",
+   "blockId": "2960af7b6dea1d3f1a11a652a95e08deced21de4ce58ed2acab6c4861741bfe4"
+  },
+  {
+   "height": 1890235,
+   "genesisTx": "46519d3b25acf46147c58b79ef9accf8e1ded8642a344b0896c3b4d519b59e1e",
+   "collateralBox": "acd3d14e7f1d735466091b90a1b068d47a5e879d95056dd136b42dfd3b8b09e2",
+   "blockId": "f826d0b33b2f00da253035a3e7df75a77a06fa40195686904ff8d2ecf3ffe2cb"
+  },
+  {
+   "height": 1890270,
+   "genesisTx": "8739defbaf9a3707a325f5f6ecec8540a829bd4458e7f6e2f28bc3c350920884",
+   "collateralBox": "ee754e4a0f8d7ec3d1dca5671c6c7aacbefe1296b27719a0dc35437f9b44b6fe",
+   "blockId": "68ff62fc70a27936050b18b5eaf29be9c9767bf41022bceca1e0678f8b2f8fa1"
+  },
+  {
+   "height": 1890408,
+   "genesisTx": "a027f3f126f6ff4373d3c7b4d6da7d7bf02e668551f05f1fbdf6487120ed3c75",
+   "collateralBox": "58cf99a2d57c0ed6412e79c185ffc9e9d23b80025ebc2e509d01ae7cfd05dd58",
+   "blockId": "96039604bf7b6884a31c884b0f9eb66c399c206d39a3e46a4d38d594a730eebb"
+  },
+  {
+   "height": 1890424,
+   "genesisTx": "4c6d8b8271ea19a7208e55c5772e029f78e324a92fdf0f4f0bd6d61515f3e25d",
+   "collateralBox": "9866f020fa9d4ba8d8505763d59f15147c5dac7495a093820bed288a54599b6c",
+   "blockId": "5c02ec28abbcb7bff029791b8b000e27d2cbe8188e36eb7f757aaed012bfd65f"
+  },
+  {
+   "height": 1890484,
+   "genesisTx": "87601535b28e3173a037a52723ea100fcc9ad66c51cf3d1ef467f46bfd4657a1",
+   "collateralBox": "156ea00dded94c9f38bbabb1ee52ddddfc1220f8b1b02e6c5f89f2154bb73c8e",
+   "blockId": "e80a609ae1aa8dcd098e593c4212badcbe50a234de4030054d77e4ee4e21d96d"
+  },
+  {
+   "height": 1890494,
+   "genesisTx": "bd104fa49e16cbd6751178121e27334c8baf4d85283edba5ae223de07a5abd86",
+   "collateralBox": "6fcaeab91d3296c7f7db731405d5d8e5a071610e9690a1a11d041ed9ac7a7f1b",
+   "blockId": "bc043f130be3999fca62d88fd14aa082ce9b9131bb1c7f8c1d2d6975b8396544"
+  },
+  {
+   "height": 1890505,
+   "genesisTx": "e536fc4f3c572c7bd471c5a02ed824333622b24c6ac57640f89f5ef4194d8860",
+   "collateralBox": "8e35c6dba157d88db9bb7d05608efef0c6cd4d425b59636e2ed657552c989ff3",
+   "blockId": "03e649298b208875b36368856387f6d7e2f5e2e1d41e8aec68a29a6ca160208e"
+  },
+  {
+   "height": 1890575,
+   "genesisTx": "64186924f979b39ffb929027d8c256969530d9b7eb31ab527e0f721390e0a67e",
+   "collateralBox": "2997329c05f428f9ff5855cfb9266b0e93f4c59dc90643175300f6e373b8738e",
+   "blockId": "9de394062b5b8d0db949e2a9c26e3afc62009dc03be676158714bf4d9e713665"
+  },
+  {
+   "height": 1890779,
+   "genesisTx": "7d7b9e2dbeeb4f027b3015005577acd6fe52b8226a3fccb5393cfa6b0954b98f",
+   "collateralBox": "73f5754fa3f16450a14aa211417871e5c15f2d8a81e3d8d66e68d92c5bb40874",
+   "blockId": "7600acf050a3fcc5e7d6c0e4f94dd136fc6088280cf763b75f0ba27f860df16a"
+  },
+  {
+   "height": 1890800,
+   "genesisTx": "8219c5244a6221d4a21051e1d48ec08d0b70b048caaa638f33e28c5ad9cb267e",
+   "collateralBox": "1f425930641cb3a7b1239a63dc9c73cb574eb358ea0d1557da272ddf13620c0e",
+   "blockId": "bbd4ceecb6f21b581c2d6e8ca88fe2cea62f5feb8e57353df8769df796942a5c"
+  },
+  {
+   "height": 1890998,
+   "genesisTx": "bddf6510e5100a174933678710dae431b5301cf083080688f78764579f1f3ca3",
+   "collateralBox": "ced4dd1db75826326e932e28bd42a74d86d794480be4658bce007f76f675a2a5",
+   "blockId": "b9f5bb6e67a85a68af29378b63948e8ed4b7f0d2c2e5a4b4d43fd911d86a0b6b"
+  }
+ ]
+}

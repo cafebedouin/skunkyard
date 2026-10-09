@@ -15,3 +15,6 @@ skunks/manytime/testnet/keys-v3-run11/
 skunks/manytime/testnet/keys-v3B-run11/
 skunks/manytime/testnet/keys-v3-run13/
 skunks/manytime/testnet/keys-v3B-run13/
+research/agents/census/raw/
+__pycache__/
+research/agents/census/out/
