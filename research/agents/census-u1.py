@@ -468,11 +468,12 @@ def classify(before, after):
 
 
 def executor_fee(tx):
-    """ERG an executor took from an order execution: P2PK outputs other than the order's redeemer, net of
-    P2PK inputs of the same addresses. Inferred classification: an order is a non-pool, non-P2PK input that
-    names a redeemer key (ProveDlog constant)."""
-    orders = [i for i in tx["inputs"] if not i["ergoTree"].startswith("0008cd")
-              and T.template_hash(i["ergoTree"]) != T.N2T_POOL_TEMPLATE_HASH]
+    """ERG an executor took from an ErgoDEX order execution, or None if the transaction spends no ErgoDEX order.
+    An order is an input under one of the N2T order templates pinned in the Lithos client
+    (census/trees.py ORDER_TEMPLATE_HASHES). The fee is the ERG paid to P2PK outputs other than the order's
+    redeemer (its ProveDlog constant), net of P2PK inputs of the same addresses: inferred, since the
+    contract lets the executor take the remainder wherever it likes."""
+    orders = [i for i in tx["inputs"] if T.template_hash(i["ergoTree"]) in T.ORDER_TEMPLATE_HASHES]
     if not orders:
         return None
     redeemers = set()
@@ -488,6 +489,11 @@ def executor_fee(tx):
     return max(0, sum(outs.values()) - ins)
 
 
+def order_kinds(tx):
+    return [T.ORDER_TEMPLATE_HASHES[h] for h in (T.template_hash(i["ergoTree"]) for i in tx["inputs"])
+            if h in T.ORDER_TEMPLATE_HASHES]
+
+
 def day(ts_ms):
     return time.strftime("%Y-%m-%d", time.gmtime(ts_ms / 1000))
 
@@ -495,7 +501,7 @@ def day(ts_ms):
 def line_de(ev, lo, hi):
     per_day = collections.defaultdict(collections.Counter)
     tot = collections.Counter()
-    ex_fee, ex_n, seen = 0, 0, set()
+    ex_fee, ex_n, seen, kinds = 0, 0, set(), collections.Counter()
     for h, _, before, after, tx, _ in ev:
         if not lo <= h <= hi:
             continue
@@ -508,9 +514,11 @@ def line_de(ev, lo, hi):
             per_day[day(tx["timestamp"])]["swap_order" if is_order else "swap_direct"] += 1
         if is_order and tx["id"] not in seen:
             seen.add(tx["id"])
+            for kv in order_kinds(tx):
+                kinds["-".join(kv)] += 1
             ex_fee += executor_fee(tx)
             ex_n += 1
-    return dict(tot), {d: dict(c) for d, c in sorted(per_day.items())}, {"orderTxs": ex_n, "executorNanoErg": ex_fee}
+    return dict(tot), {d: dict(c) for d, c in sorted(per_day.items())}, {"orderTxs": ex_n, "executorNanoErg": ex_fee, "orderKinds": dict(kinds)}
 
 
 def d_window(ev_d, t0, t1):
