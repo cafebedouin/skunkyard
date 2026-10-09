@@ -56,7 +56,7 @@ Task: `prompts/census-u1.md`. Scan: `census-u1.py` (helpers in `census/`: `explo
 - **Total: 10.3122 ERG** open, taken once. Pool NFTs, Babel box ids and the per-state history are in
   `census/u1/census-u1.json` (`a`) and `u1-a-babel-states.csv`.
 - The ergopad gap: Babel box `f0b47104…` (9.9988 ERG and 276 ergopad, created at 916,311, unspent) bids
-  0.8 ERG per ergopad; pool `d7868533…` (fee 996) sold at about 0.0000365 ERG per unit. The best take puts
+  0.0008 ERG per ergopad (8,000 nanoERG per unit, 2 decimals); pool `d7868533…` (fee 996) sold at about 0.0000365 ERG per unit. The best take puts
   0.4592 ERG into the pool for 12,497.24 ergopad and sells them into the Babel box for 9.9978 ERG.
 - **Taken on chain:** never. 722 Babel spends all time, none in the window, the last at 1,850,517; no transaction
   ever spent a Babel box and an ErgoDEX v1 pool together.

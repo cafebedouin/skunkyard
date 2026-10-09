@@ -12,6 +12,10 @@
 > `~/bin/lithos-upkeep/prompts/phase-8-babel-arb.md` (cloud, branch `upkeep-babel-arb` from `upkeep-source`);
 > (3) devnet hook `prompts/peeryard-babel-arb.md` (cloud writes, run locally on peeryard). Devnet only, no testnet.
 > Every other arbitrage idea is scored against the control (scorecard in `UPKEEP.md`).
+> **Census U1 done and merged; SK-049 done on mainnet by hand** (`skunks/upkeep/mainnet/README.md`): four Babel takes,
+> 10.28 ERG to the test wallet `9gnBiu…` (`~/.config/skunkyard/mainnet-wallet.txt`), U1's figures exact on chain.
+> Next: U1b (`prompts/census-u1b.md`, cloud, branch `census-u1b`): every keyless kind, more pools, capital takes
+> up to the wallet's 10 ERG if net positive, fees on every block. Then phase 8 (client job) and the devnet hook.
 > Correction sent to Cheese 2026-10-09 (the user's words: Babel box against a v1 pool as the first arb job, on the
 > upkeep PR; pool against bank as the natural next case). Census worktree `~/bin/skunkyard-census`, branch `census-u1`.
 

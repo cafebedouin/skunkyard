@@ -38,4 +38,4 @@ it would carry no fee and the payout would go to the miner's collection contract
 - The Babel offers were stale bids (ergopad's from height 916,311). Filling one gives its creator the tokens at the
   price they posted, through the contract's own swap path; the creator can always withdraw an open box.
 - Anyone can see these gaps; none had been taken in at least the census window, which is what U1 measured.
-- The census text says the ergopad bid is "0.8 ERG per ergopad"; it is 0.0008 (8,000 nanoERG per unit, 2 decimals).
+- The census text said the ergopad bid was "0.8 ERG per ergopad"; it is 0.0008 (corrected in CENSUS-U1.md).
