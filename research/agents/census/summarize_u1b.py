@@ -26,18 +26,45 @@ def table(head, rows):
     print()
 
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import names as N  # noqa: E402
+
+
 def line_f(f):
     print(f"## f. Keyless spends by template ({f['from']:,}..{f['to']:,})\n")
     print(f"Transactions with at least one keyless input: {f['keylessTxs']:,}. Templates with a keyless spend: "
           f"{len(f['templates'])}.\n")
     rows = []
-    for t in f["templates"]:
-        rows.append([t["templateHash"][:12], t["name"]["name"][:70], f"{t['keylessSpends']:,}", f"{t['keylessTxs']:,}",
+    for t in f["templates"][:60]:
+        nm = N.name(t["templateHash"])["name"]
+        if nm == "unknown" or nm.count(":") >= 2:      # catalog hit by file path only: keep the path short
+            nm = (nm if nm == "unknown" else "match: " + nm.split(":")[0] + " " + nm.split(":")[1].rsplit("/", 1)[-1])
+        rows.append([t["templateHash"][:12], nm[:90], f"{t['keylessSpends']:,}", f"{t['keylessTxs']:,}",
                      f"{t['signedSpends']:,}", erg(t["keylessNanoErg"], 2),
                      "" if t["unspentNow"] is None else f"{t['unspentNow']:,}",
                      f"{t['samplesRentAge']}/{t['samplesChecked']}"])
-    table(["template", "what (source in the text)", "keyless spends", "txs", "signed spends", "ERG in", "unspent now",
+    table(["template", "what", "keyless spends", "txs", "signed spends", "ERG in (box value)", "unspent now",
            "rent-age samples"], rows)
+    rest = f["templates"][60:]
+    print(f"{len(rest)} more templates: {sum(t['keylessSpends'] for t in rest):,} keyless spends, "
+          f"{erg(sum(t['keylessNanoErg'] for t in rest), 2)} ERG (all rows in f.json).\n")
+    rent_t = [t for t in f["templates"] if t["samplesChecked"] and t["samplesRentAge"] == t["samplesChecked"]
+              and t["templateHash"] != "p2pk"]
+    print(f"Templates whose every keyless sample was at rent age (contract boxes claimed as rent): {len(rent_t)}, "
+          f"{sum(t['keylessSpends'] for t in rent_t):,} spends, box value "
+          f"{erg(sum(t['keylessNanoErg'] for t in rent_t), 2)} ERG, "
+          f"{sum(t['unspentNow'] or 0 for t in rent_t):,} boxes of these templates still unspent.\n")
+    r = f.get("rent")
+    if r:
+        print(f"Storage rent on P2PK boxes: {r['txs']:,} claim txs in {r['blocks']:,} blocks, {r['boxes']:,} boxes, "
+              f"box value {erg(r['boxNanoErg'], 1)} ERG, **taken {erg(r['takenNanoErg'], 1)} ERG**, "
+              f"{r['consumedWhole']:,} consumed whole, miner fees {erg(r['minerFeeNanoErg'], 1)} ERG.\n")
+        table(["from", "to", "claim txs", "taken ERG", "miners including claims"],
+              [[f"{x['from']:,}", f"{x['to']:,}", f"{x['txs']:,}", erg(x["takenNanoErg"], 1), x["miners"]]
+               for x in r["byThird"]])
+        table(["miner address (tail)", "blocks mined", "blocks with claims", "taken ERG", "last claim"],
+              [["…" + x["miner"][-8:], f"{x['blocksMined']:,}", f"{x['rentBlocks']:,}", erg(x["takenNanoErg"], 1),
+                f"{x['lastRentBlock']:,}"] for x in r["byMiner"][:12]])
     if f.get("neverSpentKeyless"):
         table(["template", "keyless on some path, never spent keyless in the window", "signed spends", "unspent now"],
               [[t["templateHash"][:12], t["name"], t["signedSpends"], t["unspentNow"]] for t in f["neverSpentKeyless"]])

@@ -40,6 +40,54 @@ LABELS.update({
         "ErgoDEX v1 T2T pool (token:token)", "ergo-dex contracts/amm/cfmm/v1/t2t/Pool.sc; Lithos "
         "ErgoDexContracts.scala TokenPoolErgoTree"),
 })
+# identified from the deployed script (explorer decompilation of a sample box) and its tokens; "[inferred]" where
+# no source file was matched
+_SCRIPT = "decompiled sample box"
+for _p, _n, _src in [
+    ("707c363f0914", "EIP-27 re-emission proxy (pay-to-reemission), swept into the emission tx [inferred]",
+     "Lithos Eip27AdjustmentSpec.scala:36 (EIP-27 proxy tree); eip-0027.md"),
+    ("682db8df7a2a", "emission contract (one spend per block)", "ergo core; " + _SCRIPT),
+    ("ae9ac8d914dc", "EIP-27 re-emission contract (Reemission Contract NFT)", "eip-0027.md; " + _SCRIPT),
+    ("fcbf6946412d", "Oracle pool v2 oracle box (MORACLE/MORT): refresh consumes it keylessly",
+     "ergoplatform/oracle-core; " + _SCRIPT),
+    ("416babd63f01", "Oracle pool v2 pool box (MPOOL): spendable when INPUTS(0) holds the refresh or update NFT",
+     "ergoplatform/oracle-core (EIP-23); " + _SCRIPT),
+    ("f6f982fa5002", "Oracle pool v1 (ERGUSD-NFT, SigmaUSD's oracle)", "scalahub/OraclePool v1; " + _SCRIPT),
+    ("246e14059ac2", "SigmaUSD bank v0.4 (SUSD Bank V2 NFT)", "Emurgo/age-usd v0.4 AgeUSD.scala"),
+    ("0416175ab49d", "Rosen Bridge (rspv3 RWT, Ergo) [inferred]", _SCRIPT + ", tokens rspv3ErgoRWT"),
+    ("5cc1ea1a0f7a", "Rosen Bridge (rspv3 RWT, Cardano) [inferred]", _SCRIPT + ", tokens rspv3CardanoRWT"),
+    ("9b633bf518fc", "Rosen Bridge RWT repo (rspv3RWTNFT) [inferred]", _SCRIPT),
+    ("0c7face721e4", "Rosen Bridge AWC (rspv3ErgoAWC, RSN) [inferred]", _SCRIPT),
+    ("856c43fe0610", "Rosen Bridge commitment/event (rspv3ErgoRWT) [inferred]", _SCRIPT),
+    ("f083eb657c08", "Rosen Bridge emission (rspv2EmissionNFT, RSN, eRSN) [inferred]", _SCRIPT),
+    ("00c90f397b21", "sigmaProp(true): anyone; here created and spent in the same block (chained txs)", _SCRIPT),
+    ("e9d13195d73d", "OUTPUTS.size == n only: anyone; created and spent in the same block", _SCRIPT),
+    ("02132cc5df11", "key OR (OUTPUTS.size == 1 and HEIGHT == creation height): chained-tx link", _SCRIPT),
+    ("4897b8e91e59", "hash-preimage lock (blake2b256(var 0) slice == constant)", _SCRIPT),
+    ("278ccff223ae", "unknown contract (no tokens; value <= 0.1 ERG consolidation path); spent here only as rent",
+     _SCRIPT),
+    ("b924a4f73573", "unknown contract (token-gated paths); spent here only as rent", _SCRIPT),
+    ("834687280459", "Lithos emission (LITHOS-EMISSION, LITHOS-QUEUE, LITHOS-COLLAT) [inferred]",
+     _SCRIPT + "; Lithos client LIT_Emissions.ergo"),
+    ("db686aa7db20", "Lithos collateral queue box (LITHOS-QUEUE, LIT) [inferred]",
+     _SCRIPT + "; Lithos client Collateral_Enforcer.ergo"),
+    ("3328cef917f9", "Lithos collateral (LITHOS-COLLAT, LIT) [inferred]", _SCRIPT + "; Collateral_Mainnet.ergo"),
+    ("5a0f7e9f1c93", "LIT-holding contract (token 87b384) [inferred Lithos rollup]", _SCRIPT),
+    ("09d67ac30249", "LIT-holding contract (token 87b384) [inferred Lithos rollup]", _SCRIPT),
+    ("41933d09756b", "LIT-holding contract (token ff84ae) [inferred Lithos]", _SCRIPT),
+    ("8b1e2b8137db", "dortBuyback (DORT; a Dexy-style buyback) [inferred]", _SCRIPT),
+    ("3711297e58fc", "concentrated-liquidity pool tSTB/tUSD [inferred]", _SCRIPT),
+    ("406d9b79b183", "anetaBTC smart pool [inferred]", _SCRIPT),
+    ("d5f0be11ee59", "raffle contract [inferred]", _SCRIPT),
+    ("ee56ecce4217", "unknown (token cbe49f…; the explorer gives no decompilation)", "explorer"),
+    ("c5328d694b98", "unknown (R4 Long, INPUTS-size paths)", _SCRIPT),
+    ("961e872f7ab7", "time-locked key (HEIGHT >= creation + n && key): keyless only as rent", _SCRIPT),
+    ("57b642a829f8", "Duckpools (off-chain-bot consts.py)", "duckpools/off-chain-bot consts.py"),
+    ("c63f7fa24d3e", "Duckpools (off-chain-bot consts.py)", "duckpools/off-chain-bot consts.py"),
+    ("f9f76671e416", "SkyHarbor ERG sale; spent here only as rent", "skyharbor-market/contracts"),
+]:
+    _LABEL_PREFIX = _p
+    LABELS.setdefault(_p, (_n, _src))
 for _h, (_k, _v) in T.ORDER_TEMPLATE_HASHES.items():
     LABELS[_h] = (f"ErgoDEX N2T {_k} order {_v}", "Lithos ErgoDexContracts.scala orders; Spectrum backend "
                   "N2TCFMMTemplates.scala")
@@ -59,6 +107,8 @@ def catalog():
 
 
 def name(th, tree=None):
+    if th[:12] in LABELS and th not in LABELS:
+        return {"name": LABELS[th[:12]][0], "source": LABELS[th[:12]][1], "how": "label"}
     if th in LABELS:
         return {"name": LABELS[th][0], "source": LABELS[th][1], "how": "label"}
     c = catalog().get(th)

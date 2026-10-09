@@ -54,8 +54,20 @@ def u1():
 
 
 def unspent_total(th):
-    d = X.get(f"/boxes/unspent/byErgoTreeTemplateHash/{th}?offset=0&limit=1", cache=False)
+    try:
+        d = X.get(f"/boxes/unspent/byErgoTreeTemplateHash/{th}?offset=0&limit=1", cache=False)
+    except Exception as e:  # noqa: BLE001  (the mirror answers 503 at times; the count is then left out)
+        log(f"unspent count {th[:12]}: {e}")
+        return None
     return d["total"] if d else None
+
+
+def get_or_none(path):
+    try:
+        return X.get(path)
+    except Exception as e:  # noqa: BLE001
+        log(f"{path}: {e}")
+        return None
 
 
 def unspent_boxes(th, cap=5000):
@@ -84,12 +96,12 @@ def line_f(a):
         if t["keyless"] == 0:
             continue
         sample = t["samples"][0]["box"] if t["samples"] else None
-        box = X.get(f"/boxes/{sample}") if sample else None
+        box = get_or_none(f"/boxes/{sample}") if sample else None
         # storage rent: a box older than RENT_PERIOD may be spent by anyone (the miner) with no proof; a
         # template whose keyless samples are all that old is rent, not a keyless contract path
         ages = []
         for s in t["samples"]:
-            b = X.get(f"/boxes/{s['box']}")
+            b = get_or_none(f"/boxes/{s['box']}")
             if b:
                 ages.append(s["height"] - b["creationHeight"])
         rows.append({"templateHash": th, "keylessSpends": t["keyless"], "keylessTxs": t["txs"],
