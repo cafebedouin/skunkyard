@@ -7,9 +7,9 @@
 > mainnet has 30 Lithos blocks (U2, `research/agents/UPKEEP.md`). Branches: Lithos fork `upkeep-adapter` (phases 1-6,
 > c790ac66), `snapshot-spec-wait`, prompts for phase 7 (`upkeep-space`) ready; peeryard `lithos-devnet` (worktree
 > `~/bin/peeryard-lithos`, pushed through 3eb4d52; later commits unpushed) with `rig/examples/lithos-block.sh`.
-> **In flight:** rig run 4 of lithos-block (`skunks/upkeep/devnet/rig-run4/rig.out`; pid in the session scratchpad
-> `rig.pid`). **Next:** (1) get rig run to PASS, push peeryard; (2) phase 6 follow-ups + phase 7 in the cloud;
-> (3) strip working files, squash, second five-seat round, user's go for the PRs; (4) census first cut via explorer.
+> **Rig run 4 PASS** (`skunks/upkeep/devnet/rig-run4/`): one command from a wiped chain to block 76 carrying the
+> client's genesis and beat; peeryard pushed with README. **Next:** (1) phase 6 follow-ups + phase 7 in the cloud;
+> (2) strip working files, squash, second five-seat round, user's go for the PRs; (3) census first cut via explorer.
 > Process rule: pid files only, never pattern kills (`ergo_logic/docs/method/process-discipline.md`).
 
 > **Lithos upkeep adapter (2026-10-08, SK-043):** worktree `~/bin/lithos-upkeep` (branch `upkeep-adapter`, pushed to
