@@ -191,3 +191,60 @@ outside bot will not; the miner's edge is that it back-runs in the same block, b
 back-run leaves the vault holding the other asset (inventory, as the measured bot carries), unless a second pool
 closes the cycle in the same block, which on v1 is a second transaction (the Lithos fraud-rule question of SK-045).
 Measured against a reference price (an oracle data input) the vault's gain is well defined either way.
+
+## Correction: one pool per transaction, on both DEXes (2026-10-09, code inspection)
+
+The "one-transaction version on LithosDex" above and in SK-045 is wrong for any cycle through two pools.
+ErgoDEX v1 takes its successor at `OUTPUTS(0)` (`ergo-dex/contracts/amm/cfmm/v1/n2t/Pool.sc:10`); LithosDex takes
+it at `OUTPUTS(0)` and requires itself at `INPUTS(0)` (`LD_LiquidityPool.ergo`, `onlyOne`). Two pools of either
+kind cannot share a transaction, so a cross-pool cycle is two transactions on LithosDex as on v1, and the vault's
+two-transaction problem (a Lithos fraud rule, or the miner's own capital) applies to both. LithosDex orders also
+require `selfBoxIndex == 1` (`LD_SwapSellOrder.ergo`), so one order per transaction.
+
+Consequences for the TwinPools analysis (`TwinPools-Design-Analysis.pdf`, Cheese and Armeanio, 2026-09-30):
+- Q4 (mandatory splitting: "the execution spends every listed pool in one transaction") is impossible against
+  today's pools of either kind; it needs new pool scripts.
+- Q6's batch auction ("one transaction spends the pool and every order") needs new order templates as well as the
+  block-open reference.
+- Confirmed: today's LithosDex order pays the curve price against the pool as it enters the transaction (the
+  order's `fairPrice` check, within one unit), as the PDF says. Both pools' swap checks are `>=`, so the PDF's limit
+  5 (an LP rebate left in the pool) and SK-048 work on both without a pool change.
+- What does fit one transaction today: one pool, one order or keyless counterparty box, and a vault or twin box.
+- [UNVERIFIED] the PDF's 263 ErgoDEX swaps in 30 days and the RSN 0.6% gap; the census (U1) measures both.
+
+Cheese's sequencing (2026-10-09, thread): TwinPools is discussion only; arbitrage by itself comes first, on the
+upkeep PR as its base, after his review.
+
+## Positive control: a Babel box against a pool, one transaction, no capital, no key (SK-049, 2026-10-09)
+
+The user's idea. An EIP-31 Babel box is a standing bid: it pays ERG for one token at the fixed price in R5
+(nanoERG per token unit) to anyone who recreates it with the same R4 and R5, R6 = its id, and at least
+`ergPaid / price` more tokens; the recreated box's output index is a context variable, so it has no fixed
+position and can share a transaction with a pool. When a pool sells the token for less than the bid:
+
+    inputs:  pool (0), Babel box (1)
+    outputs: pool successor (0)  +X ERG, -T tokens
+             Babel successor     -Y ERG, +T tokens    (Y <= T * bid)
+             miner               Y - X
+
+The Babel box's own ERG funds the pool leg, so the miner needs no capital; the transaction is atomic; nothing
+spends a wallet box and value goes only to the two boxes' own scripts and the miner. Those are the upkeep source's
+own rules (`UpkeepSource.scala:377-401`), so it runs as an upkeep job with no relaxation; it needs a direct
+`UpkeepJob` (two inputs, a computed size), not a `ScriptJob`, which is itself feedback on the framework's shape. It
+fills the Babel owner's posted bid at the owner's price and sandwiches nobody.
+
+Mainnet, explorer read 2026-10-09 at the EIP-31 template tree: SigUSD (2 decimals) four boxes, ~20.5 ERG, bids
+10,000,000 / 4,000,000 / 4,000,000 / 1,000,000 nanoERG per 0.01 SigUSD (best: 1 ERG per SigUSD); SigRSV (0 decimals)
+one box, 1.0 ERG, 100,000 nanoERG per SigRSV. Tiny money: its role is the bar, not the revenue.
+
+The second rung is SigUSD/SigRSV against the SigmaUSD bank, oracle-priced. The sigma-usd frontend puts the bank at
+`outputs[0]` (`anon-real/sigma-usd src/utils/assembler.js:167`); [UNVERIFIED] that the bank contract enforces it.
+If it does, bank against an ErgoDEX pool is two chained transactions on the miner's own capital, outside the
+upkeep rules, and must clear the bank's fee and its reserve-ratio limits.
+
+**Scorecard every other idea must beat** (filled by the census and the devnet run): ERG per Lithos block;
+transactions per arbitrage; capital needed; key needed; contracts that must change; whose permission. The Babel
+control: (census), 1, none, none, none, nobody.
+
+Prompts: census `prompts/census-u1.md`; client job `~/bin/lithos-upkeep/prompts/phase-8-babel-arb.md`; devnet hook
+`prompts/peeryard-babel-arb.md`.

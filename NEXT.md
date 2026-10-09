@@ -3,6 +3,16 @@
 > **FIRST, at the next post-quantum session (planned Thursday 2026-10-08): follow up on the census heads-up.** Details outside git. Then: (1) restore the specific identification in public files only per their answer (it is kept outside git in ~/bin/skunkyard-private/); (2) decide the push of the unpushed commits (wording 'bridge custody' vs 'custody' multisig) — the replicator needs commit bc92d1e pushed to run C1 at the tip.
 
 
+> **Arbitrage line, 2026-10-09 (SK-049):** Cheese: TwinPools is discussion only; arbitrage first, on the upkeep
+> source, after his review of #14 to #16. Code check: one pool per transaction on both DEXes (ErgoDEX v1 `OUTPUTS(0)`;
+> LithosDex `INPUTS(0)` and `OUTPUTS(0)`), so a cross-pool cycle is two transactions on LithosDex too; the forwarded
+> reply to Cheese said otherwise and needs a short correction (`research/agents/UPKEEP.md`, correction section).
+> Positive control: an EIP-31 Babel box against an ErgoDEX v1 pool, one transaction, no capital, no key, inside the
+> upkeep rules. Order: (1) census `prompts/census-u1.md` (cloud, branch `census-u1`); (2) client job
+> `~/bin/lithos-upkeep/prompts/phase-8-babel-arb.md` (cloud, branch `upkeep-babel-arb` from `upkeep-source`);
+> (3) devnet hook `prompts/peeryard-babel-arb.md` (cloud writes, run locally on peeryard). Devnet only, no testnet.
+> Every other arbitrage idea is scored against the control (scorecard in `UPKEEP.md`).
+
 > **Lithos upkeep, state 2026-10-09 ~01:40:** PoC block mined on the devnet (block 573, `skunks/upkeep/devnet/`);
 > mainnet has 30 Lithos blocks (U2, `research/agents/UPKEEP.md`). Branches: Lithos fork `upkeep-adapter` (phases 1-6,
 > c790ac66), `snapshot-spec-wait`, prompts for phase 7 (`upkeep-space`) ready; peeryard `lithos-devnet` (worktree
