@@ -8,7 +8,10 @@
 > c790ac66), `snapshot-spec-wait`, prompts for phase 7 (`upkeep-space`) ready; peeryard `lithos-devnet` (worktree
 > `~/bin/peeryard-lithos`, pushed through 3eb4d52; later commits unpushed) with `rig/examples/lithos-block.sh`.
 > **Rig run 4 PASS** (`skunks/upkeep/devnet/rig-run4/`): one command from a wiped chain to block 76 carrying the
-> client's genesis and beat; peeryard pushed with README. **Next:** (1) phase 6 follow-ups + phase 7 in the cloud;
+> client's genesis and beat; peeryard pushed with README. Phase 7 done (`upkeep-space`, 116/116 upkeep specs).
+> **PR branches** (stripped, squashed, in worktree scratchpad/prwt and on the fork): `pr/upkeep`, `pr/upkeep-space`,
+> plus `snapshot-spec-wait`; texts in `skunks/upkeep/pr/`. **Second five-seat round** running on both
+> (`skunks/upkeep/seats/2026-10-09/`, raw out in scratchpad/seats2/pr{1,2}/out). **Next:** (1) dispositions + fixes;
 > (2) strip working files, squash, second five-seat round, user's go for the PRs; (3) census first cut via explorer.
 > Process rule: pid files only, never pattern kills (`ergo_logic/docs/method/process-discipline.md`).
 

@@ -1,0 +1,12 @@
+Review the pull request in the directory {{SLICE}}. Read {{SLICE}}/README-SLICE.md first, then {{SLICE}}/PR-DESCRIPTION.md, then {{SLICE}}/diff.patch, then the full files under {{SLICE}}/new/, and whatever under {{SLICE}}/context/ you need (context/ holds the files as they were before this PR, including the upkeep source this PR changes). Everything here is public code. Do not use the network.
+
+The project is Lithos-Client (Scala 2.12, Play, Akka): an Ergo mining-pool client whose miners build their own block candidates and may put fee-less transactions of their own into them. An earlier PR added a candidate source, "upkeep", that advances other protocols' boxes keylessly inside the miner's block, bounded by a configured per-block share (transactions, bytes, cost). This PR, stacked on it, (1) orders the due boxes by expected revenue per byte before building and (2) adds an optional "opportunistic" share that grows into the block space the mempool's waiting transactions would leave empty, off by default.
+
+Give a code review a maintainer could act on, as a single markdown document:
+1. Verdict: merge, merge with fixes, or do not merge, with one paragraph of reasons.
+2. Defects, ranked by severity, each with file:line, what goes wrong, under what input or state, and the fix. Look especially at: whether the opportunistic share can ever exceed the block's limits or the package share the candidate builder enforces (trace CandidateBuilder's bounding of each source and the allowance the wiring raises); whether a wrong or partial mempool read can make upkeep take space a paying transaction wanted; the cost of reading the mempool on every build; integer overflow or division in the demand and worth arithmetic; whether the ordering can starve a box forever or reorder boxes a job expected in a fixed order; whether behaviour with an unchanged configuration is exactly the old behaviour; and whether anything here reads what pending transactions do rather than only their size.
+3. Tests: any spec that does not test what its name says, and the most important missing test.
+4. Design: what you would simplify or change, briefly.
+5. Whether the PR description is accurate about what the code does; name any claim it gets wrong, and whether the policy question it raises is stated fairly.
+
+Distinguish what you verified in the code (cite file:line) from what you infer. Say "no concern" where you find none. Do not pad.
