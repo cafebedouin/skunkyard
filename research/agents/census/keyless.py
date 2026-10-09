@@ -33,6 +33,7 @@ def scan(lo, hi, workers=6, log=print):
                                             "firstKeyless": None, "lastKeyless": None, "samples": [],
                                             "tree": None, "with": collections.Counter(), "txs": 0})
     fees, txcount, keyless_txs, p2pk_keyless = {}, {}, 0, []
+    rent_txs = []   # transactions claiming storage rent on P2PK boxes: what the claim took and where it went
     for h, b in B.full_blocks(hdr, workers, log):
         txs = b["block"]["blockTransactions"]
         txcount[h] = len(txs)
@@ -46,9 +47,30 @@ def scan(lo, hi, workers=6, log=print):
                 elif tree.startswith("0008cd"):
                     th = "p2pk"           # the key is inline, so every key has its own template hash
                 else:
-                    th = T.template_hash(tree)
+                    try:
+                        th = T.template_hash(tree)
+                    except (ValueError, IndexError):
+                        th = "unparsed:" + tree[:16]   # a constant this parser does not read; kept apart
+
                 th_in.append((th, i, tree))
             kl = [x for x in th_in if not x[1]["spendingProof"]]
+            rent = [x for x in kl if x[0] == "p2pk"]
+            if rent:
+                # each claimed box is recreated (same tree) minus the fee, or consumed whole; match outputs to
+                # claimed trees one for one, the rest of the outputs is where the fees went
+                need = collections.Counter(x[2] for x in rent)
+                rec, paid = 0, collections.Counter()
+                for o in t["outputs"]:
+                    if need[o["ergoTree"]] > 0:
+                        need[o["ergoTree"]] -= 1
+                        rec += o["value"]
+                    else:
+                        paid["fee" if o["ergoTree"] == T.FEE_TREE else o["address"]] += o["value"]
+                signed_in = sum(x[1]["value"] for x in th_in if x[1]["spendingProof"])
+                rent_txs.append({"height": h, "tx": t["id"], "boxes": len(rent),
+                                 "boxNanoErg": sum(x[1]["value"] for x in rent), "recreatedNanoErg": rec,
+                                 "consumedWhole": sum(need.values()), "signedInNanoErg": signed_in,
+                                 "paid": dict(paid.most_common(4)), "miner": hdr[h]["miner"]["address"]})
             if kl:
                 keyless_txs += 1
             seen = set()
@@ -75,6 +97,6 @@ def scan(lo, hi, workers=6, log=print):
                 if len(r["samples"]) < SAMPLES:
                     r["samples"].append({"height": h, "tx": t["id"], "box": i["id"], "value": i["value"]})
     out = {k: dict(v, **{"with": dict(v["with"].most_common(8))}) for k, v in tmpl.items()}
-    return {"templates": out, "p2pkKeyless": p2pk_keyless, "fees": fees, "txCount": txcount, "keylessTxs": keyless_txs,
+    return {"templates": out, "p2pkKeyless": p2pk_keyless, "rentTxs": rent_txs, "fees": fees, "txCount": txcount, "keylessTxs": keyless_txs,
             "headers": {h: {"id": hdr[h]["id"], "ts": hdr[h]["timestamp"], "minerReward": hdr[h]["minerReward"],
                             "miner": hdr[h]["miner"]["address"]} for h in hdr}}

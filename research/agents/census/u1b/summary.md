@@ -185,6 +185,17 @@ ErgoDEX v1 T2T pools: 283 (282 unspent now), 78 active in the window, events {'s
 | pool | Dexy LP (SDK n2dexyGOLD, testnet ids) | 2cf12e36 | 3 | 5.004 | 22855 |  |
 | pool | LithosDex liquidity pool | 2de640e3 | 4 | 4,328.643 | 971 |  |
 
+### i. Oracle-referenced gaps: SigUSD pools against the ERG/USD oracle (1,869,418..1,891,017)
+
+| pool | fee | max ERG depth | median |gap| | mean signed gap (pool/oracle-1) | blocks |gap| > fee | of which pool above oracle | max |gap| |
+|---|---|---|---|---|---|---|---|
+| 9916d751 | 995 | 148,235 | 4.31% | +4.93% | 20,555 / 21,600 | 18,209 | 22.1% |
+| bee300e9 | 995 | 10 | 7.16% | +5.73% | 20,403 / 21,600 | 15,651 | 26.2% |
+| 931f133c | 997 | 1 | 5.20% | +8.23% | 21,066 / 21,600 | 13,209 | 38.5% |
+| 9eccc846 | 590 | 0 | 80.81% | -81.31% | 21,600 / 21,600 | 0 | 85.1% |
+| 03b695cd | 980 | 0 | 84.68% | -85.06% | 19,057 / 19,057 | 0 | 88.1% |
+| eb9095b5 | 997 | 0 | 85.90% | -85.37% | 15,943 / 15,943 | 0 | 88.2% |
+
 ## j. Takes needing capital, capped at 10 ERG, net of 0.0011 ERG per transaction
 
 | line | token | blocks open | lower ERG (net) | upper ERG (net) | best ERG (net) | capital at best | open blocks where leg 2 moved next block |
@@ -231,4 +242,31 @@ ErgoDEX v1 T2T pools: 283 (282 unspent now), 78 active in the window, events {'s
 | ac992a1c/36aba4b4:a9ddaf47 | 1.0310 | 1.0310 | 1.0277 |
 | bd0c25c3/ac992a1c:258ef8b9 | 0.9494 | 0.9482 | 0.9449 |
 | ac992a1c/0779ec04:ebe650df | 0.8500 | 0.8447 | 0.8414 |
+
+### j at tip 1,891,063: every capital take open now (cap 10 ERG)
+
+| line | token | txs | net ERG | capital ERG | if leg 2 fails | loss if sold back ERG |
+|---|---|---|---|---|---|---|
+| c pool-pool | 28bd64421838751c9 | 2 | 0.0839 | 0.0000 | hold 862,733,431 | 0.0011 |
+| h triangle | 2a7dd90423a26e477 | 3 | 0.0396 | 0.0143 | hold 7,048,532,157 | 0.0012 |
+| c pool-pool | aa589fd5a6572ba57 | 2 | 0.0325 | 0.0020 | hold 133 | 0.0011 |
+| c pool-pool | 8e0cd39c6fba31c41 | 2 | 0.0174 | 0.0001 | hold 2,538 | 0.0011 |
+| c pool-pool | 472c3d4ecaa08fb73 | 2 | 0.0138 | 0.0000 | hold 16,066,371 | 0.0011 |
+| c pool-pool | 472c3d4ecaa08fb73 | 2 | 0.0138 | 0.0000 | hold 16,066,371 | 0.0011 |
+| c pool-pool | 472c3d4ecaa08fb73 | 2 | 0.0138 | 0.0000 | hold 16,066,371 | 0.0011 |
+| h triangle | 46700be1c5b9287ac | 3 | 0.0136 | 0.0513 | hold 57 | 0.0041 |
+| h triangle | 46700be1c5b9287ac | 3 | 0.0134 | 0.0513 | hold 57 | 0.0041 |
+| h triangle | 46700be1c5b9287ac | 3 | 0.0128 | 0.0468 | hold 52 | 0.0039 |
+| h triangle | d71693c49a84fbbec | 3 | 0.0127 | 0.0000 | hold 45 | 0.0011 |
+| h triangle | d71693c49a84fbbec | 3 | 0.0127 | 0.0000 | hold 45 | 0.0011 |
+| h triangle | 003bd19d0187117f1 | 3 | 0.0125 | 0.0002 | hold 1 | 0.0011 |
+| h triangle | 0cd8c9f416e5b1ca9 | 3 | 0.0123 | 0.0004 | hold 78 | 0.0011 |
+| h triangle | 0cd8c9f416e5b1ca9 | 3 | 0.0122 | 0.0005 | hold 78 | 0.0011 |
+| c pool-pool | 45623c86e3b301157 | 2 | 0.0121 | 0.0018 | hold 35,523 | 0.0011 |
+| h triangle | 0cd8c9f416e5b1ca9 | 3 | 0.0119 | 0.0008 | hold 78 | 0.0011 |
+| c pool-pool | 03faf2cb329f2e90d | 2 | 0.0107 | 0.0213 | hold 1 | 0.0098 |
+| b bank-pool | 03faf2cb329f2e90d | 2 | 0.0106 | 0.0213 | pool->redeem |  |
+| h triangle | bd0c25c373ad606d7 | 3 | 0.0105 | 0.2216 | hold 1,670,256,019 | 0.0024 |
+
+63 takes net positive; together 0.4976 ERG (not additive where they share pools).
 

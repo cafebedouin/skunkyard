@@ -74,7 +74,9 @@ def line_f(a):
     import names as N
     X.MIN_INTERVAL = 0.12
     r = K.scan(a.lo, a.hi, a.workers, log)
-    save("scan-raw.json", r)          # the pass's aggregate; (k) reads its fees
+    # the pass's aggregate (about 25 MB, so in the git-ignored census/out/); (k) reads its fees
+    with open(os.path.join(HERE, "census", "out", "scan-raw.json"), "w") as fh:
+        json.dump(r, fh)
     rows = []
     for th, t in sorted(r["templates"].items(), key=lambda kv: -kv[1]["keyless"]):
         if t["keyless"] == 0:
@@ -114,7 +116,7 @@ def line_f(a):
 # ---- line k --------------------------------------------------------------------------------------------------
 
 def line_k(a):
-    r = load("scan-raw.json")
+    r = json.load(open(os.path.join(HERE, "census", "out", "scan-raw.json")))
     fees = {int(h): v for h, v in r["fees"].items()}
     hs = [h for h in range(a.lo, a.hi + 1)]
     assert all(h in fees for h in hs), "scan-raw.json does not cover the window"

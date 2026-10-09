@@ -7,6 +7,8 @@
    "blocks": 21600,
    "medianAbsGap": 0.043133242834566765,
    "meanAbsGap": 0.053281352233119396,
+   "meanSignedGap": 0.04925734181221125,
+   "blocksPoolAboveOracleBeyondFee": 18209,
    "blocksGapAboveFee": 20555,
    "maxGap": 0.22079373428305793,
    "ergDepthMaxNanoErg": 148234721735798
@@ -16,6 +18,8 @@
    "blocks": 21600,
    "medianAbsGap": 0.07163312829555646,
    "meanAbsGap": 0.07410308538843406,
+   "meanSignedGap": 0.057299426681161024,
+   "blocksPoolAboveOracleBeyondFee": 15651,
    "blocksGapAboveFee": 20403,
    "maxGap": 0.2618158458464832,
    "ergDepthMaxNanoErg": 9756143838
@@ -25,6 +29,8 @@
    "blocks": 21600,
    "medianAbsGap": 0.05204017028636565,
    "meanAbsGap": 0.1079122236164688,
+   "meanSignedGap": 0.08232943564504662,
+   "blocksPoolAboveOracleBeyondFee": 13209,
    "blocksGapAboveFee": 21066,
    "maxGap": 0.38537255829257466,
    "ergDepthMaxNanoErg": 969008863
@@ -34,6 +40,8 @@
    "blocks": 15943,
    "medianAbsGap": 0.8590055788040455,
    "meanAbsGap": 0.8537234559800686,
+   "meanSignedGap": -0.8537234559800686,
+   "blocksPoolAboveOracleBeyondFee": 0,
    "blocksGapAboveFee": 15943,
    "maxGap": 0.8815673454979605,
    "ergDepthMaxNanoErg": 10015023
@@ -43,6 +51,8 @@
    "blocks": 19057,
    "medianAbsGap": 0.8467602209229926,
    "meanAbsGap": 0.8505705901487443,
+   "meanSignedGap": -0.8505705901487443,
+   "blocksPoolAboveOracleBeyondFee": 0,
    "blocksGapAboveFee": 19057,
    "maxGap": 0.880550494403827,
    "ergDepthMaxNanoErg": 10101011
@@ -52,6 +62,8 @@
    "blocks": 21600,
    "medianAbsGap": 0.808063248581082,
    "meanAbsGap": 0.8131208866809854,
+   "meanSignedGap": -0.8131208866809854,
+   "blocksPoolAboveOracleBeyondFee": 0,
    "blocksGapAboveFee": 21600,
    "maxGap": 0.8512515646469827,
    "ergDepthMaxNanoErg": 12578617
