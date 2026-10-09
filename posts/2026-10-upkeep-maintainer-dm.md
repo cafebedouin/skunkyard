@@ -41,6 +41,7 @@ One obvious extension I have left for a follow-on PR rather than this one: block
 opportunistic about space. Two parts: order due work across jobs by tip per byte and cost so leftover space takes the
 best-paying maintenance first (small, self-contained in upkeep), and let the upkeep share grow into whatever the
 mempool's fee-paying demand would leave empty, read from the node's pool histogram, shrinking back when demand rises.
-The second touches every source's budget, so it is your call on policy before anyone writes it.
+The second touches every source's budget, so it is your call on policy. Both are written and tested on a second
+branch, `upkeep-space`, stacked on this one and independent of it: merge it, close it, or take the first part only.
 
 Branch: `upkeep-adapter` on my fork. Happy to split it however you prefer.
