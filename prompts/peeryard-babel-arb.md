@@ -1,7 +1,10 @@
 # peeryard: a devnet hook for the Babel arbitrage control (SK-049)
 
-Repository: peeryard, branch `lithos-devnet`. Create branch `lithos-babel-arb` from its tip and push to it. You
-write; the rig is run locally (it needs network namespaces and root), so say plainly what you could not run.
+Repository: peeryard, branch `lithos-devnet`. Create branch `lithos-babel-arb` from its tip and push to it. The rig
+needs no root, only unprivileged user namespaces (`unshare -Urmn`, `rig/README.md` prerequisites), plus the node
+jar, Java 17 and the client's staged distribution. Check whether `unshare -Urmn true` works in your sandbox; if it
+does and the rest can be built, run the hook; if not, write it and say plainly what you could not run. It is run
+locally either way before anything is merged.
 
 Read `AGENTS.md`, `rig/PHASES.md`, `rig/README.md` (the lithos rows), and above all
 `rig/examples/lithos-upkeep.sh` and `.json`: the new example is that one with a different setup and a different
