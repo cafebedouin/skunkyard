@@ -1,0 +1,2 @@
+appkit-proxy: 127.0.0.1:9153 -> http://127.0.0.1:9052 recording checks to /tmp/peeryard-rig.mX4wyh/lithos/checks.jsonl mirroring
+mirrored to mempool: "c3aa77056a9761f3d7b2565a8622fff4e9ee9ed08586095a6139b891d617f47f"

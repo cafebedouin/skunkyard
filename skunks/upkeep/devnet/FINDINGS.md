@@ -57,3 +57,8 @@ height; mined at height 20 by the devnet's own miner. Successor `fb64c2c3…`: 0
 the 0.01 ERG tip paid to the client's collection address. This is the first client-built upkeep transaction on any chain.
 What it does not show: a Lithos package. Without a deployment the candidate builder makes no genesis transaction, so
 the beat reached the block through the mempool mirror rather than inside a Lithos candidate; that is phase 6's job.
+
+**Rig run 1: PASS** (`rig-run1/`): the same test as the reusable peeryard example (`rig/examples/lithos-upkeep.sh`,
+branch `lithos-devnet`), run by the rig on a fresh devnet with the proxy and the client as companion processes inside
+node A's namespace. Beat built for 21, accepted, mirrored, mined; successor `539bb5ce…` with R4 = 21; companions and the
+node stopped by the rig. Verdict PASS, `COSTS no recovery events`.

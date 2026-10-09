@@ -1,0 +1,27 @@
+[rig] scratch: /tmp/peeryard-rig.mX4wyh
+[rig] chain preset current: blockInterval=20s minerRewardDelay=10 v4=early (soft-fork voting 4/1/1)
+[rig] genesis state digest for minerRewardDelay=10 derived from a probe start: c01a142d004a917b…
+[rig] java: openjdk version "21.0.12.1" 2026-08-18 (java, opts: -Xmx512m)
+[rig] effective configuration: /tmp/peeryard-rig.mX4wyh/out/effective.json ({"chain":"current","nodes":["A:ergo-6.0.7.jar"],"links":0})
+[rig] launched A (ns=ns_A ip=100.64.0.1 p2p=9021 rest=9052 kind=jvm jar=ergo-6.0.7.jar pid=234786)
+[rig] A pid=234786 cpus_applied=0-11 gc=G1GC
+[rig] A REST up
+[rig] bring-up: every link connected
+[rig] === handing off to hook: /home/scott/bin/peeryard-lithos/rig/examples/lithos-upkeep.sh ===
+[rig] companion proxy started (pid 235629, in A, log /tmp/peeryard-rig.mX4wyh/out/companion_proxy.log)
+[lu] due-job box funded at height 16 (R4=6, period 5, tip 0.01 ERG): tx 34f38a1a339582b3e18e76d254607bba043d3ebb274923061d4f27ac9128c87b
+[lu] box cc7782f94b1cc8c8d4726fa93a225eedafd62bc9d3de2a49de43e98698594095 listed by the index at height 17
+[rig] companion client started (pid 235738, in A, log /tmp/peeryard-rig.mX4wyh/out/companion_client.log)
+2026-10-08 21:15:40 [INFO] [UpkeepSource] UpkeepSource started: mode=candidate, verifyWithNode=true, jobs=heartbeat, scanIntervalMs=10000, maxBoxesPerJob=256, retryAfterScans=10, share: txs=5, bytes=2
+2026-10-08 21:15:42 [INFO] [UpkeepSource] Upkeep scan holds 1 boxes: heartbeat=1; 0 refused, 0 cannot pay 
+2026-10-08 21:15:46 [INFO] [UpkeepSource] Upkeep admits 1 of 1 due successors at 21: heartbeat:cc7782f9; share used txs=1/5, bytes=244/262144, cost=12326/1000000 
+2026-10-08 21:15:46 [INFO] [UpkeepSource] Upkeep offers 1 of 1 successors at 21 after the node's check: heartbeat:cc7782f9 
+[lu] successor 539bb5cedfbaa1c0763318a9f228ae0f0ec7e52ef4d2f6db8481540ff44f8308 at height 23: {"value":990000000,"R4":"042a","creationHeight":21}
+[lu] checks recorded: 1; mirrored: 1
+[lu] PASS: the client's beat was mined
+[rig] companion client stopped
+[rig] companion proxy stopped
+[rig] COSTS no recovery events
+[rig] === hook done (verdict: PASS) ===
+[rig] all nodes stopped
+RIG EXIT 0
