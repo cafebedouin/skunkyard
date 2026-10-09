@@ -177,3 +177,17 @@ is intended, since validation often depends on height. If a source ever needs a 
 Akka message or a shared thread-safe cache is the shape, never a reply the builder waits on. Any future upkeep job
 or source feature (the rejected-package feedback the reviews asked for, the opportunistic read's timing) is bound
 by this. Source: `notes/2026-10-09-lithos-reply.md`.
+
+## In place on ErgoDEX v1: a wrapper, not a pool change (user's question, 2026-10-09)
+
+Checked in `ergo-dex/contracts/amm/cfmm/v1/n2t/Pool.sc:56-60`: `validSwap` is an inequality (`>=`), so a swap may
+leave more in the pool than the constant-product-with-fee invariant requires, and the pool takes it; extra reserves
+accrue to the LP token holders. That is the hook. A secondary contract, the deposit vault of SK-045 with one more
+clause, can impose the LP share without touching the pool: it releases its capital for an arbitrage swap only if,
+in the same transaction, the pool's successor keeps at least `share × gain` above the invariant's minimum, computed
+from the pool input and `OUTPUTS(0)`, with the rest of the gain to `CONTEXT.preHeader.minerPk` or the executor.
+Limits: it binds only executors who route through the vault, which a Lithos miner can be configured to do and an
+outside bot will not; the miner's edge is that it back-runs in the same block, before the bots; a single-pool
+back-run leaves the vault holding the other asset (inventory, as the measured bot carries), unless a second pool
+closes the cycle in the same block, which on v1 is a second transaction (the Lithos fraud-rule question of SK-045).
+Measured against a reference price (an oracle data input) the vault's gain is well defined either way.
