@@ -26,3 +26,12 @@ to that key, not to node A's wallet. Six runs on 2026-10-08 (`smoke-run1..6.log`
 (`run6-beat.json`). The runs between found the height race in the refusal memory, the one-block validity of a beat, the
 mempool fee floor, and the node's candidate regeneration interval (`FINDINGS.md`). The reusable form is the peeryard
 example `rig/examples/lithos-upkeep.{json,sh}` on the `lithos-devnet` branch.
+
+## The Lithos block (2026-10-09 00:47)
+
+Block 573 of the devnet (`block-573.json`): the client's genesis transaction spends the collateral box it joined with
+itself, and the block carries the upkeep beat the client packaged. The chain of causes, each a thing the client did:
+the deployment (`deploy-run4.log`), the self-join and activation, the genesis, the package (`client-run9.log`), the
+candidate mined by the rig's CPU miner (`miner-run9.log`). The node settings and process layout that made it work are
+in `FINDINGS.md` and in the peeryard example `rig/examples/lithos-block.{json,sh}`.
+

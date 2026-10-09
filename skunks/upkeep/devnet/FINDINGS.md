@@ -62,3 +62,62 @@ the beat reached the block through the mempool mirror rather than inside a Litho
 branch `lithos-devnet`), run by the rig on a fresh devnet with the proxy and the client as companion processes inside
 node A's namespace. Beat built for 21, accepted, mirrored, mined; successor `539bb5ce…` with R4 = 21; companions and the
 node stopped by the rig. Verdict PASS, `COSTS no recovery events`.
+
+Deployment run 1 (`deploy-run1.log`, `deployment.json`): the deployer worked on its first run against the devnet, eight
+mints, the protocol boxes in one transaction, the descriptor, and 20 ERG + 20,000 LIT to the client's key, in 75 s.
+Two small things on the way: the stage launcher's `-main` cannot run `tools.DeployProtocol` (the launcher jar carries
+the classpath in its manifest), so the deployer runs by classpath; and `sync.startHeight` is validated to 2..2e9
+while its message says "minimum 1" (Lithos `ConfigValidation`, a message nit).
+
+Deployment run 2 (`deploy2.log`): the devnet node was given the client's mnemonic as `ergo.wallet.testMnemonic`, and
+mined to an address the keystore does not hold. Cause, in the node: `buildProverFromMnemonic` (`ErgoWalletSupport.scala:38`)
+builds the test wallet from the ROOT key and its direct children `rootSk.child(i)`, not from the EIP-3 path
+`m/44'/429'/0'/0/i` that a restored or keystore wallet uses; the two never share an address. A node that must mine to a
+keystore's key therefore starts with `testMnemonic = null` and has its wallet restored over the API (EIP-3). Worth a
+note in the node's docs or the rig's; recorded in the patch manifest.
+
+Deployment run 3 (`deploy3.log`): with the node mining to the client's key, the deployer still found "0 nanoERG in
+token-free boxes" while the node wallet reported 200 ERG. Mining rewards sit under the miner-reward script with the
+chain's reward delay (10 blocks on this devnet), and the deployer's funding read (`DeployProtocol.loadFunding`) looks
+for the key's plain P2PK tree and, for rewards, the mainnet delay the client hard-codes (`NodeWallet.MINER_REWARD_DELAY`),
+so a devnet's reward boxes are invisible to it. Worked around by paying the key a plain box from the node wallet first;
+the deployer should take the reward delay as an option or read it from the chain (phase 6 follow-up).
+
+**Deployment run 4 / client run 5 (`deploy-run4.log`, `client-deploy5.log`): the Lithos package carries the beat.** With
+the node mining to the client's key and a plain box paid first, the deployer completed; the client loaded the
+descriptor, discovered the due-job box, had the node accept beats at every height, joined the collateral queue with its
+own ERG and LIT (three joins accepted), activated the head of the queue, built a genesis transaction against its own
+collateral box `9f6171fe…`, and published `BlockPackage(height=278, rev=1, txs=[activate:c3744772,
+upkeep:heartbeat:16ce7078, holding-topup:02b05380])`, then at 279 `txs=[upkeep:heartbeat:0f0380e5, holding-topup:…]`.
+The node assembled the candidate "for block #279 from 4 transactions available". Two things kept it off the chain
+and are being corrected: (1) the devnet's `blockCandidateGenerationInterval = 1ms`, set for the mirror smoke test,
+makes every mempool change regenerate a mempool-only candidate that replaces the client's before the miner polls, so
+the default is right for a candidate-submitting client; (2) a client-side issue, not ours: the fourth self-join was
+refused ("Every input of the transaction should be in UTXO … Missing inputs: 0, 1"), the joins in one pass spending
+inputs an earlier join in the same pass already spent (`EmissionTransactions`, autoCollateralize with `maxJoinsPerRun`
+above the distinct boxes available); three joins stood, which is enough.
+
+Client run 5, continued (proxy `--log-mining`): every client request is `POST /mining/candidateWithTxsAndPk`, and the
+candidate it submits names the collateral lender's key (R5 of the collateral box, `032d0c04…` = the keystore's EIP-3
+index 0). The node's internal miner mines with its own `rewardPubkey` (`/mining/rewardPublicKey` = `03992dd0…`, not an
+EIP-3 key of the same wallet), and `CandidateGenerator.cachedFor` serves a cached candidate only when its key equals
+the requester's, so the miner's next poll regenerates a mempool-only candidate under its own key and the client's
+package is never mined. On mainnet this is moot (stratum miners mine the client's job); on a devnet whose node mines
+for itself, the node must mine with the lender's key: `ergo.node.miningPubKeyHex` = that key, and the client confined
+to that one key (`node.numAddresses = 1`) so every package it builds names it.
+
+Client run 8/9: `ergo.node.miningPubKeyHex` is honoured only in external-miner mode; the internal miner takes the
+wallet's first secret (`ErgoMiner.scala:38-47, 93-97`: `GetFirstSecret`, "Setting secret and public key") and mines
+with that key regardless. So the devnet node now runs with `useExternalMiner = true`, `miningPubKeyHex` = the client's
+lender key, and a CPU miner (`peeryard rig/lib/devnet-miner.sh`, a Java loop over the node jar's own
+`AutolykosPowScheme.hitForVersion2ForMessage`) solving its candidates: first solution accepted at height 570. The
+client also needed `emission.maxLenderKeys = 1` beside `node.numAddresses = 1` (validation: "exceeds node.numAddresses").
+
+**Client run 9: THE PROOF-OF-CONCEPT BLOCK.** Devnet block 573 (`block-573.json`) is a Lithos block: its second
+transaction, the genesis `e1641eb0…`, spends the client's own collateral box `9f6171fe…` (collateral token 1, LIT
+permit 2,640 LIT, lender R5 = the client's EIP-3 index-0 key, which is also the block's miner key), and the block
+carries the heartbeat beat `aa88e373…`, the very transaction the client logged in
+`BlockPackage(height=573, rev=1, txs=[upkeep:heartbeat:aa88e373, holding-topup:162659d1])` (`client-run9.log`),
+solved by the rig's CPU miner (`miner-run9.log`). Everything on the chain was created tonight: the deployment by the
+client's own deployer, the collateral by the client's own self-join, the beat by the upkeep source, the block by a
+candidate the client submitted.

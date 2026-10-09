@@ -1,0 +1,310 @@
+00:46:57,224 |-INFO in ch.qos.logback.classic.LoggerContext[default] - This is logback-classic version 1.5.21
+00:46:57,226 |-INFO in ch.qos.logback.classic.util.ContextInitializer@38e79ae3 - No custom configurators were discovered as a service.
+00:46:57,226 |-INFO in ch.qos.logback.classic.util.ContextInitializer@38e79ae3 - Trying to configure with ch.qos.logback.classic.util.DefaultJoranConfigurator
+00:46:57,227 |-INFO in ch.qos.logback.classic.util.ContextInitializer@38e79ae3 - Constructed configurator of type class ch.qos.logback.classic.util.DefaultJoranConfigurator
+00:46:57,236 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+00:46:57,242 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [file:/home/scott/bin/lithos-upkeep/target/universal/stage/conf/logback.xml]
+00:46:57,311 |-WARN in ch.qos.logback.core.joran.action.ConversionRuleAction - [converterClass] attribute is deprecated and replaced by [class]. See element [conversionRule] near line 4
+00:46:57,362 |-INFO in ch.qos.logback.core.model.processor.ConversionRuleModelHandler - registering conversion word coloredLevel with class [play.api.libs.logback.ColoredLevel]
+00:46:57,362 |-INFO in ch.qos.logback.classic.model.processor.ConfigurationModelHandlerFull - Main configuration file URL: file:/home/scott/bin/lithos-upkeep/target/universal/stage/conf/logback.xml
+00:46:57,363 |-INFO in ch.qos.logback.classic.model.processor.ConfigurationModelHandlerFull - FileWatchList= {/home/scott/bin/lithos-upkeep/target/universal/stage/conf/logback.xml}
+00:46:57,363 |-INFO in ch.qos.logback.classic.model.processor.ConfigurationModelHandlerFull - URLWatchList= {}
+00:46:57,367 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [FILE]
+00:46:57,367 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.FileAppender]
+00:46:57,373 |-INFO in ch.qos.logback.core.model.processor.ModelInterpretationContext@63070bab - value "./logs/application.log" substituted for "${application.home:-.}/logs/application.log"
+00:46:57,373 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+00:46:57,409 |-INFO in ch.qos.logback.core.FileAppender[FILE] - File property is set to [./logs/application.log]
+00:46:57,410 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [STDOUT]
+00:46:57,410 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+00:46:57,411 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+00:46:57,412 |-INFO in ch.qos.logback.core.ConsoleAppender[STDOUT] - NOTE: Writing to the console can be slow. Try to avoid logging to the 
+00:46:57,412 |-INFO in ch.qos.logback.core.ConsoleAppender[STDOUT] - console in production environments, especially in high volume systems.
+00:46:57,412 |-INFO in ch.qos.logback.core.ConsoleAppender[STDOUT] - See also https://logback.qos.ch/codes.html#slowConsole
+00:46:57,412 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [ASYNCFILE]
+00:46:57,412 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.classic.AsyncAppender]
+00:46:57,413 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [FILE] to ch.qos.logback.classic.AsyncAppender[ASYNCFILE]
+00:46:57,414 |-INFO in ch.qos.logback.classic.AsyncAppender[ASYNCFILE] - Attaching appender named [FILE] to AsyncAppender.
+00:46:57,415 |-INFO in ch.qos.logback.classic.AsyncAppender[ASYNCFILE] - Setting discardingThreshold to 51
+00:46:57,416 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [ASYNCSTDOUT]
+00:46:57,416 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.classic.AsyncAppender]
+00:46:57,416 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [STDOUT] to ch.qos.logback.classic.AsyncAppender[ASYNCSTDOUT]
+00:46:57,416 |-INFO in ch.qos.logback.classic.AsyncAppender[ASYNCSTDOUT] - Attaching appender named [STDOUT] to AsyncAppender.
+00:46:57,416 |-INFO in ch.qos.logback.classic.AsyncAppender[ASYNCSTDOUT] - Setting discardingThreshold to 51
+00:46:57,417 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [play] to INFO
+00:46:57,417 |-INFO in ch.qos.logback.classic.model.processor.RootLoggerModelHandler - Setting level of ROOT logger to INFO
+00:46:57,417 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [ASYNCFILE] to Logger[ROOT]
+00:46:57,417 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [ASYNCSTDOUT] to Logger[ROOT]
+00:46:57,417 |-INFO in ch.qos.logback.core.model.processor.DefaultProcessor@68e5eea7 - End of configuration.
+00:46:57,418 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@291b4bf5 - Registering current configuration as safe fallback point
+00:46:57,422 |-INFO in ch.qos.logback.classic.util.ContextInitializer@38e79ae3 - ch.qos.logback.classic.util.DefaultJoranConfigurator.configure() call lasted 191 milliseconds. ExecutionStatus=DO_NOT_INVOKE_NEXT_IF_ANY
+
+2026-10-09 00:46:58 [INFO] [scorex.db.LDBFactory$] Loaded org.fusesource.leveldbjni.JniDBFactory with leveldbjni version 1.8 
+  
+2026-10-09 00:46:59 [INFO] [NodeConfig] deployment: /home/scott/bin/skunkyard/skunks/upkeep/devnet/deployment.json 
+  
+2026-10-09 00:46:59 [INFO] [NodeConfig] deployment ids: LIT beff080f432f9e35df87d695d32976ccd3539cb61744e689533d01959251bd34, emission NFT 266cbff4f248f990fc0acc8aceef672b63bcd0ee6580e0098830a95022408b14, collateral token 064126a8d18f06a3cf0a96d0dc447d7d0150577ca483676dbc11d86d3a80e812 
+  
+2026-10-09 00:47:00 [INFO] [NodeConfig] Prover holds 1 EIP-3 address(es), primary 3WxtnwJojAm4C9DJtgNHs5zawzD44yE6cKyGM7NeHf7Cw1yP7XBU 
+  
+2026-10-09 00:47:05 [INFO] [akka.event.slf4j.Slf4jLogger] Slf4jLogger started 
+  
+2026-10-09 00:47:05 [INFO] [ErgoDexBatcher] ErgoDexBatcher was disabled 
+  
+2026-10-09 00:47:05 [INFO] [RollupEvaluator] RollupEvaluator starting - evaluating rollups every 4 minutes 
+  
+2026-10-09 00:47:05 [INFO] [LithosDexBatcher] LithosDexBatcher was disabled 
+  
+2026-10-09 00:47:05 [INFO] [StateFrame] Publisher accepted auto-subscription of mempool-view (1 total subscriber(s)) 
+  
+2026-10-09 00:47:06 [INFO] [RollupProcessor] RollupProcessor starting - processing pending transactions every 3 minutes 
+  
+2026-10-09 00:47:06 [INFO] [RollupPublisher] RollupPublisher starting - evaluating rollup transactions every 1 minute 
+  
+2026-10-09 00:47:06 [INFO] [EmissionsCore] EmissionsCore starting - queue every 30000ms (max 4 spends), autoCollateralize=true every 30000ms 
+  
+2026-10-09 00:47:06 [INFO] [TransactionEngine] Consolidation OFF (wallet.consolidation.enabled) 
+  
+2026-10-09 00:47:06 [INFO] [TransactionEngine] Wallet limits: maxInputs=75 pageSize=500 maxDescriptors=2048 reservationTimeout=30000ms nodeCallTimeout=30000ms nodeMaxResponse=2097152B 
+  
+2026-10-09 00:47:06 [INFO] [StartupTasks] Got indexed node with heights: BlockchainIndexHeight(572,572) 
+  
+2026-10-09 00:47:06 [INFO] [StartMiningServer] Starting actor-based Mining Server 
+  
+2026-10-09 00:47:06 [WARN] [CommitmentTransactions] No usable difficulty commitment, forcing configured diff 4.0G and score 4000000000 for stratum mining: Could not find a stored data box 
+  
+2026-10-09 00:47:06 [WARN] [CommitmentTransactions] NISPs submitted or mined in this manner may be considered fraudulent 
+  
+2026-10-09 00:47:06 [INFO] [StartMiningServer] Reduced share messages enabled: stratum diff is 10000x real diff 
+  
+2026-10-09 00:47:06 [INFO] [StartMiningServer] Stratum tau: 2894802230932904885589274625217197696331749616641014100986439600 (score: 40000000000000) 
+  
+2026-10-09 00:47:06 [INFO] [StartMiningServer] Using tau 28948022309329048855892746252171976963317496166410141009864396001978 (score: 4000000000) for NISPs 
+  
+2026-10-09 00:47:06 [INFO] [UpkeepSource] UpkeepSource started: mode=candidate, verifyWithNode=true, jobs=heartbeat, scanIntervalMs=10000, maxBoxesPerJob=256, retryAfterScans=10, share: txs=5, bytes=262144, cost=1000000; refusedHeld=0, exhaustedHeld=0 
+  
+2026-10-09 00:47:08 [INFO] [UpkeepSource] Upkeep scan holds 1 boxes: heartbeat=1; 0 refused, 0 cannot pay 
+  
+2026-10-09 00:47:08 [INFO] [RollupSyncTask] Canonical synchronization will start after 10 seconds 
+  
+2026-10-09 00:47:08 [INFO] [CandidateBuilder] CandidateBuilder started: collateralPoolSize=100, blockTransactions=true, sources=[rollups:5, emissions:20, upkeep:5] 
+  
+2026-10-09 00:47:08 [WARN] [MDSyncTask] Auto-commit is off (state.autoCommit): commit from the web panel's Mining > Difficulty > Commitment tab or POST /mining/commitment. An unregistered miner cannot submit NISPs, so it is not paid from rollups 
+  
+2026-10-09 00:47:08 [INFO] [MiningStratumServer] Mining server listening on 0.0.0.0, port 4444 
+  
+2026-10-09 00:47:08 [INFO] [play.api.Play] Application started (Prod) (no global state) 
+  
+2026-10-09 00:47:08 [INFO] [CandidateBuilder] Collateral set holds 2 live box(es) 
+  
+2026-10-09 00:47:09 [INFO] [UpkeepSource] Upkeep admits 1 of 1 due successors at 573: heartbeat:e0e29f3a; share used txs=1/5, bytes=247/262144, cost=12326/1000000 
+  
+2026-10-09 00:47:09 [INFO] [LithosPool] Ready: BlockPackage(height=573, rev=0, collateral=9f6171feda753699fe891ef3e5ffc765ba23835e9eed2e2716e9cce9b2048805, txs=[]) with txSize: 721 and collatBytes: 1249 
+  
+2026-10-09 00:47:09 [INFO] [EmissionTransactions] Collateral queue is empty at head 2 - nothing to spend 
+  
+2026-10-09 00:47:09 [INFO] [UpkeepSource] Upkeep offers 1 of 1 successors at 573 after the node's check: heartbeat:e0e29f3a 
+  
+2026-10-09 00:47:09 [INFO] [LithosPool] Ready: BlockPackage(height=573, rev=1, collateral=9f6171feda753699fe891ef3e5ffc765ba23835e9eed2e2716e9cce9b2048805, txs=[upkeep:heartbeat:aa88e373, holding-topup:162659d1]) with txSize: 721 and collatBytes: 1249 
+  
+2026-10-09 00:47:09 [INFO] [play.core.server.AkkaHttpServer] Listening for HTTP on /[0:0:0:0:0:0:0:0]:9100 
+  
+2026-10-09 00:47:09 [INFO] [LithosJobManager] New job 1 at height 573 usesCollateral=true msg=e42151d4c84ae342 
+  
+2026-10-09 00:47:09 [INFO] [LithosPool] Broadcasting job 1 to 0 miner(s); candidateStage=augmented 
+  
+2026-10-09 00:47:11 [INFO] [EngineWalletState] Wallet refreshed - 3 available, 0 reserved, 0 reward box(es) spendable 
+  
+2026-10-09 00:47:11 [INFO] [EngineWalletState] Pinned df283858119041e12b9cbeee62b02bd508fb8847f8b7279e0a642bcd5a06f087 for transactions in this miner's own blocks; 1 of 1 held 
+  
+2026-10-09 00:47:19 [INFO] [StateSnapshotActor] Restoring synchronization from snapshot 73575d4c26fdd5c7a02e0348601e041c78d8db5801797afe51795376964b1e63@425 with 196 retained cursor(s) 
+  
+2026-10-09 00:47:19 [INFO] [StateSnapshotActor] Saved synchronization snapshot 69a161668cf9ea8bd7d02cf3a2b48d9654c6fad46e65ddc1752577379d084f30@430 
+  
+2026-10-09 00:47:19 [INFO] [SyncHandler] Compacted 5 transform journal entry/entries into checkpoint 69a161668cf9ea8bd7d02cf3a2b48d9654c6fad46e65ddc1752577379d084f30@430; 11 remain volatile 
+  
+2026-10-09 00:47:20 [INFO] [StateSnapshotActor] Saved synchronization snapshot 9d3abec02bfbb6d00384bb23f22ff546402e821c9aaeef3919a0cc7fd33e86a8@445 
+  
+2026-10-09 00:47:20 [INFO] [SyncHandler] Compacted 15 transform journal entry/entries into checkpoint 9d3abec02bfbb6d00384bb23f22ff546402e821c9aaeef3919a0cc7fd33e86a8@445; 12 remain volatile 
+  
+2026-10-09 00:47:20 [INFO] [StateSnapshotActor] Saved synchronization snapshot 00e2850d4a5404a6e71e089db1c21773462ccd17b1496c61d8fa1eeacde9a12a@455 
+  
+2026-10-09 00:47:20 [INFO] [SyncHandler] Compacted 10 transform journal entry/entries into checkpoint 00e2850d4a5404a6e71e089db1c21773462ccd17b1496c61d8fa1eeacde9a12a@455; 18 remain volatile 
+  
+2026-10-09 00:47:20 [INFO] [StateSnapshotActor] Saved synchronization snapshot 150f7103e50deb272bc00af94e6093dabc133e5d95b6a5c02b3bb6bceb627ace@475 
+  
+2026-10-09 00:47:20 [INFO] [SyncHandler] Compacted 20 transform journal entry/entries into checkpoint 150f7103e50deb272bc00af94e6093dabc133e5d95b6a5c02b3bb6bceb627ace@475; 14 remain volatile 
+  
+2026-10-09 00:47:20 [INFO] [SyncHandler] Synchronized to height 500 (0 rollup(s) tracked, 0 miner(s) in the dictionary) 
+  
+2026-10-09 00:47:20 [INFO] [StateSnapshotActor] Saved synchronization snapshot d41d312793e525e75f1072550f7174d5c0a0a4fe1e0cc20c1ee50b6e47dfca2b@485 
+  
+2026-10-09 00:47:20 [INFO] [SyncHandler] Compacted 10 transform journal entry/entries into checkpoint d41d312793e525e75f1072550f7174d5c0a0a4fe1e0cc20c1ee50b6e47dfca2b@485; 20 remain volatile 
+  
+2026-10-09 00:47:20 [INFO] [StateSnapshotActor] Saved synchronization snapshot 083521f2c05856e5ab86564717cf7adbea55c02607af849330b5fc93ab711bf0@505 
+  
+2026-10-09 00:47:20 [INFO] [SyncHandler] Compacted 20 transform journal entry/entries into checkpoint 083521f2c05856e5ab86564717cf7adbea55c02607af849330b5fc93ab711bf0@505; 27 remain volatile 
+  
+2026-10-09 00:47:21 [INFO] [StateSnapshotActor] Saved synchronization snapshot f0cb12659176ff0ab29ae803e114cf996041ae93ce12e12e43cec2fbdc58cee1@535 
+  
+2026-10-09 00:47:21 [INFO] [SyncHandler] Compacted 30 transform journal entry/entries into checkpoint f0cb12659176ff0ab29ae803e114cf996041ae93ce12e12e43cec2fbdc58cee1@535; 18 remain volatile 
+  
+2026-10-09 00:47:21 [INFO] [StateSnapshotActor] Saved synchronization snapshot 74279b9bb40c1de3858dfae3f32fc7c40a5ca30a4aaf4f97932dd94518f2aa11@555 
+  
+2026-10-09 00:47:21 [INFO] [SyncHandler] Compacted 20 transform journal entry/entries into checkpoint 74279b9bb40c1de3858dfae3f32fc7c40a5ca30a4aaf4f97932dd94518f2aa11@555; 14 remain volatile 
+  
+2026-10-09 00:47:21 [INFO] [StateSnapshotActor] Saved synchronization snapshot 7a5c8005dd6af669de30f6f0beb67f62578ab314012063aee533c70dc1c7a691@565 
+  
+2026-10-09 00:47:21 [INFO] [SyncHandler] Compacted 10 transform journal entry/entries into checkpoint 7a5c8005dd6af669de30f6f0beb67f62578ab314012063aee533c70dc1c7a691@565; 7 remain volatile 
+  
+2026-10-09 00:47:21 [INFO] [StateSnapshotActor] Saved synchronization snapshot 6725ef9be27c5d6c8233741e0f79661ef68829cef930b1a50d44970fbad26f5a@572 
+  
+2026-10-09 00:47:21 [INFO] [SyncHandler] Compacted 7 transform journal entry/entries into checkpoint 6725ef9be27c5d6c8233741e0f79661ef68829cef930b1a50d44970fbad26f5a@572; 0 remain volatile 
+  
+2026-10-09 00:47:26 [INFO] [SyncHandler] Mempool view recovered at revision 1 with 0 chain(s) 
+  
+2026-10-09 00:47:30 [INFO] [UpkeepSource] Upkeep admits 1 of 1 due successors at 573: heartbeat:e0e29f3a; share used txs=1/5, bytes=247/262144, cost=12326/1000000 
+  
+2026-10-09 00:47:30 [INFO] [UpkeepSource] Upkeep offers 1 of 1 successors at 573 after the node's check: heartbeat:e0e29f3a 
+  
+2026-10-09 00:47:30 [INFO] [EmissionTransactions] Collateral queue is empty at head 2 - nothing to spend 
+  
+2026-10-09 00:47:30 [INFO] [LithosPool] Keeping published package for block 573: Not enough additional revenue 0/1000000 nanoERG or new protocol transactions 0/1 
+  
+2026-10-09 00:47:31 [INFO] [RollupPublisher] Publishing rollup transactions for FullSync with 0 rollup(s) 
+  
+2026-10-09 00:47:36 [INFO] [EmissionTransactions] Collateral queue is empty at head 2 - nothing to spend 
+  
+2026-10-09 00:47:40 [INFO] [LithosPool] Ready: BlockPackage(height=574, rev=0, collateral=9f6171feda753699fe891ef3e5ffc765ba23835e9eed2e2716e9cce9b2048805, txs=[]) with txSize: 721 and collatBytes: 1249 
+  
+2026-10-09 00:47:40 [INFO] [SyncHandler] Applied 2 transform(s) at height 573 (b7a7691e7e360370df145343f4618e3d6188482a0c0917acddfa61ad02bd6fde); 1 rollup(s) tracked, 0 dictionary copy/copies staged 
+  
+2026-10-09 00:47:40 [INFO] [EmissionTransactions] Collateral queue is empty at head 2 - nothing to spend 
+  
+2026-10-09 00:47:40 [INFO] [LithosPool] Ready: BlockPackage(height=574, rev=1, collateral=9f6171feda753699fe891ef3e5ffc765ba23835e9eed2e2716e9cce9b2048805, txs=[]) with txSize: 721 and collatBytes: 1249 
+  
+2026-10-09 00:47:40 [WARN] [LithosPool] Candidate request failed: requirement failed: collateral candidate has no proof; falling back to solo 
+  
+2026-10-09 00:47:40 [INFO] [LithosJobManager] New job 2 at height 574 usesCollateral=false msg=41242da9db978221 
+  
+2026-10-09 00:47:40 [INFO] [LithosPool] Broadcasting job 2 to 0 miner(s); candidateStage=solo 
+  
+2026-10-09 00:47:40 [INFO] [LithosPool] Ready: BlockPackage(height=574, rev=0, collateral=060fde9dd073d012f0d574588ae64a4094e124eec58d6ce54c5668e6214d14ce, txs=[]) with txSize: 721 and collatBytes: 1249 
+  
+2026-10-09 00:47:40 [INFO] [LithosJobManager] New job 3 at height 574 usesCollateral=true msg=c797429c467190d1 
+  
+2026-10-09 00:47:40 [INFO] [LithosPool] Broadcasting job 3 to 0 miner(s); candidateStage=genesis 
+  
+2026-10-09 00:47:40 [INFO] [EmissionTransactions] Collateral queue is empty at head 2 - nothing to spend 
+  
+2026-10-09 00:47:40 [INFO] [LithosPool] Ready: BlockPackage(height=574, rev=1, collateral=060fde9dd073d012f0d574588ae64a4094e124eec58d6ce54c5668e6214d14ce, txs=[]) with txSize: 721 and collatBytes: 1249 
+  
+2026-10-09 00:47:42 [INFO] [CandidateBuilder] Collateral set holds 1 live box(es) 
+  
+2026-10-09 00:47:48 [INFO] [LithosPool] Ready: BlockPackage(height=575, rev=0, collateral=060fde9dd073d012f0d574588ae64a4094e124eec58d6ce54c5668e6214d14ce, txs=[]) with txSize: 721 and collatBytes: 1249 
+  
+2026-10-09 00:47:48 [INFO] [EmissionTransactions] Collateral queue is empty at head 2 - nothing to spend 
+  
+2026-10-09 00:47:48 [INFO] [LithosPool] Ready: BlockPackage(height=575, rev=1, collateral=060fde9dd073d012f0d574588ae64a4094e124eec58d6ce54c5668e6214d14ce, txs=[]) with txSize: 721 and collatBytes: 1249 
+  
+2026-10-09 00:47:48 [INFO] [LithosJobManager] New job 4 at height 575 usesCollateral=true msg=79d97b359cd1bdee 
+  
+2026-10-09 00:47:48 [INFO] [LithosPool] Broadcasting job 4 to 0 miner(s); candidateStage=genesis 
+  
+2026-10-09 00:47:56 [INFO] [LithosPool] Ready: BlockPackage(height=576, rev=0, collateral=060fde9dd073d012f0d574588ae64a4094e124eec58d6ce54c5668e6214d14ce, txs=[]) with txSize: 721 and collatBytes: 1249 
+  
+2026-10-09 00:47:56 [INFO] [EmissionTransactions] Collateral queue is empty at head 2 - nothing to spend 
+  
+2026-10-09 00:47:56 [INFO] [LithosPool] Ready: BlockPackage(height=576, rev=1, collateral=060fde9dd073d012f0d574588ae64a4094e124eec58d6ce54c5668e6214d14ce, txs=[]) with txSize: 721 and collatBytes: 1249 
+  
+2026-10-09 00:47:56 [INFO] [LithosJobManager] New job 5 at height 576 usesCollateral=true msg=65e6b746a700e665 
+  
+2026-10-09 00:47:56 [INFO] [LithosPool] Broadcasting job 5 to 0 miner(s); candidateStage=genesis 
+  
+2026-10-09 00:48:00 [INFO] [LithosPool] Ready: BlockPackage(height=577, rev=0, collateral=060fde9dd073d012f0d574588ae64a4094e124eec58d6ce54c5668e6214d14ce, txs=[]) with txSize: 721 and collatBytes: 1249 
+  
+2026-10-09 00:48:01 [INFO] [EmissionTransactions] Collateral queue is empty at head 2 - nothing to spend 
+  
+2026-10-09 00:48:01 [INFO] [LithosPool] Ready: BlockPackage(height=577, rev=1, collateral=060fde9dd073d012f0d574588ae64a4094e124eec58d6ce54c5668e6214d14ce, txs=[]) with txSize: 721 and collatBytes: 1249 
+  
+2026-10-09 00:48:01 [INFO] [LithosJobManager] New job 6 at height 577 usesCollateral=true msg=d71f40bd4a00e6d2 
+  
+2026-10-09 00:48:01 [INFO] [LithosPool] Broadcasting job 6 to 0 miner(s); candidateStage=genesis 
+  
+2026-10-09 00:48:04 [INFO] [LithosPool] Ready: BlockPackage(height=578, rev=0, collateral=060fde9dd073d012f0d574588ae64a4094e124eec58d6ce54c5668e6214d14ce, txs=[]) with txSize: 721 and collatBytes: 1249 
+  
+2026-10-09 00:48:04 [INFO] [UpkeepSource] Upkeep admits 1 of 1 due successors at 578: heartbeat:0805a001; share used txs=1/5, bytes=247/262144, cost=12326/1000000 
+  
+2026-10-09 00:48:05 [INFO] [UpkeepSource] Upkeep offers 1 of 1 successors at 578 after the node's check: heartbeat:0805a001 
+  
+2026-10-09 00:48:05 [INFO] [EmissionTransactions] Collateral queue is empty at head 2 - nothing to spend 
+  
+2026-10-09 00:48:05 [INFO] [LithosPool] Ready: BlockPackage(height=578, rev=1, collateral=060fde9dd073d012f0d574588ae64a4094e124eec58d6ce54c5668e6214d14ce, txs=[upkeep:heartbeat:a23c9402, holding-topup:2700b0e1]) with txSize: 721 and collatBytes: 1249 
+  
+2026-10-09 00:48:05 [INFO] [LithosJobManager] New job 7 at height 578 usesCollateral=true msg=2485d861c5acda26 
+  
+2026-10-09 00:48:05 [INFO] [LithosPool] Broadcasting job 7 to 0 miner(s); candidateStage=augmented 
+  
+2026-10-09 00:48:06 [INFO] [EmissionTransactions] Self-collateralization: 9 wallet key(s), 2 already committed, budget 10, 2 key(s) taken protocol-wide 
+  
+2026-10-09 00:48:06 [INFO] [EmissionTransactions] Join at position 2 (backlog 0): 2915000000 nanoERG principal, 2000000000000 LIT permit, no priority fee, lender 3Wz5Vn75FyLCk3tTS1uULiqv8dDZvdQxpnTdcN3QCMyjk57FeFfg 
+  
+2026-10-09 00:48:07 [INFO] [EngineWalletState] Wallet refreshed - 3 available, 3 reserved, 0 reward box(es) spendable 
+  
+2026-10-09 00:48:07 [INFO] [EmissionTransactions] Join at position 3 (backlog 1): 2915000000 nanoERG principal, 2020000000000 LIT permit, no priority fee, lender 3WwiUtMHVUrEihN7ewZnGdP2EyeoR65aJc23evYpxR2K5Ej2naMN 
+  
+2026-10-09 00:48:08 [INFO] [EngineWalletState] Wallet refreshed - 3 available, 4 reserved, 0 reward box(es) spendable 
+  
+2026-10-09 00:48:08 [INFO] [EmissionTransactions] Join at position 4 (backlog 2): 2915000000 nanoERG principal, 2040000000000 LIT permit, no priority fee, lender 3Wxq5yP8DQwgW5DGh6WBXYCUxggi7tb5hLMxZsG35hhPUmKJrVnG 
+  
+2026-10-09 00:48:08 [WARN] [CommitmentTransactions] No usable difficulty commitment, mining on the configured diff 4.00G: Could not find a stored data box 
+  
+2026-10-09 00:48:08 [WARN] [CommitmentTransactions] NISPs submitted or mined in this manner may be considered fraudulent 
+  
+2026-10-09 00:48:09 [INFO] [EngineWalletState] Wallet refreshed - 3 available, 5 reserved, 0 reward box(es) spendable 
+  
+2026-10-09 00:48:09 [INFO] [EmissionTransactions] Join at position 5 (backlog 3): 2915000000 nanoERG principal, 2060000000000 LIT permit, no priority fee, lender 3Ww3YJv8NhhUHRLP9LxZFHYRvE67mDWD6dcismBqdkL1aJxzMcbF 
+  
+2026-10-09 00:48:10 [INFO] [EngineWalletState] Wallet refreshed - 3 available, 6 reserved, 0 reward box(es) spendable 
+  
+2026-10-09 00:48:10 [INFO] [EmissionTransactions] Join at position 6 (backlog 4): 2915000000 nanoERG principal, 2080000000000 LIT permit, no priority fee, lender 3WzL1NgQw7UsoNYoW17ov9uUwvs9yGA993JcQG7wLb9mpWVYPXcf 
+  
+2026-10-09 00:48:11 [INFO] [EmissionTransactions] Sent join 848fba13dd81a69360072573136bec02c1a53891bab4153a1c737c554a3b3654 for lender 3Wz5Vn75FyLCk3tTS1uULiqv8dDZvdQxpnTdcN3QCMyjk57FeFfg 
+  
+2026-10-09 00:48:11 [INFO] [EmissionTransactions] Sent join 1ed51cc94b8275401b7b28e2907c095f810a5d0ad564d9f4a6b6ca96620e06d0 for lender 3WwiUtMHVUrEihN7ewZnGdP2EyeoR65aJc23evYpxR2K5Ej2naMN 
+  
+2026-10-09 00:48:11 [INFO] [EmissionTransactions] Sent join e1b4c3b25b8163c59066e1210e5b3010e69691b270a48cc212f7de893eaa58c6 for lender 3Wxq5yP8DQwgW5DGh6WBXYCUxggi7tb5hLMxZsG35hhPUmKJrVnG 
+  
+2026-10-09 00:48:11 [INFO] [EmissionTransactions] Sent join efcf435d10c2d08ff525c96042fe85af7e872f44c254bda52f94ca32aa1756e9 for lender 3Ww3YJv8NhhUHRLP9LxZFHYRvE67mDWD6dcismBqdkL1aJxzMcbF 
+  
+2026-10-09 00:48:11 [INFO] [EmissionTransactions] Sent join 1351cfd204b32b80e59e4d2e6ce1bef8bc28b6b1d1acd0f22ddfa3a678040c93 for lender 3WzL1NgQw7UsoNYoW17ov9uUwvs9yGA993JcQG7wLb9mpWVYPXcf 
+  
+2026-10-09 00:48:11 [INFO] [EmissionTransactions] Emission box is 5 unconfirmed spend(s) ahead, tip 3c0e871541e6210fde5006d2d5b19793980c5148fe0852da8a437dd0de130758 
+  
+2026-10-09 00:48:11 [INFO] [EmissionTransactions] Activate at queue position 2: emits 640000000000 LIT (pool 500000000000, founders 140000000000), bootstrapping 
+  
+2026-10-09 00:48:11 [INFO] [EmissionTransactions] Activate at queue position 3: emits 640000000000 LIT (pool 500000000000, founders 140000000000), bootstrapping 
+  
+2026-10-09 00:48:11 [INFO] [EmissionTransactions] Activate at queue position 4: emits 640000000000 LIT (pool 500000000000, founders 140000000000), bootstrapping 
+  
+2026-10-09 00:48:11 [INFO] [EmissionTransactions] Activate at queue position 5: emits 640000000000 LIT (pool 500000000000, founders 140000000000), bootstrapping 
+  
+2026-10-09 00:48:12 [INFO] [EngineWalletState] Wallet refreshed - 3 available, 10 reserved, 0 reward box(es) spendable 
+  
+2026-10-09 00:48:12 [INFO] [EngineWalletState] Wallet refreshed - 3 available, 10 reserved, 0 reward box(es) spendable 
+  
+2026-10-09 00:48:13 [INFO] [EngineWalletState] Wallet refreshed - 4 available, 10 reserved, 0 reward box(es) spendable 
+  
+2026-10-09 00:48:20 [INFO] [LithosPool] Ready: BlockPackage(height=579, rev=0, collateral=060fde9dd073d012f0d574588ae64a4094e124eec58d6ce54c5668e6214d14ce, txs=[]) with txSize: 721 and collatBytes: 1249 
+  
+2026-10-09 00:48:20 [INFO] [UpkeepSource] Upkeep admits 1 of 1 due successors at 579: heartbeat:0805a001; share used txs=1/5, bytes=247/262144, cost=12326/1000000 
+  
+2026-10-09 00:48:20 [INFO] [EmissionTransactions] Collateral queue is empty at head 2 - nothing to spend 
+  
+2026-10-09 00:48:20 [INFO] [UpkeepSource] Upkeep offers 1 of 1 successors at 579 after the node's check: heartbeat:0805a001 
+  
+2026-10-09 00:48:20 [INFO] [LithosPool] Ready: BlockPackage(height=579, rev=1, collateral=060fde9dd073d012f0d574588ae64a4094e124eec58d6ce54c5668e6214d14ce, txs=[upkeep:heartbeat:3b32e2d6, holding-topup:ab985402]) with txSize: 721 and collatBytes: 1249 
+  
+2026-10-09 00:48:20 [INFO] [LithosJobManager] New job 8 at height 579 usesCollateral=true msg=459c046162e334a7 
+  
+2026-10-09 00:48:20 [INFO] [LithosPool] Broadcasting job 8 to 0 miner(s); candidateStage=augmented 
+  

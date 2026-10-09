@@ -1,0 +1,104 @@
+22:13:33,960 |-INFO in ch.qos.logback.classic.LoggerContext[default] - This is logback-classic version 1.5.21
+22:13:33,961 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5db250b4 - No custom configurators were discovered as a service.
+22:13:33,961 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5db250b4 - Trying to configure with ch.qos.logback.classic.util.DefaultJoranConfigurator
+22:13:33,962 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5db250b4 - Constructed configurator of type class ch.qos.logback.classic.util.DefaultJoranConfigurator
+22:13:33,968 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+22:13:33,973 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [file:/home/scott/bin/lithos-upkeep/target/universal/stage/conf/logback.xml]
+22:13:34,026 |-WARN in ch.qos.logback.core.joran.action.ConversionRuleAction - [converterClass] attribute is deprecated and replaced by [class]. See element [conversionRule] near line 4
+22:13:34,074 |-INFO in ch.qos.logback.core.model.processor.ConversionRuleModelHandler - registering conversion word coloredLevel with class [play.api.libs.logback.ColoredLevel]
+22:13:34,074 |-INFO in ch.qos.logback.classic.model.processor.ConfigurationModelHandlerFull - Main configuration file URL: file:/home/scott/bin/lithos-upkeep/target/universal/stage/conf/logback.xml
+22:13:34,075 |-INFO in ch.qos.logback.classic.model.processor.ConfigurationModelHandlerFull - FileWatchList= {/home/scott/bin/lithos-upkeep/target/universal/stage/conf/logback.xml}
+22:13:34,076 |-INFO in ch.qos.logback.classic.model.processor.ConfigurationModelHandlerFull - URLWatchList= {}
+22:13:34,079 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [FILE]
+22:13:34,079 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.FileAppender]
+22:13:34,087 |-INFO in ch.qos.logback.core.model.processor.ModelInterpretationContext@223f3642 - value "./logs/application.log" substituted for "${application.home:-.}/logs/application.log"
+22:13:34,087 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+22:13:34,126 |-INFO in ch.qos.logback.core.FileAppender[FILE] - File property is set to [./logs/application.log]
+22:13:34,127 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [STDOUT]
+22:13:34,127 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+22:13:34,128 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+22:13:34,129 |-INFO in ch.qos.logback.core.ConsoleAppender[STDOUT] - NOTE: Writing to the console can be slow. Try to avoid logging to the 
+22:13:34,129 |-INFO in ch.qos.logback.core.ConsoleAppender[STDOUT] - console in production environments, especially in high volume systems.
+22:13:34,129 |-INFO in ch.qos.logback.core.ConsoleAppender[STDOUT] - See also https://logback.qos.ch/codes.html#slowConsole
+22:13:34,129 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [ASYNCFILE]
+22:13:34,129 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.classic.AsyncAppender]
+22:13:34,130 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [FILE] to ch.qos.logback.classic.AsyncAppender[ASYNCFILE]
+22:13:34,130 |-INFO in ch.qos.logback.classic.AsyncAppender[ASYNCFILE] - Attaching appender named [FILE] to AsyncAppender.
+22:13:34,132 |-INFO in ch.qos.logback.classic.AsyncAppender[ASYNCFILE] - Setting discardingThreshold to 51
+22:13:34,132 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [ASYNCSTDOUT]
+22:13:34,132 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.classic.AsyncAppender]
+22:13:34,132 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [STDOUT] to ch.qos.logback.classic.AsyncAppender[ASYNCSTDOUT]
+22:13:34,132 |-INFO in ch.qos.logback.classic.AsyncAppender[ASYNCSTDOUT] - Attaching appender named [STDOUT] to AsyncAppender.
+22:13:34,132 |-INFO in ch.qos.logback.classic.AsyncAppender[ASYNCSTDOUT] - Setting discardingThreshold to 51
+22:13:34,133 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [play] to INFO
+22:13:34,133 |-INFO in ch.qos.logback.classic.model.processor.RootLoggerModelHandler - Setting level of ROOT logger to INFO
+22:13:34,133 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [ASYNCFILE] to Logger[ROOT]
+22:13:34,133 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [ASYNCSTDOUT] to Logger[ROOT]
+22:13:34,133 |-INFO in ch.qos.logback.core.model.processor.DefaultProcessor@38c5cc4c - End of configuration.
+22:13:34,134 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@37918c79 - Registering current configuration as safe fallback point
+22:13:34,142 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5db250b4 - ch.qos.logback.classic.util.DefaultJoranConfigurator.configure() call lasted 172 milliseconds. ExecutionStatus=DO_NOT_INVOKE_NEXT_IF_ANY
+
+2026-10-08 22:13:35 [INFO] [DeployProtocol] Node A 6.0.7 at height 34, deployer 3WxtnwJojAm4C9DJtgNHs5zawzD44yE6cKyGM7NeHf7Cw1yP7XBU 
+  
+2026-10-08 22:13:36 [INFO] [DeployProtocol] 1 spendable box(es), 201499000000 nanoERG 
+  
+2026-10-08 22:13:36 [INFO] [DeployProtocol] mint litId (Lithos devnet LIT, 1000000000000000000): sent 669412ea1f5fe0c96f6371e4ffed4b9d541a0b47e59e04ea2b803a7bf9d15b7e 
+  
+2026-10-08 22:13:40 [INFO] [DeployProtocol] mint litId (Lithos devnet LIT, 1000000000000000000): confirmed 669412ea1f5fe0c96f6371e4ffed4b9d541a0b47e59e04ea2b803a7bf9d15b7e 
+  
+2026-10-08 22:13:40 [INFO] [DeployProtocol] litId = beff080f432f9e35df87d695d32976ccd3539cb61744e689533d01959251bd34 
+  
+2026-10-08 22:13:40 [INFO] [DeployProtocol] mint emissionNft (Lithos devnet emission NFT, 1): sent 8daf71419031fe356b6f5fadeb2bd45c7cc9f27590b54e840a6bb3c366c3eed2 
+  
+2026-10-08 22:13:44 [INFO] [DeployProtocol] mint emissionNft (Lithos devnet emission NFT, 1): confirmed 8daf71419031fe356b6f5fadeb2bd45c7cc9f27590b54e840a6bb3c366c3eed2 
+  
+2026-10-08 22:13:44 [INFO] [DeployProtocol] emissionNft = 266cbff4f248f990fc0acc8aceef672b63bcd0ee6580e0098830a95022408b14 
+  
+2026-10-08 22:13:44 [INFO] [DeployProtocol] mint emConfigNft (Lithos devnet emission config NFT, 1): sent 4dbd623ea4504aa1fe92d8f96acfaa0c6033899bd43ffad9609b84c8fca09b1c 
+  
+2026-10-08 22:13:48 [INFO] [DeployProtocol] mint emConfigNft (Lithos devnet emission config NFT, 1): confirmed 4dbd623ea4504aa1fe92d8f96acfaa0c6033899bd43ffad9609b84c8fca09b1c 
+  
+2026-10-08 22:13:48 [INFO] [DeployProtocol] emConfigNft = e5e19798ebc583f2ba049fde54f69d6fee67e793a9b91d3464eaeefbf65de7a7 
+  
+2026-10-08 22:13:48 [INFO] [DeployProtocol] mint queueToken (Lithos devnet queue token, 9223372036854775807): sent cdc514814a0ab71caba0af98736fdaedef5d27c98b6bc3a379e2d5debbeb5c97 
+  
+2026-10-08 22:13:54 [INFO] [DeployProtocol] mint queueToken (Lithos devnet queue token, 9223372036854775807): confirmed cdc514814a0ab71caba0af98736fdaedef5d27c98b6bc3a379e2d5debbeb5c97 
+  
+2026-10-08 22:13:54 [INFO] [DeployProtocol] queueToken = 25091c3db1a18302ad0e008ec57ea64980e3a880495c09820897d9b748727149 
+  
+2026-10-08 22:13:54 [INFO] [DeployProtocol] mint collatToken (Lithos devnet collateral token, 9223372036854775807): sent 44fce1ed1ff315331a3b03689d033b7b1aaa7ec001fc9c0db37cf686d80a88a6 
+  
+2026-10-08 22:13:58 [INFO] [DeployProtocol] mint collatToken (Lithos devnet collateral token, 9223372036854775807): confirmed 44fce1ed1ff315331a3b03689d033b7b1aaa7ec001fc9c0db37cf686d80a88a6 
+  
+2026-10-08 22:13:58 [INFO] [DeployProtocol] collatToken = 064126a8d18f06a3cf0a96d0dc447d7d0150577ca483676dbc11d86d3a80e812 
+  
+2026-10-08 22:13:59 [INFO] [DeployProtocol] mint fpToken (Lithos devnet FP control NFT, 1): sent efd3fdbd8f84046c6710a713b15681612d221ffedd5ac462efb03a16d33eae4d 
+  
+2026-10-08 22:14:05 [INFO] [DeployProtocol] mint fpToken (Lithos devnet FP control NFT, 1): confirmed efd3fdbd8f84046c6710a713b15681612d221ffedd5ac462efb03a16d33eae4d 
+  
+2026-10-08 22:14:05 [INFO] [DeployProtocol] fpToken = 2856c32ca8a9875552aa39f4facb2a1f823349f608ff2996a037aa9860ad6030 
+  
+2026-10-08 22:14:05 [INFO] [DeployProtocol] mint mdToken (Lithos devnet miner dictionary NFT, 1): sent 52b57f7337cda3d5bf8a9c05010c8deb71708c627f47b7ce5563c0e6b974bf0c 
+  
+2026-10-08 22:14:09 [INFO] [DeployProtocol] mint mdToken (Lithos devnet miner dictionary NFT, 1): confirmed 52b57f7337cda3d5bf8a9c05010c8deb71708c627f47b7ce5563c0e6b974bf0c 
+  
+2026-10-08 22:14:09 [INFO] [DeployProtocol] mdToken = 3d0877ae203e869f38701c477f0f9b47928f4e071dcffb04904fc45ef59cb78a 
+  
+2026-10-08 22:14:09 [INFO] [DeployProtocol] mint voteToken (Lithos devnet vote token, 5): sent 8b820b5cd3c2d8f2b8f0f32c13d3e38e574dcb044ed8694209f704b9c2a11218 
+  
+2026-10-08 22:14:13 [INFO] [DeployProtocol] mint voteToken (Lithos devnet vote token, 5): confirmed 8b820b5cd3c2d8f2b8f0f32c13d3e38e574dcb044ed8694209f704b9c2a11218 
+  
+2026-10-08 22:14:13 [INFO] [DeployProtocol] voteToken = de5aeb9361982be74f503cfc44389e80a0c66ba686480c4e4db2fae4e9be0514 
+  
+2026-10-08 22:14:16 [INFO] [DeployProtocol] Compiled against the minted ids; emission guard 1bb6010604000e20... 
+  
+2026-10-08 22:14:16 [INFO] [DeployProtocol] protocol boxes: sent 3721d06d24a4bc2b8e0f8b3fb22f6e7e67d39ae50e62769071691d861921978e 
+  
+2026-10-08 22:14:20 [INFO] [DeployProtocol] protocol boxes: confirmed 3721d06d24a4bc2b8e0f8b3fb22f6e7e67d39ae50e62769071691d861921978e 
+  
+2026-10-08 22:14:20 [INFO] [DeployProtocol] emission box 0f6a6c9552dd6f1afb6fdf6e10f12070be75f77becf2c99b075bc28a5d66c95a, config box 890dfd754852a016a7f5415a4d12e7ad329c7e1f8fefe6cb298a2307d6c3e949, FP control box 19718659cf2fb24b6dbb11f9fbf9e97125096c470047da3b720979d95424836f, dictionary genesis 2a47ef12056284fd73c72087892501e7c630fc1b8e4e39cbd79344bd0ac8ae9d 
+  
+2026-10-08 22:14:20 [INFO] [DeployProtocol] Wrote /home/scott/bin/skunkyard/skunks/upkeep/devnet/deployment.json 
+  
+2026-10-08 22:14:20 [INFO] [DeployProtocol] Deployment complete: /home/scott/bin/skunkyard/skunks/upkeep/devnet/deployment.json (emission box 0f6a6c9552dd6f1afb6fdf6e10f12070be75f77becf2c99b075bc28a5d66c95a) 
+  
