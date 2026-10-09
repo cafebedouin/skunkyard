@@ -10,8 +10,8 @@
 > **Rig run 4 PASS** (`skunks/upkeep/devnet/rig-run4/`): one command from a wiped chain to block 76 carrying the
 > client's genesis and beat; peeryard pushed with README. Phase 7 done (`upkeep-space`, 116/116 upkeep specs).
 > **PR branches** (stripped, squashed, in worktree scratchpad/prwt and on the fork): `pr/upkeep`, `pr/upkeep-space`,
-> plus `snapshot-spec-wait`; texts in `skunks/upkeep/pr/`. **Second five-seat round** running on both
-> (`skunks/upkeep/seats/2026-10-09/`, raw out in scratchpad/seats2/pr{1,2}/out). **Next:** (1) dispositions + fixes;
+> plus `snapshot-spec-wait`; texts in `skunks/upkeep/pr/`. **Round two done** (`skunks/upkeep/SEATS-2.md`), fixes committed on both branches. **Round three** running
+> on the rebuilt PR branches (`seats/2026-10-09-r3/`, raw out in scratchpad/seats3). **Next:** (1) round-three dispositions; if clean, present for the user's go;
 > (2) strip working files, squash, second five-seat round, user's go for the PRs; (3) census first cut via explorer.
 > Process rule: pid files only, never pattern kills (`ergo_logic/docs/method/process-discipline.md`).
 
