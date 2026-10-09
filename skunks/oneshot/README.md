@@ -171,6 +171,18 @@ Generates a BIP39 24-word mnemonic (`generateMnemonic(256)`), derives `m/44'/429
 `$HOME/.config/skunkyard/testnet-wallet.txt` (directory 0700, file 0600, opened with `wx` so an existing file is never
 overwritten; a second run exits 1 and writes nothing). Testnet funds only.
 
+## Mainnet wallet
+
+```bash
+cd skunks/oneshot && node scripts/mainnet-wallet.mjs
+```
+
+The same generator for mainnet (`Network.Mainnet`, same path `m/44'/429'/0'/0/0`): the mnemonic to
+`$HOME/.config/skunkyard/mainnet-wallet.txt`, the address to `mainnet-wallet.address` beside it (0700 / 0600, `wx`),
+prints the address only, and reads the file back to check it derives the same address. Restores in any EIP-3 wallet
+(Nautilus, a node's `/wallet/restore`). Made 2026-10-09: `9gnBiuBAy4GgGEk1MZQ5f7aWWuQnyGHNVVF4bvhHKWvecWTNcfc`.
+Real money; keep only what a test needs.
+
 ## Regenerate vectors
 
 From the repository root (needs coursier and a JDK; no node):
