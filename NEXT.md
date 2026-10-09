@@ -10,10 +10,10 @@
 > **Rig run 4 PASS** (`skunks/upkeep/devnet/rig-run4/`): one command from a wiped chain to block 76 carrying the
 > client's genesis and beat; peeryard pushed with README. Phase 7 done (`upkeep-space`, 116/116 upkeep specs).
 > **PR branches** (stripped, squashed, in worktree scratchpad/prwt and on the fork): `pr/upkeep`, `pr/upkeep-space`,
-> plus `snapshot-spec-wait`; texts in `skunks/upkeep/pr/`. **Round two done** (`skunks/upkeep/SEATS-2.md`), fixes committed on both branches. **Five seat rounds done** (`SEATS-2..5.md`), every fix applied; the operator called the review enough
-> (2026-10-09). Full suites rerunning, then the PR branches are rebuilt and pushed in both layouts. **Next:** present
-> for the user's go: which layout (combined `pr/upkeep`+`pr/upkeep-space`, or split `pr/deploy`+`pr/upkeep-only`+
-> `pr/upkeep-space`), then open the PRs and send the DM; if clean, present for the user's go (combined or split is his call); if clean, present for the user's go (combined or split is his call); if clean, present for the user's go;
+> plus `snapshot-spec-wait`; texts in `skunks/upkeep/pr/`. **Round two done** (`skunks/upkeep/SEATS-2.md`), fixes committed on both branches. **Delivered 2026-10-09:** split layout pushed to the fork as `deployment-override`, `upkeep-source`,
+> `upkeep-space-option` (+ `snapshot-spec-wait`); overview issue Lithos-Protocol/Lithos-Client#13; the DM (with the
+> open questions) in `posts/2026-10-upkeep-maintainer-dm.md`, sent by the user. **Next:** open the PRs in order on
+> the maintainer's word; answer his questions; then the census (SK-042) and the grid job; if clean, present for the user's go (combined or split is his call); if clean, present for the user's go (combined or split is his call); if clean, present for the user's go;
 > (2) strip working files, squash, second five-seat round, user's go for the PRs; (3) census first cut via explorer.
 > Process rule: pid files only, never pattern kills (`ergo_logic/docs/method/process-discipline.md`).
 
