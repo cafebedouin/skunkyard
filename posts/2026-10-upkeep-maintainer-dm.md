@@ -1,7 +1,7 @@
 # DM to the Lithos lead developer: the upkeep source, before the PR (draft, 2026-10-08)
 
-Status: draft; the user sends it after the acceptance checks and the second seat round. Two bracketed placeholders wait
-on results (`skunks/upkeep/testnet/README.md`, `skunks/upkeep/devnet/`). Earlier dialogue: `notes/2026-10-05-lithos-reply.md`.
+Status: draft; the user sends it after the second seat round. The acceptance results are in (testnet box, devnet block
+76 by one rig command, mainnet share; `skunks/upkeep/testnet/README.md`, `skunks/upkeep/devnet/`). Earlier dialogue: `notes/2026-10-05-lithos-reply.md`.
 
 ---
 

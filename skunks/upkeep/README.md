@@ -14,5 +14,10 @@ and the research questions it answers (`research/agents/UPKEEP.md` U3, `ROADMAP.
 Built in four cloud sessions (framework; heartbeat job and `DueJob.ergo`; hardening; shape) with the operator compiling and
 testing each (one trivial fix in four phases); then the seats; then the fix round (`prompts/phase-5-seats.md` in the clone).
 
-Open after the fix round: a due-job box on testnet, an observe-mode log against it, a Lithos devnet candidate carrying a
-beat, then the PR. Contract v2 question: an optional owner path (R7) for creators who want an exit.
+After the fix round (2026-10-09): a due-job box on testnet (`testnet/`); on a devnet, one rig command from a wiped chain to
+a block the client built carrying its genesis and the beat (`devnet/FINDINGS.md`, runs 1 to 9 by hand, rig runs 1 to 4;
+the rig lives in peeryard `rig/examples/lithos-block.{json,sh}`); mainnet has 30 Lithos blocks, a 1.6% share
+(`research/agents/lithos-blocks-mainnet.py`). A seventh cloud session wrote the stacked follow-on (`upkeep-space`:
+value-per-byte ordering, an opportunistic share). PR branches, stripped and squashed: `pr/upkeep`, `pr/upkeep-space`,
+`snapshot-spec-wait`; texts in `pr/`. Second seat round on both PRs: `seats/2026-10-09/`. Contract v2 question: an
+optional owner path (R7) for creators who want an exit. The observe-mode log on testnet is optional and not done.
