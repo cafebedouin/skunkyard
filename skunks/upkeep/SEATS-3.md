@@ -47,3 +47,23 @@ Maintainer "request changes, split into two", Derivation "merge with fixes", Fid
 | Spec names and gaps: "grow into the remainder"; the fixture's `blockShare = 1.0` means only an empty mempool fits; no non-empty-fitting case (Fidelity) | CONFIRMED | **Fix:** renamed; a source spec with `blockShare = 0.5` and a mempool that fits |
 | Text: "can be merged or closed on its own", "changes only…", "best-paying first", "every transaction waiting", "once per block", "never displaces", `minTip` claim, allowance omission; conf comments B10–B15 (Fidelity, Maintainer) | CONFIRMED each | **Fixed** with the new rule's wording |
 | Split section 1 (ordering) from section 2 (opportunistic); fold ordering into PR 1 (Maintainer) | Scope | For the operator; noted in the PR text |
+
+## PR 2: Grok (landed after the table above)
+
+"Merge with fixes." Its four defects and the dispositions: an exact fit of the rest takes the space the node's own
+emission and fee transactions need (CONFIRMED for the package-growing rule; **fixed** twice over: growth is in the
+count only within the configured bytes and cost, and a demand that reaches the rest exactly counts as not fitting,
+since a saturated read means "at least this"); a transaction without size or cost disables growth (SETTLED from
+the node source, cost is present for every pooled transaction); offset paging over a changing mempool can
+under-count (CONFIRMED, bounded; stated in the conf and PR text, no snapshot endpoint exists); a failed block-budget
+read leaves the widened allowance uncapped (CONFIRMED for the `Long.MaxValue` allowance; **fixed** by raising the
+count only). Its corner: sixteen dear boxes signed and not fitting stop a build in front of a smaller box that would
+fit (CONFIRMED, bounded to one block; not changed). Its missing test, package admission with the widened allowance:
+moot with the count-only allowance, the builder's own bounds stand.
+
+## What changed after round three
+
+On `upkeep-adapter` (7f431e1e, 72cd94cd) and `upkeep-space` (rebased, the follow-on redesign commit): everything
+marked **Fixed** above. Affected suites: 231/231 on the adapter branch, 128/128 upkeep specs on the follow-on; the
+full suite reruns on each. Round four runs on the rebuilt `pr/upkeep` and `pr/upkeep-space`
+(`seats/2026-10-09-r4/`), per the rule that a fix list this long gets another round.
