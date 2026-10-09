@@ -30,3 +30,32 @@ fixes", Grok pending. Every seat-introduced fact was checked in the code before 
 | Text: `Deployment.install` for `DeploymentConfig.install`; "the other network" for its `collateral`; "waits at least" for "on average"; "up to 16 node calls"; "no key and no fee" as a `ScriptJob` property; the wallet sentence; the README rent sentence and the R4 + R5 lock; observe prerequisites; the Dexy follow-up line; the `DueJob.ergo` wording ("exactly one height", "unconstrained", the standing R4); `Deployment.scala` wording; "see the count"; the rig notes; the snapshot note; "Not extractive" to one paragraph; the per-spec walkthrough (Maintainer, Fidelity) | CONFIRMED each | **Fixed** |
 | Doc: `Upkeep.walletInputs`, the source header's "off the request path", `ScriptJob`'s configured-id failure modes, `UpkeepJob`'s fee sentence and line break, the conf's wallet reason (Fidelity) | CONFIRMED each | **Fixed** with Fidelity's wording |
 | Scope: the split (Maintainer, Derivation; every round) | For the operator | Both layouts are built and pushed |
+
+## PR 1: Grok (landed after the table above)
+
+"Merge with fixes." Two defects: boxes held as unable to pay fill `maxBoxesPerJob` (discovery order, due-height
+ascending, puts dust boxes first), so payable boxes past the cap are never tracked (CONFIRMED; **fixed:** exhausted
+boxes stay out of the capped part of a pass and their holds survive it, since every found id is still reported;
+refused boxes stay tracked and return after their passes; spec); and the unread-input hole (CONFIRMED; **fixed** in the
+second batch above, before this answer landed). Its unverified notes (the node check's height, cost accounting) are
+settled from the node source in earlier rounds.
+
+## PR 2 (`pr/upkeep-space` at 366603d0)
+
+Verdicts: Maintainer "split it; merge section 2 once tightened", Derivation "merge with fixes", Fidelity "send with
+fixes"; Gemini and Grok pending.
+
+| Point (who) | Check | Disposition |
+|---|---|---|
+| **Section 1 is not an option**: every operator running the heartbeat gets the new order with no switch, and free beats wait longer (Maintainer, Derivation) | CONFIRMED | **Fixed:** `order = "rotation"` (default, the upkeep PR's order) or `"value"`; a spec shows the default ignores what boxes declare |
+| **The starvation guarantee is false**: ids change on every beat, the rotation head may not be due, so "once per cycle" is only probabilistic (Maintainer, Derivation, Fidelity) | CONFIRMED | **Fixed:** by value, the due box unspent the longest (lowest creation height among due boxes) goes first; a waiting box keeps its id and creation height, so the wait is bounded however the set changes |
+| **No margin for the node's own emission and fee transactions** in the fit (Derivation; Grok, round three) | CONFIRMED | **Fixed:** a reserve (4,096 bytes, 200,000 cost) is subtracted from the rest before the fit |
+| **The mempool read runs even when growth could change nothing**, and with no time limit on the build path (Maintainer, Derivation) | CONFIRMED | **Fixed:** read only with more due boxes than slots; a read past 2 seconds fails and the configured count stands; spec |
+| **`verifyWithNode` now costs up to 4× the node checks** (Maintainer) | CONFIRMED | Stated in the conf and the PR text |
+| **Say that the builder's admission is the hard bound** (Maintainer, Fidelity) | Agreed | PR text |
+| `blockShare` outside [0, 1] (Derivation) | CONFIRMED possible | **Fixed:** clamped in the share computation |
+| Class doc "grows to the package share"; `demand` doc "can only overstate"; `byWorth` doc; `UpkeepJob` dead link and heartbeat vocabulary; `HeartbeatJob` overclaim; the fixture's `blockShare` comment; conf wording (B1–B11, Fidelity) | CONFIRMED each | **Fixed** |
+| Text: "none waits forever", "never the R6 tip as declared", "decided once per height", "one slot kept", the extra room in bytes, who sees a change (Maintainer, Fidelity) | CONFIRMED each | **Fixed:** the PR text rewritten with a table, the figures and the bounded rule |
+| Eager parsing in both modes (every round) | CONFIRMED, bounded | Comment corrected to include configured ids |
+| Ancestors counted twice in the demand (Derivation) | CONFIRMED, overstates only | Not changed |
+| A `CandidateBuilder` test with the widened allowance (Maintainer, every round) | Gap | Not done; stated |
