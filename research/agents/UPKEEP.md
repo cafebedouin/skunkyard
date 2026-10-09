@@ -292,3 +292,27 @@ enough miners doing it, miner capital could cushion a large dump (the 2014 "bear
 picture): back-running a whale's sale in the same block buys the dip from the pools the sale moved, which narrows the
 gap other traders see, as liquidity of last resort rather than extraction. [Idea, not measured: U1b line j sizes
 capital takes only up to 10 ERG.]
+
+## SigmaUSD: the bot that already arbitrages the bank, and SigRSV below NAV (2026-10-09)
+
+**The incumbent.** `9fffEXsaT9roF7tKt5GyJUUZfun3NpWrMQ5oMAGGXRYMFK88aJq` (P2PK, 8,521 transactions, ~3,685 ERG): 33 of
+the last 40 bank transactions. At one height it mints SigRSV at the bank and sells it into the SigRSV pool (NFT
+`1d5afc59…`) in a second transaction, whenever the pool sits more than the 2% mint fee above the bank. Over 116
+such blocks (1,738,107 to 1,888,826) it netted 142.8 ERG on 9,290 ERG minted, 1.54%; its last pair was at 1,888,826.
+At 1,891,100 nothing was open: reserve ratio 296% (SigUSD mint and SigRSV redeem locked below 400%), ERG/USD
+$0.2915 by the oracle, the main SigUSD pool 0.25% above the bank's redeem price, the SigRSV pool 2.02% below the
+bank's mint price. A Lithos miner beats the bot by ordering: in a block it builds, its own mint-and-sell goes first
+and the bot's legs fail; and only there are the two legs sure to land together. At today's 1.5% block share that is
+about 2 ERG of the bot's 142.8; it scales with Lithos's hashrate, and needs a few hundred ERG per take (the vault,
+SK-045). The trigger is an oracle refresh: when ERG falls, the bank's SigRSV price falls about 1.5 times as fast (the
+leverage at RR 296%) while the pool lags, and the builder sees the refresh in the block it builds.
+
+**SigRSV below NAV (the user).** Buying at 2% under a computable value is value arbitrage with an unknown holding
+period. The exit is RR >= 400% (redemption reopens); RR was 225% at the window's start (1,869,418) and 296% now.
+The discount has no floor while redemption is locked (the mint price caps the pool from above only), so it can widen,
+which is when buying is cheapest; NAV itself is ~1.5x long ERG. Idea: Lithos, or a vault its miners fund, buys
+SigRSV whenever the discount passes a threshold and offers it to miners on LithosDex below NAV (miners are paid in
+ERG, natural ERG longs); the pool gains a buyer of last resort; at RR >= 400% the stock redeems at NAV. With the
+mint-and-sell above, one block builder works both edges of the band.
+Census item: the SigRSV pool's discount to the bank's NAV per block over a long window (depth, duration, and what
+RR did meanwhile).
