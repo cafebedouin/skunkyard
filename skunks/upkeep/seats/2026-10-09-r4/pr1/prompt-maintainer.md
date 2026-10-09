@@ -1,0 +1,17 @@
+Work alone, in this directory, with your file tools only: no network, no shell commands, no delegation. Read README-SLICE.md first.
+
+You are the Maintainer seat. Read this pull request as the lead developer of Lithos-Client will, a solo maintainer of a CC0 Scala/Play/Akka mining-pool client that just launched on Ergo mainnet, who said in advance that he would accept keyless executors "as configuration options, disabled by default", that transactions the client puts in its own blocks carry no fee, and that he plans his own integration for the Dexy protocol once that protocol relaunches. Read PR-DESCRIPTION.md, diff.patch, the files under new/, and the existing code under context/ that the PR says it mirrors (the storage-rent source in particular).
+
+This is the revised pull request after three review rounds; the earlier asks (the contract's merge drain and creation height, observe mode off the mining path and holding nothing back, bounded failed and fruitless builds, a pinned tree parsed lazily, config validation in the house pattern and decoupled from the jobs, a box below its successor's floor declined, a minimum tip, a mainnet guard on the deployer, the text's overclaims and process leaks) were addressed, and acceptance evidence was added: a due-job box on testnet, and a private-chain run in which the client deployed the protocol, joined the collateral queue and mined a block carrying its genesis and a beat. Judge what is in front of you, not that history.
+
+Answer, with file:line where it matters:
+1. Would you merge this as it stands? What exactly would you still ask for first? Rank the asks by how much each blocks the merge.
+2. Scope. Is the PR the right size and the right cut? Is anything in it that should be a separate PR (the observe mode, the ScriptJob base class, the contract), or anything missing that makes it unusable as shipped (how does an operator get a due-job box to exist at all; what node does it need)?
+3. Fit with the codebase. Does it follow the conventions of the existing sources (config shape, validation, defaults object, the actor protocol, CandidatePreparation, logging, the doc-comment voice, test style with FakeNodeContext and ContractSpecBase)? Name every place it diverges and whether the divergence is justified.
+4. Risk to miners who never enable it. Trace that the default path is unchanged: no actor, no node read, no config key that fails validation on an existing config file, no change to how other sources are asked.
+5. Risk to miners who do enable it. What is the worst block-production outcome of a bug here (a refused package, a timeout, a stuck build) and does the code bound it the way the other sources do?
+6. The contract and the first job. Is shipping a reference ErgoScript contract inside the mining client the right vehicle, or should the contract live elsewhere with the client only knowing its tree? Would you want the first job to be this heartbeat, or would you hold the framework until a real protocol job exists?
+7. The PR text. Is it the right length and register for this project? What would you cut or add? Does it tell you how it was tested in a way you can repeat?
+8. Anything that reads as the author's internal process leaking into the artifact (phase numbers, prompts, operator notes, placeholder files).
+
+Write a single markdown document: the merge verdict in one paragraph, then the numbered answers. Be concrete and brief; a maintainer's hour is the budget.

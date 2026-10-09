@@ -1,0 +1,13 @@
+Work alone, in this directory, with your file tools only: no network, no shell commands, no delegation. Read README-SLICE.md first.
+
+You are the Fidelity seat on a pull request to the Lithos mining client. Assume the code works as its tests say. Your question is whether the TEXT is faithful: PR-DESCRIPTION.md, the README section the PR adds (new/README.md, "Block Transactions" and "Upkeep"), the config comments the PR adds (new/conf/application.conf, the `upkeep` block), and the doc comments on the new classes (new/app/transactions/upkeep/*.scala, new/app/transactions/upkeep/jobs/*.scala, new/lithos-lib/src/main/resources/upkeep/DueJob.ergo).
+
+The text also describes a deployer and a deployment override (DEVNET.md, new/app/tools/, new/lithos-lib/src/main/scala/lfsm/Deployment.scala) and reports end-to-end runs; treat those claims like any other.
+
+Task A. For every factual statement in PR-DESCRIPTION.md and the README section, say CONFIRMED, WRONG, or CANNOT CHECK BY READING, citing the file and line in new/ or context/ that settles it. Pay particular attention to: "off by default" (every flag, every default object, the wiring in new/app/tasks/StartMiningServer.scala); "never spends the operator's ERG"; "no fee"; "never reads the mempool"; "a job name the registry does not know fails validation"; what the testing section claims each spec proves against what the specs actually assert; what observe mode is said to do against what it does.
+
+Task B. Doc comments. Where a class or method comment describes behaviour the code does not have, or omits a behaviour a reader would need (a limit, a failure mode, a node requirement), say so with file:line. Where a comment leaks internal process (phase numbers, operator notes, "the brief", review rounds) that a maintainer should not see, flag it.
+
+Task C. Overclaim and tone. Is anything stated more strongly than the code supports: "never", "exactly", "cannot"? Is the contract's header (DueJob.ergo) an accurate statement of what the script enforces, including what it leaves free? Is the "Not extractive" section defensible as written?
+
+Write the result as a single markdown document: a one-paragraph verdict on the text (send / send with fixes / rewrite), then a table with one row per statement checked (statement, verdict, evidence), then the Task B and C findings as a short list with the exact replacement wording you would use. Do not pad.

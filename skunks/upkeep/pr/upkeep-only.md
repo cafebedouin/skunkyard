@@ -2,6 +2,9 @@
 
 ## What
 
+Stacked on the deployment-override PR, which it needs only for its end-to-end evidence on a private chain; the
+source itself does not touch those files.
+
 A new transaction source, `upkeep`, that advances boxes other protocols leave for anyone to maintain,
 inside this miner's own block candidate, with no key and no fee. It is a registry of jobs: each job is a
 reviewed description of one protocol's boxes — which ones it maintains, when one is due, and what its
@@ -32,26 +35,6 @@ beats included: a box offering less is not maintained, a box offering enough tha
 changes. No due-job box exists on mainnet yet; the README says how to create one, and testnet has one. Lithos itself has mined about 30 mainnet blocks so far (heights 1,888,828 to
 1,890,575, about 1.7% of blocks over that span), so upkeep carried only in Lithos blocks waits at least about 60 blocks today,
 and longer while few Lithos miners enable it.
-
-### Running on a private chain
-
-The client compiles its protocol contracts from token ids fixed per network, so on a chain with no Lithos
-deployment it finds no collateral box and never builds a Lithos block. Two small pieces change that, and they
-are what let the source be tested end to end on a devnet rather than on mainnet:
-
-- `node.deployment.file`: a JSON descriptor of a deployment (the token ids, the genesis dictionary box, the
-  protocol box ids) that `Deployment.install` reads at startup in place of the network's constants. Empty by
-  default; refused on mainnet unless `allowOnMainnet = true`; a descriptor that does not parse, names a
-  malformed id, or names another network stops the client with the key at fault.
-- `tools.DeployProtocol`: a deployer that mints the eight protocol tokens, creates the emission, config, fraud
-  control and dictionary genesis boxes with the client's own contract code, writes the descriptor, and can
-  fund operator keys with ERG and LIT. One transaction per step, each waited for. `DEVNET.md` documents both.
-
-A spec pins every protocol contract's tree on mainnet and testnet (`test/resources/deployment/contract-pins.txt`)
-so that neither piece can move a mainnet tree unnoticed; the pins were recorded from the base commit's own
-compiler and this branch matches them. A second spec checks that an override reaches the thirteen contracts that
-compile an id in and leaves `payout` and the other network unchanged. Reaching any mainnet id compiles nothing: the
-one address mainnet has no constant for is pinned too.
 
 ## Why
 
@@ -130,11 +113,6 @@ otherwise have earned in that block, which is the ordinary block-producer advant
 - `HeartbeatJobSpec`: the heartbeat's own rule — the pinned tree, which boxes at its script are beats, `due`
   at the boundary, the successor and tip as planned and signed, a partial tip when the box cannot spare the
   whole, and a free beat when what it can spare is too small for a box.
-- `DeployPlanSpec` and `ProtocolContractsDeploymentSpec`: the deployer's plan (mint, protocol boxes, descriptor,
-  funding) against a fake node, the self-join a funded operator can make with the client's own builders, the
-  refusal of funding below one join, the command line; and the contract pins: with no override every tree is
-  the pinned one, an override reaches every contract that compiles an id in and leaves `payout` and the other
-  network alone, and it is not served from a cache filled before it was installed.
 - `DueJobSpec`: the contract through the interpreter, offline — a due box advances, one block early is
   refused, every condition of the script refused on the field it reads (a zero period and a negative tip for
   `sane`), a second due-job box in the same transaction refused, a stale creation height refused, a tip above

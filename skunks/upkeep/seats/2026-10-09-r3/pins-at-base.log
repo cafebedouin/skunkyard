@@ -1,0 +1,153 @@
+[info] welcome to sbt 1.6.2 (Ubuntu Java 17.0.20.1)
+[info] loading settings for project basewt-build from plugins.sbt ...
+[info] loading project definition from /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/project
+[info] loading settings for project lithos-client from build.sbt ...
+[info] loading settings for project lithos-lib from build.sbt ...
+[info]   __              __
+[info]   \ \     ____   / /____ _ __  __
+[info]    \ \   / __ \ / // __ `// / / /
+[info]    / /  / /_/ // // /_/ // /_/ /
+[info]   /_/  / .___//_/ \__,_/ \__, /
+[info]       /_/               /____/
+[info] 
+[info] Version 2.8.15 running Java 17.0.20.1
+[info] 
+[info] Play is run entirely by the community. Please consider contributing and/or donating:
+[info] https://www.playframework.com/sponsors
+[info] 
+[info] Running Play on Java 17 is experimental. Tweaks are necessary:
+[info] https://github.com/playframework/playframework/releases/2.8.15
+[info] 
+[info] compiling 74 Scala sources and 22 Java sources to /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/lithos-lib/target/scala-2.12/classes ...
+[warn] there was one unchecked warning; re-run with -unchecked for details
+[warn] there was one feature warning; re-run with -feature for details
+[warn] two warnings found
+[info] done compiling
+[info] compiling 216 Scala sources and 1 Java source to /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/target/scala-2.12/classes ...
+[info] Passed: Total 0, Failed 0, Errors 0, Passed 0
+[info] No tests to run for lithos-lib / Test / testOnly
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/transactions/engine/wallet/EngineFunding.scala:2:35: imported `EngineWalletState` is permanently hidden by definition of object EngineWalletState in package wallet
+[warn] import transactions.engine.wallet.EngineWalletState
+[warn]                                   ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/transactions/engine/wallet/EngineWalletMessages.scala:2:35: imported `EngineWalletState` is permanently hidden by definition of object EngineWalletState in package wallet
+[warn] import transactions.engine.wallet.EngineWalletState
+[warn]                                   ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/transactions/rollups/RollupEvaluator.scala:371:7: match may not be exhaustive.
+[warn] It would fail on the following input: CurrentRollupMetadata(_, _, _)
+[warn]       rollupInfo match {
+[warn]       ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/state/persistence/StateSnapshotActor.scala:126:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class SaveWork(candidate: SnapshotCandidate,
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/state/persistence/StateSnapshotActor.scala:130:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class RestoreWork(token: String,
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/state/persistence/StateSnapshotActor.scala:134:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class LoadWork(source: SnapshotDictionarySource,
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/state/synchronization/MinerDictionaryBootstrap.scala:109:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class WalkResult(seed: Option[CommittedSyncState],
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/state/synchronization/RollupRepair.scala:33:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class Included(block: BlockInfo, tx: BlockTx) extends SpendRead
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/state/synchronization/SyncHandler.scala:49:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class ProjectionStamp(cursor: SyncCursor,
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/state/synchronization/SyncHandler.scala:54:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class CachedProjection(stamp: ProjectionStamp, state: MempoolRollupState)
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/state/synchronization/SyncHandler.scala:71:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class MaterializationFailure(key: Option[MaterializationKey], reason: String)
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/state/synchronization/SyncHandler.scala:72:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class PendingOperation(epoch: Long,
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/state/synchronization/SyncHandler.scala:86:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class MaterializationExpired(incarnation: String, operationId: Long)
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/state/synchronization/SyncHandler.scala:87:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class ActiveLoad(key: MaterializationKey,
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/state/synchronization/SyncHandler.scala:90:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class PendingCheckpoint(token: String,
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/state/synchronization/SyncHandler.scala:95:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class DictionaryOverride(at: SyncCursor,
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/state/synchronization/SyncHandler.scala:97:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class RepairPermit(cursor: SyncCursor,
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/state/synchronization/SyncHandler.scala:223:32: The outer reference in this type test cannot be checked at run time.
+[warn]     case MaterializationExpired(token, operationId) if token == incarnation =>
+[warn]                                ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/transactions/batching/RunStrategy.scala:100:30: The outer reference in this type test cannot be checked at run time.
+[warn]     private final case class Plan(steps: Vector[Planned[O, F, S]], state: S, carried: Set[String], slots: Int) {
+[warn]                              ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/transactions/engine/execution/RollupExecution.scala:459:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class Funding(box: InputUTXO, chain: Int)
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/transactions/engine/execution/RollupExecution.scala:462:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class Superseding(tx: CandidateTx, replaced: String)
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/app/transactions/engine/execution/RollupExecution.scala:468:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class Feeless(tx: CandidateTx, ancestorIds: Seq[String], leading: Seq[CandidateTx],
+[warn]                            ^
+[warn] 22 warnings found
+[info] done compiling
+[info] compiling 250 Scala sources to /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/target/scala-2.12/test-classes ...
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/test/transactions/engine/wallet/CandidateHoldSpec.scala:2:35: imported `EngineWalletState` is permanently hidden by definition of object EngineWalletState in package wallet
+[warn] import transactions.engine.wallet.EngineWalletState
+[warn]                                   ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/test/transactions/engine/wallet/EngineWalletStateSpec.scala:2:35: imported `EngineWalletState` is permanently hidden by definition of object EngineWalletState in package wallet
+[warn] import transactions.engine.wallet.EngineWalletState
+[warn]                                   ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/test/transactions/engine/wallet/KnownReservationSpec.scala:2:35: imported `EngineWalletState` is permanently hidden by definition of object EngineWalletState in package wallet
+[warn] import transactions.engine.wallet.EngineWalletState
+[warn]                                   ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/test/transactions/engine/wallet/RewardSweepSpec.scala:18:35: imported `EngineWalletState` is permanently hidden by definition of object EngineWalletState in package wallet
+[warn] import transactions.engine.wallet.EngineWalletState
+[warn]                                   ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/test/transactions/rollups/RollupExecutionSpec.scala:287:42: method ++ in class Configuration is deprecated (since 2.8.0): Use withFallback instead
+[warn]     val f = fixture(config = quietConfig ++ Configuration.from(Map("stratum.candidate.pinnedInputs" -> 0)))
+[warn]                                          ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/test/controllers/WebPanelControllerSpec.scala:44:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class Served(status: Int, body: String, contentType: Option[String])
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/test/state/persistence/SnapshotActorRestartRecoverySpec.scala:397:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class Fixture(actor: akka.actor.ActorRef,
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/test/state/synchronization/LazyMaterializationSpec.scala:41:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class Fixture(handler: ActorRef,
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/test/state/synchronization/MinerDictionaryBootstrapSpec.scala:221:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class Step(tx: BlockTx, tree: MinerDictionary, inputId: String, outputId: String, height: Int)
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/test/state/synchronization/ProjectionFanoutSpec.scala:184:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class Fixture(handler: ActorRef,
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/test/state/synchronization/RollupRepairSpec.scala:193:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class RepairChain(api: NodeApi,
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/test/transactions/TransactionCostSizingSpec.scala:81:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class Measured(family: String, name: String, tx: SignedTransaction) {
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/test/transactions/batching/RunStrategySpec.scala:15:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class Pool(x: Long, y: Long)
+[warn]                            ^
+[warn] /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/basewt/test/transactions/batching/RunStrategySpec.scala:18:28: The outer reference in this type test cannot be checked at run time.
+[warn]   private final case class Order(id: String, sellsErg: Boolean, amount: Long, minOut: Long, fee: Long,
+[warn]                            ^
+[warn] four feature warnings; re-run with -feature for details
+[warn] 15 warnings found
+[info] done compiling
+[info] ProtocolContractsPinsAtBaseSpec:
+[info] With no override, every tree
+[info] - should be the one pinned for its network
+[info] Run completed in 6 seconds, 78 milliseconds.
+[info] Total number of tests run: 1
+[info] Suites: completed 1, aborted 0
+[info] Tests: succeeded 1, failed 0, canceled 0, ignored 0, pending 0
+[info] All tests passed.
+[success] Total time: 97 s (01:37), completed Oct 9, 2026, 3:29:13 AM
+exit 0
