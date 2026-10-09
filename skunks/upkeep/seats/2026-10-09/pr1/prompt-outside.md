@@ -1,4 +1,4 @@
-Review the pull request in the directory {{SLICE}}. Read {{SLICE}}/README-SLICE.md first, then {{SLICE}}/PR-DESCRIPTION.md, then {{SLICE}}/diff.patch, then the full files under {{SLICE}}/new/, and whatever under {{SLICE}}/context/ you need. Everything here is public code. Do not use the network.
+Review the pull request in the directory {{SLICE}}. Read {{SLICE}}/README-SLICE.md first, then {{SLICE}}/PR-DESCRIPTION.md, then {{SLICE}}/diff.patch, then the full files under {{SLICE}}/new/, and whatever under {{SLICE}}/context/ you need. Everything here is public code. Work with your file-reading tools only: do not run shell commands and do not use the network; nothing needs to be compiled or executed.
 
 The project is Lithos-Client (Scala 2.12, Play, Akka): an Ergo mining-pool client whose miners build their own block candidates and may put fee-less transactions of their own into them. The PR adds a new candidate source, "upkeep", which advances other protocols' boxes keylessly inside the miner's block from a registry of jobs, a first job ("heartbeat") and the ErgoScript contract it advances (new/lithos-lib/src/main/resources/upkeep/DueJob.ergo).
 

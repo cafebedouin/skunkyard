@@ -1,0 +1,11 @@
+seat:    grok (grok 1.0.46 (2765805b9442) [stable])
+model:   tool default
+utc:     20261009T072137Z
+slice:   /tmp/claude-1000/-home-scott-bin-skunkyard/4b14a604-f9db-426f-95b6-1fd040513668/scratchpad/seats2/pr2/slice
+slice-git: not a git checkout
+web:     disabled
+sandbox: read-only
+jail:    tools/seat-jail
+prompt-sha256: 786046b577e2398d8365d2e987cf1ff0b3ed959621a65082dfb1b7b2d818afd8
+exit:    0
+model-reported: grok-4.7-build
