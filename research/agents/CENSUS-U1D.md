@@ -136,6 +136,181 @@ refresh to the pair: median 4 blocks over the whole history (116 pairs in the re
 block, the longest 577); median 2 in UPKEEP's window. The bot only ever sold into the pools; it never bought the
 discount or the SigUSD pool's dips below the redeem price.
 
+## r. Backtests over q's history
+
+`census/u1d/r.json`. Common rules: integer pool and bank rules (`census/amm.py`), so the 2% bank fee, each pool's
+own fee (0.5% SigUSD and SigRSV pools, R4 995) and the price impact of every trade at the pool's real depth are in
+every fill; 0.0011 ERG per transaction; **capital cap 1,000 ERG** (r1: in the position at once, profits set
+aside); every run starts at the first state in which its pool holds at least 1,000 ERG (SigRSV pool: 567,384;
+SigUSD 567,318; RSN 1,691,599; rsBTC 1,287,721; rsFIRO 1,845,555). A trade is priced against the state it meets,
+one trade per pool state, and the next historical state is taken to absorb it: other traders' flow is assumed
+unchanged by ours. **Every result assumes our transactions were included at the state they were computed on
+[inferred]**; the history shows who actually traded, not whether a second trader would have been served first.
+
+**Three corrections made on the way, kept in the code's comments:** buys first compounded past the cap; my trades
+were first kept in the pool's reserves for good, which left the modelled SigRSV pool lifted for 450,000 blocks after
+one buy-and-redeem (no trades at all); Babel boxes and grids first started in the pools' first, nearly empty states,
+whose impact made every "against market" number huge. The numbers below are after all three.
+
+### 1. SigRSV dip-buy
+
+Rule: when the pool is more than X below NAV, buy from the pool until its price reaches NAV × (1 − X) or the
+capital runs out. Exit, whichever comes first: redeem at the bank when redemption is open (RR ≥ 400% after the
+trade, as many units as the rule allows), or sell into the pool down to NAV when the pool is above NAV (never in
+the state it was bought in). Marked to NAV at the tip; drawdown on the position marked at the pool's sale price.
+
+| window | X | trades (buy / redeem / sell) | net ERG, marked to NAV | realised ERG | open at tip | worst drawdown ERG | blocks holding |
+|---|---|---|---|---|---|---|---|
+| 567,384 – tip | 2% | 2,864 / 2,392 / 1,046 | **+3,660.5** | +2,620.5 | 1,040.1 ERG at NAV | 453.8 | 628,225 |
+| | 5% | 253 / 60 / 572 | **+4,893.7** | +3,825.1 | 1,068.6 | 473.0 | 519,270 |
+| | 10% | 83 / 19 / 257 | **+3,650.7** | +3,487.4 | 163.3 | 532.4 | 376,180 |
+| last 525,600 blocks | 2% | 613 / 454 / 312 | +967.5 | −72.5 | 1,040.1 | 453.8 | 268,667 |
+| | 5% | 90 / 10 / 181 | +1,139.5 | +70.9 | 1,068.6 | 473.0 | 253,658 |
+| | 10% | 32 / 4 / 46 | +515.3 | +351.9 | 163.3 | 532.4 | 172,436 |
+| last 262,800 blocks | 2% | 176 / 66 / 223 | +502.3 | −537.7 | 1,040.1 | 453.8 | 230,667 |
+| | 5% | 71 / 2 / 141 | +680.3 | −388.3 | 1,068.6 | 473.0 | 224,496 |
+| | 10% | 26 / 0 / 32 | +303.5 | +140.1 | 163.3 | 484.2 | 161,433 |
+
+- **Against holding ERG:** the strategy is counted in ERG, so its net ERG is its excess over holding the 1,000 ERG.
+  In dollars both lost most of their value: ERG went from $17.26 (567,384) to $0.2957 (tip).
+- **Against holding SigRSV:** 1,000 ERG of SigRSV bought at 567,384 is worth 117 ERG at NAV now (−883 ERG).
+- **The open position at the tip:** at 2% and 5% the whole cap is in SigRSV (bought in the current discount),
+  1,040 to 1,069 ERG at NAV, about 8.5% less at the pool's sale price; redemption has been shut since 1,665,240.
+- **The result does not rest on one threshold:** all three are positive in every window, and the 5% threshold is
+  best in each. **It rests on a few periods:** the first two years carry +2,682 ERG of the 5% run's realised
+  +3,825; in the year before the last (1,618,084 – 1,880,883) every threshold's cash flow was negative (−542 to −844
+  ERG) as the capital sat in a discount that went to −40%.
+- **The exits:** with redemption shut for the last ten months, nearly every exit is a pool sale above NAV, which is
+  the band the bot also sells into (q). The 2% run redeems often in the early years, in small pieces.
+
+### 2. Beat the bot
+
+A block builder that takes the bot's own mint-and-sell first, at the same states, nets the bot's net plus the fees
+the bot paid (it pays itself no fee in its own block): **18,989.0 ERG over the 2,593 pairs** (777,824 – 1,888,826,
+1,111,002 blocks), 4,491.7 ERG a year on average, falling to 842.5 ERG in the last 262,800 blocks (435 pairs).
+
+| block share | over the whole history | per year, average | last 262,800 blocks |
+|---|---|---|---|
+| 1.5% (the prompt's U2 figure) | 284.8 ERG | 67.4 | 12.6 |
+| **1.7% (U2 measured: 30 Lithos blocks in 1,748)** | 322.8 | 76.4 | **14.3** |
+| 10% | 1,898.9 | 449.2 | 84.3 |
+| 30% | 5,696.7 | 1,347.5 | 252.8 |
+
+Scaling by share assumes a pair is equally likely in any block and that the bot's legs fail when the builder's go
+first [inferred]. Each take needs the mint's capital (median 9,290/116 ≈ 80 ERG per pair in UPKEEP's window, up to a
+few hundred) and the two legs in one block, which only the builder can guarantee.
+
+### 3. Conditional exits (SK-051)
+
+A 100-ERG SigRSV position bought from the pool every 7,200 blocks, parked in an exit box with one trigger. An exit
+whose trigger is already true when it is placed is not counted (it is not conditional); the fill is a bank redeem
+if open, otherwise the pool sale at its depth then, less two fees.
+
+| trigger | positions (already true) | fired | wait, median / p90 blocks | return on 100 ERG at fill, median (min, max) | unfired, marked to NAV |
+|---|---|---|---|---|---|
+| ERG/USD ≥ $4 | 164 (20) | 19 | 32,598 / 82,998 | +7.8% (−8.5%, +22.5%) | −37.3% |
+| ERG/USD ≥ $0.35 | 23 (161) | 22 | 73,452 / 131,052 | +12.5% (−11.5%, +62.6%) | −7.7% |
+| ERG/USD ≥ $0.50 | 31 (153) | 5 | 2,949 / 11,803 | −1.6% (−6.1%, +3.7%) | +10.4% |
+| ERG/USD ≥ $0.75 | 48 (136) | 14 | 4,913 / 17,117 | +0.0% (−5.2%, +6.9%) | +1.6% |
+| RR ≥ 400% (redeem opens) | 104 (80) | 73 | 8,416 / 32,101 | −2.5% (−24.8%, +11.0%) | +4.8% |
+| pool ≥ NAV + 2% | 154 (30) | 154 | 1,898 / 18,325 | −1.5% (−23.7%, +43.8%) | — |
+
+Positions placed in the last 525,600 blocks (73; ERG/USD range there $0.19 – $2.21): $4 never fired; $0.35 fired
+22 of 23 (median wait 74,318 blocks, median +19.2%); RR ≥ 400% fired 9 of 40 (+0.4%); pool ≥ NAV + 2% fired 60 of
+60 (−1.7%). The pool-premium trigger always fires, but by the time it does the position was usually bought
+above its exit (it was bought at the pool, not at a discount); the price triggers pay when they are set above a
+price ERG later reached, and leave the position marked down when it is not.
+
+### 4. Babel boxes as standing orders, and the sell-side mirror
+
+A 100-ERG EIP-31 Babel box placed every 7,200 blocks, bidding X below the pool's mid price (R5 = that price per
+unit). A keyless taker fills it from the pool as soon as the take nets at least one 0.0011-ERG fee (U1's
+one-transaction shape, `amm.babel_vs_pool`), repeatedly until it is empty. **Sell side:** EIP-31 is buy-only, so
+the mirror assumes the **Machina grid** contract (`a68900b6`, sell side; the shape round four filled on mainnet):
+a box holding the tokens 100 ERG bought at placement, asking X above mid; the taker buys from it and sells into the
+pool. "Against market" compares, at the tip's pool price, the owner's box (tokens filled + ERG left, or ERG received
++ tokens left) with buying (selling) the same 100 ERG at market when it was placed.
+
+| token | side | X | boxes | filled | wait, median blocks | fill vs pool mid at fill | owner vs market at tip, ERG (sum) | boxes ahead |
+|---|---|---|---|---|---|---|---|---|
+| SigUSD | buy | 2% | 183 | 169 | 2040 | +1.3% | -6,944.1 | 168 |
+| SigUSD | buy | 5% | 183 | 157 | 6838 | +1.1% | -9,264.5 | 156 |
+| SigUSD | buy | 10% | 183 | 140 | 13468 | +1.0% | -25,974.1 | 141 |
+| SigUSD | buy | 20% | 183 | 118 | 37923 | +1.1% | -39,051.7 | 127 |
+| SigUSD | sell | 2% | 183 | 176 | 1639 | -0.9% | +317.4 | 176 |
+| SigUSD | sell | 5% | 183 | 176 | 3383 | -1.0% | +841.2 | 176 |
+| SigUSD | sell | 10% | 183 | 173 | 7321 | -1.0% | +1,609.1 | 173 |
+| SigUSD | sell | 20% | 183 | 172 | 16888 | -1.1% | +3,287.0 | 172 |
+| SigRSV | buy | 2% | 183 | 183 | 3928 | +1.4% | +282.1 | 183 |
+| SigRSV | buy | 5% | 183 | 182 | 10105 | +2.1% | +537.3 | 182 |
+| SigRSV | buy | 10% | 183 | 180 | 22003 | +3.1% | +1,012.1 | 181 |
+| SigRSV | buy | 20% | 183 | 180 | 56054 | +6.5% | +2,318.2 | 181 |
+| SigRSV | sell | 2% | 183 | 163 | 3724 | -1.3% | -423.0 | 161 |
+| SigRSV | sell | 5% | 183 | 144 | 11006 | -1.4% | -962.8 | 143 |
+| SigRSV | sell | 10% | 183 | 112 | 25563 | -1.7% | -2,079.4 | 112 |
+| SigRSV | sell | 20% | 183 | 61 | 37190 | -2.8% | -4,669.0 | 60 |
+| RSN | buy | 2% | 27 | 16 | 15108 | +3.1% | -432.5 | 16 |
+| RSN | buy | 5% | 27 | 16 | 24460 | +1.9% | -364.4 | 16 |
+| RSN | buy | 10% | 27 | 11 | 41046 | +2.2% | -567.5 | 11 |
+| RSN | buy | 20% | 27 | 9 | 79908 | +1.7% | -509.6 | 9 |
+| RSN | sell | 2% | 27 | 27 | 33791 | -1.5% | +81.3 | 27 |
+| RSN | sell | 5% | 27 | 27 | 66935 | -1.7% | +161.5 | 27 |
+| RSN | sell | 10% | 27 | 27 | 84022 | -1.8% | +295.1 | 27 |
+| RSN | sell | 20% | 27 | 24 | 86954 | -1.9% | +561.9 | 27 |
+| rsBTC | buy | 2% | 83 | 66 | 7898 | +3.1% | -1,442.1 | 63 |
+| rsBTC | buy | 5% | 83 | 59 | 8369 | +3.0% | -2,116.4 | 57 |
+| rsBTC | buy | 10% | 83 | 48 | 17474 | +3.0% | -2,432.1 | 49 |
+| rsBTC | buy | 20% | 83 | 24 | 40074 | +2.5% | -3,752.5 | 34 |
+| rsBTC | sell | 2% | 83 | 81 | 2991 | -2.2% | +299.8 | 81 |
+| rsBTC | sell | 5% | 83 | 81 | 6352 | -2.3% | +537.5 | 81 |
+| rsBTC | sell | 10% | 83 | 81 | 13991 | -2.3% | +933.7 | 81 |
+| rsBTC | sell | 20% | 83 | 73 | 36524 | -2.3% | +1,503.1 | 73 |
+| rsFIRO | buy | 2% | 6 | 4 | 4149 | +7.5% | -7.4 | 4 |
+| rsFIRO | buy | 5% | 6 | 3 | 5283 | +5.3% | -5.4 | 3 |
+| rsFIRO | buy | 10% | 6 | 3 | 6969 | +4.1% | +5.7 | 3 |
+| rsFIRO | buy | 20% | 6 | 1 | 9121 | +1.9% | +21.1 | 3 |
+| rsFIRO | sell | 2% | 6 | 5 | 1123 | -3.0% | -15.4 | 5 |
+| rsFIRO | sell | 5% | 6 | 5 | 1329 | -7.2% | +1.6 | 5 |
+| rsFIRO | sell | 10% | 6 | 5 | 1442 | -6.3% | +21.6 | 5 |
+| rsFIRO | sell | 20% | 6 | 5 | 8642 | -2.4% | +75.5 | 5 |
+
+- **Fill price:** a filled bid sits 1–3% above the pool's mid price when it is taken (6–7% on rsFIRO's thin pool),
+  and a filled ask 1–3% below: the pool's fee plus the taker's margin. The owner pays that gap; the taker keeps it.
+- **Against buying at market:** in a market that trended (SigUSD up 60 times in ERG, rsBTC and RSN up), the buy-side
+  owner lost against buying at once, and the sell-side owner gained against selling at once; on SigRSV, which
+  fell in ERG, the reverse. Standing orders here are directional bets, not a source of edge; their wins and losses
+  follow the trend, and the fill gap is a steady cost.
+- **Promptness [inferred, and contradicted for Babel boxes]:** the model fills a box as soon as a take is worth a
+  fee. The chain does not support that for Babel boxes: U1 and U1b found profitable Babel boxes standing for months
+  (the ergopad bid from 916,311 was taken only by SK-049 at 1,891,043). For Machina orders a bot does fill against
+  pools within blocks (U1b line g). So the buy-side numbers hold only if a taker (a Lithos upkeep job) exists.
+
+### 5. Grid on a pool
+
+The three deepest N2T pools at the tip (RSN 250,708 ERG, SigUSD 115,979, rsBTC 42,856). Five bids below and five
+asks above the starting price at fixed spacing, 50 ERG each (the asks' tokens bought at the start, impact included);
+a level fills when the pool's marginal price, fee included, crosses it by enough to pay the keyless taker one fee;
+a filled bid becomes an ask one level up and vice versa. Marked at the tip's pool sale price.
+
+| pool | spacing | from | capital ERG | fills | round trips | realised spread ERG | end value ERG | vs holding ERG | vs holding the starting mix |
+|---|---|---|---|---|---|---|---|---|---|
+| SigUSD | 2% | 567,318 | 549.5 | 47 | 26 | 25.49 | 1,727.2 | +1,177.7 | -11,104.8 |
+| SigUSD | 5% | 567,318 | 519.3 | 27 | 16 | 38.10 | 2,018.2 | +1,498.8 | -9,891.9 |
+| SigUSD | 10% | 567,318 | 479.0 | 25 | 15 | 68.18 | 2,778.5 | +2,299.4 | -7,810.1 |
+| RSN | 2% | 1,691,599 | 488.3 | 13 | 9 | 8.82 | 505.0 | +16.7 | -23.6 |
+| RSN | 5% | 1,691,599 | 468.9 | 11 | 7 | 16.67 | 508.1 | +39.2 | +2.2 |
+| RSN | 10% | 1,691,599 | 441.6 | 7 | 4 | 18.18 | 489.9 | +48.3 | +15.9 |
+| rsBTC | 2% | 1,287,721 | 496.8 | 53 | 29 | 28.43 | 592.9 | +96.1 | -577.7 |
+| rsBTC | 5% | 1,287,721 | 476.1 | 49 | 27 | 64.29 | 710.5 | +234.5 | -386.5 |
+| rsBTC | 10% | 1,287,721 | 447.1 | 35 | 20 | 90.91 | 771.4 | +324.3 | -222.0 |
+
+- **Realised spread is small:** 8.8 to 90.9 ERG over the whole window on about 500 ERG.
+- **Inventory risk dominates:** against holding ERG the grids gain when the token rose in ERG (SigUSD 60-fold over
+  five years, rsBTC four-fold), and against holding the starting mix they lose because they sold the rising token on
+  the way up (SigUSD −7,810 to −11,105 ERG). On RSN, which moved +20% in ERG over its window, the grid roughly
+  matches holding.
+- **So a grid is a bet on mean reversion around its start.** None of the three pools reverted in this history.
+
 ## s. DexyGold
 
 **The ids, settled from the deployed trees** (`census/u1d/s.json` `ids`). Each NFT below is named on chain (its

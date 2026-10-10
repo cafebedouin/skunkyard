@@ -863,15 +863,18 @@ def sell_to(X0, Y0, fee, target, have):
 
 
 def r1_dip(rows, th, tip):
-    """SigRSV dip-buy at threshold th (fraction below NAV). My own trades persist in the pool as an offset to the
-    historical reserves; the bank is taken as historical (my redemptions are small against its reserve)."""
+    """SigRSV dip-buy at threshold th (fraction below NAV). Each trade is priced against the pool state it meets
+    (impact included, integer pool rule) and at most one trade is made per pool state; the next historical state
+    is taken to absorb it (a first version kept my trades in the pool for good, which left the modelled pool
+    lifted for years after one buy-and-redeem, an artifact). The bank is taken as historical."""
     cash, held, cost = CAP, 0, 0          # cost: ERG paid for the units still held (the capital tied up)
     offX, offY = 0, 0
     trades, eq, peak, dd = [], [], CAP, 0
     tied_blocks, max_tied, open_from = 0, 0, None
-    last_box = None
+    last_box = last_sold = None
     for r in rows:
-        X0, Y0, fee = r["rsvX"] + offX, r["rsvY"] + offY, r["rsvFee"]
+        offX, offY = 0, 0
+        X0, Y0, fee = r["rsvX"], r["rsvY"], r["rsvFee"]
         if X0 <= A.POOL_MIN_VALUE or Y0 <= 1:
             continue
         mid, nav = X0 / Y0, r["nav"]
@@ -886,7 +889,7 @@ def r1_dip(rows, th, tip):
                 trades.append({"h": r["h"], "side": "redeem", "units": n, "ergNanoErg": got, "nav": nav})
                 held -= n
                 acted = True
-            elif mid > nav:
+            elif mid > nav and r["rsvBox"] != last_box:
                 n, out = sell_to(X0, Y0, fee, nav, held)
                 if n and out > TX_FEE:
                     cash += out - TX_FEE
@@ -894,6 +897,7 @@ def r1_dip(rows, th, tip):
                     offX -= out
                     offY += n
                     held -= n
+                    last_sold = r["rsvBox"]
                     trades.append({"h": r["h"], "side": "sell", "units": n, "ergNanoErg": out - TX_FEE, "nav": nav,
                                    "poolPrice": mid})
                     acted = True
@@ -901,7 +905,8 @@ def r1_dip(rows, th, tip):
                 cost = 0
                 open_from = None
         budget = min(cash, CAP - cost) - TX_FEE     # profits are set aside: never more than CAP in the position
-        if not acted and mid < nav * (1 - th) and budget > 10 * TX_FEE and r["rsvBox"] != last_box:
+        if not acted and mid < nav * (1 - th) and budget > 10 * TX_FEE and r["rsvBox"] != last_box \
+                and r["rsvBox"] != last_sold:
             dX, T = buy_to(X0, Y0, fee, nav * (1 - th), budget)
             if T > 0:
                 cash -= dX + TX_FEE
