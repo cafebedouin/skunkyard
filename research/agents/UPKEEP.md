@@ -41,7 +41,7 @@ transactions: value the block's builder could take, or take a cut of.
 
 | Job | Who does it today | What makes it the miner's | Revenue |
 |---|---|---|---|
-| Peg and protocol triggers (Dexy trackers, intervention) | a volunteer bot; froze 40 h in March 2026 | keyless, fee only | none today; a bounty in new designs |
+| Peg and protocol triggers (Dexy trackers, intervention) | a volunteer bot (one address ran 291 of 292 tracker-98 updates); gaps of 51-59 h (March 2026) and 81 h (January) on chain (U1d s) | keyless, fee only | none; deployed DexyGold LP drained at 1,868,221 like USE's, so nothing left to keep; a bounty in new designs |
 | Pool arbitrage | bots like the one above, inventory-based, ~20 blocks late | same-block, atomic across pools | the gap itself |
 | Order execution (ErgoDEX, LithosDex, grid orders) | batcher bots; Lithos already | executor fee in the order | fixed fee per order |
 | Storage-rent claims | whoever runs a claimer | any miner may claim | the rent fee |
@@ -300,6 +300,37 @@ Round four took its candidates on chain (`skunks/upkeep/mainnet/README.md`):
 
 The orders a protocol's own bots skip are a small standing public service a Lithos executor could pick up: a SwapSell
 order unfilled for 190,000 blocks, and grid bids above every pool.
+
+## U1d checked: history and backtests (2026-10-10)
+
+Census U1d (`CENSUS-U1D.md`) rebuilt SigmaUSD, DexyGold and Duckpools state from their NFT box chains and backtested
+the trading ideas. We spot-checked three of its results on chain and they match:
+- the SigmaUSD bot's pair at 1,888,826;
+- the DexyGold LP drain, transaction `51420a50…` at 1,868,221: 3,229.997 ERG and 6,001 DexyGold out through a
+  decoy at `INPUTS(0)`;
+- the largest Duckpools liquidation take, `bf33d47d…` at 1,322,937: 155.58 SigUSD to the executor.
+
+What it changes:
+- **Duckpools liquidation is the one repeating keyless take with real money.**
+  - It needs no key and no capital, because the DEX pool is an input. It takes two transactions: a mark, then the
+    liquidation 1 to 4 blocks later.
+  - It has paid about 870 ERG a year in the past, but nothing for eight months. No live loan is within 25% of its
+    threshold.
+  - The 19 SigUSD loans, almost all held by two borrowers, start expiring at 1,920,164. Past expiry they can be
+    liquidated whatever the price, unless repaid or extended.
+  - It's a Lithos upkeep job candidate (two steps, so not atomic in one block).
+- **SigmaUSD:**
+  - The bot netted 18,983 ERG over its life, mostly from SigUSD mints in 2021 to 2024.
+  - The SigRSV discount to NAV is the normal state: the pool was more than 2% below NAV in 55% of last year's blocks.
+  - Buying SigRSV below NAV backtests positive at every threshold, but it is a capital position carried by a few
+    periods, with a 473 ERG worst drawdown on 1,000 ERG.
+  - Beating the bot is worth about 14 ERG a year at Lithos's 1.7% block share.
+  - Not yet backtested: buying SigUSD in the pool and redeeming it at the bank, which was open in 14% of blocks.
+- **Unsupported by the history:**
+  - SK-051 conditional exits on RR >= 400% (there's been no window for ten months) or on a $4 ERG price;
+  - Babel boxes and grids as an edge for their owners;
+  - a keeper for the deployed DexyGold (no action pays its executor, and the LP is empty).
+- **DexyGold's bank:** we leave its exposure unanalysed, as ergo-forge does.
 
 ## Miners with their own capital (the user, 2026-10-09)
 

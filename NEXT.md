@@ -21,7 +21,11 @@
 > - Two Machina grid fills taken (0.027 ERG). A stranded SwapSell order executed for its owner.
 > - The one-output boxes can only be taken by a miner.
 > - Wallet 21.251 ERG.
-> - Next: U1d (price and state history, backtests, DexyGold, Duckpools).
+> - **U1d merged 2026-10-10** (`CENSUS-U1D.md`; "U1d checked" in `UPKEEP.md`):
+>   - Duckpools liquidation is the one repeating keyless take. It's idle now; the first loans expire at 1,920,164.
+>   - SigRSV dip-buy backtests positive, but it's a capital position.
+>   - The deployed DexyGold LP was drained (1,868,221), so there's no keeper target.
+>   - Untested: buying SigUSD in the pool and redeeming it at the bank.
 >
 > **Round two on mainnet, 2026-10-09:** U1b reviewed (its "rent only" label was a sampling artefact); a second
 > ergopad Babel take (7.44) and 6,847 staking incentive boxes consolidated for their keyless bounty (3.42 ERG; 436.9
