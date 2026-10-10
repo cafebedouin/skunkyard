@@ -1,5 +1,12 @@
 # Next session
 
+> **Hash-key line, 2026-10-10 (SK-053 done; forward path banked):** `research/pq/ROADMAP.md`, "Update 2026-10-10".
+> SLH-DSA-SHA2-128s fits in script and is node-verified; WOTS+ for the sign-once vault, SLH-DSA for the rotating
+> address, the XMSS schedule as the stateful member. Next in order: the post, then the assurance gate (known-answer
+> vectors, differential against BouncyCastle, forced worst case, a second implementation, a security seat) before
+> any value sits behind the verifier, then tooling (noble JS signer, seed derivation, explorer hashes), then the
+> EIP for a native opcode.
+
 > **FIRST, at the next post-quantum session (planned Thursday 2026-10-08): follow up on the census heads-up.** Details outside git. Then: (1) restore the specific identification in public files only per their answer (it is kept outside git in ~/bin/skunkyard-private/); (2) decide the push of the unpushed commits (wording 'bridge custody' vs 'custody' multisig) — the replicator needs commit bc92d1e pushed to run C1 at the tip.
 
 

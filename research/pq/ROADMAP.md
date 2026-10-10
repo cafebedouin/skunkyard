@@ -59,3 +59,55 @@ Answers given along the way that this roadmap assumes (`posts/REVIEW-manytime-re
 - Standard XMSS or LMS is this structure with WOTS+ leaves and a Merkle tree where this uses an AVL dictionary;
   item 1 closes the difference that matters. Stateless SLH-DSA is not a path here (8 to 30 KB signatures, five
   times the verification cost).
+
+## Update 2026-10-10: what the policy experiments and SK-053 changed, and the forward path
+
+**A statement above is now false by measurement.** "Stateless SLH-DSA is not a path here (8 to 30 KB signatures,
+five times the verification cost)" was a reading. Built and measured (`skunks/policy/6-rekey/slhdsa/`,
+`skunks/policy/6-rekey/SCHEME-SIZING.md`): a FIPS 205 SLH-DSA-SHA2-128s verifier compiles to a 1,506-byte tree
+(cap 4,096), costs 188,944 script / 201,947 node per spend (relay cap 4,900,000), with a 7,856-byte signature and a
+transaction of about 9.4 KB; BouncyCastle's signature accepted, a flipped byte and an other-message signature
+refused, in the harness and then by the node on the policy devnet (cost 202,006, 8,054 bytes, mined). It is a path.
+Item 1 above (WOTS+ tweaks) is done and measured (`WotsPlus.es`, 703 bytes; tweak overhead 17.7% against the 8%
+estimated, because interpretation, not hashing, is about 89% of a hash-signature spend on Ergo). The option
+comparison above is answered in `SCHEME-SIZING.md` for the script-only candidates.
+
+**The two decisions (SK-053), recorded 2026-10-10:**
+- Sign-once (the quantum-day vault's migration key): **WOTS+** with a per-vault public seed in the commitment.
+- Sign-many (the rotating receive address): **SLH-DSA-SHA2-128s** as the default, a standard with no state and no
+  revealed-leaf griefing; the XMSS-shaped key schedule (`RekeySchedule.es`) stays as the cheaper stateful member
+  for a wallet that manages its index, with the forced-reuse griefing SK-052 measured as its stated price.
+
+**Edges of the result, as the numbers draw them:**
+- Vault-scale, not payment-scale: about 500× a secp spend's cost and 170× its bytes, about 39 spends per mainnet
+  block by cost. Acceptable because only owner spends run the verifier; payments in and keyless merges never do.
+- Interpretation is the cost (89%); no parameter or hash choice changes it. A native opcode would cut it about 25×
+  (SK-105's native figures); that is the one lever that needs a fork.
+- Assurance is thin: one key pair, nine spends, the stage vectors, BouncyCastle as the only oracle. A verifier that
+  accepts a forgery is a total loss.
+- The forced worst case (every chain at 15 steps, about 238,500) is a fit, not a run. One parameter set (128s);
+  128f and the higher categories are 2–3× the cost and would still fit, untested.
+- No wallet signs it: BouncyCastle in a Scala harness is the only signer; no hardware wallet supports it; key
+  derivation from an EIP-3 seed is unspecified.
+
+**Not next, and why:** lattice schemes in script (no vector arithmetic in ErgoScript; the interpretation penalty
+would dwarf today's); a blake2b variant of SLH-DSA (saves a few percent, loses the standard). Falcon's small
+signatures make it the ideal *opcode*, which is the SK-105 / item 7 track, not a script track.
+
+**Forward path, in order (replaces the recommended order above for the hash-key line):**
+1. **The post**: the three-member receive-address family (SK-052), the two scheme decisions with measured numbers,
+   the standing one-box-per-transaction rule, the griefing finding, and the opcode sentence as the ask.
+2. **Assurance gate**, before any real value sits behind the verifier: FIPS 205 known-answer vectors through the
+   Python reference and the script; a differential run against BouncyCastle over many keys and messages; the forced
+   worst case run once; a second independent implementation (`@noble/post-quantum` in JavaScript) agreeing; a
+   security seat reading the script against the standard. One or two sessions. Nothing ships before this.
+3. **Tooling**: a JavaScript signer via the noble library inside the oneshot signer; a derivation spec for the keys
+   from the EIP-3 seed; template hashes for the explorer; the Lithos KeepAlive job for the keyless merges (exists).
+4. **The fork track**: an EIP draft for a native hash-based verification opcode (SLH-DSA, WOTS+), justified by the
+   in-script versus native cost table. Blocks nothing above; it is what makes the layer cheap. Item 7 above, with
+   the evidence it was waiting for.
+5. **Research edges, cheap**: the 128f and category 3/5 cost table; typed leaves for the schedule (secp before
+   quantum day, WOTS+ after); multi-input spends.
+
+The issue changes shape here: from "can it be done" (yes, measured, no fork) to "can it be trusted, and can a
+wallet do it". Both are tractable and neither needs a fork.
