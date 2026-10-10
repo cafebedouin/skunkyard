@@ -2,7 +2,8 @@
 
 Filed 2026-10-10 as ergoplatform/explorer-backend#289 (body unwrapped for GitHub; `#2218` written as
 `ergoplatform/ergo#2218`). Review record: `posts/seats/template-hash/REVIEW.md`. Banked until a maintainer replies:
-the docs PR (direction 1) and the comment on ergo#2218 below.
+the docs PR (direction 1). The comment on ergo#2218 below was posted 2026-10-10
+(https://github.com/ergoplatform/ergo/issues/2218#issuecomment-6092648611).
 
 ---
 

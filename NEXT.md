@@ -4,7 +4,7 @@
 
 
 > **Filed 2026-10-10:** ergoplatform/explorer-backend#289 (template hash: SHA-256 on the explorer, BLAKE2b-256 on the
-> node's index). Banked until a maintainer replies: the docs PR and the ergo#2218 comment
+> node's index). Pointer posted on ergo#2218. Banked until a maintainer replies: the docs PR
 > (`posts/2026-10-template-hash-issue.md`). Also open: Bob's reply on the KeepAlive vault (SK-050), SK-051.
 
 > **Arbitrage line, 2026-10-09 (SK-049):** Cheese: TwinPools is discussion only; arbitrage first, on the upkeep
