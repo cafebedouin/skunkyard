@@ -7,6 +7,9 @@ implement today?
 
 This is a map of options, not a design.
 
+**Experiments run (2026-10-10):** all seven, on a devnet. Results and what they change here are in
+`EXPERIMENTS.md`. Rows below that the results changed are marked *[contradicted]* or *[extended]*, with a pointer.
+
 **Evidence, collected first** (three research passes, 2026-10-10; every claim linked, unsourced ones marked
 [UNVERIFIED] or [secondary] in the files):
 - `evidence/prior-art.md`: 30-odd items across Bitcoin, Ethereum, Chia, Cardano, Kaspa, Algorand, CKB, Solana, QRL,
@@ -47,13 +50,13 @@ the surveyed chains can't, without a fork.
 | block | what it does | prior art | on Ergo today | catch |
 |---|---|---|---|---|
 | **Choice of key** | which keys can spend: secp, hash-based (WOTS, then many-time), m-of-n, rings | Taproot leaves, Safe, Chia MIPS m-of-n trees, Algorand `falcon_verify` | yes: `proveDlog`, `proveDHTuple`, `atLeast` (≤ 255 children), WOTS in script (oneshot; SK-029 many-time keys) | WOTS costs bytes (vault 1,177 B; box ≤ 4,096 B) |
-| **Rekey in place** | change the key without moving coins | Algorand rekey, Chia vault rekey, NEAR, the Ergo oracle-pool box's own key | yes in pattern: key or digest in a register, successor carries the new one (SK-032 rotation) | the template must expect it; a rekey path is itself an attack surface |
+| **Rekey in place** | change the key without moving coins | Algorand rekey, Chia vault rekey, NEAR, the Ergo oracle-pool box's own key | yes in pattern: key or digest in a register, successor carries the new one (SK-032 rotation); **built on devnet**: the secp key and the WOTS commitment in registers, the hash key rekeys both in one transaction (EXPERIMENTS §6) | the template must expect it; a rekey path is itself an attack surface; *[extended]* a register-keyed vault cannot be a receive address: a plain payment to it is unspendable (EXPERIMENTS §6, row 11) |
 | **Timelocks** | absolute (`HEIGHT`) or relative (box age) | Bitcoin CLTV/CSV, Liana | yes | KeepAlive's keyless refresh resets the box's age, so relative timelocks need their own register |
-| **Two-step withdrawal with a cancel window** | announce a withdrawal, wait, then finish; the owner can cancel in between | BIP-345 (withdrawn), BIP-443 CCV, Chia withdrawal gate and clawback, Argent security period | yes: Ergo has covenants natively; a "pending" box state with a deadline | needs a watcher to cancel; Chia lets *anyone* finish after expiry (a keyless job) |
+| **Two-step withdrawal with a cancel window** | announce a withdrawal, wait, then finish; the owner can cancel in between | BIP-345 (withdrawn), BIP-443 CCV, Chia withdrawal gate and clawback, Argent security period | yes: Ergo has covenants natively; a "pending" box state with a deadline; **built on devnet** (EXPERIMENTS §2) | needs a watcher to cancel; Chia lets *anyone* finish after expiry (a keyless job); *[extended]* double satisfaction must be guarded on every path that consumes a vault or a pending box, and cancel-to-vault lets a thief and the recovery holder stalemate |
 | **Spending limits and allowed destinations** | cap per period, or only to listed scripts | Argent whitelist, session keys, Cosmos authz, Chia's daily XCH cap | yes: state in registers, checks on `propositionBytes` | a cap per period needs a counter box or register state |
-| **Recovery and inheritance** | guardians rekey; an heir key after inactivity | Argent and Loopring guardians (Loopring lost ~$5M with a single 2FA guardian), Liana, Ergo's SigmaLock | yes | inactivity can't be read from box age if keyless maintenance refreshes it: needs an owner-activity register |
+| **Recovery and inheritance** | guardians rekey; an heir key after inactivity | Argent and Loopring guardians (Loopring lost ~$5M with a single 2FA guardian), Liana, Ergo's SigmaLock | yes; **an owner-activity register beside KeepAlive built on devnet** (EXPERIMENTS §4) | inactivity can't be read from box age if keyless maintenance refreshes it: needs an owner-activity register (*confirmed sufficient*); a living owner and the heir race once the window opens (RULING R1) |
 | **Signal triggers** | a condition on an outside fact | quantum canary (comments only); oracle-gated DeFi | yes: flag boxes read as data inputs (devnet 18/18); `HEIGHT` backstops; header `votes`, `nBits`, `minerPk` (9 deep) | trust in the signer; "easy to fire, impossible to undo" |
-| **Miner-signalled flags** | miners set a key in the block extension | none found | feasible: a Merkle membership proof against `headers(i).extensionRoot`, about 7 `blake2b` calls | presence only, not absence (leaves unsorted); only the last 9 blocks; needs a custom miner, since the stock one adds no custom keys; whether peers relay such blocks is [UNVERIFIED] |
+| **Miner-signalled flags** | miners set a key in the block extension | none found | **built on devnet**: a Merkle membership proof against a header's `extensionRoot`, cost about one ordinary transaction; a patched miner's custom key proven in script (EXPERIMENTS §3) | presence only, not absence (leaves unsorted); only the last 9 blocks, and *[extended]* one block if the header index is fixed: match `headers.exists`; needs a custom miner (*confirmed*: no setting or API); *[contradicted]* stock 6.0.7 peers accept and relay such blocks (other implementations untested) |
 | **Keyless maintenance** | anyone keeps the box alive for a bounded bounty | none per-coin; CKB, Solana and Ethereum rent are protocol-wide | yes: KeepAlive, mainnet | a rent claim skips the guard (proof empty, var 127); a policy can only keep the box younger than 4 years |
 | **Sponsors and paymasters** | a third party pays fees or upkeep | ERC-4337 paymasters, Cosmos feegrant, Ergo EIP-31 Babel fees | yes: sponsored KeepAlive merge (mainnet), Babel boxes | none found |
 | **Breakers** | pause or limit when the protocol's own state goes wrong | the USE/DexyGold drain is the counter-example | yes for protocol boxes: limit reserve change per N blocks, read from history or a counter | must be designed in before the bug |
@@ -63,7 +66,7 @@ the surveyed chains can't, without a fork.
 | problem | a policy can... | blocks it would use |
 |---|---|---|
 | Quantum (GRI 2025: 28–49% within 10 years; NIST draft IR 8547 would disallow today's curve keys after 2035) | partly: a pre-committed hash key plus a signal; boxes guarded only by `proveDlog` can't rescue themselves | choice of key, signal trigger, backstop |
-| Hash weakening (SHA-1 took 9 years from deprecation to the first collision) | partly | a "collision canary": a box that flips a flag when someone submits a colliding pair, the only fully on-chain trigger found |
+| Hash weakening (SHA-1 took 9 years from deprecation to the first collision) | partly | a "collision canary": a box that flips a flag when someone submits a colliding pair, the only fully on-chain trigger found; **built on devnet** with a 2-byte prefix, read by `QVault.es` unchanged (EXPERIMENTS §5) |
 | Key loss, inheritance (2.8–3.8M BTC lost, Chainalysis 2017 [secondary]) | yes | timelocks, recovery, owner-activity register |
 | Storage rent (6,282 ERG from 76,926 boxes in 21,600 blocks, U1b) | partly: keep the box young | keyless maintenance |
 | Theft, phishing, drainers ($3.4B in 2025, Chainalysis) | yes | two-step withdrawal, limits, allowed destinations |
@@ -77,6 +80,9 @@ the surveyed chains can't, without a fork.
 
 ## Constraints any policy layer on Ergo must respect (from `evidence/ergo-capabilities.md`)
 
+- *[extended, EXPERIMENTS "cross-cutting"]* **The node wallet signs at the current height, the node checks at the
+  next**; time-locked key paths must be built for the next block. **A failed AVL operation throws** (6.0.7), so a
+  script must not run one where its proof may be absent.
 - **ErgoTree v3 is required** for the 6.0 additions: `getVarFromInput`, `Box.getReg(i)`, `Header.checkPow`,
   `UnsignedBigInt`, `serialize`, `AvlTree.insertOrUpdate`. Mainnet is on block version 4.
 - **What a script sees:** 9 past headers plus the pre-header, and the spending transaction's id. Not the raw
@@ -106,7 +112,9 @@ the surveyed chains can't, without a fork.
 
 ## Not settled
 
-- Whether a single template beats a small family of templates, which depends on experiment 1.
+- ~~Whether a single template beats a small family of templates.~~ Answered by experiment 1 (EXPERIMENTS §1): the
+  6.0.7 compiler folds nothing, so one template costs every owner the all-on bytes (about +0.4 ERG per box per four
+  years for the qvault profile); it buys one template hash. A family otherwise.
 - Who runs signal boxes. Oracle, miners, a DAO, or several OR-ed together, each with a backstop.
 - Wallet and dApp compatibility: dApps that assume the user is an ordinary key address.
 - Every "partial" judgement in the evidence matrices is the researchers' call, not a documented feature.

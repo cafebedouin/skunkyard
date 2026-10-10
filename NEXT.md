@@ -16,9 +16,20 @@
 > `~/bin/lithos-upkeep/prompts/phase-8-babel-arb.md` (cloud, branch `upkeep-babel-arb` from `upkeep-source`);
 > (3) devnet hook `prompts/peeryard-babel-arb.md` (cloud writes, run locally on peeryard). Devnet only, no testnet.
 > Every other arbitrage idea is scored against the control (scorecard in `UPKEEP.md`).
-> **Policy-layer experiments handed to a fresh session (2026-10-10):** `prompts/policy-experiments.md`. It runs the
-> six experiments from `research/policy/README.md` on a local devnet (`policy`), then writes
-> `research/policy/EXPERIMENTS.md` with suggestions.
+> **Policy-layer experiments done on devnet (2026-10-10; `research/policy/EXPERIMENTS.md`, `skunks/policy/`):**
+> - All seven experiments ran and every stage of the cheque bank was built. All contracts are ErgoTree v1; nothing
+>   needs a fork.
+> - Ready to show: the two-step withdrawal vault (with double-satisfaction guards on every path), inheritance beside
+>   KeepAlive, the hash-weakness canary, and rekey in place (whose register-keyed address strands plain payments).
+> - One template costs every owner the all-on bytes (the 6.0.7 compiler folds nothing), so a family is better unless
+>   a single hash matters.
+> - A miner flag needs a patched miner; stock 6.0.7 peers relay its blocks.
+> - Ring payments cost about 790 per member, capped at 255 by `atLeast`.
+> - Cross-cutting: the wallet signs at fullHeight, the node checks at +1; a failed AVL insert throws on 6.0.7.
+> - Open: the bank's chained spends are dropped (cause unknown; one bank operation per block).
+> - Rulings still open, all at their defaults: R1 (owner resets the heir clock), R4 (template or family), R5 (hash
+>   key rekeys both keys), R6 (one pending per transaction), R12 (7d's two shapes).
+> - The devnet `policy` is down, chain kept. Plan: `prompts/policy-experiments-plan.md`.
 >
 > **Census U1c merged; round four on mainnet, 2026-10-10:**
 > - The census read every script and found no large keyless take.
