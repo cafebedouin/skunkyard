@@ -1,0 +1,14 @@
+    1 deposit crediting 2 ERG while adding 1 ERG (new account K1)        expect REFUSE     got REFUSE     node-check     ok
+    2 deposit whose successor lacks the NFT                              expect REFUSE     got REFUSE     node-check     ok
+    3 deposit 1 ERG to account K1 (new), honest                          expect ACCEPT     got ACCEPT                    ok
+    4 deposit to K2 with the AVL proof of case 3 replayed                expect EVAL-ERROR got EVAL-ERROR EVAL-ERROR     ok
+    5 keyless 'deposit' setting K1's balance lower, taking the differenc expect REFUSE     got REFUSE     node-check     ok
+    6 deposit 1 ERG to account K2 (new), honest                          expect ACCEPT     got ACCEPT                    ok
+    7 withdrawal from K1 of balance + 1, signed by A (K1)                expect REFUSE     got REFUSE     wallet-sign    ok
+    8 withdrawal from K1 signed by B (K2's key)                          expect REFUSE     got REFUSE     wallet-sign/no-secret ok
+    9 withdrawal of half of K1 by A, honest                              expect ACCEPT     got ACCEPT                    ok
+   10 look-alike bank (another NFT) at INPUTS(0), the bank at INPUTS(1), expect REFUSE     got REFUSE     node-check     ok
+ 10.s the same deltas with the bank at INPUTS(0)                         expect ACCEPT     got ACCEPT                    ok
+   11 successor keeping the total but value - 1                          expect REFUSE     got REFUSE     node-check     ok
+ 11.s the honest successor (same as 10.s)                                expect ACCEPT     got ACCEPT                    ok
+ALL AS EXPECTED
