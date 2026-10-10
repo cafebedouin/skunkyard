@@ -81,6 +81,20 @@ R4–R9 must be filled densely, with no gaps ("not densely packed" error, `ErgoB
 - A node that trails the chain by a block is one block further behind.
 - Every time-locked policy inherits this: build for the next block, and take the node's check as the verdict (`skunks/policy/probe-sign-height.json`). Whether it is already a known issue in ergoplatform/ergo is not yet checked.
 
+## 5c. Constant folding: a per-owner constant must survive compilation (measured, policy experiment 6 rerun)
+
+- Segregated constants are what let one template serve every owner. But the 6.0.7 compiler folds an expression that
+  involves only a constant and a literal. `fromBase16("$ACCOUNT").size == 32` became `true`, the constant
+  disappeared from the tree, and every account compiled to **one address**: silently, with no error.
+- Compared with a value known only at run time (`account != SELF.id`), the constant stays in the tree.
+- **The check that caught it:** compile two instances with different constants, and confirm the trees differ, the
+  addresses differ, and the trees are equal once the constant is removed (the same template).
+- The KeepAlive receive address rests on the same claim. Its owner key is used inside `proveDlog`, so it can't be
+  folded. `kaa-mainnet-wallet.tree` was checked the same way: the devnet-tested tree with the placeholder key
+  appearing exactly once and replaced, round-tripped through a node (`skunks/keepalive/README.md`, "Mainnet demo").
+- Related (experiment 1): the compiler keeps a Boolean literal as a segregated constant and folds no branch on it,
+  so switching a block off with a constant saves no bytes.
+
 ## 6. What a guard cannot see
 
 These follow from the method lists above:

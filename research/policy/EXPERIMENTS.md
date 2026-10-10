@@ -373,20 +373,24 @@ The off-chain AVL+ prover (`AvlProver.scala`) agrees with the node's `AvlTree.in
 - **Needs nothing found here to be forked.** In-script offline ring signatures (7d) would need ErgoTree v3, which is
   live on mainnet, not a fork.
 
-**What a wallet would have to support first**
+**What a wallet would have to support first** (reordered 2026-10-10 after RULING R4)
 
-1. **Build time-locked spends for the next block's height**, and take the node's check as the verdict, not the
+1. **Recognise policy boxes by a list of template hashes.** R4 means a family, so separate sources and separate
+   hashes (§1).
+2. **Build time-locked spends for the next block's height**, and take the node's check as the verdict, not the
    wallet's signer (finding 1; §2 rows 2, 11; §4).
-2. **Refuse to pay a register-keyed vault without its registers** (§6 row 11). Better, offer only constant-owner
-   addresses (`KeepAliveAddress`) as receive addresses.
-3. **Construct successors that carry policy state:**
+3. **Pay a register-keyed vault only at its account address** (`RekeyAccount`, §6 rerun). A plain payment there is
+   safe; it joins the account's registered box by a keyless merge before it can be spent.
+4. **Merge serially per account.** An account keeps a single registered box (§6 rerun row 13d). Two plain payments
+   merged by two keepers in the same block race for that one box: one spends it and the other fails. The keeper or
+   wallet must merge one at a time, or batch every plain payment into one merge.
+5. **Construct successors that carry policy state:**
    - the activity height within SLACK (§4 rows 5–7);
-   - new keys in a rekey (§6 row 6);
+   - new keys in a rekey (§6 rows 6, 9);
    - a pending box's destination and deadline (§2 row 3).
-4. **Watch and cancel pending withdrawals within DELAY** (§2 rows 9–11). This is the part a two-step vault cannot do
-   by itself.
-5. **Attach flag boxes as data inputs** for gated owner spends (1b rows 31–32; `QVault`).
-6. **Recognise policy boxes by template hash.** A family means a list of hashes (§1).
+6. **Watch and cancel pending withdrawals within DELAY** (§2 rows 9–11, 16). This is the part a two-step vault
+   cannot do by itself.
+7. **Attach flag boxes as data inputs** for gated owner spends (1b rows 31–32; `QVault`).
 
 ## Rulings, decided 2026-10-10 (the user, with the planning instance)
 

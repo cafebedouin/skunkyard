@@ -117,3 +117,10 @@ Paths:
 - **Limit:** row 13d means two registered boxes of one account can't be merged together, so an account should keep
   one registered box.
 - **Wallet consequence:** a wallet can let anyone pay the address; it only has to merge before spending.
+
+**Who runs the merge (the hand-off path).** Row 12's merge needs no key and costs 14,791, about the same as a
+KeepAlive merge. The Lithos KeepAlive job (`~/bin/lithos-keepalive`, `KeepAliveJob`) is its natural executor: it already
+finds boxes by template hash, merges into one successor and takes the bounty. Supporting `RekeyAccount` would mean
+adding its template hash and the "one registered input, its registers kept" successor rule. Because an account keeps
+a single registered box, the executor must merge serially per account (the wallet-support list in
+`research/policy/EXPERIMENTS.md`).
