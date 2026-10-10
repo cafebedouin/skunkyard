@@ -12,7 +12,11 @@ The raw responses and the compacted chains are git-ignored under `census/raw/` a
 
 - **Endpoint:** `https://api.ergo.aap.cornell.edu/api/v1` (the Cornell mirror). The backup
   `api.ergobackup.aap.cornell.edu` still fails TLS (certificate expired, checked 2026-10-10) and was not used.
-- **Tip:** 1,891,308 when the scan began (2026-10-10, `/info`); each line states the tip it used.
+- **Tip:** 1,891,308 when the scan began (2026-10-10, `/info`); every line was computed at that tip (`--tip`).
+- **Requests:** 14,926 cached responses (box-chain pages, transactions, the bot's history, the oracle's addresses;
+  gzipped under `census/raw/`) plus about 200 uncached reads (listing totals, live unspent boxes, block times).
+- **Height ranges:** SigmaUSD 566,884 – 1,891,308 (q); DexyGold from 1,098,947 (oracle) and 1,510,760 (first
+  contract box); Duckpools from 1,064,005 (first pool box) and 1,075,307 (first loan box).
 - **State history follows the box chain.** `/boxes/byTokenId/{nft}` pages every box that ever held a singleton NFT,
   spent and unspent. A state holds from the block that included its box to the block of the transaction that spent
   it. `chain.check` verifies, for every series, that each box is spent by the transaction that creates the next;
@@ -522,3 +526,87 @@ but it has paid nothing for eight months, and no live loan is within 25% of its 
 1.7% block share (U2) the historical rate is about 15 ERG a year, if Lithos took every liquidation in its blocks
 and nobody marked first [inferred: the incumbents mark within 1–3 blocks, so a Lithos executor wins only the ones
 it sees first].
+
+## u. What it means
+
+`census/u1d/u.json`. Net per year from the backtests (r) and the measured histories (s, t); Lithos block share
+1.7% (U2); "per Lithos block" divides the Lithos-share figure by the 4,468 blocks a year that share is.
+
+| idea | net ERG a year | capital | worst case | needs | does the history support it? |
+|---|---|---|---|---|---|
+| **Duckpools liquidations** (t) | **~867 historically** (2,135.8 ERG over 274 liquidations, 1,075,868 – 1,723,118); ~14.7 at Lithos's share; **0 for the last eight months** | none | two fees on an attempt someone else wins | nothing: two keyless transactions (mark, then liquidate 1–4 blocks later) | **yes, historically**; the largest repeating keyless take any census has measured, but lumpy (a few large loans), idle now, and no live loan is within 25% of its line |
+| **SigRSV dip-buy, X = 5%** (r1) | ~971 over the whole window, ~570 over the last two years (marked to NAV; ~36 realised) | 1,000 ERG | a 473 ERG drawdown; ten months with redemption shut and the cap stuck in the discount | key, capital | **yes, with caveats**: positive at all three thresholds in all three windows, but carried by a few periods and by the assumption that its trades were served at the states it saw |
+| beat the bot (r2) | 76.4 a year averaged over the bot's life; **14.3 in the last year**; 0.0032 ERG per Lithos block | ~80 ERG per pair for one block | none in its own block | key, capital, Lithos block share | yes, but small, and shrinking with the bot's own take (6,557 → 99.6 ERG a year) |
+| conditional exits, SK-051 (r3) | none measurable | the parked position | the trigger never fires: unfired $4 exits are −37% at NAV; $4 never fired for positions placed in the last two years | new contract, capital | **only as a convenience**: no trigger shows an edge; RR ≥ 400% has not been reached for ten months |
+| Babel boxes as standing buy orders, owner side (r4) | none: the owner pays 1–3% above the pool at each fill | the box | missing a trend (SigUSD buy boxes −6,944 to −39,052 ERG against buying at once) | key, capital | **no**: standing orders are directional bets; the fill gap goes to the taker |
+| grid on a pool, owner side (r5) | realised spread at most ~40 a year on ~500 ERG | ~500 ERG | inventory (−7,810 to −11,105 ERG against the starting mix on SigUSD) | key, capital | **no**: none of the three deepest pools reverted around its start |
+| DexyGold keeper, SK-039 (s) | **0** from the contracts | none | — | Lithos block share (only to waive the fee) | **no**: no Dexy action pays its executor, and the LP was drained at 1,868,221 |
+
+**Against the Babel positive control and the scorecard** (`UPKEEP.md`: ERG per Lithos block; transactions;
+capital; key; contract change; permission). The control is one transaction, no capital, no key, no contract
+change, nobody's permission; under 0.8 ERG stands now (U1c), 17.7 ERG was taken once (U1, U1b). Ranked on that
+card:
+1. **Duckpools liquidation** is the only idea here that matches the control's shape (no key, no capital, no
+   contract change, nobody's permission) and repeats; it costs two transactions instead of one and is not atomic in
+   one block. Historically ~0.003 ERG per Lithos block at 1.7%; today 0.
+2. **Beat the bot**: 0.0032 ERG per Lithos block last year, two transactions, the miner's capital and key.
+3. **SigRSV dip-buy**: the largest number, but it is a position, not upkeep: it needs a key, 1,000 ERG, and
+   months of exposure; a Lithos miner (or a vault its miners fund, `UPKEEP.md`) could run it, but block share
+   gives it nothing.
+4. Conditional exits, standing orders and grids are owner-side tools: for an executor the only revenue is the fill
+   gap on boxes that exist, which on chain today is the control's under 0.8 ERG.
+5. The DexyGold keeper earns nothing and has nothing left to keep.
+
+**What the history does not support:** a Lithos revenue line from SigmaUSD at today's block share (14 ERG a
+year); conditional exits on RR ≥ 400% (shut for ten months) or a $4 ERG take-profit (never reached by positions of
+the last two years); Babel boxes or grids as an edge for their owners; a DexyGold keeper of the deployed contracts.
+
+## What contradicts or extends U1b, U1c and UPKEEP.md
+
+- **SigmaUSD (UPKEEP.md) — the bot was far larger than its recent window.** Its 116 pairs and 142.8 ERG
+  (1,738,107 – 1,888,826) check out exactly, but over its whole life the bot made 2,593 mint-and-sell pairs and
+  netted **18,983 ERG**, 15,687 of it from SigUSD mints when RR was at or above 400% (2021 – 2024). The "2 ERG of
+  the bot's 142.8 at 1.5% share" is right for the recent window; the historical rate at 1.7% would be ~76 ERG a
+  year, and last year's is 14.
+- **SigmaUSD — the discount is the normal state, not an anomaly.** The SigRSV pool was below NAV in 50.2% of all
+  blocks since 2021 and more than 2% below in 25%; in the last year 55% of blocks were more than 2% below. The
+  deepest discount was −40.5% (1,863,898, August 2026). UPKEEP's "no floor while redemption is locked" holds: no
+  long episode ended by redemption.
+- **SigmaUSD — RR ≥ 400% is not rare historically but is absent now.** 306 windows, 42.9% of blocks; the last
+  ended at 1,665,240, ten months ago. An exit that waits for redemption waits on ERG roughly doubling against the
+  dollar [inferred from RR 294% at the tip and RR's roughly linear dependence on the ERG price].
+- **SigmaUSD — buy-and-redeem is open and nobody takes it.** The SigUSD pool sat below the bank's redeem price in
+  14% of blocks; the bot never bought from a pool. Not backtested here (not asked); a further two-transaction take
+  of the same shape as the bot's.
+- **UPKEEP.md's scorecard, Dexy row:** "a volunteer bot; froze 40 h in March 2026": the chain shows one address
+  running 291 of 292 tracker-98 updates and 234 of 272 interventions, and a gap of 51–59 hours in late March 2026
+  (and 81 hours in January). The deployed DexyGold is now drained (s), so this row has no target.
+- **U1b "Duckpools liquidation: executor keeps the slack (2% buffer, 0.004 ERG); not computed":** computed. The
+  slack is the gap between the pool's real output and the contract's 2%-raised bound, a median 0.97% of each
+  sale, worth 2,135.8 ERG over 274 liquidations; the ERG part is 0.00025–0.0105 ERG. And liquidation needs no
+  capital: the DEX pool is an input.
+- **U1b "DexyGold ids conflict in the sources":** settled from the deployed trees (s). The LP template U1b called
+  "SDK n2dexyGOLD, testnet ids" (`2cf12e36`) is the deployed mainnet LP; the bank shares U1c's "USE bank" template
+  (`c9162bd0`).
+- **U1c "keyless with input", Duckpools and Dexy:** both protocols' maintenance paths are keyless and need only
+  public boxes as inputs and data inputs (the DEX pool, the oracle, the trackers); none pays its executor except
+  Duckpools' slack.
+
+## Series not reconstructed, and the limits
+
+- **Oracle chain:** 10 breaks remain of 285,700 boxes (three inside the window, at most 167 blocks each, where the
+  rate is held stale); the address listing's unstable paging was worked around by filling gaps from spending
+  transactions.
+- **Buyback NFT** has three units, so it is not a singleton chain (8 hand-offs); the active unit's history is the
+  contract boxes. The Dexy update NFT (three units) never stood in a contract.
+- **Not reconstructed:** each Dexy minter's LP sale (so the mint edges are upper bounds); the realised profit of the
+  other SigRSV/SigUSD traders who reverted the pool (the backtest's competitors); the Duckpools mark transactions'
+  senders (the liquidation's executor is identified, the mark's is not); the "first liquidatable" height uses the
+  principal, not the debt with interest, so it is late and the 207 measured delays are lower bounds.
+- **Readings of decompiled scripts:** the explorer prints no parentheses in mixed arithmetic. Duckpools' value
+  formula is fixed by all 274 liquidations; Dexy's payout and buyback conditions are marked [inferred]; the
+  SigmaUSD bank rule is U1's, from `AgeUSD.scala`, and reproduces the bot's mint price to the unit.
+- **Backtests are computed, not traded,** against historical states, with other traders' flow unchanged; none
+  models being front-run, and every keyless fill is assumed taken when it first pays a fee (contradicted for Babel
+  boxes by U1/U1b, supported for Machina orders).
+- **No node, no key, nothing built or submitted.**

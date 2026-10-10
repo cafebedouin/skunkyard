@@ -1,0 +1,99 @@
+{
+ "tip": 1891308,
+ "lithosShare": 0.017,
+ "rows": [
+  {
+   "idea": "SigRSV dip-buy (X = 5%)",
+   "netErgPerYear": {
+    "wholeWindowMarkedNav": 971.4,
+    "last2YearsMarkedNav": 569.7,
+    "last2YearsRealised": 35.5
+   },
+   "capital": "1,000 ERG (cap)",
+   "worstCase": "drawdown 473 ERG on 1,000",
+   "needs": [
+    "key",
+    "capital"
+   ],
+   "supported": "yes, with the fill assumption"
+  },
+  {
+   "idea": "beat the bot (Lithos share 1.7%)",
+   "netErgPerYear": {
+    "historicalAverage": 76.4,
+    "lastYear": 14.3,
+    "perLithosBlockLastYear": 0.0032
+   },
+   "capital": "~80 ERG per pair, a few hundred at most, for one block",
+   "worstCase": "none in its own block (both legs land)",
+   "needs": [
+    "key",
+    "capital",
+    "Lithos block share"
+   ],
+   "supported": "yes, but small"
+  },
+  {
+   "idea": "conditional exits (SK-051)",
+   "netErgPerYear": null,
+   "capital": "the parked position",
+   "worstCase": "the trigger never fires (unfired $4 exits: -37% marked to NAV)",
+   "needs": [
+    "new contract (SK-051)",
+    "capital"
+   ],
+   "supported": "only as a convenience; no trigger shows an edge"
+  },
+  {
+   "idea": "Babel boxes as standing buy orders (owner)",
+   "netErgPerYear": null,
+   "capital": "the box",
+   "worstCase": "pays 1-3% over the pool at every fill; misses trends",
+   "needs": [
+    "key",
+    "capital"
+   ],
+   "supported": "no"
+  },
+  {
+   "idea": "grid on a pool (owner)",
+   "netErgPerYear": {
+    "realisedSpreadBest": 39.6
+   },
+   "capital": "~500 ERG",
+   "worstCase": "inventory: -7,810 to -11,105 ERG against the starting mix (SigUSD)",
+   "needs": [
+    "key",
+    "capital"
+   ],
+   "supported": "no"
+  },
+  {
+   "idea": "DexyGold keeper (SK-039)",
+   "netErgPerYear": {
+    "fromContracts": 0
+   },
+   "capital": "none",
+   "worstCase": "-",
+   "needs": [
+    "Lithos block share (fee only)"
+   ],
+   "supported": "no: no action pays, and the LP was drained at 1,868,221"
+  },
+  {
+   "idea": "Duckpools liquidations",
+   "netErgPerYear": {
+    "historicalAll": 867.2,
+    "historicalAtLithosShare": 14.7,
+    "sinceLastLiquidation": 0
+   },
+   "capital": "none",
+   "worstCase": "two fees per attempt",
+   "needs": [
+    "nothing (two keyless transactions)"
+   ],
+   "supported": "yes historically; idle for eight months, no live loan within 25%"
+  }
+ ],
+ "control": "Babel box against a pool (SK-049): one transaction, no capital, no key; under 0.8 ERG standing now (U1c), 7.4 + 10.3 ERG taken once (U1, U1b)"
+}

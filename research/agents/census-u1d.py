@@ -1200,12 +1200,68 @@ def line_r(a):
                     "beatTheBot": out["beatTheBot"]}, indent=1))
 
 
+# ---------------------------------------------------------------------------------------------------- line u
+
+LITHOS_SHARE = 0.017          # U2: 30 Lithos blocks in 1,748 (UPKEEP.md)
+YEAR = 262_800
+
+
+def line_u(a):
+    q, r, s_, t = (load(f) for f in ("q.json", "r.json", "s.json", "t.json"))
+    tip = r["tip"]
+    d5 = r["dipBuy"]["0.05"]
+    full_years = (tip - r["from"]) / YEAR
+    bb = r["beatTheBot"]
+    liq = t["pastLiquidations"]
+    liq_years = (liq["last"] - liq["first"]) / YEAR
+    lith_blocks = YEAR * LITHOS_SHARE
+    rows = [
+        {"idea": "SigRSV dip-buy (X = 5%)", "netErgPerYear": {
+            "wholeWindowMarkedNav": round(d5["netNanoErgMarkedNav"] / 1e9 / full_years, 1),
+            "last2YearsMarkedNav": round(r["dipBuy"]["last525600"]["0.05"]["netNanoErgMarkedNav"] / 1e9 / 2, 1),
+            "last2YearsRealised": round(r["dipBuy"]["last525600"]["0.05"]["realisedCashNanoErg"] / 1e9 / 2, 1)},
+         "capital": "1,000 ERG (cap)", "worstCase": f"drawdown {r['dipBuy']['last525600']['0.05']['worstDrawdownNanoErg'] / 1e9:.0f} ERG on 1,000",
+         "needs": ["key", "capital"], "supported": "yes, with the fill assumption"},
+        {"idea": "beat the bot (Lithos share 1.7%)", "netErgPerYear": {
+            "historicalAverage": round(bb["shares"]["0.017"]["nanoErgPerYear"] / 1e9, 1),
+            "lastYear": round(bb["lastYear"]["builderNetNanoErg"] / 1e9 * LITHOS_SHARE, 1),
+            "perLithosBlockLastYear": round(bb["lastYear"]["builderNetNanoErg"] / 1e9 * LITHOS_SHARE / lith_blocks, 4)},
+         "capital": "~80 ERG per pair, a few hundred at most, for one block", "worstCase": "none in its own block (both legs land)",
+         "needs": ["key", "capital", "Lithos block share"], "supported": "yes, but small"},
+        {"idea": "conditional exits (SK-051)", "netErgPerYear": None, "capital": "the parked position",
+         "worstCase": "the trigger never fires (unfired $4 exits: -37% marked to NAV)",
+         "needs": ["new contract (SK-051)", "capital"], "supported": "only as a convenience; no trigger shows an edge"},
+        {"idea": "Babel boxes as standing buy orders (owner)", "netErgPerYear": None, "capital": "the box",
+         "worstCase": "pays 1-3% over the pool at every fill; misses trends", "needs": ["key", "capital"],
+         "supported": "no"},
+        {"idea": "grid on a pool (owner)", "netErgPerYear": {
+            "realisedSpreadBest": round(max(v["realisedSpreadNanoErg"] for g in r["grid"].values() for v in g.values()) / 1e9
+                                        / ((tip - r["grid"]["rsBTC"]["0.1"]["from"]) / YEAR), 1)},
+         "capital": "~500 ERG", "worstCase": "inventory: -7,810 to -11,105 ERG against the starting mix (SigUSD)",
+         "needs": ["key", "capital"], "supported": "no"},
+        {"idea": "DexyGold keeper (SK-039)", "netErgPerYear": {"fromContracts": 0},
+         "capital": "none", "worstCase": "-", "needs": ["Lithos block share (fee only)"],
+         "supported": "no: no action pays, and the LP was drained at 1,868,221"},
+        {"idea": "Duckpools liquidations", "netErgPerYear": {
+            "historicalAll": round(liq["executorTakeNanoErg"]["total"] / 1e9 / liq_years, 1),
+            "historicalAtLithosShare": round(liq["executorTakeNanoErg"]["total"] / 1e9 / liq_years * LITHOS_SHARE, 1),
+            "sinceLastLiquidation": 0},
+         "capital": "none", "worstCase": "two fees per attempt", "needs": ["nothing (two keyless transactions)"],
+         "supported": "yes historically; idle for eight months, no live loan within 25%"},
+    ]
+    out = {"tip": tip, "lithosShare": LITHOS_SHARE, "rows": rows,
+           "control": "Babel box against a pool (SK-049): one transaction, no capital, no key; under 0.8 ERG standing "
+                      "now (U1c), 7.4 + 10.3 ERG taken once (U1, U1b)"}
+    save("u.json", out)
+    log(json.dumps(out, indent=1))
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("line", choices=["q", "r", "s", "t", "u"])
     p.add_argument("--tip", type=int, default=None)
     a = p.parse_args()
-    {"q": line_q, "r": line_r, "s": line_s, "t": line_t}[a.line](a)
+    {"q": line_q, "r": line_r, "s": line_s, "t": line_t, "u": line_u}[a.line](a)
     log("requests", X.stats)
 
 
