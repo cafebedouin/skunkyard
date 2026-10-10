@@ -421,9 +421,9 @@ transaction (about 940 tracker and intervention runs over 283,000 blocks, roughl
 and paid nothing back. In a Lithos miner's own block the fee is its own, so the cost is zero, and so is the
 revenue. The mints and swaps pay only on the miner's own capital. And as deployed there is nothing left to keep:
 the LP is empty, so free and arbitrage mints are closed (both need the LP near or above the oracle), and although
-tracker 98's trigger is valid now (the LP's price is 0.4% of the oracle's) the intervention it enables can move at
-most about 0.002 ERG into an LP that the same flaw would let anyone drain again [inferred from the script's
-1%/102%/99.5% bounds with one DexyGold in the LP]. **For SK-039 phase 0:** the deployed DexyGold, like USE, is not a
+tracker 98's trigger is valid now (the LP's price is 0.4% of the oracle's), we do not analyse what the bank's
+companion contracts allow against a drained LP: ergo-forge leaves that open under its disclosure-first rule, and so
+do we (`notes/2026-10-05-use-lp-drain.md`). **For SK-039 phase 0:** the deployed DexyGold, like USE, is not a
 keeper target; the target is the relaunch, and its first requirement is the bound-by-NFT rule the drain shows.
 
 ## t. Duckpools
