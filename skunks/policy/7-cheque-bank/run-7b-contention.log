@@ -1,0 +1,6 @@
+  6.r cash a fresh signed cheque, honest (cost, same instrument as 13.r) expect ACCEPT     got ACCEPT                    ok
+ 11.r A (K1) commits C8 and C9                                           expect ACCEPT     got ACCEPT                    ok
+ 13.r cash C8 by membership, honest                                      expect ACCEPT     got ACCEPT                    ok
+ 14.r cash C9 chained on 13.r's unconfirmed output, submitted back to ba expect ACCEPT     got NOT-MINED  node           WRONG
+14.r2 C9 resubmitted on the confirmed bank box after 14.r was not mined  expect ACCEPT     got ACCEPT                    ok
+6.r - 13.r = {'rows': ['6.r', '13.r'], 'instrument': 'mempool', 'value': 224}

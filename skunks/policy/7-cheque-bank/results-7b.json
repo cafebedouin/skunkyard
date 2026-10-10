@@ -1,0 +1,583 @@
+{
+ "experiment": "7b-cheques",
+ "started_height": 227,
+ "node": {
+  "appVersion": "6.0.7",
+  "parameters": {
+   "outputCost": 100,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 224,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2000,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ },
+ "wallets": {
+  "A": [
+   "038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c",
+   "031ee1ab3b729f21e0dcee05642a63745286354d8e511e6376838e235a28078c01",
+   "0367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df",
+   "0398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04",
+   "026c2134d11af7f0bea024724278ebc37ced69a19a99dd6638f393d5f1b9c8bea0",
+   "0389e8fb63050cdb2c3f5c70b3d6167835b60bcf020b9ed7c332965ffce26f2e6f"
+  ],
+  "B": [
+   "03d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494",
+   "0376bf533d4b15510fa9f4124b6e48616f07debcf2ef0cfb185cdc4a576450b475",
+   "02ea2649b3512b9a859ab658a85e2989a7ae39b2518877b2dc0f2b44b785d5788d",
+   "03b4c210719212afb16b5f136a2dcb3cc9fc231721f711994facf3b6111afba7d0",
+   "0234835d35c02b0dc042aa9c041b854b98c28df4872fdc8c6a260bc2ddd767f5a3",
+   "02a52d6327542c16cce7645b899e651dc78098fa4f495acb36992e66b099405ec2"
+  ]
+ },
+ "trees": [
+  {
+   "name": "ChequeBank",
+   "tree_bytes": 996,
+   "box_bytes": 1186,
+   "address": "5maKrfowguhHbRbUoWxkS1xoMVQzTBj5my4DyPrMhv3xpPum378MS44Kz9HbcR8eBKf7xL3efAwr9YftC8ZqH6LtDAVi7KN5sSMk46gK46VC1GJ8PxNa3cPU99NH2dUvUeFN5TJTq4KsLfC5sXbSTxUEUMnMcgFMZL44Yp3GYwHwhLpg6hADUtZsuKjEF36Gq13AREVxE2RFSzGGBPLuL9XQPrLYsekcKsg5mqvwFakjU5mMzBkBHqd3xruCnHPtBogrB9hp5kNUDVj55tNU59e2HiUuQUrh1gGQLtb2R79MURrTB1tfCq9vBp81Jb3Fg6aaSjKm7CmX6wNopYxFNkX4tuUMkSw4iRV5PHvuwZDsUkqRFhWQkTLatGM3zrmNVMmswYCkt9S2zYsWDEGvZvHEiVieBi9gVZs58uurXARpetDf8smaWB1a9zahyJHV1RPK7mjdiMTSnVnfySPxjii8X7ChwvTCEPaLCugvnxfWCCcWBLT3dMmqs7CRiidSDuQyxJNgkiPDj8yfatHKKimLUegjL174zm2Fy8rjJBBbGSicpnzJWA4AGUdDJHtBU9GKk7FxArjLSrQnZnFifPacd61SF9SVWSER2psVLttavsjjKMUTAqbGxUT4KwUt5ftjJuNsrUPkvvho2kUnc5upesRupozqtBL6e3UC53HyiTAthM84pzDjKtRiYbADEEwPrwgqzypz14Rq2TQjSPTySQ3Lw86qihSvhwCcjsAzGSkexK7Z8H8k2Frg39cexJn2arvtx6mLdKhvUECiBTuBJgjdR84XuTpxGBSQBQfVb6MHW2SQ3Yfsgxm8VgCHNGgcrfLs1y2ME8Skmvfh3Z44dEEvK9cMjzvUp3zvjMAHh6r8DnL3NEPQSopr9uBjSK11NfBzeeQBgbRs19bcGG3EmhMmCpWQrpQXhk8BkP3uaRB84GgXu98yH4YybT3TaKNB3Ec5pApoxvLq8XPM16EL68hXUagQrchV9FBGbsw8zQZVk4Tp22qS26PaWkaSwVo1bMruocXWjN7HabNLhGMHiuFL5w2q3k8gX8GpNLWHxJH61Q8Wxpte9WZE2JCqf3yYwWWoyBazk5KzHwcRZuYwqY8Fb37rYt8VDXuzK1fzmj9zbunv3j5QCFdi99USdwzgZaa48A3Zq4UUsMUpg7hd8CZuZmbfUw2kPFPLoJMHB2mALwAVmTcFMKHELaCvAGAwTk7kwP6iTMbLpUwcLwPx7M3UZ7fCTgYVm2d99jXi57HApFXebiPoNDAj42ShosTQ6cjYAVWoUViZg2D27PFuX7VfQMePUiFLLgoiR1D9xTSWkeAR1mHjKh2M89Ahq1py7La9zcZKc9Xi9a7G46p",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 1482500000
+  }
+ ],
+ "cases": [
+  {
+   "n": "d.b4a6",
+   "label": "deposit (setup)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "a01e5bddf24603677a20ae2943edbc09978b47716d4c5b0a4246d694314f568d",
+   "heights": {
+    "before": 234,
+    "after": 234
+   },
+   "detail": "a01e5bddf24603677a20ae2943edbc09978b47716d4c5b0a4246d694314f568d",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "d.578e",
+   "label": "deposit (setup)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "bad94904c56ba173d2353e7f644da093ec4fae6da67de71394a29a914105e8ce",
+   "heights": {
+    "before": 236,
+    "after": 236
+   },
+   "detail": "bad94904c56ba173d2353e7f644da093ec4fae6da67de71394a29a914105e8ce",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": 1,
+   "label": "cash C1 to payee P with the signature's s + 1 (forged)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 6,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 238,
+    "after": 238
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 379d19677832cbda447f0cb82f89131717bfb1ad585588f55b355d21869625e4: #0 => Success((false,717))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 2,
+   "label": "cash C1 to payee Q",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 6,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 238,
+    "after": 238
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. e2bdea8d1c9245728a6457f368d872dba2e7ad670a30f02b2730ea5d0953eca0: #0 => Success((false,746))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 3,
+   "label": "cash C1 with the payee output's value = amount + 1, cheque unchanged",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 6,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 238,
+    "after": 238
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 6e99c1a5f9fcc37e8d4ea89098bd2cb0b24bca08b99f4e64654de1135c52ed7a: #0 => Success((false,327))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 4,
+   "label": "cash C1 with nft = the look-alike's id in the message, signed consistently",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 6,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 238,
+    "after": 238
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. b70ab6ba4a9a1c9e32739355057355796ebfb91b81dc663f03f73ac7fbbc9d8d: #0 => Success((false,722))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 5,
+   "label": "cash C1 against account K2 (key field changed, signed consistently by K1)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 6,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 238,
+    "after": 238
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. f7dee0f023d79f41260a1a267a3f1a0019abf69e1bf39b46d5923c38d8fed058: #0 => Success((false,474))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 6,
+   "label": "cash C1 (K1 -> P, within expiry), honest",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 13371,
+   "cost_instrument": "mempool",
+   "tx_id": "ab24774f9a2ca4ea1e2cba7aea8d2d5a50f9faa4b0fba4339fc6074940111ac6",
+   "heights": {
+    "before": 238,
+    "after": 238
+   },
+   "detail": "ab24774f9a2ca4ea1e2cba7aea8d2d5a50f9faa4b0fba4339fc6074940111ac6",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": 7,
+   "label": "re-cash C1 on the new bank box with no spent-set update (no proof variable)",
+   "got": "EVAL-ERROR",
+   "source": "EVAL-ERROR",
+   "sibling_n": "7.s",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 241,
+    "after": 241
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 3bd4faeace3bced2dbc315efd59214ec11c2eeea4982dcd69e5e31ff387d62ff: #0 => Failure(java.lang.reflect.InvocationTargetException)\" }",
+   "expect": "EVAL-ERROR",
+   "ok": true
+  },
+  {
+   "n": "7b",
+   "label": "re-cash C1 with an insert proof built against the stale pre-case-6 R6 digest",
+   "got": "EVAL-ERROR",
+   "source": "EVAL-ERROR",
+   "sibling_n": "7.s",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 241,
+    "after": 241
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 4c6675b5dd489e78ec724bd7ea3ba0082a7f208eb201bfa168c5a650bc497f39: #0 => Failure(java.lang.reflect.InvocationTargetException)\" }",
+   "expect": "EVAL-ERROR",
+   "ok": true
+  },
+  {
+   "n": "7.s",
+   "label": "cash C6, a fresh cheque (sibling of 7, 7b), checked",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "09d4ceeb7415268835b70aceb81c64a51c86285489338a5610a75a62276dca17",
+   "heights": {
+    "before": 241,
+    "after": 241
+   },
+   "detail": "09d4ceeb7415268835b70aceb81c64a51c86285489338a5610a75a62276dca17",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "7x",
+   "label": "re-cash C1 with a fresh insert proof: the helper cannot produce one for an existing key",
+   "got": "recorded",
+   "source": "helper",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": null,
+   "detail": "helper result: ['fail:Key 7a9113d468c0f45cd16f8defe45a4a724ae259772149cb52307db9e54d3bc98e already exists']"
+  },
+  {
+   "n": 9,
+   "label": "cash C3 whose amount (2750000001) exceeds K1's remaining balance",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "9.s",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 242,
+    "after": 242
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. b723540e7e1795719fb36df0ae0d1cd851e8dd4400f857317e14bf7d61733e11: #0 => Success((false,762))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "9.s",
+   "label": "cash C3' at exactly the balance",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "f7cb7fa1c16aa4ffaf985eb7e8b9cd7832662dfc758e57d7430bb534d6ebcfd7",
+   "heights": {
+    "before": 242,
+    "after": 242
+   },
+   "detail": "f7cb7fa1c16aa4ffaf985eb7e8b9cd7832662dfc758e57d7430bb534d6ebcfd7",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": 10,
+   "label": "B (K2) commits a cheque whose account field is K1",
+   "got": "REFUSE",
+   "source": "wallet-sign/no-secret",
+   "sibling_n": 11,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 242,
+    "after": 242
+   },
+   "detail": "wallet B sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: assertion failed: Tree root should be real but was UnprovenSchnorr(ProveDlog(Ecp((d294ff63a12d5d87885183eff6206d4abc3cb1d9c53cbd80f563e47f40a6f897,3b9349201bc37e6e980edf0f279958a57503b5ce61eb693e39ee26e19bc0cfb5,1))),None,None,None,true,0)\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 837e3cef20b23b49f5d04ada75f53b9b81b7336893673ef8f4a0f5e8",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "B"
+  },
+  {
+   "n": 11,
+   "label": "A (K1) commits the ids of C4 and C5 into R7",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 13302,
+   "cost_instrument": "mempool",
+   "tx_id": "aa5608f507cc45cfcb7f70125004cacd097f28a3e53a6276acbe9fe828d3050f",
+   "heights": {
+    "before": 242,
+    "after": 242
+   },
+   "detail": "aa5608f507cc45cfcb7f70125004cacd097f28a3e53a6276acbe9fe828d3050f",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": 12,
+   "label": "cash C7, never committed, with a contains proof for C5's id",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 13,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 244,
+    "after": 244
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 004a3578bb421a2e1d1a2fcf013dda066ccecc0f78c3559be337107fbb9ff04d: #0 => Success((false,492))\" }",
+   "expect": "EVAL-ERROR",
+   "ok": false
+  },
+  {
+   "n": 13,
+   "label": "cash C4 by membership, honest (submitted; mined below)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": "missed",
+   "tx_id": "dd541cc7f7eb0af94efc3af0e22f52ea7853c2d140c4f7b1bd02a37372d0a5e0",
+   "heights": {
+    "before": 244,
+    "after": 244
+   },
+   "detail": "dd541cc7f7eb0af94efc3af0e22f52ea7853c2d140c4f7b1bd02a37372d0a5e0",
+   "expect": "ACCEPT",
+   "ok": true,
+   "inclusionHeight": 246
+  },
+  {
+   "n": 14,
+   "label": "contention: cash C5 chained on case 13's unconfirmed output, submitted back to back",
+   "got": "NOT-MINED",
+   "source": "node",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "4f0bcac36bb622e27349648457ea33aeea5b42f44280a801a8c570e79ed8b20b",
+   "heights": {
+    "13_included": 246
+   },
+   "detail": "accepted by /transactions/check and by POST /transactions (spending 13's unconfirmed bank output 4a7647dd...); the node log shows it processed once (08:37:19.960) and never in a block candidate; 13 was mined at 246; 14 never mined (harness waited 120 x 5 s)",
+   "expect": "ACCEPT",
+   "ok": false
+  },
+  {
+   "n": 8,
+   "label": "cash C2 with expiry = HEIGHT - 1 (272; evaluated HEIGHT 273) (rerun)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "8.s",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 272,
+    "after": 272
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 920898ba8c620248eacb2ab74aa9bdd862b20195d3c651ea31073525861c1102: #0 => Success((false,736))\" }",
+   "expect": "REFUSE",
+   "ok": true,
+   "attempt": 0
+  },
+  {
+   "n": "8.s",
+   "label": "cash C2' with expiry = HEIGHT (273) (rerun)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "06c3bb62d8b3fc2e42448e0dd40b16bd91a5b91b1d9ccdf993e752523524a7d3",
+   "heights": {
+    "before": 272,
+    "after": 272
+   },
+   "detail": "06c3bb62d8b3fc2e42448e0dd40b16bd91a5b91b1d9ccdf993e752523524a7d3",
+   "expect": "ACCEPT",
+   "ok": true,
+   "attempt": 0
+  },
+  {
+   "n": "6.r",
+   "label": "cash a fresh signed cheque, honest (cost, same instrument as 13.r)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 13374,
+   "cost_instrument": "mempool",
+   "tx_id": "f1a564ded85122d768d47b08281205836d5c2e9482afaf07e126a1fde44923b2",
+   "heights": {
+    "before": 272,
+    "after": 272
+   },
+   "detail": "f1a564ded85122d768d47b08281205836d5c2e9482afaf07e126a1fde44923b2",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "11.r",
+   "label": "A (K1) commits C8 and C9",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 13306,
+   "cost_instrument": "mempool",
+   "tx_id": "c272cd7b88e57f73e2368ae5f17a1c891f0b551e03bfca9414efbf320c919944",
+   "heights": {
+    "before": 273,
+    "after": 273
+   },
+   "detail": "c272cd7b88e57f73e2368ae5f17a1c891f0b551e03bfca9414efbf320c919944",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "13.r",
+   "label": "cash C8 by membership, honest",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 13150,
+   "cost_instrument": "mempool",
+   "tx_id": "83a26b66aa682e78cd1f60b9421817e99b46aa6953fe05a1dea726483b31af0b",
+   "heights": {
+    "included": 275
+   },
+   "detail": "",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "14.r",
+   "label": "cash C9 chained on 13.r's unconfirmed output, submitted back to back",
+   "got": "NOT-MINED",
+   "source": "node",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "37283ccb9b10952a9bf46eda0083f43a5e41635389bde93a8ed5afca42827da4",
+   "heights": {
+    "13_included": 275,
+    "14_included": null,
+    "mempool_polls": [
+     {
+      "13": 200,
+      "14": 200
+     },
+     {
+      "13": 200,
+      "14": 404
+     },
+     {
+      "13": 200,
+      "14": 404
+     },
+     {
+      "13": 200,
+      "14": 404
+     },
+     {
+      "13": 200,
+      "14": 404
+     },
+     {
+      "13": 200,
+      "14": 404
+     },
+     {
+      "13": 200,
+      "14": 404
+     },
+     {
+      "13": 200,
+      "14": 404
+     },
+     {
+      "13": 200,
+      "14": 404
+     },
+     {
+      "13": 200,
+      "14": 404
+     },
+     {
+      "13": 200,
+      "14": 404
+     },
+     {
+      "13": 200,
+      "14": 404
+     },
+     {
+      "13": 200,
+      "14": 404
+     },
+     {
+      "13": 200,
+      "14": 404
+     },
+     {
+      "13": 200,
+      "14": 404
+     }
+    ]
+   },
+   "detail": "check 200 37283ccb9b10952a9bf46eda0083f43a5e41635389bde93a8ed5afca42827da4; post 200 37283ccb9b10952a9bf46eda0083f43a5e41635389bde93a8ed5afca42827da4",
+   "expect": "ACCEPT",
+   "ok": false
+  },
+  {
+   "n": "14.r2",
+   "label": "C9 resubmitted on the confirmed bank box after 14.r was not mined",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 13151,
+   "cost_instrument": "mempool",
+   "tx_id": "7d093a947ed2874d0442481a83f77968830d800122119f089ceb9fb75835c828",
+   "heights": {
+    "before": 276,
+    "after": 276
+   },
+   "detail": "7d093a947ed2874d0442481a83f77968830d800122119f089ceb9fb75835c828",
+   "expect": "ACCEPT",
+   "ok": true
+  }
+ ],
+ "harness_bugs": [
+  {
+   "case": 8,
+   "what": "a block landed between building rows 8 / 8.s for evaluated HEIGHT 242 and checking them (fullHeight 242, HEIGHT 243): 8.s (expiry 242) was refused, correctly at 243",
+   "fix": "--stage 7b-expiry: build both, check each only while fullHeight is unchanged, else rebuild"
+  },
+  {
+   "case": 14,
+   "what": "the harness exited in wait_tx_outputs(14) before committing case 13's helper ops; the helper's persisted digests then lagged the bank by case 13",
+   "fix": "the session logs (7b-*.log.session, = logs + case 13's batch) matched the bank's R4/R6 digests exactly and were adopted; a contention rerun (--stage 7b-contention) follows"
+  }
+ ],
+ "schnorr_minus_contains": {
+  "rows": [
+   "6.r",
+   "13.r"
+  ],
+  "instrument": "mempool",
+  "value": 224
+ },
+ "contention_finding": {
+  "rows": [
+   "14",
+   "14.r",
+   "14.r2"
+  ],
+  "observed": "twice, a cash chained on the bank's unconfirmed output passed /transactions/check and POST, sat in the mempool for <0.2 s (14.r: polls 200 then 404) and was never mined; resubmitted on the confirmed bank box it was mined (14.r2). Node log (14.r): candidate assembly for block 275 began 'from 3 transactions available' (emission, 13.r, 14.r) and regenerated 0.15 s later 'from 2'.",
+  "control": "../probe-chain.json: two chained spends of a trivial keyless script (HEIGHT > 0, no token) stayed in the mempool 3 s and were mined in one block (279)",
+  "cause": "[UNVERIFIED] specific to the bank's transaction (it carries an NFT and AVL proofs; the control carries neither); not isolated"
+ }
+}

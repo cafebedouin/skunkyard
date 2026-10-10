@@ -1,0 +1,21 @@
+d.b4a6 deposit (setup)                                                    expect ACCEPT     got ACCEPT                    ok
+d.578e deposit (setup)                                                    expect ACCEPT     got ACCEPT                    ok
+    1 cash C1 to payee P with the signature's s + 1 (forged)             expect REFUSE     got REFUSE     node-check     ok
+    2 cash C1 to payee Q                                                 expect REFUSE     got REFUSE     node-check     ok
+    3 cash C1 with the payee output's value = amount + 1, cheque unchang expect REFUSE     got REFUSE     node-check     ok
+    4 cash C1 with nft = the look-alike's id in the message, signed cons expect REFUSE     got REFUSE     node-check     ok
+    5 cash C1 against account K2 (key field changed, signed consistently expect REFUSE     got REFUSE     node-check     ok
+    6 cash C1 (K1 -> P, within expiry), honest                           expect ACCEPT     got ACCEPT                    ok
+    7 re-cash C1 on the new bank box with no spent-set update (no proof  expect EVAL-ERROR got EVAL-ERROR EVAL-ERROR     ok
+   7b re-cash C1 with an insert proof built against the stale pre-case-6 expect EVAL-ERROR got EVAL-ERROR EVAL-ERROR     ok
+  7.s cash C6, a fresh cheque (sibling of 7, 7b), checked                expect ACCEPT     got ACCEPT                    ok
+   7x re-cash C1 with a fresh insert proof: the helper cannot produce on expect None       got recorded   helper         
+    8 cash C2 with expiry = HEIGHT - 1 (241; evaluated HEIGHT 242)       expect REFUSE     got REFUSE     node-check     ok
+  8.s cash C2' with expiry = HEIGHT (242)                                expect ACCEPT     got REFUSE     node-check     WRONG
+    9 cash C3 whose amount (2750000001) exceeds K1's remaining balance   expect REFUSE     got REFUSE     node-check     ok
+  9.s cash C3' at exactly the balance                                    expect ACCEPT     got ACCEPT                    ok
+   10 B (K2) commits a cheque whose account field is K1                  expect REFUSE     got REFUSE     wallet-sign/no-secret ok
+   11 A (K1) commits the ids of C4 and C5 into R7                        expect ACCEPT     got ACCEPT                    ok
+   12 cash C7, never committed, with a contains proof for C5's id        expect EVAL-ERROR got REFUSE     node-check     WRONG
+   13 cash C4 by membership, honest (submitted; mined below)             expect ACCEPT     got ACCEPT                    ok
+transaction 4f0bcac36bb622e27349648457ea33aeea5b42f44280a801a8c570e79ed8b20b never mined
