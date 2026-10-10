@@ -128,3 +128,29 @@ boxes, built the merge at height 27, the node's check accepted it, and it was mi
 all 6 units, 0.0505 ERG (0.052 less the 0.0015 bounty). Two hook fixes on the way, both node start-up timing: the
 first wallet and compile calls are retried (the node's readers time out just after start), and sends use their own
 60 s timeout (the rig's wallet helper stops at 10 s).
+
+## Mainnet demo: the wallet's vault, kept by others (2026-10-10)
+
+The skunkyard test wallet's vault is `kaa-mainnet-wallet.address`. Its tree, `kaa-mainnet-wallet.tree` (404 bytes), is
+the devnet-tested `kaa-mainnet-G.tree` with the owner-key constant set to the wallet's key. It is not a fresh compile:
+the 6.1.2 node's compiler lays the tree out differently, and the substitution keeps the tested logic byte for byte.
+The node's template index finds the vault under `afc009dc…`, the hash `KeepAliveJob` searches.
+
+A lone refresh opens only in the last 21,600 blocks before a box is four years old, so it cannot run on mainnet
+before 2030. The demo uses the merge, which is open at any time and runs the same checks. Built by `mainnet-demo.py`;
+transactions in `tx/mainnet-demo-*.json`.
+
+| step | transaction | height | who signs | what happened |
+|---|---|---|---|---|
+| deposit | `8ab9fe8f525a934c3a4c0e9803581153b4d8d21e678defb32d2e50958e947941` | 1,891,359 | the wallet | minted the demo token `a2795088…` (EIP-4, "skunkyard KeepAlive demo") into vault box A (0.01 ERG); paid B (0.01) and C (0.005) as any payer would |
+| keyless merge | `92386e998c6cbafc7da31aafc244bed08b7f5414417c5ac502382c92416f6546` | 1,891,363 | **nobody** | A and B merged into one vault box (0.019 ERG + the token); the 0.001 ERG bounty the script allows for two inputs paid the fee |
+| sponsored merge | `6e1c55f9fbf41f7bc93579d221e9be1225a61749c1e161eda46f713dc9dc6f26` | 1,891,364 | the sponsor's own input only | that box and C merged; a wallet box paid the fee; the vault kept every nanoERG: **0.024 ERG + the token** |
+
+- **The vault inputs were never signed.** The signer signs only the wallet's own boxes, so they went through the
+  keyless path, with context variable 0 naming the successor, even though the wallet's key owns the vault. The
+  keyless merge went to the node directly, with no wallet input at all.
+- **Cost to the wallet:** 0.0272 ERG (0.025 ERG into the vault, which its key can take back at any time, plus two
+  fees). Wallet 21.223824102 ERG.
+- **The signer** (`skunks/oneshot/scripts/mainnet-sign.mjs`) now also allows outputs to the wallet's own vault: the
+  tested template with the wallet's key, computed rather than configured. Value sent there still counts against
+  the loss caps.

@@ -127,3 +127,15 @@ No input is the wallet's, so none passes through the signer. Transactions in `tx
   This is a candidate for a Lithos miner [inferred].
 
 **Wallet: 21.251024102 ERG** confirmed (21.224134902 + 0.0268892).
+
+## Round five, 2026-10-10: KeepAlive on mainnet (three transactions)
+
+The wallet's KeepAlive vault ran on mainnet for the first time:
+- a deposit minting a demo token, signed;
+- a merge **with no signature at all**, its bounty paying the fee;
+- a merge paid by a sponsor, with the vault keeping every nanoERG.
+
+Details in `skunks/keepalive/README.md`, "Mainnet demo". The vault box `f017a605…` holds 0.024 ERG and the demo token.
+
+**Wallet: 21.223824102 ERG** confirmed (21.251024102 − 0.0261 deposit − 0.0011 sponsor fee; the 0.024 ERG in the
+vault is the wallet's).

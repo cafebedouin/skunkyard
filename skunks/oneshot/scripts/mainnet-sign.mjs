@@ -6,8 +6,8 @@
 // {boxId, spendingProof: {proofBytes: "", extension}}, the shape babel-take.py and consolidate.py write), signs ONLY
 // the inputs held by the wallet's own P2PK tree (m/44'/429'/0'/0/0), leaves every other input's proof empty (keyless
 // contract paths), and refuses unless:
-//   - every output goes to the wallet, the miner fee contract, or the script of one of the transaction's own inputs
-//     (a contract's successor): no value can leave for any other address;
+//   - every output goes to the wallet, the wallet's own KeepAlive vault, the miner fee contract, or the script of one
+//     of the transaction's own inputs (a contract's successor): no value can leave for any other address;
 //   - the wallet's net ERG loss is at most --max-loss (default 0.5 ERG) and the day's total loss, kept in
 //     $HOME/.config/skunkyard/mainnet-spend.json, stays under --day-cap (default 5 ERG);
 //   - the miner fee is at most --max-fee (default 0.005 ERG);
@@ -51,6 +51,13 @@ const mnemonic = readFileSync(join(CONF, 'mainnet-wallet.txt'), 'utf8').trim();
 if (mnemonic.split(/\s+/).length !== 24 || !validateMnemonic(mnemonic)) die('the wallet file does not hold a valid 24-word mnemonic');
 const key = ErgoHDKey.fromMnemonicSync(mnemonic, { path: "m/44'/429'/0'/0/0" });
 const walletTree = '0008cd' + hex.encode(key.publicKey);
+// The wallet's own KeepAlive vault (skunks/keepalive/KeepAliveAddress.es, the devnet-tested tree with the owner key
+// constant set to this wallet's key): its key always moves the vault, so value sent there stays the wallet's. It
+// still counts as wallet loss under the caps.
+const KA_G = '0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798';
+const kaTemplate = readFileSync(resolve(HERE, '../../keepalive/kaa-mainnet-G.tree'), 'utf8').trim();
+if (kaTemplate.split(KA_G).length !== 2) die('the KeepAlive template does not hold the placeholder key exactly once');
+const vaultTree = kaTemplate.replace(KA_G, hex.encode(key.publicKey));
 const walletAddr = readFileSync(join(CONF, 'mainnet-wallet.address'), 'utf8').trim();
 
 // Exact integers: token amounts reach 2^63, past what a JS number holds; parse them from their source text
@@ -81,8 +88,8 @@ for (const [k, o] of tx.outputs.entries()) {
   if (BigInt(o.value) <= 0n || (o.assets ?? []).some((a) => BigInt(a.amount) <= 0n)) die(`output ${k} has a value or token amount that is not positive`);
 }
 for (const [k, o] of tx.outputs.entries()) {
-  if (o.ergoTree !== walletTree && o.ergoTree !== FEE_TREE && !inputTrees.has(o.ergoTree))
-    die(`output ${k} goes to a script that is neither the wallet, the fee contract, nor an input's script`);
+  if (o.ergoTree !== walletTree && o.ergoTree !== vaultTree && o.ergoTree !== FEE_TREE && !inputTrees.has(o.ergoTree))
+    die(`output ${k} goes to a script that is neither the wallet, its KeepAlive vault, the fee contract, nor an input's script`);
 }
 // Caps
 const sum = (xs) => xs.reduce((a, b) => a + BigInt(b), 0n);
