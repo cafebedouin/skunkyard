@@ -1,0 +1,553 @@
+2026-10-09 20:18:44 [INFO] [scorex.db.LDBFactory$] Loaded org.fusesource.leveldbjni.JniDBFactory with leveldbjni version 1.8 
+  
+2026-10-09 20:18:45 [WARN] [Globals] Miner Dictionary store was below schema 3 and has been cleared; it refills as synchronization republishes 
+  
+2026-10-09 20:18:45 [INFO] [NodeConfig] deployment: testnet constants 
+  
+2026-10-09 20:18:51 [INFO] [NodeConfig] Prover holds 32 EIP-3 address(es), primary 3WxtnwJojAm4C9DJtgNHs5zawzD44yE6cKyGM7NeHf7Cw1yP7XBU 
+  
+2026-10-09 20:18:55 [INFO] [akka.event.slf4j.Slf4jLogger] Slf4jLogger started 
+  
+2026-10-09 20:18:59 [INFO] [ErgoDexBatcher] ErgoDexBatcher was disabled 
+  
+2026-10-09 20:18:59 [INFO] [RollupEvaluator] RollupEvaluator starting - evaluating rollups every 4 minutes 
+  
+2026-10-09 20:18:59 [INFO] [LithosDexBatcher] LithosDexBatcher was disabled 
+  
+2026-10-09 20:18:59 [INFO] [StateFrame] Publisher accepted auto-subscription of mempool-view (1 total subscriber(s)) 
+  
+2026-10-09 20:18:59 [INFO] [StartupTasks] Got indexed node with heights: BlockchainIndexHeight(25,25) 
+  
+2026-10-09 20:18:59 [INFO] [StartMiningServer] Starting actor-based Mining Server 
+  
+2026-10-09 20:18:59 [WARN] [CommitmentTransactions] No usable difficulty commitment, forcing configured diff 4.0G and score 4000000000 for stratum mining: Could not find a stored data box 
+  
+2026-10-09 20:18:59 [WARN] [CommitmentTransactions] NISPs submitted or mined in this manner may be considered fraudulent 
+  
+2026-10-09 20:18:59 [INFO] [StartMiningServer] Reduced share messages enabled: stratum diff is 10000x real diff 
+  
+2026-10-09 20:18:59 [INFO] [StartMiningServer] Stratum tau: 2894802230932904885589274625217197696331749616641014100986439600 (score: 40000000000000) 
+  
+2026-10-09 20:18:59 [INFO] [StartMiningServer] Using tau 28948022309329048855892746252171976963317496166410141009864396001978 (score: 4000000000) for NISPs 
+  
+2026-10-09 20:18:59 [INFO] [UpkeepSource] UpkeepSource started: mode=candidate, verifyWithNode=true, jobs=keepalive, scanIntervalMs=10000, maxBoxesPerJob=256, retryAfterScans=10, share: txs=5, bytes=262144, cost=1000000; refusedHeld=0, exhaustedHeld=0 
+  
+2026-10-09 20:19:00 [INFO] [RollupPublisher] RollupPublisher starting - evaluating rollup transactions every 1 minute 
+  
+2026-10-09 20:19:00 [INFO] [RollupProcessor] RollupProcessor starting - processing pending transactions every 3 minutes 
+  
+2026-10-09 20:19:00 [INFO] [EmissionsCore] EmissionsCore starting - queue every 240000ms (max 4 spends), autoCollateralize=false every 900000ms 
+  
+2026-10-09 20:19:00 [INFO] [TransactionEngine] Consolidation OFF (wallet.consolidation.enabled) 
+  
+2026-10-09 20:19:00 [INFO] [TransactionEngine] Wallet limits: maxInputs=75 pageSize=500 maxDescriptors=2048 reservationTimeout=30000ms nodeCallTimeout=30000ms nodeMaxResponse=2097152B 
+  
+2026-10-09 20:19:02 [INFO] [UpkeepSource] Upkeep scan holds 3 boxes: keepalive=3; 0 refused, 0 cannot pay 
+  
+2026-10-09 20:19:04 [INFO] [CandidateBuilder] CandidateBuilder started: collateralPoolSize=100, blockTransactions=true, sources=[rollups:5, emissions:20, upkeep:5] 
+  
+2026-10-09 20:19:04 [INFO] [RollupSyncTask] Canonical synchronization will start after 10 seconds 
+  
+2026-10-09 20:19:04 [INFO] [MiningStratumServer] Mining server listening on 0.0.0.0, port 4444 
+  
+2026-10-09 20:19:04 [WARN] [MDSyncTask] Auto-commit is off (state.autoCommit): commit from the web panel's Mining > Difficulty > Commitment tab or POST /mining/commitment. An unregistered miner cannot submit NISPs, so it is not paid from rollups 
+  
+2026-10-09 20:19:04 [INFO] [play.api.Play] Application started (Prod) (no global state) 
+  
+2026-10-09 20:19:05 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 27: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+	at mining.CandidateBuilder.$anonfun$startBuild$2(CandidateBuilder.scala:432)
+	at org.ergoplatform.appkit.RestApiErgoClient.execute(RestApiErgoClient.java:66)
+	at mining.CandidateBuilder.$anonfun$startBuild$1(CandidateBuilder.scala:426)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:05 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 27: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+	at mining.CandidateBuilder.$anonfun$startBuild$2(CandidateBuilder.scala:432)
+	at org.ergoplatform.appkit.RestApiErgoClient.execute(RestApiErgoClient.java:66)
+	at mining.CandidateBuilder.$anonfun$startBuild$1(CandidateBuilder.scala:426)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:05 [INFO] [UpkeepSource] Upkeep admits 1 of 1 due successors at 27: keepalive:e1e6a4c3; share used txs=1/5, bytes=597/262144, cost=18423/1000000 
+  
+2026-10-09 20:19:05 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 27: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+	at mining.CandidateBuilder.$anonfun$startBuild$2(CandidateBuilder.scala:432)
+	at org.ergoplatform.appkit.RestApiErgoClient.execute(RestApiErgoClient.java:66)
+	at mining.CandidateBuilder.$anonfun$startBuild$1(CandidateBuilder.scala:426)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:05 [INFO] [UpkeepSource] Upkeep offers 1 of 1 successors at 27 after the node's check: keepalive:e1e6a4c3 
+  
+2026-10-09 20:19:05 [INFO] [play.core.server.AkkaHttpServer] Listening for HTTP on /[0:0:0:0:0:0:0:0]:9100 
+  
+2026-10-09 20:19:07 [INFO] [EngineWalletState] Wallet refreshed - 0 available, 0 reserved, 0 reward box(es) spendable 
+  
+2026-10-09 20:19:07 [WARN] [EngineWalletState] Only 0 of 1 pinned input(s) can be set aside: it takes a plain wallet box of at least 1000000 nanoERG, and one is always left for the mempool. Fraud proofs without one reach the chain through the mempool alone 
+  
+2026-10-09 20:19:07 [INFO] [LithosJobManager] New job 1 at height 27 usesCollateral=false msg=9e1b0a7c97140e62 
+  
+2026-10-09 20:19:07 [INFO] [LithosPool] Broadcasting job 1 to 0 miner(s); candidateStage=solo 
+  
+2026-10-09 20:19:09 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 28: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+	at mining.CandidateBuilder.$anonfun$startBuild$2(CandidateBuilder.scala:432)
+	at org.ergoplatform.appkit.RestApiErgoClient.execute(RestApiErgoClient.java:66)
+	at mining.CandidateBuilder.$anonfun$startBuild$1(CandidateBuilder.scala:426)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:09 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 28: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+	at mining.CandidateBuilder.$anonfun$startBuild$2(CandidateBuilder.scala:432)
+	at org.ergoplatform.appkit.RestApiErgoClient.execute(RestApiErgoClient.java:66)
+	at mining.CandidateBuilder.$anonfun$startBuild$1(CandidateBuilder.scala:426)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:09 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 28: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+	at mining.CandidateBuilder.$anonfun$startBuild$2(CandidateBuilder.scala:432)
+	at org.ergoplatform.appkit.RestApiErgoClient.execute(RestApiErgoClient.java:66)
+	at mining.CandidateBuilder.$anonfun$startBuild$1(CandidateBuilder.scala:426)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:11 [INFO] [LithosJobManager] New job 2 at height 28 usesCollateral=false msg=1aa78bd01da8393a 
+  
+2026-10-09 20:19:11 [INFO] [LithosPool] Broadcasting job 2 to 0 miner(s); candidateStage=solo 
+  
+2026-10-09 20:19:12 [INFO] [UpkeepSource] Upkeep scan holds 1 boxes: keepalive=1; 0 refused, 0 cannot pay 
+  
+2026-10-09 20:19:14 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 29: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+	at mining.CandidateBuilder.$anonfun$startBuild$2(CandidateBuilder.scala:432)
+	at org.ergoplatform.appkit.RestApiErgoClient.execute(RestApiErgoClient.java:66)
+	at mining.CandidateBuilder.$anonfun$startBuild$1(CandidateBuilder.scala:426)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:14 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 29: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+	at mining.CandidateBuilder.$anonfun$startBuild$2(CandidateBuilder.scala:432)
+	at org.ergoplatform.appkit.RestApiErgoClient.execute(RestApiErgoClient.java:66)
+	at mining.CandidateBuilder.$anonfun$startBuild$1(CandidateBuilder.scala:426)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:14 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 29: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+	at mining.CandidateBuilder.$anonfun$startBuild$2(CandidateBuilder.scala:432)
+	at org.ergoplatform.appkit.RestApiErgoClient.execute(RestApiErgoClient.java:66)
+	at mining.CandidateBuilder.$anonfun$startBuild$1(CandidateBuilder.scala:426)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:15 [WARN] [StateFrame] No retained synchronization snapshot 
+  
+2026-10-09 20:19:15 [INFO] [StateFrame] Rebuilding Miner Dictionary state up to height 1888199 
+  
+2026-10-09 20:19:15 [ERROR] [StateFrame] Miner Dictionary bootstrap failed: indexed node has no dictionary box 40cbcea6f8d2d48ad3f9a3407483c5e9efed7b970e8696fdff640d795ce53e76. Mining and submission continue; registering a new miner and raising commitment fraud proofs do not. 
+  
+2026-10-09 20:19:15 [ERROR] [StateFrame] Could not read startup sync state: Canonical chain slice 1888199-1888199 returned 0 of 1 header(s):  
+ java.lang.IllegalStateException: Canonical chain slice 1888199-1888199 returned 0 of 1 header(s): 
+	at state.synchronization.CanonicalBlockSource.$anonfun$headerSlice$1(CanonicalBlockSource.scala:58)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at state.synchronization.CanonicalBlockSource.headerSlice(CanonicalBlockSource.scala:47)
+	at state.synchronization.CanonicalBlockSource.headerAt(CanonicalBlockSource.scala:33)
+	at state.synchronization.StateFrame.$anonfun$seedCursor$1(StateFrame.scala:712)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:16 [INFO] [LithosJobManager] New job 3 at height 29 usesCollateral=false msg=4c5dc432c770e86e 
+  
+2026-10-09 20:19:16 [INFO] [LithosPool] Broadcasting job 3 to 0 miner(s); candidateStage=solo 
+  
+2026-10-09 20:19:16 [WARN] [StateFrame] No retained synchronization snapshot 
+  
+2026-10-09 20:19:16 [INFO] [StateFrame] Rebuilding Miner Dictionary state up to height 1888199 
+  
+2026-10-09 20:19:16 [ERROR] [StateFrame] Miner Dictionary bootstrap failed: indexed node has no dictionary box 40cbcea6f8d2d48ad3f9a3407483c5e9efed7b970e8696fdff640d795ce53e76. Mining and submission continue; registering a new miner and raising commitment fraud proofs do not. 
+  
+2026-10-09 20:19:16 [ERROR] [StateFrame] Could not read startup sync state: Canonical chain slice 1888199-1888199 returned 0 of 1 header(s):  
+ java.lang.IllegalStateException: Canonical chain slice 1888199-1888199 returned 0 of 1 header(s): 
+	at state.synchronization.CanonicalBlockSource.$anonfun$headerSlice$1(CanonicalBlockSource.scala:58)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at state.synchronization.CanonicalBlockSource.headerSlice(CanonicalBlockSource.scala:47)
+	at state.synchronization.CanonicalBlockSource.headerAt(CanonicalBlockSource.scala:33)
+	at state.synchronization.StateFrame.$anonfun$seedCursor$1(StateFrame.scala:712)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:19 [WARN] [StateFrame] No retained synchronization snapshot 
+  
+2026-10-09 20:19:19 [INFO] [StateFrame] Rebuilding Miner Dictionary state up to height 1888199 
+  
+2026-10-09 20:19:19 [ERROR] [StateFrame] Miner Dictionary bootstrap failed: indexed node has no dictionary box 40cbcea6f8d2d48ad3f9a3407483c5e9efed7b970e8696fdff640d795ce53e76. Mining and submission continue; registering a new miner and raising commitment fraud proofs do not. 
+  
+2026-10-09 20:19:19 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 30: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+	at mining.CandidateBuilder.$anonfun$startBuild$2(CandidateBuilder.scala:432)
+	at org.ergoplatform.appkit.RestApiErgoClient.execute(RestApiErgoClient.java:66)
+	at mining.CandidateBuilder.$anonfun$startBuild$1(CandidateBuilder.scala:426)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:19 [ERROR] [StateFrame] Could not read startup sync state: Canonical chain slice 1888199-1888199 returned 0 of 1 header(s):  
+ java.lang.IllegalStateException: Canonical chain slice 1888199-1888199 returned 0 of 1 header(s): 
+	at state.synchronization.CanonicalBlockSource.$anonfun$headerSlice$1(CanonicalBlockSource.scala:58)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at state.synchronization.CanonicalBlockSource.headerSlice(CanonicalBlockSource.scala:47)
+	at state.synchronization.CanonicalBlockSource.headerAt(CanonicalBlockSource.scala:33)
+	at state.synchronization.StateFrame.$anonfun$seedCursor$1(StateFrame.scala:712)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:19 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 30: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+	at mining.CandidateBuilder.$anonfun$startBuild$2(CandidateBuilder.scala:432)
+	at org.ergoplatform.appkit.RestApiErgoClient.execute(RestApiErgoClient.java:66)
+	at mining.CandidateBuilder.$anonfun$startBuild$1(CandidateBuilder.scala:426)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:19 [WARN] [StateFrame] No retained synchronization snapshot 
+  
+2026-10-09 20:19:19 [INFO] [StateFrame] Rebuilding Miner Dictionary state up to height 1888199 
+  
+2026-10-09 20:19:19 [ERROR] [StateFrame] Miner Dictionary bootstrap failed: indexed node has no dictionary box 40cbcea6f8d2d48ad3f9a3407483c5e9efed7b970e8696fdff640d795ce53e76. Mining and submission continue; registering a new miner and raising commitment fraud proofs do not. 
+  
+2026-10-09 20:19:19 [ERROR] [StateFrame] Could not read startup sync state: Canonical chain slice 1888199-1888199 returned 0 of 1 header(s):  
+ java.lang.IllegalStateException: Canonical chain slice 1888199-1888199 returned 0 of 1 header(s): 
+	at state.synchronization.CanonicalBlockSource.$anonfun$headerSlice$1(CanonicalBlockSource.scala:58)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at state.synchronization.CanonicalBlockSource.headerSlice(CanonicalBlockSource.scala:47)
+	at state.synchronization.CanonicalBlockSource.headerAt(CanonicalBlockSource.scala:33)
+	at state.synchronization.StateFrame.$anonfun$seedCursor$1(StateFrame.scala:712)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:19 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 30: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+	at mining.CandidateBuilder.$anonfun$startBuild$2(CandidateBuilder.scala:432)
+	at org.ergoplatform.appkit.RestApiErgoClient.execute(RestApiErgoClient.java:66)
+	at mining.CandidateBuilder.$anonfun$startBuild$1(CandidateBuilder.scala:426)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:21 [INFO] [LithosJobManager] New job 4 at height 30 usesCollateral=false msg=bd466b76135f50c4 
+  
+2026-10-09 20:19:21 [INFO] [LithosPool] Broadcasting job 4 to 0 miner(s); candidateStage=solo 
+  
+2026-10-09 20:19:21 [WARN] [StateFrame] No retained synchronization snapshot 
+  
+2026-10-09 20:19:21 [INFO] [StateFrame] Rebuilding Miner Dictionary state up to height 1888199 
+  
+2026-10-09 20:19:21 [ERROR] [StateFrame] Miner Dictionary bootstrap failed: indexed node has no dictionary box 40cbcea6f8d2d48ad3f9a3407483c5e9efed7b970e8696fdff640d795ce53e76. Mining and submission continue; registering a new miner and raising commitment fraud proofs do not. 
+  
+2026-10-09 20:19:21 [ERROR] [StateFrame] Could not read startup sync state: Canonical chain slice 1888199-1888199 returned 0 of 1 header(s):  
+ java.lang.IllegalStateException: Canonical chain slice 1888199-1888199 returned 0 of 1 header(s): 
+	at state.synchronization.CanonicalBlockSource.$anonfun$headerSlice$1(CanonicalBlockSource.scala:58)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at state.synchronization.CanonicalBlockSource.headerSlice(CanonicalBlockSource.scala:47)
+	at state.synchronization.CanonicalBlockSource.headerAt(CanonicalBlockSource.scala:33)
+	at state.synchronization.StateFrame.$anonfun$seedCursor$1(StateFrame.scala:712)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:24 [WARN] [StateFrame] No retained synchronization snapshot 
+  
+2026-10-09 20:19:24 [INFO] [StateFrame] Rebuilding Miner Dictionary state up to height 1888199 
+  
+2026-10-09 20:19:24 [ERROR] [StateFrame] Miner Dictionary bootstrap failed: indexed node has no dictionary box 40cbcea6f8d2d48ad3f9a3407483c5e9efed7b970e8696fdff640d795ce53e76. Mining and submission continue; registering a new miner and raising commitment fraud proofs do not. 
+  
+2026-10-09 20:19:24 [ERROR] [StateFrame] Could not read startup sync state: Canonical chain slice 1888199-1888199 returned 0 of 1 header(s):  
+ java.lang.IllegalStateException: Canonical chain slice 1888199-1888199 returned 0 of 1 header(s): 
+	at state.synchronization.CanonicalBlockSource.$anonfun$headerSlice$1(CanonicalBlockSource.scala:58)
+	at scala.util.Success.flatMap(Try.scala:251)
+	at state.synchronization.CanonicalBlockSource.headerSlice(CanonicalBlockSource.scala:47)
+	at state.synchronization.CanonicalBlockSource.headerAt(CanonicalBlockSource.scala:33)
+	at state.synchronization.StateFrame.$anonfun$seedCursor$1(StateFrame.scala:712)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:24 [ERROR] [CandidateBuilder] Failed to build the genesis transaction for block 31: no usable collateral boxes: 0 live, 0 skipped this block 
+ stratum.CollateralNotFoundException: no usable collateral boxes: 0 live, 0 skipped this block
+	at mining.CandidateBuilder.$anonfun$startBuild$2(CandidateBuilder.scala:432)
+	at org.ergoplatform.appkit.RestApiErgoClient.execute(RestApiErgoClient.java:66)
+	at mining.CandidateBuilder.$anonfun$startBuild$1(CandidateBuilder.scala:426)
+	at scala.concurrent.Future$.$anonfun$apply$1(Future.scala:659)
+	at scala.util.Success.$anonfun$map$1(Try.scala:255)
+	at scala.util.Success.map(Try.scala:213)
+	at scala.concurrent.Future.$anonfun$map$1(Future.scala:292)
+	at scala.concurrent.impl.Promise.$anonfun$transform$1(Promise.scala:42)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:74)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:63)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:100)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:85)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:100)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+ 
+2026-10-09 20:19:24 [INFO] [StartMiningServer] Stopping actor-based mining server on JVM shutdown 
+  
+2026-10-09 20:19:24 [INFO] [MiningStratumServer] Stopping MiningStratumServer 
+  
+2026-10-09 20:19:24 [INFO] [StartupTasks] Stopping dbs on JVM shutdown 
+  
+2026-10-09 20:19:24 [INFO] [p.a.i.l.c.CoordinatedShutdownSupport] Starting synchronous coordinated shutdown with ServerStoppedReason reason and 2147508000 milliseconds timeout 
+  
+2026-10-09 20:19:24 [INFO] [akka.actor.CoordinatedShutdown] Running CoordinatedShutdown with reason [ServerStoppedReason] 
+  
+2026-10-09 20:19:24 [INFO] [play.core.server.AkkaHttpServer] Stopping Akka HTTP server... 
+  
+2026-10-09 20:19:24 [INFO] [StartupTasks] Closing DBs 
+  
+2026-10-09 20:19:24 [INFO] [StartMiningServer] Stopping actor-based mining server 
+  
+2026-10-09 20:19:24 [INFO] [MiningStratumServer] Stopping MiningStratumServer 
+  
+2026-10-09 20:19:24 [INFO] [play.core.server.AkkaHttpServer] Terminating server binding for /[0:0:0:0:0:0:0:0]:9100 
+  
+2026-10-09 20:19:24 [INFO] [play.core.server.AkkaHttpServer] Running provided shutdown stop hooks 
+  

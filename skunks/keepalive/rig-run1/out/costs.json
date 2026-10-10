@@ -1,0 +1,17 @@
+{
+ "costs_schema_version": 1,
+ "clk_tck": 100,
+ "note": "agree_s: strict bestFullHeaderId equality at two consecutive regular samples; resolution is the sample interval, and under a live miner it runs late by a few intervals",
+ "recovery": [],
+ "nodes": {
+  "A": {
+   "cpu_s": 21.17,
+   "pids": [
+    1353168
+   ],
+   "rss_mb_max": 333.7,
+   "unanswered_planned": 0,
+   "unanswered_unexpected": 0
+  }
+ }
+}

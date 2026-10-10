@@ -1,0 +1,5 @@
+{"t":1791594931855,"kind":"launch","a":null,"b":null,"node":"A","detail":null,"pid":1353168,"cpus_requested":null,"cpus_applied":"0-11","gc":"G1GC","java_opts":null}
+{"t":1791595112257,"kind":"companion","a":null,"b":null,"node":"A","detail":"start proxy pid=1355917"}
+{"t":1791595114311,"kind":"companion","a":null,"b":null,"node":"A","detail":"start client pid=1355971"}
+{"t":1791595165455,"kind":"companion","a":null,"b":null,"node":null,"detail":"stop client"}
+{"t":1791595166514,"kind":"companion","a":null,"b":null,"node":null,"detail":"stop proxy"}

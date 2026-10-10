@@ -109,3 +109,22 @@ tupled form") would do automatically.
 nothing about rent: payments merge and refresh themselves, paid from the payments' own ERG. Anyone paid to a plain
 P2PK address is still outside it; for them the protocol-level protection (EIP-53/51) remains the only answer. Not yet
 done: a per-owner compile helper for mainnet, the Lithos upkeep job, and a wallet that offers the address.
+
+## The Lithos upkeep job (2026-10-09)
+
+`KeepAliveJob` in the Lithos client, branch `upkeep-keepalive` on `cafebedouin/Lithos-Client` (stacked on
+`upkeep-source`, PR #15): discovers every box under the address template through the node's index (the index
+hashes templates with Blake2b256; the explorer's SHA-256 differs), reads each address's terms from its own tree,
+makes only an address's largest box due (another box to merge, or a lone box in its window), merges up to
+`maxInputs` (50) boxes into output 0 with the bounty to this miner's collection contract, or leaves a bounty too
+small for a box in the merged box. Off by default; `jobs.keepalive { enabled, minBounty = 500000, maxInputs = 50 }`.
+Specs: `KeepAliveJobSpec` 11/11 (signing offline evaluates the real script: a merge that signs is one the script
+accepts; a lone refresh before its window fails to sign); upkeep, config and contract suites 217/217.
+
+**End to end on a devnet, PASS** (peeryard `rig/examples/lithos-keepalive.{json,sh}`, branch `lithos-keepalive`;
+log `rig-run1/`): node A compiled an address for its own key, issued a token and paid the address three times as an
+ordinary payer (0.05 ERG + 1 unit, 0.001 + 2, 0.001 + 3); the client, with only the keepalive job on, held the three
+boxes, built the merge at height 27, the node's check accepted it, and it was mined: one box left at the address,
+all 6 units, 0.0505 ERG (0.052 less the 0.0015 bounty). Two hook fixes on the way, both node start-up timing: the
+first wallet and compile calls are retried (the node's readers time out just after start), and sends use their own
+60 s timeout (the rig's wallet helper stops at 10 s).

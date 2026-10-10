@@ -1,0 +1,59 @@
+{
+  "effective_schema_version": 1,
+  "host": {
+    "kernel": "6.18.40.1-microsoft-standard-WSL2",
+    "cpus_online": 12,
+    "affinity": "0-11",
+    "mem_mb": 10955,
+    "cpu_model": "Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz",
+    "virt": "wsl2",
+    "scratch_fs": "ext2/ext3",
+    "scratch_virtual_disk": true,
+    "tcp_cc": "cubic",
+    "tcp_retries2": 15
+  },
+  "chain": {
+    "preset": "current",
+    "blockInterval": "20s",
+    "minerRewardDelay": 10,
+    "genesisStateDigestHex": "c01a142d004a917b4af35385265748e37f7c77ab8a4e8b2080b9c193516b845602",
+    "v4_early": true
+  },
+  "magic": [
+    112,
+    101,
+    101,
+    114
+  ],
+  "java": {
+    "version": "openjdk version \"21.0.12.1\" 2026-08-18",
+    "binary": "java",
+    "opts": "-Xmx512m"
+  },
+  "nodes": [
+    {
+      "name": "A",
+      "mining": true,
+      "mine_poll": "5s",
+      "knownPeers": [],
+      "defer": false,
+      "conf": {
+        "ergo.node.extraIndex": "true",
+        "ergo.node.minimalFeeAmount": "0",
+        "ergo.node.blockCandidateGenerationInterval": "1ms"
+      },
+      "cpus": null,
+      "java_opts": null,
+      "id_ip": "100.64.0.1",
+      "kind": "jvm",
+      "jar": "ergo-6.0.7.jar",
+      "jar_sha256_16": "8616f4051335cf3b"
+    }
+  ],
+  "links": [],
+  "wire": {
+    "enabled": false
+  },
+  "duration_s": null,
+  "keep_data": false
+}
