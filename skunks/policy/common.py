@@ -155,6 +155,8 @@ def classify(code, text):
     if code == 200:
         return "ACCEPT"
     t = str(text)
+    if "DecodingFailure" in t or "request content was malformed" in t:
+        return "MALFORMED"
     if EXC.search(t):
         return "EVAL-ERROR"
     if "should pass verification" in t:
@@ -224,13 +226,16 @@ class Run:
                     {"before": h0, "after": h1}, **extra)
         return mined if submit else (got, o)
 
-    def sign(self, base, tx, inputs, data=()):
-        """Sign `tx` (inputs with "extension") with the wallet of `base`. Returns (code, signed or text)."""
-        return call(base, "/wallet/transaction/sign", {"tx": tx, "inputsRaw": [raw(b) for b in inputs],
-                                                         "dataInputsRaw": [raw(d) for d in data]})
+    def sign(self, base, tx, inputs, data=(), secrets=None):
+        """Sign `tx` (inputs with "extension") with the wallet of `base`, plus any external secrets
+        ({"dlog": [hex], "dht": [{secret, g, h, u, v}]}). Returns (code, signed or text)."""
+        body = {"tx": tx, "inputsRaw": [raw(b) for b in inputs], "dataInputsRaw": [raw(d) for d in data]}
+        if secrets:
+            body["secrets"] = secrets
+        return call(base, "/wallet/transaction/sign", body)
 
     def key_spend(self, n, label, base, inputs, data, outputs, expect, sibling=None, submit=False, cost=False,
-                  ext=None, **extra):
+                  ext=None, secrets=None, **extra):
         """A spend signed by the wallet of `base` (A or B). A sign failure is a REFUSE only with the wallet's
         "reduced to false" or its missing-secret text; anything else is MALFORMED. The unsigned form is checked
         too, so the node's own verdict is in the detail."""
@@ -238,7 +243,7 @@ class Run:
         unsigned = {"inputs": [{"boxId": b, "extension": ext.get(b, {})} for b in inputs],
                     "dataInputs": [{"boxId": d} for d in data], "outputs": outputs}
         h0 = full_height()
-        code, signed = self.sign(base, unsigned, inputs, data)
+        code, signed = self.sign(base, unsigned, inputs, data, secrets)
         wallet = "A" if base == A else "B"
         if code != 200:
             empty = {"inputs": [inp(b, ext.get(b)) for b in inputs], "dataInputs": unsigned["dataInputs"],
@@ -251,6 +256,8 @@ class Run:
                 got, src = "REFUSE", "wallet-sign"
             elif "Tree root should be real" in s:
                 got, src = "REFUSE", "wallet-sign/no-secret"
+            elif EXC.search(s):
+                got, src = "EVAL-ERROR", "wallet-sign"
             else:
                 got, src = "MALFORMED", "wallet-sign"
             self.record(n, label, expect, got, src, sibling, f"wallet {wallet} sign: {s[:350]} | unsigned check: "
@@ -266,3 +273,27 @@ class Run:
                 return o["cost"], "mempool"
             time.sleep(0.2)
         return None, "missed"
+
+
+# ---- tree constants (read-only use of research/agents/census/trees.py's type parser)
+_tspec = importlib.util.spec_from_file_location("census_trees", ROOT.parent / "research" / "agents" / "census" / "trees.py")
+census_trees = importlib.util.module_from_spec(_tspec)
+_tspec.loader.exec_module(census_trees)
+
+
+def constants(tree_hex):
+    """[(type, start, end, value_hex)] of a tree's segregated constants; byte offsets into the tree."""
+    b = bytes.fromhex(tree_hex)
+    h, i = b[0], 1
+    if h & 0x08:
+        _, i = census_trees._vlq(b, i)
+    if not h & 0x10:
+        return []
+    n, i = census_trees._vlq(b, i)
+    res = []
+    for _ in range(n):
+        s = i
+        t, j = census_trees._parse_type(b, i)
+        i = census_trees._skip_value(b, j, t)
+        res.append((t, s, i, b[j:i].hex()))
+    return res
