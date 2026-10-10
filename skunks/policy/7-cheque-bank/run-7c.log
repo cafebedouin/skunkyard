@@ -1,0 +1,23 @@
+    0 deposit inserting 2 commitments while adding 1 x DENOM             expect REFUSE     got REFUSE     node-check     ok
+  0.s deposit 2 notes, honest                                            expect ACCEPT     got ACCEPT                    ok
+ 0.d1 deposit 34 notes, honest                                           expect ACCEPT     got ACCEPT                    ok
+ 0.d2 deposit 34 notes, honest                                           expect ACCEPT     got ACCEPT                    ok
+    1 pay with a ring containing one commitment not in R6                expect REFUSE     got REFUSE     wallet-sign    ok
+    2 pay with amount DENOM + 1                                          expect REFUSE     got REFUSE     wallet-sign    ok
+    3 pay, N = 4, honest                                                 expect ACCEPT     got ACCEPT                    ok
+    4 pay a second note with no key-image insert (no proof variable)     expect EVAL-ERROR got MALFORMED  wallet-sign    WRONG
+  4.s the same payment with the insert, checked                          expect ACCEPT     got ACCEPT                    ok
+   4b pay again with case 3's key image and an insert proof built agains expect EVAL-ERROR got MALFORMED  wallet-sign    WRONG
+   4x pay again with case 3's image and a fresh insert proof: the helper expect None       got recorded   helper         
+   5x key image from another note's r while proving with this one's      expect None       got recorded   prover         
+  6.8 pay, N = 8, honest (measurement)                                   expect None       got ACCEPT     measured       
+ 6.16 pay, N = 16, honest (measurement)                                  expect None       got ACCEPT     measured       
+ 6.32 pay, N = 32, honest (measurement)                                  expect None       got ACCEPT     measured       
+ 6.64 pay, N = 64, honest (measurement)                                  expect None       got ACCEPT     measured       
+{'n': 3, 'ring': 4, 'script_cost_local': 3513, 'derived_total': None, 'mempool_cost': 16113, 'proof_bytes': 224, 'tx_bytes': 2015, 'node': 'ACCEPT'}
+{'n': '4.s', 'ring': 4, 'script_cost_local': 3513, 'derived_total': None, 'mempool_cost': None, 'proof_bytes': 224, 'tx_bytes': 2050, 'node': 'ACCEPT'}
+{'n': '6.8', 'ring': 8, 'script_cost_local': 6687, 'derived_total': 8887, 'mempool_cost': 19287, 'proof_bytes': 448, 'tx_bytes': 2811, 'node': 'ACCEPT'}
+{'n': '6.16', 'ring': 16, 'script_cost_local': 13034, 'derived_total': 15234, 'mempool_cost': 25634, 'proof_bytes': 896, 'tx_bytes': 4267, 'node': 'ACCEPT'}
+{'n': '6.32', 'ring': 32, 'script_cost_local': 25701, 'derived_total': 27901, 'mempool_cost': 38301, 'proof_bytes': 1792, 'tx_bytes': 6408, 'node': 'ACCEPT'}
+{'n': '6.64', 'ring': 64, 'script_cost_local': 50993, 'derived_total': 53193, 'mempool_cost': 63593, 'proof_bytes': 3584, 'tx_bytes': 9306, 'node': 'ACCEPT'}
+2 UNEXPECTED

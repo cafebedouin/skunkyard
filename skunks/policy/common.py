@@ -258,6 +258,10 @@ class Run:
                 got, src = "REFUSE", "wallet-sign/no-secret"
             elif EXC.search(s):
                 got, src = "EVAL-ERROR", "wallet-sign"
+            elif classify(c2, o2) == "EVAL-ERROR":
+                # the wallet's text names nothing (e.g. "Malformed request: null", an exception without a message):
+                # the verdict is the node's own check of the same transaction
+                got, src = "EVAL-ERROR", "node-check (wallet text unrecognised)"
             else:
                 got, src = "MALFORMED", "wallet-sign"
             self.record(n, label, expect, got, src, sibling, f"wallet {wallet} sign: {s[:350]} | unsigned check: "

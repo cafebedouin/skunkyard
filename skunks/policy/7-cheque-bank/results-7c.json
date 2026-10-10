@@ -1,0 +1,774 @@
+{
+ "experiment": "7c-ring",
+ "started_height": 274,
+ "node": {
+  "appVersion": "6.0.7",
+  "parameters": {
+   "outputCost": 100,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 272,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2000,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ },
+ "wallets": {
+  "A": [
+   "038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c",
+   "031ee1ab3b729f21e0dcee05642a63745286354d8e511e6376838e235a28078c01",
+   "0367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df",
+   "0398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04",
+   "026c2134d11af7f0bea024724278ebc37ced69a19a99dd6638f393d5f1b9c8bea0",
+   "0389e8fb63050cdb2c3f5c70b3d6167835b60bcf020b9ed7c332965ffce26f2e6f"
+  ],
+  "B": [
+   "03d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494",
+   "0376bf533d4b15510fa9f4124b6e48616f07debcf2ef0cfb185cdc4a576450b475",
+   "02ea2649b3512b9a859ab658a85e2989a7ae39b2518877b2dc0f2b44b785d5788d",
+   "03b4c210719212afb16b5f136a2dcb3cc9fc231721f711994facf3b6111afba7d0",
+   "0234835d35c02b0dc042aa9c041b854b98c28df4872fdc8c6a260bc2ddd767f5a3",
+   "02a52d6327542c16cce7645b899e651dc78098fa4f495acb36992e66b099405ec2"
+  ]
+ },
+ "trees": [
+  {
+   "name": "RingBank",
+   "tree_bytes": 525,
+   "box_bytes": 715,
+   "address": "2uubYhazJh7Rh7sKygUcaNTsfD9N7GFm1epW7ACweUBLFFTDSdzdEQc5qmXDPgzUAhFAE2LHeWhdXzGBrai9M8R4216kMWhHSLQSUmYQFTnC6V1wcB1ACZ9N5N98L7bBUeAHBa4RvMD6yFgCoCmTNA2ZJeb9kq9kfLNDsWBFAXgXyqhMsAB8Zbiq6rBxWWDDmfNiSiprCLnYgp57ZFVYh65biHRciWkjfDhVJBhP3LKZyyw4YozYtW6x2S5CtY67i5X8KyjXk1LGYCdgsgFQrDEq9yqgrKfsd7sxG7h7R28DBb51Pu13nbay59y4kZSU5cPTQ9oh26Lt3DbYhwhMCm23KE4QLukYF7hjFHZjxq2WuTFwN6PmfhNT8tJmHGUo8hN4afQZXsrFCSvCA3wfMhv6And2QobEa5gv46Ytjz9V3Ei7EmAq3vLHEbDPUoWJt1f7SXhTavXZssLrMBLNcsLwK3ajeMhFx5LqbzsKWbArgVAfQccpdvfoSeGCKn2B8QtAVMHJxQDL6xxirTxm8ivnudgiZZg1rSrnMGavKjv8tRGihfNAVLVne7E1sTpEkUGeY13TJoB6TXnbAV9oMQ6Ljtor5CXsYwNignV4eAaKscL5Fyp3QwheQYPJjSjffQGkvnE51UYM5XXDkcMRkVqcYt4fYL7zGu8Xz1MKECRCXyCrgmVCvmJJ1rs4dyyav4G72n2mGoAtD8LUVXWx",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 893750000
+  }
+ ],
+ "cases": [
+  {
+   "n": 0,
+   "label": "deposit inserting 2 commitments while adding 1 x DENOM",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "0.s",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 277,
+    "after": 277
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 1a40bf6b6dcb77b4852a7b7abad431b9abb07cbb187a18b5eaf020b6a90539c1: #0 => Success((false,366))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "0.s",
+   "label": "deposit 2 notes, honest",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 14872,
+   "cost_instrument": "mempool",
+   "tx_id": "a43ff43d3660b9c3d1e6a3370097380952a641a70b3945e741abfdc12416c608",
+   "heights": {
+    "before": 278,
+    "after": 278
+   },
+   "detail": "a43ff43d3660b9c3d1e6a3370097380952a641a70b3945e741abfdc12416c608",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "0.d1",
+   "label": "deposit 34 notes, honest",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "8e8fbfd34b6df1ae623361647ceb088bdff23645b0c715d7fdf95d0a31ff8b50",
+   "heights": {
+    "before": 280,
+    "after": 280
+   },
+   "detail": "8e8fbfd34b6df1ae623361647ceb088bdff23645b0c715d7fdf95d0a31ff8b50",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "0.d2",
+   "label": "deposit 34 notes, honest",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "37b2141f0da2489f96930b2cf384b102f48d41b036f5bce5ff26091e66b7bcbf",
+   "heights": {
+    "before": 282,
+    "after": 282
+   },
+   "detail": "37b2141f0da2489f96930b2cf384b102f48d41b036f5bce5ff26091e66b7bcbf",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": 1,
+   "label": "pay with a ring containing one commitment not in R6",
+   "got": "REFUSE",
+   "source": "wallet-sign",
+   "sibling_n": 3,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 283,
+    "after": 283
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 0a80e22806ab361b068436670549d3f8e9d3d3e9fe1b1e78320ff0fa",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "A",
+   "ring": 4
+  },
+  {
+   "n": 2,
+   "label": "pay with amount DENOM + 1",
+   "got": "REFUSE",
+   "source": "wallet-sign",
+   "sibling_n": 3,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 283,
+    "after": 283
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. f7d35544bf252037684c87859c5a5e519981adf40cbd6b3b1975c97b",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "A",
+   "ring": 4
+  },
+  {
+   "n": 3,
+   "label": "pay, N = 4, honest",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 16113,
+   "cost_instrument": "mempool",
+   "tx_id": "cc8774614f674e1ba0d2116e47d387102997e58b7b8a1a3d7bcfd25a7e3e8f20",
+   "heights": {
+    "before": 283,
+    "after": 283
+   },
+   "detail": "cc8774614f674e1ba0d2116e47d387102997e58b7b8a1a3d7bcfd25a7e3e8f20",
+   "expect": "ACCEPT",
+   "ok": true,
+   "ring": 4,
+   "local_eval": {
+    "tx_bytes": 2015,
+    "inputs": [
+     {
+      "input": 0,
+      "valid": true,
+      "cost": 3513,
+      "proof_bytes": 224
+     }
+    ]
+   },
+   "proof_bytes": 224,
+   "tx_bytes": 2015
+  },
+  {
+   "n": 4,
+   "label": "pay a second note with no key-image insert (no proof variable)",
+   "got": "MALFORMED",
+   "source": "wallet-sign",
+   "sibling_n": "4.s",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 284,
+    "after": 284
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: null\" } | unsigned check: EVAL-ERROR {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. d4e71577b72eda3f1aa913a9883c06071db00d89b5a44a259a9e836e",
+   "expect": "EVAL-ERROR",
+   "ok": false,
+   "wallet": "A",
+   "ring": 4,
+   "superseded_by": "4.r"
+  },
+  {
+   "n": "4.s",
+   "label": "the same payment with the insert, checked",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "917037e47f82d541e6887005ac0c2fd164eb69b2e71e675b2fc82d7540ad9ad6",
+   "heights": {
+    "before": 284,
+    "after": 284
+   },
+   "detail": "917037e47f82d541e6887005ac0c2fd164eb69b2e71e675b2fc82d7540ad9ad6",
+   "expect": "ACCEPT",
+   "ok": true,
+   "ring": 4,
+   "local_eval": {
+    "tx_bytes": 2050,
+    "inputs": [
+     {
+      "input": 0,
+      "valid": true,
+      "cost": 3513,
+      "proof_bytes": 224
+     }
+    ]
+   },
+   "proof_bytes": 224,
+   "tx_bytes": 2050
+  },
+  {
+   "n": "4b",
+   "label": "pay again with case 3's key image and an insert proof built against the stale pre-case-3 R7 digest",
+   "got": "MALFORMED",
+   "source": "wallet-sign",
+   "sibling_n": "4.s",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 284,
+    "after": 284
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: null\" } | unsigned check: EVAL-ERROR {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 4da9e758c8ce346aa489166a1b1485b0ad1cd28c33ba57ffa445d8a1",
+   "expect": "EVAL-ERROR",
+   "ok": false,
+   "wallet": "A",
+   "ring": 4,
+   "superseded_by": "4b.r"
+  },
+  {
+   "n": "4x",
+   "label": "pay again with case 3's image and a fresh insert proof: the helper cannot produce one",
+   "got": "recorded",
+   "source": "helper",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": null,
+   "detail": "helper result: ['fail:Key d7effbd08eb489821fad4243b02945b5fd6b0c70f7bf74a1fcf22a5723fb5ef3 already exists']"
+  },
+  {
+   "n": "5x",
+   "label": "key image from another note's r while proving with this one's",
+   "got": "recorded",
+   "source": "prover",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": null,
+   "detail": "wallet sign: 200 {'id': '9d5cc4807815f2c972d2f4131f042d2c91cc5bfd6c6bd85736c2899b4cb30771', 'inputs': [{'boxId': '138b92288761ab7ddbc503d4001ff03b944ee118b0c04c9b17cc927b798d3e2d', 'spendingProof': {'proofBytes': '2e54051fa903211d2e8728dc21b8bac3988ffaba3bee26b39239254e531a518753debcd5b2e704ec7feec90052e7ee9fda89418b193388ca7fcb7bf860e5daf033de51de444e851b59c0a98aa65e286b2f61667e4e24faccaa98a19202f7e70a4b4ac7b47c0",
+   "superseded_by": "5x.r"
+  },
+  {
+   "n": "6.8",
+   "label": "pay, N = 8, honest (measurement)",
+   "got": "ACCEPT",
+   "source": "measured",
+   "sibling_n": null,
+   "cost": 19287,
+   "cost_instrument": "mempool",
+   "tx_id": "0c17a46b363509cc7b5077f98645b9b7c5d27266fbf937e951f894df21e50d30",
+   "heights": {
+    "before": 285
+   },
+   "detail": "",
+   "ring": 8,
+   "local_eval": {
+    "tx_bytes": 2811,
+    "inputs": [
+     {
+      "input": 0,
+      "valid": true,
+      "cost": 6687,
+      "proof_bytes": 448
+     }
+    ]
+   },
+   "derived_total": 8887,
+   "proof_bytes": 448,
+   "tx_bytes": 2811,
+   "mined": true
+  },
+  {
+   "n": "6.16",
+   "label": "pay, N = 16, honest (measurement)",
+   "got": "ACCEPT",
+   "source": "measured",
+   "sibling_n": null,
+   "cost": 25634,
+   "cost_instrument": "mempool",
+   "tx_id": "7c62d98362eae56eba94d2f17e7ef6cb2067e7792c8e76ad372bba3faf047b2b",
+   "heights": {
+    "before": 286
+   },
+   "detail": "",
+   "ring": 16,
+   "local_eval": {
+    "tx_bytes": 4267,
+    "inputs": [
+     {
+      "input": 0,
+      "valid": true,
+      "cost": 13034,
+      "proof_bytes": 896
+     }
+    ]
+   },
+   "derived_total": 15234,
+   "proof_bytes": 896,
+   "tx_bytes": 4267,
+   "mined": true
+  },
+  {
+   "n": "6.32",
+   "label": "pay, N = 32, honest (measurement)",
+   "got": "ACCEPT",
+   "source": "measured",
+   "sibling_n": null,
+   "cost": 38301,
+   "cost_instrument": "mempool",
+   "tx_id": "6c1a8e7686331a0b87a44eb60f0040b43487e3c3d89847a47755991e6c9a90a0",
+   "heights": {
+    "before": 287
+   },
+   "detail": "",
+   "ring": 32,
+   "local_eval": {
+    "tx_bytes": 6408,
+    "inputs": [
+     {
+      "input": 0,
+      "valid": true,
+      "cost": 25701,
+      "proof_bytes": 1792
+     }
+    ]
+   },
+   "derived_total": 27901,
+   "proof_bytes": 1792,
+   "tx_bytes": 6408,
+   "mined": true
+  },
+  {
+   "n": "6.64",
+   "label": "pay, N = 64, honest (measurement)",
+   "got": "ACCEPT",
+   "source": "measured",
+   "sibling_n": null,
+   "cost": 63593,
+   "cost_instrument": "mempool",
+   "tx_id": "2ff4ef01331fab5082144b9584acf28a2b8b0d6c85a6adfd9384deac7fd1db3e",
+   "heights": {
+    "before": 288
+   },
+   "detail": "",
+   "ring": 64,
+   "local_eval": {
+    "tx_bytes": 9306,
+    "inputs": [
+     {
+      "input": 0,
+      "valid": true,
+      "cost": 50993,
+      "proof_bytes": 3584
+     }
+    ]
+   },
+   "derived_total": 53193,
+   "proof_bytes": 3584,
+   "tx_bytes": 9306,
+   "mined": true
+  },
+  {
+   "n": "0.r",
+   "label": "deposit 6 fresh notes (rerun setup)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "4300afce2156c7edb4fb48284ea977bd07aba9617216c7568dc1f123b9a068cf",
+   "heights": {
+    "before": 296,
+    "after": 296
+   },
+   "detail": "4300afce2156c7edb4fb48284ea977bd07aba9617216c7568dc1f123b9a068cf",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "3.r",
+   "label": "pay, N = 4, honest (rerun setup)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "f6710b7b9d7660d4fd1cbd1a27267da3cb2a075178cfcde3056e8f8bc2036d36",
+   "heights": {
+    "before": 298,
+    "after": 298
+   },
+   "detail": "f6710b7b9d7660d4fd1cbd1a27267da3cb2a075178cfcde3056e8f8bc2036d36",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "4.r",
+   "label": "pay a second note with no key-image insert (no proof variable)",
+   "got": "EVAL-ERROR",
+   "source": "node-check (wallet text unrecognised)",
+   "sibling_n": "4.s.r",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 299,
+    "after": 299
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: null\" } | unsigned check: EVAL-ERROR {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. a3729d0b62a716da5b79f38f5d5d6e5172e6294704de714d6ecfdcb8",
+   "expect": "EVAL-ERROR",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "4b.r",
+   "label": "pay again with 3.r's key image, insert proof against the pre-3.r R7 digest",
+   "got": "EVAL-ERROR",
+   "source": "node-check (wallet text unrecognised)",
+   "sibling_n": "4.s.r",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 299,
+    "after": 299
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: null\" } | unsigned check: EVAL-ERROR {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 3278d61fd4c438d44ae8eddf13b9711c2f8dc492a81b2447a0290462",
+   "expect": "EVAL-ERROR",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "4.s.r",
+   "label": "the same payment as 4.r with the insert, checked",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "5f21cbd9cf4e9ec43f81a83fefd3ca860c745920d3b92fc3b0f2f7a43e7ccc13",
+   "heights": {
+    "before": 299,
+    "after": 299
+   },
+   "detail": "5f21cbd9cf4e9ec43f81a83fefd3ca860c745920d3b92fc3b0f2f7a43e7ccc13",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "5x.r",
+   "label": "key image from another note's r while proving with this one's (signed by the wallet, then checked)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "4.s.r",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 299,
+    "after": 299
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 430cc66af63de619e810305c645bf428383878f46f110a0e410fe89e4a844adc: #0 => Success((false,3519))\" }",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "0.f0",
+   "label": "deposit 95 filler notes (for N = 255, 256)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "660da0cfe329736758ee268a7224fc5ad1133cb93703d890dd04d2a475b4d497",
+   "heights": {
+    "before": 300,
+    "after": 300
+   },
+   "detail": "660da0cfe329736758ee268a7224fc5ad1133cb93703d890dd04d2a475b4d497",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "0.f1",
+   "label": "deposit 95 filler notes (for N = 255, 256)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "296a2516de423501ecf8d8342caeeab7c4138687aada0c2145c7b29f68651f67",
+   "heights": {
+    "before": 302,
+    "after": 302
+   },
+   "detail": "296a2516de423501ecf8d8342caeeab7c4138687aada0c2145c7b29f68651f67",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "6.196",
+   "label": "pay, N = 196 (measurement; labelled 6.255 by the harness, which held only 196 commitments)",
+   "got": "ACCEPT",
+   "source": "measured",
+   "sibling_n": null,
+   "cost": 168749,
+   "cost_instrument": "mempool",
+   "tx_id": null,
+   "heights": null,
+   "detail": "",
+   "ring": 196,
+   "local_eval": {
+    "tx_bytes": 29104,
+    "inputs": [
+     {
+      "input": 0,
+      "valid": true,
+      "cost": 156149,
+      "proof_bytes": 10976
+     }
+    ]
+   },
+   "proof_bytes": 10976,
+   "tx_bytes": 29104,
+   "mined": true
+  },
+  {
+   "n": "6.196b",
+   "label": "pay, N = 196 (measurement; labelled 6.256 by the harness, which held only 196 commitments)",
+   "got": "ACCEPT",
+   "source": "measured",
+   "sibling_n": null,
+   "cost": 168749,
+   "cost_instrument": "mempool",
+   "tx_id": null,
+   "heights": null,
+   "detail": "",
+   "ring": 196,
+   "local_eval": {
+    "tx_bytes": 29104,
+    "inputs": [
+     {
+      "input": 0,
+      "valid": true,
+      "cost": 156149,
+      "proof_bytes": 10976
+     }
+    ]
+   },
+   "proof_bytes": 10976,
+   "tx_bytes": 29104,
+   "mined": true
+  },
+  {
+   "n": "0.g0",
+   "label": "deposit 90 saved commitments (for N = 255, 256)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "02b90dbd3be24e75d5455f61ed719bb5be1c131f641cbe6d645b7142b0d1ad49",
+   "heights": {
+    "before": 310,
+    "after": 310
+   },
+   "detail": "02b90dbd3be24e75d5455f61ed719bb5be1c131f641cbe6d645b7142b0d1ad49",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "0.g1",
+   "label": "deposit 90 saved commitments (for N = 255, 256)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "8b502e0a5c0769f77910efe1a6bd18f4203529b73196915cabbae217803261ff",
+   "heights": {
+    "before": 312,
+    "after": 312
+   },
+   "detail": "8b502e0a5c0769f77910efe1a6bd18f4203529b73196915cabbae217803261ff",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "0.g2",
+   "label": "deposit 90 saved commitments (for N = 255, 256)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "d6e7e68985bf8620ec0cf3a420e1d37d340d7d409740b5348d709975e7dcf689",
+   "heights": {
+    "before": 315,
+    "after": 315
+   },
+   "detail": "d6e7e68985bf8620ec0cf3a420e1d37d340d7d409740b5348d709975e7dcf689",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "6.255",
+   "label": "pay, N = 255 (measurement)",
+   "got": "ACCEPT",
+   "source": "measured",
+   "sibling_n": null,
+   "cost": 216105,
+   "cost_instrument": "mempool",
+   "tx_id": null,
+   "heights": null,
+   "detail": "",
+   "ring": 255,
+   "local_eval": {
+    "tx_bytes": 43842,
+    "inputs": [
+     {
+      "input": 0,
+      "valid": true,
+      "cost": 203505,
+      "proof_bytes": 14280
+     }
+    ]
+   },
+   "proof_bytes": 14280,
+   "tx_bytes": 43842,
+   "mined": true
+  },
+  {
+   "n": "6.256",
+   "label": "pay, N = 256 (measurement)",
+   "got": "SIGN-FAILED",
+   "source": "measured",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": null,
+   "detail": "wallet: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Expected input elements count should not exceed 255, actual: 256\" } | unsigned check: EVAL-ERROR {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. e992da8b32ab4aaa6ec6eb2c7f7d8824ebd4d94518a36c28a22512938be57d77: #0 => Failure(java.lang.IllegalArgumentException: Expected input elements count should not",
+   "ring": 256
+  }
+ ],
+ "harness_bugs": [
+  {
+   "case": "4/4b",
+   "what": "MALFORMED: the wallet's sign error was 'Malformed request: null', which matches neither wallet refusal text; the node's check of the unsigned transaction was EVAL-ERROR",
+   "fix": "key_spend takes the node's EVAL-ERROR when the wallet text is unrecognised; rows rerun as 4.r, 4b.r"
+  },
+  {
+   "case": "5x",
+   "what": "the wallet SIGNED the mismatched-image payment (200) and the first run did not check it",
+   "fix": "5x.r checks the signed transaction"
+  },
+  {
+   "case": "6.255/6.256",
+   "what": "the ring builder held only 196 known commitments (the first run's 70 points were not saved), so both rows measured N = 196 (proof 10,976 B = 196 x 56)",
+   "fix": "rows relabelled 6.196 / 6.196b; --stage 7c-limit deposits 270 saved commitments and asserts the ring size"
+  }
+ ],
+ "H": {
+  "seed": "policy-7c",
+  "point": "0289fd900da05acd046e30d5702eb473b77aafb29d6d178c64475a7442996c74f5",
+  "counter": 0,
+  "method": "try-and-increment: x = blake2b256(seed ++ counter as 4 bytes), point 0x02 ++ x"
+ },
+ "series": [
+  {
+   "n": 3,
+   "ring": 4,
+   "script_cost_local": 3513,
+   "derived_total": null,
+   "mempool_cost": 16113,
+   "proof_bytes": 224,
+   "tx_bytes": 2015,
+   "node": "ACCEPT"
+  },
+  {
+   "n": "4.s",
+   "ring": 4,
+   "script_cost_local": 3513,
+   "derived_total": null,
+   "mempool_cost": null,
+   "proof_bytes": 224,
+   "tx_bytes": 2050,
+   "node": "ACCEPT"
+  },
+  {
+   "n": "6.8",
+   "ring": 8,
+   "script_cost_local": 6687,
+   "derived_total": 8887,
+   "mempool_cost": 19287,
+   "proof_bytes": 448,
+   "tx_bytes": 2811,
+   "node": "ACCEPT"
+  },
+  {
+   "n": "6.16",
+   "ring": 16,
+   "script_cost_local": 13034,
+   "derived_total": 15234,
+   "mempool_cost": 25634,
+   "proof_bytes": 896,
+   "tx_bytes": 4267,
+   "node": "ACCEPT"
+  },
+  {
+   "n": "6.32",
+   "ring": 32,
+   "script_cost_local": 25701,
+   "derived_total": 27901,
+   "mempool_cost": 38301,
+   "proof_bytes": 1792,
+   "tx_bytes": 6408,
+   "node": "ACCEPT"
+  },
+  {
+   "n": "6.64",
+   "ring": 64,
+   "script_cost_local": 50993,
+   "derived_total": 53193,
+   "mempool_cost": 63593,
+   "proof_bytes": 3584,
+   "tx_bytes": 9306,
+   "node": "ACCEPT"
+  }
+ ]
+}

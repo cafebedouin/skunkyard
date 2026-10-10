@@ -1,0 +1,10 @@
+  0.r deposit 6 fresh notes (rerun setup)                                expect ACCEPT     got ACCEPT                    ok
+  3.r pay, N = 4, honest (rerun setup)                                   expect ACCEPT     got ACCEPT                    ok
+  4.r pay a second note with no key-image insert (no proof variable)     expect EVAL-ERROR got EVAL-ERROR node-check (wallet text unrecognised) ok
+ 4b.r pay again with 3.r's key image, insert proof against the pre-3.r R expect EVAL-ERROR got EVAL-ERROR node-check (wallet text unrecognised) ok
+4.s.r the same payment as 4.r with the insert, checked                   expect ACCEPT     got ACCEPT                    ok
+ 5x.r key image from another note's r while proving with this one's (sig expect REFUSE     got REFUSE     node-check     ok
+ 0.f0 deposit 95 filler notes (for N = 255, 256)                         expect ACCEPT     got ACCEPT                    ok
+ 0.f1 deposit 95 filler notes (for N = 255, 256)                         expect ACCEPT     got ACCEPT                    ok
+6.255 pay, N = 255 (measurement)                                         expect None       got ACCEPT     measured       
+6.256 pay, N = 256 (measurement)                                         expect None       got ACCEPT     measured       
