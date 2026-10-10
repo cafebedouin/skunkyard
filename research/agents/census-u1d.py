@@ -82,8 +82,29 @@ def chains():
     bank = C.fetch(BANK_NFT)
     rsv = C.fetch(RSV_POOL)
     usd = C.fetch(USD_POOL)
-    orc = C.fetch(ORACLE_NFT, from_height=ORACLE_FROM)
+    orc = oracle_rows()
     return bank, orc, rsv, usd
+
+
+# The ERG/USD oracle pool box alternates between two contracts (live epoch, epoch preparation). Its token chain is
+# 286,436 boxes and the mirror serves that listing at 10-30 s a page, so the oracle is read by the two addresses
+# instead (2-4 s a page), every page of both, and cut to the window. Pages of /boxes/byAddress are not in height
+# order; the rows are sorted, and chain.check shows whether the two addresses cover the window.
+ORACLE_ADDRESSES = [
+    "NTkuk55NdwCXkF1e2nCABxq7bHjtinX3wH13zYPZ6qYT71dCoZBe1gZkh9FAr7GeHo2EpFoibzpNQmoi89atUjKRrhZEYrTapdtXrWU4kq319oY7BEWmtmRU9cMohX69XMuxJjJP5hRM8WQLfFnffbjshhEP3ck9CKVEkFRw1JDYkqVke2JVqoMED5yxLVkScbBUiJJLWq9BSbE1JJmmreNVskmWNxWE6V7ksKPxFMoqh1SVePh3UWAaBgGQRZ7TWf4dTBF5KMVHmRXzmQqEu2Fz2yeSLy23sM3pfqa78VuvoFHnTFXYFFxn3DNttxwq3EU3Zv25SmgrWjLKiZjFcEcqGgH6DJ9FZ1DfucVtTXwyDJutY3ksUBaEStRxoUQyRu4EhDobixL3PUWRcxaRJ8JKA9b64ALErGepRHkAoVmS8DaE6VbroskyMuhkTo7LbrzhTyJbqKurEzoEfhYxus7bMpLTePgKcktgRRyB7MjVxjSpxWzZedvzbjzZaHLZLkWZESk1WtdM25My33wtVLNXiTvficEUbjA23sNd24pv1YQ72nY1aqUHa2",
+    "EfS5abyDe4vKFrJ48K5HnwTqa1ksn238bWFPe84bzVvCGvK1h2B7sgWLETtQuWwzVdBaoRZ1Hcz1i9w5sa4bkSPJMrkFSmcpLeKUEseNYQn3x57xGttnWFjXkLsyE7EDQuga6ic28tMpPrVokJ2d8ZHQhjddRgwxMfhcwvVtoTqjLbDc3YKJLAetd2DcaCWJB6XzHCM8ezDFpCWVVrFeu4SYGSoGJbgPDRvEAcJEN4qu1RwsmZ1MzBfWF2jBJLagWqu2GvevuDG5oTtJrkqwCHRaAshfoM2mQnjLBsajjPN426t3aRZVJVRHm8apmZstnh92kYBVMujvLA1BkR2tqTfYLtmX6ChFSMXSYejkkCQoLdog59iD66oEzAZtg9ZowqDCjfT8G8YLVpEkVd23QH2LhFtEie3R4etCuvzCSyC4UmMmLbvrnUg4LfuP6xv6jckLGH8HkNWeTuuqf2UmVCQfhMMndBciTXF2KfrPCrzmDXw",
+]
+
+
+def oracle_rows():
+    rows, seen = [], set()
+    for addr in ORACLE_ADDRESSES:
+        for r in C.fetch(ORACLE_NFT, address=addr):
+            if r["hasNft"] and r["h"] >= ORACLE_FROM and r["box"] not in seen:
+                seen.add(r["box"])
+                rows.append(r)
+    rows.sort(key=lambda r: (r["h"], r["gix"]))
+    return rows
 
 
 def bank_step(rows):
@@ -551,12 +572,566 @@ def line_t(a):
         json.dumps({k: v for k, v in out["pastLiquidations"].items() if k != "list"}, indent=1))
 
 
+# ---------------------------------------------------------------------------------------------------- line s
+
+DEXY = {   # NFT -> (role, the deployed tree and constant that names it)
+    "75d7bfbfa6d165bfda1bad3e3fda891e67ccdcfc7b4410c1790923de2ccc9f7f": ("bank", "extract 898a2b5c const 37; free mint 264e3a22 const 14; intervention b794221f const 22; arbitrage mint 935d720e const 19"),
+    "905ecdef97381b92c2f0ea9b516f312bfb18082c61b24b40affa6a55555c77c7": ("LP", "extract 898a2b5c const 21; free mint 264e3a22 const 16; trackers b886e7cf const 6; intervention b794221f const 23"),
+    "ff7b7eff3c818f9dc573ca03a723a7f6ed1615bf27980ebd4a6c91986b26f801": ("LP swap", "LP 2cf12e36 const 11"),
+    "10b755771f7253cff9727a9ca54bb2867e22b1b236657051c47ea9556c517e10": ("LP mint (deposit)", "LP 2cf12e36 const 12"),
+    "471057efea32bf406d529902217844a258d3d6bedfcdcd3cfbab01872cc0b74c": ("LP redeem", "LP 2cf12e36 const 13"),
+    "74f906985e763192fc1d8d461e29406c75b7952da3a89dbc83fe1b889971e455": ("free mint", "bank c9162bd0 const 7"),
+    "3fefa1e3fef4e7abbdc074a20bdf751675f058e4bcce5cef0b38bb9460be5c6a": ("arbitrage mint", "bank c9162bd0 const 8"),
+    "6597acef421c21a6468a2b58017df6577b23f00099d9e0772c0608deabdf6d13": ("intervention", "bank c9162bd0 const 11; LP 2cf12e36 const 16"),
+    "26ef992a598eadfddabfd3c51509fb277b075c943b17199407f68c467b9de1ae": ("payout", "bank c9162bd0 const 12"),
+    "7a776cf75b8b3a5aac50a36c41531a4d6f1e469d2cbcaa5795a4f5b4c255bf09": ("update", "bank c9162bd0 const 13; extract 898a2b5c const 2; intervention b794221f const 2"),
+    "615be55206b1fea6d7d6828c1874621d5a6eb0e318f98a4e08c94a786f947cec": ("extract (to future / release)", "LP 2cf12e36 const 17"),
+    "4675c1819c3e22add72b73f4b7e83eb743d45013b4ee2d8a63e215de9bc6f57f": ("tracker 101 (LP above 101%)", "extract 898a2b5c const 28; arbitrage mint 935d720e const 27"),
+    "ff5269b5cdd037ea391b7210e28aeae0034ef670b9c4263995fe2a920e8d5a1d": ("tracker 95 (LP below 95%)", "extract 898a2b5c const 32"),
+    "854bb70ed735b6c6a65ca80ce1f10bf217552d2be9ac936091a127f8c6480eaa": ("tracker 98 (LP below 98%)", "intervention b794221f const 28"),
+    "610735cbf197f9de67b3628129feaa5a52403286859d140be719467c0fb94328": ("buyback (GORT)", "free mint 264e3a22 const 20; payout 8e0385a4 const 7; arbitrage mint 935d720e const 23"),
+    "3c45f29a5165b030fdb5eaf5d81f8108f9d8f507b31487dd51f4ae08fe07cf4a": ("gold oracle pool (oracle-core v2)", "extract 898a2b5c const 26; free mint 264e3a22 const 18; intervention b794221f const 26; trackers b886e7cf const 8"),
+    "97ad159235d25d05d7efc5863b5d360f89d7d668409502058be3e7aac177b9cb": ("gold oracle refresh", "oracle pool 416babd6 const 2"),
+}
+DEXYGOLD = "6122f7289e7bb2df2de273e09d4b2756cda6aeb0f40438dc9d257688f45183ad"
+INT_MAX = 2147483647
+DEXY_LIVE_FROM = 1_528_682     # the LP and bank first stand in their contracts (before: the deployer's wallet)
+
+
+def dexy_contract_rows(rows):
+    return [r for r in rows if r["hasNft"] and r["tpl"] != "af309fa026fd" and not (r.get("tree") or "").startswith("0008cd")]
+
+
+def line_s(a):
+    import txs as TX
+    tip = a.tip or X.tip()
+    chains_ = {n: C.fetch(n) for n in DEXY}
+    ids = []
+    for n, (role, src) in DEXY.items():
+        rows = chains_[n]
+        con = dexy_contract_rows(rows)
+        br, rep = C.check(rows)
+        tokinfo = X.get(f"/tokens/{n}")
+        ids.append({"role": role, "nft": n, "name": tokinfo.get("name") if tokinfo else None,
+                    "emission": tokinfo.get("emissionAmount") if tokinfo else None, "boxesEver": len(rows),
+                    "contractBoxes": len(con), "contractTemplate": con[-1]["tpl"] if con else None,
+                    "firstInContract": con[0]["h"] if con else None, "lastChange": con[-1]["h"] if con else None,
+                    "current": con[-1]["box"] if con and not con[-1]["spent"] else None, "chainBreaks": len(br),
+                    "fixedBy": src})
+    lp = dexy_contract_rows(chains_["905ecdef97381b92c2f0ea9b516f312bfb18082c61b24b40affa6a55555c77c7"])
+    bank = dexy_contract_rows(chains_["75d7bfbfa6d165bfda1bad3e3fda891e67ccdcfc7b4410c1790923de2ccc9f7f"])
+    orc = [r for r in chains_["3c45f29a5165b030fdb5eaf5d81f8108f9d8f507b31487dd51f4ae08fe07cf4a"] if r["hasNft"] and r4int(r)]
+    lp_s = Step([(r["h"], (r["value"], tok(r, DEXYGOLD), r["box"])) for r in lp])
+    bank_s = Step([(r["h"], (r["value"], tok(r, DEXYGOLD))) for r in bank])
+    o_s = Step([(r["h"], r4int(r)) for r in orc])
+    trackers = {}
+    for n, thr in (("854bb70ed735b6c6a65ca80ce1f10bf217552d2be9ac936091a127f8c6480eaa", 98),
+                   ("ff5269b5cdd037ea391b7210e28aeae0034ef670b9c4263995fe2a920e8d5a1d", 95),
+                   ("4675c1819c3e22add72b73f4b7e83eb743d45013b4ee2d8a63e215de9bc6f57f", 101)):
+        rows = dexy_contract_rows(chains_[n])
+        trackers[thr] = (rows, Step([(r["h"], int(r["regs"]["R7"])) for r in rows]),
+                         rows[0]["regs"]["R6"] == "true")
+
+    def lp_ratio(h):
+        X0, Y0, _ = lp_s.at(h)
+        return (X0 / Y0) / (o_s.at(h) / 1e6) if Y0 else None
+
+    def tracker_cond(thr, h):
+        """The tracker script's trigger condition at the states of block h (l9 vs l10, integer)."""
+        X0, Y0, _ = lp_s.at(h)
+        if not Y0:
+            return None
+        l9 = X0 // Y0 * 100
+        l10 = thr * o_s.at(h) // 1_000_000
+        return l9 < l10 if thr < 100 else l9 > l10
+
+    evs = sorted({h for h in lp_s.h + o_s.h if h >= DEXY_LIVE_FROM and h <= tip})
+    hist = []
+    for i, h in enumerate(evs):
+        X0, Y0, _ = lp_s.at(h)
+        bR, bT = bank_s.at(h) if bank_s.at(h) else (None, None)
+        r4 = o_s.at(h)
+        hist.append([h, X0, Y0, r4, bR, 10**13 - bT if bT is not None else None,
+                     round((X0 / Y0) / (r4 / 1e6), 5) if Y0 else None])
+    save("s-series.json", {"cols": ["h", "lpNanoErg", "lpDexyGold", "oracleR4", "bankNanoErg", "dexyGoldOutsideBank",
+                                    "lpOverOracle"], "note": "one row per LP or gold-oracle change from 1,528,682; "
+                           "oracle R4 / 1e6 = nanoERG per DexyGold unit, as the contracts read it", "rows": hist})
+    seg = [(hist[i][0], hist[i + 1][0] if i + 1 < len(hist) else tip + 1, hist[i]) for i in range(len(hist))]
+    ratio_w = [(r[6], b - a) for a, b, r in seg if r[6] is not None]
+    # actions: each spend of a contract box of an action NFT; who: the P2PK inputs of the spending transaction
+    act_nfts = {"intervention": "6597acef421c21a6468a2b58017df6577b23f00099d9e0772c0608deabdf6d13",
+                "tracker 98": "854bb70ed735b6c6a65ca80ce1f10bf217552d2be9ac936091a127f8c6480eaa",
+                "tracker 95": "ff5269b5cdd037ea391b7210e28aeae0034ef670b9c4263995fe2a920e8d5a1d",
+                "tracker 101": "4675c1819c3e22add72b73f4b7e83eb743d45013b4ee2d8a63e215de9bc6f57f",
+                "free mint": "74f906985e763192fc1d8d461e29406c75b7952da3a89dbc83fe1b889971e455",
+                "arbitrage mint": "3fefa1e3fef4e7abbdc074a20bdf751675f058e4bcce5cef0b38bb9460be5c6a",
+                "LP swap": "ff7b7eff3c818f9dc573ca03a723a7f6ed1615bf27980ebd4a6c91986b26f801",
+                "LP mint": "10b755771f7253cff9727a9ca54bb2867e22b1b236657051c47ea9556c517e10",
+                "LP redeem": "471057efea32bf406d529902217844a258d3d6bedfcdcd3cfbab01872cc0b74c",
+                "payout": "26ef992a598eadfddabfd3c51509fb277b075c943b17199407f68c467b9de1ae",
+                "extract": "615be55206b1fea6d7d6828c1874621d5a6eb0e318f98a4e08c94a786f947cec"}
+    spends = {}
+    for name, n in act_nfts.items():
+        rows = dexy_contract_rows(chains_[n])
+        spends[name] = [(r, r["spent"]) for r in rows if r["spent"]]
+    alltx = TX.fetch(sorted({t for v in spends.values() for _, t in v}), "dexy")
+    actions = {}
+    for name, v in spends.items():
+        lst = []
+        for r, t in v:
+            tx = alltx.get(t)
+            who = sorted({i["addr"] for i in tx["inputs"] if i["addr"] and i["addr"].startswith("9")}) if tx else []
+            lst.append({"h": tx["h"] if tx else None, "tx": t, "box": r["box"], "who": who,
+                        "regsAfter": None})
+        lst.sort(key=lambda x: x["h"] or 0)
+        hs = [x["h"] for x in lst if x["h"]]
+        gaps = sorted(b2 - a2 for a2, b2 in zip(hs, hs[1:]))
+        whoc = {}
+        for x in lst:
+            for w in x["who"]:
+                whoc[w] = whoc.get(w, 0) + 1
+        actions[name] = {"runs": len(lst), "first": hs[0] if hs else None, "last": hs[-1] if hs else None,
+                         "gapBlocks": {"median": gaps[len(gaps) // 2] if gaps else None, "max": gaps[-1] if gaps else None,
+                                       "p90": gaps[int(len(gaps) * 0.9)] if gaps else None},
+                         "longestGaps": sorted([{"from": a2, "to": b2, "blocks": b2 - a2} for a2, b2 in zip(hs, hs[1:])],
+                                               key=lambda g: -g["blocks"])[:5],
+                         "executors": dict(sorted(whoc.items(), key=lambda kv: -kv[1])[:8]), "list": lst}
+    # tracker delays: for each trigger (R7 INT_MAX -> h) and reset (h -> INT_MAX), how long after the condition held
+    delays = {}
+    for thr, (rows, st, _) in trackers.items():
+        trig, reset = [], []
+        for prev, cur in zip(rows, rows[1:]):
+            h = cur["h"]
+            was, now = int(prev["regs"]["R7"]), int(cur["regs"]["R7"])
+            want = (was == INT_MAX and now != INT_MAX)
+            # walk back over the event heights to the first block from which the condition held continuously
+            j = bisect.bisect_right(evs, h) - 1
+            first = None
+            while j >= 0 and evs[j] >= prev["h"]:
+                c = tracker_cond(thr, evs[j])
+                if c is None or c != want:
+                    break
+                first = evs[j]
+                j -= 1
+            if first is None:
+                continue
+            (trig if want else reset).append((h, h - max(first, prev["h"])))
+        delays[thr] = {"triggers": len(trig), "triggerDelay": dur_list([d for _, d in trig]), "resets": len(reset),
+                       "resetDelay": dur_list([d for _, d in reset]),
+                       "over100": [{"h": h, "kind": k, "blocks": d} for k, lst in (("trigger", trig), ("reset", reset))
+                                   for h, d in lst if d > 100]}
+    # intervention: valid when tracker 98 has been triggered for more than 20 blocks, LP < 98% of the oracle
+    # (integer, as the script), and the intervention box is older than 360 blocks; delay to the run
+    t98 = trackers[98][1]
+    iv = dexy_contract_rows(chains_[act_nfts["intervention"]])
+    iv_delay = []
+    for prev, cur in zip(iv, iv[1:]):
+        h = cur["h"]
+        j = bisect.bisect_right(evs, h) - 1
+        first = None
+        while j >= 0:
+            hh = evs[j]
+            X0, Y0, _ = lp_s.at(hh)
+            r7 = t98.at(hh)
+            ok = Y0 and r7 is not None and r7 != INT_MAX and X0 * 100 < (o_s.at(hh) // 1_000_000) * 98 * Y0
+            if not ok:
+                break
+            first = max(hh, r7 + 21, prev["h"] + 361)
+            j -= 1
+        if first is not None and first <= h:
+            iv_delay.append({"h": h, "validFrom": first, "blocks": h - first})
+    # validity windows never acted on: LP below 98% for long with no intervention
+    # (the freeze): periods where tracker 98 stayed triggered and no intervention ran
+    # mints: DexyGold out of the bank, ERG into the bank and the buyback, against the LP's price before the block
+    # (an upper bound on what selling the minted units into the LP could have paid; it ignores the sale's impact)
+    BANK = "75d7bfbfa6d165bfda1bad3e3fda891e67ccdcfc7b4410c1790923de2ccc9f7f"
+    BUYBACK = "610735cbf197f9de67b3628129feaa5a52403286859d140be719467c0fb94328"
+    mint_edges = {}
+    for name in ("free mint", "arbitrage mint"):
+        rows_ = []
+        for x in actions[name]["list"]:
+            tx = alltx.get(x["tx"])
+            if not tx:
+                continue
+            bi = [i for i in tx["inputs"] if any(t[0] == BANK for t in i["assets"])]
+            bo = [o for o in tx["outputs"] if any(t[0] == BANK for t in o["assets"])]
+            yi = [i for i in tx["inputs"] if any(t[0] == BUYBACK for t in i["assets"])]
+            yo = [o for o in tx["outputs"] if any(t[0] == BUYBACK for t in o["assets"])]
+            if not (bi and bo):
+                continue
+            units = sum(t[1] for t in bi[0]["assets"] if t[0] == DEXYGOLD) - sum(t[1] for t in bo[0]["assets"] if t[0] == DEXYGOLD)
+            paid = bo[0]["value"] - bi[0]["value"] + ((yo[0]["value"] - yi[0]["value"]) if (yi and yo) else 0)
+            X0, Y0, _ = lp_s.at(x["h"] - 1)
+            rows_.append({"h": x["h"], "units": units, "paidNanoErg": paid, "lpMid": X0 / Y0 if Y0 else None,
+                          "edgeUpperNanoErg": int(units * X0 / Y0) - paid if Y0 else None})
+        e = [r["edgeUpperNanoErg"] for r in rows_ if r["edgeUpperNanoErg"] is not None]
+        mint_edges[name] = {"n": len(rows_), "units": sum(r["units"] for r in rows_),
+                            "paidNanoErg": sum(r["paidNanoErg"] for r in rows_),
+                            "edgeUpperNanoErg": sum(e), "positive": sum(1 for v in e if v > 0), "list": rows_}
+    lp_now = lp[-1]
+    out = {"explorer": X.EXPLORER, "tip": tip, "ids": ids,
+           "now": {"lpBox": lp_now["box"], "lpNanoErg": lp_now["value"], "lpDexyGold": tok(lp_now, DEXYGOLD),
+                   "lpSince": lp_now["h"], "bankNanoErg": bank[-1]["value"], "bankDexyGold": tok(bank[-1], DEXYGOLD),
+                   "dexyGoldOutsideBank": 10**13 - tok(bank[-1], DEXYGOLD), "bankSince": bank[-1]["h"],
+                   "oracleR4": o_s.v[-1], "oracleAt": o_s.h[-1],
+                   "trackers": {thr: rows[-1]["regs"] for thr, (rows, _, _) in trackers.items()}},
+           "lpOverOracle": {"percentiles": {k: round(v, 4) for k, v in pct(ratio_w, (1, 10, 25, 50, 75, 90, 99)).items()},
+                            "blocksBelow98": sum(w for x, w in ratio_w if x < 0.98),
+                            "blocksAbove101": sum(w for x, w in ratio_w if x > 1.01), "blocks": sum(w for _, w in ratio_w)},
+           "actions": actions, "trackerDelays": delays, "mintEdges": mint_edges,
+           "interventionDelay": {"n": len(iv_delay), "blocks": dur_list([d["blocks"] for d in iv_delay]),
+                                 "list": iv_delay}}
+    save("s.json", out)
+    log(json.dumps({k: v for k, v in out.items() if k not in ("actions", "ids", "interventionDelay")}, indent=1))
+    log(json.dumps({k: {kk: vv for kk, vv in v.items() if kk != "list"} for k, v in actions.items()}, indent=1))
+
+
+def dur_list(xs):
+    xs = sorted(xs)
+    if not xs:
+        return {"n": 0}
+    return {"n": len(xs), "min": xs[0], "median": xs[len(xs) // 2], "p90": xs[int(len(xs) * 0.9)], "max": xs[-1]}
+
+
+# ---------------------------------------------------------------------------------------------------- line r
+
+CAP = 1_000 * 10**9          # capital cap per strategy run (nanoERG)
+SPACING = 7_200              # entries / placements every 7,200 blocks (about 10 days)
+OTHER_POOLS = {"RSN": "cadac6db847a715e3577d8f2fbb2edfb2280f20924abf51bf83704a9ddc511b2",
+               "rsBTC": "47a811c68e49f6bfa6629602037ee65f8d175ddbc7b64bdb65ad40599b812fd0",
+               "rsFIRO": "d86f6508c6b665bf4ba0bd3b56f7090404665b0cef26e5202d91127ed538f47c"}
+
+
+def buy_to(X0, Y0, fee, target, cash):
+    """Largest ERG in (<= cash) such that the pool's price after the swap stays <= target (nanoERG per unit)."""
+    lo, hi = 0, cash
+    if hi <= 0 or Y0 <= 1:
+        return 0, 0
+    while hi - lo > 1000:
+        m = (lo + hi) // 2
+        T = A.pool_tokens_out(X0, Y0, fee, m)
+        if T <= 0 or (X0 + m) / (Y0 - T) <= target:
+            lo = m
+        else:
+            hi = m
+    T = A.pool_tokens_out(X0, Y0, fee, lo)
+    return (lo, T) if T > 0 else (0, 0)
+
+
+def sell_to(X0, Y0, fee, target, have):
+    """Largest token amount (<= have) such that the pool's price after the sale stays >= target."""
+    lo, hi = 0, have
+    while hi - lo > 1:
+        m = (lo + hi) // 2
+        out = A.pool_erg_out(X0, Y0, fee, m)
+        if (X0 - out) / (Y0 + m) >= target:
+            lo = m
+        else:
+            hi = m
+    return lo, A.pool_erg_out(X0, Y0, fee, lo) if lo else 0
+
+
+def r1_dip(rows, th, tip):
+    """SigRSV dip-buy at threshold th (fraction below NAV). My own trades persist in the pool as an offset to the
+    historical reserves; the bank is taken as historical (my redemptions are small against its reserve)."""
+    cash, held, cost = CAP, 0, 0
+    offX, offY = 0, 0
+    trades, eq, peak, dd = [], [], CAP, 0
+    tied_blocks, max_tied, open_from = 0, 0, None
+    last_box = None
+    for r in rows:
+        X0, Y0, fee = r["rsvX"] + offX, r["rsvY"] + offY, r["rsvFee"]
+        if X0 <= A.POOL_MIN_VALUE or Y0 <= 1:
+            continue
+        mid, nav = X0 / Y0, r["nav"]
+        acted = False
+        if held:
+            b = A.Bank(r["R"], r["sc"], r["rc"], r["r4"])
+            n = b.max_units("rc", -1, held) if r["rcRedeem"] is not None else 0
+            if n:
+                got = -b.exchange("rc", -n) - TX_FEE
+                cash += got
+                trades.append({"h": r["h"], "side": "redeem", "units": n, "ergNanoErg": got, "nav": nav})
+                held -= n
+                acted = True
+            elif mid > nav:
+                n, out = sell_to(X0, Y0, fee, nav, held)
+                if n and out > TX_FEE:
+                    cash += out - TX_FEE
+                    offX -= out
+                    offY += n
+                    held -= n
+                    trades.append({"h": r["h"], "side": "sell", "units": n, "ergNanoErg": out - TX_FEE, "nav": nav,
+                                   "poolPrice": mid})
+                    acted = True
+            if held == 0 and open_from is not None:
+                open_from = None
+        if not acted and mid < nav * (1 - th) and cash > 10 * TX_FEE and r["rsvBox"] != last_box:
+            dX, T = buy_to(X0, Y0, fee, nav * (1 - th), cash - TX_FEE)
+            if T > 0:
+                cash -= dX + TX_FEE
+                held += T
+                offX += dX
+                offY -= T
+                last_box = r["rsvBox"]
+                trades.append({"h": r["h"], "side": "buy", "units": T, "ergNanoErg": -(dX + TX_FEE), "nav": nav,
+                               "poolPrice": mid, "discount": round(mid / nav - 1, 4)})
+                if open_from is None:
+                    open_from = r["h"]
+        X1, Y1 = r["rsvX"] + offX, r["rsvY"] + offY
+        mark_pool = A.pool_erg_out(X1, Y1, fee, held) if held else 0
+        e = cash + mark_pool
+        peak = max(peak, e)
+        dd = max(dd, peak - e)
+        tied = CAP - cash if held else 0
+        max_tied = max(max_tied, tied)
+        if held:
+            tied_blocks += r["to"] - r["h"]
+    last = rows[-1]
+    nav_mark = held * last["nav"]
+    pool_mark = A.pool_erg_out(last["rsvX"] + offX, last["rsvY"] + offY, last["rsvFee"], held) if held else 0
+    buys = [t for t in trades if t["side"] == "buy"]
+    return {"threshold": th, "trades": len(trades), "buys": len(buys),
+            "redeems": sum(1 for t in trades if t["side"] == "redeem"),
+            "sells": sum(1 for t in trades if t["side"] == "sell"),
+            "netNanoErgMarkedNav": cash + nav_mark - CAP, "netNanoErgMarkedPool": cash + pool_mark - CAP,
+            "realisedCashNanoErg": cash - CAP, "openUnits": held, "openMarkedNavNanoErg": nav_mark,
+            "maxCapitalTiedNanoErg": max_tied, "blocksWithPosition": tied_blocks, "worstDrawdownNanoErg": dd,
+            "trades_": trades}
+
+
+def r3_exits(rows, levels, tip):
+    """A 100-ERG SigRSV position bought from the pool every SPACING blocks, parked in an exit box per trigger."""
+    hs = [r["h"] for r in rows]
+    out = {}
+    trig = {f"ergusd>={L}": (lambda r, L=L: 1e9 / r["r4"] >= L) for L in levels}
+    trig["rr>=400 (redeem open)"] = lambda r: r["rcRedeem"] is not None
+    trig["pool>=nav+2%"] = lambda r: r["rsvX"] / r["rsvY"] >= r["nav"] * 1.02
+    entries = list(range(rows[0]["h"], tip, SPACING))
+    for name, f in trig.items():
+        res = []
+        for e in entries:
+            i = bisect.bisect_right(hs, e) - 1
+            r0 = rows[i]
+            T = A.pool_tokens_out(r0["rsvX"], r0["rsvY"], r0["rsvFee"], 100 * 10**9)
+            if T <= 0:
+                continue
+            fill = None
+            for r in rows[i + 1:]:
+                if f(r):
+                    if r["rcRedeem"] is not None:
+                        b = A.Bank(r["R"], r["sc"], r["rc"], r["r4"])
+                        n = b.max_units("rc", -1, T)
+                        got = -b.exchange("rc", -n) if n else 0
+                        rest = A.pool_erg_out(r["rsvX"], r["rsvY"], r["rsvFee"], T - n) if T - n else 0
+                        fill = (r["h"], got + rest - 2 * TX_FEE, "bank" if n == T else "bank+pool")
+                    else:
+                        fill = (r["h"], A.pool_erg_out(r["rsvX"], r["rsvY"], r["rsvFee"], T) - 2 * TX_FEE, "pool")
+                    break
+            if fill:
+                res.append({"entry": e, "fired": fill[0], "wait": fill[0] - e, "ergOut": fill[1], "via": fill[2]})
+            else:
+                res.append({"entry": e, "fired": None, "markNavNanoErg": T * rows[-1]["nav"]})
+        fired = [x for x in res if x["fired"]]
+        waits = sorted(x["wait"] for x in fired)
+        rets = sorted(x["ergOut"] / 1e11 - 1 for x in fired)
+        out[name] = {"entries": len(res), "fired": len(fired), "waitBlocks": dur_list(waits),
+                     "returnOn100Erg": {"median": round(rets[len(rets) // 2], 4) if rets else None,
+                                        "min": round(rets[0], 4) if rets else None, "max": round(rets[-1], 4) if rets else None},
+                     "via": {v: sum(1 for x in fired if x["via"] == v) for v in ("bank", "bank+pool", "pool")},
+                     "unfiredMarkNavReturn": round(sum(x["markNavNanoErg"] for x in res if not x["fired"]) /
+                                                   (1e11 * max(1, len(res) - len(fired))) - 1, 4) if len(res) > len(fired) else None,
+                     "list": res}
+    return out
+
+
+def pool_rows(step, lo, tip):
+    hs = [h for h in step.h if h <= tip]
+    out = []
+    for i, h in enumerate(hs):
+        X0, Y0, fee, box = step.v[i]
+        out.append((h, hs[i + 1] if i + 1 < len(hs) else tip + 1, X0, Y0, fee))
+    return [o for o in out if o[1] > lo]
+
+
+def r4_babel(prow, levels, tip, side="buy"):
+    """Standing offers placed every SPACING blocks at `levels` below (buy) or above (sell) the pool's mid price,
+    100 ERG each (buy: ERG in the box; sell: tokens bought at placement). A keyless taker fills against the pool when
+    it nets at least one transaction fee; repeated takes until the box is empty."""
+    hs = [p[0] for p in prow]
+    res = {}
+    for d in levels:
+        boxes = []
+        for e in range(max(prow[0][0], hs[0]), tip - SPACING, SPACING):
+            i = bisect.bisect_right(hs, e) - 1
+            _, _, X0, Y0, fee = prow[i]
+            mid = X0 / Y0
+            if side == "buy":
+                bid = int(mid * (1 - d))
+                avail, units, paid, fills = 100 * 10**9, 0, 0, []
+                mkt_T = A.pool_tokens_out(X0, Y0, fee, 100 * 10**9)
+                for p in prow[i + 1:]:
+                    if avail < 10**6:
+                        break
+                    t = A.babel_vs_pool(p[2], p[3], p[4], max(bid, 1), avail)
+                    if t and t[0] >= TX_FEE:
+                        _, dX, T, Y = t
+                        avail -= Y
+                        units += T
+                        paid += Y
+                        fills.append({"h": p[0], "units": T, "paid": Y, "poolMid": p[2] / p[3]})
+                filled = paid > 0
+                boxes.append({"placed": e, "bid": bid, "mid": mid, "filled": filled,
+                              "firstFill": fills[0]["h"] if fills else None, "units": units, "paidNanoErg": paid,
+                              "fillShare": paid / 1e11,
+                              "gainVsMarketNanoErg": (int(units * (100 * 10**9) / mkt_T) - paid) if (units and mkt_T) else 0,
+                              "fillVsPoolMid": round(bid / fills[0]["poolMid"] - 1, 4) if fills else None})
+            else:
+                ask = int(mid * (1 + d))
+                T0 = A.pool_tokens_out(X0, Y0, fee, 100 * 10**9)
+                left, got, fills = T0, 0, []
+                for p in prow[i + 1:]:
+                    if left <= 0:
+                        break
+                    # taker buys n units from the ask box at `ask` and sells them into the pool
+                    def prof(n, p=p):
+                        return A.pool_erg_out(p[2], p[3], p[4], n) - n * ask
+                    n, v = A.argmax_int(prof, 1, left)
+                    if n and v >= TX_FEE:
+                        left -= n
+                        got += n * ask
+                        fills.append({"h": p[0], "units": n, "recv": n * ask, "poolMid": p[2] / p[3]})
+                sold = T0 - left
+                boxes.append({"placed": e, "ask": ask, "mid": mid, "filled": sold > 0,
+                              "firstFill": fills[0]["h"] if fills else None, "unitsSold": sold, "receivedNanoErg": got,
+                              "fillShare": sold / T0 if T0 else 0,
+                              "gainVsMarketNanoErg": got - (A.pool_erg_out(X0, Y0, fee, sold) if sold else 0),
+                              "fillVsPoolMid": round(ask / fills[0]["poolMid"] - 1, 4) if fills else None})
+        f = [b for b in boxes if b["filled"]]
+        waits = sorted(b["firstFill"] - b["placed"] for b in f)
+        res[str(d)] = {"boxes": len(boxes), "filled": len(f), "fullyFilled": sum(1 for b in f if b["fillShare"] > 0.99),
+                       "waitBlocks": dur_list(waits),
+                       "medianFillVsPoolMid": sorted(b["fillVsPoolMid"] for b in f)[len(f) // 2] if f else None,
+                       "gainVsMarketNanoErg": sum(b["gainVsMarketNanoErg"] for b in boxes),
+                       "list": boxes}
+    return res
+
+
+def r5_grid(prow, spacing, tip, levels=5, size=50 * 10**9):
+    """Symmetric grid: `levels` bids below and asks above the start price at `spacing`, `size` ERG each. A fill is
+    when the pool's marginal price (with its fee) crosses a level by enough that the keyless taker nets a fee; a
+    filled bid becomes an ask one level up and vice versa."""
+    h0, _, X0, Y0, fee = prow[0]
+    P0 = X0 / Y0
+    grid = [P0 * (1 + spacing) ** k for k in range(-levels, levels + 1)]
+    state = {}                       # level index -> "bid" or "ask" (level 0 is the start: empty)
+    cash, units = 0, 0
+    for k in range(-levels, 0):
+        state[k] = "bid"
+        cash += size
+    T0 = 0
+    for k in range(1, levels + 1):
+        state[k] = "ask"
+        t = int(size / grid[levels + k])
+        units += t
+        T0 += t
+    start_cost = A.pool_erg_in_for(X0, Y0, fee, T0) if T0 < Y0 else None
+    capital = cash + (start_cost or 0)
+    fills, round_trips, spread = [], 0, 0
+    for h, to, X1, Y1, f1 in prow:
+        buy_px = X1 / Y1 * 1000 / f1         # marginal price to buy from the pool
+        sell_px = X1 / Y1 * f1 / 1000        # marginal price to sell into the pool
+        for k in sorted(state):
+            px = grid[levels + k]
+            t = int(size / px)
+            if state[k] == "bid" and buy_px < px and t * (px - buy_px) >= TX_FEE:
+                state[k] = None
+                cash -= int(t * px)
+                units += t
+                if k + 1 <= levels:
+                    state[k + 1] = "ask"
+                fills.append({"h": h, "level": k, "side": "buy", "units": t, "price": px})
+            elif state[k] == "ask" and sell_px > px and t * (sell_px - px) >= TX_FEE and units >= t:
+                state[k] = None
+                cash += int(t * px)
+                units -= t
+                if k - 1 >= -levels:
+                    state[k - 1] = "bid"
+                    round_trips += 1
+                    spread += int(t * px) - int(t * grid[levels + k - 1])
+                fills.append({"h": h, "level": k, "side": "sell", "units": t, "price": px})
+    hl, _, XL, YL, fL = prow[-1]
+    mark = cash + (A.pool_erg_out(XL, YL, fL, units) if units else 0) - (levels * size)
+    hold_mix = levels * size + (A.pool_erg_out(XL, YL, fL, T0) if T0 else 0)
+    return {"spacing": spacing, "from": h0, "startPrice": P0, "endPrice": XL / YL, "capitalNanoErg": capital,
+            "fills": len(fills), "roundTrips": round_trips, "realisedSpreadNanoErg": spread,
+            "endUnits": units, "startUnits": T0, "endValueNanoErg": mark + levels * size,
+            "netVsHoldErgNanoErg": mark + levels * size - capital,
+            "netVsHoldMixNanoErg": mark + levels * size - hold_mix, "fills_": fills[:200]}
+
+
+def line_r(a):
+    tip = a.tip or X.tip()
+    rows, checks, (bank, orc, rsv, usd), lo = series(tip)
+    for r in rows:
+        r["rsvBox"] = rsv.at(r["h"])[3]
+    out = {"explorer": X.EXPLORER, "tip": tip, "from": lo, "capNanoErg": CAP, "txFeeNanoErg": TX_FEE,
+           "rules": "see CENSUS-U1D.md line r"}
+    # 1. dip-buy
+    d = {}
+    for th in (0.02, 0.05, 0.10):
+        res = r1_dip(rows, th, tip)
+        d[str(th)] = {k: v for k, v in res.items() if k != "trades_"}
+        d[str(th)]["tradeList"] = res["trades_"]
+    first, last = rows[0], rows[-1]
+    T_hold = A.pool_tokens_out(first["rsvX"], first["rsvY"], first["rsvFee"], CAP)
+    d["holdSigRSVFromStart"] = {"units": T_hold, "markNavNanoErg": T_hold * last["nav"] - CAP,
+                                "usdPerErgStart": round(1e9 / first["r4"], 4), "usdPerErgTip": round(1e9 / last["r4"], 4)}
+    out["dipBuy"] = d
+    # 2. beat the bot
+    q = load("q.json")
+    pairs = q["bot"]["list"]
+    span = (pairs[-1]["h"] - pairs[0]["h"]) if pairs else 1
+    gross = [p["ergNet"] + sum(TX_FEE for lg in p["legs"]) for p in pairs]
+    fees_paid = []
+    out["beatTheBot"] = {"pairs": len(pairs), "botNetNanoErg": sum(p["ergNet"] for p in pairs),
+                         "builderNetNanoErg": sum(gross), "spanBlocks": span,
+                         "perYearNanoErg": int(sum(gross) * 262_800 / span) if span else None,
+                         "shares": {str(s): {"nanoErgAll": int(sum(gross) * s),
+                                             "nanoErgPerYear": int(sum(gross) * 262_800 / span * s) if span else None}
+                                    for s in (0.015, 0.017, 0.10, 0.30)},
+                         "note": "builder net = the bot's net plus the fees it paid (a builder pays itself no fee in "
+                                 "its own block); the same pair at the same states, taken first"}
+    # 3. conditional exits
+    ergusd = sorted(1e9 / r["r4"] for r in rows)
+    levels = [4.0] + sorted({round(ergusd[int(len(ergusd) * q2)], 2) for q2 in (0.5, 0.75, 0.95)})
+    out["exits"] = {"levels": levels, "results": r3_exits(rows, levels, tip)}
+    # 4. Babel buy offers and the sell mirror; 5. grid
+    psteps = {"SigUSD": usd, "SigRSV": rsv}
+    for name, n in OTHER_POOLS.items():
+        psteps[name] = pool_step(C.fetch(n))
+    babel, grid = {}, {}
+    for name, st in psteps.items():
+        prow = pool_rows(st, lo, tip)
+        if len(prow) < 3:
+            continue
+        babel[name] = {"buy": r4_babel(prow, (0.02, 0.05, 0.10, 0.20), tip, "buy"),
+                       "sell": r4_babel(prow, (0.02, 0.05, 0.10, 0.20), tip, "sell"), "from": prow[0][0]}
+        if name in ("RSN", "SigUSD", "rsBTC"):
+            grid[name] = {str(sp): r5_grid(prow, sp, tip) for sp in (0.02, 0.05, 0.10)}
+    out["babel"] = babel
+    out["grid"] = grid
+    save("r.json", out)
+    log(json.dumps({"dipBuy": {k: {kk: vv for kk, vv in v.items() if kk != "tradeList"} for k, v in d.items()},
+                    "beatTheBot": out["beatTheBot"]}, indent=1))
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("line", choices=["q", "r", "s", "t", "u"])
     p.add_argument("--tip", type=int, default=None)
     a = p.parse_args()
-    {"q": line_q, "t": line_t}[a.line](a)
+    {"q": line_q, "r": line_r, "s": line_s, "t": line_t}[a.line](a)
     log("requests", X.stats)
 
 
