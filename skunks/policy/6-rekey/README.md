@@ -112,8 +112,12 @@ Paths:
 
 **What changed from the first run.**
 - A plain payment is no longer stuck. It is refused cleanly to every key path (11), cannot be claimed under chosen
-  registers (13a) or by another account (13c), and joins the account's registered box by a keyless merge (12) that
-  any KeepAlive-style executor can run.
+  registers (13a) or merged into *another account's address* (13c), and joins the account's registered box by a
+  keyless merge (12) that any KeepAlive-style executor can run.
+  - **Row 13c does not cover the planted-box theft.** It merged into another account's *address*; it did not test a
+    box planted at *this* account's address. Anyone can send a box here carrying their own R4/R5, which `isReg` (R4
+    and R5 present) counts as registered, so the owner path proves to the planted key and the keyless merge pulls the
+    account's plain payments into it. Found by reading in the 2026-10-10 review; see the fix below.
 - **Limit:** row 13d means two registered boxes of one account can't be merged together, so an account should keep
   one registered box.
 - **Wallet consequence:** a wallet can let anyone pay the address; it only has to merge before spending.
@@ -124,3 +128,54 @@ finds boxes by template hash, merges into one successor and takes the bounty. Su
 adding its template hash and the "one registered input, its registers kept" successor rule. Because an account keeps
 a single registered box, the executor must merge serially per account (the wallet-support list in
 `research/policy/EXPERIMENTS.md`).
+
+## Planted-box fix (2026-10-10 review): `RekeyAccount2.es`, the account is an NFT
+
+`RekeyAccount.es`'s `isReg` is "R4 and R5 are present", so anyone can plant a registered box at the account's own
+address carrying their key and absorb the account's plain payments (see "What changed from the first run"). The fix
+makes "registered" un-forgeable:
+
+- **`RekeyAccount2.es`** (1,213 B tree): `ACCOUNT` is now the id of an NFT minted into the account's first registered
+  box, and `isReg` also requires the box to hold that NFT (`b.tokens.exists(t => t._1 == account)`). A supply-1 NFT
+  cannot be minted by anyone else, so a planted box is not registered: its owner path is dead and the merge will not
+  take it as the registered source.
+- Dragging the real NFT box into a merge does not help the attacker: `maintain` forces `next.R4 == src.R4`, so the
+  successor keeps the account owner's key. The attacker gains only the capped bounty, as any executor would.
+- The old `account != SELF.id` anti-fold guard is dropped: `account` is now used at run time inside `isReg`, so the
+  compiler keeps the segregated constant. The template stays shared, so executors still find every account by one
+  template hash.
+- **Wallet note (unchanged security, open UX):** `ACCOUNT` = the NFT id is not derivable from the seed alone, so a
+  restored wallet finds its account by the NFT, not by re-deriving the address. Tracked in the wallet-support list.
+
+Devnet, every row as expected (A = victim/owner key; B = attacker key). The exploit harness and its raw transactions
+are attack tooling, kept outside git in `~/bin/skunkyard-private/policy-attacks/6-rekey/`; the table is the public record:
+
+| # | case | expected | got |
+|---|---|---|---|
+| old-1 | attacker plants PB (R4=B) at the account addr; merge [PB, P(plain)] → successor R4=B, no key (theft of custody) | ACCEPT | ACCEPT |
+| old-2 | attacker (B) then spends that successor anywhere with its key | ACCEPT | ACCEPT |
+| new-1 | attacker plants PB (no NFT); merge [PB, P] → successor R4=B | REFUSE | REFUSE |
+| new-2 | attacker drags the real NFT box in: merge [R0(NFT), P] → successor R4=B | REFUSE | REFUSE |
+| new-3 | honest merge [R0(NFT), P] → successor keeps R4=A and the NFT, no key | ACCEPT | ACCEPT |
+| new-4 | owner (A) spends the registered NFT box with the owner key | ACCEPT | ACCEPT |
+
+`old-1`/`old-2` are the theft the review found (custody taken by the keyless merge, then cashed out); `new-1`/`new-2`
+are the same attempts refused by the fix.
+
+**Known edges, to weld before this ships under its name (reasoned from source, not yet devnet-tested):**
+- **Brick risk.** The NFT is enforced-preserved only on the `maintain` (merge) path. The owner and hash-key rekey
+  paths put no token constraint on the successor, so a rekey that drops the NFT yields a box that is no longer
+  registered — unspendable by owner/hash-key/maintain. The welded version must require any successor *at this
+  address* to carry the NFT (while still allowing a genuine withdrawal that closes the account).
+- **Peel-off hijack.** The owner can move the NFT out of the script into a plain box (the owner path has no output
+  constraints). While the NFT sits outside a key-protected account box it is an ordinary transferable token; whoever
+  then holds it can plant a box at the account address with their own key and capture future plain payments. The
+  weld — the NFT may never leave the script; a transfer is a rekey, nothing else — closes this.
+- **Supply-exactly-one is off-chain.** The contract checks `t._1 == account`, not the token's supply or mint
+  provenance. The wallet must mint the NFT (amount 1) in the same transaction that creates the first registered box;
+  the contract does not enforce it.
+
+These are design tradeoffs of identity-by-transferable-token: the NFT is the right tool when an account is meant to
+be a transferable, inheritable, composable object, and the wrong price for a seed-derived personal receive address
+(where a fixed key, or a seed-derived pre-committed key schedule, avoids the token entirely). Charting the comparison
+is a design program, not this experiment.

@@ -105,8 +105,10 @@ KeepAlive's merge is the second form: every merged input checks the same output 
 - **Rekey in place, as a receive address** (`skunks/policy/6-rekey/`, 19 of 19).
   - Keys live in registers. The owner key or the hash key can replace both, and a hash-key rekey must install a fresh
     commitment.
-  - A per-account constant gives each account its own address. Plain payments to it merge keylessly into the
-    account's registered box and can't be claimed by another account.
+  - A per-account identity (an NFT minted into the first registered box) gives each account its own address. Plain
+    payments to it merge keylessly into the account's registered box. An earlier version keyed the account by
+    register presence alone; the 2026-10-10 review found that let a stranger plant a registered box at the address
+    and capture incoming payments, and it is fixed by the NFT gate (`skunks/policy/6-rekey/`).
 
 ## 5. Parked
 

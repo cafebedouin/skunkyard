@@ -89,10 +89,13 @@ before and after each check; the evaluated HEIGHT is `fullHeight + 1`.
 - **Completion is keyless and exact** (rows 5, 6, 7): only to the announced destination, only the whole value.
 - **Strangers cannot cancel** (row 8). **The recovery key can** (row 9).
 - **The window closes at R5 for cancel** (rows 10, 11) and opens at R5 for completion (rows 4, 4.s).
-- **One pending box per transaction stops the double-satisfaction theft** (row 12 against the counterfactual, row 14).
-  The price is that two withdrawals can't be completed in one transaction (row 13 against row 15).
-  - The other answer is a per-output binding: each completing output carries its pending box's id. That is RULING
-    R6, left at its default (one-pending), so the binding is untested.
+- **One pending box per transaction stops the *same-script* double-satisfaction theft** (row 12 against the
+  counterfactual, row 14). The price is that two withdrawals can't be completed in one transaction (row 13 against
+  row 15).
+  - **It does not stop the cross-vault theft.** The `alone` clause counts inputs of *this box's own script*, and
+    each vault's pending script embeds its OWNER and RECOVERY. Two pending boxes from *different* vaults have
+    different `propositionBytes`, so each is "alone", and both are satisfied by one `OUTPUTS(0)`; the second value
+    leaves to anyone, past the deadline, with no key. Found by reading in the 2026-10-10 review; see the fix below.
 - **The cost of a completion** is 12,644 (mempool figure, a 1-input, 1-output transaction).
 
 ## Limits, stated
@@ -112,3 +115,32 @@ A policy box is either the only input of its script in the transaction, or every
 output that holds their totals, as the KeepAlive merge does. Nothing in between. Rows 2b (two vaults announced into
 one pending box) and 16/17 (two pending boxes cancelled into one vault output; `devnet-test-cancel2.py`) are the same
 shape on the announce and cancel sides.
+
+## Cross-vault fix (2026-10-10 review): `Pending2.es`, per-output id binding
+
+The `alone` clause is per-script, so it does not catch two pending boxes of *different* vaults completed into one
+output (see "What it shows"). `alone` also forbade honest batching (row 13). Both are solved by binding the output
+to the box, not by counting inputs:
+
+- **`Pending2.es`** (193 B tree): the completing (and cancelling) output must carry this box's id in R4
+  (`o.R4[Coll[Byte]].get == SELF.id`), with the same value, tokens and destination as before. Two boxes can never be
+  satisfied by one output whatever scripts the others carry, so the cross-vault theft is impossible; and two boxes
+  with distinct ids can be completed in one transaction, so honest batching is allowed.
+- The `alone` / `kept` clauses are dropped; the value/token/destination checks move onto the id-bearing output.
+- **`Vault.es` needs no source change.** A vault that uses this pending box is compiled with `PENDING_TREE` set to
+  `Pending2.es`'s tree. (Vault announce is not exposed to the cross-vault trick: it needs the owner key and the
+  pending box is pinned to one vault by R6 and the tree.)
+
+Devnet, every row as expected (the exploit harness and its raw transactions are attack tooling, kept outside git in
+`~/bin/skunkyard-private/policy-attacks/2-twostep/`; the table is the public record):
+
+| # | case | expected | got |
+|---|---|---|---|
+| old-1 | two pending boxes of **different** vaults, `OUTPUTS(0)`→X v, `OUTPUTS(1)`→stranger v (the theft) | ACCEPT | ACCEPT |
+| old-2 | control: one old pending box, honest complete to X | ACCEPT | ACCEPT |
+| new-1 | same cross-vault theft shape against `Pending2` boxes | REFUSE | REFUSE |
+| new-2 | honest complete of one `Pending2` box to X (output R4 = box id) | ACCEPT | ACCEPT |
+| new-3 | honest batch: two `Pending2` boxes (different vaults) both to X, each output carrying its own box id | ACCEPT | ACCEPT |
+| new-4 | honest recovery cancel of one `Pending2` box back to the vault (B's key) | ACCEPT | ACCEPT |
+
+`old-1` is the theft the review found, confirmed accepted by the node; `new-1` is the same shape refused by the fix.
