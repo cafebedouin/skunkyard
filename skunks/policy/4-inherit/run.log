@@ -1,0 +1,10 @@
+    1 in the window: refresh with R5 bumped to HEIGHT                    expect REFUSE     got REFUSE     node-check     ok
+    2 in the window: refresh, R5 kept, honest                            expect ACCEPT     got ACCEPT                    ok
+    3 heir (B) at wallet height R5 + N - 1                               expect REFUSE     got REFUSE     wallet-sign/no-secret ok
+    4 heir (B) at wallet height R5 + N, on the refreshed box (its age <  expect ACCEPT     got ACCEPT                    ok
+    5 owner (A) spends into a successor with R5 = HEIGHT + 1 (node HEIGH expect REFUSE     got REFUSE     wallet-sign/no-secret ok
+    6 owner (A) spends into a successor with R5 = h0, the old value      expect REFUSE     got REFUSE     wallet-sign/no-secret ok
+    7 owner (A) resets R5 = HEIGHT after the heir's window opened (R1 de expect ACCEPT     got ACCEPT                    ok
+    8 heir (B) right after case 7                                        expect REFUSE     got REFUSE     wallet-sign/no-secret ok
+    9 heir (B) at the new R5 + N                                         expect ACCEPT     got ACCEPT                    ok
+ALL AS EXPECTED

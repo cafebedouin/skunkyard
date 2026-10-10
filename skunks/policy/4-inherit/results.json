@@ -1,0 +1,241 @@
+{
+ "experiment": "4-inherit",
+ "started_height": 225,
+ "node": {
+  "appVersion": "6.0.7",
+  "parameters": {
+   "outputCost": 100,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 224,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2000,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ },
+ "wallets": {
+  "A": [
+   "038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c",
+   "031ee1ab3b729f21e0dcee05642a63745286354d8e511e6376838e235a28078c01",
+   "0367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df",
+   "0398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04",
+   "026c2134d11af7f0bea024724278ebc37ced69a19a99dd6638f393d5f1b9c8bea0",
+   "0389e8fb63050cdb2c3f5c70b3d6167835b60bcf020b9ed7c332965ffce26f2e6f"
+  ],
+  "B": [
+   "03d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494",
+   "0376bf533d4b15510fa9f4124b6e48616f07debcf2ef0cfb185cdc4a576450b475",
+   "02ea2649b3512b9a859ab658a85e2989a7ae39b2518877b2dc0f2b44b785d5788d",
+   "03b4c210719212afb16b5f136a2dcb3cc9fc231721f711994facf3b6111afba7d0",
+   "0234835d35c02b0dc042aa9c041b854b98c28df4872fdc8c6a260bc2ddd767f5a3",
+   "02a52d6327542c16cce7645b899e651dc78098fa4f495acb36992e66b099405ec2"
+  ]
+ },
+ "trees": [
+  {
+   "name": "Inherit",
+   "tree_bytes": 316,
+   "box_bytes": 428,
+   "address": "LwiidBJ5mjFGXrVxEKuZWoS9KWdT9vX3MFKGStQ9LdHeYE6FUxo37QYKUeroXgbvvGLTz1vg4fxp8wQpjybGFivDBAFwZVFsoxTboNcHpY4sF9D8tgr193M6VEDAtiwyKCnSd44X44fwPDE5jNhfom4Mpg1WFpBCqfJJGBCKXFusGhSZXnsrRePhZ3uebk6FNVzRnkCk14mrDToY8Tg7cHQBnK5fgsZgvb6K3vTA157WPBfa95fuVErtizT6WA52aQcFPK2CX12ahE7fptNHDxuF6o9usaF5yTYRWLfd64Y24XvnTuTiUgd8bxLkPD6kn48rRB49nPq2Feh2LW8b1EFXxSZoW6Q6XDhx4aH14nFxjsW5eHLbcCn5r6VKckt1i6kLJVJNyceiZzYpRcPwZQTxdGthuqdmkgJNZhaaGKo8G6BV3nAQmE",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 535000000
+  },
+  {
+   "name": "Inherit-refreshed",
+   "tree_bytes": 316,
+   "box_bytes": 462,
+   "address": "LwiidBJ5mjFGXrVxEKuZWoS9KWdT9vX3MFKGStQ9LdHeYE6FUxo37QYKUeroXgbvvGLTz1vg4fxp8wQpjybGFivDBAFwZVFsoxTboNcHpY4sF9D8tgr193M6VEDAtiwyKCnSd44X44fwPDE5jNhfom4Mpg1WFpBCqfJJGBCKXFusGhSZXnsrRePhZ3uebk6FNVzRnkCk14mrDToY8Tg7cHQBnK5fgsZgvb6K3vTA157WPBfa95fuVErtizT6WA52aQcFPK2CX12ahE7fptNHDxuF6o9usaF5yTYRWLfd64Y24XvnTuTiUgd8bxLkPD6kn48rRB49nPq2Feh2LW8b1EFXxSZoW6Q6XDhx4aH14nFxjsW5eHLbcCn5r6VKckt1i6kLJVJNyceiZzYpRcPwZQTxdGthuqdmkgJNZhaaGKo8G6BV3nAQmE",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 577500000
+  }
+ ],
+ "cases": [
+  {
+   "n": 1,
+   "label": "in the window: refresh with R5 bumped to HEIGHT",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 2,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 246,
+    "after": 246
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 8d33dccd21c5172b149f63a6b00245c118bb4abef0fa078d6492e00b5b175e3a: #0 => Success((false,679))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 2,
+   "label": "in the window: refresh, R5 kept, honest",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "12f2a86fc3e6999def6e26e5910fccfccd04f434a150606c3a7efea55545bc3c",
+   "heights": {
+    "before": 246,
+    "after": 246
+   },
+   "detail": "12f2a86fc3e6999def6e26e5910fccfccd04f434a150606c3a7efea55545bc3c",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": 3,
+   "label": "heir (B) at wallet height R5 + N - 1",
+   "got": "REFUSE",
+   "source": "wallet-sign/no-secret",
+   "sibling_n": 4,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 255,
+    "after": 255
+   },
+   "detail": "wallet B sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: assertion failed: Tree root should be real but was UnprovenSchnorr(ProveDlog(Ecp((8b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c,362790697d0a5c12e7cdc7f784629f508596183d744019a358405f1978cd7a3f,1))),None,None,None,true,0)\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 2e05674239a9dd87c4feded6b92110a11e89dd9cee5fe9c6befe9da2",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "B",
+   "wallet_height": 255,
+   "box_age": 9
+  },
+  {
+   "n": 4,
+   "label": "heir (B) at wallet height R5 + N, on the refreshed box (its age < N)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "d02c88cc5c89bac3f8336f794db0edfde108886721abc106fab177b5204462a5",
+   "heights": {
+    "before": 257,
+    "after": 257
+   },
+   "detail": "d02c88cc5c89bac3f8336f794db0edfde108886721abc106fab177b5204462a5",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "B",
+   "wallet_height": 256,
+   "box_age": 10
+  },
+  {
+   "n": 5,
+   "label": "owner (A) spends into a successor with R5 = HEIGHT + 1 (node HEIGHT)",
+   "got": "REFUSE",
+   "source": "wallet-sign/no-secret",
+   "sibling_n": 7,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 257,
+    "after": 257
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: assertion failed: Tree root should be real but was UnprovenSchnorr(ProveDlog(Ecp((d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494,7d000a1345d3845dd83b4c5814f876c918305b598f066c958fad972bf59f2ec7,1))),None,None,None,true,0)\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. ceacf4d47495af6fc1e0614916387147b7c1e8ccb18de38d56b1a8a8",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "A",
+   "wallet_height": 257,
+   "successor_r5": 259
+  },
+  {
+   "n": 6,
+   "label": "owner (A) spends into a successor with R5 = h0, the old value",
+   "got": "REFUSE",
+   "source": "wallet-sign/no-secret",
+   "sibling_n": 7,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 257,
+    "after": 257
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: assertion failed: Tree root should be real but was UnprovenSchnorr(ProveDlog(Ecp((d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494,7d000a1345d3845dd83b4c5814f876c918305b598f066c958fad972bf59f2ec7,1))),None,None,None,true,0)\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 4d95d9d5a42effd4423ed20e050beb1d43b52389cc126e593a764f06",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "A",
+   "wallet_height": 257,
+   "successor_r5": 226
+  },
+  {
+   "n": 7,
+   "label": "owner (A) resets R5 = HEIGHT after the heir's window opened (R1 default)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "6aab73728ee24019f22044d93ec4f076cffddec828c894b6ff24f37a6d1bb9f6",
+   "heights": {
+    "before": 257,
+    "after": 257
+   },
+   "detail": "6aab73728ee24019f22044d93ec4f076cffddec828c894b6ff24f37a6d1bb9f6",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A",
+   "wallet_height": 257,
+   "successor_r5": 257
+  },
+  {
+   "n": 8,
+   "label": "heir (B) right after case 7",
+   "got": "REFUSE",
+   "source": "wallet-sign/no-secret",
+   "sibling_n": 9,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 258,
+    "after": 258
+   },
+   "detail": "wallet B sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: assertion failed: Tree root should be real but was UnprovenSchnorr(ProveDlog(Ecp((8b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c,362790697d0a5c12e7cdc7f784629f508596183d744019a358405f1978cd7a3f,1))),None,None,None,true,0)\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. c91f3f0f2c9c23aa63085d4ae12f5a6e2d77743a9affefa5be556aeb",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "B",
+   "wallet_height": 257,
+   "box_age": 0
+  },
+  {
+   "n": 9,
+   "label": "heir (B) at the new R5 + N",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 13373,
+   "cost_instrument": "mempool",
+   "tx_id": "153b89234b37d8b2c4a40b343b09735c325162c519c7b0d588a650b093514aff",
+   "heights": {
+    "before": 287,
+    "after": 287
+   },
+   "detail": "153b89234b37d8b2c4a40b343b09735c325162c519c7b0d588a650b093514aff",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "B",
+   "wallet_height": 287,
+   "box_age": 30
+  }
+ ],
+ "harness_bugs": [
+  {
+   "case": "run1",
+   "what": "case 4 refused: at_full waited on node A's height, but B signs and B's wallet reduces at B's own fullHeight, which trailed A's by one (results-run1.json)",
+   "fix": "at_full waits on the signing node; experiment rerun on a fresh deposit"
+  }
+ ],
+ "h0": 226,
+ "deposit_created": 226
+}
