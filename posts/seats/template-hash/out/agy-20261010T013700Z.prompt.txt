@@ -1,0 +1,12 @@
+Review the draft GitHub issue in the directory /tmp/claude-1000/-home-scott-bin-skunkyard/fb28428c-be69-49d9-b322-cd4b7ed1dfd8/scratchpad/th-slice. Read /tmp/claude-1000/-home-scott-bin-skunkyard/fb28428c-be69-49d9-b322-cd4b7ed1dfd8/scratchpad/th-slice/README-SLICE.md first, then /tmp/claude-1000/-home-scott-bin-skunkyard/fb28428c-be69-49d9-b322-cd4b7ed1dfd8/scratchpad/th-slice/ISSUE-DRAFT.md, then the evidence it cites under /tmp/claude-1000/-home-scott-bin-skunkyard/fb28428c-be69-49d9-b322-cd4b7ed1dfd8/scratchpad/th-slice/evidence/. Everything here is public. Work with your file-reading tools only: do not run shell commands and do not use the network.
+
+The draft says the Ergo node and the Ergo explorer both offer "boxes by ErgoTree template hash" but hash the template with different functions (BLAKE2b-256 on the node, SHA-256 on the explorer), and proposes how to resolve it.
+
+Give a review the author could act on, as a single markdown document:
+1. Verdict: file as is, file with fixes, or do not file, with one paragraph of reasons.
+2. Is every factual claim supported by the evidence? Name any that is wrong or overstated, with the evidence file and line.
+3. Which definition is correct, if either, and is the proposal the right one? What would you change in it?
+4. Is it addressed to the right repository and maintainers, at the right length and tone?
+5. Anything the author missed.
+
+Distinguish what you verified in the files from what you infer. Do not pad.
