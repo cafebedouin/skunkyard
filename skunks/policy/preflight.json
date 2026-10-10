@@ -1,0 +1,104 @@
+{
+ "S4": {
+  "A_height": 22,
+  "B_height": 20,
+  "A_keys": [
+   "038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c",
+   "031ee1ab3b729f21e0dcee05642a63745286354d8e511e6376838e235a28078c01",
+   "0367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df",
+   "0398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04",
+   "026c2134d11af7f0bea024724278ebc37ced69a19a99dd6638f393d5f1b9c8bea0",
+   "0389e8fb63050cdb2c3f5c70b3d6167835b60bcf020b9ed7c332965ffce26f2e6f"
+  ],
+  "B_keys": [
+   "03d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494",
+   "0376bf533d4b15510fa9f4124b6e48616f07debcf2ef0cfb185cdc4a576450b475",
+   "02ea2649b3512b9a859ab658a85e2989a7ae39b2518877b2dc0f2b44b785d5788d",
+   "03b4c210719212afb16b5f136a2dcb3cc9fc231721f711994facf3b6111afba7d0",
+   "0234835d35c02b0dc042aa9c041b854b98c28df4872fdc8c6a260bc2ddd767f5a3",
+   "02a52d6327542c16cce7645b899e651dc78098fa4f495acb36992e66b099405ec2"
+  ],
+  "shared": [],
+  "B_peers": 1
+ },
+ "S10": {
+  "tx": "6d907b0475be5a1e28a04e80412ee4c2b58a36ef22cf54635527af9b45e3689a",
+  "cost": 17530,
+  "seconds": 0.226,
+  "reads": 1,
+  "entry_keys": [
+   "cost",
+   "dataInputs",
+   "id",
+   "inputs",
+   "outputs",
+   "size"
+  ]
+ },
+ "S14": {
+  "rows": [
+   {
+    "guard_height": 27,
+    "verdict": "REFUSE",
+    "detail": "{\n  \"error\" : 400,\n  \"reason\" : \"bad.request\",\n  \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 02267ad4aa7a4ad1"
+   },
+   {
+    "guard_height": 28,
+    "verdict": "REFUSE",
+    "detail": "{\n  \"error\" : 400,\n  \"reason\" : \"bad.request\",\n  \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 44c5d066f16ca5ad"
+   },
+   {
+    "guard_height": 29,
+    "verdict": "REFUSE",
+    "detail": "{\n  \"error\" : 400,\n  \"reason\" : \"bad.request\",\n  \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 289926b8d194b231"
+   },
+   {
+    "guard_height": 30,
+    "verdict": "ACCEPT",
+    "detail": ""
+   },
+   {
+    "guard_height": 31,
+    "verdict": "REFUSE",
+    "detail": "{\n  \"error\" : 400,\n  \"reason\" : \"bad.request\",\n  \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 62c7e1568f9de5e5"
+   },
+   {
+    "guard_height": 32,
+    "verdict": "REFUSE",
+    "detail": "{\n  \"error\" : 400,\n  \"reason\" : \"bad.request\",\n  \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 7a73d2e7953eee48"
+   }
+  ],
+  "fullHeight_before": 29,
+  "fullHeight_after": 29
+ },
+ "sign_texts": {
+  "false": {
+   "code": 400,
+   "text": "{\n  \"error\" : 400,\n  \"reason\" : \"bad.request\",\n  \"detail\" : \"Malformed request: Script reduced to false\"\n}"
+  },
+  "b_key": {
+   "code": 400,
+   "text": "{\n  \"error\" : 400,\n  \"reason\" : \"bad.request\",\n  \"detail\" : \"Malformed request: assertion failed: Tree root should be real but was UnprovenSchnorr(ProveDlog(Ecp((d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494,7d000a1345d3845dd83b4c5814f876c918305b598f066c958fad972bf59f2ec7,1))),None,None,None,true,0)\"\n}"
+  },
+  "b_key_signed_by_B": {
+   "code": 200
+  }
+ },
+ "info": {
+  "appVersion": "6.0.7",
+  "fullHeight": 30,
+  "parameters": {
+   "outputCost": 100,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 28,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2000,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ }
+}
