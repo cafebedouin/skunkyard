@@ -59,3 +59,53 @@ script-reason rule), and the node has no `/wallet/assets/issue` route of the for
 - **Wallets.** Nautilus shows P2PK addresses; a holder needs a dApp or wallet support to see and spend a vault.
 - **Rent revenue.** A refresh restarts the clock without paying rent, as any owner spend does; a variant can add a
   rent-deposit output (EIP-51's contract) to the refresh path.
+
+## The receive-address variant (`KeepAliveAddress.es`): for people who just get paid (2026-10-09)
+
+Bob's point in dev chat: users who accept, say, USE at a plain address and leave it untouched are not helped by a
+vault they must opt into. Two changes make the vault a *receive address* a payer pays like any other:
+
+- **The owner is a script constant**, not a register, so each owner has one P2S address and a payment needs no
+  registers. The constant is segregated: every owner's vault has the same template hash (checked: the trees for two
+  keys differ only in the key), so executors still find them all. 399 bytes compiled.
+- **Keyless maintenance merges every box at the address into one output**, which must hold at least every token of
+  every merged box and at least their total value less the bounty. A merge (two or more boxes) is allowed at any
+  time; a lone box only in the window before rent age. Many small payments therefore pool their ERG into one box
+  that funds its own refreshes, and the dust is cleaned up as it comes.
+- **The bounty cannot drain the owner.** A merge takes at most 0.0005 ERG per box and never more than the boxes
+  other than the largest bring (`total - largest`), so the main box never pays for a merge; a miner sending dust to
+  the address and merging it every block earns only its own dust back. A lone refresh takes at most 0.002 ERG, once
+  per period. Every merged input checks the same output, so two outputs cannot each claim the set.
+
+Devnet (same node and constants, `python3 devnet-test-address.py`; `address-results.json`). Payments were plain
+wallet sends to the vault address: P1 0.05 ERG + 1 unit, P2 0.001 ERG + 2 units, P3 0.001 ERG + 3 units, D 0.0003 ERG
+dust.
+
+| # | case | expected | node |
+|---|---|---|---|
+| 1 | a lone box refreshed before the window | refuse | refused by the script |
+| 2 | a merge that drops one token unit | refuse | refused by the script |
+| 3 | a merge taking the bounty + 1 | refuse | refused by the script |
+| 4 | a merge into another owner's vault | refuse | refused by the script |
+| 5 | a refresh whose successor is dated SLACK + 1 back (in the window) | refuse | refused by the script |
+| 6 | P2 and P3 split into two outputs, each with its own tokens | refuse | refused by the script |
+| 7 | dust merged with the main box, taking more than the dust | refuse | refused by the script |
+| 8 | dust merged with the main box, taking exactly the dust | accept | accepted (checked only) |
+| 9 | P1 + P2 + P3 + D merged, honest | accept | mined: one box, 6 units, 0.0503 ERG (P1's 0.05 intact, the executor paid 0.002 from the small boxes) |
+| 10 | the merged box refreshed alone at once | refuse | refused by the script |
+| 11 | the merged box refreshed alone in the window | accept | mined |
+| 12 | the owner spends it with its key | accept | mined |
+
+Case 5 first ran on boxes only a few blocks old and came back malformed, not refused: consensus already forbids an
+output dated before its newest input (EIP-39). That rule does not make the vault's SLACK check redundant: near rent
+age a box could be recreated with its own old creation height, which EIP-39 allows, and its rent clock would never
+restart. The case now runs in the window, where only the vault's rule can refuse it.
+
+The compiler cannot build two-argument local functions (`Don't know how to buildNode(Apply(…))`); the token count is
+written as a one-argument function over a tuple, which is what sigmastate-interpreter#1169 ("Lower n-ary functions to
+tupled form") would do automatically.
+
+**What it covers and what it does not.** A wallet that hands out this address by default protects users who know
+nothing about rent: payments merge and refresh themselves, paid from the payments' own ERG. Anyone paid to a plain
+P2PK address is still outside it; for them the protocol-level protection (EIP-53/51) remains the only answer. Not yet
+done: a per-owner compile helper for mainnet, the Lithos upkeep job, and a wallet that offers the address.
