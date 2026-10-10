@@ -21,7 +21,11 @@
   val beforeQday = HEIGHT < $BACKSTOP && flags.size == 1 && flags(0).R4[Boolean].get == false
   val mine = INPUTS.filter({ (b: Box) => b.propositionBytes == SELF.propositionBytes })
 
-  // WOTS, n = 32, w = 16 (q2/wots-constant.es specialised): 64 message digits, 3 checksum digits
+  // WOTS+, n = 32, w = 16 (SK-053 swap, 2026-10-10): the hash key is now WOTS+ (WotsPlus.es), not plain WOTS. Every
+  // chain hash is keyed by the per-vault public PKSEED and the (chain, step) address, so two vaults share no hash
+  // target (SK-035's multi-target gap); PKSEED is bound into PKCOMMIT and published with it. 64 message digits, 3
+  // checksum digits. Measured ~18% over plain WOTS (SCHEME-SIZING.md).
+  val pkSeed = fromBase16("$PKSEED")
   val sigOpt = getVar[Coll[Byte]](1)
   val hashKey = if (sigOpt.isDefined && mine.size == 1) {
     val sig = sigOpt.get
@@ -41,12 +45,13 @@
         val u = if (b < 0.toByte) b.toInt + 256 else b.toInt
         if (c % 2 == 0) u / 16 else u % 16
       } else cDigits(c - 64)
-      val stepsToHash = 15 - digit
+      // tweakable chain from the signature slice: apply T at absolute steps [digit .. 14], each keyed by PKSEED and
+      // this (chain, step)
       steps.fold(sig.slice(c * 32, (c + 1) * 32), { (curr: Coll[Byte], s: Int) =>
-        if (s < stepsToHash) blake2b256(curr) else curr
+        if (s >= digit) blake2b256(pkSeed ++ Coll(c.toByte, s.toByte) ++ curr) else curr
       })
     })
-    blake2b256(concat) == fromBase16("$PKCOMMIT")
+    blake2b256(pkSeed ++ concat) == fromBase16("$PKCOMMIT")
   } else false
 
   // KeepAlive maintenance (KeepAliveAddress.es, unchanged)

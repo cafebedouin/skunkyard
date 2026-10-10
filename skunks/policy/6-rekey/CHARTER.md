@@ -41,12 +41,17 @@ Each member is for a different requirement, and the wallet-support list names wh
 
 1. **Fixed key** (`FixedKey.es`) — a **personal receive address that rotates seldom**. Rotation is a move; free to
    receive, cheapest to rotate. The default when nothing below is required.
-2. **Key schedule** (`RekeySchedule.es`) — when the **published address must stay stable across rotation**,
-   including the quantum-day migration: a merchant or donation address, anything printed. That stability is the
-   requirement that earns the ~3× cost, and the schedule is the only member that is **token-free, seed-derivable and
-   post-quantum at once**. Its residual griefing (below) is the honest cost to disclose.
+2. **Rotating / stable published address** — when the **published address must stay stable across rotation**,
+   including the quantum-day migration: a merchant or donation address, anything printed. Default
+   **SLH-DSA-SHA2-128s** (FIPS 205, stateless — no revealed-leaf griefing, no multi-device collision), with the
+   XMSS-shaped **key schedule** (`RekeySchedule.es`, WOTS+ leaves) as the cheaper stateful member where its
+   forced-reuse griefing (below) is acceptable. Both are token-free, seed-derivable and post-quantum. This is the
+   requirement that earns the ~3× cost over the fixed key.
 3. **Welded NFT account** (`RekeyAccount3.es`) — when the account is an **object**: transferable, inheritable,
    referenced by other policies by id. The token is the point, not the price.
+
+The quantum-day vault's sign-once hash key is **WOTS+** (`WotsPlus.es`). SK-053 settled these schemes and the WOTS+
+block is now swapped into `QVault.es` and `RekeySchedule.es`, node-judged on the devnet (qvault 18/18, schedule 8/8).
 
 ## The schedule's residual griefing, sharpened
 
@@ -59,5 +64,6 @@ griefer can force the owner to choose between a lost payment and a weakened key.
 
 ## Status
 
-Contracts built, on devnet, and committed. The family above is the recorded decision; the scheme each path should
-use is SK-053 (WOTS+ vs WOTS for the sign-once vault, stateful vs stateless for the rotating address).
+Contracts built, on devnet, and committed; the family above is the recorded decision. SK-053 is settled: WOTS+ for
+the sign-once vault, SLH-DSA-SHA2-128s as the rotating default with the XMSS schedule the cheaper stateful member,
+and WOTS+ swapped into `QVault.es` and `RekeySchedule.es` (node-judged). The forum post is the last step.

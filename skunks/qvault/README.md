@@ -7,19 +7,25 @@ only by a hash-based signature after. The rent half is KeepAlive's (`skunks/keep
 - `QDay.es` (117 bytes): the quantum-day flag. A box holding a singleton NFT, R4 a Boolean.
   - It can go false → true only with the oracle's key, and never back.
   - Anyone may recreate it unchanged, which keeps it alive past rent age.
-- `QVault.es` (1,177 bytes at devnet constants): the vault. Three ways to spend it:
+> **Hash key upgraded to WOTS+ (SK-053 swap, 2026-10-10).** The sign-once hash key is now WOTS+ (`WotsPlus.es`,
+> simple tweakable-hash instantiation), not plain WOTS: every chain hash is keyed by a per-vault public seed
+> (`PKSEED`) and the (chain, step) address, closing SK-035's multi-target gap. The suite re-ran on the policy devnet
+> with the swap, **18/18 as before**. Cost rose ~18% (the tweak's per-step ops; `../policy/6-rekey/SCHEME-SIZING.md`).
+
+- `QVault.es` (1,233 bytes at devnet constants): the vault. Three ways to spend it:
   - **owner key:** `proveDlog(OWNER)`, only while the flag box, shown as a data input and found by its NFT, says
     false, and `HEIGHT < BACKSTOP`. Leaving the flag box out, or showing a look-alike, closes this path rather than
     opening it.
-  - **hash key:** a WOTS signature (n 32, w 16, Blake2b; `q2/wots-constant.es` specialised) in context variable
-    1, over `blake2b256(SELF.id ++ OUTPUTS' bytesWithoutRef)`, checked against the owner's commitment `PKCOMMIT`.
-    Only one box of the vault per transaction, since a one-time key signs once.
+  - **hash key:** a WOTS+ signature (n 32, w 16, Blake2b; `WotsPlus.es`) in context variable 1, over
+    `blake2b256(SELF.id ++ OUTPUTS' bytesWithoutRef)`, each chain hash keyed by `PKSEED` and the (chain, step)
+    address, checked against the owner's commitment `PKCOMMIT` (which binds `PKSEED`). Only one box of the vault per
+    transaction, since a one-time key signs once.
   - **maintenance, no key:** KeepAlive's merge and lone refresh, as in `KeepAliveAddress.es`. It touches no key,
     so it gives a quantum attacker nothing.
 - **The owner's way through quantum day:** first merge every payment into one box (keyless), then spend that box
   once with the hash key into a fresh vault.
-- `devnet-test.py`: the harness. WOTS keys and signatures come from `skunks/oneshot/scripts/wots-cli.mts` (the
-  oneshot signer, byte-exact against the sigma-state vectors).
+- `devnet-test.py`: the harness. The spend message digest comes from `skunks/oneshot/scripts/wots-cli.mts`; the WOTS+
+  key and signature are built in the harness (`wotsplus_keygen` / `wotsplus_sign`) against `WotsPlus.es`.
 
 ## Devnet result (2026-10-10): 18 of 18 as expected
 

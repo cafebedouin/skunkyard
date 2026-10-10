@@ -23,6 +23,8 @@
   //
   // Constants (devnet): ROOT, PER_INPUT, REFRESH, SLACK, PERIOD, WINDOW. DEPTH is fixed at 3 (N = 8) by the folds.
   val root = fromBase16("$ROOT")
+  val lseed = fromBase16("$SEED")   // per-account public seed for the WOTS+ leaf tweak (SK-053 swap; independent of
+                                    // ROOT, which is the Merkle root over the leaves and so cannot also be the seed)
   val pow2 = Coll(1, 2, 4)
   val levels = Coll(0, 1, 2)
   // proof is a flat Coll[Byte], DEPTH * 32, siblings bottom-up
@@ -67,12 +69,12 @@
         val u = if (b < 0.toByte) b.toInt + 256 else b.toInt
         if (cc % 2 == 0) u / 16 else u % 16
       } else cDigits(cc - 64)
-      val stepsToHash = 15 - digit
+      // WOTS+ leaf: tweakable chain keyed by the per-account seed and this (chain, step), absolute steps [digit..14]
       steps.fold(sig.slice(cc * 32, (cc + 1) * 32), { (curr: Coll[Byte], s: Int) =>
-        if (s < stepsToHash) blake2b256(curr) else curr
+        if (s >= digit) blake2b256(lseed ++ Coll(cc.toByte, s.toByte) ++ curr) else curr
       })
     })
-    val wotsOk = blake2b256(concat) == SELF.R4[Coll[Byte]].get
+    val wotsOk = blake2b256(lseed ++ concat) == SELF.R4[Coll[Byte]].get
     val nxt = OUTPUTS(sidxOpt.get)
     val proof3 = getVar[Coll[Byte]](3)
     val succOk = hasShape(nxt) && proof3.isDefined &&

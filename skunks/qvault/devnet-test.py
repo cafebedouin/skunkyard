@@ -54,6 +54,40 @@ def wots(*args):
     return json.loads(out.stdout.strip().splitlines()[-1])
 
 
+# WOTS+ (n=32, w=16), simple tweakable-hash instantiation (SK-053 swap). The chain hash is keyed by the per-vault
+# public PKSEED and the (chain, step) address, matching QVault.es. The CLI still provides the spend message digest.
+import hashlib  # noqa: E402
+
+WL = 67
+
+
+def _bl(b):
+    return hashlib.blake2b(b, digest_size=32).digest()
+
+
+def _wp_chain(pkseed, c, a, b, x):
+    for s in range(a, b):
+        x = _bl(pkseed + bytes([c, s]) + x)
+    return x
+
+
+def _wp_digits(msg):
+    ds = [(msg[c // 2] // 16 if c % 2 == 0 else msg[c // 2] % 16) for c in range(64)]
+    cSum = sum(30 - (b // 16 + b % 16) for b in msg)
+    return ds + [cSum // 256, (cSum // 16) % 16, cSum % 16]
+
+
+def wotsplus_keygen(pkseed, secret):
+    sk = [_bl(secret + bytes([c])) for c in range(WL)]
+    pk = b"".join(_wp_chain(pkseed, c, 0, 15, sk[c]) for c in range(WL))
+    return sk, _bl(pkseed + pk)
+
+
+def wotsplus_sign(pkseed, sk, msg):
+    ds = _wp_digits(msg)
+    return b"".join(_wp_chain(pkseed, c, 0, ds[c], sk[c]) for c in range(WL))
+
+
 def coll_bytes(h):
     n, v = len(h) // 2, bytearray()
     while True:
@@ -116,12 +150,15 @@ def main():
     backstop = {"FAR": start + 1_000_000, "NEAR": start + 45}
     vault = {}
     for name in ("FAR", "NEAR"):
-        commit = wots("commit", seeds[name], "32", "16")["commitment"]
+        pkseed = os.urandom(32)                       # per-vault public seed (WOTS+ domain separation)
+        sk, commit_b = wotsplus_keygen(pkseed, bytes.fromhex(seeds[name]))
+        commit = commit_b.hex()
         tree, addr = compile_tree(base, (HERE / "QVault.es").read_text(), {
             "$OWNER": owner_pk, "$QDAY_NFT": qday_nft, "$BACKSTOP": str(backstop[name]), "$PKCOMMIT": commit,
+            "$PKSEED": pkseed.hex(),
             "$PER_INPUTL": f"{PER_INPUT}L", "$REFRESHL": f"{REFRESH}L", "$PERIOD": str(PERIOD),
             "$WINDOW": str(WINDOW), "$SLACK": str(SLACK)})
-        vault[name] = {"tree": tree, "addr": addr, "seed": seeds[name], "commit": commit}
+        vault[name] = {"tree": tree, "addr": addr, "seed": seeds[name], "sk": sk, "pkseed": pkseed, "commit": commit}
         print(name, "vault tree", len(tree) // 2, "bytes; backstop", backstop[name])
 
     token = issue("QV")
@@ -180,12 +217,15 @@ def main():
         return check(n, label, signed, expect, submit)
 
     def hash_spend(n, label, inputs, outputs, expect, submit=False, signed_outputs=None, seed=None):
+        v = vault[seed]            # `seed` is the vault name; the WOTS+ key lives in the vault dict
         ins = []
         for b in inputs:
             with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
                 json.dump(signed_outputs or outputs, f)
-            sig = wots("sign", seed, "32", "16", b["boxId"], f.name)["signature"]
+            # the CLI gives the spend message digest; WOTS+ signs it with this vault's key and public seed
+            msg = bytes.fromhex(wots("sign", v["seed"], "32", "16", b["boxId"], f.name)["message"])
             os.unlink(f.name)
+            sig = wotsplus_sign(v["pkseed"], v["sk"], msg).hex()
             ins.append({"boxId": b["boxId"], "spendingProof": {"proofBytes": "", "extension": {"1": coll_bytes(sig)}}})
         return check(n, label, {"inputs": ins, "dataInputs": [], "outputs": outputs}, expect, submit)
 
@@ -214,7 +254,7 @@ def main():
                  "additionalRegisters": {"R4": value_r4}}]
 
     A, B, C, D = box["A"], box["B"], box["C"], box["D"]
-    far, near = vault["FAR"]["seed"], vault["NEAR"]["seed"]
+    far, near = "FAR", "NEAR"   # hash_spend looks up the WOTS+ key by vault name
 
     # ---- before quantum day
     h = height(base)
@@ -269,8 +309,10 @@ def main():
     hash_spend(18, "hash key spends the merged box to the owner", [M], outs_to_owner([M], h), "ACCEPT", submit=True,
                seed=far)
 
-    json.dump({"qdayNft": qday_nft, "flagTree": qtree, "vaults": {k: {kk: vv for kk, vv in v.items() if kk != "seed"}
-                                                                  for k, v in vault.items()},
+    # keep only JSON-serializable, non-secret vault fields (drop the seed, the WOTS+ secret key sk and the raw seed)
+    _keep = {"tree", "addr", "commit"}
+    json.dump({"qdayNft": qday_nft, "flagTree": qtree,
+               "vaults": {k: {kk: vv for kk, vv in v.items() if kk in _keep} for k, v in vault.items()},
                "backstops": backstop, "results": results}, open(HERE / a.out, "w"), indent=1)
     bad = [r for r in results if not r["ok"]]
     print("ALL AS EXPECTED" if not bad else f"{len(bad)} UNEXPECTED")

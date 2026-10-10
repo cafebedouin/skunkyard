@@ -111,8 +111,9 @@ expressibility, not cost. It does mean any cost line in the post must be the mea
 
 ## Order of the remaining build (SK-053)
 
-Sizing table (this, done) → WOTS+ verifier measured on the devnet (done), swapped into the qvault and the schedule
-leaves → SLH-DSA go/no-go from a verifier build attempt (**done: go**, `slhdsa/`) → the forum post. SK-029's many-time
-reply waits with it, since it rests on the same scheme choice. Open for the post: whether the rotating address is the
-stateful schedule (small, cheap, griefable) or stateless SLH-DSA (3.9× the WOTS+ cost, 7,856-byte signature, no
-index); both now have measured figures.
+Sizing table (this, done) → WOTS+ verifier measured on the devnet (done) and **swapped into `QVault.es` (hash key)
+and `RekeySchedule.es` (leaves), re-run on the devnet 2026-10-10: qvault 18/18, schedule 8/8** → SLH-DSA go/no-go
+from a verifier build attempt (**done: go**, `slhdsa/`) → the forum post. SK-029's many-time reply waits with it,
+since it rests on the same scheme choice. The decision is recorded (`CHARTER.md`): default stateless SLH-DSA-128s for
+the rotating address, the stateful schedule (small, cheap, forced-reuse-griefable) as the cheaper member; both have
+measured figures.

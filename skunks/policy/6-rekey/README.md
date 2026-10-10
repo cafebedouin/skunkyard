@@ -251,15 +251,23 @@ the current box (ACCEPT). Fixed-key: `devnet-test-fixedkey.py`, `results-fixedke
 
 ## The decision: a three-member family (SK-052)
 
-The three variants are not competing for one job (`CHARTER.md`):
-- **Fixed key** — a personal receive address that rotates seldom; free to receive, cheapest to rotate.
-- **Key schedule** — when the published address must stay stable across rotation (merchant/donation, anything
-  printed, the quantum-day migration); the only member that is token-free, seed-derivable and post-quantum at once.
-- **Welded NFT** — when the account is a transferable, inheritable, composable object.
+The variants are not competing for one job (`CHARTER.md`), and SK-053 has now fixed each one's signing scheme:
+- **Fixed key** (`FixedKey.es`) — a personal receive address that rotates seldom; free to receive, cheapest to
+  rotate.
+- **Rotating / stable published address** — when the published address must stay stable across rotation
+  (merchant/donation, anything printed, the quantum-day migration). Default **SLH-DSA-SHA2-128s** (FIPS 205,
+  stateless: no revealed-leaf griefing, no multi-device collision), with the XMSS-shaped **key schedule**
+  (`RekeySchedule.es`, WOTS+ leaves) as the cheaper stateful member where its forced-reuse griefing is acceptable.
+  Both are token-free, seed-derivable and post-quantum.
+- **Welded NFT** (`RekeyAccount3.es`) — when the account is a transferable, inheritable, composable object.
 
-The wallet-support list names which member each item applies to. The hash-based scheme each signing path should use
-(WOTS vs WOTS+ for the sign-once vault; stateful XMSS vs stateless SLH-DSA for the rotating address) is **SK-053**;
-the sizing that gates it is in `SCHEME-SIZING.md`.
+The quantum-day vault's sign-once hash key is **WOTS+**. The wallet-support list names which member each item applies
+to; the schemes and their sizing are SK-053 (`SCHEME-SIZING.md`).
+
+**WOTS+ swapped in and node-judged (2026-10-10).** `WotsPlus.es`'s tweakable chain is now the hash key of `QVault.es`
+and the leaf check of `RekeySchedule.es`. The full suites re-ran on the policy devnet with the swap: the quantum-day
+vault **18/18** (`skunks/qvault/`), the schedule **8/8** including the forced-reuse griefing and recovery rows
+(`devnet-test-schedule.py`). So every rotating/sign-once member now runs its SK-053 scheme end to end.
 
 ## Hash-based signature choice (SK-053)
 
@@ -281,10 +289,11 @@ sizing that gates the build is in `SCHEME-SIZING.md`.
   205, stateless) removes the index entirely: no revealed-leaf griefing, no multi-device collision (SK-037), at a
   large signature (SK-105: 128s 7,856 B). **Its in-script verifier fits (step 3, 2026-10-10, `slhdsa/`):**
   `SlhDsa.es` compiles to a **1,506 B** tree, node cost **201,947** on a random spend (~251,500 worst [est.]),
-  a BouncyCastle signature accepted and two forgeries refused in the q2 harness (not yet on a node). So the rotating
-  address has a stateless option at about 3.9× the WOTS+ cost and ~39 spends per block by cost.
+  a BouncyCastle signature accepted and two forgeries refused — and **node-judged on the policy devnet** (honest
+  spend mined at cost 202,006, 8,054 B; `slhdsa/results-devnet.json`). So the rotating address has a stateless option
+  at about 3.9× the WOTS+ cost and ~39 spends per block by cost.
 
 Standards for the post: SLH-DSA is FIPS 205, XMSS is SP 800-208, WOTS+ is a building block (sign-once by design).
-Order: `SCHEME-SIZING.md` and the WOTS+ verifier (both done) → swap WOTS+ into the qvault hash key and the schedule
-leaves → SLH-DSA go/no-go (done, go: `slhdsa/README.md`, from the cloud session `prompts/sk053-slh-dsa-cloud.md`)
-→ the post. SK-029's many-time reply waits with it.
+Order, all done bar the post: `SCHEME-SIZING.md` and the WOTS+ verifier → SLH-DSA go/no-go (go: `slhdsa/README.md`,
+from the cloud session `prompts/sk053-slh-dsa-cloud.md`) → WOTS+ swapped into the qvault hash key and the schedule
+leaves (qvault 18/18, schedule 8/8 on the devnet) → **the post** (SK-029's many-time reply waits with it).
