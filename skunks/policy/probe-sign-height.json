@@ -1,0 +1,27 @@
+{
+ "fullHeight_before": 113,
+ "fullHeight_after": 113,
+ "rows": [
+  {
+   "guard": 111,
+   "sign": "\"Malformed request: Script reduced to false\"\n}"
+  },
+  {
+   "guard": 112,
+   "sign": "\"Malformed request: Script reduced to false\"\n}"
+  },
+  {
+   "guard": 113,
+   "sign": "signed",
+   "check": "REFUSE"
+  },
+  {
+   "guard": 114,
+   "sign": "\"Malformed request: Script reduced to false\"\n}"
+  },
+  {
+   "guard": 115,
+   "sign": "\"Malformed request: Script reduced to false\"\n}"
+  }
+ ]
+}

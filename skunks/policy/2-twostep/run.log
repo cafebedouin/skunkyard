@@ -1,0 +1,22 @@
+    1 owner spends V1 straight to X                                      expect REFUSE     got REFUSE     wallet-sign    ok
+    2 owner announces V1 with R5 = HEIGHT + DELAY - 1                    expect REFUSE     got REFUSE     node-check     ok
+   2b owner announces V3 and V4 into one pending box, V4's value out     expect REFUSE     got REFUSE     wallet-sign    ok
+ 2b.s owner announces V3 alone (sibling of 2b), checked                  expect ACCEPT     got ACCEPT                    ok
+    3 owner announces V1 to X, honest                                    expect ACCEPT     got ACCEPT                    ok
+  8.a announce V2 -> P2                                                  expect ACCEPT     got ACCEPT                    ok
+    8 a stranger cancels P2 before R5, empty proof                       expect REFUSE     got REFUSE     node-check     ok
+    9 recovery key (B) cancels P2 before R5, back to the vault           expect ACCEPT     got ACCEPT                    ok
+ 10.a announce V3 -> P3                                                  expect ACCEPT     got ACCEPT                    ok
+ 10.b announce V4 -> P4                                                  expect ACCEPT     got ACCEPT                    ok
+    4 complete P1 at R5 - 1                                              expect REFUSE     got ACCEPT                    WRONG
+    5 at R5: complete P1 to Y != X                                       expect REFUSE     got REFUSE     node-check     ok
+    6 at R5: complete P1 keeping value - 0.001 ERG (the rest to a strang expect REFUSE     got REFUSE     node-check     ok
+    7 at R5: complete P1 to X, honest                                    expect ACCEPT     got ACCEPT                    ok
+   10 owner cancels P3 at R5 - 1                                         expect ACCEPT     got ACCEPT                    ok
+   11 at R5: owner cancels P3                                            expect REFUSE     got REFUSE     node-check     ok
+ 12.s at R5: complete P3 alone to X (sibling of 12, 13), checked         expect ACCEPT     got ACCEPT                    ok
+   12 at R5: P3 + P4, OUTPUTS(0) -> X v, OUTPUTS(1) -> stranger v        expect REFUSE     got REFUSE     node-check     ok
+   13 at R5: P3 + P4, both to X (honest batching)                        expect REFUSE     got REFUSE     node-check     ok
+   14 two PendingNoGuard boxes, case 12's shape (the theft)              expect ACCEPT     got ACCEPT                    ok
+   15 two PendingNoGuard boxes, case 13's shape (batching)               expect ACCEPT     got ACCEPT                    ok
+1 UNEXPECTED
