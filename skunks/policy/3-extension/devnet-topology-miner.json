@@ -1,0 +1,34 @@
+{
+  "chain": {
+    "preset": "current",
+    "v4": true,
+    "blockInterval": "20s"
+  },
+  "nodes": [
+    {
+      "name": "A",
+      "mining": true,
+      "mine_poll": "5s",
+      "knownPeers": [],
+      "jar": "${POLICY_MINER_JAR}",
+      "conf": {
+        "ergo.node.extraIndex": "true",
+        "ergo.node.minimalFeeAmount": "0",
+        "ergo.node.blockCandidateGenerationInterval": "1ms"
+      }
+    },
+    {
+      "name": "B",
+      "mining": false,
+      "knownPeers": ["A"],
+      "conf": {
+        "ergo.node.extraIndex": "true",
+        "ergo.node.minimalFeeAmount": "0",
+        "ergo.wallet.testMnemonic": "\"abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about\""
+      }
+    }
+  ],
+  "links": [
+    {"a": "A", "b": "B", "delay_ms": 0}
+  ]
+}

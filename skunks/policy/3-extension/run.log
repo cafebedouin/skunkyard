@@ -1,0 +1,14 @@
+control [{'height': 178, 'leaves': 4, 'match': True, 'flipped_byte_mismatch': True, 'has_key': True}, {'height': 177, 'leaves': 4, 'match': True, 'flipped_byte_mismatch': True, 'has_key': True}, {'height': 176, 'leaves': 16, 'match': True, 'flipped_byte_mismatch': True, 'has_key': True}, {'height': 175, 'leaves': 4, 'match': True, 'flipped_byte_mismatch': True, 'has_key': True}, {'height': 174, 'leaves': 3, 'match': True, 'flipped_byte_mismatch': True, 'has_key': True}]
+    1 spend the Depth box compiled with N = 9                            expect ACCEPT     got ACCEPT                    ok
+    2 spend the Depth box compiled with N = 10                           expect REFUSE     got REFUSE     node-check     ok
+    3 flip with the leaf's value byte changed                            expect REFUSE     got REFUSE     node-check     ok
+    4 flip with a proof for a different key present in the block (0101)  expect REFUSE     got REFUSE     node-check     ok
+    5 flip with a valid proof against H-9 (i = 8)                        expect ACCEPT     got ACCEPT                    ok
+case 6 attempt {'fullHeight': 182, 'tx_id': 'a45f545a3b24f8b837b83a3af9891375424ffa86566ea8fca1d1d273f47c84a8', 'cost': 12647, 'mined': True, 'inclusionHeight': 183}
+    6 flip with a valid proof against H-1 (i = 0), mined (resubmitted un expect ACCEPT     got ACCEPT                    ok
+    7 case 5's proof 1 block(s) later, i = 9, on a second flag box       expect EVAL-ERROR got EVAL-ERROR EVAL-ERROR     ok
+    9 true -> false                                                      expect REFUSE     got REFUSE     node-check     ok
+    8 refresh the flipped box unchanged, no key                          expect ACCEPT     got ACCEPT                    ok
+   11 ExtFlagAny: flip with a 4-block-old proof, leaf value byte changed expect REFUSE     got REFUSE     node-check     ok
+   10 ExtFlagAny: flip with a proof against the block 4 below the tip, s expect ACCEPT     got ACCEPT                    ok
+ALL AS EXPECTED

@@ -1,0 +1,53 @@
+{
+ "a": {
+  "A_tip": 40,
+  "height": 20,
+  "A_id": "1e6df5a481036e835de2ad51034a2adc93b0446c6b4845b010f95b629e92f7c4",
+  "B_id": "1e6df5a481036e835de2ad51034a2adc93b0446c6b4845b010f95b629e92f7c4",
+  "same": true,
+  "B_height": 38,
+  "B_peers": 1,
+  "B_version": "6.0.7",
+  "A_version": "6.0.7-0-3a6b00d3-20261010-0816-SNAPSHOT",
+  "custom_field_in_A_block": [
+   [
+    "f001",
+    "706f6c696379"
+   ]
+  ],
+  "root_matches_header": true,
+  "B_has_block_with_field": true
+ },
+ "b": {
+  "tree_bytes": 233,
+  "rows": [
+   {
+    "n": "B2",
+    "label": "flip with the custom field's value byte changed",
+    "expect": "REFUSE",
+    "got": "REFUSE",
+    "sibling_n": "B1",
+    "fullHeight": 42,
+    "ok": true
+   },
+   {
+    "n": "B1",
+    "label": "flip with a proof of the custom field F001 against H-1, mined",
+    "expect": "ACCEPT",
+    "got": "ACCEPT",
+    "attempt": 0,
+    "tx_id": "0b9d0b8cefbbc8f9e2da38848d03ff59fb1a709494fb5f7a79ffecc011041832",
+    "cost": 12666,
+    "leaf": "02f001706f6c696379",
+    "fullHeight": 42,
+    "inclusionHeight": 43,
+    "ok": true
+   }
+  ]
+ },
+ "a_after": {
+  "A_tip": 44,
+  "B_height": 42,
+  "B_peers": 1
+ }
+}

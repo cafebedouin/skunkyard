@@ -1,0 +1,21 @@
+diff --git a/src/main/scala/org/ergoplatform/mining/CandidateGenerator.scala b/src/main/scala/org/ergoplatform/mining/CandidateGenerator.scala
+index a06eaaf98..5b3b61023 100644
+--- a/src/main/scala/org/ergoplatform/mining/CandidateGenerator.scala
++++ b/src/main/scala/org/ergoplatform/mining/CandidateGenerator.scala
+@@ -9,6 +9,7 @@ import org.ergoplatform.mining.difficulty.DifficultySerializer
+ import org.ergoplatform.modifiers.ErgoFullBlock
+ import org.ergoplatform.modifiers.history._
+ import org.ergoplatform.modifiers.history.extension.Extension
++import org.ergoplatform.modifiers.history.extension.ExtensionCandidate
+ import org.ergoplatform.modifiers.history.header.{Header, HeaderWithoutPow}
+ import org.ergoplatform.modifiers.history.popow.NipopowAlgos
+ import org.ergoplatform.modifiers.mempool.{ErgoTransaction, UnconfirmedTransaction}
+@@ -721,7 +722,7 @@ object CandidateGenerator extends ScorexLogging {
+                       eliminate: EliminateTransactions): (Candidate, EliminateTransactions) = {
+         val candidate = CandidateBlock(
+           bestHeaderOpt, version, nBits, adDigest,
+-          adProof, blockTxs, timestamp, extensionCandidate, votes
++          adProof, blockTxs, timestamp, extensionCandidate ++ ExtensionCandidate(Seq(Array(0xF0.toByte, 0x01.toByte) -> "policy".getBytes("UTF-8"))), votes
+         )
+         val ext = deriveWorkMessage(candidate)
+         log.info(

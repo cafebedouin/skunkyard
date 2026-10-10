@@ -1,0 +1,315 @@
+{
+ "experiment": "3-extension",
+ "started_height": 179,
+ "node": {
+  "appVersion": "6.0.7",
+  "parameters": {
+   "outputCost": 100,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 176,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2000,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ },
+ "wallets": {
+  "A": [
+   "038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c",
+   "031ee1ab3b729f21e0dcee05642a63745286354d8e511e6376838e235a28078c01",
+   "0367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df",
+   "0398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04",
+   "026c2134d11af7f0bea024724278ebc37ced69a19a99dd6638f393d5f1b9c8bea0",
+   "0389e8fb63050cdb2c3f5c70b3d6167835b60bcf020b9ed7c332965ffce26f2e6f"
+  ],
+  "B": [
+   "03d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494",
+   "0376bf533d4b15510fa9f4124b6e48616f07debcf2ef0cfb185cdc4a576450b475",
+   "02ea2649b3512b9a859ab658a85e2989a7ae39b2518877b2dc0f2b44b785d5788d",
+   "03b4c210719212afb16b5f136a2dcb3cc9fc231721f711994facf3b6111afba7d0",
+   "0234835d35c02b0dc042aa9c041b854b98c28df4872fdc8c6a260bc2ddd767f5a3",
+   "02a52d6327542c16cce7645b899e651dc78098fa4f495acb36992e66b099405ec2"
+  ]
+ },
+ "trees": [
+  {
+   "name": "ExtFlag",
+   "tree_bytes": 233,
+   "box_bytes": 309,
+   "address": "5phVsx9DEkfHMNUdSSUdUKvRytbNRnjaFVaLELLK79vHQB4m1sfPFe8tPEDUprNcKtSQekqU5EdLS9AQ5xgbUwVoWdCQFPoTgMe9TCaBWnivFa5bdiudTnDX18Qk8VgnAVHw2a6Wc6GH4zupSSEUbkEpDT7LmV7u6XzjucisnnB3itKyDbn3HefPbzETRiXtv97VnW52AwdaBCMaUjeE9jb5aWNW9r2NZPL9A2RvJ4m9ULCur6QqGKK1hzFbwnqJJSQBbEiRNiybxhf4n8RbDZLEhZt6VXapuAA3ypiwwBNhXes3MA2UJys55uMYp9FtR12BL",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 386250000
+  },
+  {
+   "name": "Depth-9",
+   "tree_bytes": 14,
+   "box_bytes": 55,
+   "address": "4VnRN4mhdJrX4gusf5fFXM74kC",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 68750000
+  },
+  {
+   "name": "Depth-10",
+   "tree_bytes": 14,
+   "box_bytes": 55,
+   "address": "4VnRN4miMxJ8MduPSTeJB4Lxm5",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 68750000
+  },
+  {
+   "name": "ExtFlagAny",
+   "tree_bytes": 230,
+   "box_bytes": 306,
+   "address": "4FfJceCzSFhnfNde6ndsCoqzywWYUDrjqik4pZQXd1RwM6e1hUYwpyor52nFguy9RtpZaqqbq14bJVhbJxZbchwFWJMrHhC6eLbHBCgke7EZvxoJDc8eRk4fh2fpa1wX8PFVw3y8NoWQRGcwiNsKgxX4vkweMnxWLgWe7e7z3rRx5nyogKCGjnaVW1xhr2GJzRnF4Mr5Cw2iYs6epDU1HznRNfMiWyhBrxoYmhsZ4esuj9QA6maokQBaKZBtWSmkdxtGptTwuqcjpApjd4RfQZX5NWZKVLPsqUnzvewR1zHQbKUdTUkxiPqKd6ZYHW2L4",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 382500000
+  }
+ ],
+ "cases": [
+  {
+   "n": 1,
+   "label": "spend the Depth box compiled with N = 9",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "3a5f2eba27ed0831ebb4d4b82630cc7ead50794ac7da24c3ce69a9d7bba40582",
+   "heights": {
+    "before": 182,
+    "after": 182
+   },
+   "detail": "3a5f2eba27ed0831ebb4d4b82630cc7ead50794ac7da24c3ce69a9d7bba40582",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": 2,
+   "label": "spend the Depth box compiled with N = 10",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 1,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 182,
+    "after": 182
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 3fc3cfecd9f523535deeac8291eca0af6eeaf423ec9dbdff2b9fed5e23b6c9f2: #0 => Success((false,5))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 3,
+   "label": "flip with the leaf's value byte changed",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 6,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 182,
+    "after": 182
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. c2a735a76127e53b7da26afc3545146f24513c40f2e53f2659cb9abaeea5af09: #0 => Success((false,147))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 4,
+   "label": "flip with a proof for a different key present in the block (0101)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 6,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 182,
+    "after": 182
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. f53469b30b19ef8efc7030ab98d141b2ecbf436ff742045b748a7c4bf6333230: #0 => Success((false,84))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 5,
+   "label": "flip with a valid proof against H-9 (i = 8)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "3de88c3a7502e5856bf657d7b70123ed48d95dc8c6b4a20590dc50ef1bb2bfcd",
+   "heights": {
+    "before": 182,
+    "after": 182
+   },
+   "detail": "3de88c3a7502e5856bf657d7b70123ed48d95dc8c6b4a20590dc50ef1bb2bfcd",
+   "expect": "ACCEPT",
+   "ok": true,
+   "proof_block": 174
+  },
+  {
+   "n": 6,
+   "label": "flip with a valid proof against H-1 (i = 0), mined (resubmitted until mined)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 12647,
+   "cost_instrument": "mempool",
+   "tx_id": "a45f545a3b24f8b837b83a3af9891375424ffa86566ea8fca1d1d273f47c84a8",
+   "heights": {
+    "attempts": [
+     {
+      "fullHeight": 182,
+      "tx_id": "a45f545a3b24f8b837b83a3af9891375424ffa86566ea8fca1d1d273f47c84a8",
+      "cost": 12647,
+      "mined": true,
+      "inclusionHeight": 183
+     }
+    ]
+   },
+   "detail": "1 attempt(s)",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": 7,
+   "label": "case 5's proof 1 block(s) later, i = 9, on a second flag box",
+   "got": "EVAL-ERROR",
+   "source": "EVAL-ERROR",
+   "sibling_n": 5,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 185,
+    "after": 185
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 6a121d3632aeda884d23b50c9e0bf38acfed094bed093cfeaebacdd00ff83680: #0 => Failure(java.lang.ArrayIndexOutOfBoundsException: Index 9 out of bounds for length 9)\" }",
+   "expect": "EVAL-ERROR",
+   "ok": true,
+   "proof_block": 176
+  },
+  {
+   "n": 9,
+   "label": "true -> false",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 8,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 185,
+    "after": 185
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. cd3cc9eb19f99562f15cd100c071c1035611f06f51c6fee4ba4ac3fcbcb4d6a8: #0 => Success((false,66))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 8,
+   "label": "refresh the flipped box unchanged, no key",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "cf8653a790262fa5495b43b8c2bf646050ba4cad847ef8b09fa145aa5805d6d0",
+   "heights": {
+    "before": 185,
+    "after": 185
+   },
+   "detail": "cf8653a790262fa5495b43b8c2bf646050ba4cad847ef8b09fa145aa5805d6d0",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": 11,
+   "label": "ExtFlagAny: flip with a 4-block-old proof, leaf value byte changed",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 10,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 187,
+    "after": 187
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 35e023b9e899c2de3358132b5857128b180f72b5ca13092d15ed9c0c56de0c9d: #0 => Success((false,594))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 10,
+   "label": "ExtFlagAny: flip with a proof against the block 4 below the tip, submitted",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 12868,
+   "cost_instrument": "mempool",
+   "tx_id": "ca3f4e950164ead2667e39c6e4539365bae9a294a75d67115ed9b66d6d490f67",
+   "heights": {
+    "before": 187,
+    "after": 187
+   },
+   "detail": "ca3f4e950164ead2667e39c6e4539365bae9a294a75d67115ed9b66d6d490f67",
+   "expect": "ACCEPT",
+   "ok": true,
+   "proof_block": 183,
+   "inclusionHeight": 188
+  }
+ ],
+ "harness_bugs": [],
+ "control": {
+  "blocks": [
+   {
+    "height": 178,
+    "leaves": 4,
+    "match": true,
+    "flipped_byte_mismatch": true,
+    "has_key": true
+   },
+   {
+    "height": 177,
+    "leaves": 4,
+    "match": true,
+    "flipped_byte_mismatch": true,
+    "has_key": true
+   },
+   {
+    "height": 176,
+    "leaves": 16,
+    "match": true,
+    "flipped_byte_mismatch": true,
+    "has_key": true
+   },
+   {
+    "height": 175,
+    "leaves": 4,
+    "match": true,
+    "flipped_byte_mismatch": true,
+    "has_key": true
+   },
+   {
+    "height": 174,
+    "leaves": 3,
+    "match": true,
+    "flipped_byte_mismatch": true,
+    "has_key": true
+   }
+  ],
+  "odd_matched": true,
+  "even_matched": true,
+  "reconstruction_changes": 0
+ }
+}

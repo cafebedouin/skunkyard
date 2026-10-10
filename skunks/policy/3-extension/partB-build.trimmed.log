@@ -1,0 +1,315 @@
+[info] welcome to sbt 1.11.1 (Ubuntu Java 1.8.0_504)
+[info] loading settings for project ergo-6-0-7-policy-build from plugins.sbt...
+[info] loading project definition from /home/scott/scratch/ergo-6.0.7-policy/project
+/home/scott/scratch/ergo-6.0.7-policy/build.sbt:298: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+lazy val It2Test = config("it2") extend (IntegrationTest, Test)
+                                         ^
+/home/scott/scratch/ergo-6.0.7-policy/build.sbt:39: warning: method in in trait ScopingSetting is deprecated (since 1.5.0): `in` is deprecated; migrate to slash syntax - https://www.scala-sbt.org/1.x/docs/Migrating-from-sbt-013x.html#slash
+publishArtifact in (Compile, packageDoc) := false
+                ^
+/home/scott/scratch/ergo-6.0.7-policy/build.sbt:173: warning: lazy value itSettings in object Defaults is deprecated (since 1.9.0): Create a separate subproject instead of using IntegrationTest and in addition avoid using itSettings
+Defaults.itSettings
+         ^
+/home/scott/scratch/ergo-6.0.7-policy/build.sbt:174: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+configs(IntegrationTest extend Test)
+        ^
+/home/scott/scratch/ergo-6.0.7-policy/build.sbt:175: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+inConfig(IntegrationTest)(Seq(
+         ^
+/home/scott/scratch/ergo-6.0.7-policy/build.sbt:204: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+  val configMainNet = (IntegrationTest / resourceDirectory).value / "mainnetTemplate.conf"
+                       ^
+/home/scott/scratch/ergo-6.0.7-policy/build.sbt:203: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+  val configTestNet = (IntegrationTest / resourceDirectory).value / "testnetTemplate.conf"
+                       ^
+/home/scott/scratch/ergo-6.0.7-policy/build.sbt:202: warning: value IntegrationTest in trait LibraryManagementSyntax is deprecated (since 1.9.0): Create a separate subproject for testing instead
+  val configDevNet = (IntegrationTest / resourceDirectory).value / "devnetTemplate.conf"
+                      ^
+[info] loading settings for project ergo from build.sbt...
+[info] loading settings for project avldb from build.sbt...
+[info] loading settings for project ergoCore from build.sbt...
+[info] loading settings for project ergoWallet from build.sbt...
+[info] set current project to ergo (in build file:/home/scott/scratch/ergo-6.0.7-policy/)
+[warn] there are 4 keys that are not used by any other settings/tasks:
+[warn]  
+[warn] * ThisBuild / publishMavenStyle
+[warn]   +- /home/scott/scratch/ergo-6.0.7-policy/ergo-wallet/build.sbt:17
+[warn] * ergo / IntegrationTest / semanticdbTargetRoot
+[warn]   +- /home/scott/scratch/ergo-6.0.7-policy/build.sbt:173
+[warn] * ergo / It2 / semanticdbTargetRoot
+[warn]   +- /home/scott/scratch/ergo-6.0.7-policy/build.sbt:300
+[warn] * ergo / Linux / configuration
+[warn]   +- /home/scott/scratch/ergo-6.0.7-policy/build.sbt:165
+[warn]  
+[warn] note: a setting might still be used by a command; to exclude a key from this `lintUnused` check
+[warn] either append it to `Global / excludeLintKeys` or call .withRank(KeyRanks.Invisible) on the key
+[info] compiling 30 Scala sources and 3 Java sources to /home/scott/scratch/ergo-6.0.7-policy/ergo-wallet/target/scala-2.12/classes ...
+[info] compiling 14 Scala sources and 1 Java source to /home/scott/scratch/ergo-6.0.7-policy/avldb/target/scala-2.12/classes ...
+[info] done compiling
+[info] done compiling
+[info] compiling 109 Scala sources to /home/scott/scratch/ergo-6.0.7-policy/ergo-core/target/scala-2.12/classes ...
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/http/api/ApiCodecs.scala:3:27: Unused import
+[warn] import cats.syntax.either._
+[warn]                           ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/http/api/ApiCodecs.scala:4:33: Unused import
+[warn] import sigmastate.utils.Helpers._
+[warn]                                 ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/mining/AutolykosSolution.scala:3:27: Unused import
+[warn] import cats.syntax.either._
+[warn]                           ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/mining/AutolykosSolution.scala:4:33: Unused import
+[warn] import sigmastate.utils.Helpers._
+[warn]                                 ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/mining/ProofOfUpcomingTransactions.scala:3:27: Unused import
+[warn] import cats.syntax.either._
+[warn]                           ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/mining/ProofOfUpcomingTransactions.scala:4:33: Unused import
+[warn] import sigmastate.utils.Helpers._
+[warn]                                 ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/ErgoFullBlock.scala:3:27: Unused import
+[warn] import cats.syntax.either._
+[warn]                           ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/ErgoFullBlock.scala:4:33: Unused import
+[warn] import sigmastate.utils.Helpers._
+[warn]                                 ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/ADProofs.scala:3:27: Unused import
+[warn] import cats.syntax.either._
+[warn]                           ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/ADProofs.scala:4:33: Unused import
+[warn] import sigmastate.utils.Helpers._
+[warn]                                 ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/BlockTransactions.scala:3:27: Unused import
+[warn] import cats.syntax.either._
+[warn]                           ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/BlockTransactions.scala:4:33: Unused import
+[warn] import sigmastate.utils.Helpers._
+[warn]                                 ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/extension/Extension.scala:3:27: Unused import
+[warn] import cats.syntax.either._
+[warn]                           ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/extension/Extension.scala:4:33: Unused import
+[warn] import sigmastate.utils.Helpers._
+[warn]                                 ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/header/Header.scala:3:27: Unused import
+[warn] import cats.syntax.either._
+[warn]                           ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/header/Header.scala:4:33: Unused import
+[warn] import sigmastate.utils.Helpers._
+[warn]                                 ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/header/Header.scala:15:44: Unused import
+[warn] import org.ergoplatform.wallet.interpreter.ErgoInterpreter
+[warn]                                            ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/NipopowProof.scala:3:27: Unused import
+[warn] import cats.syntax.either._
+[warn]                           ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/NipopowProof.scala:4:33: Unused import
+[warn] import sigmastate.utils.Helpers._
+[warn]                                 ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/PoPowHeader.scala:3:27: Unused import
+[warn] import cats.syntax.either._
+[warn]                           ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/PoPowHeader.scala:4:33: Unused import
+[warn] import sigmastate.utils.Helpers._
+[warn]                                 ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/settings/ChainSettings.scala:3:33: Unused import
+[warn] import sigmastate.utils.Helpers._
+[warn]                                 ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/validation/ModifierValidator.scala:3:27: Unused import
+[warn] import cats.syntax.either._
+[warn]                           ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/validation/ModifierValidator.scala:4:33: Unused import
+[warn] import sigmastate.utils.Helpers._
+[warn]                                 ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/ADProofs.scala:109:28: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val size = r.getUInt().toIntExact
+[warn]                            ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/ADProofs.scala:109:18: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val size = r.getUInt().toIntExact
+[warn]                  ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/BlockTransactions.scala:166:34: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val verOrCount = r.getUInt().toIntExact
+[warn]                                  ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/BlockTransactions.scala:166:24: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val verOrCount = r.getUInt().toIntExact
+[warn]                        ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/BlockTransactions.scala:181:29: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]       txCount = r.getUInt().toIntExact
+[warn]                             ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/BlockTransactions.scala:181:19: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]       txCount = r.getUInt().toIntExact
+[warn]                   ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/header/HeaderSerializer.scala:56:30: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val height = r.getUInt().toIntExact
+[warn]                              ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/header/HeaderSerializer.scala:56:20: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val height = r.getUInt().toIntExact
+[warn]                    ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/NipopowProof.scala:219:25: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val m = r.getUInt().toIntExact
+[warn]                         ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/NipopowProof.scala:219:15: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val m = r.getUInt().toIntExact
+[warn]               ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/NipopowProof.scala:220:25: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val k = r.getUInt().toIntExact
+[warn]                         ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/NipopowProof.scala:220:15: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val k = r.getUInt().toIntExact
+[warn]               ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/NipopowProof.scala:221:34: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val prefixSize = r.getUInt().toIntExact
+[warn]                                  ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/NipopowProof.scala:221:24: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val prefixSize = r.getUInt().toIntExact
+[warn]                        ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/NipopowProof.scala:223:30: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]       val size = r.getUInt().toIntExact
+[warn]                              ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/NipopowProof.scala:223:20: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]       val size = r.getUInt().toIntExact
+[warn]                    ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/NipopowProof.scala:226:38: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val suffixHeadSize = r.getUInt().toIntExact
+[warn]                                      ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/NipopowProof.scala:226:28: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val suffixHeadSize = r.getUInt().toIntExact
+[warn]                            ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/NipopowProof.scala:228:34: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val suffixSize = r.getUInt().toIntExact
+[warn]                                  ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/NipopowProof.scala:228:24: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val suffixSize = r.getUInt().toIntExact
+[warn]                        ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/NipopowProof.scala:230:30: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]       val size = r.getUInt().toIntExact
+[warn]                              ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/NipopowProof.scala:230:20: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]       val size = r.getUInt().toIntExact
+[warn]                    ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/PoPowHeader.scala:160:34: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val headerSize = r.getUInt().toIntExact
+[warn]                                  ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/PoPowHeader.scala:160:24: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val headerSize = r.getUInt().toIntExact
+[warn]                        ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/PoPowHeader.scala:162:32: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val linksQty = r.getUInt().toIntExact
+[warn]                                ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/PoPowHeader.scala:162:22: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val linksQty = r.getUInt().toIntExact
+[warn]                      ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/PoPowHeader.scala:164:43: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val interlinksProofSize = r.getUInt().toIntExact
+[warn]                                           ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/popow/PoPowHeader.scala:164:33: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val interlinksProofSize = r.getUInt().toIntExact
+[warn]                                 ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/network/PeerSpec.scala:84:30: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]       val port = r.getUInt().toIntExact
+[warn]                              ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/network/PeerSpec.scala:84:20: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]       val port = r.getUInt().toIntExact
+[warn]                    ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/network/message/InvSpec.scala:40:29: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val count = r.getUInt().toIntExact
+[warn]                             ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/network/message/InvSpec.scala:40:19: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val count = r.getUInt().toIntExact
+[warn]                   ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/network/message/ModifiersSpec.scala:52:29: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val count = r.getUInt().toIntExact // 8 bytes
+[warn]                             ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/network/message/ModifiersSpec.scala:52:19: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val count = r.getUInt().toIntExact // 8 bytes
+[warn]                   ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/network/message/ModifiersSpec.scala:57:37: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]       val objBytesCnt = r.getUInt().toIntExact
+[warn]                                     ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/network/message/ModifiersSpec.scala:57:27: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]       val objBytesCnt = r.getUInt().toIntExact
+[warn]                           ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/network/message/NipopowProofSpec.scala:23:33: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val proofSize = r.getUInt().toIntExact
+[warn]                                 ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/network/message/NipopowProofSpec.scala:23:23: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val proofSize = r.getUInt().toIntExact
+[warn]                       ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/network/peer/LocalAddressPeerFeature.scala:33:28: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val port = r.getUInt().toIntExact
+[warn]                            ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/network/peer/LocalAddressPeerFeature.scala:33:18: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val port = r.getUInt().toIntExact
+[warn]                  ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/nodeView/state/VotingData.scala:41:34: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]       r.getByte() -> r.getUInt().toIntExact
+[warn]                                  ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/nodeView/state/VotingData.scala:41:24: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]       r.getByte() -> r.getUInt().toIntExact
+[warn]                        ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/settings/ErgoValidationSettingsUpdate.scala:43:30: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val disabledRulesNum = r.getUInt().toInt
+[warn]                              ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/settings/ErgoValidationSettingsUpdate.scala:51:30: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val statusUpdatesNum = r.getUInt().toInt
+[warn]                              ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/settings/Parameters.scala:459:30: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val height = r.getUInt().toIntExact
+[warn]                              ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/settings/Parameters.scala:459:20: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val height = r.getUInt().toIntExact
+[warn]                    ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/settings/Parameters.scala:460:35: method toIntExact in class LongOps is deprecated: Use Reader#getUIntExact() instead
+[warn]     val tableLength = r.getUInt().toIntExact
+[warn]                                   ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/settings/Parameters.scala:460:25: method getUInt in class Reader is deprecated: Use getUIntExact() instead
+[warn]     val tableLength = r.getUInt().toIntExact
+[warn]                         ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/http/api/ApiCodecs.scala:197:4: @nowarn annotation does not suppress any warnings
+[warn]   @nowarn
+[warn]    ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/http/api/ApiCodecs.scala:283:4: @nowarn annotation does not suppress any warnings
+[warn]   @nowarn
+[warn]    ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/http/api/ApiCodecs.scala:325:4: @nowarn annotation does not suppress any warnings
+[warn]   @nowarn
+[warn]    ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/http/api/ApiCodecs.scala:406:4: @nowarn annotation does not suppress any warnings
+[warn]   @nowarn
+[warn]    ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/BlockTransactions.scala:35:2: @nowarn annotation does not suppress any warnings
+[warn] @nowarn
+[warn]  ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/BlockTransactions.scala:127:4: @nowarn annotation does not suppress any warnings
+[warn]   @nowarn
+[warn]    ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/extension/ExtensionCandidate.scala:46:4: @nowarn annotation does not suppress any warnings
+[warn]   @nowarn
+[warn]    ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/extension/ExtensionSerializer.scala:22:4: @nowarn annotation does not suppress any warnings
+[warn]   @nowarn
+[warn]    ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/history/header/Header.scala:81:4: @nowarn annotation does not suppress any warnings
+[warn]   @nowarn
+[warn]    ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/modifiers/mempool/ErgoTransaction.scala:179:4: @nowarn annotation does not suppress any warnings
+[warn]   @nowarn
+[warn]    ^
+[warn] /home/scott/scratch/ergo-6.0.7-policy/ergo-core/src/main/scala/org/ergoplatform/settings/Parameters.scala:158:4: @nowarn annotation does not suppress any warnings
+[warn]   @nowarn
+[warn]    ^
+[warn] 83 warnings found
+[info] done compiling
+[info] compiling 181 Scala sources to /home/scott/scratch/ergo-6.0.7-policy/target/scala-2.12/classes ...
+[info] done compiling
+[warn] multiple main classes detected: run 'show discoveredMainClasses' to see the list
+[info] Strategy 'concatReversed' was applied to a file (Run the task at debug level to see details)
+[info] Strategy 'deduplicate' was applied to 6 files (Run the task at debug level to see details)
+[info] Strategy 'discard' was applied to 33 files (Run the task at debug level to see details)
+[info] Strategy 'first' was applied to 13 files (Run the task at debug level to see details)
+[info] Strategy 'last' was applied to a file (Run the task at debug level to see details)
+[info] Strategy 'rename' was applied to 6 files (Run the task at debug level to see details)
+[success] Total time: 57 s, completed Oct 10, 2026 8:16:57 AM
+
+real	1m17.120s
+user	4m5.494s
+sys	0m18.097s

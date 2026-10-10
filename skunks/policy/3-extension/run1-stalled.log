@@ -1,0 +1,6 @@
+control [{'height': 147, 'leaves': 4, 'match': True, 'flipped_byte_mismatch': True, 'has_key': True}, {'height': 146, 'leaves': 4, 'match': True, 'flipped_byte_mismatch': True, 'has_key': True}, {'height': 145, 'leaves': 4, 'match': True, 'flipped_byte_mismatch': True, 'has_key': True}, {'height': 144, 'leaves': 16, 'match': True, 'flipped_byte_mismatch': True, 'has_key': True}, {'height': 143, 'leaves': 6, 'match': True, 'flipped_byte_mismatch': True, 'has_key': True}, {'height': 142, 'leaves': 6, 'match': True, 'flipped_byte_mismatch': True, 'has_key': True}, {'height': 141, 'leaves': 5, 'match': True, 'flipped_byte_mismatch': True, 'has_key': True}]
+    1 spend the Depth box compiled with N = 9                            expect ACCEPT     got ACCEPT                    ok
+    2 spend the Depth box compiled with N = 10                           expect REFUSE     got REFUSE     node-check     ok
+    3 flip with the leaf's value byte changed                            expect REFUSE     got REFUSE     node-check     ok
+    4 flip with a proof for a different key present in the block (0101)  expect REFUSE     got REFUSE     node-check     ok
+    5 flip with a valid proof against H-9 (i = 8)                        expect ACCEPT     got ACCEPT                    ok
