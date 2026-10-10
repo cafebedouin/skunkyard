@@ -1,0 +1,5 @@
+{
+  "error" : 400,
+  "reason" : "bad.request",
+  "detail" : "Min fee not met: 0.001 ergs required, 0.0 ergs given"
+}

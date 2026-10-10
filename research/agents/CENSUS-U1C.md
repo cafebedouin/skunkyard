@@ -180,6 +180,16 @@ not build — pool at input 0, each grid bid box after it with context var 0 = f
 successor's output index, R6 = its id, one pool swap for all the units. All are **[UNVERIFIED by a node]**; to be
 checked and taken, if at all, outside this session.
 
+**Checked on chain (2026-10-10, outside the census session).** We checked all four against a 6.1.2 node
+(`/transactions/check`, tip 1,891,302) and took three; all three were mined at 1,891,305
+(`skunks/upkeep/mainnet/README.md`, round four):
+- both Machina-grid candidates passed as built: +0.0206353 and +0.0062539 ERG;
+- the SwapSell candidate was **malformed**: the owner's box held 0 ERG, below the minimum box value. Its fee rule
+  allows any split of the 2,000,000 nanoERG left over, so we rebuilt it to give the owner 1,000,000 and take
+  nothing, and submitted it;
+- the node checks the one-output candidate as valid but its mempool refuses it ("Min fee not met"), which confirms
+  the [inferred] "own block only".
+
 ## What this extends or contradicts in U1b and UPKEEP.md
 
 - **Extends U1b's "Not measured".** The unspent set by age is now listed: 812,606 P2PK boxes and ~25,000 contract

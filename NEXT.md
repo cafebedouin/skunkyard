@@ -16,6 +16,13 @@
 > `~/bin/lithos-upkeep/prompts/phase-8-babel-arb.md` (cloud, branch `upkeep-babel-arb` from `upkeep-source`);
 > (3) devnet hook `prompts/peeryard-babel-arb.md` (cloud writes, run locally on peeryard). Devnet only, no testnet.
 > Every other arbitrage idea is scored against the control (scorecard in `UPKEEP.md`).
+> **Census U1c merged; round four on mainnet, 2026-10-10:**
+> - The census read every script and found no large keyless take.
+> - Two Machina grid fills taken (0.027 ERG). A stranded SwapSell order executed for its owner.
+> - The one-output boxes can only be taken by a miner.
+> - Wallet 21.251 ERG.
+> - Next: U1d (price and state history, backtests, DexyGold, Duckpools).
+>
 > **Round two on mainnet, 2026-10-09:** U1b reviewed (its "rent only" label was a sampling artefact); a second
 > ergopad Babel take (7.44) and 6,847 staking incentive boxes consolidated for their keyless bounty (3.42 ERG; 436.9
 > ERG saved from rent for the staking setups); wallet 21.14 ERG. `skunks/upkeep/mainnet/README.md`.

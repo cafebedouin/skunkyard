@@ -281,6 +281,26 @@ with a per-box bounty turns that into upkeep anyone (a Lithos miner first and ch
 runs out: the protocol keeps its value, the executor is paid, the chain's state shrinks. It is the due-job shape
 (U3) with a deadline set by rent age, and the census can list due boxes by template and age.
 
+## U1c checked: every script read, no large keyless take (2026-10-10)
+
+Census U1c (`CENSUS-U1C.md`) walked the whole unspent set at 1,891,260 (3,176,571 boxes, 2,118 templates) and split
+every contract script into its spending paths. Its findings:
+
+- **It confirms U1b.** About 0.8 ERG of keyless takes stands now. "Keyless now" on 487 templates (13.75M ERG) means
+  pools, banks and plumbing, which anyone may submit to but which pay the builder nothing.
+- **A second built-in rent defence:** the Paideia treasury has a keyless merge (five or more boxes) and a refresh at
+  504,000 blocks of box age, each paying 0.002 ERG.
+- **Rent risk:** about 200 ERG a year of protocol boxes reach rent age with no keyless path a third party can use to
+  preserve them. They are KeepAlive targets, not generic upkeep jobs.
+
+Round four took its candidates on chain (`skunks/upkeep/mainnet/README.md`):
+- the first Machina grid fills: 0.0269 ERG, no key, no capital;
+- a stranded SwapSell order executed for its owner;
+- the one-output boxes: confirmed miner-only.
+
+The orders a protocol's own bots skip are a small standing public service a Lithos executor could pick up: a SwapSell
+order unfilled for 190,000 blocks, and grid bids above every pool.
+
 ## Miners with their own capital (the user, 2026-10-09)
 
 The mainnet wallet bootstrapped from keyless takes alone (10.28 ERG, `skunks/upkeep/mainnet/README.md`); from there

@@ -102,3 +102,28 @@ version rounded token amounts above 2^53 (this pool's LP reserve is ~9.2e18) and
 parses and writes integers exactly.
 
 **Wallet: 21.224134902 ERG** confirmed (21.140241922 + 0.08389298).
+
+## Round four, 2026-10-10: the U1c candidates (three keyless transactions, nothing signed)
+
+Census U1c (`research/agents/CENSUS-U1C.md`, branch `census-u1c`) read every contract template's paths and built four
+unsigned candidates at height 1,891,297. Checked on a 6.1.2 node at 1,891,302; three pass as built, one did not.
+No input is the wallet's, so none passes through the signer. Transactions in `tx/u1c/`.
+
+| take | transaction | height | wallet net nanoERG |
+|---|---|---|---|
+| three Machina grid bids (token `f0cac602…`) filled from ErgoDEX pool `4e97c347…`, 3 units at 129,666 nanoERG | `0bf60ba485382d14943d1ee9d8b65c554b741158e6a5fb57e0339736c190011a` | 1,891,305 | +20,635,334 |
+| one Machina grid bid (token `d4f01926…`) filled from pool `f1da394b…` | `a0230107e7afbaf4155b24c70c4f4fe43b713745dcc51540fb7ae2fd1b15fbe8` | 1,891,305 | +6,253,866 |
+| a SwapSell v1 order (`59bcc419…`, unfilled since height 1,701,498) executed **for its owner**, no executor take | `b3e42eeb005cbe901604430b6121b01d1260250f3d673df73a3b914e8bec1916` | 1,891,305 | 0 |
+| 30 boxes of `e9d13195…` (`OUTPUTS.size == 1`), 0.7016 ERG | not taken: node refused, "Min fee not met: 0.001 ergs required" | | |
+
+- **Machina grid:** the shape U1b described and did not build: pool at input 0, each grid box after it with context
+  var 0 = false (bid side) and var 1 = its successor's output index; one pool swap for all the units.
+- **SwapSell, corrected.** As built, it gave the owner's box 0 ERG (below the 40,680 nanoERG minimum for its size)
+  and the executor 1,000,000. The order holds 102,000,000: 100,000,000 to swap and 2,000,000 left over. Its fee rule
+  (`box.value >= SELF.value - quote * 1022230342047708 / 1e18 - base`) allows the executor about 115M, more than is
+  there, so any split is valid. We gave the owner the 1,000,000 left after the miner fee, along with the
+  112,690,262,715 units of `6de6f46e…` (their minimum was 978,253,099).
+- **One-output boxes:** a one-output transaction has no fee box, so only a miner can include one in their own block.
+  This is a candidate for a Lithos miner [inferred].
+
+**Wallet: 21.251024102 ERG** confirmed (21.224134902 + 0.0268892).
