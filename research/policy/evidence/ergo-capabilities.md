@@ -62,7 +62,7 @@ R4–R9 must be filled densely, with no gaps ("not densely packed" error, `ErgoB
 
 ## 4. AVL trees (authenticated dictionaries)
 
-`SAvlTreeMethods`: `digest, enabledOperations, keyLength, valueLengthOpt, isInsert/Update/RemoveAllowed, updateOperations, updateDigest, contains, get, getMany, insert, update, remove`. 6.0 adds `insertOrUpdate`. Each check takes a proof `Coll[Byte]`, usually supplied in a context variable. Membership and non-membership are both provable: the tree is a sorted AVL+ tree, and `contains` returns false with a valid proof. Lookup costs `PerItemCost(40, 10, 1)` per proof element, and insert/update/remove cost more (`methods.scala:1498-1515`). `LastBlockUtxoRootHash` and `Header.stateRoot` are the UTXO set's AVL digests. In principle a script can prove a box was unspent at H−1 [UNVERIFIED: not run; the UTXO tree uses key length 32 and full box bytes as values, and the node must supply a proof against that exact digest].
+`SAvlTreeMethods`: `digest, enabledOperations, keyLength, valueLengthOpt, isInsert/Update/RemoveAllowed, updateOperations, updateDigest, contains, get, getMany, insert, update, remove`. 6.0 adds `insertOrUpdate`. Each check takes a proof `Coll[Byte]`, usually supplied in a context variable. Membership and non-membership are both provable: the tree is a sorted AVL+ tree, and `contains` returns false with a valid proof. **Caveat, measured on 6.0.7 (policy experiment 7, `results-control.json`):** an operation whose proof is bad throws rather than returning `None` or false. `insert` with a byte-flipped proof, a proof for another tree, or no proof at all ends the script in an evaluation error. `contains` with a valid proof for *another* key returned false. So `Option.isDefined` guards nothing against a bad proof, and a script must not run an AVL operation on a path where its proof may legitimately be absent. The transaction is still refused, by the error. Lookup costs `PerItemCost(40, 10, 1)` per proof element, and insert/update/remove cost more (`methods.scala:1498-1515`). `LastBlockUtxoRootHash` and `Header.stateRoot` are the UTXO set's AVL digests. In principle a script can prove a box was unspent at H−1 [UNVERIFIED: not run; the UTXO tree uses key length 32 and full box bytes as values, and the node must supply a proof against that exact digest].
 
 ## 5. Collections and limits
 
@@ -72,6 +72,14 @@ R4–R9 must be filled densely, with no gaps ("not densely packed" error, `ErgoB
 - No collection-length cap was found apart from cost and byte limits.
 - **Cost:** the per-block budget is `maxBlockCost` (8,001,091, a voted parameter). The node relays a transaction only up to `maxTransactionCost = 4,900,000` on mainnet (NODE `mainnet.conf:82`; the default is 1,000,000). Per-input overhead is set by the `inputCost` 2407, `dataInputCost` 100, `outputCost` 298 and `tokenAccessCost` 100 parameters. q2's largest WOTS verifier measured 232,508 (`q2/LIMITS.md` §4).
 - **Sizes:** `MaxTreeDepth = 110`. The mempool limit on transaction size is 96 KiB.
+
+## 5b. The height a script is evaluated at (measured, policy experiment 2)
+
+- The node wallet's `/wallet/transaction/sign` reduces the script at `HEIGHT = fullHeight` of the signing node.
+- `/transactions/check`, the mempool and the next block evaluate at `fullHeight + 1`.
+- At a height boundary the wallet signs what the node then refuses, and refuses to sign what the node would accept a block later.
+- A node that trails the chain by a block is one block further behind.
+- Every time-locked policy inherits this: build for the next block, and take the node's check as the verdict (`skunks/policy/probe-sign-height.json`). Whether it is already a known issue in ergoplatform/ergo is not yet checked.
 
 ## 6. What a guard cannot see
 
@@ -157,7 +165,7 @@ So the box is re-created with the same guard, tokens and data, a lower value and
 | xor on byte arrays | yes | SGlobalMethods id 2 | |
 | serialize, deserializeTo, fromBigEndianBytes, some/none | 6.0+ | SGlobalMethods | |
 | executeFromVar / executeFromSelfReg / substConstants | yes | LANG l.1277-1333; Interpreter.scala:110 | substituted before eval; bytes fixed by tx id |
-| AVL contains/get/getMany/insert/update/remove | yes | SAvlTreeMethods | insertOrUpdate 6.0; non-membership provable |
+| AVL contains/get/getMany/insert/update/remove | yes | SAvlTreeMethods; policy exp. 7 | insertOrUpdate 6.0; non-membership provable; a bad proof throws (6.0.7), it does not return None |
 | fold/map/filter/exists/forall/slice/flatMap | yes | SCollectionMethods | computed flatMap bodies need the 6.0.7 compiler (q2) |
 | reverse/startsWith/endsWith/get | 6.0+ | SCollectionMethods | |
 | Recursion, unbounded loops | no | LANG overview | cost-bounded |

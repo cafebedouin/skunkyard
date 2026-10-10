@@ -27,8 +27,15 @@
 > - Ring payments cost about 790 per member, capped at 255 by `atLeast`.
 > - Cross-cutting: the wallet signs at fullHeight, the node checks at +1; a failed AVL insert throws on 6.0.7.
 > - Open: the bank's chained spends are dropped (cause unknown; one bank operation per block).
-> - Rulings still open, all at their defaults: R1 (owner resets the heir clock), R4 (template or family), R5 (hash
->   key rekeys both keys), R6 (one pending per transaction), R12 (7d's two shapes).
+> - **Rulings decided 2026-10-10** (the user, with the planning instance; reasons in `research/policy/EXPERIMENTS.md`):
+>   - R1: the owner may reset the heir clock.
+>   - R4: a family of templates, not one.
+>   - R5: a rekey through either key replaces both registers; a hash-key successor keeping the old commitment is
+>     refused.
+>   - R6: one policy box per transaction is a standing rule for every policy contract (see EXPERIMENTS.md).
+>   - R12: report both 7d figures.
+> - Next: experiment 6 rerun (plain payments merge into the account's registered box) and the cancel-side row of
+>   experiment 2, then the two-step vault's mainnet demo after the planning instance sees them.
 > - The devnet `policy` is down, chain kept. Plan: `prompts/policy-experiments-plan.md`.
 >
 > **Census U1c merged; round four on mainnet, 2026-10-10:**

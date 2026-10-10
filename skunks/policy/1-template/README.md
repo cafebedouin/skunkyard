@@ -152,7 +152,7 @@ on A-all, `results.json` `harness_bugs`).
 Rows 5–12 and 20–22 (the honest spends, all mined) are in the table above. Row 30.a is the oracle's flip of the
 flag (QDay.es, mined). Boxes in 1b carry no token: form A's box is 1,602 B against 1a's 1,633 B with one token.
 
-## What experiment 1 decides (the plan's four numbers; the verdict is RULING R4, default, unruled)
+## What experiment 1 decides (the plan's four numbers; the verdict is RULING R4, decided 2026-10-10: a family of templates)
 
 1. **Rent, qvault profile:** one template costs **0.419 ERG more per storage period** than its family member (form B
    box 1,633 B against form C 1,298 B, one token each). It costs 0.478 ERG more than the hand-written `QVault.es`.

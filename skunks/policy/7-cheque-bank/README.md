@@ -214,7 +214,7 @@ is the node's whole-transaction figure.
   N = 196. They are relabelled 6.196 / 6.196b and rerun with saved commitments and an assertion on the ring's size
   (`run-7c-limit.log`).
 
-## 7d: offline private cheques: an estimate, not built (RULING R12 default: both shapes)
+## 7d: offline private cheques: an estimate, not built (RULING R12, decided 2026-10-10: both shapes)
 
 The 7d estimate is only as good as its inputs, so here is what was measured:
 - an in-script Schnorr check costs **224 more than one `contains`** (7b, 6.r − 13.r);

@@ -47,7 +47,7 @@ Deposit at h0 = 226 with R5 = 226; refresh window from 246; heir window at 256.
   - Row 4: the refreshed box was 10 blocks old, so a box-age design would have refused the heir there.
   - Rows 1 and 2: a refresh cannot move R5.
 - **The owner can always reset the clock with a spend** (rows 5–8), even after the heir's window has opened.
-  - This is RULING R1 at its default (ACCEPT, "default, unruled").
+  - This is RULING R1, decided 2026-10-10: yes. A living owner must always be able to prove it, and the only party who can keep resetting the clock against the heir holds the owner key, so already has the funds.
   - The other answer (the window locks once open) is the owner path with `HEIGHT < R5 + N` added. Not run.
   - While both paths are open, the owner and the heir race. The first spend mined wins. A real design might give the
     heir a delay of its own (experiment 2's pending box) so a living owner can cancel.
