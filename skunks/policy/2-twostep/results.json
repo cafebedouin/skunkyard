@@ -466,6 +466,96 @@
    "expect": "ACCEPT",
    "ok": true,
    "r5": 147
+  },
+  {
+   "n": "16.a",
+   "label": "announce V6 -> P6",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "b8b380227b2f4981c3153281b0eb5284a2c9e846b44bc39b29e541a013ea4334",
+   "heights": {
+    "before": 328,
+    "after": 328
+   },
+   "detail": "b8b380227b2f4981c3153281b0eb5284a2c9e846b44bc39b29e541a013ea4334",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "16.b",
+   "label": "announce V7 -> P7",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "f38d01d14883893b8401fa82ecbc45c9b7dd6707c3b7a4051931bd7ee96956e8",
+   "heights": {
+    "before": 329,
+    "after": 329
+   },
+   "detail": "f38d01d14883893b8401fa82ecbc45c9b7dd6707c3b7a4051931bd7ee96956e8",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": 16,
+   "label": "recovery key cancels P6 + P7: one back to the vault, one to a stranger",
+   "got": "REFUSE",
+   "source": "wallet-sign",
+   "sibling_n": "16.s",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 332,
+    "after": 332
+   },
+   "detail": "wallet B sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. caea197af85317370f881f0691e2bd26f4bb0ad9581b454a40166445",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "B"
+  },
+  {
+   "n": "16.s",
+   "label": "recovery key cancels P6 alone, checked",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "10a06121a868e52653e24cd78cd48bab77f48ae1dbf3746df556e1e11b3c3e34",
+   "heights": {
+    "before": 332,
+    "after": 332
+   },
+   "detail": "10a06121a868e52653e24cd78cd48bab77f48ae1dbf3746df556e1e11b3c3e34",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "B"
+  },
+  {
+   "n": 17,
+   "label": "the same as 16 on two PendingNoGuard boxes (the theft without the guard), checked",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "cd1cc5181c49877f27259e624749ea3bd34970f8abe0a36939d7c4ba12ce3744",
+   "heights": {
+    "before": 332,
+    "after": 332
+   },
+   "detail": "cd1cc5181c49877f27259e624749ea3bd34970f8abe0a36939d7c4ba12ce3744",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "B"
   }
  ],
  "harness_bugs": [

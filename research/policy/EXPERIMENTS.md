@@ -133,6 +133,16 @@ correctly accepted. It was rerun on a fresh vault: REFUSE at R5 − 1, ACCEPT at
 - Its catch needs two additions: *double satisfaction must be guarded on every path that consumes a vault or a
   pending box*, and *cancel-to-vault lets a thief and the recovery holder stalemate forever*. *(Extension.)*
 
+
+**Added rows, 2026-10-10 (`devnet-test-cancel2.py`).**
+- Row 16: the recovery key cancels two pending boxes, one back to the vault and one to a stranger. REFUSE, with
+  wallet-sign "Script reduced to false".
+- Row 16.s: the same key cancels one alone. ACCEPT.
+- Row 17: the theft on two PendingNoGuard boxes. ACCEPT, so the guard is what stops it.
+
+The cancel-side double satisfaction is now run, not only guarded. Row 2b, the announce side, ran in the first
+pass.
+
 ## 3. Miner-signalled flag (`skunks/policy/3-extension/`)
 
 **Part A: tried.**
@@ -232,6 +242,16 @@ expect it") gains a concrete footgun:
 - **a register-keyed vault cannot be a receive address**;
 - a wallet must never pay it without the registers, or the script must treat a register-less box as merge input
   (`KeepAliveAddress`'s constant-owner pattern). *(Extension.)*
+
+
+**Rerun, 2026-10-10: `RekeyAccount.es`, 19 of 19 as expected** (`skunks/policy/6-rekey/README.md`).
+- The ruling on row 11 holds: a plain payment is spendable only as a merge input into the account's registered box,
+  keeping its registers. It needed a per-account constant: without one, every owner shared an address and anyone
+  could have claimed a plain payment.
+- Rows 11–13d: refused to every key path, unclaimable under chosen registers or by another account, and merged with
+  no key at cost 14,791.
+- R5's rule is enforced (9b).
+- Compiler note: a constant compared only with a literal is folded away. Compare it with a run-time value.
 
 ## 7. A cheque bank (`skunks/policy/7-cheque-bank/`; addendum)
 
@@ -367,6 +387,27 @@ The off-chain AVL+ prover (`AvlProver.scala`) agrees with the node's `AvlTree.in
    by itself.
 5. **Attach flag boxes as data inputs** for gated owner spends (1b rows 31–32; `QVault`).
 6. **Recognise policy boxes by template hash.** A family means a list of hashes (§1).
+
+## Rulings, decided 2026-10-10 (the user, with the planning instance)
+
+The run used every ruling at its default; all five defaults stand, with these reasons and sharpenings.
+
+- **R1: the owner may reset the heir clock, even after the heir's window opens.** A living owner must always be able to
+  prove it. The other side of the reason: the only party who can keep resetting the clock against the heir holds the
+  owner key, and so already has the funds. The ruling costs nothing that was not already lost.
+- **R4: a family of templates, not one.** The substitution form and the tree-constant form compiled to the same bytes,
+  so switching a block off never saves anything on this compiler. A family means separate sources and so separate
+  template hashes, which is why "recognise a list of template hashes" leads the wallet list.
+- **R5: the hash key may rekey both keys.** The rule: a rekey through either key replaces both registers, and a
+  hash-key successor that keeps the old commitment is refused, because the WOTS key it used is spent.
+  `6-rekey/RekeyAccount.es` enforces it (rerun row 9b).
+- **R6: one pending per transaction, promoted to a standing rule for every policy contract.** A policy box is either
+  the only input of its script in the transaction, or every input of that script checks one output that holds their
+  totals, as the KeepAlive merge does. Nothing in between. The two-vault announce theft (row 2b) and the cancel merge
+  (rows 16, 17) are the same shape.
+- **R12: 7d reported in both shapes.** Reporting only.
+
+Unchanged from the run: R2, R3, R7–R11 (below).
 
 ## Rulings: what this run used (plan §6; every one at its default, unruled)
 

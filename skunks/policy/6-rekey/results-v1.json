@@ -1,0 +1,273 @@
+{
+ "experiment": "6-rekey",
+ "started_height": 203,
+ "node": {
+  "appVersion": "6.0.7",
+  "parameters": {
+   "outputCost": 100,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 200,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2000,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ },
+ "wallets": {
+  "A": [
+   "038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c",
+   "031ee1ab3b729f21e0dcee05642a63745286354d8e511e6376838e235a28078c01",
+   "0367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df",
+   "0398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04",
+   "026c2134d11af7f0bea024724278ebc37ced69a19a99dd6638f393d5f1b9c8bea0",
+   "0389e8fb63050cdb2c3f5c70b3d6167835b60bcf020b9ed7c332965ffce26f2e6f"
+  ],
+  "B": [
+   "03d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494",
+   "0376bf533d4b15510fa9f4124b6e48616f07debcf2ef0cfb185cdc4a576450b475",
+   "02ea2649b3512b9a859ab658a85e2989a7ae39b2518877b2dc0f2b44b785d5788d",
+   "03b4c210719212afb16b5f136a2dcb3cc9fc231721f711994facf3b6111afba7d0",
+   "0234835d35c02b0dc042aa9c041b854b98c28df4872fdc8c6a260bc2ddd767f5a3",
+   "02a52d6327542c16cce7645b899e651dc78098fa4f495acb36992e66b099405ec2"
+  ]
+ },
+ "trees": [
+  {
+   "name": "Rekey",
+   "tree_bytes": 834,
+   "box_bytes": 943,
+   "address": "2ponK2WznxAWpR3vwMc8ktzx8RSn7cPeT2nZhR1wE3PDd9D37bnYpyBTYMSpQ8x9Nq8BFY7F6rNz2L3NwJcDDfX6yEDbTHaD48qoNU2kpmjECxVgFBNCEjBf4GhU9FVE5tHjLDANWCSms9gVeF11q3DZf73qB4S1oPbMnE5pheP4vw27EQEUkHii47ehhi3YvXQUHoccSwd5gzRSXjfJeUFCD12Vt8b57zauGqE91avZnDrwkftkrzT1QJhbn5pEe22sjECFqhniQpws924DezZrUJNbFWicp7AYAJba3ZExMLbZQtEZcSLsdZQzXK6L81cHsgHwdX68m4RfNwC3VHS74M6GDY8xJXNGDhww1FXTixhywMPXDsHoRVujvUV3MxwLHXnrxqn5bKSWimGDEukGi91B3TAG5RFgGuAdZLm1bViMsj6wdH6UPpYgf8bJmWMD7zLojjYNaQWWpRFAqSxf4QaZ1LLJf8TAdR1CZNNJn2CyP4tBNvH9W6kCQmonnjh78NmEdaiz9ynNdU9xYd4vwdxG44Zqt3ZtfLrtiKMT2qGi9eJcz9ddrjUMZdfnWiGxVAT8efhw7zmQLuDsBDBwzL8JqaSVsjMb35hZioDG42LguejGp5rpnx5yqBzB4EgEXPxUsJmMhrXVs9HSwdvnU1E7PR8L6nESsh6v2T1z4MUkizXmB9UmEDVPnYHvGdJAtXtaQvA9hvLiHQ93xDCWZPb7eC53TfHvppdKU6GZHisZwe7QJ25exK5isNGyxazv8zVE2aEp81Gitnye9RX9jHboydbPjgLcq1ovwmBJhyFSMRsxPbaM1G5AcnvJnSA8vRq19LDHSRXzZh65FYaoBMmSNQC6KJp7k7M6dk8LgueeAzeEtx5b8ofyjuy97rfjBJznxHSh5aVJy7JmEq3nbHho4eEy3mAY3LLCSfabyhMBmJUBXA9LA2xiRy8EFUyHUkg2cayyrYj5snqfrbnTqe1P56sT5Anehv5GSeWHdBL84QY82ca5vNwzCmdEV7ysbB1RmAzPruohqNA7cYGFuUPWhGS1Md4c2osKvTXX25SFnjx7PrHLkJKjFemX6hidHP8ttju64BWGCpQ7NnnP1RDguiLKUbrkjUaQpAzM3QKitNbL8LC9Rb",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 1178750000
+  },
+  {
+   "name": "Rekey-refreshed",
+   "tree_bytes": 834,
+   "box_bytes": 977,
+   "address": "2ponK2WznxAWpR3vwMc8ktzx8RSn7cPeT2nZhR1wE3PDd9D37bnYpyBTYMSpQ8x9Nq8BFY7F6rNz2L3NwJcDDfX6yEDbTHaD48qoNU2kpmjECxVgFBNCEjBf4GhU9FVE5tHjLDANWCSms9gVeF11q3DZf73qB4S1oPbMnE5pheP4vw27EQEUkHii47ehhi3YvXQUHoccSwd5gzRSXjfJeUFCD12Vt8b57zauGqE91avZnDrwkftkrzT1QJhbn5pEe22sjECFqhniQpws924DezZrUJNbFWicp7AYAJba3ZExMLbZQtEZcSLsdZQzXK6L81cHsgHwdX68m4RfNwC3VHS74M6GDY8xJXNGDhww1FXTixhywMPXDsHoRVujvUV3MxwLHXnrxqn5bKSWimGDEukGi91B3TAG5RFgGuAdZLm1bViMsj6wdH6UPpYgf8bJmWMD7zLojjYNaQWWpRFAqSxf4QaZ1LLJf8TAdR1CZNNJn2CyP4tBNvH9W6kCQmonnjh78NmEdaiz9ynNdU9xYd4vwdxG44Zqt3ZtfLrtiKMT2qGi9eJcz9ddrjUMZdfnWiGxVAT8efhw7zmQLuDsBDBwzL8JqaSVsjMb35hZioDG42LguejGp5rpnx5yqBzB4EgEXPxUsJmMhrXVs9HSwdvnU1E7PR8L6nESsh6v2T1z4MUkizXmB9UmEDVPnYHvGdJAtXtaQvA9hvLiHQ93xDCWZPb7eC53TfHvppdKU6GZHisZwe7QJ25exK5isNGyxazv8zVE2aEp81Gitnye9RX9jHboydbPjgLcq1ovwmBJhyFSMRsxPbaM1G5AcnvJnSA8vRq19LDHSRXzZh65FYaoBMmSNQC6KJp7k7M6dk8LgueeAzeEtx5b8ofyjuy97rfjBJznxHSh5aVJy7JmEq3nbHho4eEy3mAY3LLCSfabyhMBmJUBXA9LA2xiRy8EFUyHUkg2cayyrYj5snqfrbnTqe1P56sT5Anehv5GSeWHdBL84QY82ca5vNwzCmdEV7ysbB1RmAzPruohqNA7cYGFuUPWhGS1Md4c2osKvTXX25SFnjx7PrHLkJKjFemX6hidHP8ttju64BWGCpQ7NnnP1RDguiLKUbrkjUaQpAzM3QKitNbL8LC9Rb",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 1221250000
+  }
+ ],
+ "cases": [
+  {
+   "n": 1,
+   "label": "in the window: refresh with R4 changed to the generator G",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 3,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 223,
+    "after": 223
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. d7497e27014fea9f096195a9661c475a5f95ee9668ef863b23b14e2e2dd00f08: #0 => Success((false,566))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 2,
+   "label": "in the window: refresh with R5 changed",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 3,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 223,
+    "after": 223
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. cc7a8a5e67a10e4a8d826e7948de5cae6829eed09b99372623846c15464688bc: #0 => Success((false,566))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 3,
+   "label": "in the window: refresh, keys kept, honest",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "9d740ddf9555d6aeb04c0234ca78a3472f89c3c3778617199484725e46dc0a88",
+   "heights": {
+    "before": 223,
+    "after": 223
+   },
+   "detail": "9d740ddf9555d6aeb04c0234ca78a3472f89c3c3778617199484725e46dc0a88",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": 4,
+   "label": "rekey to B's key with an empty proof",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 6,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 225,
+    "after": 225
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. abc53592dbf560edf935db61515e48cab2493181d18a622847ba6360f35bfcbf: #0 => Success((false,434))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 5,
+   "label": "rekey to B's key, signed by B (not yet the owner)",
+   "got": "REFUSE",
+   "source": "wallet-sign/no-secret",
+   "sibling_n": 6,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 225,
+    "after": 225
+   },
+   "detail": "wallet B sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: assertion failed: Tree root should be real but was UnprovenSchnorr(ProveDlog(Ecp((8b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c,362790697d0a5c12e7cdc7f784629f508596183d744019a358405f1978cd7a3f,1))),None,None,None,true,0)\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. abc53592dbf560edf935db61515e48cab2493181d18a622847ba6360",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "B"
+  },
+  {
+   "n": 6,
+   "label": "rekey to B's key, signed by A, the owner",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 12534,
+   "cost_instrument": "mempool",
+   "tx_id": "abc53592dbf560edf935db61515e48cab2493181d18a622847ba6360f35bfcbf",
+   "heights": {
+    "before": 225,
+    "after": 225
+   },
+   "detail": "abc53592dbf560edf935db61515e48cab2493181d18a622847ba6360f35bfcbf",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": 7,
+   "label": "A (the old owner) spends the rekeyed box",
+   "got": "REFUSE",
+   "source": "wallet-sign/no-secret",
+   "sibling_n": 8,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 226,
+    "after": 226
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: assertion failed: Tree root should be real but was UnprovenSchnorr(ProveDlog(Ecp((d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494,7d000a1345d3845dd83b4c5814f876c918305b598f066c958fad972bf59f2ec7,1))),None,None,None,true,0)\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 1a9a0233b5d656249f07204a26e77ba2d4ff626b10104d6324be831b",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": 8,
+   "label": "B (the new owner) spends it into a successor",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "1a9a0233b5d656249f07204a26e77ba2d4ff626b10104d6324be831b8c33b601",
+   "heights": {
+    "before": 226,
+    "after": 226
+   },
+   "detail": "1a9a0233b5d656249f07204a26e77ba2d4ff626b10104d6324be831b8c33b601",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "B"
+  },
+  {
+   "n": 9,
+   "label": "hash-key rekey of X2: WOTS (s2) over outputs carrying new R4 (B) and R5 (s3)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 46749,
+   "cost_instrument": "mempool",
+   "tx_id": "8ec4f3ee97795d2b8f6259a49010aecabbb48bf8fff0613156f2e4ea627c23d7",
+   "heights": {
+    "before": 227,
+    "after": 227
+   },
+   "detail": "8ec4f3ee97795d2b8f6259a49010aecabbb48bf8fff0613156f2e4ea627c23d7",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": 10,
+   "label": "the old WOTS seed (s2) signs for the rekeyed box",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "10.s",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 228,
+    "after": 228
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 69397b1ee631a422356028114ae608c248044b45458e5aca7b1e318790b73b0f: #0 => Success((false,34977))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "10.s",
+   "label": "a fresh WOTS signature with the new seed (s3), checked",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "ec276923508896b6550511d5ccfafe7fd13daa65d02eef48e38ea02bb08536bb",
+   "heights": {
+    "before": 228,
+    "after": 228
+   },
+   "detail": "ec276923508896b6550511d5ccfafe7fd13daa65d02eef48e38ea02bb08536bb",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": 11,
+   "label": "a plain wallet payment to the address (no registers); A tries to spend it",
+   "got": "EVAL-ERROR",
+   "source": "wallet-sign",
+   "sibling_n": 6,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 228,
+    "after": 228
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: None.get\" } | unsigned check: EVAL-ERROR {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 2a370bd7af720066ac5c8f2517886ba39550e4d52ee7ad2f36827d07",
+   "expect": "EVAL-ERROR",
+   "ok": true,
+   "wallet": "A",
+   "node_check_unsigned": {
+    "class": "EVAL-ERROR",
+    "text": "{\n  \"error\" : 400,\n  \"reason\" : \"bad.request\",\n  \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 2a370bd7af720066ac5c8f2517886ba39550e4d52ee7ad2f36827d0762f906a9: #0 => Failure(java.util.NoSuchElementException: None.get)\"\n}"
+   }
+  }
+ ],
+ "harness_bugs": [],
+ "plain_payment_box_bytes": 875
+}

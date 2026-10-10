@@ -105,3 +105,10 @@ before and after each check; the evaluated HEIGHT is `fullHeight + 1`.
 - **The pending box carries the vault's full tree in R6** (636 B box against 405 B for the vault). A vault that
   stored only a hash of its script and checked `blake2b256(OUTPUTS(0).propositionBytes)` would be smaller. Not
   tried.
+
+## RULING R6, decided 2026-10-10: a standing rule for every policy contract
+
+A policy box is either the only input of its script in the transaction, or every input of that script checks one
+output that holds their totals, as the KeepAlive merge does. Nothing in between. Rows 2b (two vaults announced into
+one pending box) and 16/17 (two pending boxes cancelled into one vault output; `devnet-test-cancel2.py`) are the same
+shape on the announce and cancel sides.

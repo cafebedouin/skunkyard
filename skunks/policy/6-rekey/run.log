@@ -1,13 +1,20 @@
-    1 in the window: refresh with R4 changed to the generator G          expect REFUSE     got REFUSE     node-check     ok
+    1 in the window: refresh with R4 changed to G                        expect REFUSE     got REFUSE     node-check     ok
     2 in the window: refresh with R5 changed                             expect REFUSE     got REFUSE     node-check     ok
-    3 in the window: refresh, keys kept, honest                          expect ACCEPT     got ACCEPT                    ok
-    4 rekey to B's key with an empty proof                               expect REFUSE     got REFUSE     node-check     ok
-    5 rekey to B's key, signed by B (not yet the owner)                  expect REFUSE     got REFUSE     wallet-sign/no-secret ok
-    6 rekey to B's key, signed by A, the owner                           expect ACCEPT     got ACCEPT                    ok
+    3 in the window: refresh, keys kept                                  expect ACCEPT     got ACCEPT                    ok
+    4 rekey to B with an empty proof                                     expect REFUSE     got REFUSE     node-check     ok
+    5 rekey to B signed by B (not yet the owner)                         expect REFUSE     got REFUSE     wallet-sign/no-secret ok
+    6 rekey to B signed by A                                             expect ACCEPT     got ACCEPT                    ok
     7 A (the old owner) spends the rekeyed box                           expect REFUSE     got REFUSE     wallet-sign/no-secret ok
     8 B (the new owner) spends it into a successor                       expect ACCEPT     got ACCEPT                    ok
-    9 hash-key rekey of X2: WOTS (s2) over outputs carrying new R4 (B) a expect ACCEPT     got ACCEPT                    ok
-   10 the old WOTS seed (s2) signs for the rekeyed box                   expect REFUSE     got REFUSE     node-check     ok
- 10.s a fresh WOTS signature with the new seed (s3), checked             expect ACCEPT     got ACCEPT                    ok
-   11 a plain wallet payment to the address (no registers); A tries to s expect EVAL-ERROR got EVAL-ERROR wallet-sign    ok
+    9 hash-key rekey: WOTS (s2) over a successor with new R4 (B) and R5  expect ACCEPT     got ACCEPT                    ok
+   9b hash-key rekey keeping the spent commitment (s4 signs, R5 still s4 expect REFUSE     got REFUSE     node-check     ok
+   10 the old seed (s2) signs for the rekeyed box                        expect REFUSE     got REFUSE     node-check     ok
+ 10.s a fresh signature with the new seed (s3), checked                  expect ACCEPT     got ACCEPT                    ok
+   11 a plain payment P; A tries to spend it with the owner key          expect REFUSE     got REFUSE     wallet-sign    ok
+   12 P merged, no key, into the account's one registered box (Z2), regi expect ACCEPT     got ACCEPT                    ok
+  13a plain P2 'maintained' alone into a successor carrying chosen regis expect REFUSE     got REFUSE     node-check     ok
+  13b P2 merged with a registered box (R) into a successor with R4 chang expect REFUSE     got REFUSE     node-check     ok
+  13c P2 merged with account KB's registered box into KB's address       expect REFUSE     got REFUSE     node-check     ok
+  13d P2 merged with two registered boxes of its account (R and X2b)     expect REFUSE     got REFUSE     node-check     ok
+ 13.s P2 merged honestly with one registered box (R), checked            expect ACCEPT     got ACCEPT                    ok
 ALL AS EXPECTED

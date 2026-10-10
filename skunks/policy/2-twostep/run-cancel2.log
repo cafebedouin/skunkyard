@@ -1,0 +1,6 @@
+ 16.a announce V6 -> P6                                                  expect ACCEPT     got ACCEPT                    ok
+ 16.b announce V7 -> P7                                                  expect ACCEPT     got ACCEPT                    ok
+   16 recovery key cancels P6 + P7: one back to the vault, one to a stra expect REFUSE     got REFUSE     wallet-sign    ok
+ 16.s recovery key cancels P6 alone, checked                             expect ACCEPT     got ACCEPT                    ok
+   17 the same as 16 on two PendingNoGuard boxes (the theft without the  expect ACCEPT     got ACCEPT                    ok
+ALL AS EXPECTED
