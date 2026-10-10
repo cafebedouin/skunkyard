@@ -325,12 +325,55 @@ What it changes:
   - Buying SigRSV below NAV backtests positive at every threshold, but it is a capital position carried by a few
     periods, with a 473 ERG worst drawdown on 1,000 ERG.
   - Beating the bot is worth about 14 ERG a year at Lithos's 1.7% block share.
-  - Not yet backtested: buying SigUSD in the pool and redeeming it at the bank, which was open in 14% of blocks.
+  - Buying SigUSD in the pool and redeeming it at the bank: backtested below.
 - **Unsupported by the history:**
   - SK-051 conditional exits on RR >= 400% (there's been no window for ten months) or on a $4 ERG price;
   - Babel boxes and grids as an edge for their owners;
   - a keeper for the deployed DexyGold (no action pays its executor, and the LP is empty).
 - **DexyGold's bank:** we leave its exposure unanalysed, as ergo-forge does.
+
+## SigUSD buy-and-redeem, backtested (2026-10-10)
+
+`research/agents/sigusd-redeem.py` runs over U1d's committed state series (566,114 to 1,891,321). It uses the
+contract-exact bank model and the pool's integer rule, with fees of 0.0011 ERG per transaction (two transactions,
+since the pool and the bank each take `OUTPUTS(0)`). Output: `census/u1d/sigusd-redeem.json`.
+
+Redeeming SigUSD is never locked by the reserve ratio, so the take is open whenever the pool sells below the bank's
+redeem price after the bank's 2% fee and the pool's fee.
+
+- **Open in 3.9% of blocks.** 2,947 episodes, median 8 blocks, p90 41, longest 512. (U1d's 14% compared mid
+  prices, before fees.) They follow ERG falls: an oracle refresh raises the redeem price in nanoERG and the pool lags.
+- **Net, two bounds.** The upper bound takes every pool state while the gap stays open, which overcounts. The lower
+  bound is one take per episode, at its first state.
+
+  | capital cap | per year, whole history (lower / upper) | last year (lower / upper) | median take (lower) |
+  |---|---|---|---|
+  | 10 ERG | 12.5 / 37.7 ERG | 5.0 / 53.8 ERG | 0.009 ERG |
+  | 100 ERG | 93.4 / 320.3 ERG | 45.3 / 503.1 ERG | 0.030 ERG on 56 ERG |
+  | 1,000 ERG | 436.4 / 1,442.4 ERG | 165.8 / 1,638.4 ERG | 0.030 ERG |
+
+- **Leg 2 risk.** If an oracle refresh lands between the two transactions, the redeem pays the new price. If every
+  refresh did, the 100 ERG total would fall from 1,615 to 1,048 ERG (1,707 takes would lose). Sent in the same
+  block, the redeem fails instead of paying less if the oracle box it reads is spent first; we would then hold
+  SigUSD [inferred].
+- **There is an incumbent; U1d's "nobody takes it" is wrong.**
+  - `9eyeUPrWJcWhBYvWPxbsNEqzHMtcqgj9L7QztNbZBaxafU2PotT` (3,092 ERG, 13,384 transactions, heights 689,671 to
+    1,875,618) buys from the pool and redeems at the bank in the same block.
+  - It did so in 2,026 blocks, rising each year: 156, 230, 425, then 1,214 in the latest.
+  - It closed 21% of last year's 405 episodes within 4 blocks, and 34% within 10. At 1,875,183 and 1,875,185 it
+    traded the block after a refresh at 1,875,182.
+  - Most episodes close otherwise [inferred: the oracle or the pool moves back].
+- **Not open now.** At 1,891,342 the pool sells SigUSD 4.4% above the redeem price (RR 302%). The last episode ended
+  at 1,875,285.
+
+**What it means.**
+- **For us:** a real, repeating, two-transaction capital take. With the wallet's ~20 ERG it is a few ERG a year: a
+  proof of concept, not revenue.
+- **For Lithos:** a miner sees the refresh in the block it builds and orders its own pair first, as with the
+  SigRSV mint-and-sell. This is the bot pattern again, in the other direction.
+- **The build:** a watcher that, after each oracle refresh, builds the pool buy (`swap.py`) and the bank redeem.
+  The redeem needs the oracle as a data input and the receipt box the bank contract requires, and is signed by
+  `mainnet-sign.mjs` (the bank successor is an input's own script).
 
 ## Miners with their own capital (the user, 2026-10-09)
 
