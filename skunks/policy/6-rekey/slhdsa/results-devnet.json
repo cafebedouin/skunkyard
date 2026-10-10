@@ -1,0 +1,59 @@
+{
+ "experiment": "6-rekey-slhdsa-devnet",
+ "node": {
+  "appVersion": "6.0.7",
+  "parameters": {
+   "outputCost": 100,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 1052,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2000,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ },
+ "tree_bytes": 1506,
+ "address": "bChUYJfDxbHjWuh7SJeWg8T1Z885Ytji5kQKAxMxxa529Bj5mVy76x8uExo8X3W5V4cghqLAhLcUaNXfWnY3r1WG4PvRqDPyaeWdZc5qKxF7VYMTD9yGVue1arMvtg7UKNDcPjhZkJmkbDfKvdBc38Krpp8YWmNmCWQ5QjKNQn161CrWJMtE6WzSSTeqwGW1AHy2oRinmab2J9UQqV9mDzdaziCs8bBYDc6gPrFUSjth8xGq8BtvxxCPcFJpSi6jkNAJH9hoZrUS5boMhchW4xXawCeXjX5aG7p2y8VzzX2vXvDgbD4uZ4nKdtPADNFDohyuHDkNaKXMBRL5qVEDdows3gbxGPXWVsgHhurw2shgsce6uwN8dMLArBFSRzNDG2NafVTctX67CJgkqfCJefWbhfJVnjhYHadziHuJQ77VYK5dxCuSK5rLTKfGw47H5TnHciXxEKt5xzw2Pm14ZEcTbFdDtrCWxY6S1TAfYFvz2Q4xEWPxH9DCDBeaXcWe7VRNeeSvs5fmtuArfxu5pa1cuqM4nekyEjViaC3zXpSLsQWUF5f94gnKg4tzfAFLpzgNxCo1kJAcGKiVTBjSV1YDrzL2c88f6Wf9zZpHP3NCnQApsJWjt6D7Yk3yXyh3BYHPnXcVyStBdaLPDevG88TcsruNahtdDe9WfJZRsdRUJBzve3mHYuaee5GtC8C84mLBUoLZ5cReayLaie1Fq2ikxC1dcUV4t9wDHj1N28iRuodGZxFWy2KX7a77s8fikgv5EfV2vGUHHDhC1L9trABuA3reW5bS9XA4SkkdURJaAeYv7LNX8HZ1XRFfKxhdeTyVxFET2SzprTYYMv1YnGTpFrqjgEur9GmGEKV8Tv5p3uDSYV75K1y5G9yDAE5HJvcxoTCi6tYXiWydKTMjhaUmc2WTin5zdvY4N3vRwYN154ihoCNTNXuo9q3n6D7Ze5SMFpLNbp74r8w7mvdPFkEBWNjcvAggdNjEfJLN5RmLUqA7cULE7Aa3XW4kJwVjGDgnxZ1c6Zc3QEzhXQ1hudzmALSKc6ZkVPjA6wZ5wxeDvnJbir6c6tn8avZ5iJEdRrd8UYcfKvgNSh2L6NfA7gRqFAgpeDhfPKzJ2gJhu6QJW3roaitrEyvvboD5ikmKU5ni8itw4kabwnLtWXkLWDupUTEB3sx1orzxao8SD7gB2hrShdXYHFzYkUUfsmcHBv3a5P9p1fcEREbyENz67q74cJcbaUZAgAqR4nJPzQ5kt32QjuVsfxRiJqKtn5syu9UHxqFfPfn1Qc92t22JxzjfSywRBydEyk8Y16CfQmUxEtf14qY2FQWCydQ6DD2B2DA6avPi2AazxCBimamAUXbdiP6V9Awbgyz2KDYqYPopbZC7gnFp4HH1iQcK2YGdA2yLPxHkhBGvX7CdM6khLh4817nXbjrgiEMDt1EFsWHkfeESRsT32Vy6h3ddMtj949Xsbit4aEdVGDbhbXsDa4i3BAj6jPV5sDGA2MFZk5v8xPYj2MvZkf2nXagfgGtzjH1nGRfxSYtTJzA7SXzieaG9weKuM5MTZZGjyQoYMKyb5uZfgLjgjn8e4EinrB1Z7DiGai4G1Dygdc4DS3acFCfGpt2NvBE1ng1Jj7RPkehMox3ZWH9Ah6wAhxEhNPHMyYqZju41BMzoi9bmHNYnejuiUe9PY3kpqBmzBUKRfoTVQ7K5TSmxXdE3mzNUZGTXiouPgGJtXLEE9MAyTH3efCdDQ1EE7nXYF4EZw3deSbyzzjvdac4H2ub6t66mee53VntgpnFYqUyrZpoXZfX2xwmJ6Vpo5xuZKJd78xPtzq3ZYVvyF1yR2rruMxRYJ1Z4CrXXb9tmA6ssemfVKe236kgMG6jxmdsfmqkt5dKmYo2gziFtmZSjK3Fhd91HYdjCXiXaNenDyo7ZjyFLqMw34BVcTio6LwttBY5SUF5DPrEP7L333VV4XTaKKjyxbnHMJcrS2kKsx8iqk4ftdnNx63Qb94zVTvSgG4PhKiv39iBVabWdg3L2B19q4tNffwRaHPg2TMaJuw5coC8",
+ "deposit_tx": "228d48a5c060837d6a8f3bfb3f85b96fe0281ec0ae9caa8058fde9e576196b66",
+ "results": [
+  {
+   "case": 1,
+   "label": "one byte of the signature flipped (sibling of 3)",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. a2664454bbcc613a0865521ebc67b01fabdaf989653464c68e7735011182a289: #0 => Success((false,182978))\" }",
+   "source": "node-check",
+   "sibling_n": 3
+  },
+  {
+   "case": 2,
+   "label": "signed for one set of outputs, sent with another (sibling of 3)",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. a31d37363bc9f362fc00140cb3ea7a43b56567288cda1d1f7fd71215146f6913: #0 => Success((false,189213))\" }",
+   "source": "node-check",
+   "sibling_n": 3
+  },
+  {
+   "case": 3,
+   "label": "the honest spend",
+   "expect": "ACCEPT",
+   "got": "ACCEPT",
+   "ok": true,
+   "detail": "a9d53bca1610e1cf092e12ff227c89efd12c2277e619422e93a73113bbc22252",
+   "source": "node-check",
+   "sibling_n": null,
+   "tx_id": "a9d53bca1610e1cf092e12ff227c89efd12c2277e619422e93a73113bbc22252",
+   "cost": 202006,
+   "cost_instrument": "mempool",
+   "mined_height": 1055,
+   "tx_size": 8054
+  }
+ ]
+}

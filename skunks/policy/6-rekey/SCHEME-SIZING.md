@@ -36,6 +36,9 @@ an in-script verifier exists and fits; see "Measured: SLH-DSA" below.
 
 ## Measured (2026-10-10, step 3): SLH-DSA-SHA2-128s fits, 1,506 bytes
 
+**Node-verified on the policy devnet the same day** (`slhdsa/results-devnet.json`): the honest spend mined at cost
+202,006 and 8,054 bytes; a flipped byte and an other-message signature refused by the node.
+
 `slhdsa/SlhDsa.es` (FIPS 205 Algorithms 20 and 24, SHA2 "simple" tweakable hashes) compiles with sigma-state 6.0.7
 to a **1,506-byte** ErgoTree, 37% of the 4,096-byte cap, and verifies a BouncyCastle 1.86 signature on the spend it
 guards in the q2 interpreter harness (`slhdsa/README.md`, `slhdsa/run.log`):

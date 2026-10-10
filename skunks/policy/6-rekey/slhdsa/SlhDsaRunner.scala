@@ -261,6 +261,13 @@ object SlhDsaRunner {
     case "stage" :: n :: Nil => stage(n.toInt)
     case "full" :: Nil => full()
     case "pin" :: Nil => pin()
-    case _ => System.err.println("usage: SlhDsaRunner gen | stage N | full | pin"); sys.exit(2)
+    case "tree" :: Nil =>                      // the compiled verifier's bytes, for a devnet box (devnet-test-slhdsa.py)
+      val v = loadVectors(); val c = compile(read(s"$DIR/SlhDsa.es"), env(v))
+      println(s"TREE ${hex(c.tree.bytes)}")
+    case "sign" :: msgHex :: Nil =>            // BouncyCastle signs a 32-byte spend digest with vectors.json's key
+      val v = loadVectors(); val m = unhex(msgHex); val sig = bcSign(v.sk, m)
+      require(bcVerify(v.pk, m, sig), "BouncyCastle does not verify its own signature")
+      println(s"SIG ${hex(sig)}")
+    case _ => System.err.println("usage: SlhDsaRunner gen | stage N | full | pin | tree | sign <digestHex>"); sys.exit(2)
   }
 }
