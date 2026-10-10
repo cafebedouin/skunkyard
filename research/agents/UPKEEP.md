@@ -375,6 +375,50 @@ redeem price after the bank's 2% fee and the pool's fee.
   The redeem needs the oracle as a data input and the receipt box the bank contract requires, and is signed by
   `mainnet-sign.mjs` (the bank successor is an input's own script).
 
+## Off-chain bots are margin a miner can eat, and liveness it can supply (the user, 2026-10-10)
+
+Every protocol here runs on an off-chain bot that earns a margin for keeping it working:
+- SigmaUSD: the mint-and-sell bot, and the buy-and-redeem pairs of `9eyeUPrW…`;
+- Duckpools: the liquidator, the interest updater and the request processor;
+- Dexy: the tracker and intervention volunteer.
+
+The block builder sees each margin first. A miner who carries these jobs in its own blocks takes the margin. It also
+keeps the protocol alive when the bot stops, which is the second half of the point: the bots do stop.
+- Dexy's single volunteer froze for 51 to 81 hours (U1d).
+- Duckpools' bots have been silent for months. The SigUSD-1e parent interest box last moved at 1,840,030. The main
+  liquidator `9i9Rhf…` last transacted at 1,810,795.
+
+A protocol whose bot dies keeps its contracts. Its keyless paths still work, and they now wait for whoever builds the
+block. Lithos upkeep jobs are that "whoever", paid by the margin the bot used to take.
+
+## Duckpools now: expiries uncontested, a mainnet tool and a Lithos job (2026-10-10)
+
+`skunks/upkeep/mainnet/duck-liquidate.py` (`scan`, `liquidate`, `mark`) follows the loan contract (`db697243`) and
+the official liquidator (`duckpools/off-chain-bot`, `t_liquidation_susd.py`).
+
+- **Scan at 1,891,348.** 19 live SigUSD-1e loans, 31,551 ERG of collateral, health 1.331 to 1.553. Debt and health
+  agree with U1d to four decimals. None is under its threshold.
+- **Expiries.** The first two loans (3,353 and 4,309 ERG) expire at 1,920,164 and 1,920,395, twelve more between
+  1,928,524 and 1,929,268, and the rest by 1,945,001.
+- **Liquidation is one transaction, with no key and no capital.** Inputs: the ErgoDEX pool, then the loan. Data
+  inputs: three interest boxes. Outputs:
+  - the pool successor;
+  - the repayment, which is the debt plus 40% of the surplus;
+  - the borrower's 60% of the surplus.
+
+  We sell only the ERG needed for the tokens owed. Of the collateral that frees (the contract prices it as if the
+  pool held 2% more ERG), half is our take and half stays in the pool.
+- **Checked on the node.** A forced build for the 3,353 ERG loan is checked by the node and fails only on the loan
+  script, which is not yet due. Our take would be 32.9 ERG and the borrower's share 277.81 SigUSD.
+- **What all 19 would pay.** About 1% of their collateral, roughly 315 ERG, if none is repaid or extended.
+- **Fairness.** With the bot gone, the UI's repay flow may not be processed. A borrower can still repay through the
+  loan contract's keyless repay path, but needs someone to build it. No repay request sits waiting now (the proxy
+  boxes hold only dust, the newest from 1,643,126).
+- **The Lithos job** (`DuckpoolsLiquidationJob`) is on the `upkeep-duckpools` branch. It needs one framework change:
+  the source must accept the outputs a spent script obliges (the repayment and the borrower's share).
+- **Not done:** the mark, in Lithos. It needs a spacer box at `INPUTS(0)`, and the source refuses wallet inputs. The
+  mainnet tool marks with a wallet box as the spacer, as the official bot does with its own boxes.
+
 ## Miners with their own capital (the user, 2026-10-09)
 
 The mainnet wallet bootstrapped from keyless takes alone (10.28 ERG, `skunks/upkeep/mainnet/README.md`); from there
