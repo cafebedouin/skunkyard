@@ -16,6 +16,10 @@
 > `~/bin/lithos-upkeep/prompts/phase-8-babel-arb.md` (cloud, branch `upkeep-babel-arb` from `upkeep-source`);
 > (3) devnet hook `prompts/peeryard-babel-arb.md` (cloud writes, run locally on peeryard). Devnet only, no testnet.
 > Every other arbitrage idea is scored against the control (scorecard in `UPKEEP.md`).
+> **Policy-layer experiments handed to a fresh session (2026-10-10):** `prompts/policy-experiments.md`. It runs the
+> six experiments from `research/policy/README.md` on a local devnet (`policy`), then writes
+> `research/policy/EXPERIMENTS.md` with suggestions.
+>
 > **Census U1c merged; round four on mainnet, 2026-10-10:**
 > - The census read every script and found no large keyless take.
 > - Two Machina grid fills taken (0.027 ERG). A stranded SwapSell order executed for its owner.
