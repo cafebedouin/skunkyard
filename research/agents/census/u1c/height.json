@@ -1,0 +1,22 @@
+{
+ "height": 1891260,
+ "endpoint": "https://api.ergo.aap.cornell.edu/api/v1",
+ "params": {
+  "height": 978944,
+  "storageFeeFactor": 1250000,
+  "minValuePerByte": 360,
+  "maxBlockSize": 1271009,
+  "maxBlockCost": 8001091,
+  "blockVersion": 3,
+  "tokenAccessCost": 100,
+  "inputCost": 2407,
+  "dataInputCost": 100,
+  "outputCost": 184
+ },
+ "readAt": 1791600616.6412292,
+ "boxes": 3176571,
+ "ranges": 1232,
+ "firstRangeRead": 1791600622.6444647,
+ "lastRangeRead": 1791604692.0326235,
+ "templates": 2118
+}

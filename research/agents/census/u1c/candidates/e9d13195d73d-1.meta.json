@@ -1,0 +1,11 @@
+{
+ "kind": "free",
+ "height": 1891297,
+ "inputs": 30,
+ "boxNanoErg": 701553016,
+ "payoutNanoErg": 701553016,
+ "minerFeeNanoErg": 0,
+ "rule": "each input: OUTPUTS.size == 1 (constant 0 = 1 on every box)",
+ "inclusion": "no fee output: a miner's own block only [inferred]",
+ "repeating": "one-time (no box of this template was created in the window except as a chained-transaction link)"
+}
