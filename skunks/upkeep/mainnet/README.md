@@ -146,3 +146,5 @@ Deposit, an announce, a completion with no vault signature, and a second announc
 wallet's second derivation path). Details: `skunks/policy/2-twostep/mainnet/README.md`.
 
 **Wallet: 21.213324102 ERG** confirmed. 0.005 ERG remains in the two-step vault (`f22a0443…`).
+
+Both mainnet signers (what each holds, accepts and refuses): `skunks/oneshot/SIGNERS.md`.

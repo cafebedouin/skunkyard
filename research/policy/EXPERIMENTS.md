@@ -375,6 +375,9 @@ The off-chain AVL+ prover (`AvlProver.scala`) agrees with the node's `AvlTree.in
 
 **What a wallet would have to support first** (reordered 2026-10-10 after RULING R4)
 
+What a wallet already has: signing P2PK and sigma ORs of keys, building transactions with data inputs and
+registers, and paying any address. Everything below is what it must add.
+
 1. **Recognise policy boxes by a list of template hashes.** R4 means a family, so separate sources and separate
    hashes (§1).
 2. **Build time-locked spends for the next block's height**, and take the node's check as the verdict, not the
@@ -390,6 +393,11 @@ The off-chain AVL+ prover (`AvlProver.scala`) agrees with the node's `AvlTree.in
    - a pending box's destination and deadline (§2 row 3).
 6. **Watch and cancel pending withdrawals within DELAY** (§2 rows 9–11, 16). This is the part a two-step vault
    cannot do by itself.
+   - The cancel's fee needs funds: the pending box must go back to the vault at its exact value, so the fee comes
+     from another input. A recovery holder must either hold a fee box (as the mainnet demo's recovery address did)
+     or have the cancel sponsored, as the completion was (`2-twostep/mainnet/README.md`).
+   - Signing a cancel means proving an OR of keys (owner or recovery) while holding one secret. **Wallets already do
+     this natively**; the demo used sigmastate-js only because its signer is a script.
 7. **Attach flag boxes as data inputs** for gated owner spends (1b rows 31–32; `QVault`).
 
 ## Rulings, decided 2026-10-10 (the user, with the planning instance)

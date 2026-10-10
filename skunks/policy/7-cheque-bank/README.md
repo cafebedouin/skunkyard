@@ -270,3 +270,28 @@ The 7d estimate is only as good as its inputs, so here is what was measured:
     field. Not tested.
   - ChainCash's notes differ in shape: pushed, endorsed, each note its own box. The bank's cheques are pulled and
     share one box. Hence the contention above, which ChainCash avoids.
+
+## Rows 14 and 14.r: the two cheap checks (2026-10-10)
+
+Step 5 of the review: two cheap checks before any reproduction.
+
+1. **The pair's cost against the devnet's block cap: ruled out.** A cashing costs about 13,370 (rows 6, 13.r, 14.r2),
+   so a chained pair is about 27,000. The devnet's `maxBlockCost` is 1,000,000 (`results-7b.json`, node
+   parameters), one eighth of mainnet's.
+2. **Candidate ordering: a likely cause** [inferred, not yet reproduced].
+   - **Code (v6.0.7):** in `CandidateGenerator.collectTxs` (lines 969–974), a mempool transaction whose inputs aren't
+     in the state being built is added to `invalidTxs`, not deferred, and invalid ids are removed from the mempool.
+     So a child taken before its parent is evicted.
+   - **Ordering:** the mempool orders by fee weight, and a parent gains its children's weight
+     (`OrderedTxPool.updateFamily`). The cashings here carried **no fee output** (the devnet's minimum fee is 0), so
+     parent and child tie at weight 0 and either may come first.
+   - **Log:** the node log for row 14 shows block 246's candidate assembled "from 3 transactions available" (emission,
+     parent, child) with 2 included, and the next regeneration had only 2 available: the child was gone from the
+     mempool.
+   - **The control:** the trivial chained pair that was mined (`../probe-chain.py`) also appears to have been
+     fee-less. One success and two failures fit an even chance on the tie.
+   - **The next test (not run):** the chained pair with fees, child fee at least the parent's, expecting both mined,
+     against several fee-less trials, expecting some evictions.
+   - **Prior art:** ergoplatform/ergo#2550 (open) reports a neighbouring candidate-assembly bug, where a transaction
+     supplied both explicitly and through the mempool is invalidated. This one, a child ordered before its parent,
+     is not reported there.

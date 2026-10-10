@@ -46,3 +46,5 @@ happened first.
 - Wallet 21.213324102 ERG, reconciling to the nanoERG: 21.223824102 − 0.0141 − 0.0011 − 0.0011 + 0.005 − 0.0011 +
   0.0019.
 - Ledger lines in `skunks/upkeep/mainnet/ledger.jsonl`.
+
+Both mainnet signers (what each holds, accepts and refuses): `skunks/oneshot/SIGNERS.md`.
