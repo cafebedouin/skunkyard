@@ -209,3 +209,16 @@ v3's wording ("FIPS 205 style … no standard's exact instance") satisfies all t
 sections 5 and 6 and every hash verifier's numbers, so the seats run again on the draft that follows those fixes,
 not on v3. The round-three apparatus is prepared in `r3/` (prompts that ask each seat to verify this log's
 dispositions, slice README, builder, runner).
+
+## Rulings, decided 2026-10-10 (the person)
+
+1. **Split:** two posts, a wallet post (sections 1 to 4) and a protocol post (sections 5 and 6), made after the
+   devnet fixes land, since the protocol half is what they rewrite.
+2. **Fix the contracts before posting**, and write a third document: a top-line account of the errors found in the
+   contracts and the implementation on the way (not the rig), the shape of each, why independent review mattered,
+   with pointers to the public record. Draft: `posts/2026-10-policy-review-lessons.md`.
+3. **Publish the private results files** after the fixes, in sequence; the harnesses stay private.
+4. **Credit:** it does not matter; crediting kushti for the quantum-day shape is fine. The person's account of the
+   provenance: the KeepAlive shape came from finding about 2,000 mainnet boxes that paid 0.03 to be consolidated
+   while looking for Lithos revenue, and kushti's quantum remark matched the same shape. Only what the repository
+   records goes in a post (`qvault/README.md:3` for kushti; `keepalive/README.md:3` for the consolidation boxes).
