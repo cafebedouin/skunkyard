@@ -26,13 +26,39 @@ not the binding constraint; the relay cap is 4,900,000 cost.
 | WOTS n32 w16 (compact) | once | 38,893 [measured, q2] | 51,896 | 2,144 | ~840 B [measured] | yes | building block |
 | **WOTS+ n32 w16** | once | ~45,800 [**measured** +17.7% over WOTS, see below] | ~58,800 | 2,144 | **703 B [measured]** | yes | building block (RFC 8391 component) |
 | XMSS single-tree, WOTS+ leaves, d=8 | many | ~50,000 [est.: WOTS+ + Merkle path; anchor: plain-leaf schedule 47,130 node measured] | ~50,000 | 2,144 + 32·d | ~1,500 B [est.; schedule tree 1,418 B measured] | yes | SP 800-208 |
-| SLH-DSA-128s | many | ~150,000–400,000 [est., order of magnitude: a few thousand tweakable-hash calls at the q2 per-op rate] | — | 7,856 [measured, SK-105] | **[unknown]** likely near or over 4,096 B | **[unknown]** | FIPS 205 |
-| SLH-DSA-128f | many | larger than 128s [est.] | — | 17,088 [measured, SK-105] | **[unknown]** | **[unknown]** | FIPS 205 |
+| **SLH-DSA-SHA2-128s** | many | **188,944 [measured, `slhdsa/`, random spend; 8 spends 185,345–191,167]; ~238,500 worst [est., fit]** | **201,947** | 7,856 [measured, SK-105] | **1,506 B [measured]** | **yes** | FIPS 205 |
+| SLH-DSA-SHA2-128f | many | ~3× 128s [est.: 22 layers at the measured per-layer and per-step cost; not built] | — | 17,088 [measured, SK-105] | ~1,500 B [est.: same code, other constants] | yes [est.] | FIPS 205 |
 
 Anchors: WOTS n32 w16 script 38,893 and tx 3,003 B, hashing ~7% of cost (`q2/RESULT.md`); the plain-WOTS-leaf
 schedule rekey 47,130 node (`RekeySchedule`, SK-052); SLH-DSA signature bytes and the 5.5×/15.6× jar verify ratios
-(`research/lattice/RESULT.md`, SK-105). SLH-DSA's jar figures are a **native** verifier; no in-script SLH-DSA
-verifier exists, so its in-script cost and tree size are estimates and its fit is the open question.
+(`research/lattice/RESULT.md`, SK-105). The SLH-DSA-128s row is now **measured** (step 3, 2026-10-10, `slhdsa/`):
+an in-script verifier exists and fits; see "Measured: SLH-DSA" below.
+
+## Measured (2026-10-10, step 3): SLH-DSA-SHA2-128s fits, 1,506 bytes
+
+`slhdsa/SlhDsa.es` (FIPS 205 Algorithms 20 and 24, SHA2 "simple" tweakable hashes) compiles with sigma-state 6.0.7
+to a **1,506-byte** ErgoTree, 37% of the 4,096-byte cap, and verifies a BouncyCastle 1.86 signature on the spend it
+guards in the q2 interpreter harness (`slhdsa/README.md`, `slhdsa/run.log`):
+
+```
+stage 7 compiled=true tree_bytes=1506 header=0x10 constants=123 criterion1_tree_le_4096=true
+stage 7 valid=ACCEPT cost=188944 node_cost=201947 tx_bytes=9412 criterion2_node_cost_lt_4900000=true
+stage 7 one_byte_flipped=REFUSE cost=187162 other_message=REFUSE cost=184938 bc_agrees=true
+ref-fit spends=8 cost_per_chain_step=27.8 fixed=136200 max_residual=335 worst_case_steps=3675 cost_worst_est=238504 [est.: linear fit, not run]
+```
+
+**The table's two unknowns resolve as "fits".** The estimate band (150,000–400,000, read up after the WOTS+
+correction) was right in order of magnitude: 188,944 on a random spend, ~238,500 at the worst case by fit. What the
+estimate missed in the other direction: the per-call address did **not** dominate, because it need not be built per
+call — each pair of 4-byte ADRS words is one `longToByteArray(hi · 2^32 + lo)`, and the layer/tree/type/key-pair
+prefix is built once per layer, so a chain step costs 27.8 units against WOTS+'s ~39 (38,479 / 990 steps, which
+includes its fixed part). Hashing is ~11% of the cost (computed from the interpreter's `PerItemCost(80, 8, 64)` over
+the reference's 2,023–2,233 sha256 calls), above q2's 7% because sha256 is charged 3.6× blake2b256 per call;
+interpretation is still ~89%. Per block by cost: ~39 SLH-DSA spends against ~154 for WOTS+ and ~596 for `proveDlog`
+(`q2/RESULT.md`'s method); by size (9,412-byte spend) ~135, so cost-bound.
+
+Not done: no node run (harness only, as scoped); worst case is a fit, not a run; 128f not built (estimated in the
+table from the measured per-layer and per-step costs).
 
 ## Measured (2026-10-10): WOTS+, and a correction to the sizing method
 
@@ -70,7 +96,8 @@ expressibility, not cost. It does mean any cost line in the post must be the mea
 3. **SLH-DSA is a go/no-go on one unknown: does an in-script verifier fit the 4,096-byte proposition?** The signature
    size (7,856 B for 128s) is not the blocker; the verifier tree is. This needs a build attempt to answer, and it is
    the only item here that might not fit. It is the stateless alternative whose value is removing the revealed-leaf
-   griefing entirely — the concrete fragility instance SK-052 measured.
+   griefing entirely — the concrete fragility instance SK-052 measured. **Answered 2026-10-10: go.** 1,506 bytes,
+   node cost ~202,000, all four criteria met (`slhdsa/README.md`; "Measured: SLH-DSA" above).
 
 ## Standards, for the post
 
@@ -81,6 +108,8 @@ expressibility, not cost. It does mean any cost line in the post must be the mea
 
 ## Order of the remaining build (SK-053)
 
-Sizing table (this) → WOTS+ verifier measured on the devnet, swapped into the qvault and the schedule leaves →
-SLH-DSA go/no-go from a verifier build attempt → the forum post. SK-029's many-time reply waits with it, since it
-rests on the same scheme choice.
+Sizing table (this, done) → WOTS+ verifier measured on the devnet (done), swapped into the qvault and the schedule
+leaves → SLH-DSA go/no-go from a verifier build attempt (**done: go**, `slhdsa/`) → the forum post. SK-029's many-time
+reply waits with it, since it rests on the same scheme choice. Open for the post: whether the rotating address is the
+stateful schedule (small, cheap, griefable) or stateless SLH-DSA (3.9× the WOTS+ cost, 7,856-byte signature, no
+index); both now have measured figures.

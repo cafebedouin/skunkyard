@@ -1,0 +1,66 @@
+{
+ "experiment": "6-rekey-slhdsa",
+ "stages": [
+  {
+   "compiled": true,
+   "tree_bytes": 914,
+   "cost": 106,
+   "verdict": "ACCEPT",
+   "error": null,
+   "stage": "stage-2"
+  },
+  {
+   "compiled": true,
+   "tree_bytes": 543,
+   "cost": 23421,
+   "verdict": "ACCEPT",
+   "error": null,
+   "stage": "stage-3"
+  },
+  {
+   "compiled": true,
+   "tree_bytes": 314,
+   "cost": 620,
+   "verdict": "ACCEPT",
+   "error": null,
+   "stage": "stage-4"
+  },
+  {
+   "compiled": true,
+   "tree_bytes": 819,
+   "cost": 177286,
+   "verdict": "ACCEPT",
+   "error": null,
+   "stage": "stage-5"
+  },
+  {
+   "compiled": true,
+   "tree_bytes": 622,
+   "cost": 10750,
+   "verdict": "ACCEPT",
+   "error": null,
+   "stage": "stage-6"
+  },
+  {
+   "compiled": true,
+   "tree_bytes": 1506,
+   "cost": 188944,
+   "verdict": "ACCEPT",
+   "error": null,
+   "node_cost": 201947,
+   "tx_bytes": 9412,
+   "flipped": "REFUSE",
+   "other_message": "REFUSE",
+   "cost_min": 185345,
+   "cost_median": 187307,
+   "cost_max": 191167,
+   "cost_without_tweakable_sha256": 162960,
+   "second_key_templates_equal": true,
+   "criterion1": true,
+   "criterion2": true,
+   "criterion3": true,
+   "criterion4": true,
+   "stage": "stage-7"
+  }
+ ]
+}

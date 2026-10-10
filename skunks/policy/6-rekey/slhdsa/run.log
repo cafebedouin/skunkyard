@@ -1,0 +1,56 @@
+# 2026-10-10T21:12:41Z sigma-state 6.0.7 (pinned jar first on the classpath)
+pin q2/wots-constant.es n=32 w=16 tree_bytes=840 (q2/README.md: 840)
+ref-verify sig_bytes=7856 pk_bytes=32 valid=ACCEPT one_byte_flipped=REFUSE other_message=REFUSE
+ref-indices idx_tree=7814008261324205 idx_leaf=199 fors_indices=[2274, 1263, 812, 1405, 147, 846, 2300, 863, 2035, 47, 3811, 1864, 1500, 1265]
+ref-fors pk=5537096e94ea67c936f9b10ceabddf9b
+ref-layer 0 idx_tree=7814008261324205 idx_leaf=199 wots_pk=b393be8d610a6dc36a8a21f575d67441 xmss_root=378baf92881713243b1d0b3939639778
+ref-layer 1 idx_tree=15261734885398 idx_leaf=429 wots_pk=1542ac52c611d412c0c444410a1fd633 xmss_root=d00c9e937ceed2d0731e5c7251e7e5d1
+ref-layer 2 idx_tree=29808075948 idx_leaf=22 wots_pk=5bf95baddf76beff8249d270824e3e0c xmss_root=d6dfda44b8061f5814978a2bb72873fc
+ref-layer 3 idx_tree=58218898 idx_leaf=172 wots_pk=b82f1e96352d522e6037937fa8a68d69 xmss_root=03803453ca01e50dcc395826da426a7e
+ref-layer 4 idx_tree=113708 idx_leaf=402 wots_pk=3f3cc8f949ecbfec57f60d71c48695d3 xmss_root=3c0702b86ae9953c5e7fcad6be80dcd1
+ref-layer 5 idx_tree=222 idx_leaf=44 wots_pk=396c4bc812ed08abe8010a4b03f1cb48 xmss_root=00e95a92879542b8fda4745da2a8419a
+ref-layer 6 idx_tree=0 idx_leaf=222 wots_pk=73d03e91ac149f8f69a4720737a1201c xmss_root=15289e870970fbe4c542d3f7b9616210
+ref-root ht_root=15289e870970fbe4c542d3f7b9616210 pk_root=15289e870970fbe4c542d3f7b9616210 match=True
+ref-hash tweakable_calls=2128 tweakable_input_bytes=224768 wots_chain_steps=1875 (worst case 3675) h_msg_sha256_calls=2 sha256_cost_block_units=20500.8
+ref-write /home/user/skunkyard/skunks/policy/6-rekey/slhdsa/vectors.json
+stage 2 compiled=true tree_bytes=914 header=0x10 cost=106 node_cost=13109 verdict=ACCEPT
+RESULT {"compiled": true, "tree_bytes": 914, "cost": 106, "verdict": "ACCEPT", "error": null, "stage": "stage-2"}
+stage 3 compiled=true tree_bytes=543 header=0x10 cost=23421 node_cost=36424 verdict=ACCEPT
+RESULT {"compiled": true, "tree_bytes": 543, "cost": 23421, "verdict": "ACCEPT", "error": null, "stage": "stage-3"}
+stage 4 compiled=true tree_bytes=314 header=0x10 cost=620 node_cost=13623 verdict=ACCEPT
+RESULT {"compiled": true, "tree_bytes": 314, "cost": 620, "verdict": "ACCEPT", "error": null, "stage": "stage-4"}
+stage 5 compiled=true tree_bytes=819 header=0x10 cost=177286 node_cost=190289 verdict=ACCEPT
+RESULT {"compiled": true, "tree_bytes": 819, "cost": 177286, "verdict": "ACCEPT", "error": null, "stage": "stage-5"}
+stage 6 compiled=true tree_bytes=622 header=0x10 cost=10750 node_cost=23753 verdict=ACCEPT
+RESULT {"compiled": true, "tree_bytes": 622, "cost": 10750, "verdict": "ACCEPT", "error": null, "stage": "stage-6"}
+stage 7 compiled=true tree_bytes=1506 header=0x10 constants=123 criterion1_tree_le_4096=true
+stage 7 valid=ACCEPT cost=188944 node_cost=201947 tx_bytes=9412 criterion2_node_cost_lt_4900000=true
+stage 7 one_byte_flipped=REFUSE cost=187162 other_message=REFUSE cost=184938 bc_agrees=true
+stage 7 criterion3_valid_accepted=true criterion4_forgeries_refused=true
+stage 7 costs_8_spends min=185345 median=187307 max=191167 all_accepted=true
+stage 7 second_key tree_bytes=1506 templates_equal=true trees_equal=false template_hash=586fe54883bcbd40b57b7b70319cb633f12883d4d6708850a66215633076db13 address_chars=2063
+stage 7 hash_share_approx cost_with_sha256=188944 cost_without=162960 share=0.1375
+RESULT {"compiled": true, "tree_bytes": 1506, "cost": 188944, "verdict": "ACCEPT", "error": null, "node_cost": 201947, "tx_bytes": 9412, "flipped": "REFUSE", "other_message": "REFUSE", "cost_min": 185345, "cost_median": 187307, "cost_max": 191167, "cost_without_tweakable_sha256": 162960, "second_key_templates_equal": true, "criterion1": true, "criterion2": true, "criterion3": true, "criterion4": true, "stage": "stage-7"}
+# the reference on the spend the full verifier checked (hash-call counts for the hashing share):
+ref-verify sig_bytes=7856 pk_bytes=32 valid=ACCEPT one_byte_flipped=REFUSE other_message=REFUSE
+ref-indices idx_tree=16429136177236586 idx_leaf=0 fors_indices=[514, 1241, 3688, 3566, 817, 3474, 3946, 498, 1318, 2175, 586, 2636, 1425, 205]
+ref-fors pk=abb1d041a27e6ca90a86c9caf20ccae9
+ref-layer 0 idx_tree=16429136177236586 idx_leaf=0 wots_pk=e865dbc04f2f6fad240bc75ea2a3c8af xmss_root=f540a8f9d2d1f560f440900be80567f2
+ref-layer 1 idx_tree=32088156596165 idx_leaf=106 wots_pk=912a45804736c096f320f87eb18accff xmss_root=77adc69a69d068d99efc082db6392e52
+ref-layer 2 idx_tree=62672180851 idx_leaf=453 wots_pk=289f1fd4ea491d2b15af9d9a8b3dc4dc xmss_root=baad28c96ae34763524163ee582c7a92
+ref-layer 3 idx_tree=122406603 idx_leaf=115 wots_pk=dbdee598ec54d41118f30c161bf5dade xmss_root=4bc77e8ae7d112bc53142bc81cfa4773
+ref-layer 4 idx_tree=239075 idx_leaf=203 wots_pk=c4c6a0e50dab9ec5f6da8446eee1569d xmss_root=087f0cc0cdd920c98446461ccee1ca42
+ref-layer 5 idx_tree=466 idx_leaf=483 wots_pk=3b99d00593800bd511bd08c9949687d8 xmss_root=1d12aca5d0a69c150404738c7ae01dfd
+ref-layer 6 idx_tree=0 idx_leaf=466 wots_pk=d7fd9f53bfdd9de55c9695c7dad257f4 xmss_root=15289e870970fbe4c542d3f7b9616210
+ref-root ht_root=15289e870970fbe4c542d3f7b9616210 pk_root=15289e870970fbe4c542d3f7b9616210 match=True
+ref-hash tweakable_calls=2143 tweakable_input_bytes=226298 wots_chain_steps=1890 (worst case 3675) h_msg_sha256_calls=2 sha256_cost_block_units=20644.8
+# the reference on every measured spend: chain steps against cost, and the worst case by linear fit:
+ref-spend 0 valid=ACCEPT wots_chain_steps=1890 tweakable_calls=2143 tweakable_input_bytes=226298 script_cost=188944 sha256_cost=20644.8 hash_share=0.1093
+ref-spend 1 valid=ACCEPT wots_chain_steps=1800 tweakable_calls=2053 tweakable_input_bytes=217118 script_cost=186570 sha256_cost=19780.8 hash_share=0.1060
+ref-spend 2 valid=ACCEPT wots_chain_steps=1770 tweakable_calls=2023 tweakable_input_bytes=214058 script_cost=185345 sha256_cost=19492.8 hash_share=0.1052
+ref-spend 3 valid=ACCEPT wots_chain_steps=1830 tweakable_calls=2083 tweakable_input_bytes=220178 script_cost=187119 sha256_cost=20068.8 hash_share=0.1073
+ref-spend 4 valid=ACCEPT wots_chain_steps=1980 tweakable_calls=2233 tweakable_input_bytes=235478 script_cost=191167 sha256_cost=21508.8 hash_share=0.1125
+ref-spend 5 valid=ACCEPT wots_chain_steps=1800 tweakable_calls=2053 tweakable_input_bytes=217118 script_cost=185973 sha256_cost=19780.8 hash_share=0.1064
+ref-spend 6 valid=ACCEPT wots_chain_steps=1890 tweakable_calls=2143 tweakable_input_bytes=226298 script_cost=188899 sha256_cost=20644.8 hash_share=0.1093
+ref-spend 7 valid=ACCEPT wots_chain_steps=1830 tweakable_calls=2083 tweakable_input_bytes=220178 script_cost=187307 sha256_cost=20068.8 hash_share=0.1071
+ref-fit spends=8 cost_per_chain_step=27.8 fixed=136200 max_residual=335 worst_case_steps=3675 cost_worst_est=238504 [est.: linear fit, not run]

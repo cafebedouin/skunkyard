@@ -279,10 +279,12 @@ sizing that gates the build is in `SCHEME-SIZING.md`.
 - **Sign-many (the rotating address): stateful vs stateless.** The key schedule (this, an XMSS shape with WOTS+
   leaves) is small and cheap but stateful — hence the revealed-leaf forced-reuse griefing above. **SLH-DSA** (FIPS
   205, stateless) removes the index entirely: no revealed-leaf griefing, no multi-device collision (SK-037), at a
-  large signature (SK-105: 128s 7,856 B) and an in-script verifier whose fit in the 4,096-byte proposition is the
-  open go/no-go.
+  large signature (SK-105: 128s 7,856 B). **Its in-script verifier fits (step 3, 2026-10-10, `slhdsa/`):**
+  `SlhDsa.es` compiles to a **1,506 B** tree, node cost **201,947** on a random spend (~251,500 worst [est.]),
+  a BouncyCastle signature accepted and two forgeries refused in the q2 harness (not yet on a node). So the rotating
+  address has a stateless option at about 3.9× the WOTS+ cost and ~39 spends per block by cost.
 
 Standards for the post: SLH-DSA is FIPS 205, XMSS is SP 800-208, WOTS+ is a building block (sign-once by design).
 Order: `SCHEME-SIZING.md` and the WOTS+ verifier (both done) → swap WOTS+ into the qvault hash key and the schedule
-leaves → SLH-DSA go/no-go (a cost-boxed cloud session, `prompts/sk053-slh-dsa-cloud.md`) → the post. SK-029's
-many-time reply waits with it.
+leaves → SLH-DSA go/no-go (done, go: `slhdsa/README.md`, from the cloud session `prompts/sk053-slh-dsa-cloud.md`)
+→ the post. SK-029's many-time reply waits with it.
