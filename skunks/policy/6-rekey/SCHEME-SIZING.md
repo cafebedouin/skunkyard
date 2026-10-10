@@ -24,7 +24,7 @@ not the binding constraint; the relay cap is 4,900,000 cost.
 | scheme | signs | script cost | node cost | sig bytes | verifier tree | ≤ 4,096 B? | standard |
 |---|---|---|---|---|---|---|---|
 | WOTS n32 w16 (compact) | once | 38,893 [measured, q2] | 51,896 | 2,144 | ~840 B [measured] | yes | building block |
-| **WOTS+ n32 w16** | once | ~42,000 [est.: +~3k for per-chain mask/tweak] | ~55,000 | 2,144 | ~1,000 B [est.] | yes | building block (RFC 8391 component) |
+| **WOTS+ n32 w16** | once | ~45,800 [**measured** +17.7% over WOTS, see below] | ~58,800 | 2,144 | **703 B [measured]** | yes | building block (RFC 8391 component) |
 | XMSS single-tree, WOTS+ leaves, d=8 | many | ~50,000 [est.: WOTS+ + Merkle path; anchor: plain-leaf schedule 47,130 node measured] | ~50,000 | 2,144 + 32·d | ~1,500 B [est.; schedule tree 1,418 B measured] | yes | SP 800-208 |
 | SLH-DSA-128s | many | ~150,000–400,000 [est., order of magnitude: a few thousand tweakable-hash calls at the q2 per-op rate] | — | 7,856 [measured, SK-105] | **[unknown]** likely near or over 4,096 B | **[unknown]** | FIPS 205 |
 | SLH-DSA-128f | many | larger than 128s [est.] | — | 17,088 [measured, SK-105] | **[unknown]** | **[unknown]** | FIPS 205 |
@@ -33,6 +33,32 @@ Anchors: WOTS n32 w16 script 38,893 and tx 3,003 B, hashing ~7% of cost (`q2/RES
 schedule rekey 47,130 node (`RekeySchedule`, SK-052); SLH-DSA signature bytes and the 5.5×/15.6× jar verify ratios
 (`research/lattice/RESULT.md`, SK-105). SLH-DSA's jar figures are a **native** verifier; no in-script SLH-DSA
 verifier exists, so its in-script cost and tree size are estimates and its fit is the open question.
+
+## Measured (2026-10-10): WOTS+, and a correction to the sizing method
+
+`WotsPlus.es` built and run on the devnet (`devnet-test-wotsplus.py`): a Python signer against the in-script
+verifier, a valid signature accepted, a one-byte forgery refused, and a plain-WOTS baseline that is byte-identical
+except the tweak. Measured on a random spend message (not q2's worst case), so the **overhead** is the figure, not
+the absolute:
+
+```
+WOTS+ node 50,679 (script ~38,479)   plain WOTS node 44,896 (script ~32,696)   tweak overhead 17.7%
+WotsPlus.es tree 703 B; signature 2,144 B; valid ACCEPT, one-byte forgery REFUSE
+```
+
+**The estimate said ~8%; the measured overhead is 17.7% — about 2× off.** The method counted only the extra
+*hashing* (q2: hashing is ~7% of WOTS cost, and the tweak roughly doubles the hash input, 66 B vs 32 B). It missed
+that the tweak adds, per chain step, an interpreter-side cost that hashing does not: building the address
+`Coll(c.toByte, s.toByte)` (two `toByte` conversions and a `Coll` construction) and two `++` concatenations, across
+all ~990 steps. On Ergo more than 90% of a WOTS spend is interpretation, not hashing (q2), so per-step interpreter
+ops, not hash bytes, dominate the tweak.
+
+**Consequence for the SLH-DSA estimate (which inherited the method):** its per-tweakable-call cost should be read
+*up*, because an SLH-DSA address (layer, tree address, type, key-pair/chain/hash address) is longer than WOTS+'s
+two-byte one, so the per-call concatenation cost is larger still. A 128s verifier of ~2,000 tweakable calls is
+therefore likely toward the upper end of the earlier 80,000–400,000 band, or beyond — but still inside the relay cap
+(4,900,000). So the correction does not change the SLH-DSA **go/no-go**, which remains tree size and compiler
+expressibility, not cost. It does mean any cost line in the post must be the measured-overhead one, not the ~8%.
 
 ## What the table says to build
 

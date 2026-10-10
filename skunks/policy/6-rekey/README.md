@@ -268,14 +268,21 @@ not the right final choice. The scheme is **two decisions**, because the two sig
 is blocked on them (it asks wallets to support a hash-key path, so the path's scheme must be chosen first). The
 sizing that gates the build is in `SCHEME-SIZING.md`.
 
-- **Sign-once (the quantum-day vault's hash key): WOTS vs WOTS+.** It signs once, to migrate, so a one-time scheme
-  suffices and no tree or state is needed. WOTS+ adds keyed/tweaked hashing that closes SK-035's multi-target and
-  domain-separation gap, at ~8% over WOTS and well inside the proposition cap. Answered first and cheap.
-- **Sign-many (the rotating address): stateful vs stateless.** The key schedule (this, an XMSS shape) is small and
-  cheap but stateful — hence the revealed-leaf forced-reuse griefing above. **SLH-DSA** (FIPS 205, stateless) removes
-  the index entirely: no revealed-leaf griefing, no multi-device collision (SK-037), at a large signature (SK-105:
-  128s 7,856 B) and an in-script verifier whose fit in the 4,096-byte proposition is the open go/no-go.
+- **Sign-once (the quantum-day vault's hash key): WOTS vs WOTS+ — answered, WOTS+.** It signs once, to migrate, so a
+  one-time scheme suffices and no tree or state is needed. `WotsPlus.es` (simple tweakable-hash instantiation) keys
+  every chain hash to a per-vault **public seed** and the (chain, step) address, so two vaults share no hash target
+  (SK-035's gap); the seed is bound into the commitment and published with it. Built and run on the devnet
+  (`devnet-test-wotsplus.py`): a Python signer against the in-script verifier, a valid signature accepted, a one-byte
+  forgery refused. **Tree 703 B** (well inside the 4,096-B cap). Cost: a **measured ~18% over plain WOTS**, not the
+  ~8% the sizing table estimated — the tweak's per-step address/concatenation ops, not its extra hashing, dominate
+  (`SCHEME-SIZING.md` records the correction and its effect on the SLH-DSA estimate).
+- **Sign-many (the rotating address): stateful vs stateless.** The key schedule (this, an XMSS shape with WOTS+
+  leaves) is small and cheap but stateful — hence the revealed-leaf forced-reuse griefing above. **SLH-DSA** (FIPS
+  205, stateless) removes the index entirely: no revealed-leaf griefing, no multi-device collision (SK-037), at a
+  large signature (SK-105: 128s 7,856 B) and an in-script verifier whose fit in the 4,096-byte proposition is the
+  open go/no-go.
 
 Standards for the post: SLH-DSA is FIPS 205, XMSS is SP 800-208, WOTS+ is a building block (sign-once by design).
-Order: `SCHEME-SIZING.md` (done) → WOTS+ verifier measured on the devnet, swapped into the qvault and these leaves →
-SLH-DSA go/no-go from a verifier build attempt → the post. SK-029's many-time reply waits with it.
+Order: `SCHEME-SIZING.md` and the WOTS+ verifier (both done) → swap WOTS+ into the qvault hash key and the schedule
+leaves → SLH-DSA go/no-go (a cost-boxed cloud session, `prompts/sk053-slh-dsa-cloud.md`) → the post. SK-029's
+many-time reply waits with it.
