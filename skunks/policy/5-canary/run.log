@@ -1,0 +1,11 @@
+pairs {'collide': ['f52a2d962186944c', '37cdd1f57cae7cf4'], 'draws': 512, 'near': ['8e5949d30741f870', 'fb21457d181c06d6'], 'hash_prefixes': {'collide': ['6208', '6208'], 'near': ['aff5', 'af0d']}}
+    1 owner spends vault A while the canary is false (data input)        expect ACCEPT     got ACCEPT                    ok
+    2 flip with a = b                                                    expect REFUSE     got REFUSE     node-check     ok
+    3 flip with a pair agreeing on 1 byte(s) only                        expect REFUSE     got REFUSE     node-check     ok
+    4 flip with a non-colliding pair                                     expect REFUSE     got REFUSE     node-check     ok
+    5 flip with a colliding pair (first 2 bytes)                         expect ACCEPT     got ACCEPT                    ok
+    6 true -> false                                                      expect REFUSE     got REFUSE     node-check     ok
+  6.s the flipped box refreshed unchanged                                expect ACCEPT     got ACCEPT                    ok
+    7 owner spends vault A with the true canary as data input            expect REFUSE     got REFUSE     wallet-sign    ok
+    8 hash key spends vault A                                            expect ACCEPT     got ACCEPT                    ok
+ALL AS EXPECTED

@@ -1,0 +1,235 @@
+{
+ "experiment": "5-canary",
+ "started_height": 192,
+ "node": {
+  "appVersion": "6.0.7",
+  "parameters": {
+   "outputCost": 100,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 192,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2000,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ },
+ "wallets": {
+  "A": [
+   "038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c",
+   "031ee1ab3b729f21e0dcee05642a63745286354d8e511e6376838e235a28078c01",
+   "0367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df",
+   "0398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04",
+   "026c2134d11af7f0bea024724278ebc37ced69a19a99dd6638f393d5f1b9c8bea0",
+   "0389e8fb63050cdb2c3f5c70b3d6167835b60bcf020b9ed7c332965ffce26f2e6f"
+  ],
+  "B": [
+   "03d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494",
+   "0376bf533d4b15510fa9f4124b6e48616f07debcf2ef0cfb185cdc4a576450b475",
+   "02ea2649b3512b9a859ab658a85e2989a7ae39b2518877b2dc0f2b44b785d5788d",
+   "03b4c210719212afb16b5f136a2dcb3cc9fc231721f711994facf3b6111afba7d0",
+   "0234835d35c02b0dc042aa9c041b854b98c28df4872fdc8c6a260bc2ddd767f5a3",
+   "02a52d6327542c16cce7645b899e651dc78098fa4f495acb36992e66b099405ec2"
+  ]
+ },
+ "trees": [
+  {
+   "name": "HCanary",
+   "tree_bytes": 129,
+   "box_bytes": 205,
+   "address": "5JA6PCiA3KxnGjEHYCsH72azrmoAPnQxDQCMEGmjehoAsQqKAYov3von3AwcQVwBWxeWU7WjH3N7u8Q52Ja6MMbEXBHcWmK43881gGMCjfgfcaWhy3VKXoQd3x6kH8kroCGtH8Espp5thn4C5KfGX6WVUk9idRgjnSrKH2Q1fWXWGYpEURCTpvQ",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 256250000
+  },
+  {
+   "name": "QVault-canary",
+   "tree_bytes": 1178,
+   "box_bytes": 1219,
+   "address": "mTD2siKKMjaA9Cqqm2G9zCC4ZYtSKKBLDQFKrQmCCTPChXwxXpxkEtsF6RocPpNHTTTi2xiuCEK89rzXiBV1RHyEYj5mUdiHH2d6FhRoXD7M5T3dyEwZM2Y6BzEEx6E3aAJXRp8hogxSQwjXhdn9S7k4z3umWUBkDc63ALyAVYa2XWoJJiHMdspQF7z614cQP5ndEnxjtPp1g9teWRMoKmWkZrXZ229gwbLQ5Xq2g9Bn3mnrSynzALqeYK6Shk4TEiDT7VqXK5gbdNDvtCHjj4DmwWc4UcHTcRbSdUE9mAr6mA8YyaKGRo3uazNQDQDXGQZ3Jv22tU2ShxrUvcA21udVmAnnWz423cRJqffoQLy6Ug6hHJW76kKLdveMqTn1YWW9smMzBy1bGZ9KYEfefR5i6rapR6wypqHLnXKSHF4k76mDNqem2PSnswDRWKJFEGw2RW26RDVSUgiNaKH6pp5VFrPeDVG3DowXMAGDTp8HvCE9qzhCnGKYcRhETs46nFtFFcVoNTf8ZTwFL4YRMEWwSWu3Thwm8aDuxDjN2XjPWXqcKdqNoQzfWyrHEqPp1bnCQJDiUs6DZmzbAXYXPfg5BCPmwWiHLTVrjgo4LoZ6fuDr5no2k5D7yori9TDSYi8zwAr6nUL2iBvYzHEezh7YELjcQTwxXqXwh8NbkL7fHMmnqtNX6ULt3KnMYmicSzbetUTEtfd86MLn2AyWaRQeWZW7uRncKNwV1yfhkKnatWw56Ji39zduYfrv3kuSZrgwvJa8MjgRPTFuYfzyz6vLweAbS2nzKR9jB366AQ6Fvz4YxmfDFGKwbVE6CL6K8xSbyZ4rutrBgj9thXGMVhEyxhoevb4Z5BNGsSMw5F5BYueTHjrrJtRZdjUDDGPmHFaxkNaRYyJ2sD1Vt2y1bksNUDQNEuJDgQdKLxpnfDoPCck2TsnCPVCgNfFPsSxkCWDy3aUk6zGHC66bSjzpStrSYjuTUuJME5EXNW4T1TjHnNWpbWzWPX5WhyUarBARog1GXsw5gJR3NKGmUHLZwMmWPAM6GU1w6gQc58cYKqi4NfEt4fipMJ2GQxc3d3ZRda8h9bpNENH7Xsx8H1aGMqh8sJVEPWE6TCW7BsXWdj7GFnoPFAkjvBX9Ke4c3rkNaH7BDvVYFdp9gwbh99ZHF2wMTGaoTy3gBYQCSpcCFy7QfZpbHqgmEbmhZGwoZaWPKNCCcKRpGHyxGcw4ikMj4uQXriXBAepeavCU8JkFaGupoZEHM5ihXbYiiLzgZKkoMiE73gr9Ch8DTgo6YA6AEkbaFvk781LZEdYcRXtrh2xF8TWW3ikPjGT3i2iomtMP7URhak1JfVAaXrRyfQBHoij4CnZK1U9ZbK6LNoaQWpeQK3XNiZuwWZbpFkRUDSnekr6BnWM4Luk2CZeCwZSK16yN5np7F8rC9TZpjn5jscyQZET5vTce6foXHJ8Qv6fA1rnFDxXdSvsix5dRX5W9DSYABkAddzh6Ji41jK8BXK5uERDR8XjsfYzwcuyNSVBL4ke2TJg1e6NDtHTMZ25fs6PBaU2naeZDJwugQFZpT9qBMfyPK2BtGHJMfpncckDKCkWJhbUQHU3iVRp",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 1523750000
+  }
+ ],
+ "cases": [
+  {
+   "n": 1,
+   "label": "owner spends vault A while the canary is false (data input)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "1728bad76e6f0dd5cbe13782886557e63693a7f42911dbf8ea53a1ba6448a372",
+   "heights": {
+    "before": 194,
+    "after": 194
+   },
+   "detail": "1728bad76e6f0dd5cbe13782886557e63693a7f42911dbf8ea53a1ba6448a372",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": 2,
+   "label": "flip with a = b",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 5,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 194,
+    "after": 194
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 66ee2232f75e2227e4578ae4d718ade31ce3668217bc2c7f2b052dfe254619d8: #0 => Success((false,77))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 3,
+   "label": "flip with a pair agreeing on 1 byte(s) only",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 5,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 194,
+    "after": 194
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 80336e6362df7f8dcde61d1b409bbc0b967562dceb8e16f914f2b5a907c24070: #0 => Success((false,88))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 4,
+   "label": "flip with a non-colliding pair",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 5,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 194,
+    "after": 194
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. dcf7de7cdc191704a49e9aa035597ee13676b49bfd5e2fa478cc769a3e120211: #0 => Success((false,88))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": 5,
+   "label": "flip with a colliding pair (first 2 bytes)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 12588,
+   "cost_instrument": "mempool",
+   "tx_id": "17ddb6ae5d63fbcb805b35612c1583983f0df8ecf271d825aefe75cde6c10e8c",
+   "heights": {
+    "before": 194,
+    "after": 194
+   },
+   "detail": "17ddb6ae5d63fbcb805b35612c1583983f0df8ecf271d825aefe75cde6c10e8c",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": 6,
+   "label": "true -> false",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "6.s",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 195,
+    "after": 195
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. f9d531f3fda568bd0cc9c463c8b3ba46e876b4aecf5cd0509d26c97de5d1606f: #0 => Success((false,71))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "6.s",
+   "label": "the flipped box refreshed unchanged",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "c511904f49488edb418d5ee9fa1bd2092161ed1e74cdcb2fe055c3d198d57fdd",
+   "heights": {
+    "before": 195,
+    "after": 195
+   },
+   "detail": "c511904f49488edb418d5ee9fa1bd2092161ed1e74cdcb2fe055c3d198d57fdd",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": 7,
+   "label": "owner spends vault A with the true canary as data input",
+   "got": "REFUSE",
+   "source": "wallet-sign",
+   "sibling_n": 1,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 195,
+    "after": 195
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. f04116875b8ff99903063af27b562d9b93a292c914b7a9c93b662066",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": 8,
+   "label": "hash key spends vault A",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "75a9aca88467e5f74c0f38955a156b55ab8bb54b9bd9644f30370a794bd73539",
+   "heights": {
+    "before": 195,
+    "after": 195
+   },
+   "detail": "75a9aca88467e5f74c0f38955a156b55ab8bb54b9bd9644f30370a794bd73539",
+   "expect": "ACCEPT",
+   "ok": true
+  }
+ ],
+ "harness_bugs": [],
+ "pairs": {
+  "collide": [
+   "f52a2d962186944c",
+   "37cdd1f57cae7cf4"
+  ],
+  "draws": 512,
+  "near": [
+   "8e5949d30741f870",
+   "fb21457d181c06d6"
+  ],
+  "hash_prefixes": {
+   "collide": [
+    "6208",
+    "6208"
+   ],
+   "near": [
+    "aff5",
+    "af0d"
+   ]
+  }
+ }
+}
