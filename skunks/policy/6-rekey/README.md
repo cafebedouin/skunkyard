@@ -162,20 +162,93 @@ are attack tooling, kept outside git in `~/bin/skunkyard-private/policy-attacks/
 `old-1`/`old-2` are the theft the review found (custody taken by the keyless merge, then cashed out); `new-1`/`new-2`
 are the same attempts refused by the fix.
 
-**Known edges, to weld before this ships under its name (reasoned from source, not yet devnet-tested):**
-- **Brick risk.** The NFT is enforced-preserved only on the `maintain` (merge) path. The owner and hash-key rekey
-  paths put no token constraint on the successor, so a rekey that drops the NFT yields a box that is no longer
-  registered — unspendable by owner/hash-key/maintain. The welded version must require any successor *at this
-  address* to carry the NFT (while still allowing a genuine withdrawal that closes the account).
-- **Peel-off hijack.** The owner can move the NFT out of the script into a plain box (the owner path has no output
-  constraints). While the NFT sits outside a key-protected account box it is an ordinary transferable token; whoever
-  then holds it can plant a box at the account address with their own key and capture future plain payments. The
-  weld — the NFT may never leave the script; a transfer is a rekey, nothing else — closes this.
+**Two edges of v2, now welded in `RekeyAccount3.es` and devnet-verified:**
+- **Brick risk.** In v2 the NFT was enforced-preserved only on the `maintain` (merge) path; the owner and hash-key
+  rekey paths put no token constraint on the successor, so a rekey that drops the NFT yielded a box no longer
+  registered — unspendable. (Weld row `v2-brick`: the drop is accepted; `v2-brick-sp`: the result is unspendable.)
+- **Peel-off hijack.** In v2 the owner could move the NFT out of the script into a plain box; while it sits outside a
+  key-protected account box it is an ordinary transferable token, and whoever then holds it can plant a box at the
+  account address with their own key and capture future plain payments. (Weld rows `v2-peel`, `v2-peel-cap`.)
 - **Supply-exactly-one is off-chain.** The contract checks `t._1 == account`, not the token's supply or mint
-  provenance. The wallet must mint the NFT (amount 1) in the same transaction that creates the first registered box;
-  the contract does not enforce it.
+  provenance. The wallet must mint the NFT (amount 1) in the same transaction that creates the first registered box.
 
-These are design tradeoffs of identity-by-transferable-token: the NFT is the right tool when an account is meant to
-be a transferable, inheritable, composable object, and the wrong price for a seed-derived personal receive address
-(where a fixed key, or a seed-derived pre-committed key schedule, avoids the token entirely). Charting the comparison
-is a design program, not this experiment.
+`RekeyAccount3.es` welds the NFT to the script: **every output at this script must carry the NFT** (no bricked
+successor), **no output off the script may carry it** (no peel-off), and **closing the account burns it**. A transfer
+is therefore a rekey, nothing else. Devnet (`devnet-test-weld.py`, attack tooling in
+`~/bin/skunkyard-private/policy-attacks/6-rekey/`; table is the public record):
+
+| # | case | expected | got |
+|---|---|---|---|
+| v2-brick | v2: owner rekey drops the NFT (successor has no NFT) | ACCEPT | ACCEPT (the edge) |
+| v2-brick-sp | v2: spend that NFT-less successor | REFUSE | REFUSE (bricked) |
+| v2-peel | v2: owner peels the NFT off into a plain (off-script) box | ACCEPT | ACCEPT (the edge) |
+| v2-peel-cap | v2: the peeled NFT, replanted with B's key, absorbs a plain payment | ACCEPT | ACCEPT (hijack) |
+| v3-brick | v3: owner rekey dropping the NFT | REFUSE | REFUSE |
+| v3-peel | v3: owner peels the NFT off into a plain box | REFUSE | REFUSE |
+| v3-plant | v3: planted box (no NFT) absorbs a plain payment (hole-b regression) | REFUSE | REFUSE |
+| v3-rekey | v3: honest secp rekey, successor carries the NFT | ACCEPT | ACCEPT |
+| v3-xfer / v3-xfer-b | v3: transfer-by-rekey to B, then B spends with B's key | ACCEPT | ACCEPT |
+| v3-merge | v3: honest plain-payment merge, NFT kept | ACCEPT | ACCEPT |
+| v3-close | v3: closure-by-burn (withdraw all, NFT in no output) | ACCEPT | ACCEPT |
+
+## Rekey-cost comparison (SK-052, 2026-10-10): fixed key vs NFT account vs key schedule
+
+The NFT closes the hole but buys a *transferable* identity with real costs. The design question (`CHARTER.md`): is
+there a **token-free** rotating-key receive address worth having, or does the fixed key win? Three variants, all on
+the `policy` devnet.
+
+- **`FixedKey.es`** (a plain P2PK, owner key a constant). Plain payments are safe for free — they are just more of the
+  owner's boxes. Rekey is *not* in place: the owner moves every box to a new fixed-key address. The baseline.
+- **`RekeyAccount3.es`** (NFT account, welded; above). In-place rekey; plain payments merge keylessly; transferable.
+- **`RekeySchedule.es`** (seed-derived key schedule). `ROOT` is a Merkle root over N = 2^DEPTH leaves,
+  `leaf_i = blake2b256(WOTS_commitment_i)`, the commitments derived from the seed; the address embeds `ROOT`
+  (segregated — shared template, and the address is a pure function of the seed: **seed-derivable, no token**). A box
+  is registered only when its R4 commitment at index R5 verifies against `ROOT` with a Merkle proof the spender
+  supplies; a foreign leaf is not in the tree, so its box cannot be spent at all. Rekey reveals the next leaf plus a
+  WOTS signature at the current leaf and advances the index (one-time keys). Merge is keyless, keeping the registered
+  input's R4/R5. Essentially a hand-rolled single-tree XMSS.
+
+| variant | tree | rekey | plain-payment handling | token | seed-derivable | post-quantum |
+|---|---|---|---|---|---|---|
+| `FixedKey.es` | 36 B (P2PK) | move, **4,928/box** (19,712 for 4) | free (already owner's) | no | yes | no |
+| `RekeyAccount3.es` | 1,267 B | in-place, 12,590 (secp) / 46,637 (WOTS leaf) | merge **14,791** | **yes** (NFT) | no | with WOTS leaves |
+| `RekeySchedule.es` | 1,418 B | in-place, **47,130** (WOTS leaf) | merge **14,899** | no | yes | yes |
+
+Schedule devnet rows (`devnet-test-schedule.py`, attack tooling in `skunkyard-private`), all as expected:
+`sched-foreign` a leaf not in ROOT cannot be spent (REFUSE); `sched-fwd`/`sched-fwd2` WOTS-leaf rekey forward
+(ACCEPT, index 0→1→2); `sched-back` index-not-advanced (REFUSE); `sched-grief` a plain payment merged into a
+*revealed past* leaf (ACCEPT); `sched-grief-theft` redirecting that merge to the griefer's own leaf (REFUSE);
+`sched-merge` honest merge into the current box (ACCEPT). Fixed-key: `devnet-test-fixedkey.py`,
+`results-fixedkey.json` (public).
+
+**What the numbers say.**
+- **Dropping the token is essentially free.** The schedule merges a plain payment at 14,899 against the NFT's 14,791
+  — the Merkle check on the registered input adds ~100 units. A token-free, seed-derivable, post-quantum rotating
+  account merges at the same price as the NFT.
+- **Neither in-place variant beats the fixed key on raw cost.** The fixed key absorbs a plain payment for free and
+  pays only 4,928/box, and only when rotating; the in-place variants pay ~15k per plain payment. In-place rekey +
+  merge costs roughly 3× the fixed-key per-box baseline. What that 3× buys: no address change on rotation, and (the
+  schedule) a seed-derivable, post-quantum identity, or (the NFT) a transferable object.
+- **The griefing Fable anticipated does not arise.** With a Merkle `ROOT`, future leaves are hidden, so no one can
+  "plant a future key and advance the owner's index." The residual griefing is planting a box at a *revealed past*
+  leaf and merging the account's plain payments into it (`sched-grief`): a DoS on that payment (the box is keyed to a
+  spent one-time leaf), never a theft — `maintain` forces the successor to keep the registered input's key, so
+  redirecting to the griefer's own leaf is refused (`sched-grief-theft`).
+
+The kill criterion and the call between these are in `CHARTER.md` (the planning instance's, SK-052).
+
+## Hash-based signature choice (SK-053, queued)
+
+`RekeySchedule.es` is a single-tree XMSS with **plain-WOTS** leaves, which is enough to prove the construction and
+measure it but is not the right final choice for a deployment:
+- **WOTS+** is the floor: its keyed/tweaked hashing closes the multi-target and domain-separation gap SK-035 flags
+  for an address that releases many signatures over its life.
+- **XMSS / XMSS^MT** is the correct framing (what this already is) and lifts the bounded-N rotation cap via layered
+  trees, at more hashing cost.
+- **SLH-DSA (stateless, SPHINCS+)** removes the index entirely — no state to lose, no revealed-leaf griefing, no
+  multi-device collision (SK-037) — which matters most for a *receive address*, at a large per-spend size (SK-105:
+  5.5× `proveDlog`, byte-bound).
+
+The axis the question exposes: **stateful-small-but-fragile vs stateless-large-but-robust**, decided by whether the
+account is a seldom-rotated personal address (leans stateless) or a high-throughput object (leans stateful). Queued
+to measure against the SK-029 harness and SK-105's sizes.
