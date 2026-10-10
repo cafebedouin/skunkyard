@@ -1,0 +1,652 @@
+{
+ "278ccff223ae2d7debac0626704be6046ade899969970565cf6395793ee84d02": {
+  "name": "ErgoPad-style staking incentive (NETA and others), older version",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "SELF.value <= 0.1 ERG && OUTPUTS.size == 3 && OUTPUTS(0) same script, value > SELF.value && OUTPUTS(1).value == 0.0005 ERG * (inputs of this script) && OUTPUTS(2).value == 0.001 ERG",
+    "executor": "0.0005 ERG per merged box (OUTPUTS(1), any script); OUTPUTS(2) 0.001 ERG any script (the miner fee)",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless with input",
+    "condition": "INPUTS(0) holds the staking state NFT, INPUTS(2) the stake token, SELF last input, OUTPUTS(4) same script >= SELF.value - 0.005 ERG ...: the staking setup's own compound/emit step",
+    "executor": "nothing beyond the protocol's fixed fee outputs; needs the setup's state box",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless with input",
+    "condition": "INPUTS(0) holds the stake-state token, SELF last input, every input a stake box ...: staking emission",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "consolidation bounty applies only to boxes of at most 0.1 ERG; every such box was merged on 2026-10-09; the merged boxes hold more than 0.1 ERG, so no keyless take stands until new small boxes are created",
+  "preserve": "yes, while a box holds <= 0.1 ERG (consolidation); larger boxes are spent by the setup's own steps",
+  "take": null
+ },
+ "b924a4f735730da5d8dc4cd658ef2308fb520d38510aed08db549be989db2943": {
+  "name": "ErgoPad-style staking incentive, newer version (stake NFT b682ad9e)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "SELF.value <= 0.1 ERG && OUTPUTS.size == 3 && OUTPUTS(0) same script, value > SELF.value && OUTPUTS(1).value == 0.0005 ERG * (inputs of this script) && OUTPUTS(2).value == 0.001 ERG",
+    "executor": "0.0005 ERG per merged box (OUTPUTS(1), any script); OUTPUTS(2) 0.001 ERG any script (the miner fee)",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless with input",
+    "condition": "INPUTS(0) holds the staking state NFT, INPUTS(2) the stake token, SELF last input, OUTPUTS(4) same script >= SELF.value - 0.005 ERG ...: the staking setup's own compound/emit step",
+    "executor": "nothing beyond the protocol's fixed fee outputs; needs the setup's state box",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "as 278ccff2: all small boxes merged on 2026-10-09",
+  "preserve": "yes, while a box holds <= 0.1 ERG",
+  "take": null
+ },
+ "e9d13195d73d90fde24ade268844724417323260456736559cf89a18a3eb696a": {
+  "name": "OUTPUTS.size == n (n = 1 in every box read)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "OUTPUTS.size == 1",
+    "executor": "the whole box: a one-output transaction sends it anywhere; no fee box fits, so only a miner can include it for free [inferred: nodes drop zero-fee transactions]",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "free box, own block only",
+  "preserve": "yes (anyone may respend it)",
+  "take": {
+   "kind": "free",
+   "outputs": 1
+  }
+ },
+ "75bee19d7f17ff48090bf9bf950882d496889f2916306e5f6e65fc66a28e9299": {
+  "name": "data records 'flowlens:forensic:immutable:v2' (R4 tag, R5..R9 JSON)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "unreachable",
+    "condition": "HEIGHT < 0 && SELF.R4 == 'flowlens:forensic:immutable:v2'",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "no input satisfies HEIGHT < 0: unspendable by design (immutable records); every box is worth less than one rent claim (0.0004 ERG, 262 to 983 bytes), so storage rent consumes each four years after creation",
+  "preserve": "no",
+  "take": null
+ },
+ "4e83fa68ef3ed9794bbab5d8799998a9e09fb10a0afe8d1bf928936dfd11c465": {
+  "name": "EIP-31 Babel fee box",
+  "source": "eips eip-0031.md:57-87; decompiled script",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "getVar[Int](0).isDefined && OUTPUTS(v0) same script, token, R4, R5 copied, R6 = SELF.id && tokens added * R5 >= ERG taken",
+    "executor": "the spread against a pool selling the token below R5 (U1b g)",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "key",
+    "condition": "R4[SigmaProp].get (the owner)",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "standing bid; a take exists only when a pool sells the token below the bid (line n checks every box)",
+  "preserve": "no (a fill or the owner's key)",
+  "take": null
+ },
+ "c9162bd02adb1d5f25ec5cdeb19d6712f0cd46efdae24d140be4f91e89d50de6": {
+  "name": "USE (Dexy) bank: useBankNFT, USE",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless with input",
+    "condition": "OUTPUTS(1) same script, NFT and token kept && INPUTS(0) holds one of four action NFTs (mint, intervention, ... ) or INPUTS(2) the fifth",
+    "executor": "nothing: the action contracts set the amounts",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "protocol plumbing; spent only beside its own action boxes",
+  "preserve": "value far above rent",
+  "take": null
+ },
+ "ab9e9b2ad4ac29e4eab34ab351e551316c4b0734a056cb1c8fa7e70c586e9bc4": {
+  "name": "AVL-tree payout ledger, ERG (token f0f3581e at INPUTS(0))",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless with input",
+    "condition": "INPUTS(0) holds token f0f3581e && OUTPUTS(0).value == INPUTS(0).value + sum(var 0 amounts) && OUTPUTS(0).R4 digest == INPUTS(0).R4 updated by var 0 with proof var 1",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "deposits into a ledger box held by its operator's NFT box; no executor reward",
+  "preserve": "value above rent",
+  "take": null
+ },
+ "a88b7bcf9de85987e79e8f31d3b5d0d1758b7299729ef41d59aafb483520cb6f": {
+  "name": "AVL-tree payout ledger, ergopad (same design, ERG and token columns)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless with input",
+    "condition": "INPUTS(0) holds the ledger token && OUTPUTS(0) value and token(1) grow by var 0 amounts && R4 digest updated",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "as ab9e9b2a",
+  "preserve": "value above rent",
+  "take": null
+ },
+ "f2aa6b79b4b3797abcf317199155621ad924fcda9478483d7a595271b56213ca": {
+  "name": "GORT buyback (buybackNFT, GORT)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless with input",
+    "condition": "var 0 == 0 && INPUTS(0) holds a pool NFT d1c9e206 && OUTPUTS(1) same script gains GORT && ERG out <= pool price * GORT in: the buyback swap",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless now",
+    "condition": "var 0 == 1 && OUTPUTS(2) same script, same tokens, value > SELF.value",
+    "executor": "nothing: a top-up (donation) path",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless with input",
+    "condition": "var 0 not 0 or 1 && INPUTS(0) holds 3c45f29a && ...: a token return to its source",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "protocol plumbing; the keyless-now path only adds ERG",
+  "preserve": "value above rent",
+  "take": null
+ },
+ "8b1e2b8137db70f6d2814b060aee6e1da7bcd2d4a0b98db5dabed2098e499701": {
+  "name": "DORT buyback (dortBuyback, DORT)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless with input",
+    "condition": "var 0 == 0 && INPUTS(0) holds pool NFT 35bc7189 && OUTPUTS(1) same script, R4 = SELF.id, gains DORT, ERG out bounded by the pool",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless now",
+    "condition": "var 0 == 1 && OUTPUTS(2) same script and tokens, value > SELF.value, R4 = SELF.id",
+    "executor": "nothing: a top-up path",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless with input",
+    "condition": "var 0 not 0 or 1 && INPUTS(0) holds 6a2b821b && ...",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "as GORT buyback",
+  "preserve": "value above rent",
+  "take": null
+ },
+ "b38309cece954ebd78f12a78ebdf21d07f7f2572d778c6a8375f1080999ee13a": {
+  "name": "Lithos emission config (LITHOS-EMCONFIG)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless with input",
+    "condition": "the inputs hold at least 3 units of token 519b9fde && OUTPUTS(0).tokens(0) == SELF.tokens(0)",
+    "executor": "nothing: a governance vote by token holders",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "governance; not a take",
+  "preserve": "value above rent",
+  "take": null
+ },
+ "58210ce063251715e47fbd48bf7e8f6409a83e7e00685ec1568e6256e84d02ce": {
+  "name": "EGIO staking: stake boxes (EGIO Stake Token, EGIO)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless with input",
+    "condition": "INPUTS(0) holds the EGIO stake-state token 0e420219 && OUTPUTS(i) recreates SELF with R4(0) + 1 ...: a reward step",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless with input",
+    "condition": "INPUTS(0) holds 097fd281 && INPUTS(1).id == SELF.id && ...: unstake",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless with input",
+    "condition": "INPUTS(0) holds 097fd281 && INPUTS(1).id == SELF.id",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "every path needs the protocol's state box at INPUTS(0); none lets a third party merge or refresh",
+  "preserve": "no keyless path for a third party: only the EGIO state box's own transactions respend them",
+  "take": null
+ },
+ "ab4e4dc33cd11fa2dbaf989b0988f6f94e29948b195227b3e65174d540cc83fb": {
+  "name": "ErgoMixer token sale box (ErgoMixer token, R4 price list)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "OUTPUTS.size == 4 && OUTPUTS(0) script hash 199a5a08 && OUTPUTS(1) same script, R4, R5, token kept && OUTPUTS(2) script hash ... gets the price for the tokens bought",
+    "executor": "nothing: a purchase",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless with input",
+    "condition": "OUTPUTS.size == 5 && INPUTS(0) script hash 199a5a08 && ...: a purchase from a mix",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "key",
+    "condition": "pk(b038b0\u2026)",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "a sale; the buyer pays the listed price",
+  "preserve": "no (0.1 ERG boxes, a purchase or the owner's key)",
+  "take": null
+ },
+ "c5328d694b9892d54f1d9a335a9e962f9ce3e38886b5ef676c4783fdbc1f73db": {
+  "name": "ErgoMixer fee box (R4 fee, token 1a6a8c16 accounting)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "key",
+    "condition": "pk(b038b0\u2026)",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless with input",
+    "condition": "INPUTS.size == 2 && OUTPUTS.size == 3 && OUTPUTS(1) same script >= SELF.value - R4 && ErgoMixer tokens paid in: a mix pays its fee",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless with input",
+    "condition": "INPUTS.size == 3 && OUTPUTS.size == 4 && ...: the same with one more input",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "the mixer's fee box; R4 ERG leaves per use, paid for in ErgoMixer tokens",
+  "preserve": "value above rent",
+  "take": null
+ },
+ "37142e749788b64ad54de21c9fae4269955e214d23dcba961539b26e690b5573": {
+  "name": "Paideia DAO treasury (im.paideia.contracts.treasury) [inferred from the action codes]",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless with input",
+    "condition": "var 0 in (3, 4) && the DAO config data input (AVL) && ...: a passed proposal's payout",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless with input",
+    "condition": "var 0 == 9 && config data input ...: an update",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless now",
+    "condition": "var 0 == 10 && at least 5 inputs and exactly 1 output of this exact script && every token kept && (inputs' ERG - output's ERG) <= 0.002 ERG && inputs' ERG >= 0.002 ERG",
+    "executor": "up to 0.002 ERG per transaction (not per box), from which the miner fee is paid; needs >= 5 boxes of one DAO's tree",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless later",
+    "condition": "var 0 == 7 && OUTPUTS(INPUTS.indexOf(SELF)).value >= SELF.value - 0.002 ERG && its script hash is the one the DAO config (data input, R4 AVL tree, proof var 1) lists && the box bytes after value, script and height are unchanged && (new creation height - SELF creation height >= 504,000 || script changed)",
+    "executor": "up to 0.002 ERG per box refreshed, once the box is 504,000 blocks old; needs the DAO config box as a data input and an AVL proof (both public)",
+    "whenRule": {
+     "kind": "creationPlus",
+     "blocks": 504000
+    },
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "a merge pays at most 0.002 ERG a transaction: barely above a 0.0011 ERG fee, a take only in a miner's own block; the refresh path is rent protection built in, open at 504,000 blocks of age",
+  "preserve": "yes: merge (>= 5 boxes) any time; refresh after 504,000 blocks; both keyless",
+  "take": null
+ },
+ "5b41af39fc2d6a5b27a726c68e739279d0915c438d3c8491ede265345e8dde61": {
+  "name": "Paideia DAO treasury, variant (same action codes)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "var 0 == 10 && >= 5 inputs and 1 output of this script && the output holds every token && ERG taken <= 0.002",
+    "executor": "as 37142e74",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless later",
+    "condition": "var 0 == 7 && OUTPUTS(INPUTS.indexOf(SELF)).value >= SELF.value - 0.002 ERG && its script hash is the one the DAO config (data input, R4 AVL tree, proof var 1) lists && the box bytes after value, script and height are unchanged && (new creation height - SELF creation height >= 504,000 || script changed)",
+    "executor": "up to 0.002 ERG per box refreshed, once the box is 504,000 blocks old; needs the DAO config box as a data input and an AVL proof (both public)",
+    "whenRule": {
+     "kind": "creationPlus",
+     "blocks": 504000
+    },
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "as 37142e74",
+  "preserve": "yes: merge (>= 5 boxes), refresh after 504,000 blocks",
+  "take": null
+ },
+ "59c5b7bfe28d4b947590b152d81fe20fb5129510a585cc36da542b9a20ff389b": {
+  "name": "Paideia DAO key / config-holder boxes (Sigmanauts DAO Key and others; R4 AVL)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless with input",
+    "condition": "var 0 == 8 && the box holding SELF's token (output) has the same tokens, more ERG, a script listed in its own R4 tree under im.paideia.contracts.action.<input 0's script> && the key is defined: an action spends it",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless later",
+    "condition": "var 0 == 7 && OUTPUTS(INPUTS.indexOf(SELF)).value >= SELF.value - 0.002 ERG && its script hash is the one the DAO config (data input, R4 AVL tree, proof var 1) lists && the box bytes after value, script and height are unchanged && (new creation height - SELF creation height >= 504,000 || script changed)",
+    "executor": "up to 0.002 ERG per box refreshed, once the box is 504,000 blocks old; needs the DAO config box as a data input and an AVL proof (both public)",
+    "whenRule": {
+     "kind": "creationPlus",
+     "blocks": 504000
+    },
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "DAO plumbing with the refresh path",
+  "preserve": "yes: refresh after 504,000 blocks",
+  "take": null
+ },
+ "ae9ac8d914dcf12f94410683a5980dc2edb510920dbd83773e516cca5fd58681": {
+  "name": "EIP-27 re-emission contract (Reemission Contract NFT)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "OUTPUTS(0) same script, value > SELF.value, R2 token list(0) == the re-emission token && OUTPUTS(1).value <= 0.01 ERG && OUTPUTS.size == 2",
+    "executor": "nothing: the emission tx funds it; no payout output",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless later",
+    "condition": "OUTPUTS(0) same script, created at HEIGHT && OUTPUTS(1) pays the block's miner (minerPubKey) via the fee tree",
+    "executor": "the miner reward portion; this is the emission/miner path, not a take",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "chain plumbing (one spend per block, by the emission tx); no bounty for a third party",
+  "preserve": "value far above rent",
+  "take": null
+ },
+ "707c363f0914aeff3554f5e69bbed62921135007caaa449e16d682a9240c5d81": {
+  "name": "EIP-27 re-emission proxy (pay-to-reemission), swept into the emission tx",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "OUTPUTS(0).R2 token list(0) == the re-emission token",
+    "executor": "nothing: swept by the emission tx",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "plumbing: 1,185 proxy boxes waiting to be swept into an emission block; no executor reward",
+  "preserve": "each box 9 to 18 ERG, far above rent",
+  "take": null
+ },
+ "8b5dac35309da7996c2b39b7010a9ec9d46a8b6e80387e0b949db7a3ec4df156": {
+  "name": "Phoenix hodlERG3 bank (hodlERG3)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "OUTPUTS(0) same script, NFT kept, hodl token >= 1; a mint (token out) or burn (token in) at the bank's R4/R5/R7/R8 price and fee",
+    "executor": "nothing: the user pays the dev fee (R7) and burn fee (R8); no output pays whoever builds the transaction",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless now",
+    "condition": "the opposite side of the mint/burn",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "bank plumbing; a mint or burn pays the bank's own fees, not the executor (U1b i: hodlERG size < 0.01 ERG against its one dust pool)",
+  "preserve": "value far above rent",
+  "take": null
+ },
+ "5811576e4c7dff58cf55c7f3808638076659183cdbf23d00bf92b4d157e58c78": {
+  "name": "Phoenix hodlComet bank (hodlCOMET3)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "OUTPUTS(0) same script, NFT kept, hodl token >= 1; a mint (token out) or burn (token in) at the bank's R4/R5/R7/R8 price and fee",
+    "executor": "nothing: the user pays the dev fee (R7) and burn fee (R8); no output pays whoever builds the transaction",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless now",
+    "condition": "the opposite side of the mint/burn",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "bank plumbing; a mint or burn pays the bank's own fees, not the executor (U1b i: hodlERG size < 0.01 ERG against its one dust pool)",
+  "preserve": "value far above rent",
+  "take": null
+ },
+ "edacb0e6bc89268aeca29ccd64beecff46a473f9850754133e1dfa9dbbf86f89": {
+  "name": "SigmaFi-style bond (collateral; lender R8, borrower R5)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless later",
+    "condition": "HEIGHT >= R7 (maturity) && OUTPUTS(0) pays the lender (R8) the whole box, tokens and value kept, R4 = SELF.id",
+    "executor": "nothing: the matured collateral goes entirely to the lender (U1b i)",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "key",
+    "condition": "!matured && the borrower repays (R5): OUTPUTS(0) the repayment to the lender, OUTPUTS(1) the collateral back to the borrower",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "liquidation is keyless once matured but pays the lender, not the executor; no reward",
+  "preserve": "the lender claims it at maturity; a third party gains nothing",
+  "take": null
+ },
+ "44830db1e02ba3fecd33028c463bebdcb55b2a6c6e3b0cc70ebb4ffa654fe3aa": {
+  "name": "SigmaFi ERG bond",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless later",
+    "condition": "HEIGHT >= R7 (maturity) && OUTPUTS(0) pays the lender (R8) the whole box, tokens and value kept, R4 = SELF.id",
+    "executor": "nothing: the matured collateral goes entirely to the lender (U1b i)",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "key",
+    "condition": "!matured && the borrower repays (R5): OUTPUTS(0) the repayment to the lender, OUTPUTS(1) the collateral back to the borrower",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "liquidation is keyless once matured but pays the lender, not the executor; no reward",
+  "preserve": "the lender claims it at maturity; a third party gains nothing",
+  "take": null
+ },
+ "0df8312fa401dd6c7525d1c2bc3a42ed18cb83a5cc2b0fcda228249026333667": {
+  "name": "fee splitter (0.25% of inputs to a tip, rest to a fixed key)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "OUTPUTS(0).value >= inputs - (0.25% of inputs + var 1) && OUTPUTS(0) pays the fixed key; the cut (var 1, var 2) is bounded but the surplus is not an output anyone names",
+    "executor": "the cut is set by context variables the spender chooses, but OUTPUTS(0) must pay the fixed key: a service fee to that key, not a take for a third party",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "key",
+    "condition": "the fixed key spends it directly",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "a swap/relay fee box; the keyless path pays a fixed key, so a third party cannot take it",
+  "preserve": "value above rent",
+  "take": null
+ },
+ "9a54eb2482564ed9d0440ba2458bda158120fc3aef48b12dffbd4f95a740c915": {
+  "name": "fee splitter (same, one box)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "OUTPUTS(0).value >= inputs - (0.25% of inputs + var 1) && OUTPUTS(0) pays the fixed key; the cut (var 1, var 2) is bounded but the surplus is not an output anyone names",
+    "executor": "the cut is set by context variables the spender chooses, but OUTPUTS(0) must pay the fixed key: a service fee to that key, not a take for a third party",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "key",
+    "condition": "the fixed key spends it directly",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "a swap/relay fee box; the keyless path pays a fixed key, so a third party cannot take it",
+  "preserve": "value above rent",
+  "take": null
+ },
+ "2b0bcc210c832600684cac5a419be7eb3fce590cf423a1ccb60307618925c208": {
+  "name": "payout splitter (4 fixed recipient keys, l10/100 each; a batch-payment box)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "OUTPUTS(0..3) pay four fixed keys their share of the total (R4 token or ERG), total >= 0.005 ERG",
+    "executor": "nothing: every output is a fixed recipient; a third party routes the payment but takes nothing",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "a scheduled multi-payout; keyless to execute, no executor reward",
+  "preserve": "value above rent",
+  "take": null
+ },
+ "c7c5a98a7a180e373b15d62d123dc370e223824b9789f65f7b9a2925c797b7d0": {
+  "name": "fee-distribution box (pays a fixed list of keys; else a 1-of-2 key)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "OUTPUTS.size == 2 && OUTPUTS(i) pay the fixed keys (constant 0 list) their pro-rata share && blake2b256(OUTPUTS(1).propositionBytes) == the fee-contract hash",
+    "executor": "nothing: outputs are fixed keys",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "key",
+    "condition": "atLeast(1, {two operator keys})",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "a GetBlok/pool fee distributor; keyless but pays fixed recipients",
+  "preserve": "dust, below rent (44 boxes)",
+  "take": null
+ },
+ "a824f427539331fdaa28447d7f80c5d5150b4967f5ac67d25d5e3e76e3cf55a8": {
+  "name": "token-conservation box (sum of value+token over SELF-script inputs == over outputs)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "fold over INPUTS of this script of (value + token amount) == the same fold over OUTPUTS",
+    "executor": "nothing: it only forbids value leaving the script; a merge or split is free but pays nobody",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "an invariant wrapper (99.99e15 of one token); keyless to reshuffle, no reward",
+  "preserve": "value above rent",
+  "take": null
+ },
+ "16b06ffc7d8060a4c746c44ea719ce1b118b2bec3e269ae701104e5dffa15615": {
+  "name": "prefix-locked output box (OUTPUTS(0).propositionBytes[3:10] == a key prefix)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "OUTPUTS(0).propositionBytes.slice(3, 10) == 0x03d42ba1800ff4",
+    "executor": "nothing beyond the box's own ERG: it only pins OUTPUTS(0) to a key with that prefix (the owner's); a third party gains nothing",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "a weak lock to one key family; 24 of 25 boxes below one rent claim",
+  "preserve": "dust, below rent",
+  "take": null
+ },
+ "fbbddf8180ca594ccf10326383eaed49f8207547dd66b50483dc95592ce121fb": {
+  "name": "airdrop/escrow with a rent-age sweep (HEIGHT - creation > 1,051,190)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless now",
+    "condition": "INPUTS has a box of the operator key (constant 0): the operator sweeps",
+    "status": "CONFIRMED"
+   },
+   {
+    "class": "keyless with input",
+    "condition": "every non-self input is older than 1,051,190 blocks && OUTPUTS.size == 4 && one output to each of two fixed keys && the token totals are conserved: a rent-age cleanup to fixed keys",
+    "executor": "nothing: the sweep pays two fixed keys, not the executor; it fires only at rent age",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "a distribution box swept at rent age to fixed keys; keyless but no executor reward",
+  "preserve": "the operator or the rent-age sweep preserves it; a third party gains nothing",
+  "take": null
+ },
+ "0c7face721e43f6e936356ecc43d76f1df9fb5446581038873e1009785a7a57e": {
+  "name": "Rosen Bridge AWC (rspv3ErgoAWC, RSN)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless with input",
+    "condition": "INPUTS(0) holds the watcher-repo NFT (eedb8530...) && the AWC is recreated with R5 incremented / the collateral returned: a watcher action",
+    "executor": "nothing beyond the bridge's own rules; needs the repo box",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "bridge plumbing; every path needs the Rosen repo/collateral box, which only a watcher holds",
+  "preserve": "value above rent (RSN collateral)",
+  "take": null
+ },
+ "1151628ab5a44210c85118643c1d4f7b4bb769cebf4cad5dbe85ac6570497e69": {
+  "name": "Rosen Bridge AWC (rspv2CardanoAWC, RSN; 21,600 ERG)",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless with input",
+    "condition": "INPUTS(0) holds the Cardano watcher-repo NFT (eca7776f...) && the AWC recreated: a watcher collateral action",
+    "executor": "nothing beyond the bridge's rules; needs the repo box",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "as 0c7face7",
+  "preserve": "value above rent",
+  "take": null
+ },
+ "9259d83f4f6bbe1d571c4d93c94c14442f20364ec8c573bd66103d6c2a35c7e5": {
+  "name": "SigmaUSD-style bank (SigUSD, SigRSV, SigUSDBankNFT; 10,191 ERG) [a second bank deployment]",
+  "source": "decompiled script (explorer), read by hand",
+  "paths": [
+   {
+    "class": "keyless with input",
+    "condition": "the oracle box (54acaa0c...) as a data input && OUTPUTS(0) same script, >= 0.01 ERG && exactly one of SC/RC changes by the oracle-priced amount: a mint or redeem",
+    "executor": "nothing: the user pays the bank fee; no executor output (U1b b; the SigRSV arb needs a second pool leg)",
+    "status": "CONFIRMED"
+   }
+  ],
+  "verdict": "AgeUSD bank plumbing; a mint/redeem is user-paid, the arbitrage take needs a second transaction (U1b j)",
+  "preserve": "value far above rent",
+  "take": null
+ }
+}

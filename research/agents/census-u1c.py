@@ -163,8 +163,7 @@ def cmd_m(a):
                    "parsed": main["parsed"], "error": main["error"], "classes": classes,
                    "classesDifferAcrossSamples": differs,
                    "paths": [dict(p, status="SUSPECTED") for p in main["paths"]],
-                   "sampleBox": main["box"], "script": s["maxValue"]["ergoTreeScript"],
-                   "constants": s["maxValue"]["ergoTreeConstants"], "samples": {k: {kk: v[kk] for kk in
+                   "sampleBox": main["box"], "samples": {k: {kk: v[kk] for kk in
                    ("box", "regs", "parsed", "error")} | {"classes": sorted({p["class"] for p in v["paths"]})}
                    for k, v in res.items()}}
     # per box: a path that reads SELF.Rn.get is unreachable on a box without Rn
@@ -190,8 +189,18 @@ def cmd_m(a):
             p["boxesUnreachable"] = unreach[th][i]
         r["boxesWithNoReachablePath"] = allpaths_dead[th]
         r["nanoErgWithNoReachablePath"] = allpaths_dead_erg[th]
+    KEYS = {"key", "key (miner)", "key (secret)"}
+    scripts = {}
+    for th, r in out.items():
+        keyless = any(p["class"] not in KEYS for p in r["paths"])
+        if keyless or not r["parsed"] or r["error"]:
+            scripts[th] = {"script": samples[th]["maxValue"]["ergoTreeScript"],
+                           "constants": samples[th]["maxValue"]["ergoTreeConstants"]}
     rows = sorted(out.values(), key=lambda x: -x["nanoErg"])
     save("m.json", {"height": load("l.json")["height"], "templates": rows}, indent=None)
+    save("m-scripts.json", {"note": "decompiled script and constants of a sample box, for templates with a "
+         "non-key path or no clean parse (key-only scripts omitted; refetch from the sampleBox id)",
+         "scripts": scripts}, indent=None)
 
 
 def traced():
