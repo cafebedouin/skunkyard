@@ -1,0 +1,15 @@
+{
+ "kind": "swapsell-v1",
+ "height": 1891297,
+ "order": "59bcc41997e710906dbbd727a20f83ccb386f4fcc73f4f377b963001e77acc47",
+ "pool": "19dabd6f642d237a82b67969dd1a6999c6fdd50b05e66057784b93c0e06a4de8",
+ "baseNanoErg": 100000000,
+ "quote": 112690262715,
+ "minQuote": 978253099,
+ "executorNanoErg": 2000000,
+ "payoutNanoErg": 1000000,
+ "minerFeeNanoErg": 1000000,
+ "minerFeeCap": 1000000,
+ "inputs": 2,
+ "repeating": "per order: executor fees recur as users place orders (U1 e)"
+}

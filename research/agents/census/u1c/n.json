@@ -1,0 +1,582 @@
+{
+ "tip": 1891297,
+ "endpoint": "https://api.ergo.aap.cornell.edu/api/v1",
+ "takes": [
+  {
+   "templateHash": "278ccff223ae2d7debac0626704be6046ade899969970565cf6395793ee84d02",
+   "kind": "consolidation bounty",
+   "boxes": 0,
+   "trees": 0,
+   "executorNanoErg": 0,
+   "note": "0.0005 ERG per merged box; the 0.001 ERG third output pays the fee"
+  },
+  {
+   "templateHash": "b924a4f735730da5d8dc4cd658ef2308fb520d38510aed08db549be989db2943",
+   "kind": "consolidation bounty",
+   "boxes": 0,
+   "trees": 0,
+   "executorNanoErg": 0,
+   "note": "0.0005 ERG per merged box; the 0.001 ERG third output pays the fee"
+  },
+  {
+   "templateHash": "37142e749788b64ad54de21c9fae4269955e214d23dcba961539b26e690b5573",
+   "kind": "Paideia treasury merge",
+   "boxes": 6,
+   "trees": 4,
+   "treesWith5": 0,
+   "txs": 0,
+   "executorNanoErg": 0,
+   "netOfFeeNanoErg": 0,
+   "note": "at most 0.002 ERG per transaction, the miner fee paid from it"
+  },
+  {
+   "templateHash": "5b41af39fc2d6a5b27a726c68e739279d0915c438d3c8491ede265345e8dde61",
+   "kind": "Paideia treasury merge",
+   "boxes": 5,
+   "trees": 4,
+   "treesWith5": 0,
+   "txs": 0,
+   "executorNanoErg": 0,
+   "netOfFeeNanoErg": 0,
+   "note": "at most 0.002 ERG per transaction, the miner fee paid from it"
+  },
+  {
+   "templateHash": "37142e749788b64ad54de21c9fae4269955e214d23dcba961539b26e690b5573",
+   "kind": "refresh bounty (later)",
+   "boxes": 6,
+   "dueNow": 0,
+   "dueIn30d": 0,
+   "firstDue": 2373368,
+   "executorNanoErgPerBox": 2000000
+  },
+  {
+   "templateHash": "5b41af39fc2d6a5b27a726c68e739279d0915c438d3c8491ede265345e8dde61",
+   "kind": "refresh bounty (later)",
+   "boxes": 5,
+   "dueNow": 2,
+   "dueIn30d": 0,
+   "firstDue": 1842321,
+   "executorNanoErgPerBox": 2000000
+  },
+  {
+   "templateHash": "59c5b7bfe28d4b947590b152d81fe20fb5129510a585cc36da542b9a20ff389b",
+   "kind": "refresh bounty (later)",
+   "boxes": 11,
+   "dueNow": 2,
+   "dueIn30d": 0,
+   "firstDue": 1821359,
+   "executorNanoErgPerBox": 2000000
+  },
+  {
+   "templateHash": "e9d13195d73d90fde24ade268844724417323260456736559cf89a18a3eb696a",
+   "kind": "free box (one-output transaction)",
+   "boxes": 30,
+   "nanoErg": 701553016,
+   "outputsRequired": {
+    "1": 30
+   },
+   "boxIds": [
+    "10dd30f007b98f2e2caa00a937f5b2abc6c4643e5abe90c744a0a81ca3a03dcf",
+    "60293fd3b1937825d697d19950c4d18cda8594b92daa73b33016e077d4f8c280",
+    "115607ea4d33618e3b0239e743c401cfba403fd5812035158557521ab4970b32",
+    "c58b2a8b0f957c22b78e1ebccfdcdc886c4cbafd3bed477ac0973c153624fddc",
+    "b6e2d020756ab86561978501292e9e894e87b3051be08cd2f6cc5fc6402f063d",
+    "1a368b5864f38618f549197b7c75beb1859a24b01e48dfb95bd5fe84c3eab507",
+    "2632f588aeb493c9170355960b6589d16333b2c53872dbf23ba8a6cc1154edc4",
+    "8a08998c6a6fe4da8c6d2e15d529b46a34e514b915bf7b33d798508fe3634067",
+    "b6588b255f036f87bf33a5f01c35d2c5a515f708326dc02a6a1612fd51211108",
+    "d08e196daff61d9f3248f2e13f56dc55ef668d25aa8dd05f34a8491d26339802",
+    "ea01764745c6a575520211aed7c1294bdfe901c6cf1aa68e7ec24e9281b17c08",
+    "97ec822d5c46f15fe8f69d6be99ebc3c9639198b69711d246dd546188da6783d",
+    "1e1bd07afe9e9696aee250acda39b0b37bdee8fb07e3d4feb4f13f3da906d9f1",
+    "50675d52e509d92ffe82bf5eb735b34437fa499fb7afcd97447f81d1122d6c55",
+    "5df37d0eea7856f7529f43e04e5e314cb4c9b73c53771887a04d8ecced08d690",
+    "90a0ce1287b8902aa8922392048b7e13266832e020a7c35f38b4b9256d6661d6",
+    "a8d95ae3ce625d48711043cc88ca13336d37a6af23466cbf3cb4fe2852537894",
+    "bd41f92fd8e0b67043ee45d983599b0dc7eee938bbe4b00ed624d9a269d1fd7e",
+    "09e5b4dd923b6aef39723040b22018bac30adc4e58da1176b54eefa36d875745",
+    "1f500929a686f91e91142f953fc12517e5446ebf3cee8a232a8b7ef680f12b0a",
+    "20f74a88264cc8bf1d0765e4d8ef1d2d651d33e0a51eaa7e54979fe8bfb1c950",
+    "2dd0e8a9813e9f2cc9b971ef4ec0961eedbdb181780e1f272aa02b4ed5791c15",
+    "d447ba96dfa048daaff3f4bba500b16abc18e92ff039c51941500945f131352b",
+    "f36a14bc7d14958e76d64ff55c167856f8639b8f3ba02364fbd78c058c94beb8",
+    "d3cb76b96cf92e9b356f465d9eccbd4135b90bc755d339027f25a7fafd0376f2",
+    "f761d7735e6b3c761cdad1066e3063a18eaae25e44d129d0c85ebc7b8b8b8bf7",
+    "b804fcfb97d1af8bdf4ed4dc9ed001160011a610c6bd3834a18a7926a1beead2",
+    "eeeee12617b4610c76d231784b9e1f6d5b3d9927154e43472b4986ecbe765da6",
+    "068d21ae5ceaea87c312520ff5f75d43e7da87623c7414488f31e90563e26d6f",
+    "92c5c623eb5642310be50afca32dc72763f787fa04e7dde077f06f77b4bcdd95"
+   ],
+   "note": "a one-output transaction carries no fee box: own block only [inferred]"
+  },
+  {
+   "kind": "fixed-price offers against N2T pools (U1b g rerun)",
+   "atTip": 1891297,
+   "unspent": {
+    "babel": 22,
+    "otg": 14,
+    "kushti": 5,
+    "machina-limit": 7,
+    "machina-grid": 6
+   },
+   "takenInTurnNanoErg": 29089200,
+   "takes": [
+    {
+     "offerBox": "e758e57f5e4e77eb3cf686163f8895f40e25890a7eb1bf064d64136e1622e70a",
+     "kind": "machina-grid",
+     "token": "d4f0192622b440afc09711aa0545eacd04d78ad3f8a063523f451e10d3d0e6ef",
+     "poolNft": "2ade821e3b7e8ea1806f72a239eb4e123891cf486c51191f1b803e32ca4df497",
+     "profitNanoErg": 7353866,
+     "tokens": 1,
+     "in": 41134,
+     "detail": {
+      "side": "bid",
+      "price": 32021000,
+      "ergFromOffer": 7395000
+     }
+    },
+    {
+     "offerBox": "e0fdb55463ddd599278db8cda72d96e16487779d79572ad5847846501b949d6f",
+     "kind": "machina-grid",
+     "token": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+     "poolNft": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "profitNanoErg": 7341778,
+     "tokens": 1,
+     "in": 43222,
+     "detail": {
+      "side": "bid",
+      "price": 31743000,
+      "ergFromOffer": 7385000
+     }
+    },
+    {
+     "offerBox": "c175dbff7d9fac42588ed4869767527de41d01ec56a98721e4ea0020721d0204",
+     "kind": "machina-grid",
+     "token": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+     "poolNft": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "profitNanoErg": 7221778,
+     "tokens": 1,
+     "in": 43222,
+     "detail": {
+      "side": "bid",
+      "price": 31207000,
+      "ergFromOffer": 7265000
+     }
+    },
+    {
+     "offerBox": "588ee84e4e77d4f4aab7f1e753e87007e17de3b9c33911ca6d3edc3459420ee7",
+     "kind": "machina-grid",
+     "token": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+     "poolNft": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "profitNanoErg": 7171778,
+     "tokens": 1,
+     "in": 43222,
+     "detail": {
+      "side": "bid",
+      "price": 31337000,
+      "ergFromOffer": 7215000
+     }
+    }
+   ]
+  },
+  {
+   "kind": "ErgoDEX N2T SwapSell v1 executor fee",
+   "orders": 36,
+   "executable": 2,
+   "executorNanoErg": 900000,
+   "rows": [
+    {
+     "box": "0d667712959d0bfefdf72e057850ff84a63baa7314c24e1de43a29c649b89880",
+     "valueNanoErg": 12007260000,
+     "baseNanoErg": 12000000000,
+     "pool": "8355156ed23f7d26ed6a477b12476a0a63ded7bbb63c37b955168d9c0269de90",
+     "minQuote": 1724079719,
+     "quoteNow": 1609815489,
+     "executable": false,
+     "shortfallPct": 6.63,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "d67e2461fd1c6e77bc4a052a0f3722551b0c8d0bf762f2e37507db536805da88",
+     "valueNanoErg": 286861560,
+     "baseNanoErg": 279001560,
+     "pool": "f27e1c4ac153594b3f397ababe3b10a44b60c0495cc3948161d84278287ee3b5",
+     "minQuote": 5238318380,
+     "quoteNow": 2100640277,
+     "executable": false,
+     "shortfallPct": 59.9,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "03fcb8da2c4c29dfa0680a646adaf11ba2faada09a9e720bf7616dff3a8eec6b",
+     "valueNanoErg": 100007260000,
+     "baseNanoErg": 100000000000,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 11509289,
+     "quoteNow": 2152753,
+     "executable": false,
+     "shortfallPct": 81.3,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "d517e6b5a3722838e753eea5dd0b784c517a648b58c54a61b83eb57980b4831f",
+     "valueNanoErg": 1007260000,
+     "baseNanoErg": 1000000000,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 104897,
+     "quoteNow": 21988,
+     "executable": false,
+     "shortfallPct": 79.04,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "aa5de162829c95234220ea848ec969f43b7bca79822653922b39a642c4b50952",
+     "valueNanoErg": 107260000,
+     "baseNanoErg": 100000000,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 10135,
+     "quoteNow": 2199,
+     "executable": false,
+     "shortfallPct": 78.3,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "bb03870bfd7ea6ff409e83df7117710d453cde486fd06b7c97f56d6c5bb0c828",
+     "valueNanoErg": 1007260000,
+     "baseNanoErg": 1000000000,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 94811,
+     "quoteNow": 21988,
+     "executable": false,
+     "shortfallPct": 76.81,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "09363bc6b28e68e77afd172443c83f2835cc58bcd6a0c69a242ba881d556b27d",
+     "valueNanoErg": 200063564392,
+     "baseNanoErg": 200056304392,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 16688546,
+     "quoteNow": 4217357,
+     "executable": false,
+     "shortfallPct": 74.73,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "c7046a0e198322d2fdfc428fa9f2bdd4766de3b9566dcd73af589bef913829d0",
+     "valueNanoErg": 1007260000,
+     "baseNanoErg": 1000000000,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 78856,
+     "quoteNow": 21988,
+     "executable": false,
+     "shortfallPct": 72.12,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "5ab6ac4b942bcbf41d404c68f1995574dd11efc3a4c1d30eda345635e2461a48",
+     "valueNanoErg": 34147267664,
+     "baseNanoErg": 34140007664,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 2427191,
+     "quoteNow": 745345,
+     "executable": false,
+     "shortfallPct": 69.29,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "d34f8665542d0c9018869567a8d73fd286084d34d2b46da8af43a45ae6da5170",
+     "valueNanoErg": 10012060000,
+     "baseNanoErg": 10000000000,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 657087,
+     "quoteNow": 219457,
+     "executable": false,
+     "shortfallPct": 66.6,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "c5d61f06402d93615486365a9a6f0394b0e1d418f600d47d82c634c45c048821",
+     "valueNanoErg": 1345793252,
+     "baseNanoErg": 1338533252,
+     "pool": "1b694b15467c62f0cd4525e368dbdea2329c713aa200b73df4a622e950551b40",
+     "minQuote": 97087,
+     "quoteNow": 29430,
+     "executable": false,
+     "shortfallPct": 69.69,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "8fbb4ce9ae6dda2f77e189269b25bf78863eff3b0101f7dd36e82468a512c5d7",
+     "valueNanoErg": 507260000,
+     "baseNanoErg": 500000000,
+     "pool": "7194cb66dd2dfaa7e302d214294467aa34a62e2c9b3952bd884a691395674b2f",
+     "minQuote": 5638,
+     "quoteNow": 633,
+     "executable": false,
+     "shortfallPct": 88.77,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "b325ae7d6152b1ea0c3aee3e779daf47011e40dada0335d0c34cea627c39449c",
+     "valueNanoErg": 2080560315,
+     "baseNanoErg": 2073300315,
+     "pool": "821e9b67d88041854afd00441f947eaa381ff20502c9bacbb48afb09219f219f",
+     "minQuote": 93583,
+     "quoteNow": 84333,
+     "executable": false,
+     "shortfallPct": 9.88,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "a22fc5c2bfe057536746c1c2cd7c46399c88ef17b546ffb95f2cf74974322e06",
+     "valueNanoErg": 17260000,
+     "baseNanoErg": 10000000,
+     "pool": "4bd26ac78f66e4e450048fa188f24ad3cd8ae5f61beff6ef6f2317f8d633ebc3",
+     "minQuote": 30801,
+     "quoteNow": 4,
+     "executable": false,
+     "shortfallPct": 99.99,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "e3d3028742520f846b942f700dc406f16079fd057e71291cf3a3fa93f349ed65",
+     "valueNanoErg": 19751389,
+     "baseNanoErg": 12491389,
+     "pool": "9eccc846606c4a34e2e3ac189041a8f41e3dc1681f61bb0c5e1f6d3cb9c380af",
+     "minQuote": 1,
+     "quoteNow": 0,
+     "executable": false,
+     "shortfallPct": 100.0,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "dfcdd0006d70d1744aa65abcde8b923d5721ab2ba6eb85a64238a88a32ba7858",
+     "valueNanoErg": 2007260000,
+     "baseNanoErg": 2000000000,
+     "pool": "d6f5d7e7588d903efd353b75e26520e6d1200f2af7afb1b21f69cba6896dc2d2",
+     "minQuote": 56971405,
+     "quoteNow": 28231852,
+     "executable": false,
+     "shortfallPct": 50.45,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "f041febd5ab3e3e41994457178cd4a6e60a0fd907f60aea9902a5689196443ac",
+     "valueNanoErg": 10007260000,
+     "baseNanoErg": 10000000000,
+     "pool": "5a7da76e1a541c25f41c7c5e87a56ca36942030e7d2600561c3580774812b36e",
+     "minQuote": 4658070,
+     "quoteNow": 1413305,
+     "executable": false,
+     "shortfallPct": 69.66,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "a4ae4119c63a58a6c5dbd230cde0ded9c22933ca88cd3dbde794eb599b44db03",
+     "valueNanoErg": 507260000,
+     "baseNanoErg": 500000000,
+     "pool": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "minQuote": 56520300,
+     "quoteNow": 11567,
+     "executable": false,
+     "shortfallPct": 99.98,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "fd6486b987cf704dbcd158556790299ac4319556beaf70563832721655d7ad82",
+     "valueNanoErg": 208460000,
+     "baseNanoErg": 200000000,
+     "pool": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "minQuote": 8427591,
+     "quoteNow": 4627,
+     "executable": false,
+     "shortfallPct": 99.95,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "d4e8c7d1a26e0dea3547be3e5758b4942f30ec50f3c839356954e1c609d0d625",
+     "valueNanoErg": 3008460000,
+     "baseNanoErg": 3000000000,
+     "pool": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "minQuote": 25156529,
+     "quoteNow": 69369,
+     "executable": false,
+     "shortfallPct": 99.72,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "787b16e29600c5283e88f4d732da2212c0e3e134f3c6c8f745554be166d9c3f1",
+     "valueNanoErg": 1008460000,
+     "baseNanoErg": 1000000000,
+     "pool": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "minQuote": 8897620,
+     "quoteNow": 23132,
+     "executable": false,
+     "shortfallPct": 99.74,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "a734ce6c2479500a1167e18479c34c885243b50b0a51f9b0ff4419dc86f8ed77",
+     "valueNanoErg": 5007260000,
+     "baseNanoErg": 5000000000,
+     "pool": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "minQuote": 16003232,
+     "quoteNow": 115570,
+     "executable": false,
+     "shortfallPct": 99.28,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "979df7d26771d7726bbf4a98f31beec933e0f1ebb385758a60dc011faa74b3cc",
+     "valueNanoErg": 1007200000,
+     "pool": "0202020202020202020202020202020202020202020202020202020202020202",
+     "status": "pool not live"
+    },
+    {
+     "box": "fc24df0f7f9624df31776e19281abcf40367d89e24208b4562bb9881fd8898ac",
+     "valueNanoErg": 3294284510,
+     "baseNanoErg": 3287024510,
+     "pool": "7f1759300b19287adbbcd03c877eae6c6de60f4c2962b1fc5ae2c6e2a684220c",
+     "minQuote": 303429181,
+     "quoteNow": 168228597,
+     "executable": false,
+     "shortfallPct": 44.56,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "018b764c996e30c0f8ddb0012d83f9afe8084d5b3f2e48f11052350ef886fac8",
+     "valueNanoErg": 7260001,
+     "baseNanoErg": 1,
+     "pool": "c085c14f5695004c5ea7eb39dbb1017136876430e088f7a28fc59b8761015991",
+     "minQuote": 12,
+     "quoteNow": 9,
+     "executable": false,
+     "shortfallPct": 25.0,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "afe10a6e3da81c7b64fdbff2df4d8f0e9554a64248e31ee072e5837a4c844a4e",
+     "valueNanoErg": 24007260000,
+     "baseNanoErg": 24000000000,
+     "pool": "3d4fdb931917647f4755ada29d13247686df84bd8aea060d22584081bd11ba69",
+     "minQuote": 2301,
+     "quoteNow": 1759,
+     "executable": false,
+     "shortfallPct": 23.55,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "3d23b62b325144f3121017e6a4686ceb22c18f7e9d0704eeba0b4fa7f3f515de",
+     "valueNanoErg": 60007260000,
+     "baseNanoErg": 60000000000,
+     "pool": "3d4fdb931917647f4755ada29d13247686df84bd8aea060d22584081bd11ba69",
+     "minQuote": 5568,
+     "quoteNow": 4292,
+     "executable": false,
+     "shortfallPct": 22.92,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "c1a6974d11750b7b7cfa6f3811f5253614faaaa4917c029c23fae6a1c24c8369",
+     "valueNanoErg": 1017260000,
+     "baseNanoErg": 1010000000,
+     "pool": "2994c61ef6962c43a4b972791597f2e3b2c439a297e2c2b698d772795a8ea022",
+     "minQuote": 4881190,
+     "quoteNow": 4725422,
+     "executable": false,
+     "shortfallPct": 3.19,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "26be014d8ffcbfb4bb920488d315e48bf30864f82d515faa59274a9fadf0bcc9",
+     "valueNanoErg": 20007260000,
+     "baseNanoErg": 20000000000,
+     "pool": "3eb10b2fe3e1df37b6166c957109bf5f2e7510bc508e4b76708a56f8a52babff",
+     "minQuote": 641959,
+     "quoteNow": 21592,
+     "executable": false,
+     "shortfallPct": 96.64,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "974193c93ac5cbd7b5ad94873ed51471f1d81c91939c4849b725faa51e40bd8c",
+     "valueNanoErg": 10007260000,
+     "baseNanoErg": 10000000000,
+     "pool": "3eb10b2fe3e1df37b6166c957109bf5f2e7510bc508e4b76708a56f8a52babff",
+     "minQuote": 309822,
+     "quoteNow": 10956,
+     "executable": false,
+     "shortfallPct": 96.46,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "a5ec9d241aa274d0dedb69e3951778809bfccb485c450be7c627b6cd3121b3a3",
+     "valueNanoErg": 2002000000,
+     "baseNanoErg": 2000000000,
+     "pool": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "minQuote": 260466,
+     "quoteNow": 46255,
+     "executable": false,
+     "shortfallPct": 82.24,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "59bcc41997e710906dbbd727a20f83ccb386f4fcc73f4f377b963001e77acc47",
+     "valueNanoErg": 102000000,
+     "baseNanoErg": 100000000,
+     "pool": "a8a2275ff1660b6ceb6e4c977f4359c6c51b53b0a4e0f446496108770ed6a893",
+     "minQuote": 978253099,
+     "quoteNow": 112690262715,
+     "executable": true,
+     "shortfallPct": null,
+     "executorNanoErg": 900000
+    },
+    {
+     "box": "02def9a4cac70d6252b9213b7fc54abbb0f9a517edc1d96f0531b642286d67b7",
+     "valueNanoErg": 697260000,
+     "baseNanoErg": 690000000,
+     "pool": "19ffcea554912ff555b1427b3c0a390ed54a2d11cff5b599a92234697508373a",
+     "minQuote": 19169,
+     "quoteNow": 15962,
+     "executable": false,
+     "shortfallPct": 16.73,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "4e1bf0c615c021b8f4c1c2f236237c6529da1cfc59d893006b5f2ec6f41b3a9c",
+     "valueNanoErg": 40007260000,
+     "baseNanoErg": 40000000000,
+     "pool": "35bc71897cd44d1a624285c54a0be66b69d1c61674603ed89dfe136f32035f0e",
+     "minQuote": 2493,
+     "quoteNow": 1115,
+     "executable": false,
+     "shortfallPct": 55.27,
+     "executorNanoErg": 0
+    },
+    {
+     "box": "bd5dac2045611ae396d0c3dbd97b7c07e66ad7d5c955cc7f1bd28711d89b70b8",
+     "valueNanoErg": 5001500000,
+     "baseNanoErg": 5000000000,
+     "pool": "9916d75132593c8b07fe18bd8d583bda1652eed7565cf41a4738ddd90fc992ec",
+     "minQuote": 96,
+     "quoteNow": 144,
+     "executable": true,
+     "shortfallPct": null,
+     "executorNanoErg": -1100000
+    },
+    {
+     "box": "4ae31ae0f1d8a425e63ec45ab3984d0ad0abd3293dfadfe4f9028339b91fecf1",
+     "valueNanoErg": 25411704577,
+     "baseNanoErg": 25404444577,
+     "pool": "3d4fdb931917647f4755ada29d13247686df84bd8aea060d22584081bd11ba69",
+     "minQuote": 2000,
+     "quoteNow": 1860,
+     "executable": false,
+     "shortfallPct": 7.0,
+     "executorNanoErg": 0
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,30 @@
+{
+ "kind": "machina-grid",
+ "height": 1891297,
+ "token": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+ "pool": "4e97c3473590639aff4c5e3bd343e5b8aa9af90a6d5d30598dbc4470a21a5e32",
+ "poolX": 5019972388835,
+ "poolY": 119736684,
+ "poolFeeNum": 970,
+ "unitsFromPool": 3,
+ "dXNanoErg": 129666,
+ "gridBoxes": [
+  "e0fdb55463ddd599278db8cda72d96e16487779d79572ad5847846501b949d6f",
+  "588ee84e4e77d4f4aab7f1e753e87007e17de3b9c33911ca6d3edc3459420ee7",
+  "c175dbff7d9fac42588ed4869767527de41d01ec56a98721e4ea0020721d0204"
+ ],
+ "bids": [
+  31743000,
+  31337000,
+  31207000
+ ],
+ "ergFromGrids": 21865000,
+ "payoutNanoErg": 20635334,
+ "minerFeeNanoErg": 1100000,
+ "inputs": 4,
+ "rules": [
+  "pool: y0*dX*fee >= T*(x0*1000 + dX*fee) (ErgoDEX v1 n2t Pool.sc:56-60)",
+  "grid (bid, var 0 = false): units added > 0 and units * R5[1] >= ERG taken; successor at OUTPUTS(var 1) with R4, R5 copied, R6 = SELF.id, same script and token"
+ ],
+ "repeating": "one-time: the bids are stale (R5 bid far above every pool); each fill leaves the box unchanged in price, so a box refills only if its owner adds ERG"
+}
