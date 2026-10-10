@@ -22,6 +22,120 @@ The raw responses and the compacted chains are git-ignored under `census/raw/` a
   own constants. The explorer's decompiler does not print parentheses in mixed arithmetic; where that leaves a
   formula ambiguous, the reading used is the one the chain's own transactions satisfy, and it is said so.
 
+## q. SigmaUSD history
+
+**Window: 566,884 to 1,891,308 (1,324,425 blocks), the earliest height at which all four series exist.** The
+explorer serves the bank from its NFT's mint (452,140; in the v0.4 contract from 453,064), the ERG/USD oracle pool
+from 449,441, the main SigUSD pool's NFT from 566,114 and the SigRSV pool's from 566,884. The prompt's fallback (the
+last 1,000,000 blocks) was not needed: the oracle's token listing (286,436 boxes, 10–30 s a page on this mirror)
+was replaced by its three addresses (below). Output: `census/u1d/q.json` (summaries, checkpoints, the bot's pairs)
+and the compacted state series `q-series-bank.json`, `q-series-oracle.json`, `q-series-pool-sigrsv.json`,
+`q-series-pool-sigusd.json` (one row per state change). The per-state derived values (RR, NAV, prices, discount;
+179,916 states) are recomputed by `census-u1d.py`'s `series()` and not committed (17 MB).
+
+**The chains:**
+
+| series | NFT | boxes | first | breaks |
+|---|---|---|---|---|
+| bank (v0.4, template `246e1405` throughout) | `7d672d1d…` | 23,847 | 452,140 | **0** |
+| ERG/USD oracle pool (v1) | `011d3364…` | 285,700 | 449,441 | 10 (below) |
+| SigRSV pool, the only one with depth (17,774 ERG at tip) | `1d5afc59…` | 25,473 | 566,884 | **0** |
+| SigUSD pool, main (115,979 ERG; the five others hold under 9 ERG) | `9916d751…` | 58,821 | 566,114 | **0** |
+
+The oracle box alternates between two contracts (live epoch, epoch preparation), and the preparation contract
+changed constants at 1,460,747; the three addresses were read whole by `/boxes/byAddress` (89,182 + 143,204 +
+54,049 boxes). That listing pages in an unstable order and missed 1,502 boxes; each gap was filled from the
+transaction that spent the box before it (`oracle_rows`). Ten breaks remain: seven before the window, one at the
+tip (a box spent after the read), and three inside it, at 583,261, 616,154 and 656,850, where the rate is held
+over 167, 79 and 12 blocks. 113,779 rate changes fall in the window.
+
+**Checked against `UPKEEP.md`** (`q.json` `checkpoints`; state at the end of each block):
+
+| height | RR | ERG/USD | NAV | SigRSV mint | SigRSV pool | pool vs NAV | SigUSD pool vs redeem | UPKEEP.md |
+|---|---|---|---|---|---|---|---|---|
+| 1,888,825 (before the bot's pair) | 323% | 0.3177 | 206,206 | 210,330 | 212,156.9 | +2.89% | +8.30% | mint 210,330 = NAV 206,206 + 2%, pool 212,157: **exact** |
+| 1,888,826 | 323% | 0.3177 | 206,206 | 210,330 | 193,576.3 | −6.12% | +8.28% | the pool went 212,157 → 211,385 on the bot's sale; another sale followed in the same block |
+| 1,891,100 | 294% | 0.2888 | 196,977 | 200,916 | 193,934.7 | −1.54% | +1.33% | RR 296%, $0.2915, SigUSD pool +0.25%, SigRSV −2.02%; NAV ~197,000 and pool ~194,000 agree |
+
+The bot's last pair matches to the unit. At 1,891,100 the pool and NAV agree with UPKEEP's "~" values, but its RR,
+rate and SigUSD figure are off by one oracle refresh [inferred: its live read was taken a few blocks later, at
+$0.2915; at the chain's own state for that block the rate is $0.2888, which UPKEEP gives as the "to ~1,891,100"
+value].
+
+**SigRSV pool against NAV** (NAV = the bank's SigRSV price without fee, contract integer arithmetic,
+`census/amm.py` `Bank.rc_price`; block-weighted over the window):
+
+| | |
+|---|---|
+| percentiles of pool / NAV − 1 | 1%: −23.6%; 5%: −10.0%; 10%: −5.8%; 25%: −2.0%; **50%: −0.01%**; 75%: +1.7%; 90%: +2.3%; 95%: +2.5%; 99%: +2.7% |
+| blocks below NAV | 664,525 (50.2%), in 1,066 episodes: median 77 blocks, mean 623, longest 65,769 |
+| below −2% / −5% / −10% | 25.3% / 11.4% / 5.0% of blocks; 955 / 257 / 119 episodes; medians 52 / 38 / 40 blocks; longest 56,375 / 47,084 / 15,102 |
+
+The premium tops out at about +2.7%: the bank's SigRSV mint price (NAV + 2%) plus the pool fee, which the bot's
+mint-and-sell defends. The discount has no such floor. The longest episodes below NAV:
+
+| from – to | blocks | deepest | at | RR during | redemption opened? |
+|---|---|---|---|---|---|
+| 1,754,314 – 1,820,083 | 65,769 | −29.1% | 1,796,527 | 232–278% | no |
+| 1,854,454 – 1,875,614 | 21,160 | **−40.5%** | 1,863,898 | 188–266% | no |
+| 945,082 – 960,008 | 14,926 | −15.2% | 947,526 | 394% | no |
+| 960,062 – 973,753 | 13,691 | −12.2% | 966,780 | 330–373% | no |
+| 687,803 – 698,941 | 11,138 | −15.1% | 691,729 | 344–385% | no |
+| 1,684,490 – 1,695,133 | 10,643 | −9.9% | 1,689,221 | 315–373% | no |
+
+None of the long episodes ended by redemption: each ended with the pool recovering while RR stayed below 400%.
+The deepest short dislocations: −66.1% at 566,957 (the pool's first blocks), −30.7% at 1,225,698 (163 blocks, RR
+550%, redemption open), −25.0% at 857,631, −24.4% at 684,196.
+
+**Reserve ratio and the 400% line** (SigUSD mint and SigRSV redeem are open when the post-trade RR is at least 400%;
+`exchange` for one unit):
+
+| | |
+|---|---|
+| RR percentiles (block-weighted) | 1%: 186; 10%: 263; 50%: 386; 90%: 558; 99%: 752 |
+| windows with SigUSD mint open | 306; 568,573 blocks (42.9%); median 83 blocks, longest 79,420 (1,130,581 – 1,210,001); 70 last a day or more |
+| gaps between windows | median 51 blocks, longest 55,595 |
+| SigRSV redemption open | 291 windows, 568,730 blocks |
+| **last window** | **ended 1,665,240**; closed for the 226,068 blocks since (about ten months) |
+
+| year (262,800 blocks from) | blocks below NAV | below −2% | above +2% | RR ≥ 400% | ERG/USD | RR |
+|---|---|---|---|---|---|---|
+| 566,884 | 126,389 | 52,579 | 53,653 | 138,601 | 1.60 – 19.08 | 230 – 1,106% |
+| 829,684 | 105,241 | 49,817 | 56,288 | 38,894 | 0.95 – 5.22 | 298 – 704% |
+| 1,092,484 | 118,974 | 41,136 | 42,949 | 165,949 | 0.65 – 2.48 | 308 – 857% |
+| 1,355,284 | 128,949 | 42,210 | 47,672 | 192,559 | 0.62 – 2.21 | 300 – 821% |
+| 1,618,084 | 178,861 | **145,337** | 35,592 | 32,570 | 0.19 – 0.76 | 167 – 500% |
+| 1,880,884 (10,425 blocks) | 6,111 | 4,448 | 1,620 | 0 | 0.28 – 0.34 | 290 – 349% |
+
+The last full year is the outlier: the pool spent 55% of its blocks more than 2% under NAV.
+
+**SigUSD pool** against the bank's redeem price (sc price less 2%, always open): median +2.07%, 10th percentile
+−0.22%, 1st −0.68%; **below the redeem price in 185,554 blocks (14%)**, when buying SigUSD from the pool and
+redeeming it at the bank paid (no RR limit applies to SigUSD redemption). Against the oracle: median +0.03%, 90th
++5.3%, 99th +20.4%.
+
+**The bot `9fffEXsa…`** (`q.json` `bot`; all 8,521 of its transactions, 693,797 to 1,888,826): 3,848 spend the
+bank, 1,649 the SigRSV pool, 2,566 the SigUSD pool, 458 neither. A pair is a bank transaction and a pool
+transaction of the bot at one height; the net is the bot's ERG change over both (fees included):
+
+| | pairs | net ERG | losing pairs |
+|---|---|---|---|
+| SigRSV mint → pool sale | 1,006 | 3,296.2 | 4 |
+| SigUSD mint → pool sale | 1,587 | 15,687.0 | 8 |
+| pool buy → bank redeem (either coin) | **0** | — | — |
+| **all, 777,824 – 1,888,826** | **2,593** | **18,983.2** | 12 |
+
+| year (262,800 blocks from) | 777,824 | 1,040,624 | 1,303,424 | 1,566,224 | 1,829,024 |
+|---|---|---|---|---|---|
+| pairs | 546 | 606 | 897 | 470 | 74 |
+| net ERG | 6,557.2 | 9,704.0 | 1,813.0 | 809.4 | 99.6 |
+
+In UPKEEP's window (1,738,107 – 1,888,826): **117 pairs, 143.1 ERG, 9,292.8 ERG paid to the bank for mints**
+(UPKEEP: 116 SigRSV blocks, 142.8 ERG, 9,290 ERG; the extra pair is a SigUSD one). Offset from the last oracle
+refresh to the pair: median 4 blocks over the whole history (116 pairs in the refresh's own block, 400 within one
+block, the longest 577); median 2 in UPKEEP's window. The bot only ever sold into the pools; it never bought the
+discount or the SigUSD pool's dips below the redeem price.
+
 ## s. DexyGold
 
 **The ids, settled from the deployed trees** (`census/u1d/s.json` `ids`). Each NFT below is named on chain (its

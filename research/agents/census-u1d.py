@@ -30,7 +30,7 @@ ORACLE_NFT = "011d3364de07e5a26f0c4eef0852cddb387039a921b7154ef3cab22c6eda887f"
 RSV_POOL = "1d5afc59838920bb5ef2a8f9d63825a55b1d48e269d7cecee335d637c3ff5f3f"
 USD_POOL = "9916d75132593c8b07fe18bd8d583bda1652eed7565cf41a4738ddd90fc992ec"
 BOT = "9fffEXsaT9roF7tKt5GyJUUZfun3NpWrMQ5oMAGGXRYMFK88aJq"
-ORACLE_FROM = 891_308          # the last 1,000,000 blocks before tip 1,891,308 (the oracle chain is 286,436 boxes)
+ORACLE_FROM = 0               # all of it: the three oracle-pool addresses (below) cover 449,441 to the tip
 TX_FEE = 1_100_000             # 0.0011 ERG per transaction (the SK-049 fee)
 
 
@@ -93,6 +93,8 @@ def chains():
 ORACLE_ADDRESSES = [
     "NTkuk55NdwCXkF1e2nCABxq7bHjtinX3wH13zYPZ6qYT71dCoZBe1gZkh9FAr7GeHo2EpFoibzpNQmoi89atUjKRrhZEYrTapdtXrWU4kq319oY7BEWmtmRU9cMohX69XMuxJjJP5hRM8WQLfFnffbjshhEP3ck9CKVEkFRw1JDYkqVke2JVqoMED5yxLVkScbBUiJJLWq9BSbE1JJmmreNVskmWNxWE6V7ksKPxFMoqh1SVePh3UWAaBgGQRZ7TWf4dTBF5KMVHmRXzmQqEu2Fz2yeSLy23sM3pfqa78VuvoFHnTFXYFFxn3DNttxwq3EU3Zv25SmgrWjLKiZjFcEcqGgH6DJ9FZ1DfucVtTXwyDJutY3ksUBaEStRxoUQyRu4EhDobixL3PUWRcxaRJ8JKA9b64ALErGepRHkAoVmS8DaE6VbroskyMuhkTo7LbrzhTyJbqKurEzoEfhYxus7bMpLTePgKcktgRRyB7MjVxjSpxWzZedvzbjzZaHLZLkWZESk1WtdM25My33wtVLNXiTvficEUbjA23sNd24pv1YQ72nY1aqUHa2",
     "EfS5abyDe4vKFrJ48K5HnwTqa1ksn238bWFPe84bzVvCGvK1h2B7sgWLETtQuWwzVdBaoRZ1Hcz1i9w5sa4bkSPJMrkFSmcpLeKUEseNYQn3x57xGttnWFjXkLsyE7EDQuga6ic28tMpPrVokJ2d8ZHQhjddRgwxMfhcwvVtoTqjLbDc3YKJLAetd2DcaCWJB6XzHCM8ezDFpCWVVrFeu4SYGSoGJbgPDRvEAcJEN4qu1RwsmZ1MzBfWF2jBJLagWqu2GvevuDG5oTtJrkqwCHRaAshfoM2mQnjLBsajjPN426t3aRZVJVRHm8apmZstnh92kYBVMujvLA1BkR2tqTfYLtmX6ChFSMXSYejkkCQoLdog59iD66oEzAZtg9ZowqDCjfT8G8YLVpEkVd23QH2LhFtEie3R4etCuvzCSyC4UmMmLbvrnUg4LfuP6xv6jckLGH8HkNWeTuuqf2UmVCQfhMMndBciTXF2KfrPCrzmDXw",
+    # the epoch-preparation contract before 1,460,747 (same template, other constants), found from the breaks
+    "EfS5abyDe4vKFrJ48K5HnwTqa1ksn238bWFPe84bzVvCGvK1h2B7sgWLETtQuWwzVdBaoRZ1HcyzddrxLcsoM5YEy4UnqcLqMU1MDca1kLw9xbazAM6Awo9y6UVWTkQcS97mYkhkmx2Tewg3JntMgzfLWz5mACiEJEv7potayvk6awmLWS36sJMfXWgnEfNiqTyXNiPzt466cgot3GLcEsYXxKzLXyJ9EfvXpjzC2abTMzVSf1e17BHre4zZvDoAeTqr4igV3ubv2PtJjntvF2ibrDLmwwAyANEhw1yt8C8fCidkf3MAoPE6T53hX3Eb2mp3Xofmtrn4qVgmhNonnV8ekWZWvBTxYiNP8Vu5nc6RMDBv7P1c5rRc3tnDMRh2dUcDD7USyoB9YcvioMfAZGMNfLjWqgYu9Ygw2FokGBPThyWrKQ5nkLJvief1eQJg4wZXKdXWAR7VxwNftdZjPCHcmwn6ByRHZo9kb4Emv3rjfZE",
 ]
 
 
@@ -104,6 +106,31 @@ def oracle_rows():
                 seen.add(r["box"])
                 rows.append(r)
     rows.sort(key=lambda r: (r["h"], r["gix"]))
+    # The address listing pages in an unstable order and misses some boxes (1,502 gaps on the first read). Fill each
+    # gap from the transaction that spent the box before it: its output holding the NFT is the missing box, read
+    # whole by id. Repeat until the chain is unbroken or no gap can be filled.
+    import txs as TX
+    for _ in range(8):
+        br, _rep = C.check(rows)
+        gaps = [b["spent"] for b in br if b["spent"]]
+        if not gaps:
+            break
+        got = TX.fetch(gaps, "oracle-gaps")
+        new_ids = []
+        for t in got.values():
+            for o in (t or {}).get("outputs", []):
+                if any(x[0] == ORACLE_NFT for x in o["assets"]) and o["box"] not in seen:
+                    new_ids.append(o["box"])
+        if not new_ids:
+            break
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(4) as ex:
+            boxes = list(ex.map(lambda i: X.get(f"/boxes/{i}"), new_ids))
+        for b in boxes:
+            if b and b["boxId"] not in seen:
+                seen.add(b["boxId"])
+                rows.append(C.compact(b, ORACLE_NFT))
+        rows.sort(key=lambda r: (r["h"], r["gix"]))
     return rows
 
 
@@ -296,12 +323,7 @@ def line_q(a):
     for name, s in (("sigrsv", rsv), ("sigusd", usd)):
         save(f"q-series-pool-{name}.json", {"cols": ["h", "ergX", "tokenY", "fee", "box"],
                                             "rows": [[h, *v] for h, v in zip(s.h, s.v)]})
-    save("q-series-derived.json", {"cols": ["h", "rr", "nav", "rcMint", "rcRedeem", "scMint", "scRedeem", "rate",
-                                            "rsvDisc", "usdVsRedeem", "usdVsOracle"],
-                                   "rows": [[r["h"], r["rr"], r["nav"], r["rcMint"], r["rcRedeem"], r["scMint"],
-                                             r["scRedeem"], r["rate"], round(r["disc"], 5),
-                                             None if r["usdVsRedeem"] is None else round(r["usdVsRedeem"], 5),
-                                             round(r["usdVsOracle"], 5)] for r in rows]})
+    # the derived per-state series (NAV, RR, prices, discount) is recomputed from these by `series()`; not saved (17 MB)
     log(json.dumps({k: out[k] for k in ("tip", "from", "events", "chains", "checkpoints")}, indent=1))
 
 
@@ -350,16 +372,24 @@ def bot_pairs(orc, rsv, usd, bank):
         paid = -sum(lg["ergNet"] for lg in legs if lg["kind"] == "bank")
         lc = orc.last_change(h)
         coin = "SigRSV" if any(lg["kind"] == "rsvPool" for lg in legs) else "SigUSD"
-        pairs.append({"h": h, "coin": coin, "ergNet": e, "tokensLeft": {k2[:8]: v for k2, v in toks.items()},
+        direction = "mint->pool" if minted > 0 else "pool->redeem"
+        pairs.append({"h": h, "coin": coin, "dir": direction, "ergNet": e, "tokensLeft": {k2[:8]: v for k2, v in toks.items()},
                       "unitsMinted": minted, "ergPaidBank": paid, "oracleRefreshAt": lc,
                       "blocksAfterRefresh": h - lc if lc is not None else None, "legs": legs})
     tot = sum(p["ergNet"] for p in pairs)
     offs = sorted(p["blocksAfterRefresh"] for p in pairs if p["blocksAfterRefresh"] is not None)
     return {"txs": len(txs), "kinds": kinds, "pairs": len(pairs), "netNanoErg": tot,
-            "byCoin": {c: {"pairs": sum(1 for p in pairs if p["coin"] == c),
-                           "netNanoErg": sum(p["ergNet"] for p in pairs if p["coin"] == c),
-                           "paidBankNanoErg": sum(p["ergPaidBank"] for p in pairs if p["coin"] == c)}
-                       for c in ("SigRSV", "SigUSD")},
+            "byCoin": {f"{c} {d}": {"pairs": sum(1 for p in pairs if p["coin"] == c and p["dir"] == d),
+                                    "netNanoErg": sum(p["ergNet"] for p in pairs if p["coin"] == c and p["dir"] == d),
+                                    "losing": sum(1 for p in pairs if p["coin"] == c and p["dir"] == d and p["ergNet"] < 0)}
+                       for c in ("SigRSV", "SigUSD") for d in ("mint->pool", "pool->redeem")},
+            "window1738107to1888826": {"pairs": sum(1 for p in pairs if 1_738_107 <= p["h"] <= 1_888_826),
+                                       "netNanoErg": sum(p["ergNet"] for p in pairs if 1_738_107 <= p["h"] <= 1_888_826),
+                                       "mintedPaidNanoErg": sum(p["ergPaidBank"] for p in pairs
+                                                                if 1_738_107 <= p["h"] <= 1_888_826 and p["dir"] == "mint->pool")},
+            "byYear": [{"from": y0, "pairs": sum(1 for p in pairs if y0 <= p["h"] < y0 + 262_800),
+                        "netNanoErg": sum(p["ergNet"] for p in pairs if y0 <= p["h"] < y0 + 262_800)}
+                       for y0 in range(777_824, 1_891_309, 262_800)],
             "firstPair": pairs[0]["h"] if pairs else None, "lastPair": pairs[-1]["h"] if pairs else None,
             "offsetBlocks": {"n": len(offs), "zero": sum(1 for o in offs if o == 0),
                              "le1": sum(1 for o in offs if o <= 1), "median": offs[len(offs) // 2] if offs else None,
@@ -796,6 +826,7 @@ def dur_list(xs):
 # ---------------------------------------------------------------------------------------------------- line r
 
 CAP = 1_000 * 10**9          # capital cap per strategy run (nanoERG)
+DEPTH_MIN = 1_000 * 10**9    # every backtest starts at the first state where its pool holds at least 1,000 ERG
 SPACING = 7_200              # entries / placements every 7,200 blocks (about 10 days)
 OTHER_POOLS = {"RSN": "cadac6db847a715e3577d8f2fbb2edfb2280f20924abf51bf83704a9ddc511b2",
                "rsBTC": "47a811c68e49f6bfa6629602037ee65f8d175ddbc7b64bdb65ad40599b812fd0",
@@ -834,7 +865,7 @@ def sell_to(X0, Y0, fee, target, have):
 def r1_dip(rows, th, tip):
     """SigRSV dip-buy at threshold th (fraction below NAV). My own trades persist in the pool as an offset to the
     historical reserves; the bank is taken as historical (my redemptions are small against its reserve)."""
-    cash, held, cost = CAP, 0, 0
+    cash, held, cost = CAP, 0, 0          # cost: ERG paid for the units still held (the capital tied up)
     offX, offY = 0, 0
     trades, eq, peak, dd = [], [], CAP, 0
     tied_blocks, max_tied, open_from = 0, 0, None
@@ -851,6 +882,7 @@ def r1_dip(rows, th, tip):
             if n:
                 got = -b.exchange("rc", -n) - TX_FEE
                 cash += got
+                cost -= cost * n // held
                 trades.append({"h": r["h"], "side": "redeem", "units": n, "ergNanoErg": got, "nav": nav})
                 held -= n
                 acted = True
@@ -858,18 +890,22 @@ def r1_dip(rows, th, tip):
                 n, out = sell_to(X0, Y0, fee, nav, held)
                 if n and out > TX_FEE:
                     cash += out - TX_FEE
+                    cost -= cost * n // held
                     offX -= out
                     offY += n
                     held -= n
                     trades.append({"h": r["h"], "side": "sell", "units": n, "ergNanoErg": out - TX_FEE, "nav": nav,
                                    "poolPrice": mid})
                     acted = True
-            if held == 0 and open_from is not None:
+            if held == 0:
+                cost = 0
                 open_from = None
-        if not acted and mid < nav * (1 - th) and cash > 10 * TX_FEE and r["rsvBox"] != last_box:
-            dX, T = buy_to(X0, Y0, fee, nav * (1 - th), cash - TX_FEE)
+        budget = min(cash, CAP - cost) - TX_FEE     # profits are set aside: never more than CAP in the position
+        if not acted and mid < nav * (1 - th) and budget > 10 * TX_FEE and r["rsvBox"] != last_box:
+            dX, T = buy_to(X0, Y0, fee, nav * (1 - th), budget)
             if T > 0:
                 cash -= dX + TX_FEE
+                cost += dX + TX_FEE
                 held += T
                 offX += dX
                 offY -= T
@@ -883,7 +919,7 @@ def r1_dip(rows, th, tip):
         e = cash + mark_pool
         peak = max(peak, e)
         dd = max(dd, peak - e)
-        tied = CAP - cash if held else 0
+        tied = cost if held else 0
         max_tied = max(max_tied, tied)
         if held:
             tied_blocks += r["to"] - r["h"]
@@ -916,6 +952,9 @@ def r3_exits(rows, levels, tip):
             T = A.pool_tokens_out(r0["rsvX"], r0["rsvY"], r0["rsvFee"], 100 * 10**9)
             if T <= 0:
                 continue
+            if f(r0):                     # an exit set where it would fire at once is not a conditional exit
+                res.append({"entry": e, "alreadyTrue": True})
+                continue
             fill = None
             for r in rows[i + 1:]:
                 if f(r):
@@ -932,10 +971,12 @@ def r3_exits(rows, levels, tip):
                 res.append({"entry": e, "fired": fill[0], "wait": fill[0] - e, "ergOut": fill[1], "via": fill[2]})
             else:
                 res.append({"entry": e, "fired": None, "markNavNanoErg": T * rows[-1]["nav"]})
+        skipped = sum(1 for x in res if x.get("alreadyTrue"))
+        res = [x for x in res if not x.get("alreadyTrue")]
         fired = [x for x in res if x["fired"]]
         waits = sorted(x["wait"] for x in fired)
         rets = sorted(x["ergOut"] / 1e11 - 1 for x in fired)
-        out[name] = {"entries": len(res), "fired": len(fired), "waitBlocks": dur_list(waits),
+        out[name] = {"entries": len(res), "alreadyTrueAtEntry": skipped, "fired": len(fired), "waitBlocks": dur_list(waits),
                      "returnOn100Erg": {"median": round(rets[len(rets) // 2], 4) if rets else None,
                                         "min": round(rets[0], 4) if rets else None, "max": round(rets[-1], 4) if rets else None},
                      "via": {v: sum(1 for x in fired if x["via"] == v) for v in ("bank", "bank+pool", "pool")},
@@ -945,7 +986,12 @@ def r3_exits(rows, levels, tip):
     return out
 
 
+def first_deep(step):
+    return next((h for h, v in zip(step.h, step.v) if v[0] >= DEPTH_MIN), None)
+
+
 def pool_rows(step, lo, tip):
+    lo = max(lo, first_deep(step) or lo)
     hs = [h for h in step.h if h <= tip]
     out = []
     for i, h in enumerate(hs):
@@ -973,6 +1019,8 @@ def r4_babel(prow, levels, tip, side="buy"):
                 for p in prow[i + 1:]:
                     if avail < 10**6:
                         break
+                    if p[2] * 1000 / (p[3] * p[4]) >= bid:      # pool's marginal ask above the bid: no take
+                        continue
                     t = A.babel_vs_pool(p[2], p[3], p[4], max(bid, 1), avail)
                     if t and t[0] >= TX_FEE:
                         _, dX, T, Y = t
@@ -981,10 +1029,13 @@ def r4_babel(prow, levels, tip, side="buy"):
                         paid += Y
                         fills.append({"h": p[0], "units": T, "paid": Y, "poolMid": p[2] / p[3]})
                 filled = paid > 0
+                p_tip = prow[-1][2] / prow[-1][3]
+                owner = units * p_tip + (100 * 10**9 - paid)          # tokens filled + ERG left, at the tip
+                market = mkt_T * p_tip                                 # 100 ERG bought at market when placed
                 boxes.append({"placed": e, "bid": bid, "mid": mid, "filled": filled,
                               "firstFill": fills[0]["h"] if fills else None, "units": units, "paidNanoErg": paid,
-                              "fillShare": paid / 1e11,
-                              "gainVsMarketNanoErg": (int(units * (100 * 10**9) / mkt_T) - paid) if (units and mkt_T) else 0,
+                              "fillShare": paid / 1e11, "gainVsMarketAtTipNanoErg": int(owner - market),
+                              "savedPerUnitVsPlacementMid": round(1 - (paid / units) / mid, 4) if units else None,
                               "fillVsPoolMid": round(bid / fills[0]["poolMid"] - 1, 4) if fills else None})
             else:
                 ask = int(mid * (1 + d))
@@ -993,6 +1044,8 @@ def r4_babel(prow, levels, tip, side="buy"):
                 for p in prow[i + 1:]:
                     if left <= 0:
                         break
+                    if p[2] * p[4] / (p[3] * 1000) <= ask:      # pool's marginal bid below the ask: no take
+                        continue
                     # taker buys n units from the ask box at `ask` and sells them into the pool
                     def prof(n, p=p):
                         return A.pool_erg_out(p[2], p[3], p[4], n) - n * ask
@@ -1002,17 +1055,20 @@ def r4_babel(prow, levels, tip, side="buy"):
                         got += n * ask
                         fills.append({"h": p[0], "units": n, "recv": n * ask, "poolMid": p[2] / p[3]})
                 sold = T0 - left
+                p_tip = prow[-1][2] / prow[-1][3]
+                owner = got + left * p_tip                             # ERG received + tokens left, at the tip
+                market = A.pool_erg_out(X0, Y0, fee, T0)              # the same tokens sold at market when placed
                 boxes.append({"placed": e, "ask": ask, "mid": mid, "filled": sold > 0,
                               "firstFill": fills[0]["h"] if fills else None, "unitsSold": sold, "receivedNanoErg": got,
-                              "fillShare": sold / T0 if T0 else 0,
-                              "gainVsMarketNanoErg": got - (A.pool_erg_out(X0, Y0, fee, sold) if sold else 0),
+                              "fillShare": sold / T0 if T0 else 0, "gainVsMarketAtTipNanoErg": int(owner - market),
                               "fillVsPoolMid": round(ask / fills[0]["poolMid"] - 1, 4) if fills else None})
         f = [b for b in boxes if b["filled"]]
         waits = sorted(b["firstFill"] - b["placed"] for b in f)
         res[str(d)] = {"boxes": len(boxes), "filled": len(f), "fullyFilled": sum(1 for b in f if b["fillShare"] > 0.99),
                        "waitBlocks": dur_list(waits),
                        "medianFillVsPoolMid": sorted(b["fillVsPoolMid"] for b in f)[len(f) // 2] if f else None,
-                       "gainVsMarketNanoErg": sum(b["gainVsMarketNanoErg"] for b in boxes),
+                       "gainVsMarketAtTipNanoErg": sum(b["gainVsMarketAtTipNanoErg"] for b in boxes),
+                       "boxesAheadOfMarket": sum(1 for b in boxes if b["gainVsMarketAtTipNanoErg"] > 0),
                        "list": boxes}
     return res
 
@@ -1073,9 +1129,12 @@ def r5_grid(prow, spacing, tip, levels=5, size=50 * 10**9):
 def line_r(a):
     tip = a.tip or X.tip()
     rows, checks, (bank, orc, rsv, usd), lo = series(tip)
+    deep = first_deep(rsv)
+    rows = [r for r in rows if r["h"] >= deep]
     for r in rows:
         r["rsvBox"] = rsv.at(r["h"])[3]
-    out = {"explorer": X.EXPLORER, "tip": tip, "from": lo, "capNanoErg": CAP, "txFeeNanoErg": TX_FEE,
+    out = {"explorer": X.EXPLORER, "tip": tip, "from": rows[0]["h"], "capNanoErg": CAP, "txFeeNanoErg": TX_FEE,
+           "depthMinNanoErg": DEPTH_MIN,
            "rules": "see CENSUS-U1D.md line r"}
     # 1. dip-buy
     d = {}
@@ -1083,9 +1142,12 @@ def line_r(a):
         res = r1_dip(rows, th, tip)
         d[str(th)] = {k: v for k, v in res.items() if k != "trades_"}
         d[str(th)]["tradeList"] = res["trades_"]
+    for label, h0 in (("last262800", tip - 262_800), ("last525600", tip - 525_600)):
+        sub = [r for r in rows if r["h"] >= h0]
+        d[label] = {str(th): {k: v for k, v in r1_dip(sub, th, tip).items() if k != "trades_"} for th in (0.02, 0.05, 0.10)}
     first, last = rows[0], rows[-1]
     T_hold = A.pool_tokens_out(first["rsvX"], first["rsvY"], first["rsvFee"], CAP)
-    d["holdSigRSVFromStart"] = {"units": T_hold, "markNavNanoErg": T_hold * last["nav"] - CAP,
+    d["holdSigRSVFromStart"] = {"from": first["h"], "units": T_hold, "markNavNanoErg": T_hold * last["nav"] - CAP,
                                 "usdPerErgStart": round(1e9 / first["r4"], 4), "usdPerErgTip": round(1e9 / last["r4"], 4)}
     out["dipBuy"] = d
     # 2. beat the bot
@@ -1100,12 +1162,19 @@ def line_r(a):
                          "shares": {str(s): {"nanoErgAll": int(sum(gross) * s),
                                              "nanoErgPerYear": int(sum(gross) * 262_800 / span * s) if span else None}
                                     for s in (0.015, 0.017, 0.10, 0.30)},
+                         "lastYear": {"pairs": sum(1 for p in pairs if p["h"] > tip - 262_800),
+                                      "builderNetNanoErg": sum(g for p, g in zip(pairs, gross) if p["h"] > tip - 262_800)},
+                         "byYear": q["bot"]["byYear"],
                          "note": "builder net = the bot's net plus the fees it paid (a builder pays itself no fee in "
                                  "its own block); the same pair at the same states, taken first"}
     # 3. conditional exits
-    ergusd = sorted(1e9 / r["r4"] for r in rows)
-    levels = [4.0] + sorted({round(ergusd[int(len(ergusd) * q2)], 2) for q2 in (0.5, 0.75, 0.95)})
-    out["exits"] = {"levels": levels, "results": r3_exits(rows, levels, tip)}
+    # $4 (SK-051's take-profit) and three levels just above the tip's $0.30, inside the last two years' range
+    levels = [4.0, 0.35, 0.50, 0.75]
+    recent = [r for r in rows if r["h"] >= tip - 525_600]
+    out["exits"] = {"levels": levels, "results": r3_exits(rows, levels, tip),
+                    "entriesLast525600": r3_exits(recent, levels, tip),
+                    "ergUsdRangeLast525600": [round(min(1e9 / r["r4"] for r in recent), 4),
+                                              round(max(1e9 / r["r4"] for r in recent), 4)]}
     # 4. Babel buy offers and the sell mirror; 5. grid
     psteps = {"SigUSD": usd, "SigRSV": rsv}
     for name, n in OTHER_POOLS.items():
