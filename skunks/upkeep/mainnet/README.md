@@ -139,3 +139,10 @@ Details in `skunks/keepalive/README.md`, "Mainnet demo". The vault box `f017a605
 
 **Wallet: 21.223824102 ERG** confirmed (21.251024102 − 0.0261 deposit − 0.0011 sponsor fee; the 0.024 ERG in the
 vault is the wallet's).
+
+## Round six, 2026-10-10: the two-step withdrawal vault on mainnet (five transactions)
+
+Deposit, an announce, a completion with no vault signature, and a second announce cancelled by a recovery key (the
+wallet's second derivation path). Details: `skunks/policy/2-twostep/mainnet/README.md`.
+
+**Wallet: 21.213324102 ERG** confirmed. 0.005 ERG remains in the two-step vault (`f22a0443…`).

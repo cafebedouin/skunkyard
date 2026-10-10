@@ -6,8 +6,9 @@
 // {boxId, spendingProof: {proofBytes: "", extension}}, the shape babel-take.py and consolidate.py write), signs ONLY
 // the inputs held by the wallet's own P2PK tree (m/44'/429'/0'/0/0), leaves every other input's proof empty (keyless
 // contract paths), and refuses unless:
-//   - every output goes to the wallet, the wallet's own KeepAlive vault, the miner fee contract, or the script of one
-//     of the transaction's own inputs (a contract's successor): no value can leave for any other address;
+//   - every output goes to the wallet, the wallet's own KeepAlive vault or two-step vault, the wallet's recovery
+//     address, the miner fee contract, or the script of one of the transaction's own inputs (a contract's successor);
+//     a two-step pending box only with this wallet as its destination: no value can leave for any other address;
 //   - the wallet's net ERG loss is at most --max-loss (default 0.5 ERG) and the day's total loss, kept in
 //     $HOME/.config/skunkyard/mainnet-spend.json, stays under --day-cap (default 5 ERG);
 //   - the miner fee is at most --max-fee (default 0.005 ERG);
@@ -24,6 +25,7 @@ import { fileURLToPath } from 'node:url';
 import { blake2b256, hex } from '@fleet-sdk/crypto';
 import { serializeTransaction } from '@fleet-sdk/serializer';
 import { ErgoHDKey, generateProof, validateMnemonic } from '@fleet-sdk/wallet';
+import { collBytes, twostepTrees } from './twostep-trees.mjs';
 
 const FEE_TREE = '1005040004000e36100204a00b08cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304';
 const EXPLORER = 'https://api.ergoplatform.com/api/v1';
@@ -59,6 +61,14 @@ const kaTemplate = readFileSync(resolve(HERE, '../../keepalive/kaa-mainnet-G.tre
 if (kaTemplate.split(KA_G).length !== 2) die('the KeepAlive template does not hold the placeholder key exactly once');
 const vaultTree = kaTemplate.replace(KA_G, hex.encode(key.publicKey));
 const walletAddr = readFileSync(join(CONF, 'mainnet-wallet.address'), 'utf8').trim();
+// The two-step withdrawal vault (skunks/policy/2-twostep/, scripts/twostep-trees.mjs): owner = this wallet's key,
+// recovery = the wallet's second derivation path. Vault boxes are the wallet's (its key announces them); a pending
+// box is an allowed destination only when its R4 destination is this wallet's own tree and its R6 is this vault, so
+// no announce this signer signs can route funds anywhere else. The recovery key is never used here: only
+// mainnet-sign-cancel.mts signs with it. Outputs to the recovery address (its fee boxes) are allowed and count as loss.
+const recoveryKey = ErgoHDKey.fromMnemonicSync(mnemonic, { path: "m/44'/429'/0'/0/1" });
+const recoveryTree = '0008cd' + hex.encode(recoveryKey.publicKey);
+const ts = twostepTrees(hex.encode(key.publicKey), hex.encode(recoveryKey.publicKey));
 
 // Exact integers: token amounts reach 2^63, past what a JS number holds; parse them from their source text
 const exact = (k, v, ctx) => (typeof v === 'number' && Number.isInteger(v) ? BigInt(ctx.source) : v);
@@ -80,7 +90,9 @@ for (const i of tx.inputs) {
   if (b.spentTransactionId) die(`input ${i.boxId} is already spent by ${b.spentTransactionId}`);
   boxes.push(b);
 }
-const mine = boxes.map((b) => b.ergoTree === walletTree);
+// Signed with the wallet key: its P2PK boxes, and its two-step vault boxes (the vault reduces to proveDlog(owner)
+// once the announce conditions hold, so the proof is the same Schnorr signature).
+const mine = boxes.map((b) => b.ergoTree === walletTree || b.ergoTree === ts.vault);
 const inputTrees = new Set(boxes.map((b) => b.ergoTree));
 
 // Well-formed values, then the destination rule
@@ -88,8 +100,15 @@ for (const [k, o] of tx.outputs.entries()) {
   if (BigInt(o.value) <= 0n || (o.assets ?? []).some((a) => BigInt(a.amount) <= 0n)) die(`output ${k} has a value or token amount that is not positive`);
 }
 for (const [k, o] of tx.outputs.entries()) {
-  if (o.ergoTree !== walletTree && o.ergoTree !== vaultTree && o.ergoTree !== FEE_TREE && !inputTrees.has(o.ergoTree))
-    die(`output ${k} goes to a script that is neither the wallet, its KeepAlive vault, the fee contract, nor an input's script`);
+  if (o.ergoTree === ts.pending) {
+    const r = o.additionalRegisters ?? {};
+    if (r.R4 !== collBytes(walletTree)) die(`output ${k} is a pending withdrawal whose destination is not this wallet`);
+    if (r.R6 !== collBytes(ts.vault)) die(`output ${k} is a pending withdrawal whose vault is not this wallet's`);
+    continue;
+  }
+  if (o.ergoTree !== walletTree && o.ergoTree !== vaultTree && o.ergoTree !== ts.vault && o.ergoTree !== recoveryTree &&
+      o.ergoTree !== FEE_TREE && !inputTrees.has(o.ergoTree))
+    die(`output ${k} goes to a script that is neither the wallet, its vaults, its recovery address, the fee contract, nor an input's script`);
 }
 // Caps
 const sum = (xs) => xs.reduce((a, b) => a + BigInt(b), 0n);
