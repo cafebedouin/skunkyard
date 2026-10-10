@@ -117,3 +117,25 @@ from a verifier build attempt (**done: go**, `slhdsa/`) → the forum post. SK-0
 since it rests on the same scheme choice. The decision is recorded (`CHARTER.md`): default stateless SLH-DSA-128s for
 the rotating address, the stateful schedule (small, cheap, forced-reuse-griefable) as the cheaper member; both have
 measured figures.
+
+## Round 2 review fixes (2026-10-10): hardening, in progress
+
+The Cryptography and schedule seats found four limits in the hash verifiers (`prompts/policy-post-devnet-fixes.md`).
+Status, per contract (devnet, policy node):
+
+- **Signature-length guard (all five verifiers).** `sig.size == 2144` (WOTS+, QVault, RekeySchedule, RekeyAccount3)
+  / `== 7856` (SlhDsa), FIPS 205 Alg. 20 line 1 — a valid signature with bytes appended verified before. **Added to
+  all five.** Validated on `WotsPlus.es` (`devnet-test-wotsplus.py`): `wp-append`, `wp-truncate`, `wp-otherkey`,
+  `wp-deepflip`, `wp-replay` all REFUSE; valid ACCEPT. Tree 703 → **717 B**; overhead re-measured 16.3%.
+- **Key schedule (`RekeySchedule.es`), done.** Index range-checked in `verify` (`0 <= i < 8`, so index 8 cannot
+  borrow leaf 0's Merkle path); a **close path** (a leaf-signed spend with no successor at the script); the **leaf
+  index folded into the WOTS+ tweak** (`lseed ++ [index, chain, step]`), separating the N leaves as FIPS 205's
+  key-pair address does. Suite 11/11 incl. `sched-idx8` (REFUSE), `sched-idx7to8` (REFUSE), `sched-close` (ACCEPT).
+  Tree 1,473 → **1,530 B**; rekey 47,130 → **55,432**; merge 14,899 → **14,908**.
+- **Welded NFT (`RekeyAccount3.es`), contract done, suite re-run pending.** `custody` now requires `isReg(o)` (NFT
+  AND both registers) for every script output, so a rekey cannot leave an unspendable NFT box; and the hash key is
+  swapped to WOTS+ (tweak keyed by the account NFT id). Tree 1,267 → **1,302 B**. Weld harness needs WOTS+ hash-key
+  signing + the register-less-successor rows before re-measuring the hash-key rekey cost.
+- **Quantum-day vault (`QVault.es`), guard added, suite re-run pending.** Tree 1,233 → **1,247 B** (sig-length
+  guard). The 18-row suite and the Cryptography negatives are owed.
+- **SLH-DSA (`SlhDsa.es`), guard added, Scala-harness negatives pending.**

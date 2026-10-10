@@ -32,10 +32,13 @@
     val pre = t._1
     val i = t._2._1
     val proof = t._2._2
-    levels.fold(blake2b256(pre), { (acc: Coll[Byte], lvl: Int) =>
+    // range-check the index: without it, index 8 shares index 0's path directions (8/1, 8/2, 8/4 all even) and
+    // could take leaf 0's Merkle proof. N = 8 leaves, so a valid index is 0..7.
+    val computed = levels.fold(blake2b256(pre), { (acc: Coll[Byte], lvl: Int) =>
       val sib = proof.slice(lvl * 32, lvl * 32 + 32)
       if ((i / pow2(lvl)) % 2 == 0) blake2b256(acc ++ sib) else blake2b256(sib ++ acc)
-    }) == root
+    })
+    i >= 0 && i < 8 && computed == root
   }
   val hasShape = { (b: Box) => b.R4[Coll[Byte]].isDefined && b.R5[Int].isDefined }
 
@@ -69,12 +72,13 @@
         val u = if (b < 0.toByte) b.toInt + 256 else b.toInt
         if (cc % 2 == 0) u / 16 else u % 16
       } else cDigits(cc - 64)
-      // WOTS+ leaf: tweakable chain keyed by the per-account seed and this (chain, step), absolute steps [digit..14]
+      // WOTS+ leaf: tweakable chain keyed by the per-account seed, the LEAF INDEX (R5) and this (chain, step), so
+      // the N leaves are separated as FIPS 205's key-pair address separates them (a sig at leaf i is useless at j)
       steps.fold(sig.slice(cc * 32, (cc + 1) * 32), { (curr: Coll[Byte], s: Int) =>
-        if (s >= digit) blake2b256(lseed ++ Coll(cc.toByte, s.toByte) ++ curr) else curr
+        if (s >= digit) blake2b256(lseed ++ Coll(SELF.R5[Int].get.toByte, cc.toByte, s.toByte) ++ curr) else curr
       })
     })
-    val wotsOk = blake2b256(lseed ++ concat) == SELF.R4[Coll[Byte]].get
+    val wotsOk = sig.size == 2144 && blake2b256(lseed ++ concat) == SELF.R4[Coll[Byte]].get
     val nxt = OUTPUTS(sidxOpt.get)
     val proof3 = getVar[Coll[Byte]](3)
     val succOk = hasShape(nxt) && proof3.isDefined &&
@@ -82,7 +86,10 @@
       nxt.R5[Int].get > SELF.R5[Int].get &&
       nxt.R6[Coll[Byte]].getOrElse(Coll[Byte]()) == SELF.id &&
       verify((nxt.R4[Coll[Byte]].get, (nxt.R5[Int].get, proof3.get)))
-    wotsOk && succOk
+    // close: a WOTS-signed spend that leaves no successor at this script (every output off it), so the account is
+    // retired rather than advanced. No successor means no leaf to brick.
+    val closeOk = OUTPUTS.forall({ (o: Box) => o.propositionBytes != SELF.propositionBytes })
+    wotsOk && (succOk || closeOk)
   } else false
 
   // ---- maintain: keyless merge into one successor keeping the registered input's R4/R5

@@ -1,13 +1,13 @@
 {
  "experiment": "6-rekey-wotsplus",
- "started_height": 909,
+ "started_height": 1423,
  "node": {
   "appVersion": "6.0.7",
   "parameters": {
    "outputCost": 100,
    "tokenAccessCost": 100,
    "maxBlockCost": 1000000,
-   "height": 908,
+   "height": 1420,
    "maxBlockSize": 524288,
    "dataInputCost": 100,
    "blockVersion": 4,
@@ -43,21 +43,38 @@
    "got": "ACCEPT",
    "source": "",
    "sibling_n": null,
-   "cost": 50679,
+   "cost": 50273,
    "cost_instrument": "mempool",
-   "tx_id": "20322bbb111a85d8667bd635b4589b4d378758fe19d3b011864d6ad606d9af4a",
+   "tx_id": "77e2eab878d2f4ae7edae9ca7ee3fd5a6d0bf2915936d9120d14f0a2c51f1bb2",
    "heights": {
-    "before": 910,
-    "after": 910
+    "before": 1424,
+    "after": 1424
    },
-   "detail": "20322bbb111a85d8667bd635b4589b4d378758fe19d3b011864d6ad606d9af4a",
+   "detail": "77e2eab878d2f4ae7edae9ca7ee3fd5a6d0bf2915936d9120d14f0a2c51f1bb2",
    "expect": "ACCEPT",
    "ok": true,
-   "tree_bytes": 703
+   "tree_bytes": 717
   },
   {
-   "n": "wp-forge",
-   "label": "WOTS+ with one byte of the signature flipped",
+   "n": "wp-valid2",
+   "label": "the same signature unmodified (ACCEPT sibling, checked not mined)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "7c0500cc2358cada1fc99319a7c61d62b09ca2f9d918d4153260f6aa1f98c7fa",
+   "heights": {
+    "before": 1426,
+    "after": 1426
+   },
+   "detail": "7c0500cc2358cada1fc99319a7c61d62b09ca2f9d918d4153260f6aa1f98c7fa",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "wp-append",
+   "label": "valid signature with 32 bytes appended",
    "got": "REFUSE",
    "source": "node-check",
    "sibling_n": "wp-valid",
@@ -65,10 +82,78 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 912,
-    "after": 912
+    "before": 1426,
+    "after": 1426
    },
-   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 9df46663b6b463d07d64a8378d401249d94aaa44289d123dede1a10f8682ea44: #0 => Success((false,38917))\" }",
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 9c4574d544883a070594c8c3dbb37a710a6bc4c6b0dd4b5944c453dd065bde75: #0 => Success((false,656))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "wp-truncate",
+   "label": "signature truncated by 32 bytes",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "wp-valid",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1426,
+    "after": 1426
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 02c2d403c3c0ff45200586f5bf024134e428e413ee8f41fd7935368664dbdfe1: #0 => Success((false,656))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "wp-otherkey",
+   "label": "a signature from another key on the same digest",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "wp-valid",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1426,
+    "after": 1426
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 9b880fece5ec0fddb829d618336b7b5c2e8edd64754a9496b7a73d8ece482d8c: #0 => Success((false,38641))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "wp-deepflip",
+   "label": "a byte flipped deep in the signature (chain 33 element)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "wp-valid",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1426,
+    "after": 1426
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. eb6bf44d0354eac0364411fb389003103c583ae4bdf64c52e7a1c5f574ea11c9: #0 => Success((false,38641))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "wp-replay",
+   "label": "a valid signature replayed on a second box at the same address",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "wp-valid",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1427,
+    "after": 1427
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 4b09d507d86c253a48e536bb523efba340d8b911479ec47a7d6b3586a12f2d55: #0 => Success((false,37984))\" }",
    "expect": "REFUSE",
    "ok": true
   },
@@ -78,26 +163,26 @@
    "got": "ACCEPT",
    "source": "",
    "sibling_n": null,
-   "cost": 44896,
+   "cost": 44927,
    "cost_instrument": "mempool",
-   "tx_id": "3cc33bd3adda4e3c1c91560c6bbef7a5f95073bbd1f4aa4995ca48e77a3815c7",
+   "tx_id": "06b494af96bd7de25c60a93c89e17861afd385e635876d364e478e290a1e68bc",
    "heights": {
-    "before": 913,
-    "after": 913
+    "before": 1428,
+    "after": 1428
    },
-   "detail": "3cc33bd3adda4e3c1c91560c6bbef7a5f95073bbd1f4aa4995ca48e77a3815c7",
+   "detail": "06b494af96bd7de25c60a93c89e17861afd385e635876d364e478e290a1e68bc",
    "expect": "ACCEPT",
    "ok": true,
-   "tree_bytes": 643
+   "tree_bytes": 657
   }
  ],
  "harness_bugs": [],
  "cost_comparison": {
-  "wotsplus_node": 50679,
-  "wots_node": 44896,
-  "wotsplus_script_est": 38479,
-  "wots_script_est": 32696,
-  "tweak_overhead_pct": 17.7,
+  "wotsplus_node": 50273,
+  "wots_node": 44927,
+  "wotsplus_script_est": 38073,
+  "wots_script_est": 32727,
+  "tweak_overhead_pct": 16.3,
   "note": "node cost minus the devnet per-tx overhead 12200; both on a random spend message (not q2's worst case), so compare the overhead, not the absolute"
  }
 }

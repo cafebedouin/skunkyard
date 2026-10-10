@@ -84,18 +84,33 @@ def main():
         mined = run.check(label_valid, f"{'WOTS+' if tweaked else 'plain WOTS'} signature verified in script",
                           tx, "ACCEPT", submit=True, cost=True, tree_bytes=len(tree) // 2)
         if forge:
-            bad = bytearray(sig); bad[0] ^= 1
-            ftx = {"inputs": [inp(box["boxId"], {"1": coll_bytes(bytes(bad).hex())})], "dataInputs": [],
-                   "outputs": [out(box["value"], dest, full_height())]}
-            # new box for the forgery (the valid one is spent); re-sign nothing, just flip
-            fbox = at(send([{"address": addr, "value": 50_000_000}]), tree)[0]
-            fh = full_height()
-            fouts = [out(fbox["value"], dest, fh)]
-            fmsg = tx_message(fbox["boxId"], fouts)
-            fsig = bytearray(sign(tweaked, seed, sk, fmsg)); fsig[0] ^= 1
-            run.check("wp-forge", "WOTS+ with one byte of the signature flipped",
-                      {"inputs": [inp(fbox["boxId"], {"1": coll_bytes(bytes(fsig).hex())})], "dataInputs": [],
-                       "outputs": fouts}, "REFUSE", sibling=label_valid)
+            # the Cryptography seat's negatives, each REFUSE, sibling of the ACCEPT above. A fresh unspent box (the
+            # ACCEPT box was mined); REFUSE checks do not consume it, so they share it.
+            nbox = at(send([{"address": addr, "value": 50_000_000}]), tree)[0]
+            nh = full_height()
+            nouts = [out(nbox["value"], dest, nh)]
+            nmsg = tx_message(nbox["boxId"], nouts)
+            nsig = sign(tweaked, seed, sk, nmsg)
+
+            def neg(n, label, sigbytes, b=nbox, outs=nouts):
+                run.check(n, label, {"inputs": [inp(b["boxId"], {"1": coll_bytes(bytes(sigbytes).hex())})],
+                                     "dataInputs": [], "outputs": outs}, "REFUSE", sibling=label_valid)
+
+            run.check("wp-valid2", "the same signature unmodified (ACCEPT sibling, checked not mined)",
+                      {"inputs": [inp(nbox["boxId"], {"1": coll_bytes(nsig.hex())})], "dataInputs": [],
+                       "outputs": nouts}, "ACCEPT")
+            neg("wp-append", "valid signature with 32 bytes appended", nsig + b"\x00" * 32)
+            neg("wp-truncate", "signature truncated by 32 bytes", nsig[:-32])
+            osk, _ = keygen(tweaked, seed, os.urandom(32))   # a different key, same per-vault seed
+            neg("wp-otherkey", "a signature from another key on the same digest", sign(tweaked, seed, osk, nmsg))
+            df = bytearray(nsig); df[33 * 32] ^= 1            # a byte deep in the signature (chain 33)
+            neg("wp-deepflip", "a byte flipped deep in the signature (chain 33 element)", bytes(df))
+            # replay: nsig is valid for nbox; apply it to a second box at the same address, outputs byte-identical
+            # except the input, so only SELF.id (in the message) differs
+            rbox = at(send([{"address": addr, "value": 50_000_000}]), tree)[0]
+            run.check("wp-replay", "a valid signature replayed on a second box at the same address",
+                      {"inputs": [inp(rbox["boxId"], {"1": coll_bytes(nsig.hex())})], "dataInputs": [],
+                       "outputs": [out(rbox["value"], dest, nh)]}, "REFUSE", sibling=label_valid)
         return mined, commit, seed
 
     wp_mined, wp_commit, wp_seed = run_scheme("wp-valid", True, wp_src, forge=True)

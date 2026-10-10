@@ -38,5 +38,6 @@
       if (s >= digit) blake2b256(seed ++ Coll(c.toByte, s.toByte) ++ curr) else curr
     })
   })
-  sigmaProp(blake2b256(seed ++ concat) == commit)
+  // reject a signature of the wrong length (a valid one with bytes appended verifies otherwise)
+  sigmaProp(sig.size == 2144 && blake2b256(seed ++ concat) == commit)
 }
