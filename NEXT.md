@@ -3,6 +3,10 @@
 > **FIRST, at the next post-quantum session (planned Thursday 2026-10-08): follow up on the census heads-up.** Details outside git. Then: (1) restore the specific identification in public files only per their answer (it is kept outside git in ~/bin/skunkyard-private/); (2) decide the push of the unpushed commits (wording 'bridge custody' vs 'custody' multisig) — the replicator needs commit bc92d1e pushed to run C1 at the tip.
 
 
+> **Filed 2026-10-10:** ergoplatform/explorer-backend#289 (template hash: SHA-256 on the explorer, BLAKE2b-256 on the
+> node's index). Banked until a maintainer replies: the docs PR and the ergo#2218 comment
+> (`posts/2026-10-template-hash-issue.md`). Also open: Bob's reply on the KeepAlive vault (SK-050), SK-051.
+
 > **Arbitrage line, 2026-10-09 (SK-049):** Cheese: TwinPools is discussion only; arbitrage first, on the upkeep
 > source, after his review of #14 to #16. Code check: one pool per transaction on both DEXes (ErgoDEX v1 `OUTPUTS(0)`;
 > LithosDex `INPUTS(0)` and `OUTPUTS(0)`), so a cross-pool cycle is two transactions on LithosDex too; the forwarded

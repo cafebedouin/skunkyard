@@ -1,6 +1,8 @@
 # Template-hash issue: revised after five seats (2026-10-10)
 
-For ergoplatform/explorer-backend. Review record: `posts/seats/template-hash/REVIEW.md`.
+Filed 2026-10-10 as ergoplatform/explorer-backend#289 (body unwrapped for GitHub; `#2218` written as
+`ergoplatform/ergo#2218`). Review record: `posts/seats/template-hash/REVIEW.md`. Banked until a maintainer replies:
+the docs PR (direction 1) and the comment on ergo#2218 below.
 
 ---
 
@@ -63,4 +65,4 @@ documents it, and switching would mean reindexing every node's template index.
 
 > For anyone mixing node and explorer queries: the explorer's `ergoTreeTemplateHash` is SHA-256 of the same template
 > bytes, not the BLAKE2b-256 this endpoint uses, so hashes do not carry over between them. Reproduction and proposal:
-> ergoplatform/explorer-backend#\<n\>.
+> ergoplatform/explorer-backend#289.
