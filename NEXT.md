@@ -25,7 +25,10 @@
 >   - Duckpools liquidation is the one repeating keyless take. It's idle now; the first loans expire at 1,920,164.
 >   - SigRSV dip-buy backtests positive, but it's a capital position.
 >   - The deployed DexyGold LP was drained (1,868,221), so there's no keeper target.
->   - Untested: buying SigUSD in the pool and redeeming it at the bank.
+>   - SigUSD buy-and-redeem: backtested 2026-10-10 (an incumbent exists; closed now).
+> - **PARKED 2026-10-10 until Cheese says what he wants and what he will approve** (the heartbeat-minimum question):
+>   all U1d follow-ups (unreconstructed series, Duckpools interest and request jobs, Mew and other order contracts,
+>   the ergcubeswaps cross-check), the Duckpools expiry watcher and repay processing, the `upkeep-duckpools` push.
 >
 > **Round two on mainnet, 2026-10-09:** U1b reviewed (its "rent only" label was a sampling artefact); a second
 > ergopad Babel take (7.44) and 6,847 staking incentive boxes consolidated for their keyless bounty (3.42 ERG; 436.9
