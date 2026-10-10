@@ -1,5 +1,8 @@
 # Experiment 4: inheritance alongside KeepAlive
 
+> **File of record: `results.json`.** `results-run1.json` is a superseded first run (a failed row from a harness
+> bug, since fixed); do not read it as a finding.
+
 **`Inherit.es`** (316 B tree) is built on `KeepAlive.es`: a single box, the owner in R4, a keyless refresh that
 carries the replaced id in a register. Registers must be dense (plan S18), and KeepAlive's replaced-id register only
 appears at the first refresh, so the activity register sits below it:

@@ -216,10 +216,10 @@ the `policy` devnet.
 
 Schedule devnet rows (`devnet-test-schedule.py`, attack tooling in `skunkyard-private`), all as expected:
 `sched-foreign` a leaf not in ROOT cannot be spent (REFUSE); `sched-fwd`/`sched-fwd2` WOTS-leaf rekey forward
-(ACCEPT, index 0→1→2); `sched-back` index-not-advanced (REFUSE); `sched-grief` a plain payment merged into a
-*revealed past* leaf (ACCEPT); `sched-grief-theft` redirecting that merge to the griefer's own leaf (REFUSE);
-`sched-merge` honest merge into the current box (ACCEPT). Fixed-key: `devnet-test-fixedkey.py`,
-`results-fixedkey.json` (public).
+(ACCEPT, index 0→1→2); `sched-back` index-not-advanced (REFUSE); `sched-grief-theft` redirecting a griefer's merge
+to the griefer's own leaf (REFUSE); `sched-grief` a plain payment merged into a *revealed past* leaf (ACCEPT);
+`sched-recover` the owner reclaiming it by rekeying with the reused leaf (ACCEPT); `sched-merge` honest merge into
+the current box (ACCEPT). Fixed-key: `devnet-test-fixedkey.py`, `results-fixedkey.json` (public).
 
 **What the numbers say.**
 - **Dropping the token is essentially free.** The schedule merges a plain payment at 14,899 against the NFT's 14,791
@@ -229,26 +229,53 @@ Schedule devnet rows (`devnet-test-schedule.py`, attack tooling in `skunkyard-pr
   pays only 4,928/box, and only when rotating; the in-place variants pay ~15k per plain payment. In-place rekey +
   merge costs roughly 3× the fixed-key per-box baseline. What that 3× buys: no address change on rotation, and (the
   schedule) a seed-derivable, post-quantum identity, or (the NFT) a transferable object.
-- **The griefing Fable anticipated does not arise.** With a Merkle `ROOT`, future leaves are hidden, so no one can
-  "plant a future key and advance the owner's index." The residual griefing is planting a box at a *revealed past*
-  leaf and merging the account's plain payments into it (`sched-grief`): a DoS on that payment (the box is keyed to a
-  spent one-time leaf), never a theft — `maintain` forces the successor to keep the registered input's key, so
-  redirecting to the griefer's own leaf is refused (`sched-grief-theft`).
+- **The griefing is not the one anticipated, and it is sharper than "a DoS".** With a Merkle `ROOT` the future
+  leaves are hidden, so no one can "plant a future key and advance the owner's index." What a griefer *can* do is
+  plant a box at a *revealed past* leaf and merge the account's plain payments into it (`sched-grief`, ACCEPT). It is
+  never theft — `maintain` forces the successor to keep the registered input's own key, so redirecting to the
+  griefer's leaf is refused (`sched-grief-theft`, REFUSE). But a revealed past leaf is a **used one-time key**, so to
+  reclaim the payment the owner must rekey that box, which means signing **again** with the spent leaf
+  (`sched-recover`, ACCEPT — the contract has no global state to know the key was used). For a secp leaf that second
+  signature is harmless; **for a WOTS leaf it is forced key reuse**, and two signatures under one WOTS key on
+  different messages expose chain elements that make forgery cheap (q2: n=32, w=16, 67 chains, each revealed at a
+  message-dependent height; a second message lowers some of those heights and hands the attacker the lower element).
+  So the honest finding: **theft is impossible, but a griefer can force the owner to choose between a lost payment
+  and a weakened key.**
+- **Mitigation, with an honest limit.** Type the leaves in the root — secp before quantum day, WOTS after — so a
+  reclaim reuses a secp leaf (harmless) while reuse is still possible, and only WOTS leaves (post-quantum, sign-once)
+  are exposed to the forced-reuse cost. The limit: the keyless merge **cannot refuse** a registered input whose leaf
+  is a secp type once a WOTS index has been revealed, because the script sees only the one input's leaf, not whether
+  a later leaf has been used — the same no-global-state argument as the SK-029 singleton. So the typing bounds *when*
+  reuse hurts, not *whether* a griefer can force a reclaim. [Reasoned from the contract; the typed-leaf variant is
+  not built.]
 
-The kill criterion and the call between these are in `CHARTER.md` (the planning instance's, SK-052).
+## The decision: a three-member family (SK-052)
 
-## Hash-based signature choice (SK-053, queued)
+The three variants are not competing for one job (`CHARTER.md`):
+- **Fixed key** — a personal receive address that rotates seldom; free to receive, cheapest to rotate.
+- **Key schedule** — when the published address must stay stable across rotation (merchant/donation, anything
+  printed, the quantum-day migration); the only member that is token-free, seed-derivable and post-quantum at once.
+- **Welded NFT** — when the account is a transferable, inheritable, composable object.
 
-`RekeySchedule.es` is a single-tree XMSS with **plain-WOTS** leaves, which is enough to prove the construction and
-measure it but is not the right final choice for a deployment:
-- **WOTS+** is the floor: its keyed/tweaked hashing closes the multi-target and domain-separation gap SK-035 flags
-  for an address that releases many signatures over its life.
-- **XMSS / XMSS^MT** is the correct framing (what this already is) and lifts the bounded-N rotation cap via layered
-  trees, at more hashing cost.
-- **SLH-DSA (stateless, SPHINCS+)** removes the index entirely — no state to lose, no revealed-leaf griefing, no
-  multi-device collision (SK-037) — which matters most for a *receive address*, at a large per-spend size (SK-105:
-  5.5× `proveDlog`, byte-bound).
+The wallet-support list names which member each item applies to. The hash-based scheme each signing path should use
+(WOTS vs WOTS+ for the sign-once vault; stateful XMSS vs stateless SLH-DSA for the rotating address) is **SK-053**;
+the sizing that gates it is in `SCHEME-SIZING.md`.
 
-The axis the question exposes: **stateful-small-but-fragile vs stateless-large-but-robust**, decided by whether the
-account is a seldom-rotated personal address (leans stateless) or a high-throughput object (leans stateful). Queued
-to measure against the SK-029 harness and SK-105's sizes.
+## Hash-based signature choice (SK-053)
+
+`RekeySchedule.es` is a single-tree XMSS with **plain-WOTS** leaves — enough to prove and measure the construction,
+not the right final choice. The scheme is **two decisions**, because the two signing uses differ, and the forum post
+is blocked on them (it asks wallets to support a hash-key path, so the path's scheme must be chosen first). The
+sizing that gates the build is in `SCHEME-SIZING.md`.
+
+- **Sign-once (the quantum-day vault's hash key): WOTS vs WOTS+.** It signs once, to migrate, so a one-time scheme
+  suffices and no tree or state is needed. WOTS+ adds keyed/tweaked hashing that closes SK-035's multi-target and
+  domain-separation gap, at ~8% over WOTS and well inside the proposition cap. Answered first and cheap.
+- **Sign-many (the rotating address): stateful vs stateless.** The key schedule (this, an XMSS shape) is small and
+  cheap but stateful — hence the revealed-leaf forced-reuse griefing above. **SLH-DSA** (FIPS 205, stateless) removes
+  the index entirely: no revealed-leaf griefing, no multi-device collision (SK-037), at a large signature (SK-105:
+  128s 7,856 B) and an in-script verifier whose fit in the 4,096-byte proposition is the open go/no-go.
+
+Standards for the post: SLH-DSA is FIPS 205, XMSS is SP 800-208, WOTS+ is a building block (sign-once by design).
+Order: `SCHEME-SIZING.md` (done) → WOTS+ verifier measured on the devnet, swapped into the qvault and these leaves →
+SLH-DSA go/no-go from a verifier build attempt → the post. SK-029's many-time reply waits with it.

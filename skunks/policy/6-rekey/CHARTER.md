@@ -25,25 +25,39 @@ win?**
    Merkle check. No token, seed-derivable address, post-quantum. Costs: a bounded N rotations, and whatever griefing
    a revealed leaf allows.
 
-## Kill criterion
+## Kill criterion (the question the numbers answered)
 
 If no rotating-key variant lets plain payments merge safely **without a token** at a per-box cost **comparable to
-the fixed-key move baseline**, the receive-address-with-rekey idea dies and the fixed key is the answer for the
-personal-receive-address use case.
+the fixed-key move baseline**, the receive-address-with-rekey idea dies and the fixed key is the answer.
 
-The **NFT account survives on its own merits regardless** — not as a cheaper receive address, but as a transferable,
-inheritable, composable account object, where the token is the point rather than the price.
+The numbers (`README.md`): the token-free schedule merges at 14,899 against the NFT's 14,791 (dropping the token is
+~free), but neither in-place variant beats the fixed key, which receives for free and moves at 4,928/box. So on raw
+cost the fixed key wins — **but that is not the right frame, because the three variants are not competing for one
+job.** The decision is the family below.
 
-## What settles it
+## Decision (2026-10-10): a three-member family, not a winner
 
-The three variants' numbers, measured this round and recorded in `README.md`:
-- fixed-key: per-box move cost (`devnet-test-fixedkey.py`);
-- NFT account: per-box keyless-merge cost (`devnet-test-account.py`, the v2 line);
-- key schedule: per-box keyless-merge cost and the rekey (WOTS-leaf) cost (`skunkyard-private` attack harness);
-- tree bytes for each; and for the schedule, the residual griefing characterized (no theft; DoS on a payment merged
-  into a revealed past leaf).
+Each member is for a different requirement, and the wallet-support list names which member each item applies to.
+
+1. **Fixed key** (`FixedKey.es`) — a **personal receive address that rotates seldom**. Rotation is a move; free to
+   receive, cheapest to rotate. The default when nothing below is required.
+2. **Key schedule** (`RekeySchedule.es`) — when the **published address must stay stable across rotation**,
+   including the quantum-day migration: a merchant or donation address, anything printed. That stability is the
+   requirement that earns the ~3× cost, and the schedule is the only member that is **token-free, seed-derivable and
+   post-quantum at once**. Its residual griefing (below) is the honest cost to disclose.
+3. **Welded NFT account** (`RekeyAccount3.es`) — when the account is an **object**: transferable, inheritable,
+   referenced by other policies by id. The token is the point, not the price.
+
+## The schedule's residual griefing, sharpened
+
+Not merely "a DoS on a payment". A revealed past leaf is a **used one-time key**. If a stranger plants a box at that
+leaf and merges a plain payment into it, the owner can reclaim the payment only by signing **again** with the used
+WOTS leaf. For secp leaves that is harmless; for WOTS leaves it is **forced key reuse**, and two signatures under one
+WOTS key on different messages expose enough chain elements to make forgery cheap. So: **theft is impossible, but a
+griefer can force the owner to choose between a lost payment and a weakened key.** Measured in `README.md`
+(`sched-grief` → `sched-recover`). The typed-leaf mitigation and its honest limit are recorded there too.
 
 ## Status
 
-Contracts built and on devnet; the comparison table is in `README.md`. Decision pending the read of those numbers
-against the kill criterion (the planning instance's call).
+Contracts built, on devnet, and committed. The family above is the recorded decision; the scheme each path should
+use is SK-053 (WOTS+ vs WOTS for the sign-once vault, stateful vs stateless for the rotating address).

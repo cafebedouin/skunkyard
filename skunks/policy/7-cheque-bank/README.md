@@ -1,5 +1,10 @@
 # Experiment 7: a cheque bank (addendum; four stages)
 
+> **Files of record: `results-7a.json`, `results-7b.json`, `results-7c.json` (the stages) and
+> `results-control.json` (the AVL control).** The `results-control-run1.json`, `results-control-run2.json` and
+> `results-control-run3.json` are superseded runs carrying MALFORMED rows from a harness bug (since fixed); do not
+> read them as findings.
+
 The task is `prompts/policy-experiment-7-cheque-bank.md`; the cases and instruments are in plan §4.7. Every stage was
 built, so the addendum's stop rule did not fire. The rule's one candidate trigger was the AVL helper's control, and it
 is discussed under *Control* below.
