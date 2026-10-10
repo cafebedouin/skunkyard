@@ -78,5 +78,5 @@ Results: `devnet-results.json`.
   survives more than one spend.
 - **Mainnet constants** (PERIOD 1,051,200, WINDOW 21,600) and a mainnet flag box. Who runs the oracle is a
   governance question, not a contract one.
-- **Size.** 1,177 bytes against about 80 for an ordinary address. If such a box were left to rent, a claim would
+- **Size.** 1,178 bytes (1,233 after the WOTS+ swap) against about 80 for an ordinary address. If such a box were left to rent, a claim would
   take about 1.5 ERG; KeepAlive's refresh is what makes that moot.

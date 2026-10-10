@@ -1,0 +1,10 @@
+Review the draft forum post in the directory {{SLICE}}. Read {{SLICE}}/README-SLICE.md first, then {{SLICE}}/POST-DRAFT.md, then the evidence it cites under {{SLICE}}/evidence/. Everything here is public. Work with your file-reading tools only: do not run shell commands and do not use the network.
+The post argues that opt-in "policy vaults" on Ergo (contracts that keep coins safe from storage rent, delay withdrawals with a recovery key, rotate a receive address's key in place, switch to a hash-based key on a "quantum day" signal) work today without a fork, shows mainnet transactions for two of them with a per-policy integration list for wallets, describes a three-member family of rotating-key receive addresses with measured costs and one measured griefing, and reports that a FIPS 205 SLH-DSA-SHA2-128s verifier fits in an ErgoScript proposition, with its cost and the assurance it still lacks.
+Give a review the author could act on, as a single markdown document:
+1. Verdict: post as is, post with fixes, or do not post, with one paragraph of reasons.
+2. Is every factual claim supported by the evidence? Name any that is wrong or overstated, with the evidence file and line. Is any estimate or computed figure presented as measured?
+3. Are the contracts sound? Look for any path that lets someone other than the owner take funds, or that locks the owner out, which the cases do not cover: in KeepAliveAddress.es, Vault.es, Pending.es and Pending2.es, QVault.es, RekeyAccount3.es, RekeySchedule.es, WotsPlus.es and SlhDsa.es.
+4. Is the standing rule (section 4: three forms) correct and sufficient, and is each theft row cited for the right form?
+5. Are the hash-based signature claims (sections 5 and 6) correct against FIPS 205 and RFC 8391 as the contracts implement them, and are the stated negatives (a flipped byte, another message) enough?
+6. Is this the right message for wallet developers and for the protocol side, and what is missing or should be cut?
+Distinguish what you verified in the files from what you infer. Do not pad.

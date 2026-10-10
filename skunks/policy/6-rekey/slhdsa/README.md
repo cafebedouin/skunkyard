@@ -17,8 +17,8 @@ Stage reached: **7 of 7** (the full verifier). No stage failed to compile; no co
 **version 0** (header `0x10`, constants segregated), no 6.0-only method was needed.
 
 **The one sentence for the forum post:** a stateless FIPS 205 SLH-DSA-SHA2-128s verifier fits in an ErgoScript
-proposition today (1,506 of 4,096 bytes) at about 3.9× the measured cost of the WOTS+ single-chain verifier
-(node 201,947 against 51,896 for `wots_constant` n=32 w=16 in `q2/RESULT.md`) and a 7,856-byte signature, so the
+proposition today (1,506 of 4,096 bytes) at about 3.9× the measured cost of the plain-WOTS single-chain verifier
+(node 201,947 against 51,896 for `wots_constant` n=32 w=16 in `q2/RESULT.md`; about 3.4× the WOTS+ estimate) and a 7,856-byte signature, so the
 rotating receive address has a stateless option with no revealed-leaf griefing, at roughly 39 single-input spends per
 block by cost (8,001,091 / 201,947; computed, not run).
 

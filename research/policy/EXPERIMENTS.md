@@ -396,8 +396,9 @@ registers, and paying any address. Everything below is what it must add.
    - The cancel's fee needs funds: the pending box must go back to the vault at its exact value, so the fee comes
      from another input. A recovery holder must either hold a fee box (as the mainnet demo's recovery address did)
      or have the cancel sponsored, as the completion was (`2-twostep/mainnet/README.md`).
-   - Signing a cancel means proving an OR of keys (owner or recovery) while holding one secret. **Wallets already do
-     this natively**; the demo used sigmastate-js only because its signer is a script.
+   - Signing a cancel means proving an OR of keys (owner or recovery) while holding one secret. The node wallet does
+     it (§2 row 9); Fleet's single-key prover could not, so the mainnet cancel used sigmastate-js (`SIGNERS.md`);
+     other wallets are untested (corrected after the 2026-10-10 post review).
 7. **Attach flag boxes as data inputs** for gated owner spends (1b rows 31–32; `QVault`).
 
 ## Rulings, decided 2026-10-10 (the user, with the planning instance)

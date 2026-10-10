@@ -81,8 +81,10 @@ comparison above is answered in `SCHEME-SIZING.md` for the script-only candidate
 **Edges of the result, as the numbers draw them:**
 - Vault-scale, not payment-scale: about 500× a secp spend's cost and 170× its bytes, about 39 spends per mainnet
   block by cost. Acceptable because only owner spends run the verifier; payments in and keyless merges never do.
-- Interpretation is the cost (89%); no parameter or hash choice changes it. A native opcode would cut it about 25×
-  (SK-105's native figures); that is the one lever that needs a fork.
+- Interpretation is the cost (89%); no parameter or hash choice changes it. A native verification would cost about
+  14,893 per transaction by SK-105's estimate (`research/lattice/RESULT.md`, the SLH-DSA-128s opcode row) against
+  201,947 measured in script, about 13.6× per transaction (computed; an earlier "25×" here did not follow from that
+  table and was corrected 2026-10-10); that is the one lever that needs a fork.
 - Assurance is thin: one key pair, nine spends, the stage vectors, BouncyCastle as the only oracle. A verifier that
   accepts a forgery is a total loss.
 - The forced worst case (every chain at 15 steps, about 238,500) is a fit, not a run. One parameter set (128s);

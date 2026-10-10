@@ -30,7 +30,7 @@ win?**
 If no rotating-key variant lets plain payments merge safely **without a token** at a per-box cost **comparable to
 the fixed-key move baseline**, the receive-address-with-rekey idea dies and the fixed key is the answer.
 
-The numbers (`README.md`): the token-free schedule merges at 14,899 against the NFT's 14,791 (dropping the token is
+The numbers (`README.md`): the token-free schedule merges at 14,899 against the first (pre-NFT) account's 14,791 (dropping the token is
 ~free), but neither in-place variant beats the fixed key, which receives for free and moves at 4,928/box. So on raw
 cost the fixed key wins — **but that is not the right frame, because the three variants are not competing for one
 job.** The decision is the family below.

@@ -222,7 +222,9 @@ to the griefer's own leaf (REFUSE); `sched-grief` a plain payment merged into a 
 the current box (ACCEPT). Fixed-key: `devnet-test-fixedkey.py`, `results-fixedkey.json` (public).
 
 **What the numbers say.**
-- **Dropping the token is essentially free.** The schedule merges a plain payment at 14,899 against the NFT's 14,791
+- **Dropping the token is essentially free** [corrected 2026-10-10 post review: the 14,791 was measured on
+  `RekeyAccount.es`, the account *before* the NFT, so this compares two token-free merges; the NFT versions' merge was
+  not costed]. The schedule merges a plain payment at 14,899 against the first account's 14,791
   — the Merkle check on the registered input adds ~100 units. A token-free, seed-derivable, post-quantum rotating
   account merges at the same price as the NFT.
 - **Neither in-place variant beats the fixed key on raw cost.** The fixed key absorbs a plain payment for free and
@@ -267,7 +269,10 @@ to; the schemes and their sizing are SK-053 (`SCHEME-SIZING.md`).
 **WOTS+ swapped in and node-judged (2026-10-10).** `WotsPlus.es`'s tweakable chain is now the hash key of `QVault.es`
 and the leaf check of `RekeySchedule.es`. The full suites re-ran on the policy devnet with the swap: the quantum-day
 vault **18/18** (`skunks/qvault/`), the schedule **8/8** including the forced-reuse griefing and recovery rows
-(`devnet-test-schedule.py`). So every rotating/sign-once member now runs its SK-053 scheme end to end.
+(`devnet-test-schedule.py`). So every rotating/sign-once member now runs its SK-053 scheme end to end. The
+schedule after the swap: tree **1,473 B** (1,418 with plain leaves), WOTS+-leaf rekey **51,690** (sched-fwd), merge
+**14,900** (sched-merge); the results file (`results-schedule.json`) sits with the harness in `skunkyard-private`,
+so these are the numbers of record here. The comparison table above keeps the plain-leaf figures.
 
 ## Hash-based signature choice (SK-053)
 
