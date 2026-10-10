@@ -1,0 +1,166 @@
+{
+ "qdayNft": "05f4d8c696b87a4e8adca8909ea16f274b2190c18c23dc20a75bf5909add8044",
+ "flagTree": "19730204000e21031ee1ab3b729f21e0dcee05642a63745286354d8e511e6376838e235a28078c01d804d601b2a5730000d602eded93c27201c2a793db63087201db6308a792c17201c1a7d603e4c672010401d604e4c6a70401eb02d1ed72029372037204ea02d1eded7202ef72047203cdee7301",
+ "vaults": {
+  "FAR": {
+   "tree": "1997098101040004000e2005f4d8c696b87a4e8adca8909ea16f274b2190c18c23dc20a75bf5909add8044050004bc907a040204000e21038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c040204000200048004043c0420042004000402040404060408040a040c040e04100412041404160418041a041c041e04200422042404260428042a042c042e04300432043404360438043a043c043e04400442044404460448044a044c044e04500452045404560458045a045c045e04600462046404660468046a046c046e04700472047404760478047a047c047e04800104820104840104000402040404060408040a040c040e04100412041404160418041a041c044004020440041e0480010404020004800404040400042004200480040420042004200480010e20efd745a50a3627f2fbdbb2907793d92b904e9f4402c1989c2625e2313c44ae9201000404050004500428050005c0843d05000504058092f4010414040004080100d806d601b5db6501fed9010163d801d603db63087201ed91b172037300938cb27203730100017302d602e3010ed603c2a7d604b5a4d901046393c272047203d605e30004d606d901063c630eb0db63088c7206017303d90108414d0ed802d60a8c720802d60b8c72080195938c720a018c7206029a720b8c720a02720beb02eb02ea02d1eded8fa3730493b172017305efe4c6b272017306000401cdee7307d195ede6720293b172047308d802d607cbb3c5a7dc0c0fa501d9010763c47207d608b072077309d901084002d802d60a8c720802d60b958f720a730a9a7e720a04730b7e720a049a8c72080199730c9a9d720b730d9e720b730e93cbdc0c0f834304730f7310731173127313731473157316731773187319731a731b731c731d731e731f7320732173227323732473257326732773287329732a732b732c732d732e732f7330733173327333733473357336733773387339733a733b733c733d733e733f7340734173427343734473457346734773487349734a734b734c734d734e734f7350735101d9010904b0830f0473527353735473557356735773587359735a735b735c735d735e735f7360b4e472029c720973619c9a720973627363d9010b4c0ed801d60d8c720b01958f8c720b02997364958f72097365d802d60eb272079d7209736600d60f958f720e73679a7e720e0473687e720e0495939e72097369736a9d720f736b9e720f736cb28303049d7208736d9e9d7208736e736f9e72087370997209737100cb720d720d73727373d195e67205d804d607b17204d6089272077374d609b2a5e4720500d60ab072047375d9010a41639a8c720a01c18c720a0296830601ec720892a3999a8cc7a7017376737793c272097203af7204d9010b63afdb6308720bd9010d4d0ed801d60f8c720d0192da72060186027209720fb072047378d9011041639a8c721001da72060186028c721002720f92c1720999720a957208a19c7e720705737999720ab07204737ad9010b4163a28c720b01c18c720b02a19dc1a7737b737c928cc772090199a3737d95720890b1c37209b07204737ed9010b40639a8c720b01b1c38c720b0290b1c372099ab1c3a7737f738001",
+   "addr": "mTD2siKKMjaA9CqqdHfDPiKYQdodwtznD7SCFctiFHR5U3KWr5q8FjPHdyq83iDZ6HW6umog4gYa7htx69Whc59yyLBGxXyEnXU3fQWqqyC2EHWh1Qstfr8svbAmZiTABPpBaVD3bs8Dx7EJxd6eQG2UsdymsA2gPEXascEwJ7UU1WHAypsZ9rm6iKi87GzECeVpv5nCLBeQXpCNmrwr6yCKfQTmWNS5tMCqDc4UdWGPjcoHMS6bVAKdBozJDLyk5ExTDxt7GB9E37U4RT8mgqnggcbMhxHzEqnERfYr8GnbnByyyzn6jpz7uECaJhboziQN46wAx3uHSuQfYBXUfJQLW8YkfkB5JJHZpA6wfinsmRfLwcCKfm3e6quth9ScgBRKfyNJLFrudUHTdu6jDQyxiFPgq1aQuQzdRtGudFJCy4AGGydfjRKbS9VMupRacfyZQzAdkrUZ9Bo26wZeWjazxZp3s7ovaCEvdWhMa9E8LnKTqW8BvDiYFdkKd61hqAUVkA2jyHCQtLQQAcGjkxMhAQ7AdRQCknhWtQxw19nfT2FE7Q2b8sRvgAUugtZrm14paETsfU474bXDPRnURJcaqeqNotnFm2H1XKxBbMxTvUUptu7dNvxnhRn6XqVzcVLuzwGw6aGYQqGPeM3mCneGozFXcWKGKQ6mvB3XdT9AWJmYB6ViY58SmpUeNrZ1oinvb2YhXVE45NW3nBbnjf6SGmcTkSXbBavAh4VmwFy848iSKebgJSwKg4euaMtdHKcWBSeVvobKkLtDE3X5HR3LhEzJgrpCupjoo9JLifxJEimFxUQS3hUqGBHbBaVeqteHEDBhWVHfJxGnJpEr3if7SDXCvocWe87xWRdRw6qMej29kakUkKexsRZu2GVhUrtBbmbZvpzhn4pxsqofbNbf8q5MxVMX3bV5buu7BarjUsKaRiwKdCFaUd11X5oxTS5RNVtjDRGrs2tkRbcFdcLwsZ9CGW49Pe9i35ECoyyznsQA6z89Crm7m5QhpQnERGqq9zgULmH8EefRTCNCGRx5ukHhvYXN5aJYKiGarqVsWnb3WFGfA12yahyW1NtHUCFGXnaFiwsAE37Fhvp92pNVD91hAUQpP7EVEhyR3NG6GsejhNRaGiCJPwTLXqvKHhDF4pPgC6zbfE8VUPusqo2PKWz9vXBMWkaZukk8gQnfXkLqCzCEX5KeEW1QgcaWmSCymSHnFqS92HYQurXwb78BHvP4uFU2iGArbRX9hptHGeaaG2536dcYiRcoosm3Ht3xTktgEGjyqW8stgvyYhjoNzcKkCWNQE7vqb1MscmLGxbJFG85Hum68y9G3ZRsrYsKwDcNmP8AwHYsfUUxJ8ptrDdUNeVQi1YM9YJFfSbJrERooNRqhkLcA7k78g79HppUoxGrKoPT9KHufBse1zmwuASNWWJB83ZpJmwbumdWFuhmHAxgEnMby2w7wDZAADdAmmZLfVrwRqq4vUAayN9hdnUnp4ABgAKyDkCmWXog3Gm9afswoDbHfxCRj2NVRWKRq5Bj2vHHD1DDcTL8SpkpqbzU786MNZZciV584SbgbqzQbcoKZt5ZDKBbVCCVKiQn2iiqzsBw5qW",
+   "commit": "efd745a50a3627f2fbdbb2907793d92b904e9f4402c1989c2625e2313c44ae92"
+  },
+  "NEAR": {
+   "tree": "1996098101040004000e2005f4d8c696b87a4e8adca8909ea16f274b2190c18c23dc20a75bf5909add80440500049608040204000e21038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c040204000200048004043c0420042004000402040404060408040a040c040e04100412041404160418041a041c041e04200422042404260428042a042c042e04300432043404360438043a043c043e04400442044404460448044a044c044e04500452045404560458045a045c045e04600462046404660468046a046c046e04700472047404760478047a047c047e04800104820104840104000402040404060408040a040c040e04100412041404160418041a041c044004020440041e0480010404020004800404040400042004200480040420042004200480010e20bff39ecba2a5051971ad3b6a8df44dd6a4cf4f71537f3e2df8ad7d470f97accc01000404050004500428050005c0843d05000504058092f4010414040004080100d806d601b5db6501fed9010163d801d603db63087201ed91b172037300938cb27203730100017302d602e3010ed603c2a7d604b5a4d901046393c272047203d605e30004d606d901063c630eb0db63088c7206017303d90108414d0ed802d60a8c720802d60b8c72080195938c720a018c7206029a720b8c720a02720beb02eb02ea02d1eded8fa3730493b172017305efe4c6b272017306000401cdee7307d195ede6720293b172047308d802d607cbb3c5a7dc0c0fa501d9010763c47207d608b072077309d901084002d802d60a8c720802d60b958f720a730a9a7e720a04730b7e720a049a8c72080199730c9a9d720b730d9e720b730e93cbdc0c0f834304730f7310731173127313731473157316731773187319731a731b731c731d731e731f7320732173227323732473257326732773287329732a732b732c732d732e732f7330733173327333733473357336733773387339733a733b733c733d733e733f7340734173427343734473457346734773487349734a734b734c734d734e734f7350735101d9010904b0830f0473527353735473557356735773587359735a735b735c735d735e735f7360b4e472029c720973619c9a720973627363d9010b4c0ed801d60d8c720b01958f8c720b02997364958f72097365d802d60eb272079d7209736600d60f958f720e73679a7e720e0473687e720e0495939e72097369736a9d720f736b9e720f736cb28303049d7208736d9e9d7208736e736f9e72087370997209737100cb720d720d73727373d195e67205d804d607b17204d6089272077374d609b2a5e4720500d60ab072047375d9010a41639a8c720a01c18c720a0296830601ec720892a3999a8cc7a7017376737793c272097203af7204d9010b63afdb6308720bd9010d4d0ed801d60f8c720d0192da72060186027209720fb072047378d9011041639a8c721001da72060186028c721002720f92c1720999720a957208a19c7e720705737999720ab07204737ad9010b4163a28c720b01c18c720b02a19dc1a7737b737c928cc772090199a3737d95720890b1c37209b07204737ed9010b40639a8c720b01b1c38c720b0290b1c372099ab1c3a7737f738001",
+   "addr": "B58EMagM7NLewbTSi317mrjR3iPBRSQXHU68aByLWtfaxsVYG2qWwiTsbZJHQBNGpwyfmrQN8tNXV4xf91GiiBdr92ZZecv7HDdjrYh1qeuQZzwXTpKVDFfHsSyT8JvrxawhdxPSHZS7JQcFcvSYy8de2xYVgdgxtxJzLRkHjcEQzQ8XBeZ3HCLtehSVn4Wr3KAojT9zApmT5ez1JXFAUHtzPtLEueMNV5LmagzSPhbTC8rdV5a3kajfLY3cR8aRe4BfkFcESg8jwXsvZo4HpJUmSwnZaMwq9AWmCJ7qWrCU6CZRLHUpCFzn3sCCnYUkHjHvfpjNUzgpjYpJoL2CEFvdk9BJSNJua3wKsNx4rU1CUjd8AwfeHmXni9rbCYiwoLgGy6XbERojTWE9zF9KnsY4YybJUoYyc8y2pckQrzWoaNzBpUKhbi3v3F7vkE4UjBMQVyabCSoqzeVrUyHMmyx7R9xdvra4SxqwuTXWt5XwDExxKyk1xipNpU1CUBajMZtXutdNqRigYnAqCw4Pmep3JPouiDGyzFU21Vu9sfhXDW2ZcwHypbzLb8FzwimAfdNDyBSSCR8Ddinv7pra7XnDkFtx5GpP9CrYHnj3nXd1W8MaJVToCQD3gytCdXhPMyBd6YmweMxAmn3u1pVmYr6YPN89ZNFGucFFv8kSo6CTfmFjRhYJfgcGwMxwG2YRUoPqsegyH78bpViE3iMV8wQPP8BFU5Xti1uTD41cPFpGWZEzTAWaKD85ZpBSPS2AMAZsCirSHBEBYPPKrDjthPM28Q9DeofbwJ52qPAJuy2yGPHEWK6m22eFV7AmnghJGimNNGZqVJQsdUKaXncrBjqqdyB79KkmqqSsw6kZvXMReV4MfboTbAamuPJjxxdMQMFxwi9VhUVeaRTMiREPwtTF6bRxhgH7pQzgSrfUGwQH52Fu8GDBUP1eXzXT1tm6CtNQUYjNo6ZkyZedne2yj3UXRmeFopYqQYFAzu65F4xsdS9uuM8yydZmdjCasCGpdZgT4atN9inwcwAzwbqnFVxSRodPZDS6z9cR2eDEZDzvqjnQo8Xw1sisgXbcAT3hhpxntwhYviHioiRAz28wSGA5fpzVHx4TqyaGB722YCfmSB8JAMddjbkgiBo8wRspHYzbw6EdBrscWD2ESrtCk1hE51gZMp8MuDmYjojYeqeWfciMWygLrp1g8FSb8FqMGLXdnYxvtZDd5nDeAFdtxK8fFEtzU8yUMAqdhbaXw7HLA4GwQenwDWqhTYewyNdHDaDr4nYMKEFJ7WuywEyzGdh52WtrkgaWetR7e97XoNtuKuJMfagmjQHbkGBSsg6iUkEqW8eygBKKs9AgTb9qk5F8DtTUBroPDgEH5fWHQ88YVqY1eLQ7iAGWVZtg1SikLyfLn41zwXR5fg7htAzEWiTiYni4963uc5ibEgMWipLTTcB96Z2tAUtSgzQwFzY3nGbNQ2aksY1t4KCN3wb6QwXyBzEq5i39Ke8GbyZqKmenR7kp9D35F74iDbQfE3WykDJSG7XC7zWsQ19a54irmZfzd6jF6d6LwTdRx2aJV5CEYjmV6i43Y35YJWTMMZcF4sbpGKLMKMC7R5",
+   "commit": "bff39ecba2a5051971ad3b6a8df44dd6a4cf4f71537f3e2df8ad7d470f97accc"
+  }
+ },
+ "backstops": {
+  "FAR": 1000478,
+  "NEAR": 523
+ },
+ "results": [
+  {
+   "case": 1,
+   "label": "owner key spends A, flag box (false) as a data input",
+   "expect": "ACCEPT",
+   "got": "ACCEPT",
+   "ok": true,
+   "detail": "d931bf8e684cdf4b1dd0ea51c5ebb537535af9a813e2ef6e8f5d337d2450699e"
+  },
+  {
+   "case": 2,
+   "label": "owner key spends A with no flag box",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" }; unsigned check: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 946e0775397c208fccfdadbd38"
+  },
+  {
+   "case": 3,
+   "label": "owner key spends A with a look-alike flag (another token)",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" }; unsigned check: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 298e443fdf1574feb07094fff2"
+  },
+  {
+   "case": 4,
+   "label": "hash key spends A",
+   "expect": "ACCEPT",
+   "got": "ACCEPT",
+   "ok": true,
+   "detail": "39271c23faf65ff8f7335f529965a8c8e26ece52d1a5037caf803807a02965f1"
+  },
+  {
+   "case": 5,
+   "label": "hash key: signed for one set of outputs, sent with another",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. a7d97d6e579b7f269b2f7c7a64fbc88942e0d69b097767fd4d41e145d4087eee: #0 => Success((false,34730))\" }"
+  },
+  {
+   "case": 6,
+   "label": "hash key spends B and C together (a one-time key twice)",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. ab9ceb4d0d045ed7131e4ba3e82d68649d0579a2987fb71970ce80d5d7214f84: #0 => Success((false,88))\" }"
+  },
+  {
+   "case": 7,
+   "label": "keyless merge of B and C",
+   "expect": "ACCEPT",
+   "got": "ACCEPT",
+   "ok": true,
+   "detail": "c2ba5971ec4e276cfabfe46b35b53e5794c346f6bfd4ab40caaae156af48876c"
+  },
+  {
+   "case": 8,
+   "label": "lone refresh of A in the KeepAlive window, no key",
+   "expect": "ACCEPT",
+   "got": "ACCEPT",
+   "ok": true,
+   "detail": "67e7405609967f9762d8e48a18812cbf4b485899ad02128544b66861e80e1a7f"
+  },
+  {
+   "case": 9,
+   "label": "owner key spends D after NEAR's backstop",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" }; unsigned check: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. edd2d1b40eeb2dfaab8315ce90"
+  },
+  {
+   "case": 10,
+   "label": "hash key spends D after the backstop",
+   "expect": "ACCEPT",
+   "got": "ACCEPT",
+   "ok": true,
+   "detail": "975f9e1eb04286f0f4c8a35aeb76b52de6da5a66616985a2e226ae6ea6223728"
+  },
+  {
+   "case": 11,
+   "label": "flag false -> true with no key",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 66365fe96541c925b998f793960f1763843e5f0d9476a1386fdfe838661f7c41: #0 => Success((false,490))\" }"
+  },
+  {
+   "case": 12,
+   "label": "flag false -> true by the oracle",
+   "expect": "ACCEPT",
+   "got": "ACCEPT",
+   "ok": true,
+   "detail": "66365fe96541c925b998f793960f1763843e5f0d9476a1386fdfe838661f7c41"
+  },
+  {
+   "case": 13,
+   "label": "flag true -> false by the oracle",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" }; unsigned check: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 369062ff536a85b5964b3876a7"
+  },
+  {
+   "case": 14,
+   "label": "flag box refreshed unchanged, no key",
+   "expect": "ACCEPT",
+   "got": "ACCEPT",
+   "ok": true,
+   "detail": "e29389fb7513acfc8a6dd82f065bb74b1b5a884fa08dbcc396e2ed07aab47b8b"
+  },
+  {
+   "case": 15,
+   "label": "owner key spends A, flag box (true) as a data input",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" }; unsigned check: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. d1dab84f854b077f1ab208e690"
+  },
+  {
+   "case": 16,
+   "label": "owner key spends A with no flag box",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" }; unsigned check: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. f2114334bf0135f8335c94ba9e"
+  },
+  {
+   "case": 17,
+   "label": "keyless merge of A, the B+C box and a new payment E",
+   "expect": "ACCEPT",
+   "got": "ACCEPT",
+   "ok": true,
+   "detail": "029309cdf8b7f364bafb301ba7f73aadef5e20e114eb698631ce2f18addd59c1"
+  },
+  {
+   "case": 18,
+   "label": "hash key spends the merged box to the owner",
+   "expect": "ACCEPT",
+   "got": "ACCEPT",
+   "ok": true,
+   "detail": "f2dd97a2f1112a25a419c6de6fb6b789ecec858eeb18699a1b61b1cc48d81ac1"
+  }
+ ]
+}
