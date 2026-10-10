@@ -4,7 +4,7 @@ The cache lives under research/agents/census/raw/ (git-ignored). A cached respon
 that cannot change once the window is fixed (anything with an explicit height bound, a transaction or box id);
 listing endpoints are cached too, keyed by their full path, so a rerun over the same window is offline.
 """
-import hashlib, json, os, threading, time, urllib.request
+import gzip, hashlib, json, os, threading, time, urllib.request
 
 EXPLORER = os.environ.get("ERGO_EXPLORER", "https://api.ergo.aap.cornell.edu/api/v1")
 RAW = os.path.join(os.path.dirname(os.path.abspath(__file__)), "raw")
@@ -34,8 +34,15 @@ def _parse(text, path):
     return out[0] if len(out) == 1 and "/stream" not in path else out
 
 
+GZIP = os.environ.get("CENSUS_GZIP") == "1"  # U1d: the box-chain pages are large; cache them gzipped
+
+
 def get(path, cache=True, method="GET", body=None):
     cp = _cache_path(path + (json.dumps(body, sort_keys=True) if body is not None else ""))
+    if cache and os.path.exists(cp + ".gz"):
+        stats["cache"] += 1
+        with gzip.open(cp + ".gz", "rt") as f:
+            return json.load(f)
     if cache and os.path.exists(cp):
         stats["cache"] += 1
         with open(cp) as f:
@@ -62,9 +69,14 @@ def get(path, cache=True, method="GET", body=None):
     stats["net"] += 1
     if cache:
         os.makedirs(os.path.dirname(cp), exist_ok=True)
-        with open(cp + ".tmp", "w") as f:
-            json.dump(out, f)
-        os.replace(cp + ".tmp", cp)
+        if GZIP:
+            with gzip.open(cp + ".gz.tmp", "wt") as f:
+                json.dump(out, f)
+            os.replace(cp + ".gz.tmp", cp + ".gz")
+        else:
+            with open(cp + ".tmp", "w") as f:
+                json.dump(out, f)
+            os.replace(cp + ".tmp", cp)
     return out
 
 
