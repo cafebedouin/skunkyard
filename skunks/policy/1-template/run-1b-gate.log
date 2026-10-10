@@ -1,0 +1,10 @@
+   31 owner spend with a TRUE flag on A-all (gate on)                    expect REFUSE     got REFUSE     wallet-sign    ok
+   32 owner spend with a TRUE flag on A-all-signal (gate off)            expect ACCEPT     got ACCEPT                    ok
+{'path': 'owner', 'kind': 'switched-off', 'X': 'hash', 'all_on': 12897, 'without_X': 12893, 'delta': 4}
+{'path': 'owner', 'kind': 'switched-off', 'X': 'KeepAlive', 'all_on': 12897, 'without_X': 12895, 'delta': 2}
+{'path': 'owner', 'kind': 'absent', 'X': 'hash', 'all_on': 12897, 'without_X': 12886, 'delta': 11}
+{'path': 'owner', 'kind': 'absent', 'X': 'KeepAlive', 'all_on': 12897, 'without_X': 12889, 'delta': 8}
+{'path': 'hash key', 'kind': 'switched-off', 'X': 'signal', 'all_on': 46479, 'without_X': 46820, 'delta': -341}
+{'path': 'hash key', 'kind': 'absent', 'X': 'signal', 'all_on': 46479, 'without_X': 46779, 'delta': -300}
+{'path': 'maintenance', 'kind': 'switched-off', 'X': 'two-step', 'all_on': 14594, 'without_X': 14594, 'delta': 0}
+{'path': 'maintenance', 'kind': 'absent', 'X': 'two-step', 'all_on': 14594, 'without_X': 14592, 'delta': 2}

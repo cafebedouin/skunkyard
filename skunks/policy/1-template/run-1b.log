@@ -1,0 +1,27 @@
+    1 hash key on A-all-hash (switch off)                                expect REFUSE     got REFUSE     node-check     ok
+    2 hash key on C-all-hash (block absent)                              expect REFUSE     got REFUSE     node-check     ok
+    3 maintenance on A-all-ka (switch off)                               expect REFUSE     got REFUSE     node-check     ok
+    4 maintenance on C-all-ka (block absent)                             expect REFUSE     got REFUSE     node-check     ok
+    5 owner path on A-all (signal + two-step + limit exercised)          expect ACCEPT     got ACCEPT                    ok
+    6 owner path on A-all-hash (switched off: hash key)                  expect ACCEPT     got ACCEPT                    ok
+    7 owner path on A-all-ka (switched off: KeepAlive)                   expect ACCEPT     got ACCEPT                    ok
+    8 owner path on C-all-hash (absent: hash key)                        expect ACCEPT     got ACCEPT                    ok
+    9 owner path on C-all-ka (absent: KeepAlive)                         expect ACCEPT     got ACCEPT                    ok
+   10 hash-key path on A-all                                             expect ACCEPT     got ACCEPT                    ok
+   11 hash-key path on A-all-signal (switched off: signal)               expect ACCEPT     got ACCEPT                    ok
+   12 hash-key path on C-all-signal (absent: signal)                     expect ACCEPT     got ACCEPT                    ok
+   20 maintenance merge on A-all                                         expect ACCEPT     got ACCEPT                    ok
+   21 maintenance merge on A-all-twostep (switched off: two-step)        expect ACCEPT     got ACCEPT                    ok
+   22 maintenance merge on C-all-twostep (absent: two-step)              expect ACCEPT     got ACCEPT                    ok
+ 30.a the oracle flips the flag false -> true                            expect ACCEPT     got ACCEPT                    ok
+Traceback (most recent call last):
+  File "/home/scott/bin/skunkyard/skunks/policy/1-template/devnet-test.py", line 277, in <module>
+    main()
+  File "/home/scott/bin/skunkyard/skunks/policy/1-template/devnet-test.py", line 273, in main
+    stage_1b()
+  File "/home/scott/bin/skunkyard/skunks/policy/1-template/devnet-test.py", line 207, in stage_1b
+    owner(31, "owner spend with a TRUE flag on A-all (gate on)", "A-all", "REFUSE", tflag, sibling=32, submit=False)
+  File "/home/scott/bin/skunkyard/skunks/policy/1-template/devnet-test.py", line 163, in owner
+    b = boxes[nm].pop()
+        ^^^^^^^^^^^^^^^
+IndexError: pop from empty list

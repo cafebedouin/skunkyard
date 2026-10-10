@@ -100,3 +100,69 @@ over `QVault.es` (1,225 against 1,178 tree bytes), from the `else` defaults and 
 Trees: `A-*.tree`, `C-*.tree`, `KeepAliveAddress.tree`, `QVault.tree`. The constants used (owner = node A's first
 key, a fresh WOTS commitment, a fresh QDAY NFT, BACKSTOP start + 1,000,000, DELAY 15, LIMIT 0.1 ERG, KeepAlive's
 devnet values) are in `results-1a.json` `constants`.
+
+## 1b: transaction cost per path (devnet `policy`, 2026-10-10, after experiment 2)
+
+`devnet-test.py --stage 1b`, then `--stage 1b-gate` (rows 31-32, after a harness bug: too few boxes were deposited
+on A-all, `results.json` `harness_bugs`).
+- The template's two-step block is experiment 2's tested announce block. `PENDING_TREE` is the tested `Pending.es`.
+- Every compared pair has the same transaction shape:
+  - owner: 1 input, 1 data input (the flag box), 2 outputs (pending + successor);
+  - hash key: 1 input, 1 output;
+  - maintenance merge: 2 inputs, 2 outputs.
+- Costs are the node's mempool figures (`cost_instrument: mempool` in every row).
+
+**Forms A and B are one tree (1a), so the plan's two pair kinds become:**
+- *switched-off*: form A's "all" against "all − X";
+- *absent*: form C's "all" (the same tree) against form C's "all − X".
+
+| path | X | kind | cost, all on | cost, without X | delta |
+|---|---|---|---|---|---|
+| owner (signal + two-step + limit exercised) | hash key | switched-off | 12,897 | 12,893 | 4 |
+| owner | KeepAlive | switched-off | 12,897 | 12,895 | 2 |
+| owner | hash key | absent | 12,897 | 12,886 | 11 |
+| owner | KeepAlive | absent | 12,897 | 12,889 | 8 |
+| hash key | signal | switched-off | 46,479 | 46,820 | −341 |
+| hash key | signal | absent | 46,479 | 46,779 | −300 |
+| maintenance merge | two-step | switched-off | 14,594 | 14,594 | 0 |
+| maintenance merge | two-step | absent | 14,594 | 14,592 | 2 |
+
+**Expectation (iv), exact equality within each pair: not exactly, and below 0.1% where the measurement is clean.**
+- **The owner path's deltas** of 2–11 (out of 12,897) are reported as measured. Their cause is not isolated
+  [UNVERIFIED].
+  - Both absent-block trees are shorter, and the script compares `propositionBytes` with costs that scale with
+    length. That would explain the absent rows, not the switched-off ones, whose trees have equal length.
+- **The hash-key rows say nothing about the switch.** A WOTS verification's cost depends on the message's digits,
+  since each chain is hashed `15 − digit` times. Two different spends therefore differ by hundreds whatever the
+  template. One sample per tree cannot resolve a switch effect under that noise.
+- **The answer to "does a switched-off block still cost evaluation"** is that a switched-off or cut block costs at
+  most a few units, against the bytes it costs every box (1a).
+
+**Negative half: every row as expected.**
+
+| # | case | expected | got | source | sibling |
+|---|---|---|---|---|---|
+| 1 | hash key on A-all-hash (switch off) | REFUSE | REFUSE | node-check | 10 |
+| 2 | hash key on C-all-hash (block absent) | REFUSE | REFUSE | node-check | 10 |
+| 3 | maintenance on A-all-ka (switch off) | REFUSE | REFUSE | node-check | 20 |
+| 4 | maintenance on C-all-ka (block absent) | REFUSE | REFUSE | node-check | 20 |
+| 31 | owner spend with a TRUE flag on A-all (gate on) | REFUSE | REFUSE | wallet-sign | 32 |
+| 32 | the same spend on A-all-signal (gate off) | ACCEPT (checked) | ACCEPT | | |
+
+Rows 5–12 and 20–22 (the honest spends, all mined) are in the table above. Row 30.a is the oracle's flip of the
+flag (QDay.es, mined). Boxes in 1b carry no token: form A's box is 1,602 B against 1a's 1,633 B with one token.
+
+## What experiment 1 decides (the plan's four numbers; the verdict is RULING R4, default, unruled)
+
+1. **Rent, qvault profile:** one template costs **0.419 ERG more per storage period** than its family member (form B
+   box 1,633 B against form C 1,298 B, one token each). It costs 0.478 ERG more than the hand-written `QVault.es`.
+   For an owner who wants only the key, the template box costs 2.04 ERG per period against 0.18 ERG.
+2. **The cap:** no combination exceeds 4,096 bytes; the largest is 1,560 B tree, 1,633 B box.
+3. **Template hashes:** **one** under forms A and B (13 combinations); **13** under form C.
+4. **Evaluation of switched-off blocks:** a few cost units at most (rows 5–9, 20–22). Negligible.
+
+Recommendation, conditional as R4's default asks:
+- **one template if a wallet must recognise a single template hash**, at about 0.4 ERG per box per four years for the
+  qvault profile, and up to 1.9 ERG for a bare-key owner;
+- **otherwise a small family.** The 6.0.7 compiler folds nothing, so the template saves no bytes for an owner who
+  switches blocks off.

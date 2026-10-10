@@ -111,9 +111,161 @@ def stage_1a(run, consts):
     return out, formb
 
 
+def stage_1b():
+    """Cost per path. Every compared pair has the same transaction shape. Forms A and B are one tree (1a), so the two
+    pair kinds are: switched-off (form A "all" vs "all - X") and absent (form C "all" vs "all - X")."""
+    run = Run("1b-template-cost", HERE)
+    owner, oracle = pk_of(A), pk_of(A, 1)
+    seed = os.urandom(32).hex()
+    commit = wots("commit", seed, "32", "16")["commitment"]
+    qnft = issue("QDAY-1B")
+    qtree, qaddr = compile_tree((HERE.parent.parent / "qvault" / "QDay.es").read_text(), {"$ORACLE": oracle})
+    flag = at(send([{"address": qaddr, "value": 10_000_000, "assets": [{"tokenId": qnft, "amount": 1}],
+                     "registers": {"R4": FALSE}}]), qtree)[0]
+    pend = compile_tree((HERE.parent / "2-twostep" / "Pending.es").read_text(),
+                        {"$OWNER": owner, "$RECOVERY": pk_of(B)})[0]
+    start = full_height()
+    consts = {"$OWNER": owner, "$PKCOMMIT": commit, "$QDAY_NFT": qnft, "$BACKSTOP": str(start + 1_000_000),
+              "$PENDING_TREE": pend, "$DELAY": str(DELAY), "$LIMITL": f"{LIMIT}L", **KA_CONST}
+    src = (HERE / "PolicyTemplate.es").read_text()
+    allon = {s: True for s in SW}
+    names = {"A-all": ("A", allon)}
+    for x in ("hash", "ka", "signal", "twostep"):
+        names[f"A-all-{x}"] = ("A", dict(allon, **{x.upper(): False}))
+        names[f"C-all-{x}"] = ("C", dict(allon, **{x.upper(): False}))
+    trees = {}
+    for nm, (form, sw) in names.items():
+        s, subs = (form_a if form == "A" else form_c)(src, sw)
+        trees[nm] = compile_tree(s, {**consts, **subs})
+    S = 300_000_000
+    need = {nm: 4 for nm in trees}
+    boxes = {nm: [] for nm in trees}
+    reqs = [(nm, {"address": trees[nm][1], "value": S}) for nm in trees for _ in range(need[nm])]
+    for i in range(0, len(reqs), 12):
+        chunk = reqs[i:i + 12]
+        dep = send([r for _, r in chunk])
+        used = set()
+        for nm, _ in chunk:
+            o = [o for o in at(dep, trees[nm][0]) if o["boxId"] not in used][0]
+            used.add(o["boxId"])
+            boxes[nm].append(o)
+    for nm in trees:
+        run.tree(nm, trees[nm][0], trees[nm][1], boxes[nm][0]["boxId"])
+    dest = "0008cd" + pk_of(A, 2)
+
+    def owner_outs(nm, b, h):
+        t = trees[nm][0]
+        return [out(LIMIT, pend, h, [], {"R4": coll_bytes(dest), "R5": int_c(h + 1 + DELAY + 2),
+                                         "R6": coll_bytes(t)}),
+                out(b["value"] - LIMIT, t, h)]
+
+    def owner(n, label, nm, expect, data, sibling=None, submit=True, **kw):
+        b = boxes[nm].pop()
+        h = full_height()
+        return run.key_spend(n, label, A, [b["boxId"]], [data["boxId"]], owner_outs(nm, b, h), expect, sibling,
+                             submit=submit, cost=submit, tree=nm, **kw)
+
+    def hashk(n, label, nm, expect, sibling=None, submit=True, **kw):
+        b = boxes[nm].pop()
+        h = full_height()
+        outs = [out(b["value"], NOBODY_TREE, h)]
+        sig = wots_sign(seed, b["boxId"], outs)
+        return run.check(n, label, {"inputs": [inp(b["boxId"], {"1": coll_bytes(sig)})], "dataInputs": [],
+                                    "outputs": outs}, expect, sibling, submit=submit, cost=submit, tree=nm, **kw)
+
+    def maint(n, label, nm, expect, sibling=None, submit=True, **kw):
+        b1, b2 = boxes[nm].pop(), boxes[nm].pop()
+        h = full_height()
+        bounty = min(2 * 500_000, min(b1["value"], b2["value"]))
+        outs = [out(b1["value"] + b2["value"] - bounty, trees[nm][0], h), out(bounty, FEE_TREE, h)]
+        return run.check(n, label, {"inputs": [inp(b1["boxId"], {"0": "0400"}), inp(b2["boxId"], {"0": "0400"})],
+                                    "dataInputs": [], "outputs": outs}, expect, sibling, submit=submit, cost=submit,
+                         tree=nm, **kw)
+
+    # negatives first (checked, not submitted), each before its sibling consumes boxes of that tree
+    hashk(1, "hash key on A-all-hash (switch off)", "A-all-hash", "REFUSE", sibling=10, submit=False)
+    hashk(2, "hash key on C-all-hash (block absent)", "C-all-hash", "REFUSE", sibling=10, submit=False)
+    maint(3, "maintenance on A-all-ka (switch off)", "A-all-ka", "REFUSE", sibling=20, submit=False)
+    maint(4, "maintenance on C-all-ka (block absent)", "C-all-ka", "REFUSE", sibling=20, submit=False)
+    # honest paths, mined, cost from the mempool
+    owner(5, "owner path on A-all (signal + two-step + limit exercised)", "A-all", "ACCEPT", flag)
+    owner(6, "owner path on A-all-hash (switched off: hash key)", "A-all-hash", "ACCEPT", flag)
+    owner(7, "owner path on A-all-ka (switched off: KeepAlive)", "A-all-ka", "ACCEPT", flag)
+    owner(8, "owner path on C-all-hash (absent: hash key)", "C-all-hash", "ACCEPT", flag)
+    owner(9, "owner path on C-all-ka (absent: KeepAlive)", "C-all-ka", "ACCEPT", flag)
+    hashk(10, "hash-key path on A-all", "A-all", "ACCEPT")
+    hashk(11, "hash-key path on A-all-signal (switched off: signal)", "A-all-signal", "ACCEPT")
+    hashk(12, "hash-key path on C-all-signal (absent: signal)", "C-all-signal", "ACCEPT")
+    maint(20, "maintenance merge on A-all", "A-all", "ACCEPT")
+    maint(21, "maintenance merge on A-all-twostep (switched off: two-step)", "A-all-twostep", "ACCEPT")
+    maint(22, "maintenance merge on C-all-twostep (absent: two-step)", "C-all-twostep", "ACCEPT")
+    # the signal gate: flip the flag (oracle key, A's second key), then an owner spend with the true flag
+    h = full_height()
+    flipped = run.key_spend("30.a", "the oracle flips the flag false -> true", A, [flag["boxId"]], [],
+                            [out(flag["value"], qtree, h, flag["assets"], {"R4": TRUE})], "ACCEPT", submit=True)
+    tflag = at(flipped, qtree)[0]
+    owner(31, "owner spend with a TRUE flag on A-all (gate on)", "A-all", "REFUSE", tflag, sibling=32, submit=False)
+    owner(32, "owner spend with a TRUE flag on A-all-signal (gate off)", "A-all-signal", "ACCEPT", tflag,
+          submit=False)
+    pairs = []
+    cost = {c["n"]: c["cost"] for c in run.doc["cases"]}
+    for path, base_n, others in (("owner", 5, [(6, "switched-off", "hash"), (7, "switched-off", "KeepAlive"),
+                                               (8, "absent", "hash"), (9, "absent", "KeepAlive")]),
+                                 ("hash key", 10, [(11, "switched-off", "signal"), (12, "absent", "signal")]),
+                                 ("maintenance", 20, [(21, "switched-off", "two-step"), (22, "absent", "two-step")])):
+        for n, kind, x in others:
+            pairs.append({"path": path, "kind": kind, "X": x, "all_on": cost[base_n], "without_X": cost[n],
+                          "delta": None if None in (cost[base_n], cost[n]) else cost[base_n] - cost[n]})
+    run.doc["pairs"] = pairs
+    run.save()
+    for p in pairs:
+        print(p)
+
+
+def stage_1b_gate():
+    """Continuation of 1b after a harness bug: rows 31-32 needed boxes on A-all and A-all-signal and the first run had
+    deposited too few (IndexError at row 31). Fresh deposits to the same trees, the flipped flag box from row 30.a,
+    then the pair table."""
+    run = Run("1b-template-cost", HERE)
+    run.doc = json.loads(run.path.read_text())
+    run.bug(31, "too few boxes deposited on A-all (4, all used by rows 5, 10, 20): IndexError at row 31",
+            "--stage 1b-gate deposits fresh boxes on A-all and A-all-signal and runs rows 31-32")
+    trees = {t["name"]: (open(HERE / f"{t['name']}.tree").read().strip(), t["address"]) for t in run.doc["trees"]}
+    flip_tx = [c for c in run.doc["cases"] if c["n"] == "30.a"][0]["tx_id"]
+    ftx = must(A, f"/blockchain/transaction/byId/{flip_tx}")
+    tflag = ftx["outputs"][0]
+    owner = pk_of(A)
+    pend = compile_tree((HERE.parent / "2-twostep" / "Pending.es").read_text(),
+                        {"$OWNER": owner, "$RECOVERY": pk_of(B)})[0]
+    S = 300_000_000
+    dep = send([{"address": trees[n][1], "value": S} for n in ("A-all", "A-all-signal")])
+    bx = {n: at(dep, trees[n][0])[0] for n in ("A-all", "A-all-signal")}
+    dest = "0008cd" + pk_of(A, 2)
+    for n, nm, expect, sib in ((31, "A-all", "REFUSE", 32), (32, "A-all-signal", "ACCEPT", None)):
+        b = bx[nm]
+        h = full_height()
+        outs = [out(LIMIT, pend, h, [], {"R4": coll_bytes(dest), "R5": int_c(h + 1 + DELAY + 2),
+                                         "R6": coll_bytes(trees[nm][0])}), out(b["value"] - LIMIT, trees[nm][0], h)]
+        run.key_spend(n, f"owner spend with a TRUE flag on {nm} ({'gate on' if n == 31 else 'gate off'})", A,
+                      [b["boxId"]], [tflag["boxId"]], outs, expect, sib, tree=nm)
+    pairs = []
+    cost = {c["n"]: c["cost"] for c in run.doc["cases"]}
+    for path, base_n, others in (("owner", 5, [(6, "switched-off", "hash"), (7, "switched-off", "KeepAlive"),
+                                               (8, "absent", "hash"), (9, "absent", "KeepAlive")]),
+                                 ("hash key", 10, [(11, "switched-off", "signal"), (12, "absent", "signal")]),
+                                 ("maintenance", 20, [(21, "switched-off", "two-step"), (22, "absent", "two-step")])):
+        for n, kind, x in others:
+            pairs.append({"path": path, "kind": kind, "X": x, "all_on": cost[base_n], "without_X": cost[n],
+                          "delta": None if None in (cost[base_n], cost[n]) else cost[base_n] - cost[n]})
+    run.doc["pairs"] = pairs
+    run.save()
+    for p in pairs:
+        print(p)
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--stage", choices=["1a", "1b"], required=True)
+    ap.add_argument("--stage", choices=["1a", "1b", "1b-gate"], required=True)
     a = ap.parse_args()
     if a.stage == "1a":
         run = Run("1a-template-compile", HERE, "results-1a.json")
@@ -158,6 +310,10 @@ def main():
         print(json.dumps({"form_B": {k: v for k, v in formb.items() if k != "rewrites"}}, indent=1))
         print("rewrites equal to form A:", sum(r["equals_form_A_compile"] for r in formb["rewrites"].values()),
               "of", len(formb["rewrites"]))
+    elif a.stage == "1b":
+        stage_1b()
+    else:
+        stage_1b_gate()
 
 
 if __name__ == "__main__":

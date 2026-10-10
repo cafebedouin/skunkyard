@@ -1,0 +1,518 @@
+{
+ "experiment": "1b-template-cost",
+ "started_height": 232,
+ "node": {
+  "appVersion": "6.0.7",
+  "parameters": {
+   "outputCost": 100,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 232,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2000,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ },
+ "wallets": {
+  "A": [
+   "038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c",
+   "031ee1ab3b729f21e0dcee05642a63745286354d8e511e6376838e235a28078c01",
+   "0367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df",
+   "0398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04",
+   "026c2134d11af7f0bea024724278ebc37ced69a19a99dd6638f393d5f1b9c8bea0",
+   "0389e8fb63050cdb2c3f5c70b3d6167835b60bcf020b9ed7c332965ffce26f2e6f"
+  ],
+  "B": [
+   "03d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494",
+   "0376bf533d4b15510fa9f4124b6e48616f07debcf2ef0cfb185cdc4a576450b475",
+   "02ea2649b3512b9a859ab658a85e2989a7ae39b2518877b2dc0f2b44b785d5788d",
+   "03b4c210719212afb16b5f136a2dcb3cc9fc231721f711994facf3b6111afba7d0",
+   "0234835d35c02b0dc042aa9c041b854b98c28df4872fdc8c6a260bc2ddd767f5a3",
+   "02a52d6327542c16cce7645b899e651dc78098fa4f495acb36992e66b099405ec2"
+  ]
+ },
+ "trees": [
+  {
+   "name": "A-all",
+   "tree_bytes": 1560,
+   "box_bytes": 1602,
+   "address": "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",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 2002500000
+  },
+  {
+   "name": "A-all-hash",
+   "tree_bytes": 1560,
+   "box_bytes": 1602,
+   "address": "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",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 2002500000
+  },
+  {
+   "name": "C-all-hash",
+   "tree_bytes": 871,
+   "box_bytes": 913,
+   "address": "Geq94XnCRgpWkKUeBNrFYh6pUFzb2BYney899hdtyzdRN83nBWLrXJThEokJz5RgFpAPBm81rsDzeAD2E4nBiXiMdcuQ3zdYv4frTtMTdMvEZT83pw8XjvCxkGvdn11n6QzGo64cyih3dzBPyxtPNij1MFsMPTK768b7vdvpstXwScWxsvvbgXjbDANwWgAuX8VibKSRbNiAUwRHPZp97vo5PZBaa2RdfVYhvxrbs6iRmBgEXA5EuxWiBkXHYXVPepYtUnksxjcAqY5Xnj8Bcj14tmQRGAbVadFfMzMfw9gU95sgvG3coHuAbte1E5xqA5TwNTAYYo5byt6sGq8MSppKDkUAmAooyezqC8h5uoFbq8rLTkusJki8fzBe5C9VjgbKhLDDNBw7RYYyf8HCSsgHeSuuRMiJuN1qTeXugSnT4KEokdVsAZX2GozAeEtcQR2Xt1HFon4LSdVtntG8D3PwZquGvv2mcVQWFm9jXnAtK42v8BNrupD5QAzo8YW9QJoUmnCKU5cW1AqAhhFP3oYpCgYaJJNZ1sxXziCi4r9XSYpaw1eYV43gTq8vUmthLRrfNzqwxq55yM8WUrtAF5Wcfn7ekTHVwcrzUQzNZmaVJL8XiUXAEK2MhCixcHUv9oMJRqbwn2o2LK6xixtesteRuyK5trWaWDm1UMXwuuwEYPQSXTxdnNXedEhHoqzNNVJ2qaiZadvfkwyyvokCRUWZ4wF6WoiY6buCCPaVEEvxRXztvXtrxqDcLCqbRtHbs37yi2FmfLsVwspoyRtFfJqekuu17vyftKS4g4VJ7FfQy7K49fE944ZHta4eRrUFQ9mLFaNQotMooyjUCmgNrAh7uo2snWUiRmTq6wifnoSzDjjzPXRHDcZitMS4rGp9qVwZbhcVBQWbPTeNLt9HqRmCeVY77nCg6M8q2FGdWXBjDK2STfgEEWc59NCEFbpq6Soa4gd3DiRDMHXhgNnABZSKDRCbkQTgQrkiStD8TZbdPcs9cXSGHgZRPihfFZE2wqkxpx19rPfpcDqK8TtNpvG13iLWNoemqxGWsLjTr9d1j1XruEEJonNHyVMs16MHauYs7xvHdyAfv8NzcZh1Y1UKsbdxCcE5ddkdyx57UZjGTN8FBNCBJ5KVSU7VR8gDrfF6YX4NnNrsLw529afqiKSPHB1QdZ2FokCzHybxc1gv",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 1141250000
+  },
+  {
+   "name": "A-all-ka",
+   "tree_bytes": 1560,
+   "box_bytes": 1602,
+   "address": "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",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 2002500000
+  },
+  {
+   "name": "C-all-ka",
+   "tree_bytes": 1207,
+   "box_bytes": 1249,
+   "address": "9ucgWDyT968qz19DDFfVB6cAi6U3CGqkR3quz89LEArEQSL7Pf13CGVsSSdYD7bRMTQDyKgzqSDSmhyo4EbrXHrbf75aqWfrbFzx2wT5CtBoNQyrZ2ZykJvQU7audFiN3deiHw2hpw6iMQ8vmTdA4Zfp5g7bgmtL5LiLm66JsSdm52nry66V8sxwUg1iDmi1WVCkjFzjU9CbRZiL4qZ5iq2BTgv356aPoso23hR9sqz3oTb6uNWyUdYNDzpZD8QwW6DKKqonjFSheNSReVZcJtqyFjRXi1KV5BFBLoATEYJrZE1AsEZn7wH6Jucmn6zgh2z5a5MvWK6RjVDw9etKtXzZkVfRaJjMGBcLQGWRQPZtwg3vhPyVh3BLWDpfQUP3PW6qXCzqKJAmXtu3cSon6FdC9tffZZoTaZKYAT1LiHyPKqr4eQ3LmDqzDd3Y17mYfY6jnVt8uk1LmNKDx1CCNgck48va6ZLyYcCW93cwYP84SVBpqdDXAe1w5Bqz27TTMy8sP4bfsz7jBJ2VnVofVmiSCysFRdGs7kxN5y1Skod4N17jTP9LhTcedu3ktQT1VrS5UyiHYsVPazAMdhC2PwErp3ebZdQCyg5D5UbomTcq9r3sThRBRZNXDGpbSmfhfLqdn3VMn18ms8E6kSiVat7iFEouGWq4me1ft2f352sH4yoGSA54TeDydoRFJbUk5ziUrypGthZEDVA8ekJgtCvZyLjXw8q8Lyx1hUD4gPSxRXTD55yswVd7wAX72vYkdUqP5sLro7ETb2zuWbLVHcicP1jZcHwLUJZqRvjXcqZBRU6NTDwnsMNNfmkor78eoRWrLwLVvVzmxdBZgS9W8wzr1CWVXzWee3T6c11fxLXRKgigoeH4crvR8pWHxU8wnntE3js1yaFwLDZ3kMwC8zC2cWbVRMKx5PeYFxNf37fMPda6n8DLxNvzyLMWSSfYu47jVg3nxFiozZ5Hr4f3hxA7R65KnNhzTfzrRb8j4KjhdeuC7h1hmkK3K55kRpx3zzGUfx9BvWVkmB99rPCHXFdTfaCDuTSr8QbHjAL6XQB3zh5zPp6Br5UEYk7hG45vbCHv5n7WDacJ8eQgy7dMfgUpXLzFS8zBsa8d1sB3UiDAkQouk4AomXrgMvbRjiWDUhT9sQh5SWq1hv9zHRsrjue9MA6qTgikEPdQ24hy6YLnSxwtV2PefrmnMYdoKRwciW4TTt1UxJgFTA6vFNiPrB3Na2Bm7wJDoKTHHCAh6R68b39PDJPbUGDFx9uS4121xm3rDah1ijLYmcAEyLmEnrpKeNXfaX7SLwFWqxN6eox6qYA76ztL3YSWCbtDwZ3c2svfnqxvDW6zoairx8brakShGKGWgqm6MqMNz4ZD9nATAniy19Z7DEPaD2YcuRrwcYeRdEuwmjAoxGUwxMjJNeYRnyVCzUKgZPh5cazrXj6NUPiWuKZLea12Av2ARAXJmnRe1rr89bwQ5WUbsCmbSRz9btkF8RpViJZUQuhHBf9HxmxHA1ziyAXTBFqBcgb28NabsBC6vKvMHzQ3Ur66vVzbtWBW5tmrNg5dQvfJEgkf3uJ3xZMUaVEMEweMg5ufVQaqygPtbS2b1GMf5EYoi5bKEwGHybqQAo2kKR8etf9NU6ou26shTJ1",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 1561250000
+  },
+  {
+   "name": "A-all-signal",
+   "tree_bytes": 1560,
+   "box_bytes": 1602,
+   "address": "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",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 2002500000
+  },
+  {
+   "name": "C-all-signal",
+   "tree_bytes": 1439,
+   "box_bytes": 1481,
+   "address": "5Wuwu8su6bBkT4rHyPYpLWuPwn17UHQM5qg91pDKnhamhR35Rzw2gathwQfKPyNY8DPQ71ckAFxQxVtfHpvJtTQJrQP8UpcYxVrHwLRGbfFdStiVMHmnPPFsDeqw2HfZyxzVA4fUUsTx4WWVzdN9juPER3oV1Bev6uSnYucuoaQjTLWjBmhnyyRxuVZXaQs3F9MP5GvVdChm9rs2Gt59HuZoqrurnVopz3kLEN33qhKmGRSSGTxCPvhRKgKrk5WxKnNatNTfnrrjjjjo149DLk6mAKrHrMcA3aSNBr2wVGAtvuJyVmwC5RXe6dcWKB3VNGKRzyTS9TWFFVfamKj8EmQH9KXc76EiijnVs1cAzds1C6ZFKxkjEh4Zy2x74CL1FKYA1xcpwsfhspe1o4VrvUrf6jiUMQQqsMWrvWgCZxhpgqzjQRFKhWA5ofHLR8vAVzJ4TmHkC9PqKvurRCPMBp6bXGeyz55wc69XmzrJBVpi34Zm8zbqxnEVNt8aGf3RigWLcGGRCkd5xEPGDnNSPfWEtx6UxhMYMc1xnVnz7XLBDg8jYmFShvAkRmTxzbcKjMSiCAtZzU2m3hjCDXMUmbdrefufp2akHtpWPBh8bj8gjvz3HHsWi5K3UKt4uHp4eKKSwABvQ8tKXcZNRcBHhqVa6t2K17oA1yqevAsrDqnYdavCvJd7jXyB4Cm9CvVm6fXFaZtFnk8JPbL1AnHPv5GN2N3wjvNqpaZNERLgdMH5U9XtsxVvQC38BdMDh5vQygTUVksGJSaM6kVZJLwKXdAdhPBSvUeSExitS8gq15SB2BR4qaXfS2WCUhU1b9ja9EsKyifFmWUgWBHLuJUhvR26XpPrcXnnL5bJ8tT1oAyArL9g2s1X7cne2mXWtTLCLRBpV4TCpn4WhT4zN3QHgW2593ictmZVrvstJeaLvfukwsBbzhwjQLuXPpmbv9rfqg31o4ULoJzANNQywgMorQ5vJdU2JLaMeHGCukGnNk5SoHf2efQADbGhf21PuqhoB5HtvAXdTGEf8tiBia5uH7Heip72w2YqTUAG9fGURwbVvTCRATXYawdcJVmEWJNmfJQsdDHfb4zqVCtyLEiun2QHJF5VPSrnMhjn825wjrWS4Qkktgh9DH24rzP9qiAf45h5scf8mb3eYs9nNPBts1RuVF25dTbjn4WSmVKXgBv7dVecxG6Ny1LWXc7rxRA9VGMfznHbLH6TmBpU6pzsjEdzFauUmqjtnMo2DUUdooCAM1Bq9hYhatZfWqn7BsdW5KX5tRMbNZ5JrDwHs8Yd8FLx6rKH1DKQsbhFYTH7gy2ad4arthwRWT7LYfZaDJn5CG5jWectkVjRci1D4N3WawmMbd53mgtwL2mZH7tBt6gsHfnPUZZkAnGA3qUdtQBXi96u51eobdpqRuZ93pZhYMBp2H1bLDy7K7g35jCrBkdiTmqX2kDtyzLs4jA3gQ8W1yEk21LTun4PEZkckFT3AFKLRn9QupnjbsTgHD2Y2qDetYUaTWwB7TJMCyAEyrUo1Fcci7fBK1otYg8BW2fVScs57hZtRE1gqea7VYYBD4H1JJPRUAXt8EjdiBJxFGs8ifHiq4qQkKYUXu3Rp5VYxfmjwxn73uD8JUMc7LDtcejVQCwh4y7P5e24c5jP4vBMhkqU9RBTFkwnCc6ahiGWZUejGZibPzSxMtpo6oo5ao2yBbHK7fetz3b7jM7Uk4V9dwXauFdHRYz6A3vCBg33XgDuZwwnaVDZ3M2QrPn1UVXHzFvXc2AU3WjV6j43Ad8MSVESwW6y5DX8tBXMR9izCNBxPB6mV85qdexdTicicETCe4Tx4szhk7kCR9wAQYD9zbg2J8eHoURMUJMbqnQxnV4CS2GejsKLBET8CgMkhYtuipMmq2LjgomMTDLbAuCtwTfCzBr5ALJG3CohituucwZ97heNf9mCu4H7rY1AbksK7PXYFWDq",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 1851250000
+  },
+  {
+   "name": "A-all-twostep",
+   "tree_bytes": 1560,
+   "box_bytes": 1602,
+   "address": "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",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 2002500000
+  },
+  {
+   "name": "C-all-twostep",
+   "tree_bytes": 1259,
+   "box_bytes": 1301,
+   "address": "ASN5xKcJt8MMqgrShfAER1w83Uim2vzdJptmJfFobttr1CdVmFk4TmZoo7UzGT2YMGW7Lqp43v4aRpVeyg2vKwmHk4V19bGzxhCiZJdPqJi8bRQbNC3BFfNxz6znCUJdBH4CsvPPPgfxJ4P2KvbcMxPVqpxCaQFRnx6QPMwZMFpmcFTPzwePAnxEs7M5JZ83sXG43AnHDi3BVx3BioEpY25auA7sTotPHnBgZyEyfZxQj3yshwLZHXqxo1wHg6a2fqg5A62JF6kaNuq28kGB4sR34CRe8uBqL34weQRu4WxsgNmrYqxjMmucxdkzdPYZ1aueqazpwX1qdj4zrL9jaurFc2egXaPjp81xsEdoyU1gYSissNU96gNpUzqTYRph2m37tLSXPMGW92YNuHXE9ywfTyt73pcd3avDowhsJUYUtUmaYgTe9YoBzCkjJYs1PDG6uo7sgPj3746RVm2dT4XhMXgunZmDTLne8B4DBZ2qpG4CSWaEo3nw3tdZQ2zJLYKtoEVXgq9dDQyoqY9wS1QHHz2zpQFH52nfKs9LqjdtsLwTnRCbicQGGmrktJYi37sbwkCZKCdv1LYrRakR8EbEa8CgtMsPNzYpT4BivGBXuKpcBdTapUHxvMiPXBp5bvnZBaHyuQhPv3dfnmSZCeTtXWZLWBffUbGEPrJDZkVdGSe2ANx6x1GxE9k88Ko6LpCmJgSsyYSF2GrRDNGDRhDYBE8aSYFossmjigHJKb8Q3Wte8gxijcVEBGrYgkfymDQyvxD9UEKkEqeVuJuQgMGKDEvVoLwp6TYrLng4CHYv6KmtVCdTQD8FeJJAak3oK5tXY5WEeuHQhjW1mMHzB9oo3x6e89uGyEHj34rqXPyeD4wtioo7tD59Q2EmVvXyNLmPqMzNUF31W6eN6AUDUfaVnR7p1QfRdnQ2tPVivP2C7Bj1muEVnuFUBGfggCovxgPwvoKMnqDLgRAPfZza7zAFeSrp8e9xNP8hMvTvkUBLYPR2G4hqv2VKTtkBrBJTVY7KadUtfKSLJq6Q5EJdQSHKBxqd8CEsZpcE8RpnQtdYJgjJeJ4Xd3EFysAwjyziWVMJrBU8bP1Y8veCZcu24bak27ixvfkRfeHxY4kCxmNaGBwXTzxGqkvMnBmnN1ji1miQEj3EwPWoiSyRjM4HRCksquY4mpJGnEHVDz6SkKF9N5q98ZKpHQSUnYtSYVCyy32dAuKMSRcdpYLa2HNMa9b1FqLtpo5UtMXw8rNSGyaNpeXWE9YDQNHoP1a8e2HnByM4BtKNAQmSN3wrdCxfmZMKYWVDVjARKJw7iekoG7L9rnv7QYKMcXBUwUZym9NA4zaMAJq3PPCfxAQDAH3ECj7uB6YWi77AD2Ya1VWae7d1Bcid18wmRxrgPg3sbwZhvpAMjHonQewWFB2BsivPSD5xBAKPwjmFAkWxmy9zubscVnSaiBn6T95GeAt3gVitMLgBo8aDb8HBRJ4nd1PFmqJNmQwYzzoCjCsQHXv1HzwYD7WhdQj3MS7KCxTQCdGiiZF1ykwMcr2NZ2moJRcYa9m9Q1GyWx2q1DN9MnvmEdVn9RKBdK2RVRxuWVePWaWLRKERptqC2BdsS9qneYstNSehTNRpAzCUxS9HzgNEbrZXP3RLb4D2oSM7RuWauRvqESd3xcQ46zu4KzKRf9NqqC13wVhYxBQyx6SmheS9MNdzomDDRD7YGamrTPMDUx",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 1626250000
+  }
+ ],
+ "cases": [
+  {
+   "n": 1,
+   "label": "hash key on A-all-hash (switch off)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 10,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 237,
+    "after": 237
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 14abd01731d1d1af2ecfcf3892b9719a11926a549998b23fadbab6f3f840105a: #0 => Success((false,83))\" }",
+   "expect": "REFUSE",
+   "ok": true,
+   "tree": "A-all-hash"
+  },
+  {
+   "n": 2,
+   "label": "hash key on C-all-hash (block absent)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 10,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 237,
+    "after": 237
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. ac0cf59abd917171ecc698559c35c1f0e616532895a2bad75d47b0d5c3ef5d7d: #0 => Success((false,79))\" }",
+   "expect": "REFUSE",
+   "ok": true,
+   "tree": "C-all-hash"
+  },
+  {
+   "n": 3,
+   "label": "maintenance on A-all-ka (switch off)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 20,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 237,
+    "after": 237
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 272737ad06b9a9f50edc1be2f5323bc75d9de75144a8f25824c82fe618bcb63b: #0 => Success((false,92))\" }",
+   "expect": "REFUSE",
+   "ok": true,
+   "tree": "A-all-ka"
+  },
+  {
+   "n": 4,
+   "label": "maintenance on C-all-ka (block absent)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": 20,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 237,
+    "after": 237
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 8021044edf7dc8cc1ea2dffd7d312c6f67ebe7fe5e8ebb7c59f45fcaf8896040: #0 => Success((false,87))\" }",
+   "expect": "REFUSE",
+   "ok": true,
+   "tree": "C-all-ka"
+  },
+  {
+   "n": 5,
+   "label": "owner path on A-all (signal + two-step + limit exercised)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 12897,
+   "cost_instrument": "mempool",
+   "tx_id": "d813aea85f36ea3afea619252c2bc5158794db329b99cea009acd1cccc6baf9a",
+   "heights": {
+    "before": 237,
+    "after": 237
+   },
+   "detail": "d813aea85f36ea3afea619252c2bc5158794db329b99cea009acd1cccc6baf9a",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A",
+   "tree": "A-all"
+  },
+  {
+   "n": 6,
+   "label": "owner path on A-all-hash (switched off: hash key)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 12893,
+   "cost_instrument": "mempool",
+   "tx_id": "509d88c91d812419b7efdd1f6561b4ea69d37c3929d92782294536f94e0dd756",
+   "heights": {
+    "before": 239,
+    "after": 239
+   },
+   "detail": "509d88c91d812419b7efdd1f6561b4ea69d37c3929d92782294536f94e0dd756",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A",
+   "tree": "A-all-hash"
+  },
+  {
+   "n": 7,
+   "label": "owner path on A-all-ka (switched off: KeepAlive)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 12895,
+   "cost_instrument": "mempool",
+   "tx_id": "2cd5de8fb601d5b7e0ae16ed2b5a82e020411a52bcb163e39e049ff5263af3bc",
+   "heights": {
+    "before": 241,
+    "after": 241
+   },
+   "detail": "2cd5de8fb601d5b7e0ae16ed2b5a82e020411a52bcb163e39e049ff5263af3bc",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A",
+   "tree": "A-all-ka"
+  },
+  {
+   "n": 8,
+   "label": "owner path on C-all-hash (absent: hash key)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 12886,
+   "cost_instrument": "mempool",
+   "tx_id": "121c663459d3f8cf0c16487db4fed641e57700818ac81f868fbcef3d1b0ea976",
+   "heights": {
+    "before": 242,
+    "after": 242
+   },
+   "detail": "121c663459d3f8cf0c16487db4fed641e57700818ac81f868fbcef3d1b0ea976",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A",
+   "tree": "C-all-hash"
+  },
+  {
+   "n": 9,
+   "label": "owner path on C-all-ka (absent: KeepAlive)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 12889,
+   "cost_instrument": "mempool",
+   "tx_id": "74cf762f012ecca569060ef46b1d958501376be7052cd284966c635013231992",
+   "heights": {
+    "before": 243,
+    "after": 243
+   },
+   "detail": "74cf762f012ecca569060ef46b1d958501376be7052cd284966c635013231992",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A",
+   "tree": "C-all-ka"
+  },
+  {
+   "n": 10,
+   "label": "hash-key path on A-all",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 46479,
+   "cost_instrument": "mempool",
+   "tx_id": "f8013f66f880833b7591ef2b02ebbb3772f0ea1cd052b9b27047fe285f07f52c",
+   "heights": {
+    "before": 244,
+    "after": 244
+   },
+   "detail": "f8013f66f880833b7591ef2b02ebbb3772f0ea1cd052b9b27047fe285f07f52c",
+   "expect": "ACCEPT",
+   "ok": true,
+   "tree": "A-all"
+  },
+  {
+   "n": 11,
+   "label": "hash-key path on A-all-signal (switched off: signal)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 46820,
+   "cost_instrument": "mempool",
+   "tx_id": "6faf56a3da96cb85df038e2806ff1a91a70704d749ec6a84960f41e327beeb82",
+   "heights": {
+    "before": 245,
+    "after": 245
+   },
+   "detail": "6faf56a3da96cb85df038e2806ff1a91a70704d749ec6a84960f41e327beeb82",
+   "expect": "ACCEPT",
+   "ok": true,
+   "tree": "A-all-signal"
+  },
+  {
+   "n": 12,
+   "label": "hash-key path on C-all-signal (absent: signal)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 46779,
+   "cost_instrument": "mempool",
+   "tx_id": "0d0a01afc6b113aec5c6bb4d6d72c503763e529c400087e0585050ec486d4180",
+   "heights": {
+    "before": 246,
+    "after": 246
+   },
+   "detail": "0d0a01afc6b113aec5c6bb4d6d72c503763e529c400087e0585050ec486d4180",
+   "expect": "ACCEPT",
+   "ok": true,
+   "tree": "C-all-signal"
+  },
+  {
+   "n": 20,
+   "label": "maintenance merge on A-all",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 14594,
+   "cost_instrument": "mempool",
+   "tx_id": "accf7ccb75751af30a658fc99d02c3859ed5267b33cd926dec9363a7f063a6ff",
+   "heights": {
+    "before": 247,
+    "after": 247
+   },
+   "detail": "accf7ccb75751af30a658fc99d02c3859ed5267b33cd926dec9363a7f063a6ff",
+   "expect": "ACCEPT",
+   "ok": true,
+   "tree": "A-all"
+  },
+  {
+   "n": 21,
+   "label": "maintenance merge on A-all-twostep (switched off: two-step)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 14594,
+   "cost_instrument": "mempool",
+   "tx_id": "25c28cc0318d912aa1d19ea5b1528eaa2123b557f10b87be1cf470901fcaef59",
+   "heights": {
+    "before": 248,
+    "after": 248
+   },
+   "detail": "25c28cc0318d912aa1d19ea5b1528eaa2123b557f10b87be1cf470901fcaef59",
+   "expect": "ACCEPT",
+   "ok": true,
+   "tree": "A-all-twostep"
+  },
+  {
+   "n": 22,
+   "label": "maintenance merge on C-all-twostep (absent: two-step)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 14592,
+   "cost_instrument": "mempool",
+   "tx_id": "aac05ad77c0515aca0fea39947501154fc7767c80d88101445e25d118f07b8ec",
+   "heights": {
+    "before": 249,
+    "after": 249
+   },
+   "detail": "aac05ad77c0515aca0fea39947501154fc7767c80d88101445e25d118f07b8ec",
+   "expect": "ACCEPT",
+   "ok": true,
+   "tree": "C-all-twostep"
+  },
+  {
+   "n": "30.a",
+   "label": "the oracle flips the flag false -> true",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "a21fbef7fb0edbe750d755bca01e87ccdc7ee1c13ef8718a7c7a45a491848cbd",
+   "heights": {
+    "before": 250,
+    "after": 250
+   },
+   "detail": "a21fbef7fb0edbe750d755bca01e87ccdc7ee1c13ef8718a7c7a45a491848cbd",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": 31,
+   "label": "owner spend with a TRUE flag on A-all (gate on)",
+   "got": "REFUSE",
+   "source": "wallet-sign",
+   "sibling_n": 32,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 267,
+    "after": 267
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 37cb11b9f8848b513236d3f328690161705fd8b93c4d8b65c8ce0f14",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "A",
+   "tree": "A-all"
+  },
+  {
+   "n": 32,
+   "label": "owner spend with a TRUE flag on A-all-signal (gate off)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "406eff6861fd002fe02722601000f3f2b55be42da42e7da78d217efe9d453655",
+   "heights": {
+    "before": 267,
+    "after": 267
+   },
+   "detail": "406eff6861fd002fe02722601000f3f2b55be42da42e7da78d217efe9d453655",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A",
+   "tree": "A-all-signal"
+  }
+ ],
+ "harness_bugs": [
+  {
+   "case": 31,
+   "what": "too few boxes deposited on A-all (4, all used by rows 5, 10, 20): IndexError at row 31",
+   "fix": "--stage 1b-gate deposits fresh boxes on A-all and A-all-signal and runs rows 31-32"
+  }
+ ],
+ "pairs": [
+  {
+   "path": "owner",
+   "kind": "switched-off",
+   "X": "hash",
+   "all_on": 12897,
+   "without_X": 12893,
+   "delta": 4
+  },
+  {
+   "path": "owner",
+   "kind": "switched-off",
+   "X": "KeepAlive",
+   "all_on": 12897,
+   "without_X": 12895,
+   "delta": 2
+  },
+  {
+   "path": "owner",
+   "kind": "absent",
+   "X": "hash",
+   "all_on": 12897,
+   "without_X": 12886,
+   "delta": 11
+  },
+  {
+   "path": "owner",
+   "kind": "absent",
+   "X": "KeepAlive",
+   "all_on": 12897,
+   "without_X": 12889,
+   "delta": 8
+  },
+  {
+   "path": "hash key",
+   "kind": "switched-off",
+   "X": "signal",
+   "all_on": 46479,
+   "without_X": 46820,
+   "delta": -341
+  },
+  {
+   "path": "hash key",
+   "kind": "absent",
+   "X": "signal",
+   "all_on": 46479,
+   "without_X": 46779,
+   "delta": -300
+  },
+  {
+   "path": "maintenance",
+   "kind": "switched-off",
+   "X": "two-step",
+   "all_on": 14594,
+   "without_X": 14594,
+   "delta": 0
+  },
+  {
+   "path": "maintenance",
+   "kind": "absent",
+   "X": "two-step",
+   "all_on": 14594,
+   "without_X": 14592,
+   "delta": 2
+  }
+ ]
+}
