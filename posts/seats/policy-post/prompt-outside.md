@@ -1,0 +1,12 @@
+Review the draft forum post in the directory {{SLICE}}. Read {{SLICE}}/README-SLICE.md first, then {{SLICE}}/POST-DRAFT.md, then the evidence it cites under {{SLICE}}/evidence/. Everything here is public. Work with your file-reading tools only: do not run shell commands and do not use the network.
+
+The post argues that opt-in "policy vaults" on Ergo (contracts that keep coins safe from storage rent, delay withdrawals with a recovery key, switch to a hash-based key on a "quantum day" signal, and so on) work today without a fork, shows mainnet transactions for two of them, and asks wallet developers to support them.
+
+Give a review the author could act on, as a single markdown document:
+1. Verdict: post as is, post with fixes, or do not post, with one paragraph of reasons.
+2. Is every factual claim supported by the evidence? Name any that is wrong or overstated, with the evidence file and line.
+3. Are the contracts sound? Look for any path that lets someone other than the owner take funds, or that locks the owner out, which the cases do not cover.
+4. Is the standing rule (one policy box per transaction, or every input checking one totals output) correct and sufficient?
+5. Is this the right message for wallet developers, and what is missing?
+
+Distinguish what you verified in the files from what you infer. Do not pad.
