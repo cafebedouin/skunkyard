@@ -8,7 +8,7 @@
   //     spending limit          per transaction: a successor at this script keeps at least SELF.value - LIMIT
   //                             (a per-period cap needs a counter register; out of scope)
   //   alternative paths (`if (ON) {…} else false`):
-  //     hash key                QVault.es's WOTS block, unchanged (n 32, w 16, context variable 1)
+  //     hash key                QVault.es's first WOTS block (plain WOTS, no length guard; superseded, see README.md)
   //     KeepAlive maintenance   KeepAliveAddress.es's maintain, unchanged (context variable 0)
   //
   // Two-step and limit together: the limit bounds the announced pending box (pending.value <= LIMIT) and the rest

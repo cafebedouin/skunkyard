@@ -1,5 +1,12 @@
 # Experiment 1: one parameterised template, or a family?
 
+> **Superseded as a hash verifier (2026-10-11, round-four review, handoff C.18).** The hash-key block in
+> `PolicyTemplate.es` is the experiment-1 snapshot of `QVault.es`'s first hash key: **plain WOTS, no tweak and no
+> signature-length guard** (a valid signature with bytes appended verifies). It was built to measure template sharing
+> and tree sizes, and those measurements stand; it is not a contract to deploy. The hardened hash key is WOTS+ with
+> `sig.size == 2144`, in `../6-rekey/WotsPlus.es` and `../../qvault/QVault.es`. The template is left unchanged so the
+> published trees and figures below still reproduce.
+
 `PolicyTemplate.es`: one vault-side source where every building block is switched by a Boolean constant:
 - owner key, always on (the base);
 - restrictions on the owner path, `if (ON) {…} else true`:

@@ -31,7 +31,10 @@ If no rotating-key variant lets plain payments merge safely **without a token** 
 the fixed-key move baseline**, the receive-address-with-rekey idea dies and the fixed key is the answer.
 
 The numbers (`README.md`): the token-free schedule merges at 14,899 against the first (pre-NFT) account's 14,791 (dropping the token is
-~free; with WOTS+ leaves and the round-2 fixes the schedule merges at 14,908, `results-schedule.json` `sched-merge`), but neither in-place variant beats the fixed key, which receives for free and moves at 4,928/box. So on raw
+~free; with WOTS+ leaves and the round-2 fixes the schedule merges at 14,908, `results-schedule.json` `sched-merge`), but neither in-place variant beats the fixed key, which receives for free and pays only when it rotates (a move:
+12,503 for one box, 19,712 for four; `results-fixedkey-n.json`). Like for like, a keyless merge of n inputs costs
+what a fixed-key move of n boxes costs (2 / 4 / 8: 14,908 / 19,770 / 30,394 against 14,906 / 19,712 / 29,324;
+round 3), so the in-place variants' extra cost is one such transaction per plain payment. So on raw
 cost the fixed key wins — **but that is not the right frame, because the three variants are not competing for one
 job.** The decision is the family below.
 
@@ -46,7 +49,8 @@ Each member is for a different requirement, and the wallet-support list names wh
    **SLH-DSA-SHA2-128s** (FIPS 205, stateless — no revealed-leaf griefing, no multi-device collision), with the
    XMSS-shaped **key schedule** (`RekeySchedule.es`, WOTS+ leaves) as the cheaper stateful member where its
    forced-reuse griefing (below) is acceptable. Both are token-free, seed-derivable and post-quantum. This is the
-   requirement that earns the ~3× cost over the fixed key.
+   requirement that earns the extra merge per plain payment over the fixed key (the "~3×" written here before
+   round 3 divided a merge by a quarter of a four-box move; corrected 2026-10-11).
 3. **Welded NFT account** (`RekeyAccount3.es`) — when the account is an **object**: transferable, inheritable,
    referenced by other policies by id. The token is the point, not the price.
 
@@ -79,3 +83,13 @@ found are fixed, each with refusal rows and an ACCEPT sibling (details and print
 - the schedule range-checks the index (`sched-idx8`, `sched-idx7to8` REFUSE), has a close path (`sched-close`
   ACCEPT) and puts the leaf index in the WOTS+ tweak (tree 1,530 B, rekey 55,432, merge 14,908;
   `results-schedule.json`, 11/11).
+
+**Round-3 review rows (2026-10-11), all on the policy devnet** (`SCHEME-SIZING.md`, "Round 3"):
+- the welded account's hash key gets a per-key seed in its tweak (R5 = KSEED ++ COMMIT, fresh seed enforced): tree
+  **1,362 B**; hash-key rekeys 51,746 and 51,885, secp rekey 13,115, merge 15,670; weld 22 of 22
+  (`results-weld.json`);
+- the schedule's cross-leaf negative (leaf binding), the current-leaf plant and its two-signature reclaim, the
+  signature negatives and the variable rows: 18 of 18 (`results-schedule-r3.json`);
+- a payment with an R4 of the wrong type (an EIP-4 memo at the welded account, a `GroupElement` at the schedule) is
+  stranded: the typed register read throws (`../2-twostep/results-destinations.json`). Both rotating members must
+  receive register-less payments.

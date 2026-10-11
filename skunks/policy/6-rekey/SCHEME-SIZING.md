@@ -24,9 +24,9 @@ not the binding constraint; the relay cap is 4,900,000 cost.
 | scheme | signs | script cost | node cost | sig bytes | verifier tree | ≤ 4,096 B? | standard |
 |---|---|---|---|---|---|---|---|
 | WOTS n32 w16 (compact) | once | 38,893 [measured, q2] | 51,896 | 2,144 | ~840 B [measured] | yes | building block |
-| **WOTS+ n32 w16** | once | ~45,800 [**measured** +17.7% over WOTS, see below; +16.3% with the round-2 length guard] | ~58,800 | 2,144 | **717 B [measured, with the guard; 703 before]** | yes | building block (RFC 8391 component) |
+| **WOTS+ n32 w16** | once | ~45,800 [**measured** about +18% over WOTS at matched step counts: 17.6% at 480 hashed steps, 18.8% at a random message's mean 506, `results-wotsplus-fit.json`; single spends 17.7%, 16.3%] | ~58,800 | 2,144 | **717 B [measured, with the guard; 703 before]** | yes | building block (RFC 8391 component) |
 | XMSS single-tree, WOTS+ leaves, d=8 | many | ~50,000 [est.; **measured since** as `RekeySchedule.es` with WOTS+ leaves and the round-2 fixes: rekey 55,432 node, `results-schedule.json`] | 55,432 [measured] | 2,144 + 32·d | **1,530 B [measured, round 2]** (1,418 plain leaves) | yes | SP 800-208 |
-| **SLH-DSA-SHA2-128s** | many | **188,247 [measured, `slhdsa/`, random spend, with the length guard; 8 spends 185,784–189,443]; ~236,200 worst [est., fit]** | **201,250** (devnet node 201,416) | 7,856 [measured, SK-105] | **1,516 B [measured, with the guard; 1,506 before]** | **yes** | FIPS 205 |
+| **SLH-DSA-SHA2-128s** | many | **188,247 [measured, `slhdsa/`, random spend, with the length guard; 8 spends 185,784–189,443, median 187,566]; ceiling: a variant hashing every step (3,675) measures 248,050, an over-bound; ~244,600 at the 3,570-step checksum cap [est., the variant's slope]** | **201,250** computed; **201,816** measured on mainnet cost parameters (`slhdsa/results-devnet-mainnetcost.json`); devnet node 201,416 | 7,856 [measured, SK-105] | **1,516 B [measured, with the guard; 1,506 before]** | **yes** | FIPS 205 |
 | SLH-DSA-SHA2-128f | many | ~3× 128s [est.: 22 layers at the measured per-layer and per-step cost; not built] | — | 17,088 [measured, SK-105] | ~1,500 B [est.: same code, other constants] | yes [est.] | FIPS 205 |
 
 Anchors: WOTS n32 w16 script 38,893 and tx 3,003 B, hashing ~7% of cost (`q2/RESULT.md`); the plain-WOTS-leaf
@@ -100,7 +100,8 @@ expressibility, not cost. It does mean any cost line in the post must be the mea
 
 ## What the table says to build
 
-1. **WOTS+ for the sign-once vault.** It fits the proposition cap with room, costs ~8% over WOTS, and closes the
+1. **WOTS+ for the sign-once vault.** It fits the proposition cap with room, costs ~8% over WOTS [the pre-build
+   estimate; measured about 18% at matched step counts, `results-wotsplus-fit.json`], and closes the
    multi-target gap. It is a small change to the q2 verifier (a keyed hash in each chain step). Build and measure it;
    swap it into the quantum-day vault's hash key and the schedule's leaves.
 2. **XMSS (WOTS+ leaves) is the rotating address's stateful answer**, and it already exists as `RekeySchedule.es`
@@ -162,3 +163,37 @@ Status, per contract (devnet, policy node):
 Printed lines for the rows above: `results-wotsplus.json`, `../../qvault/devnet-results.json`, `results-schedule.json`,
 `results-weld.json`, `slhdsa/run.log` + `slhdsa/results.json`, `slhdsa/results-devnet.json`. The schedule and weld
 files were published from `skunkyard-private` under ruling 3; their harnesses stay private.
+
+## Round 3 (2026-10-11): what only a run could settle (`prompts/policy-post-devnet-fixes-3.md`)
+
+All on the policy devnet unless noted; each figure names its printed line.
+
+- **WOTS+ overhead at matched step counts** (B.11): eight spends per scheme, hashed steps per spend beside the mempool
+  cost. WOTS+ costs 11.03 per hashed step (fit, residual 139); plain WOTS's per-step cost is below the noise (fit
+  slope −3.1, residual 138, over only 435–495 steps). Overhead 17.6% at 480 steps, 18.8% at 506 (a random message's
+  mean), 20.3% at 540 (`results-wotsplus-fit.json` `matched`; its 41.6% at 990 rests on the plain fit's slope and is
+  not a finding). Note: `devnet-test-wotsplus.py` subtracted 12,200 (two outputs) from one-output spends; 12,100 is
+  right, a 0.3-point effect on its single-spend percentages.
+- **SLH-DSA median and ceiling** (B.12, the fork's commit `29c9684`): the eight-spend median is **187,566** (the
+  harness had printed the upper-middle value, 188,247; fixed, `slhdsa/run.log` `costs_8_spends … median=187566`). A
+  measurement-only variant that hashes every WOTS+ step (3,675) costs script **248,050**, node 261,053
+  (`stage 7 all_steps_variant …`): an over-bound, since the checksum caps a valid signature at 3,570 steps (~244,600
+  [est., the variant's slope]; the eight-spend fit's ~233,400 at the cap is about 5% low). Like-for-like hashing share
+  on that variant: **0.158** measured by the stand-in, 0.152 computed (B.16), against 0.106–0.111 on random spends.
+- **SLH-DSA on mainnet cost parameters** (B.14): a separate devnet voted `inputCost` to 2,407 and `outputCost` to 298
+  (`slhdsa/devnet-mainnetcost.json`); the honest spend mined at **201,816**, every forgery refused, 9 of 9
+  (`slhdsa/results-devnet-mainnetcost.json`). Its script part, 188,813, is inside the harness's eight-spend range.
+- **The welded account's hash key gets a key counter** (A.2): R5 = KSEED ++ COMMIT, tweak ACCOUNT ++ KSEED ++ (chain,
+  step), fresh seed enforced. Tree 1,302 → **1,362 B**; hash-key rekeys **51,746** and **51,885**; secp rekey
+  **13,115**; merge **15,670**; weld 22 of 22 (`results-weld.json`; `README.md`, "Round 3").
+- **The schedule's owed rows** (A.3, A.4, A.5, A.10): cross-leaf REFUSE (leaf binding), the current-leaf plant and its
+  two-signature reclaim, the signature negatives, the variable-0/1 rows: 18 of 18 (`results-schedule-r3.json`).
+- **The quantum-day vault** (A.5–A.8): other-key and replay REFUSE against `QVault.es` itself; flag-box churn shown and
+  closed by a refresh window in `QDay.es` (117 → 148 B); flag-NFT provenance is the wallet's check (the vault accepts a
+  second unit or a key-address unit); a payment after migration moves only by a second signature with the spent key.
+  39 of 39 (`../../qvault/devnet-results.json`).
+- **Like-for-like costs** (B.13): a fixed-key move of 1 / 2 / 4 / 8 boxes costs 12,503 / 14,906 / 19,712 / 29,324
+  (`results-fixedkey-n.json`); the schedule's merge of 2 / 4 / 8 inputs 14,908 / 19,770 / 30,394.
+- **Native cost re-measured on 6.0.7, quieter** (B.15): every SK-026 median reproduces within 4%; the SLH-DSA-128s
+  opcode is 1,906–1,964 block units (14,909–14,967 per transaction; was 1,890 / 14,893), Falcon-512 13,094–13,095
+  per transaction (was 13,097) (`../../../research/lattice/RESULT.md`, "Re-run on the 6.0.7 jar").

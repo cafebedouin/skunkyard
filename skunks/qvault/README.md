@@ -4,13 +4,16 @@ A receive address that is safe from a quantum attacker and from storage rent, wi
 dev chat (2026-10-10): a vault spendable by `proveDlog` until an oracle or a miner signal declares quantum day, and
 only by a hash-based signature after. The rent half is KeepAlive's (`skunks/keepalive/`), unchanged.
 
-- `QDay.es` (117 bytes): the quantum-day flag. A box holding a singleton NFT, R4 a Boolean.
+- `QDay.es` (148 bytes since round 3; 117 before): the quantum-day flag. A box holding a singleton NFT, R4 a Boolean.
   - It can go false → true only with the oracle's key, and never back.
-  - Anyone may recreate it unchanged, which keeps it alive past rent age.
+  - Anyone may recreate it unchanged, which keeps it alive past rent age, but only in the last WINDOW blocks of each
+    PERIOD (round 3: KeepAlive's refresh window; without it anyone could churn the box every block and void every
+    pending owner spend, rows 7a–7f).
 > **Hash key upgraded to WOTS+ (SK-053 swap, 2026-10-10).** The sign-once hash key is now WOTS+ (`WotsPlus.es`,
 > simple tweakable-hash instantiation), not plain WOTS: every chain hash is keyed by a per-vault public seed
 > (`PKSEED`) and the (chain, step) address, closing SK-035's multi-target gap. The suite re-ran on the policy devnet
-> with the swap, **18/18 as before**. Cost rose ~18% (the tweak's per-step ops; `../policy/6-rekey/SCHEME-SIZING.md`).
+> with the swap, **18/18 as before**. Cost rose about 18% (the tweak's per-step ops; 17.6% at 480 hashed steps,
+> 18.8% at a random message's mean 506, `../policy/6-rekey/results-wotsplus-fit.json`).
 > Round 2 (2026-10-10) adds a signature-length guard (`sig.size == 2144`) and the Cryptography-seat negatives on the
 > hash key (rows 6a append, 6b truncate, 6c deep-flip, all REFUSE); the full suite is 21/21.
 
@@ -30,7 +33,7 @@ only by a hash-based signature after. The rent half is KeepAlive's (`skunks/keep
 - `devnet-test.py`: the harness. The spend message digest comes from `skunks/oneshot/scripts/wots-cli.mts`; the WOTS+
   key and signature are built in the harness (`wotsplus_keygen` / `wotsplus_sign`) against `WotsPlus.es`.
 
-## Devnet result (2026-10-10): 18 of 18 as expected; 21 of 21 after round 2
+## Devnet result (2026-10-10): 18 of 18 as expected; 21 of 21 after round 2; 39 of 39 after round 3 (2026-10-11)
 
 peeryard devnet `keepalive` (ergo 6.0.7, one mining node, 20 s blocks; `rig/devnet.sh expose A 9180 keepalive`).
 The node wallet holds the owner key and a second, derived oracle key. Two vaults, each with its own WOTS key:
@@ -63,10 +66,47 @@ Results: `devnet-results.json`.
 | 17 | keyless merge of A, the B+C box and a new payment E | ACCEPT (mined) | ACCEPT |
 | 18 | hash key spends the merged box to the owner | ACCEPT (mined) | ACCEPT |
 
+Round 3 (2026-10-11, the policy devnet; `devnet-results.json` is now this run, the round-2 file is in git at
+`ba9df42`). Row 14 changed meaning with `QDay.es`'s window: it is now the refresh right after the oracle's flip.
+
+| # | case | expected | got |
+|---|---|---|---|
+| 6d | hash key: another WOTS+ key's signature (same PKSEED) on A's digest | REFUSE | REFUSE |
+| 6e | hash key: A's valid signature replayed on A2 (same vault, same outputs) | REFUSE | REFUSE |
+| 7a | an owner spend of A citing the flag box, signed and held | signed | signed |
+| 7b | the flag box refreshed unchanged, in its window, no key | ACCEPT (mined) | ACCEPT |
+| 7c | the held owner spend submitted after 7b | REFUSE | REFUSE ("Every data input of the transaction should be in UTXO") |
+| 7d | the refreshed flag box refreshed again at once (churn) | REFUSE | REFUSE (outside the window) |
+| 7e, 7e2 | control: a flag box under the pre-window `QDay.es`, refreshed twice in a row | ACCEPT (mined) | ACCEPT, ACCEPT |
+| 7f | the owner spend rebuilt on the refreshed flag box | ACCEPT | ACCEPT |
+| 8a | FAR2 (its flag NFT minted with amount 2): owner spend with the real flag (false) | ACCEPT | ACCEPT |
+| 8b | the oracle sets that flag true; owner spend with it | REFUSE | REFUSE |
+| 8c | owner spend with the NFT's **second unit**, at a key address, R4 = false | ACCEPT | **ACCEPT**: the vault cannot tell |
+| 8d | FAR3 (its flag NFT minted amount 1 **into a key address**, R4 = false): owner spend | ACCEPT | **ACCEPT**: the vault cannot tell |
+| m1 | after NEAR's backstop and its hash-key spend (row 10), a new payment F1: owner key spends it | REFUSE | REFUSE |
+| m2 | keyless merge of F1 and F2 at NEAR | ACCEPT (mined) | ACCEPT |
+| m3 | NEAR's already-used hash key signs again, spending the merged box | ACCEPT | ACCEPT: the only way to move it |
+| 14 | the flag box refreshed unchanged right after the oracle's flip (outside its window) | REFUSE | REFUSE |
+| 14b | the same refresh once its window opens | ACCEPT | ACCEPT |
+
+**What the round-3 rows settle.**
+- **Churn (7a–7f) and the decision.** A pending owner spend cites the flag box by id; any refresh replaces that id, so
+  the spend fails before any script runs (7c). Without a window anyone could do this every block (7e, 7e2). Decided:
+  `QDay.es` gets KeepAlive's window: an unchanged refresh only in the last WINDOW blocks of each PERIOD, into a
+  successor stamped at least HEIGHT − SLACK. On mainnet constants that is at most one refresh in about four years
+  (PERIOD 1,051,200, WINDOW 21,600). Tree 117 → 148 B, template blake2b256 `4969eda9…`. The oracle's flip is unchanged.
+- **Provenance (8a–8d).** The vault reads the flag by the NFT's token id alone, so a second unit, or a unit outside
+  `QDay.es`, carrying R4 = false keeps the owner path open after quantum day. The contract does not check supply or
+  mint; the wallet must, by reading the NFT's issuing transaction (amount 1, minted straight into `QDay.es`) before it
+  builds a vault on that flag. A script check of the flag box's script would close 8d but not 8c.
+- **After migration (m1–m3).** Once the hash key has signed (row 10), a later payment to the vault can be merged
+  keylessly but leaves only by a second signature under that key: forced reuse of a one-time key. A wallet should
+  stop publishing the address after migrating.
+
 Rows 6a–6c are the Cryptography seat's negatives (round 2), each a mutation of row 4's honest hash-key spend; with
 the length guard the full suite is 21 of 21 (`devnet-results.json`, re-run 2026-10-10). The other-key and replay
 negatives were run on `WotsPlus.es` itself (`../policy/6-rekey/results-wotsplus.json`, `wp-otherkey`, `wp-replay`),
-whose chain code is the hash key here; they were not re-run against `QVault.es`.
+whose chain code is the hash key here, and in round 3 against `QVault.es` too (rows 6d, 6e).
 
 **Where each refusal comes from:**
 - **Key paths** (2, 3, 9, 13, 15, 16): the node's wallet answered "Script reduced to false". It evaluated the script

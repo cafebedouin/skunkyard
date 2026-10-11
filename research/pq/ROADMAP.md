@@ -70,10 +70,12 @@ with the signature-length guard (cap 4,096), costs 188,247 script / 201,250 node
 transaction of about 9.4 KB; BouncyCastle's signature accepted, and an other-message signature, appended and
 truncated signatures, another key's signature, deep flips (a FORS auth node, a layer-6 WOTS+ chain) and a replay on a
 second box refused, in the harness and then by the node on the policy devnet (honest spend mined at cost 201,416,
-8,054 bytes; `slhdsa/results-devnet.json`, 9 of 9). It is a path. (Before the round-2 guard: 1,506 bytes,
+8,054 bytes; `slhdsa/results-devnet.json`, 9 of 9; on a devnet voted to mainnet's cost parameters, mined at
+201,816, `slhdsa/results-devnet-mainnetcost.json`). It is a path. (Before the round-2 guard: 1,506 bytes,
 188,944 / 201,947, devnet 202,006; git `3a6f826`.)
 Item 1 above (WOTS+ tweaks) is done and measured (`WotsPlus.es`, 703 bytes, 717 with the length guard; tweak
-overhead 17.7%, 16.3% re-measured with the guard (`results-wotsplus.json`), against the 8% estimated, because interpretation, not hashing, is about 89% of a hash-signature spend on Ergo). The option
+overhead about 18% at matched step counts (17.6% at 480 hashed steps, 18.8% at a random message's mean 506; eight
+spends per scheme, `results-wotsplus-fit.json`; the single-spend 17.7% and 16.3% sit in that band), against the 8% estimated, because interpretation, not hashing, is about 89% of a hash-signature spend on Ergo). The option
 comparison above is answered in `SCHEME-SIZING.md` for the script-only candidates.
 
 **Round 2 of the post's review (2026-10-10): four contract limits found by reading, all fixed on the devnet.**
@@ -86,6 +88,18 @@ Each now has refusal rows and an ACCEPT sibling (`skunks/policy/6-rekey/SCHEME-S
   WOTS+ tweak: 1,530 B, rekey 55,432, merge 14,908 (`results-schedule.json`, 11/11).
 The schedule and weld verdict files moved from `skunkyard-private` into `skunks/policy/6-rekey/` (ruling 3).
 
+**Round 3 (2026-10-11): what only a run could settle** (`prompts/policy-post-devnet-fixes-3.md`;
+`skunks/policy/6-rekey/SCHEME-SIZING.md`, "Round 3"):
+- the welded account's hash-key tweak gets a per-key seed (1,362 B; rekeys 51,746 / 51,885; secp 13,115; merge 15,670);
+- a vault embedding `Pending2` run end to end, including the cancel-side theft shape (REFUSE) and row 2b's
+  guard-less control (ACCEPT): 21 of 21 (`skunks/policy/2-twostep/results-vault2.json`);
+- **a register read of the wrong type throws** (sigma-state `InvalidType`), so a payment carrying an R4 of another
+  type is stranded at the welded account and the schedule, and a `Pending2` completion can strand funds in any
+  destination that reads a register (`results-destinations.json`); recorded decision: move `Pending2`'s id into a
+  receipt output (not built);
+- `QDay.es` gets a refresh window (churn shown and closed); flag-NFT provenance is the wallet's check;
+- like-for-like: a merge of n inputs costs what a fixed-key move of n boxes costs.
+
 **The two decisions (SK-053), recorded 2026-10-10:**
 - Sign-once (the quantum-day vault's migration key): **WOTS+** with a per-vault public seed in the commitment.
 - Sign-many (the rotating receive address): **SLH-DSA-SHA2-128s** as the default, a standard with no state and no
@@ -95,14 +109,19 @@ The schedule and weld verdict files moved from `skunkyard-private` into `skunks/
 **Edges of the result, as the numbers draw them:**
 - Vault-scale, not payment-scale: about 500× a secp spend's cost and 170× its bytes, about 39 spends per mainnet
   block by cost. Acceptable because only owner spends run the verifier; payments in and keyless merges never do.
-- Interpretation is the cost (89%); no parameter or hash choice changes it. A native verification would cost about
-  14,893 per transaction by SK-105's estimate (`research/lattice/RESULT.md`, the SLH-DSA-128s opcode row) against
-  201,250 in script (188,247 measured in the harness plus the fixed 13,003; 201,947 before the length guard), about 13.5× per transaction (computed; an earlier "25×" here did not follow from that
+- Interpretation is the cost (89% on a random spend; about 85% at the all-steps over-bound, where the like-for-like
+  hashing share is 0.152–0.158); no parameter or hash choice changes it. A native verification would cost about
+  14,909–14,967 per transaction by SK-105's estimate re-run on the 6.0.7 jar (`research/lattice/RESULT.md`, "Re-run on
+  the 6.0.7 jar"; 14,893 in the first run) against 201,816 measured in script on mainnet cost parameters (201,250
+  computed from the harness's 188,247 plus the fixed 13,003; 201,947 before the length guard), about 13.5× per transaction (computed; an earlier "25×" here did not follow from that
   table and was corrected 2026-10-10); that is the one lever that needs a fork.
-- Assurance is thin: one key pair, nine spends, the stage vectors, six negative classes (round 2), BouncyCastle as
-  the only oracle. A verifier that
+- Assurance is thin: two BouncyCastle key pairs (eleven signatures from one, one from the other), the stage vectors,
+  six negative classes (round 2), BouncyCastle as the only oracle. A verifier that
   accepts a forgery is a total loss.
-- The forced worst case (every chain at 15 steps, about 236,200; 238,500 before the guard) is a fit, not a run. One parameter set (128s);
+- The ceiling: every chain at 15 steps is unreachable (the checksum caps a layer at 510 of 525 steps, 3,570 in all).
+  A measurement-only variant that hashes all 3,675 steps costs 248,050 script (`slhdsa/run.log`,
+  `stage 7 all_steps_variant`), an over-bound; ~244,600 at the cap [est., the variant's slope]. The eight-spend
+  median is 187,566 (the harness had printed the upper-middle value; fixed). One parameter set (128s);
   128f and the higher categories are 2–3× the cost and would still fit, untested.
 - No wallet signs it: BouncyCastle in a Scala harness is the only signer; no hardware wallet supports it; key
   derivation from an EIP-3 seed is unspecified.
@@ -115,8 +134,8 @@ signatures make it the ideal *opcode*, which is the SK-105 / item 7 track, not a
 1. **The post**: the three-member receive-address family (SK-052), the two scheme decisions with measured numbers,
    the standing one-box-per-transaction rule, the griefing finding, and the opcode sentence as the ask.
 2. **Assurance gate**, before any real value sits behind the verifier: FIPS 205 known-answer vectors through the
-   Python reference and the script; a differential run against BouncyCastle over many keys and messages; the forced
-   worst case run once; a second independent implementation (`@noble/post-quantum` in JavaScript) agreeing; a
+   Python reference and the script; a differential run against BouncyCastle over many keys and messages; a
+   chosen-digest spend near the 3,570-step cap (the all-steps variant bounds it); a second independent implementation (`@noble/post-quantum` in JavaScript) agreeing; a
    security seat reading the script against the standard. One or two sessions. Nothing ships before this.
 3. **Tooling**: a JavaScript signer via the noble library inside the oneshot signer; a derivation spec for the keys
    from the EIP-3 seed; template hashes for the explorer; the Lithos KeepAlive job for the keyless merges (exists).
