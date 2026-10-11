@@ -138,6 +138,7 @@ Status, per contract (devnet, policy node):
   REFUSE) and `v3-hashkey` (WOTS+ hash-key rekey → ACCEPT). Tree 1,267 → **1,302 B**; the WOTS+ hash-key rekey costs
   **51,836** on the welded account (no NFT version was costed before; 12,590/46,637/14,791 were on pre-NFT
   `RekeyAccount.es`).
-- **Quantum-day vault (`QVault.es`), guard added, suite re-run pending.** Tree 1,233 → **1,247 B** (sig-length
-  guard). The 18-row suite and the Cryptography negatives are owed.
+- **Quantum-day vault (`QVault.es`), done.** Sig-length guard added; tree 1,233 → **1,247 B**. Suite 21/21 on the
+  policy devnet: the 18 rows pass with the guard, and the Cryptography negatives `6a` (append), `6b` (truncate),
+  `6c` (deep-flip) all REFUSE.
 - **SLH-DSA (`SlhDsa.es`), guard added, Scala-harness negatives pending.**

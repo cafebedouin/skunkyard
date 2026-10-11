@@ -11,8 +11,10 @@ only by a hash-based signature after. The rent half is KeepAlive's (`skunks/keep
 > simple tweakable-hash instantiation), not plain WOTS: every chain hash is keyed by a per-vault public seed
 > (`PKSEED`) and the (chain, step) address, closing SK-035's multi-target gap. The suite re-ran on the policy devnet
 > with the swap, **18/18 as before**. Cost rose ~18% (the tweak's per-step ops; `../policy/6-rekey/SCHEME-SIZING.md`).
+> Round 2 (2026-10-10) adds a signature-length guard (`sig.size == 2144`) and the Cryptography-seat negatives on the
+> hash key (rows 6a append, 6b truncate, 6c deep-flip, all REFUSE); the full suite is 21/21.
 
-- `QVault.es` (1,233 bytes at devnet constants): the vault. Three ways to spend it:
+- `QVault.es` (1,247 bytes at devnet constants, with the signature-length guard): the vault. Three ways to spend it:
   - **owner key:** `proveDlog(OWNER)`, only while the flag box, shown as a data input and found by its NFT, says
     false, and `HEIGHT < BACKSTOP`. Leaving the flag box out, or showing a look-alike, closes this path rather than
     opening it.

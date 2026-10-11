@@ -216,7 +216,7 @@ def main():
             return None
         return check(n, label, signed, expect, submit)
 
-    def hash_spend(n, label, inputs, outputs, expect, submit=False, signed_outputs=None, seed=None):
+    def hash_spend(n, label, inputs, outputs, expect, submit=False, signed_outputs=None, seed=None, sig_xform=None):
         v = vault[seed]            # `seed` is the vault name; the WOTS+ key lives in the vault dict
         ins = []
         for b in inputs:
@@ -225,8 +225,11 @@ def main():
             # the CLI gives the spend message digest; WOTS+ signs it with this vault's key and public seed
             msg = bytes.fromhex(wots("sign", v["seed"], "32", "16", b["boxId"], f.name)["message"])
             os.unlink(f.name)
-            sig = wotsplus_sign(v["pkseed"], v["sk"], msg).hex()
-            ins.append({"boxId": b["boxId"], "spendingProof": {"proofBytes": "", "extension": {"1": coll_bytes(sig)}}})
+            sb = wotsplus_sign(v["pkseed"], v["sk"], msg)
+            if sig_xform:
+                sb = sig_xform(sb)       # tamper the signature for a negative row
+            ins.append({"boxId": b["boxId"],
+                        "spendingProof": {"proofBytes": "", "extension": {"1": coll_bytes(sb.hex())}}})
         return check(n, label, {"inputs": ins, "dataInputs": [], "outputs": outputs}, expect, submit)
 
     def merge(n, label, inputs, h, expect, submit=False):
@@ -269,6 +272,14 @@ def main():
                signed_outputs=outs_to_owner([A], h), seed=far)
     hash_spend(6, "hash key spends B and C together (a one-time key twice)", [B, C], outs_to_owner([B, C], h),
                "REFUSE", seed=far)
+    # Cryptography seat negatives on the WOTS+ hash key (sig.size guard + a deep flip); sibling of row 4. The
+    # other-key and replay negatives are proven on the identical verifier in 6-rekey/devnet-test-wotsplus.py.
+    hash_spend("6a", "hash key, signature with 32 bytes appended", [A], outs_to_owner([A], h), "REFUSE", seed=far,
+               sig_xform=lambda s: s + b"\x00" * 32)
+    hash_spend("6b", "hash key, signature truncated by 32 bytes", [A], outs_to_owner([A], h), "REFUSE", seed=far,
+               sig_xform=lambda s: s[:-32])
+    hash_spend("6c", "hash key, a byte flipped deep in the signature (chain 33)", [A], outs_to_owner([A], h),
+               "REFUSE", seed=far, sig_xform=lambda s: s[:33 * 32] + bytes([s[33 * 32] ^ 1]) + s[33 * 32 + 1:])
     bc = merge(7, "keyless merge of B and C", [B, C], h, "ACCEPT", submit=True)
     BC = [o for o in bc["outputs"] if o["ergoTree"] == vault["FAR"]["tree"]][0]
     wait_height(base, A["creationHeight"] + PERIOD - WINDOW)

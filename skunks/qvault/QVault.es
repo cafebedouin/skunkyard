@@ -51,7 +51,7 @@
         if (s >= digit) blake2b256(pkSeed ++ Coll(c.toByte, s.toByte) ++ curr) else curr
       })
     })
-    blake2b256(pkSeed ++ concat) == fromBase16("$PKCOMMIT")
+    sig.size == 2144 && blake2b256(pkSeed ++ concat) == fromBase16("$PKCOMMIT")
   } else false
 
   // KeepAlive maintenance (KeepAliveAddress.es, unchanged)
