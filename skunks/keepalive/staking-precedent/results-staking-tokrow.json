@@ -1,0 +1,76 @@
+{
+ "experiment": "staking-shared-output-tokrow",
+ "started_height": 3191,
+ "node": {
+  "appVersion": "6.0.7",
+  "parameters": {
+   "outputCost": 100,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 3188,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2000,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ },
+ "wallets": {
+  "A": [
+   "038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c",
+   "031ee1ab3b729f21e0dcee05642a63745286354d8e511e6376838e235a28078c01",
+   "0367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df",
+   "0398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04",
+   "026c2134d11af7f0bea024724278ebc37ced69a19a99dd6638f393d5f1b9c8bea0",
+   "0389e8fb63050cdb2c3f5c70b3d6167835b60bcf020b9ed7c332965ffce26f2e6f"
+  ],
+  "B": [
+   "03d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494",
+   "0376bf533d4b15510fa9f4124b6e48616f07debcf2ef0cfb185cdc4a576450b475",
+   "02ea2649b3512b9a859ab658a85e2989a7ae39b2518877b2dc0f2b44b785d5788d",
+   "03b4c210719212afb16b5f136a2dcb3cc9fc231721f711994facf3b6111afba7d0",
+   "0234835d35c02b0dc042aa9c041b854b98c28df4872fdc8c6a260bc2ddd767f5a3",
+   "02a52d6327542c16cce7645b899e651dc78098fa4f495acb36992e66b099405ec2"
+  ]
+ },
+ "trees": [],
+ "cases": [
+  {
+   "n": "278ccff2-theft4-tok",
+   "label": "278ccff2 theft, token-bearing foreign box, fourth output",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 3194,
+    "after": 3194
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 10be78d4b7c50538334878553b89f0f34bfa7b71d0c55a0c3ea3dbb0cadb2f11: #1 => Success((false,128))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "278ccff2-theft3-tok",
+   "label": "278ccff2 theft, token-bearing foreign box, folded",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 3197,
+    "after": 3197
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 7c4c5ad21c785f0efd23b54786cf9c6a1774ad4bbcd30bb4f42a0d372c4f0ac8: #1 => Success((false,182))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  }
+ ],
+ "harness_bugs": []
+}

@@ -9,7 +9,10 @@ vault on mainnet, with a per-policy integration kit) is a companion post.
 
 Where it came from: a keyless consolidation path with a per-box bounty was already on mainnet in the staking
 incentive boxes, 6,847 of them merged before rent age (`skunks/upkeep/mainnet/README.md`, via
-`skunks/keepalive/README.md`); KeepAlive generalises that for anything a holder wants kept, and the quantum-day
+`skunks/keepalive/README.md`). That path is not exposed to the merge finding in §5: it requires exactly three
+outputs, the bounty and the fee at fixed values, so all other value stays at its script (templates `278ccff2…` and
+`b924a4f7…`, decompiled and run on the devnet, `skunks/keepalive/staking-precedent/`). KeepAlive generalises that
+for anything a holder wants kept, and the quantum-day
 vault was suggested in dev chat (a vault spendable by `proveDlog` until an oracle or miner signal declares
 quantum day, then only by a hash-based signature), built here on KeepAlive's maintenance (`skunks/qvault/README.md`).
 

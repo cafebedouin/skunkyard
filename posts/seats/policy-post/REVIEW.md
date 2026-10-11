@@ -545,6 +545,11 @@ boxes are all spent. Ported into the wallet post and `keepalive/README.md`.
    right after the other (no active wallet developers to time it for), the lessons document as a repository link. Posting day: re-check `f017a605…` and the two-step demo box,
    and query the node index for boxes under `afc009dc…`.
 
+**The staking precedent (decided 2026-10-11, the person).** Checked after the round, outside the seats: both
+staking templates decompiled and run on the devnet against the shared-output shape (10 rows), not exposed, since
+their consolidation path pins three outputs and two of their values. Published as
+`skunks/keepalive/staking-precedent/` and stated in one line beside the 6,847 citation in the protocol post.
+
 ## For the devnet (part five, if wanted)
 
 The destination and memo rows on the fixed trees; the form-3 gap (`KeepAlive.es`, `Inherit.es`) with and without
