@@ -1,0 +1,452 @@
+{
+ "experiment": "2-twostep-vault2",
+ "started_height": 1856,
+ "node": {
+  "appVersion": "6.0.7",
+  "parameters": {
+   "outputCost": 100,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 1856,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2000,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ },
+ "wallets": {
+  "A": [
+   "038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c",
+   "031ee1ab3b729f21e0dcee05642a63745286354d8e511e6376838e235a28078c01",
+   "0367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df",
+   "0398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04",
+   "026c2134d11af7f0bea024724278ebc37ced69a19a99dd6638f393d5f1b9c8bea0",
+   "0389e8fb63050cdb2c3f5c70b3d6167835b60bcf020b9ed7c332965ffce26f2e6f"
+  ],
+  "B": [
+   "03d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494",
+   "0376bf533d4b15510fa9f4124b6e48616f07debcf2ef0cfb185cdc4a576450b475",
+   "02ea2649b3512b9a859ab658a85e2989a7ae39b2518877b2dc0f2b44b785d5788d",
+   "03b4c210719212afb16b5f136a2dcb3cc9fc231721f711994facf3b6111afba7d0",
+   "0234835d35c02b0dc042aa9c041b854b98c28df4872fdc8c6a260bc2ddd767f5a3",
+   "02a52d6327542c16cce7645b899e651dc78098fa4f495acb36992e66b099405ec2"
+  ]
+ },
+ "trees": [
+  {
+   "name": "Vault2",
+   "tree_bytes": 338,
+   "box_bytes": 379,
+   "address": "QtigEHtc2CRt21Xnb9BJgbViq7nuNXTD2fKjLhLWMKzE71vJoe1hBpDju2E9joHmhrA7tUGLKNhZBYyZFwJQWsSYLLEcv97ouSH3x4zptmurRPZeu9tXFJUhQnt3kLgM7qB3XJLdT7HAc6rg9syHK8mUsmyzKoV2buvdWzsBB3UPzRd5qMHJfNXikfViEmXxmnUXPXhx8UznHAGpKXD3xzatKzxkVSenMh8QDcspU9gHauosotpo7ux8jjVmJvmUQ7GJXArEoMrAJXbnf8aWB2Tm7iT2XXT1Qc1vexxjJLdLRcKjDfbTfT6q8NXhcpEZTephtEBddUjzsV9CM4YQGmbA2L5CuKeZSdnjBeiQC8Q3mAithMWLuBNgGCwPWm9bMKpCVH2R73BgrfJPrwM8nhYzWTzZUs57ggyHqGb7M5kftGHtet54uavhU4ASLeJvsEpM49MQ8dQZwEY9p1Zk",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 473750000,
+   "pending_tree": "Pending2.tree",
+   "pending_tree_bytes": 193
+  },
+  {
+   "name": "Vault2-second",
+   "tree_bytes": 338,
+   "box_bytes": 379,
+   "address": "QtigEHtc2CRt21Xnb9BJgbViq6rKTznCosrza97fPCZpWwRNPxQQEK7XkvJYSaZabvojuKm2ToozgheLC3d6FhJowWyKr5ZpG9JkTo9kcvgnz1D9XCs12Tb15W9gHkc3XVHFj6Je6Ygrw7WbWkooeftYoKWof6nBtsLK3EVBXayY96cqac8JLzN5VbyEFjyapTFvUFobnd6NXoNk6Doa4hWZTzVwixUYjoE6P8Qkh6GrwxqoKCVj82WSUS23m1KqxrdjRpe6yHsXgPm5M8rYa8ATvsY3yHNtph57fjEU4zdYTAPJ9vCzHHS19yREUbDKkipzmYAUeL3qc3qbVwpMvd1ajVaRo9BfD3J3ta9wUZr8j6XThqEYwYNTeVRMyWvqY22JZ9u1RaoEVDhU97e8tg9r4WFVCxQaeYrKL8Ua6xjqKDFkzzM21AnJmJ8KVvLM4LwS8toPjPBTELYHTFpE",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 473750000
+  },
+  {
+   "name": "Vault2-noguard",
+   "tree_bytes": 320,
+   "box_bytes": 361,
+   "address": "3FWBs4a6syUUSFhUcYGvicGXc3G5mx6uVZhVk8tGNLDKwKvBXWNo31BQ6AHonq4KcdP5zD6P9gcKRDFHHsWUbqfZTdQigDAb2Drst2BkMCoqrDwmBrNi5LuXzUrZXKxkywA3u9zXLZwzWoUc7R4UAS8JK7T25XdGcJgHg6Hc4ERyVigXarcE94BnXXUJuivV3S17oarTmGKViSMiqaV4woCk51NJQRJoFM6kKjvNPGmu3tDpBQT2nv9ogjeAeHWj6374CZPAq1LJe6TCjk89YpcKRDSoLYWxiGoDz4GsUX9fyQG5xY73piCW6n6jQsvSvKdZt1jQxL4guu8krfb9PNg2GE1bAXv6w3pgcXCPLPUY7EgUbJkYtRsa9bv7RgaDBDgk17hHZ9Ursi9yZoFobJ6ZDYfH6fWV3GorKgHRpvF13ErisbJ6FpTAUQBX",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 451250000,
+   "control": "Vault.es with `alone` set to true"
+  }
+ ],
+ "cases": [
+  {
+   "n": "v-1",
+   "label": "announce V1 -> P1 into Pending2 (R5 = HEIGHT + DELAY + 6)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "676af9b1d8cf7e1f4de05006b79a6844de9e9e17ef75773dc3a72187caaed7cd",
+   "heights": {
+    "before": 1858,
+    "after": 1858
+   },
+   "detail": "676af9b1d8cf7e1f4de05006b79a6844de9e9e17ef75773dc3a72187caaed7cd",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v-2",
+   "label": "announce V2 -> P2 (far deadline)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "d2b2c2f87c2d0ce8aa7a3f8ef2c17b66e6483c13116b79f5a4e1706622273cbc",
+   "heights": {
+    "before": 1859,
+    "after": 1859
+   },
+   "detail": "d2b2c2f87c2d0ce8aa7a3f8ef2c17b66e6483c13116b79f5a4e1706622273cbc",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v-5a",
+   "label": "announce V4 -> P4 (vault 1), the batch deadline",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "2dc8bb6b62b729fa87cedcf524d3905ac91b33d3f76dc973638988073b4b28b1",
+   "heights": {
+    "before": 1860,
+    "after": 1860
+   },
+   "detail": "2dc8bb6b62b729fa87cedcf524d3905ac91b33d3f76dc973638988073b4b28b1",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v-5b",
+   "label": "announce W1 -> Q1 (vault 2), the batch deadline",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "35a5b5968bce224d4eefe50b0245bbc2ac69b219c89f02161a8095aa764e149b",
+   "heights": {
+    "before": 1861,
+    "after": 1861
+   },
+   "detail": "35a5b5968bce224d4eefe50b0245bbc2ac69b219c89f02161a8095aa764e149b",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v-3n",
+   "label": "recovery cancel of P2 into vault 1 with no R4 on the output",
+   "got": "REFUSE",
+   "source": "wallet-sign",
+   "sibling_n": "v-3",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1862,
+    "after": 1862
+   },
+   "detail": "wallet B sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 0cda6638cccd42033ae7345ad4a96060e2a5f86d0468758fb5cbe5fd",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "B"
+  },
+  {
+   "n": "v-3",
+   "label": "recovery key (B) cancels P2 back into vault 1, output R4 = P2.id",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 13043,
+   "cost_instrument": "mempool",
+   "tx_id": "3cee535424aebccec89e5e26a581e89adbdc626f392e3381e6bad9c956815eb9",
+   "heights": {
+    "before": 1862,
+    "after": 1862
+   },
+   "detail": "3cee535424aebccec89e5e26a581e89adbdc626f392e3381e6bad9c956815eb9",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "B"
+  },
+  {
+   "n": "v-4a",
+   "label": "announce V3 -> P3 (far deadline)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "989c6569057de82373ce012d5e6b1d8779d7afebe18e248ad3f1b1cb6b0d886d",
+   "heights": {
+    "before": 1864,
+    "after": 1864
+   },
+   "detail": "989c6569057de82373ce012d5e6b1d8779d7afebe18e248ad3f1b1cb6b0d886d",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v-4",
+   "label": "owner key (A) cancels P3 back into vault 1, output R4 = P3.id",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 13043,
+   "cost_instrument": "mempool",
+   "tx_id": "58f5db77046998e58018125e6f0f96c3c4d8efc686f3d5210b9a1d50e23dd3e2",
+   "heights": {
+    "before": 1865,
+    "after": 1865
+   },
+   "detail": "58f5db77046998e58018125e6f0f96c3c4d8efc686f3d5210b9a1d50e23dd3e2",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v-6a",
+   "label": "announce V5 -> P5 (vault 1, far)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "b80ed6b4645a969ecec97b505588f55b77592bb6446b3c16921cf3867d2c69f4",
+   "heights": {
+    "before": 1866,
+    "after": 1866
+   },
+   "detail": "b80ed6b4645a969ecec97b505588f55b77592bb6446b3c16921cf3867d2c69f4",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v-6b",
+   "label": "announce V6 -> P6 (vault 1, far)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "4e42d264565e59f56113793269818d0d45b9d9d2bf73b01356fdd1594aa94158",
+   "heights": {
+    "before": 1867,
+    "after": 1867
+   },
+   "detail": "4e42d264565e59f56113793269818d0d45b9d9d2bf73b01356fdd1594aa94158",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v-6c",
+   "label": "announce W2 -> Q2 (vault 2, far)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "f33add99167531a552aee5569d66c62e60347bdddecc2c6963c6871bc47254c3",
+   "heights": {
+    "before": 1869,
+    "after": 1869
+   },
+   "detail": "f33add99167531a552aee5569d66c62e60347bdddecc2c6963c6871bc47254c3",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v-7c",
+   "label": "cancel-side theft, two vaults: P5 + Q2, OUT0 -> vault 1 (R4 = P5.id), OUT1 -> stranger",
+   "got": "REFUSE",
+   "source": "wallet-sign",
+   "sibling_n": "v-7s",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1870,
+    "after": 1870
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. a335a48ba8519009e848f0cedb87dde4281b7cd76c14e9f359fc3b53",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v-7d",
+   "label": "cancel-side theft, one vault: P5 + P6, OUT0 -> vault 1 (R4 = P5.id), OUT1 -> stranger",
+   "got": "REFUSE",
+   "source": "wallet-sign",
+   "sibling_n": "v-7s",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1870,
+    "after": 1870
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. d68ad4d1e3bc2063699e851ee3a2d0e16c3c676d6db2b67ccfaf11fa",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v-7s",
+   "label": "honest batch cancel: P5 + Q2, each back to its own vault with its own id (checked)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "553cb28d9b0c6604082bd8a79ece9d1e3821c87b5c3c0954c0401f364f21c648",
+   "heights": {
+    "before": 1870,
+    "after": 1870
+   },
+   "detail": "553cb28d9b0c6604082bd8a79ece9d1e3821c87b5c3c0954c0401f364f21c648",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "2b",
+   "label": "owner announces V7 and V8 into one pending box, V8's value out",
+   "got": "REFUSE",
+   "source": "wallet-sign",
+   "sibling_n": "2b.s",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1870,
+    "after": 1870
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. e8e9a2f4d9923def7a03c8f617a86940e77c47290b311584df32d551",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "2b.s",
+   "label": "owner announces V7 alone (sibling of 2b), checked",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "b6d16e64a9736fa02fef92274e7f7500e486e33257965d25a25040a0a7ebfac7",
+   "heights": {
+    "before": 1870,
+    "after": 1870
+   },
+   "detail": "b6d16e64a9736fa02fef92274e7f7500e486e33257965d25a25040a0a7ebfac7",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "2b-ng",
+   "label": "guard-less vault: N1 and N2 into one pending box, N2's value out (control), checked",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "3e12237d4043cbf45f020b6b047d8b5f1b0cf53b9376e42a8ca593fda7ca4403",
+   "heights": {
+    "before": 1870,
+    "after": 1870
+   },
+   "detail": "3e12237d4043cbf45f020b6b047d8b5f1b0cf53b9376e42a8ca593fda7ca4403",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v-8",
+   "label": "complete P1 at R5 - 1 (output R4 = P1.id)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "v-9",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1878,
+    "after": 1878
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. ac85074a360cee88b817292c476c75ae169f5512e85a905b8fbe41d4547e1f8d: #0 => Success((false,144))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "v-10",
+   "label": "completion-side theft: P4 + Q1, OUT0 -> X (R4 = P4.id), OUT1 -> stranger",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "v-11",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1879,
+    "after": 1879
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. c59d64fffc873df5e87f0d8013687b4439a6233645951434cc9d99c263680aa7: #1 => Success((false,164))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "v-9",
+   "label": "complete P1 at R5 to X, output R4 = P1.id",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 12245,
+   "cost_instrument": "mempool",
+   "tx_id": "c732d8f62b7605bb1e792b950a1fa981cdcc8962e72e0cde755b7b15f3e12e22",
+   "heights": {
+    "before": 1879,
+    "after": 1879
+   },
+   "detail": "c732d8f62b7605bb1e792b950a1fa981cdcc8962e72e0cde755b7b15f3e12e22",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "v-11",
+   "label": "honest two-vault batch: P4 + Q1 both to X, each with its own id",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 14531,
+   "cost_instrument": "mempool",
+   "tx_id": "7c31287fa0233feb3ec75fcb6e883080030a926ecb774ffa8cd2d3c33d84c403",
+   "heights": {
+    "before": 1880,
+    "after": 1880
+   },
+   "detail": "7c31287fa0233feb3ec75fcb6e883080030a926ecb774ffa8cd2d3c33d84c403",
+   "expect": "ACCEPT",
+   "ok": true
+  }
+ ],
+ "harness_bugs": [],
+ "X": "0008cd026c2134d11af7f0bea024724278ebc37ced69a19a99dd6638f393d5f1b9c8bea0",
+ "stranger": "0008cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+ "vault1": "19cf0206040004020ec10119be01020e21038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c0e2103d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494d802d601e4c6a70504d602d9010263ededed93c17202c1a793db63087202db6308a7e6c67202040e93e4c67202040ec5a7eb02d1ed92a37201aea5d9010363edda720201720393c27203e4c6a7040eea02d1ed8fa37201aea5d9010363edda720201720393c27203e4c6a7060eeb02cdee7300cdee73010400041e0e21038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513cd802d601c2a7d602b2a5730000ea02d1edededededed93b1b5a4d901036393c272037201730193c27202730292c17202c1a793db63087202db6308a7e6c67202040e92e5c67202050473039aa3730493e5c67202060e8300027201cdee7305",
+ "vault2": "19cf0206040004020ec10119be01020e210367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df0e210398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04d802d601e4c6a70504d602d9010263ededed93c17202c1a793db63087202db6308a7e6c67202040e93e4c67202040ec5a7eb02d1ed92a37201aea5d9010363edda720201720393c27203e4c6a7040eea02d1ed8fa37201aea5d9010363edda720201720393c27203e4c6a7060eeb02cdee7300cdee73010400041e0e210367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802dfd802d601c2a7d602b2a5730000ea02d1edededededed93b1b5a4d901036393c272037201730193c27202730292c17202c1a793db63087202db6308a7e6c67202040e92e5c67202050473039aa3730493e5c67202060e8300027201cdee7305",
+ "pending1": "19be01020e21038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c0e2103d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494d802d601e4c6a70504d602d9010263ededed93c17202c1a793db63087202db6308a7e6c67202040e93e4c67202040ec5a7eb02d1ed92a37201aea5d9010363edda720201720393c27203e4c6a7040eea02d1ed8fa37201aea5d9010363edda720201720393c27203e4c6a7060eeb02cdee7300cdee7301",
+ "pending2": "19be01020e210367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df0e210398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04d802d601e4c6a70504d602d9010263ededed93c17202c1a793db63087202db6308a7e6c67202040e93e4c67202040ec5a7eb02d1ed92a37201aea5d9010363edda720201720393c27203e4c6a7040eea02d1ed8fa37201aea5d9010363edda720201720393c27203e4c6a7060eeb02cdee7300cdee7301",
+ "note": "every pending box is announced by a real Pending2 vault and cancelled back into it; results-crossvault.json used a key address (vault_R6) as the vault",
+ "v-3_returned_box": "07d9d9f5a2f8c9c21a2fa3030cf08bf39ecc539ce718c0bf82b6d9c5da0ac702"
+}

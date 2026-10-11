@@ -145,3 +145,44 @@ Devnet, every row as expected (the exploit harness and its raw transactions are 
 | new-4 | honest recovery cancel of one `Pending2` box back to the vault (B's key) | ACCEPT | ACCEPT |
 
 `old-1` is the theft the review found, confirmed accepted by the node; `new-1` is the same shape refused by the fix.
+
+**What those rows did not run, and the caveat on them.** The cross-vault rows created the pending boxes directly from
+the wallet, with a key address standing in for the vault (`vault_R6` in `results-crossvault.json`, `0008cd03…`): no
+vault embedding `Pending2` announced into them, and `new-4` cancelled into that key address, not into a vault script.
+The run below closes that gap.
+
+## A vault that embeds `Pending2`, end to end (2026-10-11): 21 of 21 as expected
+
+`Vault.es` compiled with `PENDING_TREE` = `Pending2.es`'s tree (re-serialised by the node's compiler, not patched):
+**`Vault2.tree`, 338 B** (constant 2 is the 193-byte `Pending2.tree`; the old `Vault.tree` is 332 B around the 187-byte
+`Pending.tree`). Two such vaults: vault 1 (OWNER = A key 0, RECOVERY = B key 0, the committed `Pending2.tree`) and
+vault 2 (A keys 2 and 3, a different pending script). Every pending box was announced by a vault's own owner path and
+cancelled back into the real vault script. Harness: `devnet-test-vault2.py` (attack tooling, in
+`~/bin/skunkyard-private/policy-attacks/2-twostep/`); verdicts: **`results-vault2.json`** (public).
+
+| # | case | expected | got (source; cost) |
+|---|---|---|---|
+| v-1 | announce V1 → P1 into `Pending2` (R4 = X, R5 = HEIGHT + 21, R6 = vault 1) | ACCEPT | ACCEPT (mined) |
+| v-3n | recovery cancel of P2 into vault 1 with no R4 on the output | REFUSE | REFUSE (wallet: reduced to false) |
+| v-3 | recovery key (B) cancels P2 back into vault 1, output R4 = P2.id | ACCEPT | ACCEPT (mined; 13,043) |
+| v-4 | owner key (A) cancels P3 back into vault 1, output R4 = P3.id | ACCEPT | ACCEPT (mined; 13,043) |
+| v-7c | **cancel-side theft, two vaults:** P5 + Q2 cancelled, OUTPUTS(0) → vault 1 (R4 = P5.id), OUTPUTS(1) → stranger | REFUSE | REFUSE (wallet: reduced to false; the node's check also refuses) |
+| v-7d | cancel-side theft, one vault: P5 + P6, the same shape | REFUSE | REFUSE (as v-7c) |
+| v-7s | honest batch cancel: P5 + Q2, each back to its own vault with its own id (checked) | ACCEPT | ACCEPT |
+| 2b | owner announces V7 and V8 into one pending box, V8's value out | REFUSE | REFUSE (wallet: reduced to false) |
+| 2b.s | owner announces V7 alone (checked) | ACCEPT | ACCEPT |
+| **2b-ng** | **row 2b's guard-less control:** the same two-box announce against `Vault.es` with `alone` set to true (`Vault2-noguard.tree`, 320 B) (checked) | ACCEPT | **ACCEPT**: without the guard the second vault box's value leaves by the owner key |
+| v-8 | complete P1 at R5 − 1 | REFUSE | REFUSE (node) |
+| v-10 | completion-side theft: P4 (vault 1) + Q1 (vault 2), OUTPUTS(0) → X (R4 = P4.id), OUTPUTS(1) → stranger | REFUSE | REFUSE (node) |
+| v-9 | complete P1 at R5 to X, output R4 = P1.id | ACCEPT | ACCEPT (mined; 12,245) |
+| v-11 | honest two-vault batch: P4 + Q1 both to X, each with its own id | ACCEPT | ACCEPT (mined; 14,531) |
+
+(The other seven rows are the announces that set these up, all ACCEPT and mined: `v-2`, `v-4a`, `v-5a`, `v-5b`,
+`v-6a`–`v-6c`.) Costs are the mempool entry's, on the devnet's parameters.
+
+**Template hash.** `Vault2.tree`'s template is byte-identical to `Vault.tree`'s: Blake2b256 `ea6c571d…`, SHA-256
+`46fb6ca6…` (`skunks/keepalive/template-hash.out`, the `Vault2.tree` entry). The pending tree is a segregated
+constant, so the template hash finds every two-step vault but **cannot tell a `Pending2` vault from one that embeds
+the old `Pending.tree`**; a wallet or indexer must read constant 2 (offset 8, 193 bytes for `Pending2` with these keys)
+and compare it with the `Pending2` tree for the vault's own keys. The preflight for this run is
+`../preflight-r3.json` (S4, S10, S14 and the wallet texts hold as recorded in `../PREFLIGHT.md`).

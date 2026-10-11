@@ -46,3 +46,14 @@ header=0x19 version=1 size=190 constants=2
 template bytes=119 (tree bytes=193)
 template blake2b256=4871552cebbd4ca501ffef917d9f82be879be68c35718904e252db8861776295
 template sha256=8a92d542b93d3083fb2fe2280588467455422a117416023f0bae79cd9375fe75
+== skunks/policy/2-twostep/Vault2.tree
+header=0x19 version=1 size=335 constants=6
+  const 0: offset=4 Int 0
+  const 1: offset=6 Int 1
+  const 2: offset=8 Coll[Byte] len=193 bytes@11..204 19be01020e21038b…
+  const 3: offset=204 Int 0
+  const 4: offset=206 Int 15
+  const 5: offset=208 Coll[Byte] len=33 bytes@210..243 038b0f29a60fa8d7…
+template bytes=95 (tree bytes=338)
+template blake2b256=ea6c571d829843a6dc49a12f97449b4def16ea815670f6a40064781209e67af3
+template sha256=46fb6ca6cfa69afffa607a001c034ce0966f43a188ed5873920b2ee403eba220
