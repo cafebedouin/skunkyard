@@ -155,7 +155,8 @@ The run below closes that gap.
 
 `Vault.es` compiled with `PENDING_TREE` = `Pending2.es`'s tree (re-serialised by the node's compiler, not patched):
 **`Vault2.tree`, 338 B** (constant 2 is the 193-byte `Pending2.tree`; the old `Vault.tree` is 332 B around the 187-byte
-`Pending.tree`). Two such vaults: vault 1 (OWNER = A key 0, RECOVERY = B key 0, the committed `Pending2.tree`) and
+`Pending.tree`). **`Vault.tree` and `Pending.tree` are superseded by `Vault2.tree` and `Pending2.tree`** (the per-output
+id binding, cross-vault fix below); the two kept only for the record. Two such vaults: vault 1 (OWNER = A key 0, RECOVERY = B key 0, the committed `Pending2.tree`) and
 vault 2 (A keys 2 and 3, a different pending script). Every pending box was announced by a vault's own owner path and
 cancelled back into the real vault script. Harness: `devnet-test-vault2.py` (attack tooling, in
 `~/bin/skunkyard-private/policy-attacks/2-twostep/`); verdicts: **`results-vault2.json`** (public).
@@ -220,6 +221,14 @@ The stray box does not block other merges (an executor leaves it out), but its v
 wallets:** a payment to a `RekeyAccount3.es` or `RekeySchedule.es` address must carry no registers (or registers of
 exactly the types the script reads); a memo is lost. The same holds for `KeepAlive.es` and `Inherit.es`, whose R4 is
 the owner's `SigmaProp`.
+
+**The shared-output theft (part four, 2026-10-11).** The `KeepAliveAddress.es` and `QVault.es` rows above
+(completion ACCEPT, then the landed box keyless-merged) could be done *in one transaction*: the completion output at
+the address doubles as the merge successor, so the owner's incoming payout (the `Pending2` box) covers the merge
+while the address's own boxes drain to the executor. It is a property of the keyless merge, not of `Pending2`
+(the completion pins the exact value, so the two-step vault is not itself drained this way). It is fixed in those
+merges by refusing any foreign input (`INPUTS.size == mine.size`); the full account, the node rows and the fix are in
+`skunks/keepalive/README.md`.
 
 **Decision (recorded, not built): `Pending2` should not carry the id in the destination's registers.** Because the
 completer chooses the landed box's other registers, any destination that reads a register can be made unspendable by
