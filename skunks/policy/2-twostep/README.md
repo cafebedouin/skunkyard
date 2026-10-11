@@ -186,3 +186,47 @@ constant, so the template hash finds every two-step vault but **cannot tell a `P
 the old `Pending.tree`**; a wallet or indexer must read constant 2 (offset 8, 193 bytes for `Pending2` with these keys)
 and compare it with the `Pending2` tree for the vault's own keys. The preflight for this run is
 `../preflight-r3.json` (S4, S10, S14 and the wallet texts hold as recorded in `../PREFLIGHT.md`).
+
+## `Pending2` completions into register-reading destinations, and wrong-type registers (2026-10-11)
+
+`Pending2.es`'s complete path pins only the destination script, the value, the tokens and the output's R4 (= the
+pending box's id). The completer is anyone, and chooses every other register of the landed box. Each destination
+below got one keyless completion (always ACCEPT, mined), then a spend of the landed box by the destination's own path.
+Harness: `devnet-test-destinations.py` (private, `~/bin/skunkyard-private/policy-attacks/2-twostep/`, it shows how to
+strand a payment); verdicts: **`results-destinations.json`** (public).
+
+| destination | the completer's register choice | the landed box, spent by the destination's path | verdict |
+|---|---|---|---|
+| `RekeySchedule.es` | R4 = id, **R5 = 0** | merged into the registered box | **REFUSE**: the box has the schedule's shape, so `okSelf` demands a Merkle proof for a leaf that does not exist. Stranded |
+| `RekeySchedule.es` | R4 = id only | merged into the registered box | ACCEPT (a plain box) |
+| `KeepAlive.es` | R4 = id | the refresh path | **EVAL-ERROR** `InvalidType: Cannot getReg[SigmaProp](4)`. Stranded |
+| `Inherit.es` | R4 = id, R5 = 0 | the heir's key | **EVAL-ERROR** (the same `getReg[SigmaProp](4)`). Stranded |
+| `KeepAliveAddress.es` | R4 = id | keyless merge | ACCEPT |
+| `QVault.es` | R4 = id | keyless merge | ACCEPT |
+| `RekeyAccount3.es` | R4 = id (a `Coll[Byte]`; R4 is a `GroupElement` there) | merged into the registered box | **EVAL-ERROR** `InvalidType: Cannot getReg[GroupElement](4)`. Stranded |
+
+**Wrong-type registers settle as a throw, not an absent value.** sigma-state 6.0.7 raises `InvalidType` when a
+script reads a register as a type other than the one it holds; `isDefined` does not catch it. So a plain payment
+carrying an R4 of another type is stranded at the rotating addresses, whoever sends it:
+
+| row | the payment | verdict |
+|---|---|---|
+| `w-memo-ra3` | an EIP-4-style memo R4 (`Coll[Byte]`) at a `RekeyAccount3.es` address, merged into the account | EVAL-ERROR (`getReg[GroupElement](4)`) |
+| `w-memo-ra3-alone` | the same box spent alone by the owner key | EVAL-ERROR: no path evaluates (`isReg(SELF)` throws first) |
+| `w-ge-sched` | a `GroupElement` R4 at a `RekeySchedule.es` address, merged into the registered box | EVAL-ERROR (`getReg[Coll[Byte]](4)`) |
+| `w-ge-sched-alone` | the same box alone, keyless path | EVAL-ERROR |
+
+The stray box does not block other merges (an executor leaves it out), but its value is lost. **Consequence for
+wallets:** a payment to a `RekeyAccount3.es` or `RekeySchedule.es` address must carry no registers (or registers of
+exactly the types the script reads); a memo is lost. The same holds for `KeepAlive.es` and `Inherit.es`, whose R4 is
+the owner's `SigmaProp`.
+
+**Decision (recorded, not built): `Pending2` should not carry the id in the destination's registers.** Because the
+completer chooses the landed box's other registers, any destination that reads a register can be made unspendable by
+whoever completes, so a destination allowlist would have to exclude the schedule, KeepAlive, inheritance and the
+welded account, i.e. every register-reading policy. The robust shape is to move the id out of the destination box:
+a completion pays `OUTPUTS(i)` to R4 (no register required) and carries the id in a separate small receipt output
+`OUTPUTS(i + 1)` (R4 = the pending box's id). Two pending boxes cannot share a receipt (the ids differ) and so cannot
+share a payment, which keeps `Pending2`'s double-satisfaction guard. The receipt costs one minimum-value box. Until
+that is built and run, **a `Pending2` destination must be a script that reads no register of its own boxes**
+(`KeepAliveAddress.es`, `QVault.es`, a P2PK address): rows `s-kaa` and `s-qv`.
