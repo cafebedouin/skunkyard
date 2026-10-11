@@ -1,13 +1,13 @@
 {
  "experiment": "6-rekey-schedule",
- "started_height": 1434,
+ "started_height": 2612,
  "node": {
   "appVersion": "6.0.7",
   "parameters": {
    "outputCost": 100,
    "tokenAccessCost": 100,
    "maxBlockCost": 1000000,
-   "height": 1432,
+   "height": 2612,
    "maxBlockSize": 524288,
    "dataInputCost": 100,
    "blockVersion": 4,
@@ -38,13 +38,13 @@
  "trees": [
   {
    "name": "RekeySchedule",
-   "tree_bytes": 1530,
-   "box_bytes": 1607,
-   "address": "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",
+   "tree_bytes": 1546,
+   "box_bytes": 1623,
+   "address": "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",
    "tree_version": 1,
-   "rent_per_period_nanoerg_derived": 2008750000,
+   "rent_per_period_nanoerg_derived": 2028750000,
    "leaves": 8,
-   "root": "ea3b688454976d4d76f774914517e26962ad4a622382f22ff8ff893cadd414f7"
+   "root": "3c21d72c24ec8daa28234383df1a0c6e2fc401b6fd14ce92ff25bfa404042638"
   }
  ],
  "cases": [
@@ -58,10 +58,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1436,
-    "after": 1436
+    "before": 2614,
+    "after": 2614
    },
-   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 6cf40ca4f2881812e62ab39ec44c811d327e10d90e3cafe063e86051c43b2e96: #0 => Success((false,227))\" }",
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. acd809273acb330cdc2d7fc54bab936d2d40beed542fd3bae13ae02153a6722e: #0 => Success((false,227))\" }",
    "expect": "REFUSE",
    "ok": true
   },
@@ -71,14 +71,14 @@
    "got": "ACCEPT",
    "source": "",
    "sibling_n": null,
-   "cost": 55432,
+   "cost": 55770,
    "cost_instrument": "mempool",
-   "tx_id": "7d9be30a11fa361a17ba44a4ca331a9c6385b58063c972d79d7a429caaaa5dee",
+   "tx_id": "9e5c3562f61f81be9c30d7f9140783a7f56f24f6e7fea178e3c265305183f11d",
    "heights": {
-    "before": 1436,
-    "after": 1436
+    "before": 2614,
+    "after": 2614
    },
-   "detail": "7d9be30a11fa361a17ba44a4ca331a9c6385b58063c972d79d7a429caaaa5dee",
+   "detail": "9e5c3562f61f81be9c30d7f9140783a7f56f24f6e7fea178e3c265305183f11d",
    "expect": "ACCEPT",
    "ok": true
   },
@@ -92,10 +92,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1438,
-    "after": 1438
+    "before": 2616,
+    "after": 2616
    },
-   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. fc2d5d3665ee015677ddb4e6afc81811f4f2ade4eef824e7a698246525e55dca: #0 => Success((false,43690))\" }",
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. c99105c876f97f5e8be5eaef3b342f5d1fb39ad1b38bc1a4e510f37307b87e49: #0 => Success((false,45077))\" }",
    "expect": "REFUSE",
    "ok": true
   },
@@ -107,12 +107,12 @@
    "sibling_n": null,
    "cost": null,
    "cost_instrument": null,
-   "tx_id": "5fdbb75d832a3f2a491add246a206edb14333142c0fe80191e1e901a966730ef",
+   "tx_id": "2fe10c4d6b0af35c00ac0fcc29323f69eb29d5304e74cf48898d0de0dc9f4a4f",
    "heights": {
-    "before": 1438,
-    "after": 1438
+    "before": 2616,
+    "after": 2616
    },
-   "detail": "5fdbb75d832a3f2a491add246a206edb14333142c0fe80191e1e901a966730ef",
+   "detail": "2fe10c4d6b0af35c00ac0fcc29323f69eb29d5304e74cf48898d0de0dc9f4a4f",
    "expect": "ACCEPT",
    "ok": true
   },
@@ -126,10 +126,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1440,
-    "after": 1440
+    "before": 2618,
+    "after": 2618
    },
-   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 95472c7c3f07a381f5295da6b71e5b97723653458abfdc2e1bf625669b459842: #0 => Success((false,427))\" }",
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 9e53e520e1f0ee3a9f3a63036ad85814bf8c56a8069b54bcf4179ac3615d1515: #0 => Success((false,435))\" }",
    "expect": "REFUSE",
    "ok": true
   },
@@ -141,12 +141,12 @@
    "sibling_n": null,
    "cost": null,
    "cost_instrument": null,
-   "tx_id": "237564664a690b3cfb9cb96e4513d5fbdd61d02a107f69d03dde0b6059729cff",
+   "tx_id": "7aa290740689d1b6c37582393cdb0caeb64bac9d134f9293b7829d47b47ccb5d",
    "heights": {
-    "before": 1440,
-    "after": 1440
+    "before": 2618,
+    "after": 2618
    },
-   "detail": "237564664a690b3cfb9cb96e4513d5fbdd61d02a107f69d03dde0b6059729cff",
+   "detail": "7aa290740689d1b6c37582393cdb0caeb64bac9d134f9293b7829d47b47ccb5d",
    "expect": "ACCEPT",
    "ok": true
   },
@@ -158,12 +158,12 @@
    "sibling_n": null,
    "cost": null,
    "cost_instrument": null,
-   "tx_id": "30f681691bd7bb9e7b746e14cf80fceee7504224fbf018d8758eddc5fa4e51b9",
+   "tx_id": "b25fa7fd7d80ae3a3ddb517e6bd81350797d2c0cc938c934d9e7f77bf81a6a4e",
    "heights": {
-    "before": 1441,
-    "after": 1441
+    "before": 2620,
+    "after": 2620
    },
-   "detail": "30f681691bd7bb9e7b746e14cf80fceee7504224fbf018d8758eddc5fa4e51b9",
+   "detail": "b25fa7fd7d80ae3a3ddb517e6bd81350797d2c0cc938c934d9e7f77bf81a6a4e",
    "expect": "ACCEPT",
    "ok": true
   },
@@ -173,14 +173,14 @@
    "got": "ACCEPT",
    "source": "",
    "sibling_n": null,
-   "cost": 14908,
+   "cost": 14924,
    "cost_instrument": "mempool",
-   "tx_id": "0628f13f12348bf6274d183d1000d340ac854d97181db410915bb28a0b21ab01",
+   "tx_id": "a8154b739b0895aeb923880262981ccb5f188575c438b1fc8c21fd112b4929a5",
    "heights": {
-    "before": 1442,
-    "after": 1442
+    "before": 2621,
+    "after": 2621
    },
-   "detail": "0628f13f12348bf6274d183d1000d340ac854d97181db410915bb28a0b21ab01",
+   "detail": "a8154b739b0895aeb923880262981ccb5f188575c438b1fc8c21fd112b4929a5",
    "expect": "ACCEPT",
    "ok": true
   },
@@ -194,10 +194,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1445,
-    "after": 1445
+    "before": 2624,
+    "after": 2624
    },
-   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. b5958fc60c61d86ade48245849534bb6bf4fbbcba9fe8bc48b9444ce7e5a9566: #0 => Success((false,128))\" }",
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. d49df1082d7c8c89687ca240f6279899906a8da5771148184ff53abff1535aa5: #0 => Success((false,128))\" }",
    "expect": "REFUSE",
    "ok": true
   },
@@ -211,10 +211,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1446,
-    "after": 1446
+    "before": 2626,
+    "after": 2626
    },
-   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 6a162e584dbf6c8335caab3e277a778c581c4adb1c1fd68d119a5afa40e959f4: #0 => Success((false,42987))\" }",
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 639596a4c5bd71bb9ddc509485c2bcfc3d8c4edc6135f612a6ce237ce1e34044: #0 => Success((false,42940))\" }",
    "expect": "REFUSE",
    "ok": true
   },
@@ -226,12 +226,12 @@
    "sibling_n": null,
    "cost": null,
    "cost_instrument": null,
-   "tx_id": "fe593d692838bd5f091cb681cb7409dc53007f9e2c603953514a10bbc3021d37",
+   "tx_id": "99c68a539e7e47152040ce973930c7bb65a4a938e6e687ba7b5d694cb6111c16",
    "heights": {
-    "before": 1447,
-    "after": 1447
+    "before": 2627,
+    "after": 2628
    },
-   "detail": "fe593d692838bd5f091cb681cb7409dc53007f9e2c603953514a10bbc3021d37",
+   "detail": "99c68a539e7e47152040ce973930c7bb65a4a938e6e687ba7b5d694cb6111c16",
    "expect": "ACCEPT",
    "ok": true
   }

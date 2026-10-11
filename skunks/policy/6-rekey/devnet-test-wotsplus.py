@@ -22,6 +22,9 @@ from common import *  # noqa: E402
 
 N, W, L = 32, 16, 67            # n=32, w=16, l = l1(64) + l2(3)
 FIXED = 10_000 + 2_000 + 2 * 100  # devnet per-tx overhead (1 input, 2 outputs): interpreterInitCost + input + outputs
+# Note (part four, C.9): this charges two outputs (2 * 100); the one-output charge would be 12,100 (10,000 + 2,000 +
+# 100). The figure only shifts the absolute script costs by 100 and cancels in the WOTS+-over-WOTS overhead %, which
+# is a difference of two costs measured the same way; the note stands rather than a re-run.
 
 
 def bl(b):

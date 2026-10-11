@@ -233,6 +233,28 @@ not be cited. **Payments with registers:** a payment to this address that carrie
 memo, say) is stranded: sigma-state throws on the typed register read (`../2-twostep/results-destinations.json`,
 `w-memo-ra3`, `w-memo-ra3-alone`), so a wallet must send register-less payments here.
 
+## The shared-output theft and the no-foreign-input fix (part four, 2026-10-11)
+
+The shared-output theft is a property of every keyless merge in the family: a payout a third party executes into the
+address can fund the merge successor while the merged boxes' value escapes to the executor, and no bound on
+`next.value` closes it (the full account and the node evidence are in `skunks/keepalive/README.md` and
+`skunks/keepalive/results-shared-output.json`). The welded account's and the schedule's merge successor must already
+carry the account's own registers (`next.R4 == src.R4` — a `GroupElement` for the account, the committed leaf for the
+schedule), which refuses a `Pending2` completion (whose output must carry R4 = the pending id) as a successor; but a
+payout that *did* carry a matching-type register, or the account NFT, could still be combined with a merge. So the
+fix is applied here too, uniformly: **the maintenance path requires every input of the transaction to be at this
+script** (`INPUTS.size == mine.size`), plus `next.value <= total` as defence in depth. The only value entering is the
+merged boxes' own, so what leaves is capped at the bounty, and no foreign payout (whatever its registers or the NFT)
+can ride a merge. The cost is the sponsored merge (a foreign fee box is refused); the fee comes from the bounty.
+
+**Trees (the fix changes the template).** `RekeyAccount3.tree` 1,362 → **1,378 B**, template Blake2b256 `92deb4f2…`
+→ **`2056878f…`**. `RekeySchedule.tree` 1,530 → **1,546 B**, template → **`a2a967b1…`**. Both recompiled from the
+fixed `.es` with the committed account/root/seed constants unchanged (only the template grows, by the one input
+check). The honest merge rows (`v3-merge`; the schedule's `r3-merge-2/4/8`, a registered box plus 1/3/7 plain boxes,
+all at the script) spend only boxes at the script, so they still pass; the attack rows still refuse. Re-run against
+the fixed trees, every suite as before: **weld 22/22, schedule 11/11, schedule-r3 18/18** (`results-weld.json`,
+`results-schedule.json`, `results-schedule-r3.json`).
+
 ## Rekey-cost comparison (SK-052, 2026-10-10): fixed key vs NFT account vs key schedule
 
 The NFT closes the hole but buys a *transferable* identity with real costs. The design question (`CHARTER.md`): is

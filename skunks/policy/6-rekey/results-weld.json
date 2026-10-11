@@ -1,13 +1,13 @@
 {
  "experiment": "6-rekey-weld",
- "started_height": 1888,
+ "started_height": 2593,
  "node": {
   "appVersion": "6.0.7",
   "parameters": {
    "outputCost": 100,
    "tokenAccessCost": 100,
    "maxBlockCost": 1000000,
-   "height": 1888,
+   "height": 2592,
    "maxBlockSize": 524288,
    "dataInputCost": 100,
    "blockVersion": 4,
@@ -38,9 +38,9 @@
  "trees": [
   {
    "name": "RekeyAccount3",
-   "tree_bytes": 1362,
+   "tree_bytes": 1378,
    "box_bytes": null,
-   "address": "3QCYtC2wckWks8cgezyN6jtBUrM9RkQvNUNtdRWYm4f1yZGVJPir6tMdvriem3ojBUB8ufkNEUG5M7UW7ijkGkdEGXEcYsA1LWSUgD55MdzeMygJNtcwqbNTpYztR7jgL6jk2jBbS8op5GakEAquyWkAaHHMcjj2Gn6cJQPWjTGarjccM6KzGjp6Whx2Vuu3eiufXoUqWueAReDF5wQUNNWGKkN7hU3r97PY6NP99gggNSEaERq1YZHHGx752deFwXUWtw895PwNgpoT3YrJFp8QG2THDjT96C4UXU1FTLvziMmBSjF4sZwoF2SmfXgqhBJ5q2hZDpGjL35pVMbwVPByUAvGQGM62bC7MCUnq3nwKNs1qDknNk9h2qQjPzfPrnaZn2z1m7TZfH3eEVAxodhYNp9oStNRywxekNcPxV8t6yP8rNbQ41gmCSKesfYTuWkbogMKYe9RCct7yyCPhEmGGqxSceSUFrqVBahJsAubXJird9jMPqvvQN8GnXd4QdAJBEzG1DMuTVZHdEnytWbqzePBBaEurqKSbpSWjSHMjtEg9q7KBNC5qTRCBnC3Jeg7NefSDQtUubpMxt3X7bJbvuZt429ZBMCstks9Zv8y3TDsBJxvKC5zwpc5BkXNwVCfZpFvBsJi8c8UukPYRaKWwaUmEFvq4Xxn1Jp8rN7tnaKYha3tFjuqV3eZo4FTxncnEzijKK1KH1r6MMTDuPNpei1Kpxa79nC4XY7254s1bWEY8W1c3zmF4z3UDRUWY1a5xuz5Efqug5egh83XcjwPjnFCDQeA2PZA5GrBnpA2SnYxZJk9v659ysAu3wpCVAENrmwVZTZUXTzsojCMxwnYZGgJkwPL7z5k9LAuLD5FFHShN21HX2U8ZC1uzZ7rDFz19mFA9ygKx57JCKrQPwZj9Mtq6AzRpZoStR77qWYvBUMcNjCjgP5Hj99np2NDxPuchn5pcmpckqRiFuQQoWzafrL1Qi48dUqDsYvaRFSwoHK3xPyYp8bM7D7xefjoHvJViHnriUjmPnhV61nRuWca3T3jD2WUveyRPyseFjWcb4z8pDbe9v9VRyWnYuRK4nrW97zbPtuSmergUYmGuXYv6XzrMJLN2BAyUg1c9oZ1yrSDFh7T8tqUvjWvCZjWEHRnKcHS9DsEBcYXHLDu29chV6HGJTbyEziciGAe4k4ZFuyb94GQMFwxdgx8qFkrVUGxXRdipE73RP8c6iqoq1gkTnZr72e8z74C7C6FHqYpj7GufCurqkK3iVpTLm3uUsZLo1Qtipy11Ai45oU97DoWpqGWi9zTU8biZwnxwVuoFZzq6x53mvdLB9FZiynJhzfFXaEiFTcv15CtpDrjTJwxPYrM6cSxaUBESu8kGGA5u84gNfXQp2SoQmuxBSUtUGjB8oC1mjRMoFu3j1mhjpkovq6uCagt994NVCyb6ygVTgEKeC6cRwnK6RojzC87Mg28KnTh5scC1p6vjsWMa8kmMRJa87AbZwWkWdrfqTDv5ADusuoT5ZZp1P3Frwqv6b6sy3vTEietnJQtXoh9rp1f1A5Qve9yaBSJshn4REtVbPvASERGD5jhHY38AaGV8V8N1ho5t5fyvgccBuefsoMp4UA4Cf8znEUxKY794hUv8oBgTp1nvj1teViBUYim6bpZj8yfqbbb6gbiLonxndR1JHEAobmvaLtHBPomMrswMj3ob1MtcaR4LZAXhe4LSNNRHbq7nA5Xc11QCeMY9ZTARsSDoEkXLK8k6G6QxQQYCXthgQsb8eaqXPyajNL1GfQeWv2TSFhgHfJU3HS8dwHWd5pkqRKWi2QZzqjn16AC5XL8xMv1ZCcof9NqhmSCBcudUr6GqEK",
+   "address": "2JsR5tRWGCuWX3AHwHWZB8HQ7ZDe53xEpK6r5jQunV14Y7nT6JUpzGH1z3pnnUaaNmRq5vAmXZpNKfMTxWgPe8kR6gdjMRQLZUXncddCQxpR12qkEgrAhUEGpDVvsPpTd2ZJaGaTirK5e7qHU8MC38NHydgBEkfTx19ZJbSQqHtZQWrv1iTgTwaJMXixvPKQWeZcFUmgTMgzsiN12m4Cgz1GbozqpUyMxds4fde4e5PgKbmJNTq39Wirb6X6a6G4PB5hcwdGcwUXhFcxXrNEJGeuAFnSemdpDHhuSxcoo7zMQat7kWyrByk82zzL3J52S39pKFfEunLyDkHF3YKFtrD8KBhBLTbkxLW8azwcm973UcEhAn2sU4wcXBkeFvdkvxkNVADGvVZPp2hAP13QtomBe2TqCXeJjnvX6Q8uxuJ7zCS97kdTSSrLEzQBnZQf8jdP7UNXz8Kija1SDZEqt2v6L3XJd1hMrubyvU9L97WWNg7TmPkMnTcgARkUcPKmjAEMj3nvR6t1rTgzSak1QnPYHUu6th9nuUB2qA7WchuBxykhnrfVZQoNq9nWqmruhwvs4aMVStkGkgVfWpELHmXhqiTsc5ied83nGFebLGUUvvavKMaBjLiMhDN3jZ91cF431KL5jPsNeAp7HXGPqehwNJosB9ek8cQEBBJKspqYHipeATK4sWtK5QGJXqAEwFGT6t4aCbQdmWVX28sPjGgUbXFJbtV7k6THGw6xsRWHzjXc1T8qAQ7ZsoEWT6LUHU41rkWK1jFkex45PxgXWfcJ16x9kvktQ6755GowkEa5gXCv9QabEZjqqq3Xm7yDBo7aa76rR9BEuDaw6aGxyEeWpB3wQJLtEiu7u9nH1jmsGjqGrpnsMHq351tyrGjyKN1id2HPtoojht46KRq2kKNRqFtZXNvRtGxKVS1pdYb5YwgZiD1MzGJgogsjwGGvUUFNbatmNejvZmgNVoxuePFN6KgZSeEkdQ13DKE53zZUXwFGxDuQ1HMvW73vjmAH5iQajtMyYtNWP8FXjpnkya22QC6GM3Ai69RLNiodeD116q93RcZGrx8eUYE8FjzN4U2cjbPih5KNP9v68zPh7rhcgRyh84HeyjvtEdveevCXG4SCzfroAxc7adLWsKHsrvRfZEe6PCtcZBdpKZJw2SH9k6SR5QCQL3tyb9p6HDLkYmW9hWH9iJhi5ZexDEMhrcGfLKSM7RUM3n8U6v9iXpdCfDYE2Nxp1DGc1WWQkVjYMrNT1kCcyzVTFLufxYcJAspfS5WmGccY6ZBZq9GYuurzLagbnf6bMFuv5mr8V4So2oNhZ8hg79hmXd3gcJGWy7MSMnY2CBVmyniXqNPznWgsknN3HLGF3pxmP2av2fzcs9ro4YDL3YaqWS8w6igyy5DhAQv5SKTK8mq9PL23ioSpezVGcKX2i9K1daBQxkZoWjY1K6QcK87LYyyYDCoiqbNhbrHBwGvzQnhCqtDX2rArmc7VXFrG5knR5RAwziecfV8tDdFMs1uSb2NLQDhq3potxQAgHwwJ4yTwdBXkYCZuUfuMKd6yuYTTji4xCLAT3J3dGbBpcWCodkoKW5ekmp7AEhCNkGPev6cBYRRv8w8J4QP5uGfCi1WSXb28pwf7Ls1cwEF8dim6mND4bv2zKyVm1S9o5KDct549qLMsYyQp6PoxxJxGUD7V8fQgQjcGaANnE1YVQaG9ZaZQjknhXdk3kmGdpWvowk9kj8GETPCdALxx4LbWnMie2yK7T8dDcBZ5Ra9sQzxMD1TFTrNQHeYHkJkjuHaaKynmb7sRLUeAD7a8sCDsqtk3Y2K58c29SRA3VjNbpoRFpvRcrPKxFoj1LLhYerar9bvjyEB6jWxaRzYmvBG2P",
    "tree_version": 1,
    "rent_per_period_nanoerg_derived": null
   }
@@ -54,12 +54,12 @@
    "sibling_n": null,
    "cost": null,
    "cost_instrument": null,
-   "tx_id": "78ac29f45a4a7abb1e146a67505d32a7ad9fe6104d9b754d88aea07fee578d97",
+   "tx_id": "71cac4d501d492d1c535fdd612199140a9c006575becf0e727a822f7df7587b8",
    "heights": {
-    "before": 1890,
-    "after": 1890
+    "before": 2595,
+    "after": 2595
    },
-   "detail": "78ac29f45a4a7abb1e146a67505d32a7ad9fe6104d9b754d88aea07fee578d97",
+   "detail": "71cac4d501d492d1c535fdd612199140a9c006575becf0e727a822f7df7587b8",
    "expect": "ACCEPT",
    "ok": true,
    "wallet": "A"
@@ -74,10 +74,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1892,
-    "after": 1892
+    "before": 2596,
+    "after": 2596
    },
-   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. ee145c9a506dd11da0cc43a80cba2f6f97d47059ae391f26455c274d",
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 37b255e25ab41de0fcb794b189988a324d46f3f22d583dd05dfa0f09",
    "expect": "REFUSE",
    "ok": true,
    "wallet": "A"
@@ -90,12 +90,12 @@
    "sibling_n": null,
    "cost": null,
    "cost_instrument": null,
-   "tx_id": "6aab9a1134a9e4ce1f8b1f0fedb4659d162962263415fb2d879fa10db1fe4e58",
+   "tx_id": "875c365c596fbc17fed28c08f58b131b1dfe2d3eefa48b1df2f6355d28cbaa8f",
    "heights": {
-    "before": 1895,
-    "after": 1895
+    "before": 2599,
+    "after": 2599
    },
-   "detail": "6aab9a1134a9e4ce1f8b1f0fedb4659d162962263415fb2d879fa10db1fe4e58",
+   "detail": "875c365c596fbc17fed28c08f58b131b1dfe2d3eefa48b1df2f6355d28cbaa8f",
    "expect": "ACCEPT",
    "ok": true,
    "wallet": "A"
@@ -108,12 +108,12 @@
    "sibling_n": null,
    "cost": null,
    "cost_instrument": null,
-   "tx_id": "9480dabf1bf96e409b8d58c6eac7cf045864710122634c6dda56fce706272494",
+   "tx_id": "33d1f965f52cbd8263d01b1b0e73c55a165bb4664f596de9497dac209fb193b7",
    "heights": {
-    "before": 1897,
-    "after": 1897
+    "before": 2601,
+    "after": 2601
    },
-   "detail": "9480dabf1bf96e409b8d58c6eac7cf045864710122634c6dda56fce706272494",
+   "detail": "33d1f965f52cbd8263d01b1b0e73c55a165bb4664f596de9497dac209fb193b7",
    "expect": "ACCEPT",
    "ok": true
   },
@@ -127,10 +127,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1899,
-    "after": 1899
+    "before": 2603,
+    "after": 2603
    },
-   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 80b3fa26e6c860e6f5d60c0ee1731479288b7792a53c0f647cb9918a",
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. c025950d82f3f59cb4682809429eb8926e072e6ac792e489bb76aa71",
    "expect": "REFUSE",
    "ok": true,
    "wallet": "A"
@@ -145,10 +145,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1899,
-    "after": 1899
+    "before": 2603,
+    "after": 2603
    },
-   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. fc895f793d92e32601650dcf78173a206da4c51afe95632c28406897",
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 2c21c13ab2eb716f69a1291fdc8a963319f17f362b42c3439e751ddb",
    "expect": "REFUSE",
    "ok": true,
    "wallet": "A"
@@ -163,10 +163,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1900,
-    "after": 1900
+    "before": 2604,
+    "after": 2604
    },
-   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. e44487e73fa6b6b8eb1ed2e1200d5c9fb9dec3e3df6e4e599420a57ea8667480: #0 => Success((false,197))\" }",
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. c98eff726960094bf493b9d4a90113aeb972818f30daf6213b6021092f72291d: #0 => Success((false,197))\" }",
    "expect": "REFUSE",
    "ok": true
   },
@@ -180,10 +180,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1900,
-    "after": 1900
+    "before": 2604,
+    "after": 2604
    },
-   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 2bc0b27d9966356324b92c45ca90fea6c27971348f691b41805db6a1",
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. e9098b24735f4a9f34630d0a2d47f6691e1341488be5e448d7840d01",
    "expect": "REFUSE",
    "ok": true,
    "wallet": "A"
@@ -198,10 +198,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1900,
-    "after": 1900
+    "before": 2604,
+    "after": 2604
    },
-   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. c1754c64faddd7af0ef80071e0473c3bbb276cfceb77758c14edabab",
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 5264d99a08074d0211fda9dbaa2444d0670d207bca7aa1d91388bba2",
    "expect": "REFUSE",
    "ok": true,
    "wallet": "A"
@@ -216,10 +216,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1900,
-    "after": 1900
+    "before": 2604,
+    "after": 2604
    },
-   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 49156c38f247da5808d3a02a173b0f9ad074192fa9bcaf95a596c9e3",
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 7fbab8ed2719a7b1fdf89a5b82f05fa0a4e8bb81ef9f3beff3176049",
    "expect": "REFUSE",
    "ok": true,
    "wallet": "A"
@@ -232,12 +232,12 @@
    "sibling_n": null,
    "cost": 13115,
    "cost_instrument": "mempool",
-   "tx_id": "fd835c952ea40c73bc57825a6926e8d763e3a1de311d89e43d939251d33c4d93",
+   "tx_id": "954a2861612477279b91c237dee5b372fa8bfa97011060fc6d9b76fa995ab61d",
    "heights": {
-    "before": 1900,
-    "after": 1900
+    "before": 2604,
+    "after": 2604
    },
-   "detail": "fd835c952ea40c73bc57825a6926e8d763e3a1de311d89e43d939251d33c4d93",
+   "detail": "954a2861612477279b91c237dee5b372fa8bfa97011060fc6d9b76fa995ab61d",
    "expect": "ACCEPT",
    "ok": true,
    "wallet": "A"
@@ -250,12 +250,12 @@
    "sibling_n": null,
    "cost": null,
    "cost_instrument": null,
-   "tx_id": "d52b5d298828b64bd0867962d99230d02a8b9ba82a39b661ffdeef7c8741e929",
+   "tx_id": "24a871ee4418c395530fddd41333a5d4fefa73aa197421ce4027f33a6c1236f1",
    "heights": {
-    "before": 1901,
-    "after": 1901
+    "before": 2605,
+    "after": 2605
    },
-   "detail": "d52b5d298828b64bd0867962d99230d02a8b9ba82a39b661ffdeef7c8741e929",
+   "detail": "24a871ee4418c395530fddd41333a5d4fefa73aa197421ce4027f33a6c1236f1",
    "expect": "ACCEPT",
    "ok": true,
    "wallet": "A"
@@ -268,12 +268,12 @@
    "sibling_n": null,
    "cost": null,
    "cost_instrument": null,
-   "tx_id": "81c7e8cbab4d1bf5e3cd42e71f5f98fba869c66dc7a27013223cd7b66d903c68",
+   "tx_id": "381ddfa89c84516b9ce07788f6b23a529f96984c1dc52af63fa1bbbe268b99f2",
    "heights": {
-    "before": 1902,
-    "after": 1902
+    "before": 2606,
+    "after": 2606
    },
-   "detail": "81c7e8cbab4d1bf5e3cd42e71f5f98fba869c66dc7a27013223cd7b66d903c68",
+   "detail": "381ddfa89c84516b9ce07788f6b23a529f96984c1dc52af63fa1bbbe268b99f2",
    "expect": "ACCEPT",
    "ok": true,
    "wallet": "B"
@@ -284,14 +284,14 @@
    "got": "ACCEPT",
    "source": "",
    "sibling_n": null,
-   "cost": 15670,
+   "cost": 15685,
    "cost_instrument": "mempool",
-   "tx_id": "d2a76ac9d9baf045d7912c89d1f7567cc1701b20df0f0d83633ced9253c46e05",
+   "tx_id": "c3793db99e577f530a3646e9cc40ce271a9e7e17b4cf24a64df52761d7cc099b",
    "heights": {
-    "before": 1904,
-    "after": 1904
+    "before": 2607,
+    "after": 2607
    },
-   "detail": "d2a76ac9d9baf045d7912c89d1f7567cc1701b20df0f0d83633ced9253c46e05",
+   "detail": "c3793db99e577f530a3646e9cc40ce271a9e7e17b4cf24a64df52761d7cc099b",
    "expect": "ACCEPT",
    "ok": true
   },
@@ -303,12 +303,12 @@
    "sibling_n": null,
    "cost": null,
    "cost_instrument": null,
-   "tx_id": "8ea6a6baed1149d3416242c0fabeaf6fbc8eb382709abc259fe6b564b02cef4a",
+   "tx_id": "7902735126a2c8559a77155a8ed856f2fd6a3ebb0ea5b54979dd0bd5be527077",
    "heights": {
-    "before": 1905,
-    "after": 1905
+    "before": 2608,
+    "after": 2608
    },
-   "detail": "8ea6a6baed1149d3416242c0fabeaf6fbc8eb382709abc259fe6b564b02cef4a",
+   "detail": "7902735126a2c8559a77155a8ed856f2fd6a3ebb0ea5b54979dd0bd5be527077",
    "expect": "ACCEPT",
    "ok": true,
    "wallet": "B"
@@ -319,18 +319,18 @@
    "got": "ACCEPT",
    "source": "",
    "sibling_n": null,
-   "cost": 51746,
+   "cost": 51240,
    "cost_instrument": "mempool",
-   "tx_id": "2dc5ac99536a031cd1c10bf373e121fbaff414f9974b2c1116221f3ace1841f2",
+   "tx_id": "5f5ae3be96e42c96f31dd8ae16de1d99ed6364b7c486c60a18b93fe40baed68f",
    "heights": {
-    "before": 1908,
-    "after": 1908
+    "before": 2610,
+    "after": 2610
    },
-   "detail": "2dc5ac99536a031cd1c10bf373e121fbaff414f9974b2c1116221f3ace1841f2",
+   "detail": "5f5ae3be96e42c96f31dd8ae16de1d99ed6364b7c486c60a18b93fe40baed68f",
    "expect": "ACCEPT",
    "ok": true,
-   "seed_spent": "1c6584de54c3b30346bded7d0ebeb2d30ed1ddf668f7520437e1e42ed8d24349",
-   "seed_installed": "fad1635c42f61f789b80c2154edf88b6be89c9b6377e45c67f961accda6ece4c"
+   "seed_spent": "112a5be1a38b58d2c5286fcf723b0870f2c0a0c4c159a7eef572f7dab08c3fb4",
+   "seed_installed": "ba4a556d9261e163bc48d786f418fabe4565ad0992666689eae855cfec2caa79"
   },
   {
    "n": "v3-hk-append",
@@ -342,10 +342,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1909,
-    "after": 1909
+    "before": 2611,
+    "after": 2611
    },
-   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. f1db1334f0c8bb3951cbbcc0a5ee3e088b3e7e6962affb843c96506c0b7a1108: #0 => Success((false,1483))\" }",
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 91fa9bd3e893d55dacfaeb37f05809f4e34c2abc8ffc6d5438f6b8230ce763a7: #0 => Success((false,1483))\" }",
    "expect": "REFUSE",
    "ok": true
   },
@@ -359,10 +359,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1909,
-    "after": 1909
+    "before": 2611,
+    "after": 2611
    },
-   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. cb2a22b323b7ad67478722137bf3c4c0cc30ab4dcc894f5626848566d99209af: #0 => Success((false,1483))\" }",
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 89091086375970d76abf3867ebb37470f000483b18879a6277b9ec4b5bba0cdc: #0 => Success((false,1483))\" }",
    "expect": "REFUSE",
    "ok": true
   },
@@ -376,10 +376,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1909,
-    "after": 1909
+    "before": 2611,
+    "after": 2611
    },
-   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. b12dbc766718e0766efadb5366aa57e54bfb8e66ee2267d261c17f7baad529bb: #0 => Success((false,39753))\" }",
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. ee57107d3345ff6b831c5d053dc38d1762983f9d1202bee9554fdc20e91b9301: #0 => Success((false,39327))\" }",
    "expect": "REFUSE",
    "ok": true
   },
@@ -393,10 +393,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1909,
-    "after": 1909
+    "before": 2611,
+    "after": 2611
    },
-   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 019b8bfe389fb2bba11a5e8bd754e393de74c664d06ff5cb2d196890ceca72f9: #0 => Success((false,39753))\" }",
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 76476d5c7377cea2b355dd3c7a1a1a575d1b963afba31aee4a8b122420fc97f5: #0 => Success((false,39327))\" }",
    "expect": "REFUSE",
    "ok": true
   },
@@ -410,10 +410,10 @@
    "cost_instrument": null,
    "tx_id": null,
    "heights": {
-    "before": 1909,
-    "after": 1909
+    "before": 2611,
+    "after": 2611
    },
-   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. b9b673f75166203610800ebfc2c44f386efed87a1b3f25c6273977ea7afca858: #0 => Success((false,39216))\" }",
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. bcbba243626b8c7834361396d5115557e501d05347765834847235881164f8f3: #0 => Success((false,39138))\" }",
    "expect": "REFUSE",
    "ok": true
   },
@@ -423,24 +423,24 @@
    "got": "ACCEPT",
    "source": "",
    "sibling_n": null,
-   "cost": 51885,
+   "cost": 51460,
    "cost_instrument": "mempool",
-   "tx_id": "3e98ec0d5ceadef7406a9c1f7548f313882e1b82fb83c072938b37d1a8480c7c",
+   "tx_id": "27a27f79f146d55e587cd53a235c6b0369ab06effb3f056b6e42249035928572",
    "heights": {
-    "before": 1909,
-    "after": 1909
+    "before": 2611,
+    "after": 2611
    },
-   "detail": "3e98ec0d5ceadef7406a9c1f7548f313882e1b82fb83c072938b37d1a8480c7c",
+   "detail": "27a27f79f146d55e587cd53a235c6b0369ab06effb3f056b6e42249035928572",
    "expect": "ACCEPT",
    "ok": true,
-   "seed_spent": "fad1635c42f61f789b80c2154edf88b6be89c9b6377e45c67f961accda6ece4c",
-   "seed_installed": "e7be879bac10cb678b77bc1c0d45e71f9fe29c260bd7c9577ab5f747d407d25b"
+   "seed_spent": "ba4a556d9261e163bc48d786f418fabe4565ad0992666689eae855cfec2caa79",
+   "seed_installed": "9154d80de5fee93eb91b1675b8038115828a4812ae142406dd785dba137441d7"
   }
  ],
  "harness_bugs": [],
  "hashkey_seeds": [
-  "1c6584de54c3b30346bded7d0ebeb2d30ed1ddf668f7520437e1e42ed8d24349",
-  "fad1635c42f61f789b80c2154edf88b6be89c9b6377e45c67f961accda6ece4c",
-  "e7be879bac10cb678b77bc1c0d45e71f9fe29c260bd7c9577ab5f747d407d25b"
+  "112a5be1a38b58d2c5286fcf723b0870f2c0a0c4c159a7eef572f7dab08c3fb4",
+  "ba4a556d9261e163bc48d786f418fabe4565ad0992666689eae855cfec2caa79",
+  "9154d80de5fee93eb91b1675b8038115828a4812ae142406dd785dba137441d7"
  ]
 }

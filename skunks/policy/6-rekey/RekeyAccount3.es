@@ -107,6 +107,11 @@
       next.R6[Coll[Byte]].get == src.id,
       tokensKept,
       next.value >= total - bounty,
+      // every input is at this script (no foreign input): the only value entering is the merged boxes' own, so by
+      // conservation nothing but the bounty can leave, and no payout carrying this account's registers and NFT can
+      // be combined with a merge to route the merged value or the NFT elsewhere. The cost is the sponsored merge.
+      INPUTS.size == mine.size,
+      next.value <= total,      // defence in depth
       next.creationInfo._1 >= HEIGHT - $SLACK,
       sizeOk
     ))

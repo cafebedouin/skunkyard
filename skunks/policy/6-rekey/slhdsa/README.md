@@ -19,7 +19,7 @@ The `&&` short-circuits: a wrong-length signature is refused at script cost 328,
 | criterion | threshold | measured | verdict | printed line |
 |---|---|---|---|---|
 | 1. verifier tree | ≤ 4,096 B | **1,516 B** (header 0x10, 124 segregated constants) | **fits** | `stage 7 compiled=true tree_bytes=1516 …` |
-| 2. node cost | < 4,900,000 | **201,250** (script 188,247 + 13,003); 8 spends: script min 185,784 / median 187,566 / max 189,443; worst case **~236,200 script [est., linear fit]** | **fits** | `stage 7 valid=ACCEPT cost=188247 node_cost=201250 …`, `ref-fit …` |
+| 2. node cost | < 4,900,000 | **201,250** (script 188,247 + 13,003); 8 spends: script min 185,784 / median 187,566 / max 189,443; worst case **~233,600 script at the 3,570-step cap [est., linear fit; see the ceiling section below]** | **fits** | `stage 7 valid=ACCEPT cost=188247 node_cost=201250 …`, `ref-fit …` |
 | 3. independent signature accepted | BouncyCastle 1.86 (FIPS 205 final) | valid = ACCEPT, and BC agrees | **pass** | `stage 7 criterion3_valid_accepted=true` |
 | 4. forgeries refused | another message; the six round-2 negatives (table below) | all REFUSE; BC refuses each too | **pass** | `stage 7 other_message=REFUSE … negatives_refused=true bc_agrees=true` |
 

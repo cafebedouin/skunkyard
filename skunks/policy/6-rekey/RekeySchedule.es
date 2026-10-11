@@ -120,6 +120,11 @@
       next.R6[Coll[Byte]].get == src.id,
       tokensKept,
       next.value >= total - bounty,
+      // every input is at this script (no foreign input): the only value entering is the merged boxes' own, so by
+      // conservation nothing but the bounty can leave, and no payout that happens to carry this leaf's registers can
+      // be combined with a merge to drain the merged value. The cost is the sponsored merge (fee comes from the bounty).
+      INPUTS.size == mine.size,
+      next.value <= total,      // defence in depth
       next.creationInfo._1 >= HEIGHT - $SLACK,
       sizeOk
     ))
