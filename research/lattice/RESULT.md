@@ -47,6 +47,31 @@ ML-DSA-65 opcode is about 12× cheaper in cost and 2.3× larger in bytes; a Falc
 than the WOTS script on both axes, and is the only post-quantum spend here whose block count is still set by the
 fixed per-transaction charge rather than by its own size.
 
+## Re-run on the 6.0.7 jar, on a quieter machine (2026-10-11, handoff B.15)
+
+The figures above came from the 6.0.6 jar with two syncing nodes in the background (load about 7). Re-run unpinned
+on `ergo-6.0.7.jar` (the same "BouncyCastle Security Provider v1.86-SNAPSHOT", Java 21.0.12.1), load average 1.6 to
+2.1 (the `policy` devnet's mining node at nice 12, about 0.9 of one core; nothing else busy): `bench/run-20261011T032813Z-607.txt`
+and `bench/run-20261011T032824Z-607-repeat.txt`. (A first attempt pinned with `taskset -c 5` gave the JVM one core,
+so GC ran on the measured core; it was discarded, not kept.)
+
+| Verifier | median µs (two runs) | ratio to the baseline | implied JIT | block units | cost per tx (13,003 + units) |
+|---|---|---|---|---|---|
+| `proveDlog` commitment (baseline) | 156.5, 155.5 | 1.00 | 3,400 (charged) | 340 | 13,343 |
+| ML-DSA-44 | 94.6, 95.1 | 0.60, 0.61 | 2,055, 2,079 | 206, 208 | 13,209, 13,211 |
+| ML-DSA-65 | 151.3, 157.3 | 0.97, 1.01 | 3,287, 3,439 | 329, 344 | 13,332, 13,347 |
+| ML-DSA-87 | 244.8, 253.8 | 1.56, 1.63 | 5,318, 5,549 | 532, 555 | 13,535, 13,558 |
+| Falcon-512 | 42.0, 42.1 | 0.27 | 912, 921 | 91, 92 | **13,094, 13,095** (was 13,097) |
+| Falcon-1024 | 87.3, 86.5 | 0.56 | 1,897, 1,891 | 190, 189 | 13,193, 13,192 |
+| SLH-DSA-SHA2-128s | 877.1, 898.4 | 5.60, 5.78 | 19,055, 19,643 | **1,906, 1,964** (was 1,890) | 14,909, 14,967 (was 14,893) |
+| SLH-DSA-SHA2-128f | 2,565.6, 2,538.6 | 16.4, 16.3 | 55,738, 55,506 | 5,574, 5,551 | 18,577, 18,554 |
+
+Every 6.0.6 median is reproduced within 4% (`proveDlog` 155/156 → 156.5/155.5 µs, SLH-DSA-128s 854/868 → 877/898,
+Falcon-512 43/43 → 42.0/42.1). The readings above stand unchanged: an SLH-DSA-128s opcode would be about 14,900 to
+15,000 per transaction (byte-bound at about 158 per block), against 201,816 for the in-script verifier on mainnet cost
+parameters (`skunks/policy/6-rekey/slhdsa/results-devnet-mainnetcost.json`), about 13.5×; Falcon-512 stays at the
+fixed charge. The load caveat below applies to the first table only.
+
 ## Caveats
 
 - One machine, one JVM, pure-Java Bouncy Castle; the node's production cost model was calibrated on other hardware
