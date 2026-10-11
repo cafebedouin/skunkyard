@@ -1,4 +1,4 @@
-# 2026-10-11T00:48:20Z sigma-state 6.0.7 (pinned jar first on the classpath)
+# 2026-10-11T02:02:43Z sigma-state 6.0.7 (pinned jar first on the classpath)
 pin q2/wots-constant.es n=32 w=16 tree_bytes=840 (q2/README.md: 840)
 ref-verify sig_bytes=7856 pk_bytes=32 valid=ACCEPT one_byte_flipped=REFUSE other_message=REFUSE
 ref-indices idx_tree=7814008261324205 idx_leaf=199 fors_indices=[2274, 1263, 812, 1405, 147, 846, 2300, 863, 2035, 47, 3811, 1864, 1500, 1265]
@@ -26,21 +26,23 @@ RESULT {"compiled": true, "tree_bytes": 622, "cost": 10750, "verdict": "ACCEPT",
 stage 7 compiled=true tree_bytes=1516 header=0x10 constants=124 criterion1_tree_le_4096=true
 stage 7 negative appended_16_bytes=REFUSE cost=328
 stage 7 negative truncated_16_bytes=REFUSE cost=328
-stage 7 negative other_key_same_digest=REFUSE cost=188499
+stage 7 negative other_key_same_digest=REFUSE cost=185339
 stage 7 negative flip_fors_auth_node=REFUSE cost=189929
 stage 7 negative flip_layer6_wots_chain=REFUSE cost=188247
 stage 7 negative replay_on_second_box=REFUSE cost=188353
 stage 7 sibling unguarded_appended_16_bytes=ACCEPT cost=188243
-stage 7 sibling other_key_own_tree=ACCEPT cost=189192
+stage 7 sibling other_key_own_tree=ACCEPT cost=185840
 stage 7 sibling second_box_own_signature=ACCEPT cost=189603
 stage 7 unguarded tree_bytes=1506 guarded tree_bytes=1516
 stage 7 valid=ACCEPT cost=188247 node_cost=201250 tx_bytes=9422 criterion2_node_cost_lt_4900000=true
 stage 7 other_message=REFUSE cost=187368 negatives_refused=true bc_agrees=true
 stage 7 criterion3_valid_accepted=true criterion4_forgeries_refused=true
-stage 7 costs_8_spends min=185784 median=188247 max=189443 all_accepted=true
+stage 7 costs_8_spends min=185784 median=187566 max=189443 all_accepted=true
 stage 7 second_key tree_bytes=1516 templates_equal=true trees_equal=false template_hash=6b2a95f4bc39f79402cc7051e09b4614247a54778b647096bdb77bc43b3ae07e address_chars=2077
 stage 7 hash_share_approx cost_with_sha256=188247 cost_without=162964 share=0.1343
-RESULT {"compiled": true, "tree_bytes": 1516, "cost": 188247, "verdict": "ACCEPT", "error": null, "node_cost": 201250, "tx_bytes": 9422, "other_message": "REFUSE", "cost_min": 185784, "cost_median": 188247, "cost_max": 189443, "cost_without_tweakable_sha256": 162964, "second_key_templates_equal": true, "criterion1": true, "criterion2": true, "criterion3": true, "criterion4": true, "bc_agrees": true, "appended_16_bytes": "REFUSE", "truncated_16_bytes": "REFUSE", "other_key_same_digest": "REFUSE", "flip_fors_auth_node": "REFUSE", "flip_layer6_wots_chain": "REFUSE", "replay_on_second_box": "REFUSE", "sibling_unguarded_appended_16_bytes": "ACCEPT", "sibling_other_key_own_tree": "ACCEPT", "sibling_second_box_own_signature": "ACCEPT", "stage": "stage-7"}
+stage 7 all_steps_variant chain_steps=3675 verdict=REFUSE cost=248050 node_cost=261053 [over-bound on a variant, not the verifier]
+stage 7 all_steps_hash_share cost_with_sha256=248050 cost_without=208941 share=0.1577
+RESULT {"compiled": true, "tree_bytes": 1516, "cost": 188247, "verdict": "ACCEPT", "error": null, "node_cost": 201250, "tx_bytes": 9422, "other_message": "REFUSE", "cost_min": 185784, "cost_median": 187566.0, "cost_max": 189443, "cost_without_tweakable_sha256": 162964, "all_steps_variant_cost": 248050, "all_steps_variant_cost_without_tweakable_sha256": 208941, "second_key_templates_equal": true, "criterion1": true, "criterion2": true, "criterion3": true, "criterion4": true, "bc_agrees": true, "appended_16_bytes": "REFUSE", "truncated_16_bytes": "REFUSE", "other_key_same_digest": "REFUSE", "flip_fors_auth_node": "REFUSE", "flip_layer6_wots_chain": "REFUSE", "replay_on_second_box": "REFUSE", "sibling_unguarded_appended_16_bytes": "ACCEPT", "sibling_other_key_own_tree": "ACCEPT", "sibling_second_box_own_signature": "ACCEPT", "stage": "stage-7"}
 # the reference on the spend the full verifier checked (hash-call counts for the hashing share):
 ref-verify sig_bytes=7856 pk_bytes=32 valid=ACCEPT one_byte_flipped=REFUSE other_message=REFUSE
 ref-indices idx_tree=958036468154073 idx_leaf=290 fors_indices=[1130, 3884, 910, 1231, 933, 298, 768, 234, 719, 1913, 1969, 3877, 1939, 3355]

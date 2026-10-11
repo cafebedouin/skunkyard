@@ -19,7 +19,7 @@ The `&&` short-circuits: a wrong-length signature is refused at script cost 328,
 | criterion | threshold | measured | verdict | printed line |
 |---|---|---|---|---|
 | 1. verifier tree | ≤ 4,096 B | **1,516 B** (header 0x10, 124 segregated constants) | **fits** | `stage 7 compiled=true tree_bytes=1516 …` |
-| 2. node cost | < 4,900,000 | **201,250** (script 188,247 + 13,003); 8 spends: script min 185,784 / median 188,247 / max 189,443; worst case **~236,200 script [est., linear fit]** | **fits** | `stage 7 valid=ACCEPT cost=188247 node_cost=201250 …`, `ref-fit …` |
+| 2. node cost | < 4,900,000 | **201,250** (script 188,247 + 13,003); 8 spends: script min 185,784 / median 187,566 / max 189,443; worst case **~236,200 script [est., linear fit]** | **fits** | `stage 7 valid=ACCEPT cost=188247 node_cost=201250 …`, `ref-fit …` |
 | 3. independent signature accepted | BouncyCastle 1.86 (FIPS 205 final) | valid = ACCEPT, and BC agrees | **pass** | `stage 7 criterion3_valid_accepted=true` |
 | 4. forgeries refused | another message; the six round-2 negatives (table below) | all REFUSE; BC refuses each too | **pass** | `stage 7 other_message=REFUSE … negatives_refused=true bc_agrees=true` |
 
@@ -41,8 +41,9 @@ Stage reached: **7 of 7** (the full verifier). No stage failed to compile; no co
 **version 0** (header `0x10`, constants segregated), no 6.0-only method was needed.
 
 **The one sentence for the forum post:** a stateless FIPS 205 SLH-DSA-SHA2-128s verifier fits in an ErgoScript
-proposition today (1,516 of 4,096 bytes) at about 3.9× the measured cost of the plain-WOTS single-chain verifier
-(node 201,250 against 51,896 for `wots_constant` n=32 w=16 in `q2/RESULT.md`; about 3.4× the WOTS+ estimate) and a 7,856-byte signature, so the
+proposition today (1,516 of 4,096 bytes) at about 5× the script cost of the WOTS+ verifier on a like-for-like spend
+(script 188,247 against WOTS+'s ~38,073 on a random spend, `../results-wotsplus.json` `cost_comparison`
+`wotsplus_script_est`; about 5.8× plain WOTS's ~32,727 there) and a 7,856-byte signature, so the
 rotating receive address has a stateless option with no revealed-leaf griefing, at roughly 39 single-input spends per
 block by cost (8,001,091 / 201,250; computed, not run).
 
@@ -82,14 +83,33 @@ concatenations, one hash, one slice. There is no per-byte `toByte` (which throws
 `Coll(...)` construction in the inner loops. The compiler accepted it everywhere, including tuple-typed fold
 accumulators `(Coll[Byte], Long)` three lambdas deep.
 
+(Corrected 2026-10-11, round 4: this sentence said "about 3.9× the plain-WOTS verifier" and "about 3.4× the WOTS+
+estimate". The 3.9× set SLH-DSA's random spend (node 201,250) against plain WOTS's *worst-case* node cost (51,896,
+`q2/RESULT.md`), which understates the ratio; the 3.4× was against an estimate (~58,800 node, `SCHEME-SIZING.md`),
+since replaced by the measured WOTS+ figure above. Both operands now come from random spends.)
+
 **Cost per chain step, measured:** a least-squares fit over the 8 spends (chain steps counted by the reference,
 cost by the interpreter) gives **26.6 block-cost units per WOTS+ chain step** with a fixed part of **138,634** and a
 largest residual of 367 (`ref-fit spends=8 cost_per_chain_step=26.6 fixed=138634 max_residual=367`; before the guard,
 on other digests: 27.8, 136,200, 335). The fixed part
 is the structure that runs whatever the message: FORS (10,750), seven T_len compressions over 560 bytes, 63 XMSS
 nodes, and 3,675 fold iterations over the step index that each evaluate the `if (s >= digit)` test (WOTS+ in
-`WotsPlus.es` pays the same per-iteration cost). The worst case, every chain 15 steps, extrapolates to
-**~236,200 script, ~249,200 node [est.: fit, not run]** (`cost_worst_est=236208`), 5.1% of the relay cap.
+`WotsPlus.es` pays the same per-iteration cost).
+
+**The ceiling, measured on a variant (round 4, 2026-10-11).** "Every chain at 15 steps" (3,675 hashed steps) cannot
+happen with a valid signature: the checksum caps a layer at 510 of its 525 steps (all-zero message digits give
+checksum 480, digits 1, 14, 0), so the most a valid signature can cost is 7 × 510 = **3,570** steps. A verifier variant
+that hashes every step (the test made always true, `s >= digit - 15`; built by source substitution in the runner,
+`SlhDsa.es` unchanged; its verdict is REFUSE because the chain ends are wrong) measures the over-bound:
+**script 248,050, node 261,053 at 3,675 steps** (`stage 7 all_steps_variant chain_steps=3675 verdict=REFUSE
+cost=248050 node_cost=261053`), 5.3% of the relay cap. The linear fit under-predicts it: the fit gives 236,208 at
+3,675 (`cost_worst_est=236208`) and ~233,400 at 3,570 (233,600 with the rounded 26.6), about 5% below the variant.
+The variant's per-step slope from the valid spend (1,860 steps, 188,247) is ~32.9, not 26.6 [the fit's slope comes
+from spends spanning 1,785 to 1,920 steps; extrapolating it 1,700 steps out is what misses]. Interpolating on that
+slope, a valid signature at the 3,570-step cap would cost about **244,600 script [est.]**; the variant's 248,050 bounds
+it from above. (An earlier substitution that deleted the `if` instead measured 139,270, *below* the valid spend:
+deleting the test also deleted the per-iteration comparison and made the digit computation dead code, a different
+program; the runner records why.)
 
 **Hashing share: about 11%, computed; the stand-in measurement is unreliable here.** sha256 is charged
 `PerItemCost(80, 8, 64)` JIT per call (block units are JIT/10; the same formula on blake2b256 reproduces q2's measured
@@ -101,6 +121,16 @@ before the guard and 0.068 on the first key: without the real
 hash the WOTS+ digits come from garbage nodes, so the step counts, and the cost, change between runs. The computed
 figure is the one to quote; it is above q2's 7% because sha256 is charged 3.6× blake2b256 per call, and still means
 nearly 90% of the cost is interpretation.
+
+**Like for like (round 4, 2026-10-11): the two methods agree once the step count is fixed.** On the all-steps variant
+(above) every chain runs 15 steps whatever the hash returns, so the stand-in runs the same structure as the real
+run. Measured: script 248,050 with sha256, 208,941 with every tweakable sha256 replaced by a slice of its input,
+share **0.1577** (`stage 7 all_steps_hash_share cost_with_sha256=248050 cost_without=208941 share=0.1577`). Computed
+for the same run: spend 0's 20,356.8 block units (`ref-spend 0 … sha256_cost=20356.8`) plus 1,815 more F calls at
+9.6 each (102 bytes: `PerItemCost(80, 8, 64)` = 96 JIT), 37,781 units, a share of **0.152** [computed]. The stand-in
+is within 4% of the computation [the 4%: not traced]. So
+the earlier gap (0.1343 measured against 0.108 computed) was the step-count mismatch, not the method; the share
+itself rises with the step count, from about 11% on random spends to about 15% at the all-steps bound.
 
 ## Per-key address, as for WOTS
 
@@ -181,7 +211,8 @@ number above was produced from it; regenerating it would change them all.
 - `stage-2.es` … `stage-6.es`, `SlhDsa.es` — the stages and the verifier; each header says what it computes and which
   constants it expects.
 - `SlhDsaRunner.scala` — the harness (q2 pattern): `gen` (BC key pair and signature), `stage N`, `full` (criteria 1–4,
-  the round-2 negatives and their siblings, 8 spends, second key, hash stand-in), `pin`, `tree`, `sign`, `sign-other`.
+  the round-2 negatives and their siblings, 8 spends with the true median, second key, hash stand-in, the all-steps
+  ceiling variant and its like-for-like hash share), `pin`, `tree`, `sign`, `sign-other`.
 - `run.sh` — the whole pipeline; writes `run.log`, `results.json` (`{stage, compiled, tree_bytes, cost, verdict, error}`
   per stage, with the stage-7 criteria), `vectors.json`, `vectors-spend.json`, `spends.json`.
 - `devnet-test-slhdsa.py`, `results-devnet.json`: the node's verdict (the section above). `run.sh tree` prints the
@@ -191,8 +222,9 @@ number above was produced from it; regenerating it would change them all.
 
 - **Executed on a devnet node, not mainnet.** The cloud run was harness-only; the devnet section above adds the
   node's verdict on one honest spend, its second-box sibling and seven forgeries. The devnet's block cost cap is one eighth of mainnet's.
-- **Worst-case cost is a fit, not a run.** Forcing all 7 × 35 chains to 15 steps needs a chosen-digest message the
-  harness does not construct. The fit's residual is 335 on costs near 188,000.
+- **The worst case is bounded, not run.** No valid signature at the 3,570-step cap was constructed (it needs a
+  chosen-digest message); the all-steps variant (3,675 steps, script 248,050) is an over-bound on it, and the fit
+  (residual 367 on costs near 188,000, `ref-fit … max_residual=367`) under-predicts that variant by about 5%.
 - **One parameter set.** 128s was the question. The same script with the 128f constants (d 22, h' 3, a 6, k 33) would
   be about the same size [est.] and roughly 3× the cost [est.: 22 layers at the measured per-layer fixed cost and
   per-step slope], still far under the cap, with a 17,088-byte signature; not built.

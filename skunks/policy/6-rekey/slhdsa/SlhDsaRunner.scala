@@ -252,9 +252,13 @@ object SlhDsaRunner {
           val more = (1 to 7).map { i => val o = spend(i); val m = digest(o); val s = bcSign(v.sk, m); val (ok, cost) = evaluate(c.tree, self, o, s); (m, s, ok, cost) }
           val spends = (msg0, sig0, okValid, costValid) +: more
           val all = spends.map(_._4).sorted
+          // the true median: for an even count, the mean of the two middle values (the earlier "median" printed
+          // all(n / 2), the upper-middle value: 188,247 where the median of the eight is 187,566; round 4)
+          val median = if (all.length % 2 == 0) (all(all.length / 2 - 1) + all(all.length / 2)) / 2.0 else all(all.length / 2).toDouble
+          def fmt(x: Double): String = if (x == math.floor(x)) x.toLong.toString else "%.1f".format(x)
           write(s"$DIR/spends.json", "{\"pk\": \"" + hex(v.pk) + "\", \"spends\": [" +
             spends.map { case (m, s, _, cost) => s"""{"msg": "${hex(m)}", "sig": "${hex(s)}", "cost": $cost}""" }.mkString(", ") + "]}")
-          println(s"stage 7 costs_${spends.length}_spends min=${all.head} median=${all(spends.length / 2)} max=${all.last} all_accepted=${spends.forall(_._3)}")
+          println(s"stage 7 costs_${spends.length}_spends min=${all.head} median=${fmt(median)} max=${all.last} all_accepted=${spends.forall(_._3)}")
           // per-key address: a second key must compile to the same template (constants segregated), a different tree
           implicit val enc: ErgoAddressEncoder = ErgoAddressEncoder(ErgoAddressEncoder.MainnetNetworkPrefix)
           println(s"stage 7 second_key tree_bytes=${c2.bytes} templates_equal=${c.tree.template.sameElements(c2.tree.template)} " +
@@ -266,9 +270,27 @@ object SlhDsaRunner {
           val cNo = compile(noHash, e)
           val (_, costNo) = evaluate(cNo.tree, box(cNo.tree), new ErgoBoxCandidate(1000000000L, cNo.tree, 100), sig0)
           println(s"stage 7 hash_share_approx cost_with_sha256=$costValid cost_without=$costNo share=${"%.4f".format((costValid - costNo).toDouble / costValid)}")
+          // ceiling (round 4, B.12): a measurement-only variant that hashes every WOTS+ step, 7 x 35 x 15 = 3,675 chain
+          // steps whatever the digest. An over-bound: the checksum caps a valid signature at 3,570. Its verdict is
+          // REFUSE (the chain ends are wrong); only its cost is the measurement. SlhDsa.es is not changed.
+          // The test is kept and made always true (digit <= 15, so s >= digit - 15 for every s >= 0): deleting the `if`
+          // instead also deletes the per-iteration test and the digit computation (dead code), a different, cheaper
+          // program (139,270 on the first try, below the valid spend's 188,247), not a ceiling.
+          val allSteps = src.replace("if (s >= digit) ", "if (s >= digit - 15) ")
+          require(allSteps != src, "all-steps substitution did not apply")
+          val cAll = compile(allSteps, e)
+          val (okAll, costAll) = evaluate(cAll.tree, box(cAll.tree), out0, sig0)
+          println(s"stage 7 all_steps_variant chain_steps=3675 verdict=${verdict(okAll)} cost=$costAll node_cost=${costAll + FIXED_TX_COST} [over-bound on a variant, not the verifier]")
+          // like-for-like hashing share (B.16): on the all-steps variant the step count does not depend on the digest,
+          // so the stand-in (every tweakable sha256 replaced by a slice of its input) runs the same structure
+          val allNo = allSteps.replace("sha256(", "(").replace("(r ++ pkSeed", "sha256(r ++ pkSeed")
+          val cAllNo = compile(allNo, e)
+          val (_, costAllNo) = evaluate(cAllNo.tree, box(cAllNo.tree), out0, sig0)
+          println(s"stage 7 all_steps_hash_share cost_with_sha256=$costAll cost_without=$costAllNo share=${"%.4f".format((costAll - costAllNo).toDouble / costAll)}")
           result("stage-7", (Seq[(String, Any)]("compiled" -> true, "tree_bytes" -> c.bytes, "cost" -> costValid, "verdict" -> verdict(okValid),
             "error" -> null, "node_cost" -> nodeCost, "tx_bytes" -> txLen, "other_message" -> verdict(okOther),
-            "cost_min" -> all.head, "cost_median" -> all(spends.length / 2), "cost_max" -> all.last, "cost_without_tweakable_sha256" -> costNo,
+            "cost_min" -> all.head, "cost_median" -> median, "cost_max" -> all.last, "cost_without_tweakable_sha256" -> costNo,
+            "all_steps_variant_cost" -> costAll, "all_steps_variant_cost_without_tweakable_sha256" -> costAllNo,
             "second_key_templates_equal" -> c.tree.template.sameElements(c2.tree.template),
             "criterion1" -> fits1, "criterion2" -> fits2, "criterion3" -> okValid, "criterion4" -> (!okOther && negsRefused),
             "bc_agrees" -> bcAgrees) ++
