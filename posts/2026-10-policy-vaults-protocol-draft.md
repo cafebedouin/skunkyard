@@ -18,8 +18,9 @@ Everything is in https://github.com/cafebedouin/skunkyard: `skunks/qvault/`, `sk
 was judged by the devnet node or its wallet, except the SLH-DSA harness rows, which are marked "in the harness"; the
 SLH-DSA cost figures come from an interpreter harness, with two honest spends and seven forgeries then judged by the
 node, on the devnet's cost parameters and again on mainnet's. Five review rounds read the contracts before this post; every contract defect they found is fixed and re-tested
-except one, disclosed in §5: a `Pending2` completion can strand funds at a register-reading destination and, found
-by reading in the fifth round, can double as a merge successor at an address with a keyless merge. The limits that
+except two, disclosed in §5: a `Pending2` completion can strand funds at a register-reading destination, and, found
+by reading in the fifth round, every keyless merge in this family accepts a successor funded from outside the merged
+boxes, so a third-party payout into such an address can be combined with draining it. The limits that
 are design costs (the schedule's griefing, the shared flag box) are stated with each member. The verdict files cited below are published; the attack harnesses that produced the planted, weld, schedule
 (sched-*, r3-*), cross-vault, `Vault2` (v-*) and destination (c-*, s-*, w-*) rows are not. What the reviews found, and how: `posts/2026-10-policy-review-lessons.md`.
 
@@ -224,14 +225,20 @@ completion into a script that reads its own registers strands the funds: into th
 landed box has the schedule's shape and no leaf, into the register KeepAlive vault, inheritance and the welded
 account the typed read throws; into the KeepAlive address or the quantum-day vault it is spendable, and into a key address by reading, since a
 key script ignores registers (`skunks/policy/2-twostep/results-destinations.json`). The robust shape, decided and not built, carries the id in a separate receipt output; until then a `Pending2`
-destination is a plain key address. Counting per script is also unsafe when an input of *another* script can rely
-on the same output, found by reading in the fifth round and not run: a completion of either pending box into a
-KeepAlive address or the quantum-day vault can double as the merge successor of that address's token-free boxes,
-because the completion pins exactly the pending value and the merge asks only for at least the merged total less
-the bounty; the merged value then leaves to the completer. The receipt output does not change this; a merge
-successor that may carry no registers would, and is not built. Token-bearing boxes are not exposed (the
-completion output must carry exactly the pending box's tokens), and nothing on mainnet is: the demo's KeepAlive
-box carries a token and no pending box exists. `Pending2` is tested
+destination is a plain key address. Counting per script is also unsafe when an input of *another* script can rely on the same output, found by reading
+in the fifth round and not run, and it is a property of the merge, not of the pending box: the KeepAlive merge (and
+the quantum-day vault's, and both rotating members') accepts any successor at its script worth at least the merged
+total less the bounty, without checking that the successor was funded by the merged boxes. A keyless completion of
+either pending box into such an address pins exactly the pending value there and satisfies the merge too, so the
+completer spends the owner's incoming value to cover the merge and takes the merged value; the same holds for any
+payout into the address that a third party executes (a settlement, an order fill). A plain payer cannot profit,
+since they fund the payout themselves and the merge bounds their take by the bounty. Boxes whose tokens the payout
+does not carry in at least the merged amount are safe, and nothing on mainnet is exposed: the demo's KeepAlive box
+carries a token and no pending box exists. The fix is one clause in every merge (the successor may not hold more
+than the merged inputs' total, which keeps sponsored merges, since the sponsor pays the fee and not the value), not
+built; it changes every template in the family. This is the finding that matters most for a receive address meant
+as a default: until the merge is bounded, a KeepAlive address is safe to receive plain payments and unsafe to
+receive keyless-executed payouts. `Pending2` is tested
 with real vaults (`Vault2.tree`, 338 bytes, the same template as the old vault's; `results-vault2.json`, 21 of 21);
 the mainnet demo vault runs the old pending tree. The rule does not cover a forged input state: the first rekey
 account kept one registered input per merge and still lost custody to a planted box (`results-planted.json` old-1,

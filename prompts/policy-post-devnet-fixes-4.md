@@ -5,22 +5,39 @@ You are a fresh Claude Code session in `~/bin/skunkyard`. Read `CLAUDE.md` and `
 for why. The posts disclose each item below as "not run" or "not built"; the writing session ports your numbers.
 Do not edit the posts, the review log or the lessons document.
 
-## A. The shared-output theft (found by reading in round five; the posts state it as not run)
+## A. The shared-output theft (found by reading in round five; a property of every keyless merge in the family)
 
-1. **The row.** A KeepAlive address holding two token-free boxes (a, b) and an old `Pending` box and a `Pending2` box
-   (value V ≥ a + b − bounty) whose R4 is that address: after the deadline, one transaction with inputs [P, K1, K2],
-   K1 and K2 each naming output 0 by context variable 0, output 0 at the KeepAlive address with value V (and R4 =
-   P.id for the `Pending2` case), output 1 to a stranger with a + b − fee. Expected ACCEPT (the theft). Run it
-   against `KeepAliveAddress.es` and against `QVault.es`'s maintenance; add the control where K1 carries a token the
-   pending box lacks (expected REFUSE, `tokensKept`).
-2. **The fix.** Decide and build: the simplest is in the merge contracts, a merge or refresh successor must carry no
-   registers (`!next.R4[…].isDefined` reads as false on an absent register; confirm a wrong-type present register
-   does not throw there, or test `next.R4[Coll[Byte]].isDefined` plus the other types the posts mention). Re-run the
-   KeepAlive address suite (12), the quantum-day suite (39) and the Lithos `KeepAliveJob` expectations if the
-   successor shape changes, record the new tree sizes and template hashes (`skunks/keepalive/template-hash.out`),
-   and run row 1 again (expected REFUSE). The mainnet tree is unchanged by this; say so in the record.
-3. **Record** the finding and the fix in `skunks/keepalive/README.md` and `skunks/policy/2-twostep/README.md` with
-   the rows, and mark `2-twostep/Vault.tree` and `Pending.tree` superseded by `Vault2.tree` and `Pending2.tree`.
+The merge in `KeepAliveAddress.es`, `QVault.es`, `RekeyAccount3.es` and `RekeySchedule.es` accepts any successor
+at its script worth at least the merged total less the bounty, without checking that the successor was funded by
+the merged boxes. Any payout into the address that a third party executes (a pending completion, a settlement, an
+order fill) can therefore double as the successor: the executor spends the owner's incoming value to cover the
+merge and takes the merged boxes' value, up to the payout. A plain payer cannot profit (they fund the payout, and
+the merge bounds their take by the bounty). Tokens do not protect a box whose token the payout carries in at least
+the merged amount.
+
+1. **The rows.** A KeepAlive address holding two token-free boxes (a, b); an old `Pending` box and a `Pending2` box
+   (value V ≥ a + b − bounty) whose R4 is that address. After the deadline, one transaction: inputs [P, K1, K2],
+   K1 and K2 each naming output 0 by context variable 0; output 0 at the KeepAlive address with value V (R4 = P.id
+   for `Pending2`); output 1 to a stranger with a + b − fee. Expected ACCEPT (the theft). Also: the same with K1
+   carrying a token the pending box lacks (expected REFUSE, `tokensKept`); the same with the pending box carrying
+   that token in a greater amount (expected ACCEPT: tokens do not protect); the same shape against `QVault.es`'s
+   maintenance; and a generic keyless payout (no pending box: the executor's own output of value V at the address,
+   funded by the executor's input) with K1 and K2 merged into it, to show the executor's take is bounded by the
+   bounty (expected ACCEPT, take ≤ bounty) and so is not the theft.
+2. **The fix, in every merge:** the successor may not hold more than the merged inputs' total (`next.value <= total`
+   beside the existing `>= total - bounty`; for the lone refresh, `<= SELF.value`). A sponsored merge still passes
+   (the sponsor pays the fee, the successor holds exactly the total); a payout output can double as a successor only
+   when it holds no more than the merged total, and then the executor's take is the bounty. Re-run every suite the
+   change touches (KeepAlive address 12, quantum-day 39, weld 22, schedule 11 and 18, the `Vault2` 21 if the
+   destination rows change), run row 1 again (expected REFUSE), record every new tree size and template hash
+   (`skunks/keepalive/template-hash.out`, the address vectors in `address-vectors.out` re-derived with
+   `address-vector.py`), and check the Lithos `KeepAliveJob`'s successor rule still fits (it merges to exactly the
+   total less the bounty, by its README; say whether it needs a change).
+3. **Record** the finding, the rows and the fix in `skunks/keepalive/README.md`, `skunks/qvault/README.md`,
+   `skunks/policy/6-rekey/README.md` and `skunks/policy/2-twostep/README.md`; mark the pre-fix mainnet tree
+   `kaa-mainnet-wallet.tree` as superseded by the fixed one (the mainnet demo ran the pre-fix tree; whether to
+   re-demonstrate on mainnet is the person's call, not this session's); mark `2-twostep/Vault.tree` and
+   `Pending.tree` superseded by `Vault2.tree` and `Pending2.tree`.
 
 ## B. Other rows the round asked for
 

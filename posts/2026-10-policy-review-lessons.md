@@ -62,11 +62,14 @@ devnet the same day (`skunks/policy/6-rekey/SCHEME-SIZING.md`, "Round 2 review f
     owner, and a completion of the two-step vault's fixed pending box into a script that reads its own registers can
     strand the funds, since the completer chooses the other registers. **Disclosed**; the fix (the id in a receipt
     output) is decided, not built.
-13. **Two contracts' output checks, each sound alone, can share one output.** The fixed pending box's completion
-    pins exactly the pending value at the destination; the KeepAlive address's keyless merge asks only for at
-    least the merged total less the bounty at the same script. One output satisfies both, and the merged boxes'
-    value leaves to the completer. Found by a seat reading the two contracts together in round five; not run;
-    **disclosed**, with the destination advice changed to a plain key address.
+13. **A merge that accepts a successor funded from outside.** The KeepAlive merge, and every merge in the family,
+    asks only that the successor hold at least the merged total less the bounty; it never asks where the value came
+    from. So any payout into the address that a third party executes (a pending completion, a settlement) can double
+    as the merge successor, and the executor spends the owner's incoming value to cover the merge and takes the
+    merged boxes' value. A seat found it in round five by reading the two-step completion against the merge; the
+    person then read it as what it is, a property of the merge that bears on the whole idea of a keyless-kept
+    default receive address. Not run; **disclosed**; the fix (the successor may not exceed the merged inputs'
+    total) is one clause and changes every template in the family.
 
 ## Why independent review mattered
 

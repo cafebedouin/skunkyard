@@ -14,7 +14,10 @@ A companion post for the protocol side covers the quantum-day vault, a receive a
 a FIPS 205 SLH-DSA verifier that fits in a proposition, and the double-satisfaction rule these contracts follow.
 This one is the wallet half.
 
-Every accept or refuse row below was judged by an Ergo node 6.0.7 on a devnet, or by its wallet's refusal to sign. On mainnet only the honest paths
+Every accept or refuse row below was judged by an Ergo node 6.0.7 on a devnet, or by its wallet's refusal to sign.
+One exposure found by reading in the last review round is not yet fixed and is stated where it applies (section 2,
+Destinations): the KeepAlive merge can be combined with a third-party payout into the address. The tree in section
+1 will change when it is fixed; what follows is the kit for the tree as demonstrated. On mainnet only the honest paths
 ran, with demo values (0.005 to 0.025 ERG), a 15-block delay and a recovery key from the same seed.
 
 Everything is in https://github.com/cafebedouin/skunkyard: `skunks/keepalive/`, `skunks/policy/`, and the write-up
@@ -168,18 +171,21 @@ not published). New vaults build on `Vault2`; the mainnet demo still runs the ol
   the vault ignores; a wallet that recognises vault boxes must not expect empty registers. Proving the OR of two keys with one secret: the node wallet
   does it (devnet row 9 and v-3); the demo's Fleet-based signer proves a single key, so the mainnet cancel was signed
   with sigmastate-js (`SIGNERS.md`); Fleet, sigma-rust and other wallets were not tried on the OR.
-- **Destinations**: announce only to a plain key address for now. `Pending2` writes the pending box's id into the
-  destination output's R4, and the completer chooses every other register, so a completion into a script that reads
-  its own registers can strand the funds: into the key schedule with R5 set, into the register KeepAlive vault,
-  inheritance and the welded account the landed box can never be spent, while into the KeepAlive address or the
-  quantum-day vault it is spendable (`2-twostep/results-destinations.json`; the verdict file is published, the
-  harness is not); a plain key script ignores registers, by reading, not a row. A destination with a keyless merge (the KeepAlive address, the
-  quantum-day vault) has a second exposure, found by reading in the fifth review round and not run: after the
-  deadline a completer can make the completion output also the merge successor of the address's other token-free
-  boxes, since the completion needs exactly the pending value and the merge only at least their total less the
-  bounty; one output satisfies both, and those boxes' value, up to the pending value, leaves to the completer. The
-  receipt-output redesign that was decided for the register problem does not change this; a fix in the merge
-  contracts (a merge successor carries no registers) would, and is not built.
+- **Destinations**: announce only to a plain key address for now, for two reasons. First, `Pending2` writes the
+  pending box's id into the destination output's R4, and the completer chooses every other register, so a
+  completion into a script that reads its own registers can strand the funds: into the key schedule with R5 set,
+  into the register KeepAlive vault, inheritance and the welded account the landed box can never be spent, while
+  into the KeepAlive address or the quantum-day vault it is spendable (`2-twostep/results-destinations.json`; the
+  verdict file is published, the harness is not); a plain key script ignores registers, by reading, not a row.
+  Second, and wider than this vault: the KeepAlive merge accepts any successor at the address worth at least the
+  merged boxes' total less the bounty, without checking that the successor was funded by those boxes. So any payout
+  into a KeepAlive address that a third party executes (a pending completion, a settlement, an order fill) can be
+  combined with a merge of the address's existing boxes, and their value leaves to the executor, up to the payout's
+  value; boxes whose tokens the payout does not carry in at least the merged amount are safe. A plain payer cannot
+  profit this way, since they fund the payout themselves and their take is bounded by the bounty. Found by reading
+  in the fifth review round, not run; the fix is one clause in the merge (the successor may not hold more than the
+  merged inputs' total, which keeps sponsored merges, since the sponsor pays the fee and not the value) and is not
+  built. It changes the KeepAlive tree below, so section 1's kit changes with it.
 - **Fee source**: every step needs an input from outside the vault, because the pending box's value is fixed on all
   three paths.
 - **Heights**: consensus evaluates HEIGHT at the including block, tip + 1. The node wallet's
@@ -251,6 +257,6 @@ Would you track a KeepAlive address beside the P2PK one, given the tree, the key
 Should the template be fixed in an EIP before a second wallet ships it, so a recompile cannot fork the template
 hash? Offering it as a default receive address waits on a keeper and on payer acceptance of a 558-character
 address; the two-step vault is the second question: `Vault2.tree` exists, and it waits on a tree with a realistic
-DELAY, on a watcher design, and on the destination exposures above.
+DELAY, on a watcher design, and on the merge fix above, which also re-cuts section 1's tree.
 
 Questions, objections and "this would break my wallet because…" are all welcome.

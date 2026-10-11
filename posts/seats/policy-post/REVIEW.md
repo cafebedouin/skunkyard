@@ -437,3 +437,16 @@ want them; kept.
 **For the devnet** (part four, `prompts/policy-post-devnet-fixes-4.md`): the shared-output row and its fix; the
 SLH-DSA framing negatives; a `Vault2` at a realistic DELAY; the `Pending2` box size; ergo-lib OR signing; the record
 slips. Nothing in it blocks the texts, which say "not run" at each.
+
+**Correction after the round (the person, 2026-10-11).** The shared-output finding was framed as a property of the
+two-step completion and answered with "announce only to a plain key address". The person's reading is the right one:
+it is a property of the merge. Every keyless merge in the family (`KeepAliveAddress.es`, `QVault.es`,
+`RekeyAccount3.es`, `RekeySchedule.es`) accepts a successor funded from outside the merged boxes, so any payout a
+third party executes into such an address can be combined with draining it, and a KeepAlive address meant as a
+default receive address is unsafe for keyless-executed payouts until the merge is bounded. A plain payer cannot
+profit (they fund the payout; the bounty bounds their take). Tokens protect a box only if the payout does not carry
+its token in at least the merged amount, so "token-bearing boxes are safe" was wrong as stated. Both posts, the
+lessons draft (item 13) and the part-four handoff now say this; the fix is one clause in every merge (the successor
+may not exceed the merged inputs' total), which keeps sponsored merges and changes every template in the family,
+including the mainnet KeepAlive tree the wallet post publishes. **Ruling for the person:** whether to re-demonstrate
+the fixed KeepAlive tree on mainnet before the wallet post, or post with the exposure stated and the pre-fix kit.
