@@ -19,8 +19,7 @@ ran, with demo values (0.005 to 0.025 ERG), a 15-block delay and a recovery key 
 
 Everything is in https://github.com/cafebedouin/skunkyard: `skunks/keepalive/`, `skunks/policy/`, and the write-up
 `research/policy/EXPERIMENTS.md`. Two drafts of this post were reviewed before it; the contract holes the reviews
-found by reading are fixed on the devnet (for the two-step vault, the pending box only: the vault that uses the
-fixed pending box is not built yet), and are reported below as found by review.
+found by reading are fixed and re-tested on the devnet, and are reported below as found by review.
 
 ## 1. KeepAlive: a receive address anyone can keep alive (mainnet)
 
@@ -94,7 +93,8 @@ the rotating receive addresses in the companion post reuse.
 The owner's key can only *announce* a withdrawal, into a pending box that fixes the destination and a deadline.
 After the deadline, anyone completes it, with no key and at the exact value. Before it, the owner or a recovery key
 cancels it back into the vault (`skunks/policy/2-twostep/Vault.es`, `Pending.es`; devnet 28 rows in `results.json`:
-the README's 23, then the cancel-side rows 16 and 17 with their setup and sibling rows). DELAY was the tested 15
+the README's 23, then the cancel-side rows 16 and 17 with their setup and sibling rows; and the fixed design,
+`Vault2.tree` with `Pending2.es`, 21 of 21 in `results-vault2.json`). DELAY was the tested 15
 blocks; a real vault would use hundreds, and a tree with another DELAY has not been built (the constant's length
 changes, so the tree must be re-serialised, not patched).
 
@@ -113,22 +113,23 @@ derivation path of the same seed: it shows the script path, not separate custody
 recovery key in separate custody.
 
 **Status first.** The mainnet demo's pending tree has the cross-vault hole described at the end of this section.
-The fixed pending box, `Pending2`, has run on the devnet only with pending boxes created directly and a key address
-standing in for the vault (`2-twostep/results-crossvault.json`, `vault_R6`). A vault compiled with `Pending2` as its
-PENDING_TREE has not been built, announced into or cancelled into, and the repository's `Vault.tree` still embeds
-the old pending tree. So there is no two-step tree to build a wallet against today; what follows is what the demo
-shows and what the fixed design will require.
+The fixed design is built and run: `Vault2.tree` (338 bytes, `Vault.es` compiled with `Pending2.tree` as its
+PENDING_TREE) announced into `Pending2` boxes, completed, cancelled with the recovery key and with the owner key,
+batched across two vaults, and refused every theft shape, 21 of 21 (`2-twostep/results-vault2.json`; the harness is
+not published). New vaults build on `Vault2`; the mainnet demo still runs the old pair. One restriction is open: a
+`Pending2` destination must be a script that reads no register of its own boxes (below).
 
 **What a wallet adds for this one:**
-- **Recognise** (the demo's pair; do not build new vaults from it): vault tree 332 bytes (six constants: two `Int`
-  literals, PENDING_TREE at index 2, an `Int`, DELAY at 4, OWNER at 5), pending tree 187 bytes (OWNER at index 2,
-  RECOVERY at 3; `skunks/keepalive/template-hash.out`, the explorer's constants for `7e20f569…` and `13048061…`).
-  `Pending2.tree` is 193 bytes with OWNER at constant 0 and RECOVERY at constant 1; a vault for it embeds that tree
-  as PENDING_TREE, so its vault tree differs and has not been built. Rebuild both trees from OWNER, RECOVERY and
-  DELAY and compare bytes, never match by template alone: PENDING_TREE embeds the pending box's own keys, and a
-  vault whose nested pending tree is not the expected one cancels or completes somewhere else. A recovery-key
-  holder rebuilds the pending tree from the two public keys and queries unspent boxes by that tree; no index
-  searches by constant.
+- **Recognise**: `Vault2.tree` is 338 bytes with six constants (two `Int` literals, PENDING_TREE at index 2, the
+  193-byte `Pending2.tree` at bytes 11 to 203, an `Int`, DELAY at 4, OWNER at 5); `Pending2.tree` is 193 bytes with
+  OWNER at constant 0 and RECOVERY at 1 (`skunks/keepalive/template-hash.out`). The demo's pair is `Vault.tree`
+  (332 bytes, the 187-byte old pending tree at constant 2) and `Pending.tree` (OWNER at 2, RECOVERY at 3). The two
+  vault trees share one template (Blake2b256 `ea6c571d…`), so a template hash finds every two-step vault but cannot
+  tell a `Pending2` vault from an old one: rebuild both trees from OWNER, RECOVERY and DELAY and compare bytes, and
+  read constant 2 against the `Pending2` tree for the vault's own keys. PENDING_TREE embeds the pending box's own
+  keys, and a vault whose nested pending tree is not the expected one cancels or completes somewhere else. A
+  recovery-key holder rebuilds the pending tree from the two public keys and queries unspent boxes by that tree; no
+  index searches by constant.
 - **Announce** (owner key): the vault must be the *only* input at its script in the transaction; `OUTPUTS(0)` is the
   pending box, at the pending tree, with value ≥ the vault's and the same tokens in the same order, R4 `Coll[Byte]`
   = the destination's ErgoTree bytes, R5 `Int` = a deadline ≥ HEIGHT + DELAY, R6 `Coll[Byte]` = the vault's own
@@ -140,16 +141,23 @@ shows and what the fixed design will require.
 - **Box selection**: a whole vault box moves, with no change back to the vault, one vault box per transaction, and
   vault boxes cannot be merged. Deposit in several boxes (deposits are plain payments and can be split freely) so a
   withdrawal rarely moves much more than asked.
-- **Complete** (no key): HEIGHT ≥ R5; an output at R4's tree with exactly this value and these tokens (same order).
-  With the demo's tree it must be `OUTPUTS(0)` and the only pending box of its script in the transaction; with
-  `Pending2` it may sit at any index, must carry R4 = this pending box's id as `Coll[Byte]`, and several pending
-  boxes may complete in one transaction, each to its own id-bearing output. No bounty: someone pays the fee from
-  another input. It can be presigned at announce time, which locks the fee box until broadcast after R5; a
-  third-party recipient will not complete it for you.
-- **Cancel** (owner or recovery key): HEIGHT < R5; an output back at R6's tree with the exact value and tokens, under
-  the same old-tree or `Pending2` output rule as complete. Proving the OR of two keys with one secret: the node
-  wallet does it (devnet row 9); the demo's Fleet-based signer proves a single key, so the mainnet cancel was signed
+- **Complete** (no key, `Pending2`): HEIGHT ≥ R5; an output at R4's tree with exactly this value and these tokens
+  (same order) and R4 = this pending box's id as `Coll[Byte]`, at any index; several pending boxes may complete in
+  one transaction, each to its own id-bearing output (honest completion 12,245, a two-vault batch 14,531; one block
+  early refused, v-8). The demo's old tree instead requires `OUTPUTS(0)` and the only pending box of its script in
+  the transaction. No bounty: someone pays the fee from another input. It can be presigned at announce time, which
+  locks the fee box until broadcast after R5; a third-party recipient will not complete it for you.
+- **Cancel** (owner or recovery key, `Pending2`): HEIGHT < R5; an output back at R6's tree with the exact value and
+  tokens and R4 = this pending box's id (13,043 by either key, v-3 and v-4; without the id refused, v-3n; the old
+  tree: `OUTPUTS(0)` and one pending box of its script). Proving the OR of two keys with one secret: the node wallet
+  does it (devnet row 9 and v-3); the demo's Fleet-based signer proves a single key, so the mainnet cancel was signed
   with sigmastate-js (`SIGNERS.md`); Fleet, sigma-rust and other wallets were not tried on the OR.
+- **Destinations**: `Pending2` writes the pending box's id into the destination output's R4, and the completer chooses
+  every other register, so a completion into a script that reads its own registers can strand the funds: into the
+  key schedule with R5 set, into the register KeepAlive vault, inheritance and the welded account the landed box can
+  never be spent (`2-twostep/results-destinations.json`); into a key address, the KeepAlive address or the
+  quantum-day vault it is spendable. Until the id moves out of the destination box (a receipt output, decided and
+  not built), announce only to destinations that read no register of their own.
 - **Fee source**: every step needs an input from outside the vault, because the pending box's value is fixed on all
   three paths.
 - **Heights**: consensus evaluates HEIGHT at the including block, tip + 1. The node wallet's
@@ -170,53 +178,61 @@ shows and what the fixed design will require.
   would owe about 0.5 ERG per storage period, derived from the box size, not run); a restored wallet finds the vault
   only from a stored RECOVERY key and DELAY, which the seed does not contain.
 
-**Found by review, fixed on the devnet, not yet in a vault or on mainnet.** The pending box's "only one of my
-script" guard counts boxes with the same `propositionBytes`, and each vault's pending script embeds its own keys. So
-two pending boxes from *different* vaults, past their deadlines, with the same destination and value, were each
-"alone" and both satisfied by one `OUTPUTS(0)`, the second value leaving to anyone with no key. The node accepted
-that shape (row old-1) and refuses it against `Pending2.es` (193 bytes), which binds the completing or cancelling
-output to the pending box's id (row new-1 refused; honest completion, a two-box batch and a recovery cancel to the
-stand-in address accepted, rows new-2 to new-4; `2-twostep/results-crossvault.json`, 6 of 6; the verdict file is
-published, the attack harness that produced it is not). The mainnet demo runs the old pending tree: no pending box
-exists at it, and its one vault box holds 0.005 ERG of ours (explorer, 2026-10-10). With `Pending2`, a destination
-that reads its own R4 cannot receive from it; and never pay a pending address directly, since both pending scripts
-read R5 unconditionally and strand a plain payment.
+**Found by review, fixed on the devnet, not on mainnet.** The pending box's "only one of my script" guard counts
+boxes with the same `propositionBytes`, and each vault's pending script embeds its own keys. So two pending boxes
+from *different* vaults, past their deadlines, with the same destination and value, were each "alone" and both
+satisfied by one `OUTPUTS(0)`, the second value leaving to anyone with no key. The node accepted that shape (row
+old-1, `results-crossvault.json`) and refuses it against `Pending2.es`, which binds the completing or cancelling
+output to the pending box's id: with real vaults, the completion-side theft (v-10) and the cancel-side theft across
+two vaults and within one (v-7c, v-7d) are refused, the honest batches accepted (v-11, v-7s), and the announce
+guard's control run (two vaults announced into one pending box is accepted only by a vault built without the guard,
+2b-ng; `results-vault2.json`). The mainnet demo runs the old pending tree: no pending box exists at it, and its one
+vault box holds 0.005 ERG of ours (explorer, 2026-10-10). Never pay a pending address directly, since both pending
+scripts read R5 unconditionally and strand a plain payment.
 
 ## 3. Items that belong to other policies
 
 Named so a wallet can skip what it does not offer. The policies themselves are in the companion post and in the
 repository; neither hash-based path is for value yet. Every keyless path follows Ergo's double-satisfaction rule;
 the companion post gives the three forms these contracts use and the case the old pending box missed.
+A register read as the wrong type throws rather than reading as absent (sigma-state `InvalidType`,
+`2-twostep/results-destinations.json` w-*), which is why several items below say "register-free".
 
 - **Never pay a register-keyed script without its registers**: the register KeepAlive vault (`KeepAlive.es`),
   inheritance (`skunks/policy/4-inherit/`), the first rekey vault, and any two-step pending address. Each reads a
   register unconditionally and strands a plain payment (rekey row 11 of the first run, `6-rekey/results-v1.json`,
   `None.get`). Plain payments are safe at the KeepAlive address, the two-step vault (it reads no register of its
-  own), the quantum-day vault and a plain key address. The rotating receive addresses take plain payments by a
-  keyless merge, but at the key schedule a griefer can divert one into a box at a leaf whose proof is on chain
-  (companion post), and either rotating member that has been closed strands any later payment: merge every plain
-  payment before closing.
+  own), the quantum-day vault and a plain key address. The rotating receive addresses take register-free plain payments by a
+  keyless merge; a payment carrying a register of another type (an EIP-4 memo, say) is lost there, since the typed
+  read throws (w-memo-ra3, w-ge-sched: even the owner cannot spend it). At the key schedule a griefer can divert a
+  payment into a box at a leaf whose proof is on chain (companion post), and either rotating member that has been
+  closed strands any later payment: merge every plain payment before closing.
 - **Context variables**: variable 0 (`Int`), the successor index, on every merge or refresh path and on the key
   schedule's rekey and close; the two-step completion uses `OUTPUTS(0)` and no variable. Variable 1 (`Coll[Byte]`),
   the hash signature, on a hash-key spend (WOTS+ 2,144 bytes; SLH-DSA-128s 7,856 bytes, for the standalone
   verifier, which no policy contract uses yet; every verifier checks the length). The key schedule also reads
-  variables 2 and 3 for its Merkle proofs. A schedule rekey's signature covers all outputs but the script checks
+  variables 2 and 3 for its Merkle proofs; its close reads variable 0 too (absent: refused; out of range: the
+  script errors; `6-rekey/results-schedule-r3.json`). A schedule rekey's signature covers all outputs but the script checks
   only the successor's leaf, so show every output before signing.
 - **NFT account**: mint the NFT (amount 1) in the transaction that creates the first registered box; the contract
-  does not check supply.
+  does not check supply. The same for the quantum-day flag: the vault checks the flag NFT's id only, and a second
+  unit, or a unit minted into a key address, opens the owner path (`skunks/qvault/devnet-results.json` rows 8c, 8d),
+  so the wallet checks the mint before trusting a flag.
 - **One hash-key box per transaction; merge first, then spend once** (quantum-day vault). The WOTS+ commitment is a
   script constant, so every box at the address shares it, and `mine.size == 1` stops two boxes in one transaction,
-  not a second transaction later (`skunks/qvault/QVault.es`). Before a hash-key spend, merge every box at the
-  address into one by the keyless path, then spend that box once. After quantum day or the backstop, a payment
-  arriving after the hash-key spend can move only by reusing the spent one-time key; warn the user and stop
-  publishing the address.
+  not a second transaction later (`skunks/qvault/QVault.es`; another key's signature and a replay refused on the
+  vault itself, rows 6d, 6e). Before a hash-key spend, merge every box at the address into one by the keyless path,
+  then spend that box once. After quantum day or the backstop, a payment arriving after the hash-key spend can move
+  only by reusing the spent one-time key (rows m1 to m3: the owner key refused, the keyless merge accepted, the
+  used key accepted again); warn the user and stop publishing the address.
 - **Data inputs**: the quantum-day vault's owner path needs the flag box as a data input, found by its NFT. The flag
-  box is shared by every vault: anyone may refresh it, which changes its id and invalidates an owner spend built
-  against the old id. No mainnet flag box exists, so a mainnet quantum-day vault's owner path would be closed from
+  box is shared by every vault: a refresh changes its id and invalidates an owner spend built against the old id
+  (rows 7a to 7c), so the flag box now refreshes only in a KeepAlive-style window, at most once per period (row 7d
+  refused; `QDay.es`, 148 bytes). No mainnet flag box exists, so a mainnet quantum-day vault's owner path would be closed from
   the start.
 - **Merge serially per account** (the rotating receive addresses): an account keeps one registered box (row 13d
-  refused merging two on the pre-NFT account, `6-rekey/results.json`; the current members carry the same
-  one-registered-input clause, by reading), so concurrent merges spend the same box and only one can confirm.
+  refused merging two on the pre-NFT account, `6-rekey/results.json`; r3-fold-merge on the schedule,
+  `results-schedule-r3.json`), so concurrent merges spend the same box and only one can confirm.
 - **Seed recovery**: a KeepAlive address is seed-recoverable (on restore, build the tree for each derived key and
   scan it as a second address, which doubles the restore scan); a plain key address is derivable from the seed; the
   key schedule is derivable by design, once a derivation from an EIP-3 seed is specified (none is yet). Not
@@ -228,6 +244,7 @@ the companion post gives the three forms these contracts use and the case the ol
 Would you track a KeepAlive address beside the P2PK one, given the tree, the key offset and the test vector above?
 Should the template be fixed in an EIP before a second wallet ships it, so a recompile cannot fork the template
 hash? Offering it as a default receive address waits on a keeper and on payer acceptance of a 558-character
-address; the two-step vault waits on a `Pending2` vault tree and a watcher design.
+address; the two-step vault is the second question, now that `Vault2.tree` exists, and waits on a watcher design
+and on the destination restriction above.
 
 Questions, objections and "this would break my wallet because…" are all welcome.

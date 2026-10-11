@@ -2,7 +2,8 @@
 
 **Top line.** The contracts and their harnesses were written by the author with a model; the review seats were other,
 fresh model sessions of several models. Two review rounds on the policy-vaults work (`skunks/policy/`, `skunks/keepalive/`, `skunks/qvault/`)
-found eleven defects by reading the contracts and the records: two thefts the node then accepted on the devnet, an
+found eleven defects by reading the contracts and the records, and a twelfth followed from a seat's reading of the
+interpreter: two thefts the node then accepted on the devnet, an
 unbounded Merkle index that let a spent one-time key be used again, two missing paths (a successor that could be
 bricked, and no way to close), two departures from FIPS 205's checks (signature length, leaf separation), and four
 errors in the record. None of the seven contract defects had been caught by the devnet suites, because every suite
@@ -10,9 +11,9 @@ tested the cases its author had imagined. Nine were found by review seats (fresh
 given only the public files and no part in writing them); two of the record errors were caught by checking the
 review prompt against the files before round two. All seven contract defects were fixed and re-measured on the
 devnet the same day (`skunks/policy/6-rekey/SCHEME-SIZING.md`, "Round 2 review fixes"; items 1 and 2 in
-`skunks/policy/2-twostep/README.md` and `skunks/policy/6-rekey/README.md`), with one residual the third round
-found: the NFT account's keys still share one hash family. A third and a fourth round then read the split posts, found that residual and
-mostly wording. The log of every round, with every finding, the check that confirmed it and what changed, is
+`skunks/policy/2-twostep/README.md` and `skunks/policy/6-rekey/README.md`). A third and a fourth round read the
+split posts, found one more contract residual (the NFT account's keys shared one hash family, fixed the next day)
+and a twelfth defect that only a run could settle (item 12), and otherwise wording. The log of every round, with every finding, the check that confirmed it and what changed, is
 `posts/seats/policy-post/REVIEW.md`.
 
 ## The shape of each
@@ -57,6 +58,10 @@ mostly wording. The log of every round, with every finding, the check that confi
     measurements; a harness figure was called a node's.
 11. **A logged fix that never happened.** Round one's text findings were recorded as fixed and were not in the file.
     The next round found the same sentences.
+12. **A register read of the wrong type throws rather than reading as absent.** A seat read the interpreter that
+    way; the devnet confirmed it: a payment carrying a memo register to a rotating-key address is lost, even to its
+    owner, and a completion of the two-step vault's fixed pending box into any script that reads its own registers
+    strands the funds. **Disclosed**; the fix (the id in a receipt output) is decided, not built.
 
 ## Why independent review mattered
 
