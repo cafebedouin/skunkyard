@@ -132,10 +132,12 @@ Status, per contract (devnet, policy node):
   index folded into the WOTS+ tweak** (`lseed ++ [index, chain, step]`), separating the N leaves as FIPS 205's
   key-pair address does. Suite 11/11 incl. `sched-idx8` (REFUSE), `sched-idx7to8` (REFUSE), `sched-close` (ACCEPT).
   Tree 1,473 → **1,530 B**; rekey 47,130 → **55,432**; merge 14,899 → **14,908**.
-- **Welded NFT (`RekeyAccount3.es`), contract done, suite re-run pending.** `custody` now requires `isReg(o)` (NFT
-  AND both registers) for every script output, so a rekey cannot leave an unspendable NFT box; and the hash key is
-  swapped to WOTS+ (tweak keyed by the account NFT id). Tree 1,267 → **1,302 B**. Weld harness needs WOTS+ hash-key
-  signing + the register-less-successor rows before re-measuring the hash-key rekey cost.
+- **Welded NFT (`RekeyAccount3.es`), done.** `custody` now requires `isReg(o)` (NFT AND both registers) for every
+  script output, so a rekey cannot leave an unspendable NFT box; and the hash key is swapped to WOTS+ (tweak keyed by
+  the account NFT id). Weld suite 15/15 incl. `v3-no-regs` (NFT, no registers → REFUSE), `v3-no-r5` (NFT, R4 only →
+  REFUSE) and `v3-hashkey` (WOTS+ hash-key rekey → ACCEPT). Tree 1,267 → **1,302 B**; the WOTS+ hash-key rekey costs
+  **51,836** on the welded account (no NFT version was costed before; 12,590/46,637/14,791 were on pre-NFT
+  `RekeyAccount.es`).
 - **Quantum-day vault (`QVault.es`), guard added, suite re-run pending.** Tree 1,233 → **1,247 B** (sig-length
   guard). The 18-row suite and the Cryptography negatives are owed.
 - **SLH-DSA (`SlhDsa.es`), guard added, Scala-harness negatives pending.**

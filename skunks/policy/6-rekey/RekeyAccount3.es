@@ -31,8 +31,11 @@
 
   // v3 weld (2026-10-10): the NFT never leaves the script. Any output at this script carries it (no brick); any
   // output carrying it is at this script (no peel-off). Closure is the NFT in no output (burned).
+  // every output at this script must be fully registered (NFT AND both registers), not merely hold the NFT, so an
+  // owner or hash-key rekey cannot leave an unspendable NFT box and brick the account; and no output off the script
+  // may hold the NFT (no peel-off). Closure burns the NFT (no output holds it).
   val custody = OUTPUTS.forall({ (o: Box) =>
-    (o.propositionBytes != SELF.propositionBytes || hasNft(o)) &&
+    (o.propositionBytes != SELF.propositionBytes || isReg(o)) &&
     (!(hasNft(o)) || o.propositionBytes == SELF.propositionBytes) })
 
   val registered = isReg(SELF)
@@ -60,15 +63,15 @@
         val u = if (b < 0.toByte) b.toInt + 256 else b.toInt
         if (c % 2 == 0) u / 16 else u % 16
       } else cDigits(c - 64)
-      val stepsToHash = 15 - digit
+      // WOTS+ (SK-053): tweakable chain keyed by the account NFT id and this (chain, step), absolute steps [digit..14]
       steps.fold(sig.slice(c * 32, (c + 1) * 32), { (curr: Coll[Byte], s: Int) =>
-        if (s < stepsToHash) blake2b256(curr) else curr
+        if (s >= digit) blake2b256(account ++ Coll(c.toByte, s.toByte) ++ curr) else curr
       })
     })
     // the signed outputs may not leave a successor at this address under the spent commitment
     val freshCommit = OUTPUTS.forall({ (o: Box) => o.propositionBytes != SELF.propositionBytes ||
       !(o.R5[Coll[Byte]].isDefined) || o.R5[Coll[Byte]].get != SELF.R5[Coll[Byte]].get })
-    blake2b256(concat) == SELF.R5[Coll[Byte]].get && freshCommit
+    sig.size == 2144 && blake2b256(account ++ concat) == SELF.R5[Coll[Byte]].get && freshCommit
   } else false
 
   val amt = { (p: (Box, Coll[Byte])) => p._1.tokens.fold(0L, { (a: Long, t: (Coll[Byte], Long)) =>
