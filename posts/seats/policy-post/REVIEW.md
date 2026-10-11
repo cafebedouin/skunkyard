@@ -536,8 +536,8 @@ fix), and the flag boxes have no size bound on refresh (below). Gemini (agy, 10 
    `2e7ff6ae…`.
 2. **The Wallet seat's owner spend** of the demo box `f017a605…` with an unmodified signer, as a fourth row; Recipients
    adds that it closes the only pre-fix deployment.
-3. **Posting order:** two threads, the wallet post first, the protocol post a day or two later, the lessons document
-   as a repository link (Recipients, again this round). Posting day: re-check `f017a605…` and the two-step demo box,
+3. **Posting order** (decided 2026-10-11, the person): two threads, the wallet post then the protocol post, one
+   right after the other (no active wallet developers to time it for), the lessons document as a repository link. Posting day: re-check `f017a605…` and the two-step demo box,
    and query the node index for boxes under `afc009dc…`.
 
 ## For the devnet (part five, if wanted)
