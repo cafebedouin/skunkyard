@@ -1,7 +1,7 @@
 # What review found in the policy contracts, and why independent review mattered
 
 **Top line.** The contracts and their harnesses were written by the author with a model; the review seats were other,
-fresh model sessions of several models. Five review rounds on the policy-vaults work (`skunks/policy/`, `skunks/keepalive/`, `skunks/qvault/`) found
+fresh model sessions of several models. Six review rounds on the policy-vaults work (`skunks/policy/`, `skunks/keepalive/`, `skunks/qvault/`) found
 thirteen defects: eleven in the first two rounds by reading the contracts and the records, a twelfth in the fourth
 from a seat's reading of the interpreter, which the devnet then confirmed, and a thirteenth in the fifth by reading
 two contracts together; the third round found one residual (item 7). The first eleven: two thefts the node then accepted on the devnet, an
@@ -12,7 +12,7 @@ author had imagined. Nine were found by review seats (fresh model sessions, of s
 given only the public files and no part in writing them); two of the record errors were caught by checking the
 review prompt against the files before round two. All seven contract defects were fixed and re-measured on the
 devnet the same day (`skunks/policy/6-rekey/SCHEME-SIZING.md`, "Round 2 review fixes"; items 1 and 2 in
-`skunks/policy/2-twostep/README.md` and `skunks/policy/6-rekey/README.md`). The later rounds read the split posts and found the residual, item 12 and item 13, and otherwise wording. The log of every round, with every finding, the check that confirmed it and what changed, is
+`skunks/policy/2-twostep/README.md` and `skunks/policy/6-rekey/README.md`). The later rounds read the split posts and found the residual, item 12 and item 13, and otherwise wording; item 13 was then fixed on the devnet, and its first proposed fix failed there. The log of every round, with every finding, the check that confirmed it and what changed, is
 `posts/seats/policy-post/REVIEW.md`.
 
 ## The shape of each
@@ -54,7 +54,8 @@ devnet the same day (`skunks/policy/6-rekey/SCHEME-SIZING.md`, "Round 2 review f
    opcode would cut it about 25×" did not follow from the table it cited (13.6× per transaction did, before the
    length guard; 13.5× now).
 10. **Derived figures written as measured.** Script costs computed as node cost minus a fixed charge were quoted as
-    measurements; a harness figure was called a node's.
+    measurements; a harness figure was called a node's. In the sixth round a handoff carried a premise taken from another
+    session's reasoning rather than from the transactions it described, and the transactions contradicted it.
 11. **A logged fix that never happened.** Round one's text findings were recorded as fixed and were not in the file.
     The next round found the same sentences.
 12. **A register read of the wrong type throws rather than reading as absent.** A seat read the interpreter that
@@ -62,16 +63,24 @@ devnet the same day (`skunks/policy/6-rekey/SCHEME-SIZING.md`, "Round 2 review f
     owner, and a completion of the two-step vault's fixed pending box into a script that reads its own registers can
     strand the funds, since the completer chooses the other registers. **Disclosed**; the fix (the id in a receipt
     output) is decided, not built.
-13. **A merge that accepts a successor funded from outside.** The KeepAlive merge, and every merge in the family,
-    asks only that the successor hold at least the merged total less the bounty; it never asks where the value came
-    from. So any payout into the address that a third party executes (a pending completion, a settlement) can double
-    as the merge successor, and the executor spends the owner's incoming value to cover the merge and takes the
+13. **A merge that accepted a successor funded from outside.** The KeepAlive merge, and every merge in the family,
+    asked only that the successor hold at least the merged total less the bounty; it never asked where the value came
+    from. So any payout into the address that a third party executes (a pending completion, a settlement) could double
+    as the merge successor, and the executor spent the owner's incoming value to cover the merge and took the
     merged boxes' value. A seat found it in round five by reading the two-step completion against the merge; the
     person then read it as what it is, a property of the merge that bears on the whole idea of a keyless-kept
-    default receive address. Not run; **disclosed**; a value bound on the successor, the first fix proposed, does not close it (the devnet showed the executor's take
-    is the merged value less the fee whatever the payout's size: a second lesson, that a value-only check cannot
-    trace where value came from); the fix is to admit no foreign input to a merge, one clause that costs the
-    sponsored merge and changes every template in the family.
+    default receive address. The devnet confirmed it: the node accepted the theft against the pre-fix KeepAlive
+    address and quantum-day vault, including with the payout carrying the merged boxes' token
+    (`skunks/keepalive/results-shared-output.json`). The first fix proposed was a bound on the successor's value, and
+    the devnet showed it was no fix: with the bound alone the node still accepted the theft at every payout tried
+    across the bounty window, the executor taking the merged value less the fee each time
+    (`results-shared-output-boundary.json`: three accepts of the value-only variant, three refusals of the full fix). A second lesson: a value-only check cannot trace where value came
+    from, and a proposed fix is a claim to test like any other. **Fixed** by admitting no foreign input to a merge,
+    in all four merges, the value bound kept as defence in depth (every theft row refused, the keeper merge accepted,
+    14 of 14); it cost the sponsored merge and changed every template in the family, including the KeepAlive tree the
+    mainnet demo had run. The sixth round found by reading the same gap in the id-bound form: the lone refreshes of
+    the register KeepAlive vault and the inheritance vault admit foreign inputs (neither is offered as a receive
+    address; disclosed, not run).
 
 ## Why independent review mattered
 

@@ -158,7 +158,8 @@ by `address-vector.py`, `address-vectors.out`). **The mainnet demo ran the pre-f
 re-demonstrate on mainnet before the wallet post is the person's call, not this session's. The sponsored-merge demo
 row (`merge-sponsored`) is superseded by the fix: a sponsor's fee box is a foreign input the merge now refuses.
 
-**The Lithos `KeepAliveJob` needs no change.** Its merge spends only the address's own boxes (the devnet run's merge
+**The Lithos `KeepAliveJob`'s merge shape needs no change** (it must still find boxes under the new template, and has
+not been run against the fixed tree). Its merge spends only the address's own boxes (the devnet run's merge
 tx has three inputs, all at the address; the fee and bounty come from the merged boxes' value: `rig-run1/lithos/
 checks.jsonl`), so `INPUTS.size == mine.size` holds. A job that tried to add a foreign fee input would now be
 refused, which the job does not do.
@@ -184,10 +185,12 @@ first wallet and compile calls are retried (the node's readers time out just aft
 
 ## Mainnet demo: the wallet's vault, kept by others (2026-10-10)
 
-The skunkyard test wallet's vault is `kaa-mainnet-wallet.address`. Its tree, `kaa-mainnet-wallet.tree` (404 bytes), is
-the devnet-tested `kaa-mainnet-G.tree` with the owner-key constant set to the wallet's key. It is not a fresh compile:
-the 6.1.2 node's compiler lays the tree out differently, and the substitution keeps the tested logic byte for byte.
-The node's template index finds the vault under `afc009dc…`, the hash `KeepAliveJob` searches.
+The demo's vault was the pre-fix tree (404 bytes, address `7fcz1gR1…`), the devnet-tested `kaa-mainnet-G.tree` with
+the owner-key constant set to the wallet's key. It is not a fresh compile: the 6.1.2 node's compiler lays the tree out
+differently, and the substitution keeps the tested logic byte for byte. The node's template index found the vault
+under `afc009dc…`, the hash `KeepAliveJob` searched. Since part four, `kaa-mainnet-wallet.tree` and `.address` hold
+the fixed tree (418 bytes, `BpQ1xs4h…`, template `2e7ff6ae…`, above); no mainnet box exists at it from this project,
+the node index has not been checked against `2e7ff6ae…`, and the job has not been run against the fixed template.
 
 A lone refresh opens only in the last 21,600 blocks before a box is four years old, so it cannot run on mainnet
 before 2030. The demo uses the merge, which is open at any time and runs the same checks. Built by `mainnet-demo.py`;

@@ -1,13 +1,13 @@
-# Two policy vaults demonstrated on mainnet (KeepAlive, two-step withdrawal): what a wallet needs
+# KeepAlive receive addresses and a two-step withdrawal vault: what a wallet needs (honest paths shown on mainnet on the earlier trees; the fixed trees tested on a devnet)
 
-**For wallet developers.** The ask, up front: given the tree, the key offset and the test vector in section 1,
+**For wallet developers.** The ask, up front: given the tree, the key offset and the test vectors in section 1,
 would you track a KeepAlive address beside the P2PK one (show its balance, spend it with the owner key, label it in
 send screens)? And should the template be fixed in an EIP, so every wallet builds the same bytes for a key?
 
 A holder can opt into a *policy* on their own coins by receiving at a P2S address:
 - a receive address that anyone can keep alive against storage rent, with no key, a contract-level answer to the
-  storage-rent threads (EIP-48, 49, 51, 52 and 53): the merge demonstrated on mainnet, the refresh devnet only, since it cannot
-  open on mainnet before 2030;
+  storage-rent threads (EIP-48, 49, 51, 52 and 53): a keyless merge ran on mainnet on the tree before the fix described below; the refresh is devnet only,
+  since on mainnet it cannot open before 2030;
 - a waiting period on withdrawals, with a recovery key that can cancel (demonstrated on mainnet).
 
 A companion post for the protocol side covers the quantum-day vault, a receive address whose key rotates in place,
@@ -15,62 +15,76 @@ a FIPS 205 SLH-DSA verifier that fits in a proposition, and the double-satisfact
 This one is the wallet half.
 
 Every accept or refuse row below was judged by an Ergo node 6.0.7 on a devnet, or by its wallet's refusal to sign.
-One exposure found by reading in the last review round is not yet fixed and is stated where it applies (section 2,
-Destinations): the KeepAlive merge can be combined with a third-party payout into the address. The tree in section
-1 will change when it is fixed; what follows is the kit for the tree as demonstrated. On mainnet only the honest paths
-ran, with demo values (0.005 to 0.025 ERG), a 15-block delay and a recovery key from the same seed.
+On mainnet only the honest paths ran, with demo values (0.005 to 0.025 ERG), a 15-block delay and a recovery key
+from the same seed. **The KeepAlive tree changed after the mainnet demo.** Review found that the merge could be
+combined with a third-party payout into the address and drain it; the devnet confirmed it, and the fix (every input
+of a keyless merge must be at the address) changes the tree. Section 1's kit is for the fixed tree; the mainnet demo
+ran the pre-fix tree, and no mainnet transaction has run the fixed one yet.
 
 Everything is in https://github.com/cafebedouin/skunkyard: `skunks/keepalive/`, `skunks/policy/`, and the write-up
-`research/policy/EXPERIMENTS.md`. Four drafts of this post were reviewed before it; the contract holes the reviews
+`research/policy/EXPERIMENTS.md`. Five drafts of this post were reviewed before it, in six review rounds of the work (one round read only the companion post); the contract holes the reviews
 found by reading are fixed and re-tested on the devnet, except the open restriction on two-step destinations in
 section 2, and are reported below as found by review.
 
-## 1. KeepAlive: a receive address anyone can keep alive (mainnet)
+## 1. KeepAlive: a receive address anyone can keep alive (merge on mainnet with the pre-fix tree; the fixed tree on a devnet)
 
 The owner's key moves everything at any time. Anyone else may only *merge* boxes paid to the address into one, or
 *refresh* a lone box from 30 days before it reaches rent age. The successor keeps the script and every token, is no
-larger than the boxes it replaces (a lone refresh may add 4 bytes), and loses at most a bounty
-(`skunks/keepalive/KeepAliveAddress.es`; devnet 12 of 12, `address-results.json`).
+larger than the boxes it replaces (a lone refresh may add 4 bytes), and loses at most a bounty; every input of such a
+transaction must be at the address (`skunks/keepalive/KeepAliveAddress.es`; devnet 12 of 12 against the fixed tree,
+`address-results.json`).
 
 | step | transaction | height | signed by |
 |---|---|---|---|
 | deposit, minting a demo token into the vault | `8ab9fe8f525a934c3a4c0e9803581153b4d8d21e678defb32d2e50958e947941` | 1,891,359 | the wallet |
 | keyless merge, the bounty paying the fee | `92386e998c6cbafc7da31aafc244bed08b7f5414417c5ac502382c92416f6546` | 1,891,363 | **nobody** |
-| sponsored merge: the vault keeps every nanoERG | `6e1c55f9fbf41f7bc93579d221e9be1225a61749c1e161eda46f713dc9dc6f26` | 1,891,364 | the sponsor's own input only (shown with the owner's wallet paying) |
+| sponsored merge: the vault keeps every nanoERG (a shape the fixed tree refuses) | `6e1c55f9fbf41f7bc93579d221e9be1225a61749c1e161eda46f713dc9dc6f26` | 1,891,364 | the sponsor's own input only (shown with the owner's wallet paying) |
+
+All three ran the **pre-fix tree** (template `afc009dc…`, address `7fcz1gR1…`), not the tree in the kit below. The
+keyless merge spent only the address's two boxes, a shape the fixed tree accepts (by reading; on the devnet, row
+3-kaa-post). The sponsored merge added a wallet box as a third input; under the fixed tree a sponsor's fee box is a
+foreign input and is refused (row 4-kaa-post, `skunks/keepalive/results-shared-output.json`), so the fee always comes
+from the bounty. No mainnet transaction has run the fixed tree.
 
 Table: `skunks/keepalive/README.md`, "Mainnet demo"; the transactions as built in `skunks/keepalive/tx/`. A lone
 refresh opens 21,600 blocks before a box is 1,051,200 blocks old, so not before 2030. The devnet suite ran the same
 logic at PERIOD 40 and WINDOW 20; the mainnet tree carries the mainnet constants. No keeper runs on mainnet today:
 the demo's merges were built by `skunks/keepalive/mainnet-demo.py`; a Lithos miner job (`KeepAliveJob`, in a branch
-of the Lithos client outside this repository) ran the merge on a devnet. Until a keeper runs, the rent protection is
+of the Lithos client outside this repository) ran the merge on a devnet; its merge spends only the address's boxes,
+so the fix does not change how it merges, but it has not been run against the fixed tree, whose template hash
+(`2e7ff6ae…`) it must search for (`keepalive/README.md`). Until a keeper runs, the rent protection is
 the owner's own spend.
 
 **What a wallet adds for this one** (read from the contract and the mainnet transactions):
-- **The address for a key.** Take `skunks/keepalive/kaa-mainnet-wallet.tree` (404 bytes as hex; header
-  `19 9103 0f`: version 1, 15 segregated constants) and replace constant 1, the 33-byte compressed public key at
-  byte offsets 8 to 40 inclusive, 0-based (`skunks/keepalive/template-hash.out`). The length does not change. Then
-  P2S-encode. Two test vectors (`skunks/keepalive/address-vectors.out`, from `address-vector.py`): the key
+- **The address for a key.** Take `skunks/keepalive/kaa-mainnet-wallet.tree` (the fixed tree, 418 bytes as hex;
+  header `19 9f03 0f`: version 1, 15 segregated constants) and replace constant 1, the 33-byte compressed public key
+  at byte offsets 8 to 40 inclusive, 0-based (`skunks/keepalive/template-hash.out`). The length does not change.
+  Then P2S-encode. Two test vectors (`skunks/keepalive/address-vectors.out`, from `address-vector.py`): the key
   `0329bbd4df63f911f6858fd5d35d4ff6a8e1404c51ec5ef3fa4899dc1a996726ab` is the one already in the tree, so it checks
-  only your P2S encoding and gives `skunks/keepalive/kaa-mainnet-wallet.address` (`7fcz1gR1…ki5W4z`, 558
+  only your P2S encoding and gives `skunks/keepalive/kaa-mainnet-wallet.address` (`BpQ1xs4hioRWFjt1…DNb4ha`, 577
   characters); the key `038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c` checks the
-  substitution and gives `7fcz1gR14KgzKaYa…oByX` (558 characters, the full string in the vectors file). If your build
-  does not reproduce both byte for byte, do not hand the address out. Do not recompile the source: node 6.1.2's compiler lays the
-  same source out differently, and a different tree is a different template that no keeper finds
-  (`keepalive/README.md`). Which payers and exchanges accept a P2S address of that length has not been surveyed.
+  substitution and gives `BpQ1xs4hioRWG9VW…nGdnw` (577 characters, the full string in the vectors file). If your
+  build does not reproduce both byte for byte, do not hand the address out. Do not recompile the source: node
+  6.1.2's compiler lays the same source out differently, and a different tree is a different template that no
+  keeper finds (`keepalive/README.md`). Which payers and exchanges accept a P2S address of that length has not been
+  surveyed.
 - **Recognise.** To track your own address, compare the full tree bytes with the one you built. To recognise another
   holder's KeepAlive address (to label it, or to merge as a keeper), use the template hash *and* the constants:
-  template Blake2b256 (the node's index) `afc009dcb6d619a42be622b6b950651dfefa8409381abdb8bb27af8162965c19`,
-  SHA-256 (the explorer's) `43d8cc5616ce1e04df7cfa71ab8638783fb4139a5001135fca154b39ecd3aeac`
-  (`template-hash.out`; the Blake2b value is the one the node's index reported, `keepalive/README.md`). A template
-  hash ignores the constants, and here constant 4 is PERIOD 1,051,200, 5 WINDOW 21,600, 7 the per-input bounty
-  500,000, 10 the refresh bounty 2,000,000, 11 SLACK 10, and 14 is `false`, the else-branch of the maintenance
-  check (the explorer's `ergoTreeConstants` for input 0 of `92386e99…`). A tree with the same template and constant
-  14 set to `true` is spendable by anyone. Accept a tree only if every constant but the key matches.
+  template Blake2b256 (the node's index) `2e7ff6aeefe21df26b519b0c519149b7272b59be83fca087b3f99d710c412cbc`,
+  SHA-256 (the explorer's) `ebff5777b98cd1d17b4784bf26054e83fc11cfd90481d4e119a67ab2004bfd46`
+  (`template-hash.out`). Both are computed by `template-hash.py`, whose Blake2b value matched the node's index for
+  the pre-fix tree (`afc009dc…`, `keepalive/README.md`); we have created no box at the fixed tree on mainnet, so
+  no node index has been checked against the new value. A template hash ignores the constants, and here constant 4 is PERIOD 1,051,200, 5 WINDOW
+  21,600, 7 the per-input bounty 500,000, 10 the refresh bounty 2,000,000, 11 SLACK 10, and 14 is `false`, the
+  else-branch of the maintenance check (`template-hash.out`; the fix left the constants and their indices as they
+  were, as the explorer's `ergoTreeConstants` show them for the pre-fix tree at input 0 of `92386e99…`). A tree with
+  the same template and constant 14 set to `true` is spendable by anyone. Accept a tree only if every constant but
+  the key matches. The pre-fix template (`afc009dc…`) is the demo's alone: do not build addresses from it.
 - **Paying it needs nothing on chain**: a plain payment with no registers, as the deposit's outputs B and C were. A
   merge keeps tokens and value, not registers (box A's EIP-4 mint registers are gone from the merged box
   `1685438c…`): read any memo in a payment's registers before it is merged.
 - **Owner spend**: sign as P2PK for the same key; the script reduces to `proveDlog(OWNER)` when context variable 0
-  is absent (hardware signers untested). New work: track the P2S address, select its boxes beside the P2PK ones, and
+  is absent (run on the devnet's node wallet only, address case 12; hardware signers untested). New work: track the P2S address, select its boxes beside the P2PK ones, and
   send change back to it if the change should stay protected. Three things to expect: anyone may merge the address's
   boxes at any time, so a spend built on boxes that were just merged fails and must be rebuilt on the successor, and
   such a merge spends the user's boxes without their key, so show it in the history as maintenance (every input and
@@ -81,22 +95,45 @@ the owner's own spend.
   token transfer, can lose all its ERG and keeps its tokens (devnet address case 8). Do not set context variable 0
   on an owner spend: the maintenance branch is evaluated too, and an out-of-range index throws.
 - **Merge or refresh, no key**: each input at this script sets context variable 0 (`Int`, encoded `04` plus the
-  zigzag index: `0400` for output 0, as `mainnet-demo.py` builds it) to the index of the one successor output. The
-  successor is at the same script, holds at least every token total and at least the total value less the bounty,
-  has a creation height of at least HEIGHT − 10 and no lower than the newest input's (EIP-39), and is no larger in
-  bytes than the inputs it replaces (a lone refresh: +4). A merge needs two or more inputs and is allowed at any
-  time; a lone refresh only from the window. The extension is covered by the bytes a sponsor signs, so set it
-  before signing.
-- **Fee source**: the bounty, at most 0.0005 ERG per merged input and never more than the boxes other than the
-  largest bring (`92386e99…` paid its fee from the 0.001 ERG the script allowed for two inputs), or a sponsor's own
-  input (`6e1c55f9…`). A lone refresh may take at most 0.002 ERG and at most half the box. When the smaller boxes
-  bring less than the node's minimum fee, a keyless merge needs a sponsor.
+  zigzag index: `0400` for output 0, as `mainnet-demo.py` builds it) to the index of the one successor output.
+  Every input of the transaction is at the address: no fee box, no other input. The successor is at the same
+  script, holds at least every token total and between the total value less the bounty and the total value, has a
+  creation height of at least HEIGHT − 10 and no lower than the newest input's (EIP-39), and is no larger in bytes
+  than the inputs it replaces (a lone refresh: +4). A merge needs two or more inputs and is allowed at any time; a
+  lone refresh only from the window. A merge cannot be batched with another address's boxes, which are foreign
+  inputs too. The as-built JSON in `skunks/keepalive/tx/` carries the pre-fix tree: copy its shape, not its
+  `ergoTree`.
+- **Fee source**: the bounty only, at most 0.0005 ERG per merged input and never more than the boxes other than the
+  largest bring (`92386e99…` paid its fee from the 0.001 ERG the script allowed for two inputs). A lone refresh may
+  take at most 0.002 ERG and at most half the box. The sponsored merge of the demo (`6e1c55f9…`) is gone: when the
+  smaller boxes bring less than the node's minimum fee, the boxes wait for more payments to merge, or for the owner's
+  spend (by reading the contract). At a minimum fee of 0.001 ERG, a two-input merge's whole bounty is the fee, so a
+  keeper that is not the block's miner earns only from three inputs up (by reading). To keep every nanoERG, the owner
+  consolidates with the key: an ordinary owner spend of the address's boxes plus a fee box, the change back to the
+  address.
 - **Validity window**: stamp the successor with the current tip height. The script accepts it for 10 blocks (SLACK);
   if it is not mined by then, rebuild it. The demo's merges were stamped 4 blocks and 1 block before inclusion
   (creation heights 1,891,359 and 1,891,363 in the explorer JSON).
 
 This is the cheapest policy for a wallet: no watcher, no registers, no new signing. It is also the maintenance path
 the rotating receive addresses in the companion post reuse.
+
+**Found by review, fixed on the devnet, not on mainnet.** The pre-fix merge asked only that the successor be at the
+address and hold at least the merged boxes' total less the bounty; it never asked where the successor's value came
+from. So a payout into the address that a third party executes (a two-step completion, a settlement, an order fill)
+could double as the merge successor: the executor merges the address's boxes, lets the payout stand in for the
+successor, and takes the merged value less the fee. On the devnet, against the pre-fix tree, the node accepted it
+with the payout worth more than the merged boxes and with it inside the bounty window (rows 1-kaa-pre,
+1sub-kaa-pre), and with the payout carrying the merged boxes' token (1c-kaa-pre); a token the payout lacks blocks it
+(1b-kaa-pre) only because a `Pending2` completion fixes its output's tokens exactly; a payout contract that
+tolerates an extra token would let the executor move the merged token into it (by reading, not run). A plain payer
+who funds the payout themselves gains at most the bounty (by reading). The fix is the no-foreign-input clause above,
+with the value bound kept as defence in depth (a value bound alone accepted the theft at all three
+payouts tried, `results-shared-output-boundary.json`; the companion post's §5); against the fixed tree every theft row is refused, the
+keeper merge accepted and the sponsored merge refused (`results-shared-output.json`, 14 of 14). The mainnet demo's
+remaining box (`f017a605…`, output 0 of `6e1c55f9…`, 0.024 ERG and the demo token, unspent in the explorer JSON of
+2026-10-10; re-check on posting day) is at the pre-fix address: draining it would need a second box there to merge
+with and someone else's payout into the address, executed by a third party (by reading, not run).
 
 ## 2. Two-step withdrawal: announce, wait, complete; a recovery key can cancel (mainnet)
 
@@ -134,8 +171,9 @@ not published). New vaults build on `Vault2`; the mainnet demo still runs the ol
   193-byte `Pending2.tree` at bytes 11 to 203 inclusive, 0-based, an `Int`, DELAY at 4, OWNER at 5);
   `Pending2.tree` is 193 bytes with OWNER at constant 0 and RECOVERY at 1 (`skunks/keepalive/template-hash.out`).
   To build one for your keys, substitute OWNER and RECOVERY in `Pending2.tree` (constants 0 and 1), place that
-  193-byte tree in `Vault2.tree`'s constant 2 and OWNER in constant 5; no length changes. There is no mainnet test
-  vector for `Vault2` yet, and only DELAY 15 exists: a tree with a realistic DELAY changes the constant's length and
+  193-byte tree in `Vault2.tree`'s constant 2 and OWNER in constant 5; no length changes. There is no mainnet
+  address vector for `Vault2` yet, but `Vault2.tree` and `Pending2.tree` as published carry the devnet keys
+  `038b0f…` (OWNER) and `03d902…` (RECOVERY), so they check your substitution byte for byte; only DELAY 15 exists: a tree with a realistic DELAY changes the constant's length and
   has not been built or run. The demo's pair is `Vault.tree`
   (332 bytes, the 187-byte old pending tree at constant 2) and `Pending.tree` (OWNER at 2, RECOVERY at 3). The two
   vault trees share one template (Blake2b256 `ea6c571d…`), so a template hash finds every two-step vault but cannot
@@ -149,10 +187,11 @@ not published). New vaults build on `Vault2`; the mainnet demo still runs the ol
   = the destination's ErgoTree bytes, R5 `Int` = a deadline ≥ HEIGHT + DELAY, R6 `Coll[Byte]` = the vault's own
   tree. The script checks only that R4 exists. A valid but wrong destination completes there after the deadline
   unless cancelled, and an R4 that is not a valid tree can never complete and is stranded once the deadline passes,
-  so the wallet checks R4 before signing: accept in R4 only a plain key address (an exchange deposit address is
-  one) and refuse every other tree (the demo's signer refuses a pending box to any destination but the wallet's
-  own; `skunks/oneshot/SIGNERS.md`). A pending box of the demo's pair is 636 bytes (a `Pending2` box a few bytes
-  more, computed), so a very small vault box needs a top-up to meet the minimum box value; the ≥ allows it.
+  so the wallet checks R4 before signing: accept in R4 only a plain key address, the 36 bytes `0008cd` followed by
+  a 33-byte compressed key (an exchange deposit address is one), and refuse every other tree (the demo's signer refuses a pending box to any destination but the wallet's
+  own; `skunks/oneshot/SIGNERS.md`). Encode R4 and R6 as `Coll[Byte]` and R5 as `Int`; a Long R5 makes the
+  announce fail. A pending box of the demo's pair is 636 bytes (a `Pending2` box about 12 bytes more by the tree
+  sizes, not measured), so a very small vault box needs a top-up to meet the minimum box value; the ≥ allows it.
 - **Box selection**: a whole vault box moves, with no change back to the vault, one vault box per transaction, and
   vault boxes cannot be merged. Deposit in several boxes (deposits are plain payments and can be split freely) so a
   withdrawal rarely moves much more than asked; to pay someone less than a vault box holds, announce to your own key
@@ -161,7 +200,9 @@ not published). New vaults build on `Vault2`; the mainnet demo still runs the ol
   (same order) and R4 = this pending box's id as `Coll[Byte]`, at any index; several pending boxes may complete in
   one transaction, each to its own id-bearing output (honest completion 12,245, a two-vault batch 14,531; one block
   early refused, v-8). The demo's old tree instead requires `OUTPUTS(0)` and the only pending box of its script in
-  the transaction. No bounty: someone pays the fee from another input. It can be
+  the transaction. No other output with this box's value and tokens may carry an R4 of another type, since the
+  script reads it as `Coll[Byte]` and the read throws (by reading). No bounty: someone pays the fee from another
+  input. It can be
   presigned at announce time (the pending box's id is known before signing): hand the presigned completion to the
   recipient or any relay, anyone can broadcast it once HEIGHT ≥ R5, and the wallet must not spend the fee box
   meanwhile.
@@ -177,17 +218,12 @@ not published). New vaults build on `Vault2`; the mainnet demo still runs the ol
   into the register KeepAlive vault, inheritance and the welded account the landed box can never be spent, while
   into the KeepAlive address or the quantum-day vault it is spendable (`2-twostep/results-destinations.json`; the
   verdict file is published, the harness is not); a plain key script ignores registers, by reading, not a row.
-  Second, and wider than this vault: the KeepAlive merge accepts any successor at the address worth at least the
-  merged boxes' total less the bounty, without checking that the successor was funded by those boxes. So any payout
-  into a KeepAlive address that a third party executes (a pending completion, a settlement, an order fill) can be
-  combined with a merge of the address's existing boxes, and their value leaves to the executor, up to the payout's
-  value; boxes whose tokens the payout does not carry in at least the merged amount are safe. A plain payer cannot
-  profit this way, since they fund the payout themselves and their take is bounded by the bounty. Found by reading in the fifth review round and confirmed on the devnet; the executor's take is the whole merged
-  value less the fee, whatever the payout's size, so no value bound closes it. The fix is one clause in the merge:
-  every input of the transaction must be at this script, so the only value in the transaction is the merged boxes'
-  own and the bounty is all that can leave. It costs the sponsored merge (the fee comes from the bounty, as the
-  keyless mainnet merge and the keeper job already do) and changes the KeepAlive tree below, so section 1's kit
-  changes with it; it is being built.
+  Second: a completion into an address under the pre-fix KeepAlive tree (the mainnet demo's address) can double as
+  that address's merge successor and drain its boxes, the theft section 1 records as found by review. The fixed tree
+  refuses it, since a completion's pending box is a foreign input to the merge (`results-shared-output.json`
+  1-kaa-post), so a completion into the fixed tree is safe as far as the merge goes; the destination rows ran on the
+  pre-fix trees, and the fix leaves the register reads they test as they were (by reading). The rule stays one a
+  signer can check: a plain key address, until the receipt output (protocol post, §5) is built.
 - **Fee source**: every step needs an input from outside the vault, because the pending box's value is fixed on all
   three paths.
 - **Heights**: consensus evaluates HEIGHT at the including block, tip + 1. The node wallet's
@@ -229,14 +265,16 @@ scripts read R5 unconditionally and strand a plain payment.
 The other policies are in the companion post; neither hash-based path is for value yet. The lines that protect a
 wallet offering only KeepAlive and the two-step vault:
 
-- **Never pay a pending address** (both pending scripts read R5 unconditionally and strand a plain payment), and
+- **Never pay a pending address** (both pending scripts read R5 unconditionally and strand a plain payment; recognise
+  them by template, Blake2b256 `0cefe6ae…` for `Pending` and `4871552c…` for `Pending2`, `template-hash.out`), and
   **never pay a register-keyed script without its registers**: the register KeepAlive vault (`KeepAlive.es`),
   inheritance (`skunks/policy/4-inherit/`), the first rekey vault (rekey row 11 of the first run,
   `6-rekey/results-v1.json`, `None.get`). A register read as the wrong type throws rather than reading as absent
   (sigma-state `InvalidType`), so at the rotating-key addresses only register-free payments are safe: a `Coll[Byte]`
   memo in R4 at the NFT account, which even the owner cannot spend (`2-twostep/results-destinations.json`
   w-memo-ra3, w-memo-ra3-alone), and a `GroupElement` R4 at the key schedule (w-ge-sched, w-ge-sched-alone), are
-  lost. Plain payments are safe at the KeepAlive address, the two-step vault, the quantum-day vault and a plain key
+  lost (these rows ran on the pre-fix trees; the fix touches no register read). Plain payments are safe at the
+  KeepAlive address (less up to 0.001 ERG each when merged, section 1), the two-step vault, the quantum-day vault and a plain key
   address.
 - **Do not create a quantum-day vault on mainnet**: no flag box exists, so its owner path is closed from the start and
   only the hash key, which no wallet signs, can move it.
@@ -245,7 +283,7 @@ wallet offering only KeepAlive and the two-step vault:
   `Pending2` completion or cancel output may sit at any index). Variable 1 (`Coll[Byte]`) is the hash signature on
   a hash-key spend (WOTS+ 2,144 bytes; every hash verifier in these posts checks the length), and set only where a
   path names it: a schedule merge with variable 1 set is refused (`6-rekey/results-schedule-r3.json` r3-merge-var1).
-- **Merge serially per rotating-key account**: an account keeps one registered box, so concurrent merges spend the
+- **Merge serially per rotating-key account** (if you also integrate the companion post's addresses): an account keeps one registered box, so concurrent merges spend the
   same box and only one can confirm (`6-rekey/results.json` row 13d, `results-schedule-r3.json` r3-fold-merge).
 - **Seed recovery**: a KeepAlive address is seed-recoverable (on restore, build the tree for each derived key and
   scan it as a second address, which doubles the restore scan); a plain key address is derivable from the seed. Not
@@ -255,10 +293,10 @@ wallet offering only KeepAlive and the two-step vault:
 
 ## The ask, again
 
-Would you track a KeepAlive address beside the P2PK one, given the tree, the key offset and the test vector above?
+Would you track a KeepAlive address beside the P2PK one, given the tree, the key offset and the test vectors above?
 Should the template be fixed in an EIP before a second wallet ships it, so a recompile cannot fork the template
-hash? Offering it as a default receive address waits on a keeper and on payer acceptance of a 558-character
+hash? Offering it as a default receive address waits on a keeper and on payer acceptance of a 577-character
 address; the two-step vault is the second question: `Vault2.tree` exists, and it waits on a tree with a realistic
-DELAY, on a watcher design, and on the merge fix above, which also re-cuts section 1's tree.
+DELAY and on a watcher design.
 
 Questions, objections and "this would break my wallet because…" are all welcome.

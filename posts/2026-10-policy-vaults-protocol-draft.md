@@ -17,10 +17,11 @@ Everything is in https://github.com/cafebedouin/skunkyard: `skunks/qvault/`, `sk
 `SCHEME-SIZING.md` and `slhdsa/`), and `research/pq/ROADMAP.md` (the 2026-10-10 update). Every accept or refuse row
 was judged by the devnet node or its wallet, except the SLH-DSA harness rows, which are marked "in the harness"; the
 SLH-DSA cost figures come from an interpreter harness, with two honest spends and seven forgeries then judged by the
-node, on the devnet's cost parameters and again on mainnet's. Five review rounds read the contracts before this post; every contract defect they found is fixed and re-tested
-except two, disclosed in §5: a `Pending2` completion can strand funds at a register-reading destination, and, found
-by reading in the fifth round, every keyless merge in this family accepts a successor funded from outside the merged
-boxes, so a third-party payout into such an address can be combined with draining it. The limits that
+node, on the devnet's cost parameters and again on mainnet's. Six review rounds read the contracts before this post; every contract defect they found is fixed and re-tested (on the rotating members, the merge fix by their suites)
+except one, disclosed in §5: a `Pending2` completion can strand funds at a register-reading destination. The last
+found and fixed, also in §5: every keyless merge in this family accepted a successor funded from outside the merged
+boxes, so a third-party payout into such an address could be combined with draining it; every merge now admits no
+foreign input, which changed every template in the family. The limits that
 are design costs (the schedule's griefing, the shared flag box) are stated with each member. The verdict files cited below are published; the attack harnesses that produced the planted, weld, schedule
 (sched-*, r3-*), cross-vault, `Vault2` (v-*) and destination (c-*, s-*, w-*) rows are not. What the reviews found, and how: `posts/2026-10-policy-review-lessons.md`.
 
@@ -37,7 +38,8 @@ is unspecified.
 A receive address whose secp key spends only while a flag box, read as a data input and found by a singleton NFT,
 says false, and before a per-owner backstop height. After that, only a hash-based key spends. KeepAlive's keyless
 merge and refresh are kept, since they use no key, so the box outlives storage rent (`skunks/qvault/QVault.es`,
-1,247 bytes for the test vault with the near backstop and 1,248 for the three with far ones, at devnet constants; `QDay.es`, 148 bytes;
+1,261 bytes for the test vault with the near backstop and 1,262 for the three with far ones, at devnet constants,
+with the no-foreign-input merge of §5, `devnet-results.json` `vaults`; `QDay.es`, 148 bytes;
 `skunks/qvault/devnet-results.json`, 39 of 39). The flag is fired by an oracle key and never reset (rows 11 to 13); leaving
 it out, or showing a look-alike, closes the secp path rather than opening it (rows 2, 3 and 16; a fired flag closes
 it too, row 15). The secp key is a script constant, so it is public in the address itself: the backstop height is
@@ -50,7 +52,7 @@ merged before that spend. Every chain hash is keyed by a per-vault public seed a
 vaults share no hash target as long as each has its own seed (the wallet must choose a fresh seed per vault)
 (`skunks/policy/6-rekey/WotsPlus.es`, 717-byte tree). The instance is Blake2b-256 with a 2-byte address in the FIPS
 205 style (a simple tweakable hash keyed by a public seed and an address), so no standard's exact instance; RFC
-8391's WOTS+ masks each step instead. Five negatives refused by the node on `WotsPlus.es`, whose chain the vault
+8391's WOTS+ instead derives a key and a bitmask for each step from the seed and address. Five negatives refused by the node on `WotsPlus.es`, whose chain the vault
 uses unchanged, and on the vault itself: a byte flipped deep in the signature, bytes appended, a truncated
 signature, another key's signature on the same digest, and a valid signature replayed on a second box
 (`skunks/policy/6-rekey/results-wotsplus.json`, wp-*; the vault's rows 6a to 6e). The tweak costs about 18% over plain WOTS on the script cost (17.6% at 480 hashed steps, where each scheme has
@@ -58,7 +60,7 @@ two measured spends; the fit's 18 to 19% at a random message's mean of 506 extra
 measured 435 to 495 steps, and that fit is flat within its noise; eight spends per scheme, script cost as node cost
 less the devnet's fixed 12,100; `6-rekey/results-wotsplus-fit.json`), against an 8% estimate: interpreter operations
 that run at every chain position, hashed or not, dominate (the fit's slope is about 11 per hashed step against a
-fixed 45,269).
+node-cost intercept of 45,269, 33,169 on script cost).
 
 What the contract does not do: it checks the flag box by its NFT's id, not its script or the NFT's amount, so a
 second unit of the NFT, or a unit minted into a key address, opens the owner path (rows 8c, 8d: the vault cannot
@@ -66,9 +68,11 @@ tell; the wallet checks the mint); the flag box is shared by every vault, and on
 secp path. A refresh changes the flag box's id and voids an owner spend built against the old box (rows 7a to 7c), so `QDay.es` now refreshes only in a KeepAlive-style window, about once per period (at most once per PERIOD − WINDOW −
 SLACK blocks; row 7d refused; the old contract allowed a refresh every block, rows 7e, 7e2). Who holds the oracle key, or whether a miner signal replaces it, is the
 governance question. A vault with several boxes must merge them keylessly before the one hash-key spend, since every
-box shares the commitment (`mine.size == 1` stops two boxes in one transaction, not a second transaction later);
-after quantum day or the backstop, a payment that reaches the address after the hash-key spend can be moved only by signing again with the spent one-time key (rows m1 to m3), which weakens the one-time
-bound for anyone who sees both signatures, so the wallet stops giving out the address before it migrates.
+box shares the commitment (`mine.size == 1` stops two boxes in one transaction, not a second transaction later; the
+merge fee comes from the bounty since §5's fix, so boxes worth less than the fee wait for more payments or a miner's
+own block, by reading);
+after quantum day or the backstop, a payment that reaches the address after the hash-key spend can still be merged keylessly (m2) but withdrawn only by a second signature with the spent one-time key (m3; the secp key is refused, m1), and two signatures under one WOTS+ key may let anyone
+who sees both grind a forgery for any later box at the address (§2), so the wallet stops giving out the address before it migrates.
 
 ## 2. A receive address whose key rotates: three members, not one winner (devnet; hash keys not for value yet)
 
@@ -81,15 +85,18 @@ family: each member is for a different requirement.
 | member | contract | tree | rotate | plain payment | token | from seed | hash key |
 |---|---|---|---|---|---|---|---|
 | fixed key | `FixedKey.es` (a P2PK) | 36 B | move every box: 12,503 for one, 14,906 / 19,712 / 29,324 for 2 / 4 / 8 (`results-fixedkey-n.json`) | free, as at any address | no | yes | none |
-| welded NFT account | `RekeyAccount3.es` | 1,362 B | in place: 13,115 (secp key), 51,746 and 51,885 (two successive WOTS+ hash-key rekeys, `results-weld.json`) | keyless merge, 15,670 (2 inputs) | yes | no (found by its NFT) | WOTS+, per-key seed |
-| key schedule | `RekeySchedule.es` | 1,530 B | in place: 55,432 (WOTS+ leaf, `results-schedule.json` sched-fwd) | keyless merge, 14,908 / 19,770 / 30,394 at 2 / 4 / 8 inputs (`results-schedule-r3.json`) | no | yes, by design | WOTS+ leaves |
+| welded NFT account | `RekeyAccount3.es` | 1,378 B | in place: 13,115 (secp key), 51,240 and 51,460 (two successive WOTS+ hash-key rekeys, `results-weld.json`) | keyless merge, 15,685 (2 inputs) | yes | no (found by its NFT) | WOTS+, per-key seed |
+| key schedule | `RekeySchedule.es` | 1,546 B | in place: 55,770 (WOTS+ leaf, `results-schedule.json` sched-fwd) | keyless merge, 14,924 / 19,806 / 30,466 at 2 / 4 / 8 inputs (`results-schedule-r3.json`) | no | yes, by design | WOTS+ leaves |
 
 All results files are in `skunks/policy/6-rekey/`; devnet mempool figures with `inputCost` 2,000, mainnet charges
-2,407. A payment carrying a register of a type the member does not expect is lost, since a typed register read throws
+2,407. Tree sizes and costs are for the trees with the no-foreign-input merge of §5, re-run after it (weld 22 of
+22, schedule 11 of 11 and 18 of 18); the hash-key rekey costs moved by up to about 500 against the previous run
+(`6-rekey/README.md` keeps both), since the hashed steps depend on the signed message. A payment carrying a register of a type the member does not expect is lost, since a typed register read throws
 rather than reading as absent (sigma-state `InvalidType`): an EIP-4-style `Coll[Byte]` memo in R4 at the NFT
 account, which the owner alone cannot spend either (`skunks/policy/2-twostep/results-destinations.json`,
 w-memo-ra3, w-memo-ra3-alone), and a `GroupElement` R4 at the key schedule (w-ge-sched, w-ge-sched-alone), while
-an R4-only `Coll[Byte]` box at the schedule merges (s-sched-R4). Wallets send register-free payments.
+an R4-only `Coll[Byte]` box at the schedule merges (s-sched-R4). These destination and memo rows ran on the trees
+before the fix; the fix adds one clause to the merge and leaves the register reads as they were (by reading). Wallets send register-free payments.
 
 - **Fixed key**: a personal receive address that rotates seldom. Cheapest to receive and to rotate; rotation
   changes the address.
@@ -140,8 +147,8 @@ an R4-only `Coll[Byte]` box at the schedule merges (s-sched-R4). Wallets send re
   The rotating SLH-DSA contract is not built, only the verifier.
 
 Both in-place members reuse KeepAlive's merge. Like for like, a merge costs about what a fixed-key move of the same
-size costs (two inputs: 14,908 and 15,670 against a two-box move at 14,906; eight: 30,394 against 29,324), so the
-in-place members' extra cost is one such transaction per batch of payments, plus 51,746 to 56,717 per hash-key
+size costs (two inputs: 14,924 and 15,685 against a two-box move at 14,906; eight: 30,466 against 29,324), so the
+in-place members' extra cost is one such transaction per batch of payments, plus 51,240 to 56,720 per hash-key
 rekey against 12,503 for a one-box move; what that buys is an address that does not change on rotation.
 
 ## 3. An SLH-DSA-SHA2-128s verifier fits in a proposition today (not for value yet)
@@ -149,7 +156,8 @@ rekey against 12,503 for a one-box move; what that buys is an address that does 
 `skunks/policy/6-rekey/slhdsa/SlhDsa.es` implements FIPS 205 Algorithms 20 and 24 for SHA2-128s (by our reading
 against the standard and BouncyCastle's acceptance; the gate at the top still applies) and compiles to a
 **1,516-byte** tree (cap 4,096). The message is pure SLH-DSA with an empty context over the spend digest
-`blake2b256(SELF.id ++ the outputs' bytes)`, not HashSLH-DSA. In the interpreter harness: script cost 188,247 on the spend the negatives mutate
+`blake2b256(SELF.id ++ the outputs' bytes)`, not HashSLH-DSA (no row yet tests a signature over a non-empty
+context, a HashSLH-DSA signature or one from the internal function without the prefix: not run). In the interpreter harness: script cost 188,247 on the spend the negatives mutate
 (eight random spends: 185,784 to 189,443, median 187,566; `slhdsa/run.log`), 201,250 once mainnet's fixed 13,003
 per-transaction charge for one input and two outputs is added (computed), and **201,816 measured** on a devnet voting mainnet's cost parameters (`slhdsa/results-devnet-mainnetcost.json`, 9 of 9, the honest spend mined at
 8,054 bytes); a 7,856-byte signature in context variable 1. BouncyCastle's signature is accepted. Refused, in the harness and then by the devnet node: bytes
@@ -195,61 +203,93 @@ soft-fork verification method, SLH-DSA (hash assumptions only, the same scheme t
 scheme, or a generic tweakable-hash-chain primitive, which might remove much of the interpretation overhead for
 every hash-based scheme (not sized)? And is a measured table of this shape what an EIP needs?
 
-## 5. The double-satisfaction rule these contracts follow, and the case the usual guard missed
+## 5. The double-satisfaction rule these contracts follow, and the two cases the usual guard missed
 
-This is Ergo's known double-satisfaction rule; what these contracts add is three forms of it and one case where the
+This is Ergo's known double-satisfaction rule; what these contracts add is three forms of it and two cases where the
 usual guard fails. An output that a keyless or output-checking path relies on must answer for exactly one input, or
 hold the totals of every input relying on it:
 1. the box is the only input of its script in the transaction (the vault's announce, which also pins R6 to its own
    script; the old pending box; a hash-key spend, whose outputs may sit anywhere and which is safe because the
    signed message includes the box's own id, as the replay rows test);
-2. every input of the script names one output that holds their totals (the KeepAlive address's merge and lone
-   refresh; the quantum-day vault's maintenance; the rotating addresses' merge, which also requires exactly one
-   registered input);
+2. every input of the script names one output that holds their totals, and no input of any other script is in
+   the transaction (the KeepAlive address's merge and lone refresh; the quantum-day vault's maintenance; the
+   rotating addresses' merge, which also requires exactly one registered input; the second clause is the fix
+   described below);
 3. the output carries the input's id (the lone refresh of the register KeepAlive vault `KeepAlive.es` and of the
    inheritance vault `skunks/policy/4-inherit/`, R5 or R6 = the spent id; the rotating addresses' merge, R6;
    `Pending2`'s completion and cancel, R4).
 
 The flag boxes (the quantum-day flag, the canary) use none of these: the singleton NFT they carry binds their
 output, given a supply the contract does not check (rows 8a to 8d); the canary still refreshes every block, as
-`QDay.es` did before row 7d. A path guarded by a key alone needs none of this. A path that pairs a key with a check that *some* output
+`QDay.es` did before row 7d. Neither flag contract bounds the successor's size on refresh, unlike KeepAlive, so a
+refresher could pad the flag box and raise its storage rent, and a collected flag box closes every vault's secp path
+(found by reading in the sixth round, not run; `QDay.es` only within its window). A path guarded by a key alone needs none of this. A path that pairs a key with a check that *some* output
 exists, or that a named output holds a value, does, when that check exists to restrain the key's holder: the
 announce against a stolen owner key, the cancel against the recovery holder (and the owner, whom the same guard
 binds). A check that *every* output satisfies a
 property (the welded account's custody, the inheritance owner path's height stamp) cannot be double-satisfied and
 needs none of this. Forms 1 and 2 count per *script*, which is safe only when the relied-on output must sit at that
-same script (the merges, the lone refresh) or is pinned back to it (the announce's R6). The old pending box paid out
+same script (the merges, the lone refresh) or is pinned back to it (the announce's R6), and only when no input of
+another script can rely on the same output (the second case, below). The old pending box paid out
 to R4, a different script, and that is the hole `Pending2` closed with form 3. The price of form 3 here: `Pending2`
 writes the spent box's id into the destination output's R4, and the completer chooses every other register, so a
 completion into a script that reads its own registers strands the funds: into the key schedule with R5 set the
 landed box has the schedule's shape and no leaf, into the register KeepAlive vault, inheritance and the welded
 account the typed read throws; into the KeepAlive address or the quantum-day vault it is spendable, and into a key address by reading, since a
-key script ignores registers (`skunks/policy/2-twostep/results-destinations.json`). The robust shape, decided and not built, carries the id in a separate receipt output; until then a `Pending2`
-destination is a plain key address. Counting per script is also unsafe when an input of *another* script can rely on the same output, found by reading
-in the fifth round and not run, and it is a property of the merge, not of the pending box: the KeepAlive merge (and
-the quantum-day vault's, and both rotating members') accepts any successor at its script worth at least the merged
-total less the bounty, without checking that the successor was funded by the merged boxes. A keyless completion of
-either pending box into such an address pins exactly the pending value there and satisfies the merge too, so the
-completer spends the owner's incoming value to cover the merge and takes the merged value; the same holds for any
-payout into the address that a third party executes (a settlement, an order fill). A plain payer cannot profit,
-since they fund the payout themselves and the merge bounds their take by the bounty. Boxes whose tokens the payout
-does not carry in at least the merged amount are safe, and nothing on mainnet is exposed: the demo's KeepAlive box
-carries a token and no pending box exists. A value bound on the successor does not close it (confirmed on the devnet: the executor's take is the merged
-value less the fee whatever the payout's size, and the executor chooses which boxes to merge); the fix is one
-clause in every merge, every input of the transaction at this script, so the only value in the transaction is the
-merged boxes' own and the bounty is all that can leave. It costs the sponsored merge (the fee comes from the
-bounty, as the keyless mainnet merge and the keeper job already do), is being built, and changes every template in
-the family. This is the finding that matters most for a receive address meant
-as a default: until the merge is bounded, a KeepAlive address is safe to receive plain payments and unsafe to
-receive keyless-executed payouts. `Pending2` is tested
+key script ignores registers (`skunks/policy/2-twostep/results-destinations.json`, run on the pre-fix trees). The robust shape, decided and not built, carries the id in a separate receipt output; until then a `Pending2`
+destination is a plain key address.
+
+Counting per script is also unsafe when an input of *another* script can rely on the same output, and that is a
+property of the merge, not of the pending box: the merges as first built (the KeepAlive address's, the quantum-day
+vault's, both rotating members') accepted any successor at their script worth at least the merged total less the
+bounty, without checking that the successor was funded by the merged boxes. Any payout into such an address that a
+third party executes (a completion of either pending box, a settlement, an order fill) pins value there and could
+satisfy the merge too, so the executor let the payout stand in for the successor and took the merged value less
+the fee. Found by reading in the fifth round; on the devnet the node accepted it against the pre-fix KeepAlive
+address and the pre-fix quantum-day vault (`skunks/keepalive/results-shared-output.json`, 1-kaa-pre, 1sub-kaa-pre,
+2-qv-pre), and with the payout carrying the merged boxes' token in at least their amount (1c-kaa-pre): a token
+protects a box only when the payout cannot carry it (1b-kaa-pre, refused). A plain payer cannot profit, since they
+fund the payout themselves and the merge bounds their take by the bounty. The first fix proposed, a bound on the
+successor's value, does not close it: the executor chooses which boxes to merge, and with a value bound alone the
+node accepted the theft at a payout of the total, the total less the bounty and halfway between, the executor taking
+the merged value less the fee each time (`results-shared-output-boundary.json`: the value-only variant accepted all three, the full fix refused the same three). No value-only check can
+work, since the script cannot see which input funds which output. The fix is the second clause of form 2: every
+input of the transaction at this script, so the only value in the transaction is the merged boxes' own and the
+bounty is all that can leave, with the value bound kept as defence in depth. Against the fixed trees every theft row
+is refused, the plain keeper merge accepted and the sponsored merge refused (14 of 14): the price is the sponsored
+merge, so the fee always comes from the bounty, as the keyless mainnet merge and the keeper job already did. A second
+price, by reading and not run: where a plain payment has no key path, at both rotating members (their key paths
+require a registered box) and at the quantum-day vault after quantum day, a payment whose bounty cannot cover the
+fee can no longer be merged on someone else's fee; it waits for more payments, at the vault the one hash-key spend
+leaves it behind for a second signature, and one left when a rotating account closes is stranded. The
+clause is in all four merges; on the rotating members the theft was not run, since their merge successor must
+already carry the account's own registers, which refuses a `Pending2` completion as a successor by reading, and the
+clause closes any payout that could carry them; their suites pass unchanged against the fixed trees (§2). The KeepAlive
+mainnet demo ran the pre-fix tree (companion post). The general rule: a keyless merge that checks only "at least the
+total less the bounty" is exposed when the merged boxes are plain value and the transaction may carry other value;
+it is closed by admitting no foreign input, or by pinning every other output's value, and boxes whose tokens a payout
+cannot carry are protected by the tokens alone. With the fix, a KeepAlive address can receive keyless-executed
+payouts as far as the merge goes; a `Pending2` completion into it still lands with the pending id in R4, which the
+address ignores, and the destination rule stays a plain key address until the receipt shape is built (companion post,
+§2).
+
+Form 3 has the same gap, found by reading in the sixth round and not run: an id binding makes the output answer for
+one box of its script, not that the box funded it. The lone refreshes of `KeepAlive.es` and of the inheritance vault
+admit foreign inputs, so a payout into them whose executor may set the id register could stand in for the successor
+of a token-free box in its refresh window (their exact-token rule protects any box with tokens; a `Pending2`
+completion cannot do it, since it writes its own id into R4). Neither contract is offered as a receive address, and
+the same clause would close it.
+
+`Pending2` is tested
 with real vaults (`Vault2.tree`, 338 bytes, the same template as the old vault's; `results-vault2.json`, 21 of 21);
 the mainnet demo vault runs the old pending tree. The rule does not cover a forged input state: the first rekey
 account kept one registered input per merge and still lost custody to a planted box (`results-planted.json` old-1,
 old-2), because "registered" could be forged; the fix was registration that cannot be forged, a welded NFT or a
 Merkle proof into the root. Nor does it cover a forged data input: the vault trusts the flag box by its NFT alone, so
 the flag's singleton supply and its mint into `QDay.es` are deployment facts the contract does not check. The rows
-(`skunks/policy/2-twostep/results.json` and `results-crossvault.json`, `skunks/keepalive/devnet-results.json` and
-`address-results.json`, `skunks/policy/6-rekey/results.json`):
+(`skunks/policy/2-twostep/results.json`, `results-crossvault.json` and `results-vault2.json`,
+`skunks/keepalive/devnet-results.json`, `address-results.json`, `results-shared-output.json` and
+`results-shared-output-boundary.json`, `skunks/policy/6-rekey/results.json`):
 - two vault boxes announced into one pending box (two-step row 2b, refused; accepted by a vault built without the
   guard, `results-vault2.json` 2b-ng);
 - two pending boxes cancelled, one output to the vault and one to a stranger (row 16 refused; accepted without the
@@ -263,7 +303,11 @@ the flag's singleton supply and its mint into `QDay.es` are deployment facts the
   by the id binding);
 - for form 2: two KeepAlive-address payments split into two outputs (`address-results.json` case 6, refused: an
   enforcement row, not a theft); and the one-registered-input rule, a merge of two registered boxes of the pre-NFT
-  rekey account (`6-rekey/results.json` row 13d, refused).
+  rekey account (`6-rekey/results.json` row 13d, refused);
+- for form 2's second clause: a third-party payout standing in for the merge successor (`results-shared-output.json`:
+  accepted against the pre-fix KeepAlive address and quantum-day vault, 1-kaa-pre, 1sub-kaa-pre, 1c-kaa-pre and
+  2-qv-pre; refused against the fixed trees, 1-kaa-post, 1sub-kaa-post, 1c-kaa-post, 2-qv-post; accepted against a
+  value bound alone, `results-shared-output-boundary.json`).
 
 Parked, for the record: ring payments from a shared pool (`skunks/policy/7-cheque-bank/`, a 1-of-N `atLeast` over
 deposit commitments, capped at 255 members) and miner-signalled flags (`skunks/policy/3-extension/`, a key proven in

@@ -17,8 +17,9 @@ only by a hash-based signature after. The rent half is KeepAlive's (`skunks/keep
 > Round 2 (2026-10-10) adds a signature-length guard (`sig.size == 2144`) and the Cryptography-seat negatives on the
 > hash key (rows 6a append, 6b truncate, 6c deep-flip, all REFUSE); the full suite is 21/21.
 
-- `QVault.es` (1,247 bytes at devnet constants, 1,248 for the vault with the farther backstop; with the
-  signature-length guard, `devnet-results.json` `vaults`): the vault. Three ways to spend it:
+- `QVault.es` (1,261 bytes at devnet constants, 1,262 for the vaults with the farther backstop, with the
+  signature-length guard and the no-foreign-input merge of part four; 1,247 and 1,248 before it;
+  `devnet-results.json` `vaults`): the vault. Three ways to spend it:
   - **owner key:** `proveDlog(OWNER)`, only while the flag box, shown as a data input and found by its NFT, says
     false, and `HEIGHT < BACKSTOP`. Leaving the flag box out, or showing a look-alike, closes this path rather than
     opening it.

@@ -458,3 +458,92 @@ also chooses which boxes to merge. No value-only check can, since the script can
 output. Decided: every input of the transaction must be at this script on the maintenance path, in all four merges,
 the value bound kept as defense in depth; the sponsored merge is given up (the fee comes from the bounty). The posts,
 the lessons draft and the handoff say this; the sentence "then the executor's take is the bounty" was mine and wrong.
+
+**Part four landed (2026-10-11, commits 48b1659, f0c025c, 1ad0422, 86305ad).** The no-foreign-input clause is in all
+four merges with the value bound kept; `skunks/keepalive/results-shared-output.json` 14 of 14 (pre-fix theft ACCEPT on
+both merges, post-fix REFUSE including the subset case, keeper merge ACCEPT, sponsored merge REFUSE) and
+`results-shared-output-boundary.json` 6 of 6 (a value bound alone: theft ACCEPT at V = total, total − bounty,
+total − bounty/2, take 99,000,000 each). Regressions green (12, 39, 22, 11, 18). New templates: the KeepAlive address
+`2e7ff6ae…` (418 B; the mainnet-wallet address is now `BpQ1xs4h…`, both vectors re-derived), `RekeyAccount3`
+`2056878f…` (1,378 B), `RekeySchedule` `a2a967b1…` (1,546 B). The Lithos job needs no change. Not done: the part-B
+rows (framing negatives, DELAY 720, ergo-lib OR signing, the `Pending2` box size, the memo). The posts have not yet
+been re-cut for the fixed trees: that is the next writing session's first task (`prompts/policy-post-port-5.md`),
+followed by round six.
+
+# Round 6: seven seats on both posts and the lessons draft, after part four (2026-10-11)
+
+**Subject:** the two posts and the lessons draft after the part-four port (`9b5334e`): the wallet post's KeepAlive
+kit re-cut for the fixed tree, the shared-output rows and the boundary file in both posts, the re-run tree sizes and
+costs. Slice: `r6/README-SLICE.md`, built by `r6/build-slice.sh` (206 files: the two shared-output verdict files and
+their harnesses, the regenerated `template-hash.out` and `address-vectors.out`, `REVIEW-ROUND5.md` with its
+corrections). Prompts in `r6/` ("sixth round; the merge contracts changed after round five; verify the posts cite the
+new trees and rows"); the answers are kept outside the repository this round.
+
+**Verdicts.** Wallet post: Fidelity and Cryptography "ready as it stands"; Wallet "nearly ready, four small text
+fixes"; Gemini "post with minor fixes" (the vector plural); Derivation and Recipients "post with fixes" (the §2
+destination sentence contradicted "plain key address only"; the §1 heading and the title said "mainnet" for a kit
+that has not run there). Protocol post: every seat "post with fixes". Lessons draft: the round count and one wording. Every seat confirmed
+every number the fix changed against its file (418 B, `19 9f03 0f`, `2e7ff6ae…`/`ebff5777…`, both 577-character
+vectors, 1,261/1,262, 1,378, 1,546, the re-run costs, 14 of 14, 6 of 6, 99,000,000 of 100,000,000), that the published
+trees carry the clause (`93 b1 a4 72 05`, Wallet, Recipients, Cryptography), that the kit tree's body equals the
+devnet-tested 413-byte tree's (Fidelity, Derivation), and that every round-five "fixed" item is in the texts.
+Grok (grok-4.7-build, 16 minutes): post with fixes on both, the same list as the others plus two of its own: the
+boundary file's "6 of 6" reads as six accepts (three accepts of the value-only variant, three refusals of the full
+fix), and the flag boxes have no size bound on refresh (below). Gemini (agy, 10 minutes).
+
+## Contract and record findings
+
+| Point (who) | Check | Disposition |
+|---|---|---|
+| **Form 3 has the same gap** (Derivation, by reading): the lone refreshes of `KeepAlive.es` and `Inherit.es` bind the successor by id but admit foreign inputs, so a payout whose executor sets the id register could stand in for a token-free box's successor in its refresh window | CONFIRMED by reading (`KeepAlive.es:28,30`, `Inherit.es:37,40`; no `INPUTS` check in either) | **Fixed in text:** disclosed in protocol §5 and lessons item 13 as by reading, not run; neither contract is offered as a receive address. **Devnet item** (the row and the clause) |
+| **A second price of the fix** (Cryptography, Derivation, by reading): where a plain payment has no key path (both rotating members; the quantum-day vault after quantum day), a payment whose bounty cannot cover the fee can no longer be merged on another's fee; one left at a rotating account's close is stranded | CONFIRMED by reading (`RekeyAccount3.es:48`: `owner` is `false` unless registered; same in the schedule) | **Fixed:** stated in protocol §5 and §1 |
+| **The Lithos job "needs no change"** holds for its merge shape only: it finds boxes by template (`keepalive/README.md`, `afc009dc…`) and has not run against the fixed tree (Wallet, Recipients) | CONFIRMED | **Fixed** in the wallet post and in `keepalive/README.md`. **Devnet item** (the job end to end against `2e7ff6ae…`) |
+| The destination and memo rows (`results-destinations.json`) ran on the pre-fix trees (399, 1249, 1362, 1530 B) and are cited beside "the trees with the fix" (Recipients, Derivation, Wallet) | CONFIRMED (its `tree_bytes`) | **Fixed:** "run on the pre-fix trees; the fix touches no register read" at each citation. **Devnet item** (re-run on the fixed trees) |
+| Token protection stated too broadly: 1b-kaa-pre was refused only because `Pending2` fixes its output's tokens; a payout contract that tolerates an extra token would let the executor move the merged token (Recipients) | CONFIRMED by reading (`tokensKept` is ≥ on the successor only) | **Fixed** in the wallet post; protocol §5 already said "cannot carry". **Devnet item** |
+| The demo box's drain also needs a second box at the address (`mine.size >= 2`) and a payout someone else funds (Fidelity, Derivation, Recipients) | CONFIRMED by reading | **Fixed** |
+| Keeper economics after the fix: at a 0.001 ERG minimum fee a two-input merge's bounty is all fee (Recipients) | By reading; the node's default minimum fee is not in the slice | **Fixed** ("at a minimum fee of 0.001 ERG … by reading") |
+| Record lags: `keepalive/README.md` "404 bytes … found under `afc009dc…`"; `6-rekey/README.md`'s table and merge-cost line at the pre-fix figures (Fidelity, Derivation, Recipients) | CONFIRMED | **Fixed** (both READMEs, old figures kept in parentheses) |
+| Record slips not cited by the posts: `QVault.es` comments ("unchanged", "18.8% at 506"), `QDay.es:5,9`, `SCHEME-SIZING.md:63`, `KeepAliveAddress.es:19-20` comment, `EXPERIMENTS.md` R6 without the clause, `results-wotsplus-fit.json` note's checksum digits, `policy/1-template/*.tree` without the clause (Recipients, Cryptography, Derivation) | CONFIRMED | **Handoff** (comments in compiled sources and the experiment record; none is cited by the posts) |
+| **The flag boxes have no size bound on refresh** (Grok, by reading): `QDay.es` and `HCanary.es` let a refresher enlarge the box, raising its rent; a collected flag box closes every vault's secp path | CONFIRMED by reading (no size check in either) | **Fixed in text:** disclosed in protocol §5, not run. **Devnet item** (a padding row) |
+| §1's "moved only by signing again (m1 to m3)": m2 shows a keyless merge still works; m3 is the second signature (Grok) | CONFIRMED (`qvault/devnet-results.json`) | **Fixed** |
+| `EXPERIMENTS.md:386-388` still says an EIP-4 memo is lost at the schedule; s-sched-R4 merges (Grok) | CONFIRMED | **Handoff** (record; the posts say it right) |
+| A WOTS+ checksum row: the signer shares the verifier's digit code, so no row exercises the checksum (Cryptography) | Fair | **Devnet item** |
+| Whether anyone else created boxes under the pre-fix template `afc009dc…` (Recipients) | Not visible from the slice | **For posting day:** a node index query; if any exist, a private note before the thread |
+| A mainnet deposit, keyless merge and owner spend at the fixed tree, checking the node index against `2e7ff6ae…` (every seat) | A mainnet transaction | **Ruling** (below) |
+
+## Text findings
+
+| Point (who) | Disposition |
+|---|---|
+| Wallet §2 destinations contradicted itself ("plain key address only" against "the only KeepAlive tree to complete into") (Wallet, Recipients, Derivation) | **Fixed:** the fixed tree is safe as far as the merge goes; the rule stays a plain key address until the receipt output; the same sentence in the protocol post |
+| Title and §1 heading said "mainnet" for a kit that has not run there (Recipients, Derivation) | **Fixed** (title and heading name the pre-fix demo and the devnet-tested fixed tree; lead bullet reworded) |
+| "the test vector" in the ask, twice (Gemini, Recipients) | **Fixed** |
+| Round counts disagreed: wallet "five drafts", protocol "six rounds", lessons "five rounds" (all seats; Gemini and Grok would make all five) | **Fixed:** "five drafts … in six review rounds of the work (one read only the companion post)"; lessons "six" |
+| Wallet kit additions: do not build from the pre-fix template; the `tx/` JSON's tree is pre-fix; no batching across addresses; the owner's keyed consolidation as the sponsored merge's replacement; the owner spend ran on the node wallet only (Wallet, Recipients, Derivation) | **Fixed** |
+| Two-step kit: R4 as the 36 bytes `0008cd` + key; register types; `Vault2.tree` is a tree-bytes vector with the devnet keys; the `Pending2` box "about 12 bytes more by the tree sizes, not measured"; another output with this value and tokens may not carry a non-`Coll[Byte]` R4; pending templates for "never pay a pending address"; dust caveat beside "plain payments are safe"; the serial-merge line labelled as companion-post material (Wallet, Derivation) | **Fixed** |
+| Cut the value-bound sentence from the wallet post (Recipients) | **Partly:** shortened to a pointer to the boundary file and protocol §5 |
+| Protocol: §1's m3 wording to match §2's forgery risk; RFC 8391 derives a key and a bitmask; 45,269 is the node-cost intercept (33,169 script); "re-tested (on the rotating members, by their suites)"; the §5 file list (Cryptography, Derivation) | **Fixed** |
+| "Moved by up to about 500" not checkable in the slice (Cryptography, Derivation) | **Fixed:** cites `6-rekey/README.md`, which now keeps both runs' figures |
+| A simpler byte-compare recognition rule with an on-curve key check; a dApp-connector (EIP-12) caution; a "data inputs: none" clause; "rebuild the announce if not mined before R5" (Wallet) | **Declined** for this round: wallet practice, not evidence; the kit already gives byte comparison for one's own address and template plus constants for others'. Kept for the person's read |
+| The boundary file's "6 of 6" in all three texts (Grok) | **Fixed:** three accepts of the value-only variant, three refusals of the full fix |
+| Lessons "the devnet refused it as a fix" (Recipients) | **Fixed:** "showed it was no fix" |
+
+## Rulings for the person (presented, not decided)
+
+1. **Re-demonstrate the fixed KeepAlive tree on mainnet** (a deposit and a keyless merge, about 0.03 ERG) before the
+   wallet post, or post with the pre-fix demo and the fixed kit side by side, as the texts now say. Every seat raised
+   it; Recipients and Wallet would make it the condition of replying. It would also check the node index against
+   `2e7ff6ae…`.
+2. **The Wallet seat's owner spend** of the demo box `f017a605…` with an unmodified signer, as a fourth row; Recipients
+   adds that it closes the only pre-fix deployment.
+3. **Posting order:** two threads, the wallet post first, the protocol post a day or two later, the lessons document
+   as a repository link (Recipients, again this round). Posting day: re-check `f017a605…` and the two-step demo box,
+   and query the node index for boxes under `afc009dc…`.
+
+## For the devnet (part five, if wanted)
+
+The destination and memo rows on the fixed trees; the form-3 gap (`KeepAlive.es`, `Inherit.es`) with and without
+the clause; the shared-output theft against the fixed `RekeyAccount3` and `RekeySchedule`; a payout contract that
+tolerates an extra token; a flag-box padding refresh; the Lithos job against `2e7ff6ae…`; a WOTS+ checksum row; a sub-fee merge at a rotating
+member; carried over: the SLH-DSA framing negatives, `Vault2` at DELAY 720, ergo-lib OR signing, the `Pending2` box
+size. None blocks the texts, which say "by reading" or "not run" at each.

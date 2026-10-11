@@ -275,8 +275,8 @@ the `policy` devnet.
 | variant | tree | rekey | plain-payment handling | token | seed-derivable | post-quantum |
 |---|---|---|---|---|---|---|
 | `FixedKey.es` | 36 B (P2PK) | move: **12,503** for one box; 14,906 / 19,712 / 29,324 for 2 / 4 / 8 (`results-fixedkey-n.json`) | free (already owner's) | no | yes | no |
-| `RekeyAccount3.es` | 1,362 B (round 3) | in-place: secp **13,115**; WOTS+ hash-key **51,746**, **51,885** (`results-weld.json`) | merge **15,670** (2 inputs) | **yes** (NFT) | no | WOTS+ hash key |
-| `RekeySchedule.es` | 1,530 B (round 2) | in-place, WOTS+ leaf **55,432** (`results-schedule.json`; 55,383 and 56,717 in `results-schedule-r3.json`) | merge **14,908 / 19,770 / 30,394** at 2 / 4 / 8 inputs (`results-schedule-r3.json`) | no | yes | yes |
+| `RekeyAccount3.es` | 1,378 B (part four; 1,362 B round 3) | in-place: secp **13,115**; WOTS+ hash-key **51,240**, **51,460** (`results-weld.json`, part-four re-run; 51,746, 51,885 before) | merge **15,685** (2 inputs; 15,670 before) | **yes** (NFT) | no | WOTS+ hash key |
+| `RekeySchedule.es` | 1,546 B (part four; 1,530 B round 2) | in-place, WOTS+ leaf **55,770** (`results-schedule.json`; 55,751 and 56,720 in `results-schedule-r3.json`; 55,432, 55,383 and 56,717 before part four) | merge **14,924 / 19,806 / 30,466** at 2 / 4 / 8 inputs (`results-schedule-r3.json`; 14,908 / 19,770 / 30,394 before) | no | yes | yes |
 
 (Until round 3 this table carried the plain-leaf schedule, 1,418 B / 47,130 / 14,899, a four-box quarter for the
 fixed key, 4,928 per box, and the pre-NFT account's merge, 14,791.)
@@ -374,7 +374,7 @@ in comments only; template blake2b256 `2e2023ea…`, 1,530 B, the committed tree
 - **Variables:** a close with variable 0 absent REFUSE (`r3-close-novar0`); with variable 0 = 5, past the one output,
   EVAL-ERROR (`r3-close-var0oob`, `ArrayIndexOutOfBoundsException`, pre-registered); the honest close ACCEPT; a keyless
   merge with variable 1 set REFUSE (`r3-merge-var1`).
-- **Merge cost by size:** 14,908 / 19,770 / 30,394 at 2 / 4 / 8 inputs (`r3-merge-2/4/8`).
+- **Merge cost by size:** 14,924 / 19,806 / 30,466 at 2 / 4 / 8 inputs (`r3-merge-2/4/8`, part-four re-run; 14,908 / 19,770 / 30,394 before).
 - **Payments with registers:** a `GroupElement` R4 at a schedule address is stranded (the typed read throws;
   `../2-twostep/results-destinations.json`, `w-ge-sched`, `w-ge-sched-alone`), and a box carrying the schedule's
   shape (R4 `Coll[Byte]`, R5 `Int`) that is no leaf is unspendable (`s-sched-R5`).
