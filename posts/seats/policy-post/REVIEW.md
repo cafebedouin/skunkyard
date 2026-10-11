@@ -298,3 +298,75 @@ stays; it stays as a paragraph.
 person's sequence, 2026-10-10: a seat round on the protocol post, the devnet run, the revisions, then seven seats on
 both); (2) the authorship line in the lessons document; (3) two threads, the wallet post first, the lessons document
 linked rather than posted (Recipients' recommendation, adopted in the texts).
+
+# Round 4: six seats on the protocol post (2026-10-11)
+
+**Subject:** `posts/2026-10-policy-vaults-protocol-draft.md` after round three's revisions (17 KB), with the lessons
+draft for reference; the wallet post was not in the slice (its own round waits on the `Pending2` vault run). Slice:
+`r4/README-SLICE.md`, built by `r4/build-slice.sh` (180 files, both prior round logs included). Seats: Derivation,
+Fidelity, Recipients, Cryptography (Opus), Grok (grok-4.7-build), Gemini (gemini-3.8-flash); prompts in `r4/`,
+answers in `r4/out/`. Each seat was also asked for a "For the devnet" list; the person's sequence (2026-10-10) is
+this round, then the devnet run, then the revisions, then seven seats on both posts.
+
+**Verdicts.** All six: post with fixes, not as it stands; none needs a rewrite. Every seat confirmed that every
+round-three "fixed" item that applies to the protocol post landed and that every number matches its results file.
+The blockers converged: the review-history sentence contradicted §2's unfixed residual; the hash-call range
+(pre-guard) and "about 40" per block; "the median of eight" (the harness mislabels the upper-middle value, the median
+is 187,566); the ask's 13.5× hid that native SLH-DSA capacity rises only about 4× because the spend becomes
+size-bound; `Pending2`'s status was absent from §5; the lessons document lacked the authorship line and the counts.
+
+## Contract and record findings
+
+| Point (who) | Check | Disposition |
+|---|---|---|
+| **A `Pending2` completion into a register-reading destination strands the funds**: the completer chooses every register but R4; into the key schedule with R5 set it makes a shaped box `okSelf` can never pass, into `KeepAlive.es` or inheritance the R4 read throws (Grok) | CONFIRMED by reading (`Pending2.es` `mineOut`; `RekeySchedule.es` `okSelf`; `KeepAlive.es:19`, `Inherit.es:18`) | **Fixed in text:** §5 states the price of form 3 and that a destination must ignore R4. **Devnet item** (handoff A.9: the rows, then whether `Pending2` should carry the id elsewhere) |
+| **The harness's "median" is the upper-middle value**: the eight spends' median is 187,566, not 188,247 (`run.log:40`, `results.json` `cost_median`, `slhdsa/README.md:22`) (Fidelity, Derivation) | CONFIRMED by arithmetic over `run.log:58-65` | **Fixed in text;** the harness and the record are a devnet item (B.12) |
+| **"Every chain at 15 steps" is unreachable**: the checksum caps a layer at 510 of 525 steps, so the ceiling is 3,570 steps (about 233,600 by the fit), and "the forced worst case run once" cannot be done with a valid signature (Cryptography, Recipients) | CONFIRMED by arithmetic (all-zero digits give checksum 480 = digits 1, 14, 0) | **Fixed:** the ceiling, its reason, and "measured on a variant that hashes every step" in the gate |
+| **Native SLH-DSA capacity is size-bound** at about 158 per block (SK-026's table) against 39 today, so the ask's "13.5× per transaction" must carry "capacity about 4×"; Falcon-512 at 611 (Recipients) | CONFIRMED (`research/lattice/RESULT.md` table; `q2/RESULT.md` P2PK 596) | **Fixed:** the ask rewritten with both figures and "core's calibration, not our benchmark" |
+| **"One key pair" undercounts**: two BouncyCastle key pairs were accepted (eleven signatures from one, one from the other) (Cryptography) | CONFIRMED (`results.json` `sibling_other_key_own_tree`) | **Fixed** |
+| **"No standard specifies WOTS+" is wrong**: RFC 8391 and FIPS 205 define it as a component (Cryptography) | CONFIRMED (`SCHEME-SIZING.md:27` "RFC 8391 component") | **Fixed:** "this WOTS+ instance, which no standard specifies" |
+| **The cross-leaf negative tests leaf binding, not the tweak**; the leaf-index separation can only be checked by reading (Cryptography) | Fair | **Fixed** |
+| **16.3% against 17.7% is message variance**, one spend per scheme per run (Cryptography) | CONFIRMED (`devnet-test-wotsplus.py:70-82`) | **Fixed:** "16 to 18%" with both runs |
+| **The NFT account's hash key is still the shared-seed shape** (all six) | CONFIRMED (`RekeyAccount3.es:68`) | Stays "found in round three, not fixed"; devnet item A.2 |
+| **"Firing is fail-safe" overstates**: it cannot steal but strands every owner whose wallet cannot sign WOTS+, and today none can (Recipients, Derivation) | Fair, from `QVault.es` and "no wallet signs" | **Fixed** |
+| **The flag box's unchanged refresh has no height window**, so anyone can churn it every block and invalidate pending owner spends (Recipients, Fidelity) | CONFIRMED (`QDay.es:14-17`) | **Fixed:** stated "by reading, not run"; devnet item A.7 (and whether `QDay` gets a window) |
+| **The ratios 3× and 10 to 11× rest on a four-box average**; a one-box move is at least about 12,100 on the devnet (Derivation, Recipients) | CONFIRMED (12,100 = 10,000 + 2,000 + 100) | **Fixed:** the ratios dropped; costs stated per transaction with "most of it the per-transaction charge"; devnet item B.13 |
+| **Row 15 is the fired flag**, not a look-alike (Fidelity, Derivation, Recipients, Grok) | CONFIRMED (`devnet-results.json` label) | **Fixed** |
+| **The other-key and replay negatives ran on `WotsPlus.es`, not against `QVault.es`** (Fidelity, Derivation, Grok) | CONFIRMED (`qvault/README.md:66-69`) | **Fixed;** devnet item A.5 |
+| **"Every hash verifier checks the length"**: `1-template/PolicyTemplate.es` does not (Derivation) | CONFIRMED | **Fixed:** "every hash verifier presented in this post"; handoff C.18 |
+| **The rule is too broad**: a check that every output satisfies a property (the weld's custody, inheritance's height stamp) cannot be double-satisfied; and the rule does not cover a forged data input (Derivation) | By reading (`RekeyAccount3.es:37-39`, `Inherit.es:20-26`) | **Fixed:** §5 narrowed; the data-input note added |
+| Hash-key spends are safe under form 1 because the message includes SELF.id, not because the output is pinned (Grok) | CONFIRMED (the replay rows) | **Fixed** |
+| "15 of 15" includes four rows reproducing v2's edges; eleven run on v3 (Grok) | CONFIRMED (`results-weld.json` labels) | **Fixed** |
+| `Pending2`'s cancel-side theft shape has never been run (Fidelity, Recipients) | CONFIRMED (new-4 is the honest cancel) | Devnet item A.1 |
+| The current leaf's proof is on chain from the installing rekey (var 3), not merely "once its proof is on chain" (Derivation) | CONFIRMED (`RekeySchedule.es:83-88`) | **Fixed** |
+| Record slips: `slhdsa/README.md:43-47` (3.9×, 3.4×), `:195` (residual 335, now 367), `qvault/README.md:13` ("~18%"), `SCHEME-SIZING.md:103` ("~8%"), the stale `.es` comments (Recipients, Cryptography, Grok) | CONFIRMED each | Handoff C.17 and C.18 |
+
+## Text findings
+
+| Point (who) | Disposition |
+|---|---|
+| "Two review rounds … the defects they found are fixed" contradicts §2 (all six) | **Fixed:** three rounds; the residual named |
+| "2,023 to 2,233 hash calls" (all six); "about 40" (five) | **Fixed** (already in the previous pass; confirmed landed) |
+| "The median of eight" (Fidelity, Derivation) | **Fixed:** "on the spend the negatives mutate (eight random spends: 185,784 to 189,443, median 187,566)" |
+| 4.0× mixes a mainnet-computed figure with a devnet one (Recipients, Cryptography, Derivation, Fidelity) | **Fixed:** devnet to devnet (201,416 against 50,273) and script to script (4.9×) |
+| "Judged by the devnet node": several refusals are the wallet's, and the harness rows are not the node's (Derivation, Fidelity) | **Fixed:** "node or its wallet, except the harness rows" |
+| "The honest spend and seven forgeries" for 9 of 9 (Gemini) | **Fixed:** "two honest spends and seven forgeries" |
+| "Inheritance" appears in §5 without introduction (Gemini) | **Fixed:** named as `skunks/policy/4-inherit/` |
+| Bare results-file names (Gemini) | **Fixed:** directories given once per section |
+| "A one-time scheme suffices" leaves out a later payment (Derivation); the payment-after-migration rule belongs here too (Recipients) | **Fixed** |
+| The message SLH-DSA signs is never stated (Grok) | **Fixed:** pure SLH-DSA, empty context, over the spend digest; not HashSLH-DSA |
+| "Not for value" can be missed from the section headings (Cryptography) | **Fixed:** in the §1 and §3 headings |
+| "Public from the first payment" → "public in the address itself"; 13,003 is one input and two outputs; "6.9% measured at the worst-case message"; Falcon's 656 is the jar's encoding (666 by the spec); "as 6.0's methods were added" cited to `ergo-capabilities.md` §8; the generic primitive "might remove much … (not sized)"; "a cruder substitution gives 13%"; SK-026 as a path (Fidelity, Derivation, Recipients, Cryptography) | **Fixed** |
+| Title: lead with the SLH-DSA cost and the ask (Recipients) | **Fixed:** new title, without the name |
+| Cut "Where it came from" to one sentence; the 6,847 belongs to the wallet post (Recipients) | **Declined:** kept as one paragraph with the `upkeep/mainnet/README.md` source named; ruling 4 allows the credit and the provenance is the reader's first question |
+| Cut §5 to its new finding, or the row list to the new case (Recipients, kushti's read) against keep it (Grok) | **Declined:** the rows stay (each is cited by verdict and control); §5 is the record the wallet post points to |
+| The lessons document: "three rounds" / "every round", the authorship line (Fidelity, Recipients, Cryptography, Derivation, Grok, Gemini) | **Fixed:** the line states the contracts were written by the author with a model and the seats were other, fresh sessions of several models. **Ruling:** the person confirms that sentence before the document is linked |
+| kushti should be asked before being credited publicly (Fidelity) | **Ruling** for the person (ruling 4 allowed the credit; asking is a courtesy call) |
+
+**Where the seats disagreed.** Grok would post after the two `Pending2` sentences; the other five hold the same
+blocker list. Recipients would cut §5 and the origin paragraph; Grok would keep both; both kept. Cryptography and
+Derivation differ on whether the 3× ratio can be rescued by a one-box measurement; the ratios are out until B.13 runs.
+
+**For the devnet:** the six lists are consolidated in `prompts/policy-post-devnet-fixes-3.md` (19 items: ten the
+posts cite as missing, six re-measurements, three record groups). Nothing in them blocks the protocol post's text,
+which says "not run" or "not fixed" at each; the `Pending2` vault (A.1) gates the wallet post.

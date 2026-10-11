@@ -1,6 +1,7 @@
 # What review found in the policy contracts, and why independent review mattered
 
-**Top line.** Two review rounds on the policy-vaults work (`skunks/policy/`, `skunks/keepalive/`, `skunks/qvault/`)
+**Top line.** The contracts and their harnesses were written by the author with a model; the review seats were other,
+fresh model sessions of several models. Two review rounds on the policy-vaults work (`skunks/policy/`, `skunks/keepalive/`, `skunks/qvault/`)
 found eleven defects by reading the contracts and the records: two thefts the node then accepted on the devnet, an
 unbounded Merkle index that let a spent one-time key be used again, two missing paths (a successor that could be
 bricked, and no way to close), two departures from FIPS 205's checks (signature length, leaf separation), and four
@@ -10,8 +11,9 @@ given only the public files and no part in writing them); two of the record erro
 review prompt against the files before round two. All seven contract defects were fixed and re-measured on the
 devnet the same day (`skunks/policy/6-rekey/SCHEME-SIZING.md`, "Round 2 review fixes"; items 1 and 2 in
 `skunks/policy/2-twostep/README.md` and `skunks/policy/6-rekey/README.md`), with one residual the third round
-found: the NFT account's keys still share one hash family. The log, with every finding, the check that confirmed it
-and what changed, is `posts/seats/policy-post/REVIEW.md`.
+found: the NFT account's keys still share one hash family. A third and a fourth round then read the split posts, found that residual and
+mostly wording. The log of every round, with every finding, the check that confirmed it and what changed, is
+`posts/seats/policy-post/REVIEW.md`.
 
 ## The shape of each
 
@@ -73,7 +75,7 @@ and what changed, is `posts/seats/policy-post/REVIEW.md`.
 
 ## Where to read more
 
-- The log of both rounds, every finding with its check: `posts/seats/policy-post/REVIEW.md`.
+- The log of every round, every finding with its check: `posts/seats/policy-post/REVIEW.md`.
 - The contracts and their rows: `skunks/policy/2-twostep/`, `skunks/policy/6-rekey/` (and `slhdsa/` for the FIPS
   205 verifier), `skunks/qvault/`, `skunks/keepalive/`.
 - The method: fresh headless sessions with read tools only on a slice of public files, two outside models through
