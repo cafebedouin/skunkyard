@@ -34,6 +34,7 @@ is not scheduled before that foundation has a measured answer.
 
 | Id | Kind | Layer | Item | Trigger | Foundations | Where |
 |---|---|---|---|---|---|---|
+| SK-054 | skunk | script, tooling | Two-step vault watcher: cancels a thief's announce with a delegated recovery key before R5; first host a Lithos job on the upkeep framework (SK-043), in the miner's own block; the first keyed job (key store, per-vault allowlists, custody). Requirements written 2026-10-11, incl. the authenticity test against planted announces | after the policy posts; devnet rows in the spec first | F3 (own-block inclusion, zero-fee cancel) | `skunks/policy/2-twostep/WATCHER.md` |
 | SK-006 | skunk | script | Second skunk, chosen at Node D: many-time keys (AVL tree of WOTS keys, box-carried index) if someone asks for reuse-safe keys; otherwise the TSNP pilot | 2026-10-30 read | F1 (box-carried state across rent) | `research/pq/DECISIONS.md` Node D |
 | SK-007 | research | script, chain | TSNP: the anonymity-set correction (Q0) for thread 5311 and the ring-cost measurement (Q1) | after SK-001's first replies; the correction can go sooner | F3 (grace period and mempool cleanup), F7 (ring rebuilt from an indexer) | `tsnp/PILOT-TSNP.md` |
 | SK-008 | research | script | TSNP post-quantum bearer note (oneshot lock + expiry + fee box; P2SH-wrapped variant) | after SK-007 | F1, F3 | `tsnp/QUANTUM-HORIZON.md` |
