@@ -550,6 +550,16 @@ staking templates decompiled and run on the devnet against the shared-output sha
 their consolidation path pins three outputs and two of their values. Published as
 `skunks/keepalive/staking-precedent/` and stated in one line beside the 6,847 citation in the protocol post.
 
+**Fidelity-only pass after the mainnet run (r7, 2026-10-11; answer in `r7/out/fidelity.md`).** Every new id, height,
+value, box id and index count confirmed against the explorer JSONs and the saved index responses. Three sentences
+were **wrong**: the ergo-lib owner spend `7c6e493f…` spent the pre-fix box `f017a605…`, so no fixed-tree box has been
+spent by its owner; **fixed** (both posts now say the deposit was an owner spend of the pre-fix demo box, and that
+the fixed tree keeps the owner branch unchanged by reading). Also fixed: the demo-value range (to 0.032 ERG), the
+staking templates labelled as explorer SHA-256, the staking README's "all as expected" (two rows are `ok: false`,
+EVAL-ERROR refusals), and lessons item 10's clause now cites its source. Round counts left at six: the seventh pass
+read numbers, not the contracts. **For the person:** an ergo-lib owner spend of the fixed-tree box `e46f5c4e…`
+(checked by the node, 200, not submitted: it was beyond the agreed three) would turn "should spend" into a row.
+
 ## For the devnet (part five, if wanted)
 
 The destination and memo rows on the fixed trees; the form-3 gap (`KeepAlive.es`, `Inherit.es`) with and without

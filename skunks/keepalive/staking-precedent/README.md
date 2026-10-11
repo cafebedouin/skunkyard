@@ -34,8 +34,10 @@ boxes carry none.
 ## The run
 
 Policy devnet (node 6.0.7), boxes created at the exact mainnet trees (`devnet-staking-shared-output.py`,
-`results-staking-shared-output.json`; `devnet-staking-tokrow.py`, `results-staking-tokrow.json`), 10 rows, all as
-expected:
+`results-staking-shared-output.json`; `devnet-staking-tokrow.py`, `results-staking-tokrow.json`), 10 rows: 8 as
+expected, and the two `278ccff2` theft rows marked `ok: false` in the file because the harness expected REFUSE and
+the node answered EVAL-ERROR, a refusal too (below); re-run with a token-bearing foreign box, both refuse
+(`results-staking-tokrow.json`, 2 of 2):
 
 | row | 278ccff2 | b924a4f7 |
 |---|---|---|

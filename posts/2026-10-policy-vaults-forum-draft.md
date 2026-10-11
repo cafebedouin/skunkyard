@@ -6,8 +6,9 @@ send screens)? And should the template be fixed in an EIP, so every wallet build
 
 A holder can opt into a *policy* on their own coins by receiving at a P2S address:
 - a receive address that anyone can keep alive against storage rent, with no key, a contract-level answer to the
-  storage-rent threads (EIP-48, 49, 51, 52 and 53): an owner spend and a keyless merge ran on mainnet on the fixed
-  tree described below; the refresh is devnet only, since on mainnet it cannot open before 2030;
+  storage-rent threads (EIP-48, 49, 51, 52 and 53): on mainnet the fixed tree described below took a deposit and a
+  plain payment, and a keyless merge ran with no signature; the refresh is devnet only, since on mainnet it cannot
+  open before 2030;
 - a waiting period on withdrawals, with a recovery key that can cancel (demonstrated on mainnet).
 
 A companion post for the protocol side covers the quantum-day vault, a receive address whose key rotates in place,
@@ -15,12 +16,12 @@ a FIPS 205 SLH-DSA verifier that fits in a proposition, and the double-satisfact
 This one is the wallet half.
 
 Every accept or refuse row below was judged by an Ergo node 6.0.7 on a devnet, or by its wallet's refusal to sign.
-On mainnet only the honest paths ran, with demo values (0.005 to 0.025 ERG), a 15-block delay and a recovery key
+On mainnet only the honest paths ran, with demo values (0.005 to 0.032 ERG), a 15-block delay and a recovery key
 from the same seed. **The KeepAlive tree changed after the mainnet demo.** Review found that the merge could be
 combined with a third-party payout into the address and drain it; the devnet confirmed it, and the fix (every input
 of a keyless merge must be at the address) changes the tree. Section 1's kit is for the fixed tree, which has run on
-mainnet (a deposit, an owner spend signed by ergo-lib, and a keyless merge); the first demo ran the pre-fix tree,
-whose address is now empty.
+mainnet (a deposit made by an owner spend of the first demo's last box, signed by ergo-lib; a plain payment; a
+keyless merge); the first demo ran the pre-fix tree, whose address is now empty.
 
 Everything is in https://github.com/cafebedouin/skunkyard: `skunks/keepalive/`, `skunks/policy/`, and the write-up
 `research/policy/EXPERIMENTS.md`. Five drafts of this post were reviewed before it, in six review rounds of the work (one round read only the companion post); the contract holes the reviews
@@ -44,8 +45,11 @@ The fixed tree, the one in the kit below:
 | keyless merge of the two boxes, every input at the address, the bounty paying the fee | `15df5e636fbaca159bd23ffe761571d7fe8710712ba424422ab19ec5ccbc3abd` | 1,892,193 | **nobody** |
 
 ergo-lib reduced the script itself before signing: with no context variable 0 the KeepAlive script is the owner's
-key alone, so a wallet built on sigma-rust spends the address as it spends its P2PK one. The node's template index
-returns all three fixed-tree boxes under `2e7ff6ae…` (`skunks/keepalive/README.md`, "The fixed tree on mainnet").
+key alone. The box it spent was at the pre-fix tree; the fixed tree's owner branch is the same expression (by
+reading the explorer's `ergoTreeScript` for both, in `tx/fixed-7c6e493f….json`), so a wallet built on sigma-rust
+should spend the fixed address as it spends its P2PK one, but no owner spend of a fixed-tree box has run on mainnet.
+The node's template index returns all three fixed-tree boxes under `2e7ff6ae…` (`skunks/keepalive/tx/
+index-node-2e7ff6ae.json`; `skunks/keepalive/README.md`, "The fixed tree on mainnet").
 
 The first demo, on the pre-fix tree:
 
@@ -99,8 +103,9 @@ the owner's own spend.
   merge keeps tokens and value, not registers (box A's EIP-4 mint registers are gone from the merged box
   `1685438c…`): read any memo in a payment's registers before it is merged.
 - **Owner spend**: sign as P2PK for the same key; the script reduces to `proveDlog(OWNER)` when context variable 0
-  is absent (on mainnet signed by ergo-lib, `7c6e493f…`; on the devnet by the node wallet, address case 12;
-  hardware signers untested). New work: track the P2S address, select its boxes beside the P2PK ones, and
+  is absent (on mainnet signed by ergo-lib on a pre-fix box, `7c6e493f…`, whose owner branch the fixed tree keeps
+  unchanged, by reading; on the devnet by the node wallet on the fixed source, address case 12; hardware signers
+  untested). New work: track the P2S address, select its boxes beside the P2PK ones, and
   send change back to it if the change should stay protected. Three things to expect: anyone may merge the address's
   boxes at any time, so a spend built on boxes that were just merged fails and must be rebuilt on the successor, and
   such a merge spends the user's boxes without their key, so show it in the history as maintenance (every input and

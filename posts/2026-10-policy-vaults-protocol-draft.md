@@ -10,8 +10,8 @@ vault on mainnet, with a per-policy integration kit) is a companion post.
 Where it came from: a keyless consolidation path with a per-box bounty was already on mainnet in the staking
 incentive boxes, 6,847 of them merged before rent age (`skunks/upkeep/mainnet/README.md`, via
 `skunks/keepalive/README.md`). That path is not exposed to the merge finding in §5: it requires exactly three
-outputs, the bounty and the fee at fixed values, so all other value stays at its script (templates `278ccff2…` and
-`b924a4f7…`, decompiled and run on the devnet, `skunks/keepalive/staking-precedent/`). KeepAlive generalises that
+outputs, the bounty and the fee at fixed values, so all other value stays at its script (explorer SHA-256 templates
+`278ccff2…` and `b924a4f7…`, decompiled and run on the devnet, `skunks/keepalive/staking-precedent/`). KeepAlive generalises that
 for anything a holder wants kept, and the quantum-day
 vault was suggested in dev chat (a vault spendable by `proveDlog` until an oracle or miner signal declares
 quantum day, then only by a hash-based signature), built here on KeepAlive's maintenance (`skunks/qvault/README.md`).
@@ -268,8 +268,8 @@ leaves it behind for a second signature, and one left when a rotating account cl
 clause is in all four merges; on the rotating members the theft was not run, since their merge successor must
 already carry the account's own registers, which refuses a `Pending2` completion as a successor by reading, and the
 clause closes any payout that could carry them; their suites pass unchanged against the fixed trees (§2). The KeepAlive
-mainnet demo ran the pre-fix tree; the fixed tree has since run on mainnet, an owner spend signed by ergo-lib and a
-keyless merge (companion post). The general rule: a keyless merge that checks only "at least the
+mainnet demo ran the pre-fix tree; the fixed tree has since run on mainnet: a deposit into it (an owner spend of the
+pre-fix demo box, signed by ergo-lib), a plain payment and a keyless merge (companion post). The general rule: a keyless merge that checks only "at least the
 total less the bounty" is exposed when the merged boxes are plain value and the transaction may carry other value;
 it is closed by admitting no foreign input, or by pinning every other output's value, and boxes whose tokens a payout
 cannot carry are protected by the tokens alone. With the fix, a KeepAlive address can receive keyless-executed

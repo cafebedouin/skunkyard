@@ -54,8 +54,9 @@ devnet the same day (`skunks/policy/6-rekey/SCHEME-SIZING.md`, "Round 2 review f
    opcode would cut it about 25×" did not follow from the table it cited (13.6× per transaction did, before the
    length guard; 13.5× now).
 10. **Derived figures written as measured.** Script costs computed as node cost minus a fixed charge were quoted as
-    measurements; a harness figure was called a node's. In the sixth round a handoff carried a premise taken from another
-    session's reasoning rather than from the transactions it described, and the transactions contradicted it.
+    measurements; a harness figure was called a node's. In the sixth round a handoff said the mainnet staking precedent was
+    protected by its tokens, a premise taken from another session's reasoning; its consolidation outputs carry no
+    token, and the protection is its pinned outputs (`skunks/keepalive/staking-precedent/`).
 11. **A logged fix that never happened.** Round one's text findings were recorded as fixed and were not in the file.
     The next round found the same sentences.
 12. **A register read of the wrong type throws rather than reading as absent.** A seat read the interpreter that
