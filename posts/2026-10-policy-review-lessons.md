@@ -68,8 +68,10 @@ devnet the same day (`skunks/policy/6-rekey/SCHEME-SIZING.md`, "Round 2 review f
     as the merge successor, and the executor spends the owner's incoming value to cover the merge and takes the
     merged boxes' value. A seat found it in round five by reading the two-step completion against the merge; the
     person then read it as what it is, a property of the merge that bears on the whole idea of a keyless-kept
-    default receive address. Not run; **disclosed**; the fix (the successor may not exceed the merged inputs'
-    total) is one clause and changes every template in the family.
+    default receive address. Not run; **disclosed**; a value bound on the successor, the first fix proposed, does not close it (the devnet showed the executor's take
+    is the merged value less the fee whatever the payout's size: a second lesson, that a value-only check cannot
+    trace where value came from); the fix is to admit no foreign input to a merge, one clause that costs the
+    sponsored merge and changes every template in the family.
 
 ## Why independent review mattered
 

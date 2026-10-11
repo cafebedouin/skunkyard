@@ -234,9 +234,12 @@ completer spends the owner's incoming value to cover the merge and takes the mer
 payout into the address that a third party executes (a settlement, an order fill). A plain payer cannot profit,
 since they fund the payout themselves and the merge bounds their take by the bounty. Boxes whose tokens the payout
 does not carry in at least the merged amount are safe, and nothing on mainnet is exposed: the demo's KeepAlive box
-carries a token and no pending box exists. The fix is one clause in every merge (the successor may not hold more
-than the merged inputs' total, which keeps sponsored merges, since the sponsor pays the fee and not the value), not
-built; it changes every template in the family. This is the finding that matters most for a receive address meant
+carries a token and no pending box exists. A value bound on the successor does not close it (confirmed on the devnet: the executor's take is the merged
+value less the fee whatever the payout's size, and the executor chooses which boxes to merge); the fix is one
+clause in every merge, every input of the transaction at this script, so the only value in the transaction is the
+merged boxes' own and the bounty is all that can leave. It costs the sponsored merge (the fee comes from the
+bounty, as the keyless mainnet merge and the keeper job already do), is being built, and changes every template in
+the family. This is the finding that matters most for a receive address meant
 as a default: until the merge is bounded, a KeepAlive address is safe to receive plain payments and unsafe to
 receive keyless-executed payouts. `Pending2` is tested
 with real vaults (`Vault2.tree`, 338 bytes, the same template as the old vault's; `results-vault2.json`, 21 of 21);

@@ -182,10 +182,12 @@ not published). New vaults build on `Vault2`; the mainnet demo still runs the ol
   into a KeepAlive address that a third party executes (a pending completion, a settlement, an order fill) can be
   combined with a merge of the address's existing boxes, and their value leaves to the executor, up to the payout's
   value; boxes whose tokens the payout does not carry in at least the merged amount are safe. A plain payer cannot
-  profit this way, since they fund the payout themselves and their take is bounded by the bounty. Found by reading
-  in the fifth review round, not run; the fix is one clause in the merge (the successor may not hold more than the
-  merged inputs' total, which keeps sponsored merges, since the sponsor pays the fee and not the value) and is not
-  built. It changes the KeepAlive tree below, so section 1's kit changes with it.
+  profit this way, since they fund the payout themselves and their take is bounded by the bounty. Found by reading in the fifth review round and confirmed on the devnet; the executor's take is the whole merged
+  value less the fee, whatever the payout's size, so no value bound closes it. The fix is one clause in the merge:
+  every input of the transaction must be at this script, so the only value in the transaction is the merged boxes'
+  own and the bounty is all that can leave. It costs the sponsored merge (the fee comes from the bounty, as the
+  keyless mainnet merge and the keeper job already do) and changes the KeepAlive tree below, so section 1's kit
+  changes with it; it is being built.
 - **Fee source**: every step needs an input from outside the vault, because the pending box's value is fixed on all
   three paths.
 - **Heights**: consensus evaluates HEIGHT at the including block, tip + 1. The node wallet's

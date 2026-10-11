@@ -450,3 +450,11 @@ lessons draft (item 13) and the part-four handoff now say this; the fix is one c
 may not exceed the merged inputs' total), which keeps sponsored merges and changes every template in the family,
 including the mainnet KeepAlive tree the wallet post publishes. **Ruling for the person:** whether to re-demonstrate
 the fixed KeepAlive tree on mainnet before the wallet post, or post with the exposure stated and the pre-fix kit.
+
+**Second correction (2026-10-11, the devnet instance's probe).** The fix first specified, a value bound on the
+merge successor, does not close the theft: with the payout in [total − bounty, total] the node accepts the shape and
+the executor takes total − fee, whatever the payout's size (four boundary rows, all ACCEPT post-bound); the executor
+also chooses which boxes to merge. No value-only check can, since the script cannot trace which input funds which
+output. Decided: every input of the transaction must be at this script on the maintenance path, in all four merges,
+the value bound kept as defense in depth; the sponsored merge is given up (the fee comes from the bounty). The posts,
+the lessons draft and the handoff say this; the sentence "then the executor's take is the bounty" was mine and wrong.

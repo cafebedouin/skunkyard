@@ -24,15 +24,22 @@ the merged amount.
    maintenance; and a generic keyless payout (no pending box: the executor's own output of value V at the address,
    funded by the executor's input) with K1 and K2 merged into it, to show the executor's take is bounded by the
    bounty (expected ACCEPT, take ≤ bounty) and so is not the theft.
-2. **The fix, in every merge:** the successor may not hold more than the merged inputs' total (`next.value <= total`
-   beside the existing `>= total - bounty`; for the lone refresh, `<= SELF.value`). A sponsored merge still passes
-   (the sponsor pays the fee, the successor holds exactly the total); a payout output can double as a successor only
-   when it holds no more than the merged total, and then the executor's take is the bounty. Re-run every suite the
-   change touches (KeepAlive address 12, quantum-day 39, weld 22, schedule 11 and 18, the `Vault2` 21 if the
-   destination rows change), run row 1 again (expected REFUSE), record every new tree size and template hash
-   (`skunks/keepalive/template-hash.out`, the address vectors in `address-vectors.out` re-derived with
-   `address-vector.py`), and check the Lithos `KeepAliveJob`'s successor rule still fits (it merges to exactly the
-   total less the bounty, by its README; say whether it needs a change).
+2. **The fix, in every merge (decided 2026-10-11 after the probe showed a value bound does not close it: the
+   executor's take is total − fee whatever V is, and the executor chooses which boxes to merge):** every input of
+   the transaction must be at this script on the maintenance path (`INPUTS.size == mine.size`), so the only value in
+   the transaction is the merged boxes' own and conservation plus `>= total - bounty` caps what leaves at the bounty.
+   Keep `next.value <= total` as defense in depth. Apply it to all four merges (the rotating members' immunity rests
+   on the other contract's checks, not their own). It costs the sponsored merge: a foreign fee input is now refused,
+   the fee comes from the bounty (as the keyless mainnet merge `92386e99…` and the keeper job do), and the mainnet
+   sponsored-merge row `6e1c55f9…` is recorded as a shape the fixed tree refuses; a lone refresh pays its fee from
+   the refresh bounty. Rows: the theft shape post-fix (REFUSE), its subset-selection variant (the executor merges
+   only boxes worth about V; REFUSE), a plain keeper merge with the bounty paying the fee (ACCEPT), a merge with a
+   foreign fee input (REFUSE), a lone refresh in the window with the bounty paying the fee (ACCEPT). Re-run every
+   suite the change touches (KeepAlive address 12, quantum-day 39, weld 22, schedule 11 and 18, `Vault2` 21 if the
+   destination rows change), record every new tree size and template hash (`skunks/keepalive/template-hash.out`,
+   the address vectors re-derived with `address-vector.py` into `address-vectors.out`), and check the Lithos
+   `KeepAliveJob` (`~/bin/lithos-keepalive`) builds its merge with no inputs but the address's boxes; if it adds a
+   miner input, say so and what changes.
 3. **Record** the finding, the rows and the fix in `skunks/keepalive/README.md`, `skunks/qvault/README.md`,
    `skunks/policy/6-rekey/README.md` and `skunks/policy/2-twostep/README.md`; mark the pre-fix mainnet tree
    `kaa-mainnet-wallet.tree` as superseded by the fixed one (the mainnet demo ran the pre-fix tree; whether to
