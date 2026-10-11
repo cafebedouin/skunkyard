@@ -120,6 +120,22 @@ whose chain code is the hash key here, and in round 3 against `QVault.es` too (r
 
 **Compiler note:** `!flags(0).R4[Boolean].get` parses as `(!flags)(0)…`. The script uses `== false`.
 
+## The shared-output theft and the no-foreign-input fix (part four, 2026-10-11)
+
+`QVault.es`'s maintenance is KeepAlive's merge, so it carried the same hole: a keyless-executed payout into the vault
+(a `Pending2` completion, a settlement) funded the merge successor while the merged boxes' value escaped to the
+executor, up to `total − fee`, for any payout the merge accepted — and no bound on `next.value` closes it (the full
+account is in `skunks/keepalive/README.md`). Node-judged, the pre-fix QVault maintenance accepts the theft and the
+fixed one refuses it (`skunks/keepalive/results-shared-output.json`, rows `2-qv-pre` ACCEPT / `2-qv-post` REFUSE).
+
+**Fix:** the maintenance path now requires every input of the transaction to be at this script
+(`INPUTS.size == mine.size`), plus `next.value <= total` as defence in depth. The only value entering is the merged
+boxes' own, so what leaves is capped at the bounty. The sponsored merge is the cost (a foreign fee box is refused);
+the fee comes from the bounty, as the keyless merge already does. The key paths and the flag logic are untouched.
+The `QVault` tree is compiled per vault from `QVault.es` (no committed tree); the maintenance template is the shared
+no-foreign-input merge. The `devnet-results.json` merge rows (7, 8, 17, m2) all spend only vault boxes, so the
+39-case suite is unaffected by the fix (re-run confirms it).
+
 ## Not done
 
 - **The miner signal.** A script sees only the last 10 headers, so a miner flag would have to be written once into

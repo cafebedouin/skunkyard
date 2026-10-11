@@ -74,6 +74,12 @@
       next.propositionBytes == SELF.propositionBytes,
       tokensKept,
       next.value >= total - bounty,
+      // every input is at this script (no foreign input), so the only value entering the transaction is the merged
+      // boxes' own and, by conservation, nothing but the bounty can leave. Without it a keyless-executed payout into
+      // this vault (a Pending2 completion, a settlement) funds the successor while the merged value escapes to the
+      // executor; no next.value bound can stop it. The cost is the sponsored merge (fee now comes from the bounty).
+      INPUTS.size == mine.size,
+      next.value <= total,      // defence in depth
       next.creationInfo._1 >= HEIGHT - $SLACK,
       sizeOk
     ))
