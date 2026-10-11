@@ -13,21 +13,25 @@
   //
   //   - ACCOUNT, the id of that NFT, is the per-account constant; the template stays shared.
   //   - The registers hold the account's current keys and rotate as before: R4 the secp key (GroupElement), R5 the
-  //     WOTS commitment, R6 the id of the box this one replaced (added by the first maintenance).
+  //     WOTS+ hash key as KSEED (32 bytes, a per-key public seed) ++ COMMIT (32 bytes), R6 the id of the box this
+  //     one replaced (added by the first maintenance).
   //   - A register-less box at the address (a plain payment) is spendable only as a merge input into a successor
   //     that carries the registers of the account's one registered input, unchanged.
   //
   // PATHS
   //   owner:    proveDlog(SELF.R4), only for a registered box. A successor may carry any R4 and R5 (a rekey).
-  //   hash key: WOTS (n 32, w 16) in context variable 1 over blake2b256(SELF.id ++ OUTPUTS' bytesWithoutRef),
-  //             checked against SELF.R5; registered box only; one box of this script per transaction.
+  //   hash key: WOTS+ (n 32, w 16; WotsPlus.es's chain) in context variable 1 over
+  //             blake2b256(SELF.id ++ OUTPUTS' bytesWithoutRef), each chain hash tweaked by ACCOUNT ++ KSEED and
+  //             (chain, step), checked against COMMIT; registered box only; one box of this script per transaction;
+  //             every successor at this script must carry a different KSEED (so no two keys share a hash family).
   //   maintain: no key; context variable 0 names the successor. Every input of this script must be either the one
   //             registered input or a plain box, and all of them go into that one successor.
   //
   // Constants (devnet): PERIOD 40, WINDOW 20, PER_INPUT 500000, REFRESH 2000000, SLACK 10; ACCOUNT per account.
   val account = fromBase16("$ACCOUNT")
   val hasNft = { (b: Box) => b.tokens.exists({ (t: (Coll[Byte], Long)) => t._1 == account }) }
-  val isReg = { (b: Box) => b.R4[GroupElement].isDefined && b.R5[Coll[Byte]].isDefined && hasNft(b) }
+  val isReg = { (b: Box) => b.R4[GroupElement].isDefined && b.R5[Coll[Byte]].isDefined &&
+    b.R5[Coll[Byte]].get.size == 64 && hasNft(b) }
 
   // v3 weld (2026-10-10): the NFT never leaves the script. Any output at this script carries it (no brick); any
   // output carrying it is at this script (no peel-off). Closure is the NFT in no output (burned).
@@ -47,6 +51,9 @@
   val sigOpt = getVar[Coll[Byte]](1)
   val hashKey = if (registered && sigOpt.isDefined && mine.size == 1) {
     val sig = sigOpt.get
+    val r5 = SELF.R5[Coll[Byte]].get
+    val kseed = r5.slice(0, 32)
+    val pre = account ++ kseed
     val msg = blake2b256(SELF.id ++ OUTPUTS.flatMap({ (b: Box) => b.bytesWithoutRef }))
     val cSum = msg.fold(0, { (acc: Int, b: Byte) =>
       val u = if (b < 0.toByte) b.toInt + 256 else b.toInt
@@ -63,15 +70,17 @@
         val u = if (b < 0.toByte) b.toInt + 256 else b.toInt
         if (c % 2 == 0) u / 16 else u % 16
       } else cDigits(c - 64)
-      // WOTS+ (SK-053): tweakable chain keyed by the account NFT id and this (chain, step), absolute steps [digit..14]
+      // WOTS+ (SK-053): tweakable chain keyed by the account NFT id, this key's public seed (round 3: a key counter,
+      // so successive keys are distinct hash families) and this (chain, step), absolute steps [digit..14]
       steps.fold(sig.slice(c * 32, (c + 1) * 32), { (curr: Coll[Byte], s: Int) =>
-        if (s >= digit) blake2b256(account ++ Coll(c.toByte, s.toByte) ++ curr) else curr
+        if (s >= digit) blake2b256(pre ++ Coll(c.toByte, s.toByte) ++ curr) else curr
       })
     })
-    // the signed outputs may not leave a successor at this address under the spent commitment
-    val freshCommit = OUTPUTS.forall({ (o: Box) => o.propositionBytes != SELF.propositionBytes ||
-      !(o.R5[Coll[Byte]].isDefined) || o.R5[Coll[Byte]].get != SELF.R5[Coll[Byte]].get })
-    sig.size == 2144 && blake2b256(account ++ concat) == SELF.R5[Coll[Byte]].get && freshCommit
+    // the signed outputs may not leave a successor at this address under the spent key's seed (hence not under its
+    // commitment either): each key the account installs is a new hash family
+    val freshSeed = OUTPUTS.forall({ (o: Box) => o.propositionBytes != SELF.propositionBytes ||
+      !(o.R5[Coll[Byte]].isDefined) || o.R5[Coll[Byte]].get.slice(0, 32) != kseed })
+    sig.size == 2144 && blake2b256(pre ++ concat) == r5.slice(32, 64) && freshSeed
   } else false
 
   val amt = { (p: (Box, Coll[Byte])) => p._1.tokens.fold(0L, { (a: Long, t: (Coll[Byte], Long)) =>
