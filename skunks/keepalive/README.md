@@ -195,9 +195,10 @@ returned them in `tx/fixed-*.json`.
 | a plain payment of 0.01 ERG from the wallet to the fixed address | `72169bd5b986aa613cc993cf71307dc6967d074b60493643d13aa021ec6d142a` | 1,892,190 | the wallet (P2PK input, `mainnet-sign.mjs`) |
 | keyless merge of the two fixed-tree boxes into `e46f5c4e…` (0.032 ERG + the token); every input at the address, the 0.001 ERG bounty paying the fee | `15df5e636fbaca159bd23ffe761571d7fe8710712ba424422ab19ec5ccbc3abd` | 1,892,193 | **nobody** |
 
-The node's template index (`/blockchain/box/byTemplateHash/2e7ff6ae…`) returns all three fixed-tree boxes (the merged
+The node's template index (`/blockchain/box/byTemplateHash/2e7ff6ae…`, saved as `tx/index-node-2e7ff6ae.json`; the
+explorer's under `ebff5777…`, `tx/index-explorer-ebff5777.json`) returns all three fixed-tree boxes (the merged
 box unspent, the two inputs spent by the merge), so the kit's Blake2b value is the index's. The pre-fix template
-`afc009dc…` holds five boxes in all, every one this demo's and every one spent: the pre-fix address is retired. The
+`afc009dc…` holds five boxes in all (`tx/index-node-afc009dc.json`), every one this demo's and every one spent: the pre-fix address is retired. The
 ergo-lib owner spend is the first mainnet owner spend of a KeepAlive box, and the first by a wallet library that
 evaluates the script rather than signing as P2PK.
 
