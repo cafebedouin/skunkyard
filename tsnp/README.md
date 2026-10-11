@@ -12,6 +12,7 @@ items.
 | `reply-a-shannon-2026-03-12.md` | the reply that found the multi-box extraction, the fee-box coupling gap and the storage-fee governance risk, all folded into v0.6 |
 | `PILOT-TSNP.md` | the pilot: compile both contracts, cost them, execute the five attacks and the grace-period edge on a devnet |
 | `QUANTUM-HORIZON.md` | a proposed v0.7 subsection: the 4-to-12-year terms rest on secp256k1 discrete logarithms staying hard until expiry |
+| `KEEPALIVE-NOTES.md` | a proposed v0.7 subsection 5.6 and pilot question Q2: a keyless refresh (the policy work's KeepAlive lone refresh, form 3) in place of the rent reserve, the register-type MUST, the refresh-changes-the-id caveat, and the double-satisfaction rule read against the fee box; written 2026-10-11 |
 
 Thread state on 2026-10-01: two posts, the specification and the reply, 131 views, nothing since 2026-03-12. The
 open items in section 12 (`HashToPoint`, `groupIdentity`, test vectors, the CleanupWorker interaction) are questions

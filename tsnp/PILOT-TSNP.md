@@ -23,6 +23,10 @@ Q2 harness, no node needed: script cost and proof bytes for N = 8, 16, 32, 64, a
 fixed per-transaction charge; the AVL lookups and the insert; where N stops fitting. This decides whether "TSNP with
 ring redemption" is a v0.7 section or a different protocol.
 
+**Q2 (added 2026-10-11). Rent by keyless refresh instead of a reserve.** `KEEPALIVE-NOTES.md`: the policy work's lone
+refresh, compiled into the pool contract, with its rows; and the fee box read against the three forms of the
+double-satisfaction rule before it is compiled.
+
 **Why P2SH does not combine with the ring.** The pool box is spent on every deposit and withdrawal, so its script is
 public from the first transaction; P2SH hides a script only until its box is first spent. P2SH belongs to boxes that
 sit still, which is the post-quantum bearer note in `QUANTUM-HORIZON.md`, not the pool. The ring design is
