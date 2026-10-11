@@ -6,18 +6,22 @@
   //
   // A box is "registered" only when its R4 commitment at index R5 verifies against ROOT with a Merkle proof the
   // spender supplies. A planted box can therefore carry only a leaf that is already in ROOT (the owner's own
-  // schedule); a foreign key is not in the tree, so its box cannot be spent at all. Theft is impossible without a
-  // token. The cost is a bounded number of rotations (N) and whatever griefing a *revealed* leaf allows (measured).
+  // schedule); a foreign key is not in the tree, so its box cannot be spent at all, and a keyless merge must keep
+  // the registered input's own leaf, so a planter cannot redirect the owner's payments to a key of theirs. No token
+  // is needed for that. It is not "theft is impossible": a forged WOTS+ signature at a leaf spends every box
+  // registered at that leaf, the owner's own included. The cost is a bounded number of rotations (N) and whatever
+  // griefing a revealed leaf allows (measured: results-schedule.json, results-schedule-r3.json).
   //
   //   R4 = current WOTS commitment (Coll[Byte]); R5 = index (Int); R6 = replaced id (added by first maintenance).
-  //   var 1 = WOTS signature (rekey auth) by the current leaf's key, over blake2b256(SELF.id ++ OUTPUTS' bytes).
+  //   var 1 = WOTS+ signature (rekey auth) by the current leaf's key, over blake2b256(SELF.id ++ OUTPUTS' bytes).
   //   var 2 = Merkle proof for (SELF.R4, SELF.R5): a flat Coll[Byte] of DEPTH * 32, siblings bottom-up.
   //   var 0 = successor index (maintain); var 3 = Merkle proof (flat) for the rekey successor's (R4', R5').
   //
   // PATHS
-  //   rekey:    one box of this script; a WOTS signature at the current leaf over the outputs; a successor at this
-  //             script carrying a new leaf at index R5' > R5, both leaves verified in ROOT. Each WOTS key is
-  //             one-time, so a signed spend must advance the index.
+  //   rekey:    one box of this script; a WOTS+ signature at the current leaf over the outputs; a successor at this
+  //             script carrying a new leaf at index R5' > R5, both leaves verified in ROOT, or no output at this
+  //             script at all (close). Each WOTS+ key is one-time, so a signed spend must advance the index or close.
+  //             Both read var 0 (the successor's output index).
   //   maintain: no key; var 0 names the successor. Every input of this script is either the one registered input or
   //             a register-less plain box, and all go into one successor keeping the registered input's R4/R5.
   //

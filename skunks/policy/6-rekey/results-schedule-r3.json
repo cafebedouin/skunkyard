@@ -1,0 +1,362 @@
+{
+ "experiment": "6-rekey-schedule-r3",
+ "started_height": 1914,
+ "node": {
+  "appVersion": "6.0.7",
+  "parameters": {
+   "outputCost": 100,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 1912,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2000,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ },
+ "wallets": {
+  "A": [
+   "038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c",
+   "031ee1ab3b729f21e0dcee05642a63745286354d8e511e6376838e235a28078c01",
+   "0367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df",
+   "0398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04",
+   "026c2134d11af7f0bea024724278ebc37ced69a19a99dd6638f393d5f1b9c8bea0",
+   "0389e8fb63050cdb2c3f5c70b3d6167835b60bcf020b9ed7c332965ffce26f2e6f"
+  ],
+  "B": [
+   "03d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494",
+   "0376bf533d4b15510fa9f4124b6e48616f07debcf2ef0cfb185cdc4a576450b475",
+   "02ea2649b3512b9a859ab658a85e2989a7ae39b2518877b2dc0f2b44b785d5788d",
+   "03b4c210719212afb16b5f136a2dcb3cc9fc231721f711994facf3b6111afba7d0",
+   "0234835d35c02b0dc042aa9c041b854b98c28df4872fdc8c6a260bc2ddd767f5a3",
+   "02a52d6327542c16cce7645b899e651dc78098fa4f495acb36992e66b099405ec2"
+  ]
+ },
+ "trees": [
+  {
+   "name": "RekeySchedule",
+   "tree_bytes": 1530,
+   "box_bytes": 1607,
+   "address": "EnkUoH2dTWfmC264XA4rkra65tQaidByBUTwkFx1io8w8rgy2Fz6HWF8AjZNsEFq8y25cU34v1intMEdBWZsZzyGqjChZZ6EqJQAeugdS4oCfrLttzLLZd53d7yrUDPvRGasmJ3nu8RFUAt1eGt3LewppRnsztvhG59VmAp73xbmjPzaVuCYm75yPzdeu2rhi7A9Sa3xsM2yGfKadSGHYKQUdaBowcPwvJnkaNBoN19fwhdFUZn8SJu1dvGziooFoPnjsQf4VwkB8YMX9ZMhKWTDcwekiRkG5CESpPriEfLNr3Y6RqdV1FvYtCQTeXdSjs9H1zbJ2GjidMTagpVJ3qrurcwMZrLgKgFjRZzweu8Pz6WhjwFjicE886j3aRz6F5fCmF4gbto6g24GiSK2obSXbsavCmm2tvePLZZ1gMTQjk9g26DBVULGjgbxf2RWQcxsF24qtjKJZj3pUY1DHd7TZUmoHh7aAqpziLr4Bhw5fSCEJJsKa5kG5EbJ72Npe31PNxUXD4WiASpaWnYH2xAyJSVPYWTGkDuhY78mX5hY6NANJS1CFpG3EnjfRMMq6XFuWPVdycak1NuhtYRXZNxuzb9R2ytC4YrnYL5E2iioo7GyU61CgRwDCq8JTfGSZvi1GBRY53JT7sfo985rvi4ZuvD6zGfHiep1xFs6Ue2USBYTxK6iupHNnLpMPnj5zxJmYuRht2uvCr6Ns91THBLdHQxfs6PmASAUvGrPqasmyRJhNAKNcctPs3XKxyaLQfjdZXHf4yZfQBd6R1CeG5HPqM5kgbYbJnAsQvY9214g1QerUxXfG8sme9Up2nouFbMVz1BmRCECik44DW3ZBjCZDtYS5TsUcrddmVTzc8wzXfHGPrV15MpMURFmJ6QjZXS4CobeBrwTHfJmPHpaQ5C9isxavvJW1Xt8jqWd59oLuj8xtrmrBfsjia3wnsMCRGx7rQCCxSvZSRbzZKAQeD1G5Rw65EtCJopWE7JNzF55s22c3MviQshg7UjFo4JdfJpBxE5BBmP4y77mLwG9wisSLHGKxYosWwYvBPCHbvoXNsJHDR5Qfu2ZSEmPKMeRczbzEuLGDGMqDR41qJExZzwooBeAnbaWPVNmGtTzGbnaZRqaJfwtYFvxHR2F2qSQFxnRu7tW2ebxr3FvNHdzr4aiUdo6DMSpKGXJ6YoPGFZmEQTtZTv5FH3o9LvNsW2aD3EmHyi83cuivcxWfHU5C3PWpHPK2TaZoKLr64Z84MZ9D1RWSy8Y1E2NMHPoE4nxzZQYfMh2YskkT5nnJc2JXgmGBxDKEi7EmKL7Bn8y4AoZZYJpkeECLNAbnVdvtuqXph6bPp87YXK8ySAGzx8ZEpzFXgT7jsKCobBC23rzNa19nrbN5ovbatzBGkdvHaBix8qRetBhaYR4ryhbfUJV7LeAPTisPoqQ1317Ku1DJaKASYCCVSvGhWaugUjApPuMnDVYcuYWrDdXecPWGsMq7wj29nfBjwFy4frrwGCghCYDk1dXvLjhmmQz1oQfBtNVuu1aoUkskFx5TcZmxT1QyARLVad4KK8szDtj7397PZCtRAJ1CBQb2X9k4dakH516QXDAJ3dcMVjNCRgzqKWw5z5566Dc5aYitgSw5FMddiDZtUGVoCeASGDrqbGq1Rf3NbCnANWUzv6KYVFQSRum9D8ZTrZMzLXxA5UJWxRzzcj9FgAbxPTbcuFBzgj3EZK3KQPBUvePb9LLya8rtbvc8wMvq4ZXrHVUtkhkctpW63P8zjNd8ETihomiAa2uuo35ahcPj5ikPKUU75CQaRTsj7K4bGdTke5N8nw5NsSMXFAqktdb6tW8dasLsv2kVXAN6iUu6bhboezEqXZwWcqqa639FFoeVpiPCYR4ZTqNXMunVpdNwac6Az4o3Jq4KyG3nFubbq6cujfnVLKaZNwWFXU8xsUwxzxS9gk7xGt6MgVCsScbpAKFXmWdBkXSzBX31avDbkXioPLQHrsA7rycHKiTwyDHGdPJ6sD3CcvXGanhMwAaEM7DZb6cm5KyqpC4EzTmW5WKwmdUXLXpAgCda9MBdNKjShTfr2qDAZ2DmpHAVP9C",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": 2008750000,
+   "leaves": 8,
+   "root": "79e23b056d657af1cdb80fe703e14419e981fde2c42df0ce6ed4b7986daf6fc9"
+  }
+ ],
+ "cases": [
+  {
+   "n": "r3-append",
+   "label": "rekey 0 -> 1, the valid signature with 32 bytes appended",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "r3-honest",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1915,
+    "after": 1915
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. ba1a375670a2b6a7e522eebe9ecc5fddd2f9c9d7670d34bc80cb92aa4d29a796: #0 => Success((false,1113))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "r3-truncate",
+   "label": "rekey 0 -> 1, the valid signature truncated by 32 bytes",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "r3-honest",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1915,
+    "after": 1915
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 479f40b3a39b4672a14b4fe47da3c296abad0687818dbac59ffa450460bf3fb4: #0 => Success((false,1113))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "r3-deepflip",
+   "label": "rekey 0 -> 1, the valid signature with a byte flipped in chain 33",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "r3-honest",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1915,
+    "after": 1915
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. df5d6d8d89f3bae04efc470bbcf6a54255168ace2d77d50a84d34617bdeac7a0: #0 => Success((false,43092))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "r3-honest",
+   "label": "honest rekey 0 -> 1 (sibling of the three above)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 55383,
+   "cost_instrument": "mempool",
+   "tx_id": "dceb8318905c25f8577145a5c1d780e26a40e7ae6bfb9602899896d20fc0fb49",
+   "heights": {
+    "before": 1915,
+    "after": 1915
+   },
+   "detail": "dceb8318905c25f8577145a5c1d780e26a40e7ae6bfb9602899896d20fc0fb49",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "r3-cross",
+   "label": "box registered at leaf 1, rekey 1 -> 2 signed by leaf 5's key (leaf binding)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "r3-cross-s",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1917,
+    "after": 1917
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. e2a6ed33b92a7349aeedcbf9fd5c22512db8b7be050cf87f285e696ebcf4a06a: #0 => Success((false,44427))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "r3-cross-s",
+   "label": "the same box, rekey 1 -> 2 signed by leaf 1's key",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 56717,
+   "cost_instrument": "mempool",
+   "tx_id": "54f935edd395758151cd5b8e98824ecb9ec8165073e1d9340e25abe66552db46",
+   "heights": {
+    "before": 1917,
+    "after": 1917
+   },
+   "detail": "54f935edd395758151cd5b8e98824ecb9ec8165073e1d9340e25abe66552db46",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "r3-plant",
+   "label": "planted box at the CURRENT leaf 2 absorbs a plain payment, keyless",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "1fe9752c35642f300ea85bf593673f3ce07e23f4559fda7aa0d421924991fb34",
+   "heights": {
+    "before": 1920,
+    "after": 1920
+   },
+   "detail": "1fe9752c35642f300ea85bf593673f3ce07e23f4559fda7aa0d421924991fb34",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "r3-fold-rekey",
+   "label": "owner rekeys its leaf-2 box 2 -> 3 with the planted box as a second input",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "r3-reclaim-1",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1921,
+    "after": 1921
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 228563e3a823fab67f6fcf6b554cab663147c83df3f2101ff953a70f0eb21804: #0 => Success((false,256))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "r3-fold-merge",
+   "label": "keyless merge of the owner's leaf-2 box and the planted leaf-2 box",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "r3-reclaim-1",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1921,
+    "after": 1921
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 54eb73ce8e75d1ca10512dbc843948e8f00add6e86ecd107d31a6f6532a57057: #0 => Success((false,253))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "r3-reclaim-1",
+   "label": "owner rekeys the planted box 2 -> 3 with leaf 2's key (first signature)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "530bfbe24d863eab91424fa853dcc574e45ffb7a86bdadb8d227f0a96a917183",
+   "heights": {
+    "before": 1921,
+    "after": 1921
+   },
+   "detail": "530bfbe24d863eab91424fa853dcc574e45ffb7a86bdadb8d227f0a96a917183",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "r3-reclaim-2",
+   "label": "owner rekeys its own leaf-2 box 2 -> 4 with leaf 2's key (the second signature)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "e6c1b9d55a70769b0e3d3905828c9da2d4dc5bfbb6b774cd97d5ff85076b35c1",
+   "heights": {
+    "before": 1922,
+    "after": 1922
+   },
+   "detail": "e6c1b9d55a70769b0e3d3905828c9da2d4dc5bfbb6b774cd97d5ff85076b35c1",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "r3-close-novar0",
+   "label": "close (no output at the script) with context variable 0 absent",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "r3-close",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1924,
+    "after": 1924
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 69aaf57abcd36dffe3c61cf5cdd86b2a4e2064f005dc9ebf59a9b358b573835d: #0 => Success((false,233))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "r3-close-var0oob",
+   "label": "close with context variable 0 = 5, past the one output",
+   "got": "EVAL-ERROR",
+   "source": "EVAL-ERROR",
+   "sibling_n": "r3-close",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1924,
+    "after": 1924
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. fb0ca7bbd80d8c19ba77e4f1a6e99a487604589bc7fc64a750e4be10b8c20ecb: #0 => Failure(java.lang.ArrayIndexOutOfBoundsException: Index 5 out of bounds for length 1)\" }",
+   "expect": "EVAL-ERROR",
+   "ok": true
+  },
+  {
+   "n": "r3-close",
+   "label": "honest close, variable 0 = 0",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "5d8a5656b596c0253720f31c300779c469201e00a68d80eb6f789b3d53572b72",
+   "heights": {
+    "before": 1924,
+    "after": 1924
+   },
+   "detail": "5d8a5656b596c0253720f31c300779c469201e00a68d80eb6f789b3d53572b72",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "r3-merge-var1",
+   "label": "keyless merge with context variable 1 set (2,144 zero bytes)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "r3-merge-2",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1928,
+    "after": 1928
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 52dc4ea0d5110fe463798d2db363e6c9116a8298629e81b3eda0267e1d5a198e: #0 => Success((false,252))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "r3-merge-2",
+   "label": "honest merge: 1 registered + 1 plain (2 inputs)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 14908,
+   "cost_instrument": "mempool",
+   "tx_id": "d07302aa0cf2ecbe45569ea688679bbcd1e7362108b465606e20a9f62011c770",
+   "heights": {
+    "before": 1928,
+    "after": 1928
+   },
+   "detail": "d07302aa0cf2ecbe45569ea688679bbcd1e7362108b465606e20a9f62011c770",
+   "expect": "ACCEPT",
+   "ok": true,
+   "inputs": 2
+  },
+  {
+   "n": "r3-merge-4",
+   "label": "honest merge: 1 registered + 3 plain (4 inputs)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 19770,
+   "cost_instrument": "mempool",
+   "tx_id": "d9b4c51709ee1070e276f1b2d2e8b0b0e4e3ca1305bfa0ccb4d89e22e3456991",
+   "heights": {
+    "before": 1931,
+    "after": 1931
+   },
+   "detail": "d9b4c51709ee1070e276f1b2d2e8b0b0e4e3ca1305bfa0ccb4d89e22e3456991",
+   "expect": "ACCEPT",
+   "ok": true,
+   "inputs": 4
+  },
+  {
+   "n": "r3-merge-8",
+   "label": "honest merge: 1 registered + 7 plain (8 inputs)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 30394,
+   "cost_instrument": "mempool",
+   "tx_id": "567e7053b3d6c1c49ce5fe30e7a07c0332364ba1d510317d5a5af9414033e28a",
+   "heights": {
+    "before": 1935,
+    "after": 1935
+   },
+   "detail": "567e7053b3d6c1c49ce5fe30e7a07c0332364ba1d510317d5a5af9414033e28a",
+   "expect": "ACCEPT",
+   "ok": true,
+   "inputs": 8
+  }
+ ],
+ "harness_bugs": []
+}
