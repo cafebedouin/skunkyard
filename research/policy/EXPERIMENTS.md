@@ -383,7 +383,11 @@ registers, and paying any address. Everything below is what it must add.
 2. **Build time-locked spends for the next block's height**, and take the node's check as the verdict, not the
    wallet's signer (finding 1; §2 rows 2, 11; §4).
 3. **Pay a register-keyed vault only at its account address** (`RekeyAccount`, §6 rerun). A plain payment there is
-   safe; it joins the account's registered box by a keyless merge before it can be spent.
+   safe; it joins the account's registered box by a keyless merge before it can be spent. [Superseded 2026-10-11:
+   only a *register-free* payment is safe. A payment carrying a register of another type (an EIP-4 memo) is lost at
+   the welded account and the key schedule, since a typed register read throws (`2-twostep/results-destinations.json`,
+   `w-memo-ra3`, `w-ge-sched`); and the welded account (`RekeyAccount3.es`) replaced `RekeyAccount` after the planted-box
+   hole, `skunks/policy/6-rekey/README.md`.]
 4. **Merge serially per account.** An account keeps a single registered box (§6 rerun row 13d). Two plain payments
    merged by two keepers in the same block race for that one box: one spends it and the other fails. The keeper or
    wallet must merge one at a time, or batch every plain payment into one merge.

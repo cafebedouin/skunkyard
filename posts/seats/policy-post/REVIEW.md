@@ -370,3 +370,70 @@ Derivation differ on whether the 3× ratio can be rescued by a one-box measureme
 **For the devnet:** the six lists are consolidated in `prompts/policy-post-devnet-fixes-3.md` (19 items: ten the
 posts cite as missing, six re-measurements, three record groups). Nothing in them blocks the protocol post's text,
 which says "not run" or "not fixed" at each; the `Pending2` vault (A.1) gates the wallet post.
+
+# Round 5: seven seats on both posts and the lessons draft, after the part-three devnet run (2026-10-11)
+
+**Subject:** the wallet post (23 KB), the protocol post (24 KB) and the lessons draft, after the devnet session
+ran every item the fourth round listed (commits 29c9684 to 7a2e2d4) and the numbers were ported (`24f3dfe`).
+Slice: `r5/README-SLICE.md`, built by `r5/build-slice.sh` (199 files: the new verdict files, the benchmark
+re-run, the three prior round logs). Seats as in round three (prompts in `r5/`, answers in `r5/out/`).
+
+**Verdicts.** Wallet post: Gemini "post as is"; Cryptography "can be posted as it stands"; Recipients "ready with
+small fixes"; Wallet "not ready, but close" (stale figures, the watcher's authentication gap, a degenerate test
+vector); Fidelity five one-line fixes; Derivation blocked on one new finding. Protocol post: every seat "post with
+fixes", converging on three self-contradictions the port introduced (the §1 heading's row count, the weld row
+sentence, the length-check scope) and a handful of wording slips. Lessons draft: every seat, two stale items. Grok (grok-4.7-build, 21 minutes): post with fixes on both, the same
+list, plus three the others missed (below).
+Every seat confirmed that every round-three and round-four "fixed" and "devnet" item landed in the texts and that
+every ported number matches its results file. Recipients on format: two threads, the wallet post first, the lessons
+document linked; the two posts read as a pair once the fixes are in.
+
+## Contract and record findings
+
+| Point (who) | Check | Disposition |
+|---|---|---|
+| **A `Pending2` completion into a KeepAlive address or the quantum-day vault can double as the merge successor of that address's token-free boxes**: the completion pins exactly the pending value at the destination script, the merge asks only for at least the merged total less the bounty at the same script, and neither sees the other's reliance; the merged value leaves to the completer (Derivation) | CONFIRMED by reading (`KeepAliveAddress.es` and `QVault.es` maintain: same script, tokens kept, value ≥ total − bounty, no register check; `Pending2.es` `mineOut`: exact value, same tokens, R4 = id). Token-bearing boxes are not exposed (the completion output must carry exactly the pending box's tokens); on mainnet the demo's KeepAlive box carries a token and no pending box exists | **Fixed in text:** the wallet post's destination advice is now "a plain key address for now", with the exposure stated as found by reading, not run; the protocol post's §5 states the case. **Devnet item** (part four: the row, and the fix, a merge successor that carries no registers) |
+| **The welded account's "fresh seed" rule forbids only the spent key's own seed**; a cycle to an older seed passes, and the owner path checks no seed (Cryptography, Derivation) | CONFIRMED (`RekeyAccount3.es` `freshSeed`: `slice(0, 32) != kseed`) | **Fixed:** "may not leave a successor under the spent key's seed (… the wallet never reuses a seed)"; the README's "enforced by the contract, not promised by the wallet" corrected |
+| **The test vector is degenerate**: the key it names is the one already in the published tree, so it checks only the P2S encoding (Wallet) | CONFIRMED (bytes 8..40 of the tree are `0329bbd4…`) | **Fixed:** a second vector from the devnet's wallet-A key, computed by `skunks/keepalive/address-vector.py` after it reproduced the published address (`address-vectors.out`) |
+| **The watcher's "which announces are the owner's" is unauthenticated**: a thief with the owner key can whitelist its own announce; "not created on this device" fails across devices (Wallet) | Fair | **Fixed:** an allowlist fixed at setup and changed only out of band |
+| The returned vault box under `Pending2` carries R4 = the pending id (Derivation) | CONFIRMED (`Pending2.es` cancel; `results-vault2.json` v-3) | **Fixed** |
+| A schedule merge must leave variable 1 unset (Derivation, Wallet) | CONFIRMED (r3-merge-var1) | **Fixed** |
+| The canary still refreshes every block, as `QDay.es` did before row 7d (Derivation) | CONFIRMED (`HCanary.es` has no window) | **Fixed:** noted in §5 |
+| The singleton NFT binds the flag's output only given a supply the contract does not check (Derivation) | CONFIRMED (rows 8a to 8d) | **Fixed** |
+| `EXPERIMENTS.md` still says a plain payment at the account address "is safe" (Wallet) | CONFIRMED (`research/policy/EXPERIMENTS.md:385`) | **Fixed:** superseded note in the record |
+| The 18.8% at 506 steps extrapolates plain WOTS past its measured 435 to 495 steps on a fit whose slope is −3 per step, noise (Cryptography, Fidelity, Derivation) | CONFIRMED (`results-wotsplus-fit.json` `fits.wots`) | **Fixed:** 17.6% at 480 stated as measured; the mean-message figure as "by fit, flat within its noise" |
+| The 244,600 ceiling comes from the variant's slope, not the linear fit (Recipients, Fidelity, Cryptography, Derivation) | CONFIRMED (`slhdsa/README.md:104-110`) | **Fixed** |
+| "Thirteen signatures from one key", not eleven (Cryptography) | CONFIRMED (8 + 1 harness, 2 devnet, 2 mainnet-cost) | **Fixed** |
+| A `Vault2` box is 379 bytes, rent about 0.47 ERG derived; the 405 and 636 figures were the old pair's (Recipients, Wallet, Fidelity, Derivation) | CONFIRMED (`results-vault2.json` `box_bytes`, `rent_per_period_nanoerg_derived`) | **Fixed** |
+| A mainnet owner spend of the demo's KeepAlive box, signed by an unmodified signer, would turn "no new signing" into a transaction id (Wallet) | A mainnet transaction | **Ruling:** the person's; it is the Wallet seat's "single change that would make me reply" |
+| The record slip `slhdsa/README.md:22` still says "~236,200 by fit" (Recipients); `QDay.es`'s comment says "only in the last WINDOW blocks" where the predicate has no upper edge (Grok) | CONFIRMED | Handoff C |
+| "Into a key address it is spendable" cited `results-destinations.json`, which has no key-address row (Grok) | CONFIRMED (rows s-kaa, s-qv only) | **Fixed:** "by reading, since a key script ignores registers" in both posts |
+| The wallet post's lead said every row was judged by the node; v-7c and v-7d are the wallet's refusals (Grok) | CONFIRMED (`results-vault2.json` `source`) | **Fixed:** "or by its wallet's refusal to sign" |
+| "Both mined on random messages": the SLH-DSA devnet honest spend is not a random-message spend (Grok) | CONFIRMED (its label is "the honest spend") | **Fixed:** "both mined on that devnet's parameters" |
+| A second signature under the spent WOTS+ key (m3) weakens the one-time bound; say so beside m1 to m3 (Grok) | Fair | **Fixed** in the protocol post's §1 |
+| The person should re-check the explorer on posting day; the slice holds no UTXO snapshot (Recipients, Derivation) | Fair | **Fixed:** cited to the mainnet README with "re-check on posting day" |
+
+## Text findings
+
+| Point (who) | Disposition |
+|---|---|
+| The protocol post's §1 heading said 21 of 21 (the body says 39); the weld sentence named the five v3 rows as "the four that reproduce the previous version's edges"; the length check was "by reading on the two rotating addresses" although §2 cites the runs; "every defect … is fixed" contradicted the lessons draft's item 12 (all seats) | **Fixed** |
+| "EIP-48 to 53": there is no EIP-50 in the list; "two drafts" reviewed (Fidelity) | **Fixed:** "EIP-48, 49, 51, 52 and 53"; "four drafts" |
+| Rows 2b and 2b-ng announce two boxes of one vault, not two vaults (Fidelity) | **Fixed:** "two vault boxes" in both posts |
+| The memo rows: w-memo-ra3-alone is the owner row; w-ge-sched is a `GroupElement` R4, and an R4-only `Coll[Byte]` box at the schedule merges (s-sched-R4), so "lost at either member" overclaimed (Fidelity, Derivation) | **Fixed** in both posts and the lessons draft |
+| Rekey range to 56,717; "201,816 measured on a devnet voting mainnet's cost parameters"; 188,813 labelled computed; 38,073 labelled derived with its 12,200 deduction; "about once per period" as PERIOD − WINDOW − SLACK; rows 7e and 7e2; four test vaults; "(600 on the benchmark's own baseline)"; the harness disclosure list extended to v-*, c-*, s-*, w-*, r3-* (Fidelity, Derivation, Recipients, Cryptography) | **Fixed** |
+| §2 heading "hash keys not for value yet" (Cryptography); the forgery cost "possibly at practical cost … treat a leaf that has signed twice as broken", and each forged spend needs its own grind (Cryptography) | **Fixed** |
+| Wallet §1: merges show as maintenance in the history, change back to the address costs the same, hardware signers untested; §2: "inclusive, 0-based", a build recipe for `Vault2`, R4 accepts only a plain key address, pay-less-than-a-box by announcing to your own key address, hand the presigned completion to any relay, other signers' pre-header heights; §3 cut to the lines that protect a wallet offering KeepAlive and the two-step vault (Wallet, Recipients) | **Fixed** |
+| The two-step vault is not offerable until a tree with a realistic DELAY exists (Wallet) | **Fixed:** stated in §2 and the ask |
+| Lessons: the tally and rounds, items 1, 4, 6, 7 and 12, and a thirteenth item for the shared-output finding (Recipients, Fidelity, Cryptography, Derivation, Gemini) | **Fixed** |
+| Cut the wallet post's "Found by review" paragraph further; cut §5's row list (Recipients) | **Declined:** both kept; each row is cited by verdict and control, and the paragraph is the disclosure of the mainnet demo's hole |
+| Shorten the wallet post toward 9 KB (Recipients) | **Partly:** §3 cut from eight items to five; 23 KB stands, since the integration kit is what the Wallet seat asked for |
+
+**Where the seats disagreed.** Gemini and Cryptography called the wallet post ready; Derivation blocked it on the
+shared-output finding, which the evidence supports by reading and which the others did not see; it is in both
+posts now. Recipients would cut §5's rows and the "Found by review" paragraph; Grok (round four) and the Wallet seat
+want them; kept.
+
+**For the devnet** (part four, `prompts/policy-post-devnet-fixes-4.md`): the shared-output row and its fix; the
+SLH-DSA framing negatives; a `Vault2` at a realistic DELAY; the `Pending2` box size; ergo-lib OR signing; the record
+slips. Nothing in it blocks the texts, which say "not run" at each.

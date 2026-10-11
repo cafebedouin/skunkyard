@@ -210,8 +210,9 @@ file and is superseded). 12,590 / 46,637 / 14,791 were measured on the pre-NFT `
 seats found that the tweak was the account NFT id and (chain, step) only (`RekeyAccount3.es:68` then), so every key an
 account installs shared one hash family: the shape the schedule had fixed. R5 is now `KSEED (32) ++ COMMIT (32)`, a
 per-key public seed beside the commitment; the tweak is `ACCOUNT ++ KSEED ++ (chain, step)`; `isReg` requires a
-64-byte R5; and a hash-key spend must leave every successor at the script under a different KSEED, so distinct
-tweaks per key are enforced by the contract, not promised by the wallet. Tree 1,302 → **1,362 B** (template
+64-byte R5; and a hash-key spend must leave every successor at the script under a KSEED other than the spent key's
+(`freshSeed`; the contract sees only that one seed, so a cycle back to an older seed would pass, and the owner path
+checks no seed: the wallet must never reuse a seed; noted by the round-5 Cryptography seat). Tree 1,302 → **1,362 B** (template
 blake2b256 `92deb4f2…`). Weld suite **22 of 22** (`results-weld.json`, the round-3 run; the round-2 file is in git
 at `0ed4490`): the fifteen earlier rows pass, and
 

@@ -1,19 +1,18 @@
 # What review found in the policy contracts, and why independent review mattered
 
 **Top line.** The contracts and their harnesses were written by the author with a model; the review seats were other,
-fresh model sessions of several models. Two review rounds on the policy-vaults work (`skunks/policy/`, `skunks/keepalive/`, `skunks/qvault/`)
-found eleven defects by reading the contracts and the records, and a twelfth followed from a seat's reading of the
-interpreter: two thefts the node then accepted on the devnet, an
+fresh model sessions of several models. Five review rounds on the policy-vaults work (`skunks/policy/`, `skunks/keepalive/`, `skunks/qvault/`) found
+thirteen defects: eleven in the first two rounds by reading the contracts and the records, a twelfth in the fourth
+from a seat's reading of the interpreter, which the devnet then confirmed, and a thirteenth in the fifth by reading
+two contracts together; the third round found one residual (item 7). The first eleven: two thefts the node then accepted on the devnet, an
 unbounded Merkle index that let a spent one-time key be used again, two missing paths (a successor that could be
 bricked, and no way to close), two departures from FIPS 205's checks (signature length, leaf separation), and four
-errors in the record. None of the seven contract defects had been caught by the devnet suites, because every suite
-tested the cases its author had imagined. Nine were found by review seats (fresh model sessions, of several models,
+errors in the record. None of the contract defects had been caught by the devnet suites, because every suite tested the cases its
+author had imagined. Nine were found by review seats (fresh model sessions, of several models,
 given only the public files and no part in writing them); two of the record errors were caught by checking the
 review prompt against the files before round two. All seven contract defects were fixed and re-measured on the
 devnet the same day (`skunks/policy/6-rekey/SCHEME-SIZING.md`, "Round 2 review fixes"; items 1 and 2 in
-`skunks/policy/2-twostep/README.md` and `skunks/policy/6-rekey/README.md`). A third and a fourth round read the
-split posts, found one more contract residual (the NFT account's keys shared one hash family, fixed the next day)
-and a twelfth defect that only a run could settle (item 12), and otherwise wording. The log of every round, with every finding, the check that confirmed it and what changed, is
+`skunks/policy/2-twostep/README.md` and `skunks/policy/6-rekey/README.md`). The later rounds read the split posts and found the residual, item 12 and item 13, and otherwise wording. The log of every round, with every finding, the check that confirmed it and what changed, is
 `posts/seats/policy-post/REVIEW.md`.
 
 ## The shape of each
@@ -23,8 +22,8 @@ and a twelfth defect that only a run could settle (item 12), and otherwise wordi
    Each vault's pending script embeds its own keys, so two different vaults' boxes each counted as "alone" and one
    output satisfied both; the second value left to anyone, with no key. The suite had tested two boxes of the same
    vault and passed. **Fixed** by binding the output to the input's box id, which also allows honest batching
-   (`2-twostep/results-crossvault.json`, old-1 accepted, new-1 refused). The fix is on the devnet; the mainnet demo
-   still runs the old pending tree, and a vault that embeds the fixed pending box is not built yet.
+   (`2-twostep/results-crossvault.json`, old-1 accepted, new-1 refused). The fix is on the devnet, now in a real vault (`Vault2.tree`, `2-twostep/results-vault2.json`, 21 of 21
+   including the cancel-side thefts); the mainnet demo still runs the old pending tree.
 2. **"Registered" defined by the presence of registers.** The rotating-key receive address called a box registered
    if R4 and R5 existed. Anyone could create such a box at the address with their own keys, and the keyless merge
    then pulled the owner's plain payments into the stranger's box. The suite had tested a merge into another
@@ -37,17 +36,17 @@ and a twelfth defect that only a run could settle (item 12), and otherwise wordi
 4. **A Merkle index that was never range-checked.** The key schedule verified a leaf at index i by the parity of
    i / 2^level for three levels. Index 8 has the same parities as index 0, so it verified against leaf 0's path; the
    bound N was not enforced and a spent leaf could be returned to. The suite tested "index not advanced" and passed.
-   Found by two seats independently. **Fixed** (sched-idx8, sched-idx7to8 refused).
+   Found by three seats independently. **Fixed** (sched-idx8, sched-idx7to8 refused).
 5. **No close path.** The same schedule required every rekey to produce a successor at the script, so an account
    could never be closed, only emptied to dust. **Fixed** (sched-close accepted).
 6. **Signature length never checked.** Every hash-based verifier, SLH-DSA included, sliced the first N bytes of the
    signature and ignored the rest, so a valid signature with bytes appended passed. FIPS 205's first verification
    step is the length check; the Python reference had it, the script did not, and no test noticed, because
-   agreement on valid signatures says nothing about missing refusals. **Fixed** in all five verifiers, with the
-   appended-bytes row now refused and the guard-less tree accepting it as the control.
+   agreement on valid signatures says nothing about missing refusals. **Fixed** in all five verifiers in the posts (the early template experiment's hash path still has none and is
+   marked superseded), with the appended-bytes row now refused and the guard-less tree accepting it as the control.
 7. **One seed for all the leaves.** The schedule's eight one-time keys were tweaked by one seed and no leaf index,
-   so they were not separated from each other as the standard's key-pair address separates them. **Fixed** in the
-   schedule; the same shape remains in the NFT account, whose keys are tweaked by the NFT id alone.
+   so they were not separated from each other as the standard's key-pair address separates them. **Fixed** in the schedule and, after round three found the same shape in the NFT account, there too: each key
+   now carries its own seed (`6-rekey/results-weld.json` v3-hk-sameseed, v3-hk-wrongseed).
 8. **A number measured on one contract quoted for another.** The merge cost used to argue "dropping the token is
    free" had been measured on the account contract from before the token was added, so the comparison was between
    two token-free merges. The record said otherwise until the review.
@@ -60,8 +59,14 @@ and a twelfth defect that only a run could settle (item 12), and otherwise wordi
     The next round found the same sentences.
 12. **A register read of the wrong type throws rather than reading as absent.** A seat read the interpreter that
     way; the devnet confirmed it: a payment carrying a memo register to a rotating-key address is lost, even to its
-    owner, and a completion of the two-step vault's fixed pending box into any script that reads its own registers
-    strands the funds. **Disclosed**; the fix (the id in a receipt output) is decided, not built.
+    owner, and a completion of the two-step vault's fixed pending box into a script that reads its own registers can
+    strand the funds, since the completer chooses the other registers. **Disclosed**; the fix (the id in a receipt
+    output) is decided, not built.
+13. **Two contracts' output checks, each sound alone, can share one output.** The fixed pending box's completion
+    pins exactly the pending value at the destination; the KeepAlive address's keyless merge asks only for at
+    least the merged total less the bounty at the same script. One output satisfies both, and the merged boxes'
+    value leaves to the completer. Found by a seat reading the two contracts together in round five; not run;
+    **disclosed**, with the destination advice changed to a plain key address.
 
 ## Why independent review mattered
 
