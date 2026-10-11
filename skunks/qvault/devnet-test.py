@@ -31,6 +31,26 @@ After quantum day
   17  keyless merge of A, the B+C box and a new payment E            ACCEPT (mined)
   18  hash key spends the merged box to the owner                    ACCEPT (mined)
 
+Round 3 (2026-10-11, prompts/policy-post-devnet-fixes-3.md A.5-A.8; QDay.es gains a refresh window):
+  6d  hash key: another WOTS+ key's signature (same PKSEED) on A's digest           REFUSE  sibling 4
+  6e  hash key: A's valid signature replayed on A2 (same vault, same outputs)       REFUSE  sibling 4
+  7a  owner spend of A citing the flag box, signed now, held                         (signed)
+  7b  flag box refreshed unchanged, in its window, no key                            ACCEPT (mined)
+  7c  the held owner spend submitted after 7b                                        REFUSE (its data input is gone)
+  7d  the refreshed flag box refreshed again at once (churn)                         REFUSE (outside the window)
+  7e  control: a flag box under the pre-window QDay, refreshed twice in a row        ACCEPT, ACCEPT (mined)
+  7f  owner spend of A rebuilt on the refreshed flag box                             ACCEPT
+  8a  FAR2 (flag NFT minted with amount 2): owner spend, the real flag (false)       ACCEPT
+  8b  after the oracle sets that flag true: owner spend with it                      REFUSE
+  8c  owner spend with the NFT's second unit, at a key address, R4 = false           ACCEPT (the vault cannot tell)
+  8d  FAR3 (flag NFT minted amount 1 into a key address, R4 = false): owner spend    ACCEPT (the vault cannot tell)
+  m1  after NEAR's backstop and its hash-key spend (row 10), a new payment F1:
+      owner key spends it                                                         REFUSE
+  m2  keyless merge of F1 and F2 at NEAR                                             ACCEPT (mined)
+  m3  NEAR's already-used hash key signs again, spending the merged box              ACCEPT (the second signature)
+  14  the flag box refreshed unchanged right after the oracle's flip (now outside its window)  REFUSE
+  14b the same refresh in its window                                                 ACCEPT
+
 usage: devnet-test.py [--node http://127.0.0.1:9180] [--out results.json]
 """
 import argparse, importlib.util, json, os, subprocess, sys, tempfile
@@ -109,7 +129,7 @@ def compile_tree(base, src, subs):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--node", default="http://127.0.0.1:9180")
+    ap.add_argument("--node", default="http://127.0.0.1:9181")
     ap.add_argument("--out", default="devnet-results.json")
     a = ap.parse_args()
     base = a.node
@@ -126,13 +146,19 @@ def main():
     assert oracle_pk != owner_pk
 
     # the flag: mint the singleton, put it in the flag box with R4 = false; and a look-alike with another token
-    def issue(name):
+    def issue(name, amount=1):
         tx = wait_tx_outputs(base, must(base, "/wallet/transaction/send", {"requests": [{
-            "address": owner_addr, "ergValue": 1_000_000, "amount": 1, "name": name, "description": name,
+            "address": owner_addr, "ergValue": 1_000_000, "amount": amount, "name": name, "description": name,
             "decimals": 0}], "fee": FEE}))
         return tx["outputs"][0]["assets"][0]["tokenId"]
     qday_nft, fake_nft = issue("QDAY"), issue("QDAY-FAKE")
-    qtree, qaddr = compile_tree(base, (HERE / "QDay.es").read_text(), {"$ORACLE": oracle_pk})
+    qsubs = {"$ORACLE": oracle_pk, "$PERIOD": str(PERIOD), "$WINDOW": str(WINDOW), "$SLACK": str(SLACK)}
+    qsrc = (HERE / "QDay.es").read_text()
+    qtree, qaddr = compile_tree(base, qsrc, qsubs)
+    # the pre-window QDay (before round 3), for the churn control 7e
+    old_qsrc = qsrc.replace("now == was && inWindow", "now == was")
+    assert old_qsrc != qsrc
+    oqtree, oqaddr = compile_tree(base, old_qsrc, qsubs)
     # the look-alike sits at a key nobody holds (the curve generator), so the node wallet never spends it as change
     nobody_addr = must(base, "/utils/ergoTreeToAddress/0008cd" + kt.G)["address"]
     sent = wait_tx_outputs(base, must(base, "/wallet/transaction/send", {"requests": [
@@ -144,26 +170,44 @@ def main():
     fake = [o for o in sent["outputs"] if any(t["tokenId"] == fake_nft for t in o["assets"])][0]
     print("flag box", flag["boxId"][:8], "nft", qday_nft[:8], "fake", fake["boxId"][:8])
 
-    # two vaults, each with its own WOTS key
-    seeds = {"FAR": os.urandom(32).hex(), "NEAR": os.urandom(32).hex()}
+    # A.8: a flag NFT minted with amount 2 (one unit in a real flag box, one at a key address), and one minted
+    # into a key address only; each guards its own far-backstop vault. 7e: a flag box under the pre-window QDay.
+    q2_nft, q3_nft, old_nft = issue("QDAY2", 2), issue("QDAY3"), issue("QDAY-OLD")
+    q23 = wait_tx_outputs(base, must(base, "/wallet/transaction/send", {"requests": [
+        {"address": qaddr, "value": 10_000_000, "assets": [{"tokenId": q2_nft, "amount": 1}], "registers": {"R4": FALSE}},
+        {"address": nobody_addr, "value": 10_000_001, "assets": [{"tokenId": q2_nft, "amount": 1}], "registers": {"R4": FALSE}},
+        {"address": nobody_addr, "value": 10_000_002, "assets": [{"tokenId": q3_nft, "amount": 1}], "registers": {"R4": FALSE}},
+        {"address": oqaddr, "value": 10_000_000, "assets": [{"tokenId": old_nft, "amount": 1}], "registers": {"R4": FALSE}},
+    ], "fee": FEE}))
+    holds = lambda o, t: any(x["tokenId"] == t for x in o["assets"])
+    flag_q2 = [o for o in q23["outputs"] if o["ergoTree"] == qtree and holds(o, q2_nft)][0]
+    keyaddr_q2 = [o for o in q23["outputs"] if o["ergoTree"] != qtree and holds(o, q2_nft)][0]
+    keyaddr_q3 = [o for o in q23["outputs"] if holds(o, q3_nft)][0]
+    old_flag = [o for o in q23["outputs"] if o["ergoTree"] == oqtree][0]
+
+    # two vaults, each with its own WOTS key (and, round 3, FAR2 / FAR3 on the A.8 flag NFTs)
+    seeds = {"FAR": os.urandom(32).hex(), "NEAR": os.urandom(32).hex(), "FAR2": os.urandom(32).hex(),
+             "FAR3": os.urandom(32).hex()}
     start = height(base)
-    backstop = {"FAR": start + 1_000_000, "NEAR": start + 45}
+    backstop = {"FAR": start + 1_000_000, "NEAR": start + 45, "FAR2": start + 1_000_000, "FAR3": start + 1_000_000}
     vault = {}
-    for name in ("FAR", "NEAR"):
+    for name in ("FAR", "NEAR", "FAR2", "FAR3"):
         pkseed = os.urandom(32)                       # per-vault public seed (WOTS+ domain separation)
         sk, commit_b = wotsplus_keygen(pkseed, bytes.fromhex(seeds[name]))
         commit = commit_b.hex()
+        nft = {"FAR2": q2_nft, "FAR3": q3_nft}.get(name, qday_nft)
         tree, addr = compile_tree(base, (HERE / "QVault.es").read_text(), {
-            "$OWNER": owner_pk, "$QDAY_NFT": qday_nft, "$BACKSTOP": str(backstop[name]), "$PKCOMMIT": commit,
+            "$OWNER": owner_pk, "$QDAY_NFT": nft, "$BACKSTOP": str(backstop[name]), "$PKCOMMIT": commit,
             "$PKSEED": pkseed.hex(),
             "$PER_INPUTL": f"{PER_INPUT}L", "$REFRESHL": f"{REFRESH}L", "$PERIOD": str(PERIOD),
             "$WINDOW": str(WINDOW), "$SLACK": str(SLACK)})
         vault[name] = {"tree": tree, "addr": addr, "seed": seeds[name], "sk": sk, "pkseed": pkseed, "commit": commit}
         print(name, "vault tree", len(tree) // 2, "bytes; backstop", backstop[name])
 
-    token = issue("QV")
+    token = issue("QV", 2)          # A and A2 (the replay row 6e) each carry one
     pays = [("A", "FAR", 50_000_000, 1), ("B", "FAR", 10_000_000, 0), ("C", "FAR", 10_000_000, 0),
-            ("D", "NEAR", 50_000_000, 0)]
+            ("D", "NEAR", 50_000_000, 0), ("A2", "FAR", 50_000_000, 1), ("G2", "FAR2", 20_000_000, 0),
+            ("G3", "FAR3", 20_000_000, 0)]
     dep = wait_tx_outputs(base, must(base, "/wallet/transaction/send", {"requests": [
         {"address": vault[v]["addr"], "value": val, "assets": [{"tokenId": token, "amount": n}] if n else []}
         for _, v, val, n in pays], "fee": FEE}))
@@ -216,24 +260,26 @@ def main():
             return None
         return check(n, label, signed, expect, submit)
 
-    def hash_spend(n, label, inputs, outputs, expect, submit=False, signed_outputs=None, seed=None, sig_xform=None):
+    def hash_spend(n, label, inputs, outputs, expect, submit=False, signed_outputs=None, seed=None, sig_xform=None,
+                   sk=None, signed_box=None):
         v = vault[seed]            # `seed` is the vault name; the WOTS+ key lives in the vault dict
         ins = []
         for b in inputs:
             with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
                 json.dump(signed_outputs or outputs, f)
             # the CLI gives the spend message digest; WOTS+ signs it with this vault's key and public seed
-            msg = bytes.fromhex(wots("sign", v["seed"], "32", "16", b["boxId"], f.name)["message"])
+            # (signed_box: the digest of another box's spend, for the replay row)
+            msg = bytes.fromhex(wots("sign", v["seed"], "32", "16", (signed_box or b)["boxId"], f.name)["message"])
             os.unlink(f.name)
-            sb = wotsplus_sign(v["pkseed"], v["sk"], msg)
+            sb = wotsplus_sign(v["pkseed"], sk or v["sk"], msg)
             if sig_xform:
                 sb = sig_xform(sb)       # tamper the signature for a negative row
             ins.append({"boxId": b["boxId"],
                         "spendingProof": {"proofBytes": "", "extension": {"1": coll_bytes(sb.hex())}}})
         return check(n, label, {"inputs": ins, "dataInputs": [], "outputs": outputs}, expect, submit)
 
-    def merge(n, label, inputs, h, expect, submit=False):
-        tree = vault["FAR"]["tree"]
+    def merge(n, label, inputs, h, expect, submit=False, name="FAR"):
+        tree = vault[name]["tree"]
         total = sum(b["value"] for b in inputs)
         bounty = min(len(inputs) * PER_INPUT, total - max(b["value"] for b in inputs)) if len(inputs) > 1 \
             else min(inputs[0]["value"] // 2, REFRESH)
@@ -256,7 +302,7 @@ def main():
                  "assets": [{"tokenId": t["tokenId"], "amount": t["amount"]} for t in b["assets"]],
                  "additionalRegisters": {"R4": value_r4}}]
 
-    A, B, C, D = box["A"], box["B"], box["C"], box["D"]
+    A, B, C, D, A2 = box["A"], box["B"], box["C"], box["D"], box["A2"]
     far, near = "FAR", "NEAR"   # hash_spend looks up the WOTS+ key by vault name
 
     # ---- before quantum day
@@ -280,10 +326,59 @@ def main():
                sig_xform=lambda s: s[:-32])
     hash_spend("6c", "hash key, a byte flipped deep in the signature (chain 33)", [A], outs_to_owner([A], h),
                "REFUSE", seed=far, sig_xform=lambda s: s[:33 * 32] + bytes([s[33 * 32] ^ 1]) + s[33 * 32 + 1:])
+    other_sk, _ = wotsplus_keygen(vault["FAR"]["pkseed"], os.urandom(32))
+    hash_spend("6d", "hash key: another WOTS+ key's signature (same PKSEED) on A's digest", [A], outs_to_owner([A], h),
+               "REFUSE", seed=far, sk=other_sk)
+    hash_spend("6e", "hash key: A's valid signature replayed on A2 (same vault, same outputs)", [A2],
+               outs_to_owner([A], h), "REFUSE", seed=far, signed_box=A)
     bc = merge(7, "keyless merge of B and C", [B, C], h, "ACCEPT", submit=True)
     BC = [o for o in bc["outputs"] if o["ergoTree"] == vault["FAR"]["tree"]][0]
     wait_height(base, A["creationHeight"] + PERIOD - WINDOW)
     merge(8, "lone refresh of A in the KeepAlive window, no key", [A], height(base), "ACCEPT")
+
+    # ---- A.7: flag-box churn. The flag box is older than A, so its refresh window is open now.
+    h = height(base)
+    held = {"inputs": [{"boxId": A["boxId"], "extension": {}}], "dataInputs": [{"boxId": flag["boxId"]}],
+            "outputs": outs_to_owner([A], h)}
+    code, held_signed = call(base, "/wallet/transaction/sign", {"tx": held, "inputsRaw": [raw(A)],
+                                                               "dataInputsRaw": [raw(flag)]})
+    record("7a", "owner spend of A citing the flag box, signed now and held", "SIGNED",
+           "SIGNED" if code == 200 else "SIGN-FAIL", "" if code == 200 else held_signed)
+    rf = check("7b", "flag box refreshed unchanged in its window, no key",
+               {"inputs": [{"boxId": flag["boxId"], "spendingProof": {"proofBytes": "", "extension": {}}}],
+                "dataInputs": [], "outputs": flag_successor(flag, FALSE, height(base))}, "ACCEPT", submit=True)
+    flag = [o for o in rf["outputs"] if o["ergoTree"] == qtree][0]
+    code, o = call(base, "/transactions/check", held_signed)
+    record("7c", "the held owner spend submitted after the refresh", "REFUSE",
+           "ACCEPT" if code == 200 else "REFUSE", o)
+    h = height(base)
+    check("7d", "the refreshed flag box refreshed again at once (churn)",
+          {"inputs": [{"boxId": flag["boxId"], "spendingProof": {"proofBytes": "", "extension": {}}}],
+           "dataInputs": [], "outputs": flag_successor(flag, FALSE, h)}, "REFUSE")
+    oq = old_flag
+    for n in ("7e", "7e2"):
+        r = check(n, "control: pre-window QDay flag box refreshed unchanged (twice in a row)",
+                  {"inputs": [{"boxId": oq["boxId"], "spendingProof": {"proofBytes": "", "extension": {}}}],
+                   "dataInputs": [], "outputs": [dict(flag_successor(oq, FALSE, height(base))[0], ergoTree=oqtree)]},
+                  "ACCEPT", submit=True)
+        oq = [x for x in r["outputs"] if x["ergoTree"] == oqtree][0]
+    key_spend("7f", "owner spend of A rebuilt on the refreshed flag box", [A], [flag], outs_to_owner([A], height(base)),
+              "ACCEPT")
+
+    # ---- A.8: flag NFT provenance (the vault reads the token id of a data input, nothing else)
+    G2, G3 = box["G2"], box["G3"]
+    h = height(base)
+    key_spend("8a", "FAR2 (flag NFT minted with amount 2): owner spend with the real flag (false)", [G2], [flag_q2],
+              outs_to_owner([G2], h), "ACCEPT")
+    fq = key_spend("8b.a", "the oracle sets FAR2's real flag true", [flag_q2], [], flag_successor(flag_q2, TRUE, h),
+                   "ACCEPT", submit=True)
+    flag_q2t = [x for x in fq["outputs"] if x["ergoTree"] == qtree][0]
+    h = height(base)
+    key_spend("8b", "FAR2: owner spend with the real flag, now true", [G2], [flag_q2t], outs_to_owner([G2], h), "REFUSE")
+    key_spend("8c", "FAR2: owner spend with the NFT's second unit (a key address, R4 = false)", [G2], [keyaddr_q2],
+              outs_to_owner([G2], h), "ACCEPT")
+    key_spend("8d", "FAR3 (flag NFT minted amount 1 into a key address, R4 = false): owner spend", [G3], [keyaddr_q3],
+              outs_to_owner([G3], h), "ACCEPT")
 
     # ---- the backstop, flag still false
     wait_height(base, backstop["NEAR"])
@@ -291,6 +386,19 @@ def main():
     key_spend(9, "owner key spends D after NEAR's backstop", [D], [flag], outs_to_owner([D], h), "REFUSE")
     hash_spend(10, "hash key spends D after the backstop", [D], outs_to_owner([D], h), "ACCEPT", submit=True,
                seed=near)
+
+    # ---- A.6: a payment after migration (NEAR's hash key signed once, at row 10)
+    fdep = wait_tx_outputs(base, must(base, "/wallet/transaction/send", {"requests": [
+        {"address": vault["NEAR"]["addr"], "value": 30_000_000}, {"address": vault["NEAR"]["addr"], "value": 31_000_000}],
+        "fee": FEE}))
+    F1, F2 = [o for o in fdep["outputs"] if o["ergoTree"] == vault["NEAR"]["tree"]]
+    h = height(base)
+    key_spend("m1", "after migration: owner key spends a new payment F1 (flag false, past the backstop)", [F1], [flag],
+              outs_to_owner([F1], h), "REFUSE")
+    fm = merge("m2", "after migration: keyless merge of F1 and F2", [F1, F2], h, "ACCEPT", submit=True, name="NEAR")
+    FM = [o for o in fm["outputs"] if o["ergoTree"] == vault["NEAR"]["tree"]][0]
+    hash_spend("m3", "after migration: NEAR's already-used hash key signs again, spending the merged box", [FM],
+               outs_to_owner([FM], height(base)), "ACCEPT", seed=near)
 
     # ---- the flag
     h = height(base)
@@ -302,9 +410,9 @@ def main():
     flag2 = [o for o in flipped["outputs"] if o["ergoTree"] == qtree][0]
     h = height(base)
     key_spend(13, "flag true -> false by the oracle", [flag2], [], flag_successor(flag2, FALSE, h), "REFUSE")
-    check(14, "flag box refreshed unchanged, no key",
+    check(14, "flag box refreshed unchanged right after the flip, no key (outside its window)",
           {"inputs": [{"boxId": flag2["boxId"], "spendingProof": {"proofBytes": "", "extension": {}}}],
-           "dataInputs": [], "outputs": flag_successor(flag2, TRUE, h)}, "ACCEPT")
+           "dataInputs": [], "outputs": flag_successor(flag2, TRUE, h)}, "REFUSE")
 
     # ---- after quantum day
     key_spend(15, "owner key spends A, flag box (true) as a data input", [A], [flag2], outs_to_owner([A], h),
@@ -319,10 +427,14 @@ def main():
     h = height(base)
     hash_spend(18, "hash key spends the merged box to the owner", [M], outs_to_owner([M], h), "ACCEPT", submit=True,
                seed=far)
+    wait_height(base, flag2["creationHeight"] + PERIOD - WINDOW)
+    check("14b", "flag box refreshed unchanged in its window, no key",
+          {"inputs": [{"boxId": flag2["boxId"], "spendingProof": {"proofBytes": "", "extension": {}}}],
+           "dataInputs": [], "outputs": flag_successor(flag2, TRUE, height(base))}, "ACCEPT")
 
     # keep only JSON-serializable, non-secret vault fields (drop the seed, the WOTS+ secret key sk and the raw seed)
     _keep = {"tree", "addr", "commit"}
-    json.dump({"qdayNft": qday_nft, "flagTree": qtree,
+    json.dump({"qdayNft": qday_nft, "flagTree": qtree, "flagTreePreWindow": oqtree,
                "vaults": {k: {kk: vv for kk, vv in v.items() if kk in _keep} for k, v in vault.items()},
                "backstops": backstop, "results": results}, open(HERE / a.out, "w"), indent=1)
     bad = [r for r in results if not r["ok"]]

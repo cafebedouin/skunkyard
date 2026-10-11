@@ -3,7 +3,7 @@
   //
   //   owner key, before quantum day:  proveDlog(OWNER), only while the quantum-day box (shown as a data input,
   //                                   found by its singleton NFT) still says false and HEIGHT < BACKSTOP
-  //   hash key, any time:             a WOTS signature (n 32, w 16, Blake2b) in context variable 1 over
+  //   hash key, any time:             a WOTS+ signature (n 32, w 16, Blake2b) in context variable 1 over
   //                                   blake2b256(SELF.id ++ OUTPUTS' bytesWithoutRef), checked against PKCOMMIT; one
   //                                   box of this vault per transaction, since a one-time key signs once
   //   maintenance, no key:            KeepAlive's merge and lone refresh (context variable 0 names the successor),
