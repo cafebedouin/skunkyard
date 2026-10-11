@@ -68,5 +68,6 @@ Both:
   `kaa-mainnet-wallet.tree`, which it rebuilds from `kaa-mainnet-G.tree` and requires to match); outputs to the fixed
   KeepAlive tree for this key or the wallet, and the fee contract; node `/transactions/check` first; `--submit` with
   `--purpose` appends to the ledger.
-- **Used for:** the fixed tree's mainnet owner spend, `7c6e493f…` (`skunks/keepalive/README.md`, "The fixed tree on
+- **Used for:** the two KeepAlive owner spends on mainnet, `7c6e493f…` (the pre-fix demo box into the fixed address) and
+  `955a5ebc…` (a fixed-tree box) (`skunks/keepalive/README.md`, "The fixed tree on
   mainnet").

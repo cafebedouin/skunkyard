@@ -557,8 +557,8 @@ spent by its owner; **fixed** (both posts now say the deposit was an owner spend
 the fixed tree keeps the owner branch unchanged by reading). Also fixed: the demo-value range (to 0.032 ERG), the
 staking templates labelled as explorer SHA-256, the staking README's "all as expected" (two rows are `ok: false`,
 EVAL-ERROR refusals), and lessons item 10's clause now cites its source. Round counts left at six: the seventh pass
-read numbers, not the contracts. **For the person:** an ergo-lib owner spend of the fixed-tree box `e46f5c4e…`
-(checked by the node, 200, not submitted: it was beyond the agreed three) would turn "should spend" into a row.
+read numbers, not the contracts. **Then (the person's go):** an ergo-lib owner spend of the fixed-tree box `e46f5c4e…`, `955a5ebc…` at 1,892,208,
+now the fourth row in the wallet post and `keepalive/README.md`.
 
 ## For the devnet (part five, if wanted)
 

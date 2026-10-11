@@ -7,7 +7,7 @@ send screens)? And should the template be fixed in an EIP, so every wallet build
 A holder can opt into a *policy* on their own coins by receiving at a P2S address:
 - a receive address that anyone can keep alive against storage rent, with no key, a contract-level answer to the
   storage-rent threads (EIP-48, 49, 51, 52 and 53): on mainnet the fixed tree described below took a deposit and a
-  plain payment, and a keyless merge ran with no signature; the refresh is devnet only, since on mainnet it cannot
+  plain payment, a keyless merge ran with no signature, and the owner spent the merged box with ergo-lib; the refresh is devnet only, since on mainnet it cannot
   open before 2030;
 - a waiting period on withdrawals, with a recovery key that can cancel (demonstrated on mainnet).
 
@@ -20,8 +20,8 @@ On mainnet only the honest paths ran, with demo values (0.005 to 0.032 ERG), a 1
 from the same seed. **The KeepAlive tree changed after the mainnet demo.** Review found that the merge could be
 combined with a third-party payout into the address and drain it; the devnet confirmed it, and the fix (every input
 of a keyless merge must be at the address) changes the tree. Section 1's kit is for the fixed tree, which has run on
-mainnet (a deposit made by an owner spend of the first demo's last box, signed by ergo-lib; a plain payment; a
-keyless merge); the first demo ran the pre-fix tree, whose address is now empty.
+mainnet (a deposit, a plain payment, a keyless merge, and an owner spend signed by ergo-lib); the first demo ran
+the pre-fix tree, whose address is now empty.
 
 Everything is in https://github.com/cafebedouin/skunkyard: `skunks/keepalive/`, `skunks/policy/`, and the write-up
 `research/policy/EXPERIMENTS.md`. Five drafts of this post were reviewed before it, in six review rounds of the work (one round read only the companion post); the contract holes the reviews
@@ -43,13 +43,13 @@ The fixed tree, the one in the kit below:
 | owner spend of the first demo's last box (0.024 ERG and its token), paid into the fixed address as the deposit | `7c6e493f3c7ce9652aca90a01f61f4df5666976787a7f532770361c6b12d9280` | 1,892,190 | the owner key, by **ergo-lib** (sigma-rust), unmodified |
 | a plain payment of 0.01 ERG | `72169bd5b986aa613cc993cf71307dc6967d074b60493643d13aa021ec6d142a` | 1,892,190 | the wallet |
 | keyless merge of the two boxes, every input at the address, the bounty paying the fee | `15df5e636fbaca159bd23ffe761571d7fe8710712ba424422ab19ec5ccbc3abd` | 1,892,193 | **nobody** |
+| owner spend of the merged box, back into the fixed address | `955a5ebcea81bf73474445e7d94c49ce97682ac266890c3f51a30be9bc29af6f` | 1,892,208 | the owner key, by **ergo-lib** (sigma-rust), unmodified |
 
-ergo-lib reduced the script itself before signing: with no context variable 0 the KeepAlive script is the owner's
-key alone. The box it spent was at the pre-fix tree; the fixed tree's owner branch is the same expression (by
-reading the explorer's `ergoTreeScript` for both, in `tx/fixed-7c6e493f….json`), so a wallet built on sigma-rust
-should spend the fixed address as it spends its P2PK one, but no owner spend of a fixed-tree box has run on mainnet.
-The node's template index returns all three fixed-tree boxes under `2e7ff6ae…` (`skunks/keepalive/tx/
-index-node-2e7ff6ae.json`; `skunks/keepalive/README.md`, "The fixed tree on mainnet").
+ergo-lib reduced the script itself before signing both owner spends (the first of a pre-fix box, the last of a
+fixed-tree one): with no context variable 0 the KeepAlive script is the owner's key alone, so a wallet built on
+sigma-rust spends the address as it spends its P2PK one. The node's template index returns the four fixed-tree
+boxes under `2e7ff6ae…` (`skunks/keepalive/tx/index-node-2e7ff6ae.json`; `skunks/keepalive/README.md`, "The fixed
+tree on mainnet").
 
 The first demo, on the pre-fix tree:
 
@@ -92,7 +92,7 @@ the owner's own spend.
   holder's KeepAlive address (to label it, or to merge as a keeper), use the template hash *and* the constants:
   template Blake2b256 (the node's index) `2e7ff6aeefe21df26b519b0c519149b7272b59be83fca087b3f99d710c412cbc`,
   SHA-256 (the explorer's) `ebff5777b98cd1d17b4784bf26054e83fc11cfd90481d4e119a67ab2004bfd46`
-  (`template-hash.out`); on mainnet the node's index returns the three fixed-tree boxes under the first and the
+  (`template-hash.out`); on mainnet the node's index returns the fixed-tree boxes under the first and the
   explorer under the second (2026-10-11, `keepalive/README.md`). A template hash ignores the constants, and here constant 4 is PERIOD 1,051,200, 5 WINDOW
   21,600, 7 the per-input bounty 500,000, 10 the refresh bounty 2,000,000, 11 SLACK 10, and 14 is `false`, the
   else-branch of the maintenance check (`template-hash.out`; the fix left the constants and their indices as they
@@ -103,9 +103,8 @@ the owner's own spend.
   merge keeps tokens and value, not registers (box A's EIP-4 mint registers are gone from the merged box
   `1685438c…`): read any memo in a payment's registers before it is merged.
 - **Owner spend**: sign as P2PK for the same key; the script reduces to `proveDlog(OWNER)` when context variable 0
-  is absent (on mainnet signed by ergo-lib on a pre-fix box, `7c6e493f…`, whose owner branch the fixed tree keeps
-  unchanged, by reading; on the devnet by the node wallet on the fixed source, address case 12; hardware signers
-  untested). New work: track the P2S address, select its boxes beside the P2PK ones, and
+  is absent (on mainnet signed by ergo-lib, `955a5ebc…` at the fixed tree; on the devnet by the node wallet,
+  address case 12; hardware signers untested). New work: track the P2S address, select its boxes beside the P2PK ones, and
   send change back to it if the change should stay protected. Three things to expect: anyone may merge the address's
   boxes at any time, so a spend built on boxes that were just merged fails and must be rebuilt on the successor, and
   such a merge spends the user's boxes without their key, so show it in the history as maintenance (every input and

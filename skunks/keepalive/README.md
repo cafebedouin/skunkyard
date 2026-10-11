@@ -185,7 +185,7 @@ first wallet and compile calls are retried (the node's readers time out just aft
 
 ## The fixed tree on mainnet (2026-10-11)
 
-Three transactions at the fixed tree (`kaa-mainnet-wallet.tree`, 418 B, address `BpQ1xs4h…`, template `2e7ff6ae…`),
+Four transactions at the fixed tree (`kaa-mainnet-wallet.tree`, 418 B, address `BpQ1xs4h…`, template `2e7ff6ae…`),
 each checked by a mainnet node (6.1.2, `128.253.41.100:9053`) before it was submitted; as built and as the explorer
 returned them in `tx/fixed-*.json`.
 
@@ -194,13 +194,15 @@ returned them in `tx/fixed-*.json`.
 | owner spend of the pre-fix demo box `f017a605…` (0.024 ERG + the demo token), paid into the fixed address as its deposit (0.023 ERG + the token) | `7c6e493f3c7ce9652aca90a01f61f4df5666976787a7f532770361c6b12d9280` | 1,892,190 | the wallet key, by **ergo-lib** (sigma-rust, `ergo-lib-wasm-nodejs` 0.28.0), which reduced the script itself: no context variable 0, so `owner \|\| false` |
 | a plain payment of 0.01 ERG from the wallet to the fixed address | `72169bd5b986aa613cc993cf71307dc6967d074b60493643d13aa021ec6d142a` | 1,892,190 | the wallet (P2PK input, `mainnet-sign.mjs`) |
 | keyless merge of the two fixed-tree boxes into `e46f5c4e…` (0.032 ERG + the token); every input at the address, the 0.001 ERG bounty paying the fee | `15df5e636fbaca159bd23ffe761571d7fe8710712ba424422ab19ec5ccbc3abd` | 1,892,193 | **nobody** |
+| owner spend of the fixed-tree box `e46f5c4e…`, back into the fixed address as `73de7342…` (0.031 ERG + the token) | `955a5ebcea81bf73474445e7d94c49ce97682ac266890c3f51a30be9bc29af6f` | 1,892,208 | the wallet key, by **ergo-lib**, as the first row |
 
-The node's template index (`/blockchain/box/byTemplateHash/2e7ff6ae…`, saved as `tx/index-node-2e7ff6ae.json`; the
-explorer's under `ebff5777…`, `tx/index-explorer-ebff5777.json`) returns all three fixed-tree boxes (the merged
-box unspent, the two inputs spent by the merge), so the kit's Blake2b value is the index's. The pre-fix template
+The node's template index (`/blockchain/box/byTemplateHash/2e7ff6ae…`, saved as `tx/index-node-2e7ff6ae.json`)
+returns the four fixed-tree boxes (`73de7342…` unspent, the other three spent); the explorer's under `ebff5777…`
+(`tx/index-explorer-ebff5777.json`, saved before the fourth transaction) returned the first three. So the kit's
+Blake2b value is the index's. The pre-fix template
 `afc009dc…` holds five boxes in all (`tx/index-node-afc009dc.json`), every one this demo's and every one spent: the pre-fix address is retired. The
-ergo-lib owner spend is the first mainnet owner spend of a KeepAlive box, and the first by a wallet library that
-evaluates the script rather than signing as P2PK.
+two ergo-lib owner spends are the first mainnet owner spends of KeepAlive boxes (one at each tree, the owner branch
+being the same expression in both), by a wallet library that evaluates the script rather than signing as P2PK.
 
 ## Mainnet demo: the wallet's vault, kept by others (2026-10-10)
 
