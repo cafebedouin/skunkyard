@@ -24,7 +24,8 @@
   // WOTS+, n = 32, w = 16 (SK-053 swap, 2026-10-10): the hash key is now WOTS+ (WotsPlus.es), not plain WOTS. Every
   // chain hash is keyed by the per-vault public PKSEED and the (chain, step) address, so two vaults share no hash
   // target (SK-035's multi-target gap); PKSEED is bound into PKCOMMIT and published with it. 64 message digits, 3
-  // checksum digits. Measured ~18% over plain WOTS (SCHEME-SIZING.md).
+  // checksum digits. About 18% over plain WOTS at matched step counts (17.6% at 480 hashed steps, 18.8% at a random
+  // message's mean 506; ../policy/6-rekey/results-wotsplus-fit.json).
   val pkSeed = fromBase16("$PKSEED")
   val sigOpt = getVar[Coll[Byte]](1)
   val hashKey = if (sigOpt.isDefined && mine.size == 1) {
