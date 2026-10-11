@@ -265,7 +265,8 @@ leaves it behind for a second signature, and one left when a rotating account cl
 clause is in all four merges; on the rotating members the theft was not run, since their merge successor must
 already carry the account's own registers, which refuses a `Pending2` completion as a successor by reading, and the
 clause closes any payout that could carry them; their suites pass unchanged against the fixed trees (§2). The KeepAlive
-mainnet demo ran the pre-fix tree (companion post). The general rule: a keyless merge that checks only "at least the
+mainnet demo ran the pre-fix tree; the fixed tree has since run on mainnet, an owner spend signed by ergo-lib and a
+keyless merge (companion post). The general rule: a keyless merge that checks only "at least the
 total less the bounty" is exposed when the merged boxes are plain value and the transaction may carry other value;
 it is closed by admitting no foreign input, or by pinning every other output's value, and boxes whose tokens a payout
 cannot carry are protected by the tokens alone. With the fix, a KeepAlive address can receive keyless-executed

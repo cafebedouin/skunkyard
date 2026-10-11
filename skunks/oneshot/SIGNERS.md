@@ -1,6 +1,6 @@
 # The mainnet signers
 
-Two scripts sign with the skunkyard mainnet test wallet (`~/.config/skunkyard/mainnet-wallet.txt`, 24 words, mode
+Three scripts sign with the skunkyard mainnet test wallet (`~/.config/skunkyard/mainnet-wallet.txt`, 24 words, mode
 600; made by `scripts/mainnet-wallet.mjs`). Nothing else in this repository signs mainnet transactions.
 
 Both:
@@ -57,3 +57,16 @@ Both:
 - **Refuses:** any other shape. Checked 2026-10-10: a cancel whose output 0 was the wallet instead of the vault was
   refused.
 - **Used for:** the two-step mainnet demo's recovery cancel (`skunks/policy/2-twostep/mainnet/README.md`).
+
+## `scripts/kaa-owner-spend-ergolib.cjs`: the wallet key on its own KeepAlive boxes, by ergo-lib
+
+- **Secret:** the wallet key, `m/44'/429'/0'/0/0`, derived by ergo-lib from the same mnemonic.
+- **Signing:** ergo-lib (sigma-rust, `ergo-lib-wasm-nodejs` 0.28.0, the library Nautilus is built on), which
+  reduces the script itself against the node's last 10 headers. With no context variable 0 the KeepAlive script is
+  `owner || false`, so this is an unmodified wallet library spending the address with an ordinary key.
+- **The one shape it accepts:** one input, a KeepAlive box of this wallet's key (the pre-fix tree or the fixed
+  `kaa-mainnet-wallet.tree`, which it rebuilds from `kaa-mainnet-G.tree` and requires to match); outputs to the fixed
+  KeepAlive tree for this key or the wallet, and the fee contract; node `/transactions/check` first; `--submit` with
+  `--purpose` appends to the ledger.
+- **Used for:** the fixed tree's mainnet owner spend, `7c6e493f…` (`skunks/keepalive/README.md`, "The fixed tree on
+  mainnet").

@@ -530,6 +530,11 @@ fix), and the flag boxes have no size bound on refresh (below). Gemini (agy, 10 
 
 ## Rulings for the person (presented, not decided)
 
+**Done 2026-10-11 (rulings 1 and 2, the person):** the demo box `f017a605…` spent by its owner with ergo-lib into
+the fixed address (`7c6e493f…`), a plain payment (`72169bd5…`), a keyless merge (`15df5e63…`); the node's index
+finds the three fixed-tree boxes under `2e7ff6ae…` and the explorer under `ebff5777…`; the pre-fix template's five
+boxes are all spent. Ported into the wallet post and `keepalive/README.md`.
+
 1. **Re-demonstrate the fixed KeepAlive tree on mainnet** (a deposit and a keyless merge, about 0.03 ERG) before the
    wallet post, or post with the pre-fix demo and the fixed kit side by side, as the texts now say. Every seat raised
    it; Recipients and Wallet would make it the condition of replying. It would also check the node index against

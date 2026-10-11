@@ -183,14 +183,32 @@ all 6 units, 0.0505 ERG (0.052 less the 0.0015 bounty). Two hook fixes on the wa
 first wallet and compile calls are retried (the node's readers time out just after start), and sends use their own
 60 s timeout (the rig's wallet helper stops at 10 s).
 
+## The fixed tree on mainnet (2026-10-11)
+
+Three transactions at the fixed tree (`kaa-mainnet-wallet.tree`, 418 B, address `BpQ1xs4h…`, template `2e7ff6ae…`),
+each checked by a mainnet node (6.1.2, `128.253.41.100:9053`) before it was submitted; as built and as the explorer
+returned them in `tx/fixed-*.json`.
+
+| step | transaction | height | signed by |
+|---|---|---|---|
+| owner spend of the pre-fix demo box `f017a605…` (0.024 ERG + the demo token), paid into the fixed address as its deposit (0.023 ERG + the token) | `7c6e493f3c7ce9652aca90a01f61f4df5666976787a7f532770361c6b12d9280` | 1,892,190 | the wallet key, by **ergo-lib** (sigma-rust, `ergo-lib-wasm-nodejs` 0.28.0), which reduced the script itself: no context variable 0, so `owner \|\| false` |
+| a plain payment of 0.01 ERG from the wallet to the fixed address | `72169bd5b986aa613cc993cf71307dc6967d074b60493643d13aa021ec6d142a` | 1,892,190 | the wallet (P2PK input, `mainnet-sign.mjs`) |
+| keyless merge of the two fixed-tree boxes into `e46f5c4e…` (0.032 ERG + the token); every input at the address, the 0.001 ERG bounty paying the fee | `15df5e636fbaca159bd23ffe761571d7fe8710712ba424422ab19ec5ccbc3abd` | 1,892,193 | **nobody** |
+
+The node's template index (`/blockchain/box/byTemplateHash/2e7ff6ae…`) returns all three fixed-tree boxes (the merged
+box unspent, the two inputs spent by the merge), so the kit's Blake2b value is the index's. The pre-fix template
+`afc009dc…` holds five boxes in all, every one this demo's and every one spent: the pre-fix address is retired. The
+ergo-lib owner spend is the first mainnet owner spend of a KeepAlive box, and the first by a wallet library that
+evaluates the script rather than signing as P2PK.
+
 ## Mainnet demo: the wallet's vault, kept by others (2026-10-10)
 
 The demo's vault was the pre-fix tree (404 bytes, address `7fcz1gR1…`), the devnet-tested `kaa-mainnet-G.tree` with
 the owner-key constant set to the wallet's key. It is not a fresh compile: the 6.1.2 node's compiler lays the tree out
 differently, and the substitution keeps the tested logic byte for byte. The node's template index found the vault
 under `afc009dc…`, the hash `KeepAliveJob` searched. Since part four, `kaa-mainnet-wallet.tree` and `.address` hold
-the fixed tree (418 bytes, `BpQ1xs4h…`, template `2e7ff6ae…`, above); no mainnet box exists at it from this project,
-the node index has not been checked against `2e7ff6ae…`, and the job has not been run against the fixed template.
+the fixed tree (418 bytes, `BpQ1xs4h…`, template `2e7ff6ae…`, above); it ran on mainnet on 2026-10-11 (above), the node
+index finds it under `2e7ff6ae…`, and the job has not been run against the fixed template.
 
 A lone refresh opens only in the last 21,600 blocks before a box is four years old, so it cannot run on mainnet
 before 2030. The demo uses the merge, which is open at any time and runs the same checks. Built by `mainnet-demo.py`;
