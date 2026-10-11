@@ -222,3 +222,79 @@ dispositions, slice README, builder, runner).
    provenance: the KeepAlive shape came from finding about 2,000 mainnet boxes that paid 0.03 to be consolidated
    while looking for Lithos revenue, and kushti's quantum remark matched the same shape. Only what the repository
    records goes in a post (`qvault/README.md:3` for kushti; `keepalive/README.md:3` for the consolidation boxes).
+
+# Round 3: seven seats on the split posts and the lessons draft (2026-10-10)
+
+**Subject:** the wallet post (`posts/2026-10-policy-vaults-forum-draft.md`, 20 KB), the protocol post
+(`posts/2026-10-policy-vaults-protocol-draft.md`, 12 KB) and the lessons draft (`posts/2026-10-policy-review-lessons.md`),
+after the devnet fixes (commits 126c588, 106014d, ba9df42, 5a9ad72, 9ff591e, 0ed4490) and the number port
+(`1cdfa66`). Slice: `r3/README-SLICE.md`, built by `r3/build-slice.sh` (179 files: round two's plus the four
+published verdict files, the re-run results, and this log's Round 2 as `REVIEW-ROUND2.md`). Seats as in round two
+(prompts in `r3/`, raw answers in `r3/out/`; Grok grok-4.6-build, Gemini gemini-3.8-flash).
+
+**Verdicts.** Grok: the wallet post is ready; the protocol post needs two number fixes. Every other seat: post with
+fixes, not as they stand. All seven confirmed that every round-two "fixed" item is in the code or the text, with
+the partial landings listed below, and that every ported number matches its results file. Recipients on the thread
+question: two threads, cross-linked, the wallet post first, the protocol post a day or two later; the lessons
+document as a repository link from the protocol post, not a third thread.
+
+## Contract and record findings
+
+| Point (who) | Check | Disposition |
+|---|---|---|
+| **No vault that embeds `Pending2` has been built or run**: the cross-vault rows created pending boxes directly with a key address standing in for the vault (`vault_R6` = `0008cd03…`), the repository's `Vault.tree` still embeds the old pending tree, and the wallet post told builders to build new vaults with `Pending2` (Wallet, Recipients, Derivation, Gemini) | CONFIRMED (`results-crossvault.json` `vault_R6`; `template-hash.out` Vault constant 2 is the 187-byte tree) | **Fixed in text:** section 2 opens with the status, the kit is labelled the demo's pair, `Pending2`'s own layout (193 B, OWNER at 0, RECOVERY at 1) is given, and "build new vaults with `Pending2`" is replaced by "not built, announced into or cancelled into". **Devnet item** (`prompts/policy-post-devnet-fixes-3.md`): compile `Vault.es` with `Pending2.tree` as PENDING_TREE; announce, complete, cancel; publish the tree |
+| **The NFT account's hash-key tweak has no key counter** (the NFT id and (chain, step) only), so every key the account installs shares one hash family: the shape fixed in the schedule (Cryptography, Recipients, Derivation) | CONFIRMED (`RekeyAccount3.es:68`) | **Fixed in text:** "found in round three, not fixed", with the one-line fix. **Devnet item** |
+| **A cross-leaf negative for the schedule is owed** (a valid signature at leaf i presented on a box at leaf j); sched-fwd shows only that signer and script agree (Cryptography) | Fair; no row | **Fixed in text:** "a cross-leaf negative is not yet run". **Devnet item** |
+| The current-leaf plant was not run; sched-grief is labelled "revealed PAST-leaf" (Cryptography, Derivation, Grok) | CONFIRMED (`results-schedule.json` label) | **Fixed:** "run at a past leaf; the current leaf by reading, not run" |
+| A forgery at a leaf also spends the owner's own box while it sits there (Derivation); each further reclaim makes the forgery cheaper (Cryptography) | By reading (`okSelf`, `registered`) | **Fixed** |
+| Stale comments in the published contracts: `QVault.es:6,27`, `RekeyAccount3.es:16,22`, `RekeySchedule.es:9` (Cryptography, Recipients) | CONFIRMED | **Devnet item** (comments only; the trees do not change) |
+| The record's 17.7% lines (`slhdsa/README.md:74`, `SCHEME-SIZING.md:83-87`) predate the guard (Recipients) | CONFIRMED | **Declined** as a change here: both files already carry the 16.3% re-measure beside the table; the 17.7% lines describe the first run and say so |
+| The demo stamped successors at the tip, not the expected inclusion height (1,891,359 mined at 1,891,363; 1,891,363 at 1,891,364); "stamp the height you expect it to be mined at" was risky (Wallet) | CONFIRMED (explorer `creationHeight`) | **Fixed:** "stamp the current tip; 10 blocks; rebuild if not mined" |
+| A merge drops input registers (box A's EIP-4 registers are gone from `1685438c…`) (Wallet) | CONFIRMED (explorer JSON) | **Fixed:** "read any memo before it is merged" |
+| EIP-39: the successor's creation height may not precede the newest input's (Wallet) | CONFIRMED (`keepalive/README.md` case 5) | **Fixed** |
+| The owner key can cancel too, so an intermittently online wallet can promise a cancel on its next open; "protection exists only while someone online holds the recovery key" was wrong (Wallet) | CONFIRMED (`Pending.es`, `Pending2.es` keys = OWNER ‖ RECOVERY) | **Fixed:** the watching item restated |
+| Gemini's "338-byte vault tree" for a `Pending2` vault | A computation, not a build | **Declined:** no such tree exists; the post says so instead |
+| The schedule's close path also reads variable 0; no policy contract reads an SLH-DSA signature (Derivation) | CONFIRMED (`RekeySchedule.es:57,82`) | **Fixed** |
+| Before quantum day the owner path still moves a later payment (Derivation) | CONFIRMED | **Fixed:** "after quantum day or the backstop" |
+| N = 8 is fixed in the contract; a rekey may take any later index (Derivation) | CONFIRMED | **Fixed** |
+| The 6,847 staking merges (Recipients: confirm the source) | CONFIRMED (`skunks/upkeep/mainnet/README.md:52,73`) | No change |
+
+## Text findings
+
+| Point (who) | Check | Disposition |
+|---|---|---|
+| "2,023 to 2,233 hash calls" is the pre-guard range; the re-run is 2,038 to 2,173 tweakable plus H_msg's two (all seven) | CONFIRMED (`run.log:58-65`) | **Fixed** |
+| "About 40 spends per block": 39.76, and every record says 39 (Fidelity, Recipients, Derivation, Grok) | CONFIRMED | **Fixed:** "about 39 (= 39.8)" |
+| "3.9× a plain-WOTS spend" divides a random SLH-DSA spend by q2's worst case; like for like it is 4.0× the measured WOTS+ (50,273) (Derivation, Grok, Fidelity) | CONFIRMED (201,250 / 50,273 = 4.00) | **Fixed:** 4.0× measured WOTS+; the 3.9× and 3.4× dropped |
+| "11% of the charged cost" is a share of script cost; "7 to 11% of every hash-signature spend measured here" was measured only for plain WOTS and computed for SLH-DSA (Derivation, Fidelity) | CONFIRMED | **Fixed** |
+| The protocol post's ask proposed a hash-based EIP one sentence after saying lattice schemes are the better opcode candidates (Recipients) | Fair | **Fixed:** the ask asks which method core would accept (SLH-DSA, lattice, or a generic hash-chain primitive) and whether the table is what an EIP needs; the ask summarised under the title |
+| "The secp key is public from the first payment; firing is fail-safe" belongs in §1 (Recipients) | CONFIRMED by reading (`QVault.es` OWNER constant; `QDay.es` false → true only) | **Fixed** |
+| Provenance wording: the README records kushti's suggestion, not "the same shape" (Recipients) | CONFIRMED (`qvault/README.md:3`) | **Fixed** |
+| "Two review rounds read every contract" cannot be checked; not every limit was fixed (Recipients) | Fair | **Fixed:** "read the contracts; the defects fixed, the design costs stated" |
+| "1,247-byte tree": the two test vaults are 1,247 and 1,248 (Fidelity) | CONFIRMED (`devnet-results.json` headers) | **Fixed** |
+| Rows 11 to 13 are the flag's firing rows (Derivation) | CONFIRMED | **Fixed** |
+| Row 13d ran on the pre-NFT account and is the one-registered-input rule, not a totals row (Fidelity, Gemini, Grok) | CONFIRMED (`results.json` experiment `6-rekey-account`) | **Fixed:** labelled so in both posts |
+| "23 rows plus 16 and 17" is still not the file's 28 (Fidelity, Derivation, Wallet) | CONFIRMED | **Fixed:** "28 rows: the README's 23, then rows 16 and 17 with their setup and sibling rows" |
+| "Plain payments are safe at the rotating receive addresses" contradicts sched-grief and the close; "the key schedule is derivable from the seed" contradicts "EIP-3 derivation unspecified" (Wallet, Derivation, Recipients) | CONFIRMED | **Fixed** |
+| The merge-before-close and show-every-output items were moved to the protocol post but are wallet items; merge-before-close now applies to the schedule too (Wallet, Derivation) | Fair | **Fixed:** in both posts |
+| Section 1 lacks a test vector, "0-based, as hex", hardware signers untested, the per-payment dust wording, and the KeepAlive seed-restore note (Wallet) | The key at bytes 8..40 of the published tree is `0329bbd4…26ab` and its address file is 558 characters | **Fixed** |
+| The `template-hash.out` cite points into the review directory (Wallet, Recipients) | Fair | **Fixed:** the parser and its output now live at `skunks/keepalive/template-hash.{py,out}`, covering `Pending2.tree` too |
+| "An Ergo address can be a script" is common knowledge; the rent EIP numbers are in the evidence and missing (Recipients) | CONFIRMED (`keepalive/README.md:3`) | **Fixed** |
+| Section 4 (the rule) is contract design, not wallet work (Wallet, Gemini, Recipients) against keep it (Grok) | A value call; three seats to one, and the wallet audience's reading | **Fixed:** moved to the protocol post as §5 with Derivation's safety condition for forms 1 and 2 and the forged-input-state note; one line left in the wallet post. Grok's dissent recorded |
+| The asks: the wallet ask should ask the cheap thing and the EIP-fixed template; the two-step second (Wallet, Recipients) | Fair | **Fixed** |
+| "Not for value" lacks the WOTS+ gap (no KATs can exist for a Blake2b instance) (Cryptography) | Fair | **Fixed:** "a written specification of this instance and a second implementation" |
+| "Costs nothing" → "costs no security (only the spend's fee)"; "two vaults share no hash target as long as each has its own seed"; "a family … two with hash-based keys"; the control row ran in the harness only; "median of eight"; SK-026 as a path; the benchmark's caveats (Cryptography, Recipients, Grok) | CONFIRMED each | **Fixed** |
+| Lessons document: the tally (two thefts, an unbounded index, two missing paths, two FIPS 205 departures, four record errors), the credits (Gemini 3; Gemini and Derivation 4 and 5, Grok 4; Cryptography 6 with Gemini, and 7; Fidelity and Derivation 8 to 10; the pre-round check 11 and the 25×), the present tense, item 2's "supply-one", item 9's quotes and 13.5×, the title, a definition of "seat", the sibling-repository mention (Fidelity, Recipients, Cryptography, Derivation) | Checked against this log's Round 2 | **Fixed:** all of them; the sibling repository is private and is now "an outside-model runner" |
+| The lessons document's independence claim depends on who wrote the contracts (Recipients) | A fact about authorship | **Ruling:** the person states the authorship in one line (the contracts and harnesses were written by the author with a model; the seats were other sessions and other models) |
+| Cut "Parked" and "The standards, per path" (Recipients) against keep (Grok) | A value call | "The standards, per path" cut (its content is inline); "Parked" kept as one paragraph |
+| The wallet post's "would you offer it as a receive address" invites a predictable no (Wallet, Recipients) | Fair | **Fixed:** the ask asks for tracking and the EIP-fixed template; the receive-address offer is stated as waiting on a keeper and payer acceptance |
+
+**Where the seats disagreed.** Grok called the wallet post ready; Wallet, Recipients, Derivation and Gemini blocked on
+the untested `Pending2` vault, and the evidence supports them (`vault_R6` is a key address). Grok keeps the rule in
+the wallet post; three seats moved it, and it moved. Fidelity, Recipients and Gemini differ on whether "Parked"
+stays; it stays as a paragraph.
+
+**Rulings this round:** (1) the `Vault` + `Pending2` end-to-end devnet run before the wallet post goes out (the
+person's sequence, 2026-10-10: a seat round on the protocol post, the devnet run, the revisions, then seven seats on
+both); (2) the authorship line in the lessons document; (3) two threads, the wallet post first, the lessons document
+linked rather than posted (Recipients' recommendation, adopted in the texts).

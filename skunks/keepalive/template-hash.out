@@ -1,0 +1,48 @@
+# skunks/keepalive/template-hash.py over the published trees, 2026-10-10 (the Blake2b256 value is the node index's template hash, the SHA-256 the explorer's)
+== skunks/keepalive/kaa-mainnet-wallet.tree
+header=0x19 version=1 size=401 constants=15
+  const 0: offset=4 Long 0
+  const 1: offset=6 Coll[Byte] len=33 bytes@8..41 0329bbd4df63f911…
+  const 2: offset=41 Int 2
+  const 3: offset=43 Long 0
+  const 4: offset=45 Int 1051200
+  const 5: offset=50 Int 21600
+  const 6: offset=54 Long 0
+  const 7: offset=56 Long 500000
+  const 8: offset=60 Long 0
+  const 9: offset=62 Long 2
+  const 10: offset=64 Long 2000000
+  const 11: offset=69 Int 10
+  const 12: offset=71 Int 0
+  const 13: offset=73 Int 4
+  const 14: offset=75 Boolean False
+template bytes=327 (tree bytes=404)
+template blake2b256=afc009dcb6d619a42be622b6b950651dfefa8409381abdb8bb27af8162965c19
+template sha256=43d8cc5616ce1e04df7cfa71ab8638783fb4139a5001135fca154b39ecd3aeac
+== skunks/policy/2-twostep/Vault.tree
+header=0x19 version=1 size=329 constants=6
+  const 0: offset=4 Int 0
+  const 1: offset=6 Int 1
+  const 2: offset=8 Coll[Byte] len=187 bytes@11..198 19b8010404020400…
+  const 3: offset=198 Int 0
+  const 4: offset=200 Int 15
+  const 5: offset=202 Coll[Byte] len=33 bytes@204..237 038b0f29a60fa8d7…
+template bytes=95 (tree bytes=332)
+template blake2b256=ea6c571d829843a6dc49a12f97449b4def16ea815670f6a40064781209e67af3
+template sha256=46fb6ca6cfa69afffa607a001c034ce0966f43a188ed5873920b2ee403eba220
+== skunks/policy/2-twostep/Pending.tree
+header=0x19 version=1 size=184 constants=4
+  const 0: offset=4 Int 1
+  const 1: offset=6 Int 0
+  const 2: offset=8 Coll[Byte] len=33 bytes@10..43 038b0f29a60fa8d7…
+  const 3: offset=43 Coll[Byte] len=33 bytes@45..78 03d902f35f560e04…
+template bytes=109 (tree bytes=187)
+template blake2b256=0cefe6aebf812afad711d7292e815783e9988edeb3f6d4df5177404f14141eee
+template sha256=92142d8992d22eacf48209b0dfd3afff12a3c04939b5f9f54676b1c783943413
+== skunks/policy/2-twostep/Pending2.tree
+header=0x19 version=1 size=190 constants=2
+  const 0: offset=4 Coll[Byte] len=33 bytes@6..39 038b0f29a60fa8d7…
+  const 1: offset=39 Coll[Byte] len=33 bytes@41..74 03d902f35f560e04…
+template bytes=119 (tree bytes=193)
+template blake2b256=4871552cebbd4ca501ffef917d9f82be879be68c35718904e252db8861776295
+template sha256=8a92d542b93d3083fb2fe2280588467455422a117416023f0bae79cd9375fe75

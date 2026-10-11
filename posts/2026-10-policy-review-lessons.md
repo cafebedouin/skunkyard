@@ -1,12 +1,17 @@
-# What review found in the policy contracts, and why the outside seats earned their keep (draft, not posted)
+# What review found in the policy contracts, and why independent review mattered
 
 **Top line.** Two review rounds on the policy-vaults work (`skunks/policy/`, `skunks/keepalive/`, `skunks/qvault/`)
-found eleven defects by reading the contracts and the records, none of which the devnet suites had caught, because
-every suite tested the cases its author had imagined. Three were thefts, two were lockouts, one was a standards
-departure, and five were claims that read true in a README and false in the source. All of them were found by
-seats that had only the public files and no part in writing them, and all of the contract defects were fixed
-and re-measured on the devnet the same day (`skunks/policy/6-rekey/SCHEME-SIZING.md`, "Round 2 review fixes"). The log, with every finding, the check that
-confirmed it and what changed, is `posts/seats/policy-post/REVIEW.md`.
+found eleven defects by reading the contracts and the records: two thefts the node then accepted on the devnet, an
+unbounded Merkle index that let a spent one-time key be used again, two missing paths (a successor that could be
+bricked, and no way to close), two departures from FIPS 205's checks (signature length, leaf separation), and four
+errors in the record. None of the seven contract defects had been caught by the devnet suites, because every suite
+tested the cases its author had imagined. Nine were found by review seats (fresh model sessions, of several models,
+given only the public files and no part in writing them); two of the record errors were caught by checking the
+review prompt against the files before round two. All seven contract defects were fixed and re-measured on the
+devnet the same day (`skunks/policy/6-rekey/SCHEME-SIZING.md`, "Round 2 review fixes"; items 1 and 2 in
+`skunks/policy/2-twostep/README.md` and `skunks/policy/6-rekey/README.md`), with one residual the third round
+found: the NFT account's keys still share one hash family. The log, with every finding, the check that confirmed it
+and what changed, is `posts/seats/policy-post/REVIEW.md`.
 
 ## The shape of each
 
@@ -14,40 +19,44 @@ confirmed it and what changed, is `posts/seats/policy-post/REVIEW.md`.
    two-step vault refused two pending boxes in one transaction by counting inputs with its own `propositionBytes`.
    Each vault's pending script embeds its own keys, so two different vaults' boxes each counted as "alone" and one
    output satisfied both; the second value left to anyone, with no key. The suite had tested two boxes of the same
-   vault and passed. **Fix:** bind the output to the input's box id, which also allows honest batching
-   (`skunks/policy/2-twostep/README.md`, rows old-1 and new-1).
+   vault and passed. **Fixed** by binding the output to the input's box id, which also allows honest batching
+   (`2-twostep/results-crossvault.json`, old-1 accepted, new-1 refused). The fix is on the devnet; the mainnet demo
+   still runs the old pending tree, and a vault that embeds the fixed pending box is not built yet.
 2. **"Registered" defined by the presence of registers.** The rotating-key receive address called a box registered
-   if R4 and R5 existed. Anyone can create such a box at the address with their own keys, and the keyless merge then
-   pulled the owner's plain payments into the stranger's box. The suite had tested a merge into another account's
-   address, not another key's box at this address. **Fix:** registration by a supply-one NFT welded to the script
-   (`skunks/policy/6-rekey/README.md`, rows old-1 to new-4, v3-*).
-3. **A custody rule that checks the token and not the registers.** The welded account requires every successor at
-   the script to carry the NFT, and that closed the brick the previous version had. It does not require the
-   registers, so a rekey whose successor omits them is accepted and leaves a box no path can spend, with the NFT
-   inside. Found by reading in round two; the fix is one clause.
-4. **A Merkle index that is never range-checked.** The key schedule verifies a leaf at index i by the parity of
-   i / 2^level for three levels. Index 8 has the same parities as index 0, so it verifies against leaf 0's path; the
+   if R4 and R5 existed. Anyone could create such a box at the address with their own keys, and the keyless merge
+   then pulled the owner's plain payments into the stranger's box. The suite had tested a merge into another
+   account's address, not another key's box at this address. **Fixed** by registration through an NFT the wallet
+   mints with amount one, welded to the script (`6-rekey/results-planted.json`, `results-weld.json`).
+3. **A custody rule that checked the token and not the registers.** The welded account required every successor at
+   the script to carry the NFT, and that closed the brick the previous version had. It did not require the
+   registers, so a rekey whose successor omitted them was accepted and left a box no path could spend, with the NFT
+   inside. **Fixed** (v3-no-regs, v3-no-r5 refused).
+4. **A Merkle index that was never range-checked.** The key schedule verified a leaf at index i by the parity of
+   i / 2^level for three levels. Index 8 has the same parities as index 0, so it verified against leaf 0's path; the
    bound N was not enforced and a spent leaf could be returned to. The suite tested "index not advanced" and passed.
-   Found by two seats independently.
+   Found by two seats independently. **Fixed** (sched-idx8, sched-idx7to8 refused).
 5. **No close path.** The same schedule required every rekey to produce a successor at the script, so an account
-   could never be closed, only emptied to dust.
+   could never be closed, only emptied to dust. **Fixed** (sched-close accepted).
 6. **Signature length never checked.** Every hash-based verifier, SLH-DSA included, sliced the first N bytes of the
    signature and ignored the rest, so a valid signature with bytes appended passed. FIPS 205's first verification
    step is the length check; the Python reference had it, the script did not, and no test noticed, because
-   agreement on valid signatures says nothing about missing refusals.
+   agreement on valid signatures says nothing about missing refusals. **Fixed** in all five verifiers, with the
+   appended-bytes row now refused and the guard-less tree accepting it as the control.
 7. **One seed for all the leaves.** The schedule's eight one-time keys were tweaked by one seed and no leaf index,
-   so they were not separated from each other as the standard's key-pair address separates them.
+   so they were not separated from each other as the standard's key-pair address separates them. **Fixed** in the
+   schedule; the same shape remains in the NFT account, whose keys are tweaked by the NFT id alone.
 8. **A number measured on one contract quoted for another.** The merge cost used to argue "dropping the token is
    free" had been measured on the account contract from before the token was added, so the comparison was between
-   two token-free merges. The record said otherwise for a day.
-9. **A ratio against the wrong baseline.** "3.9× a WOTS+ spend" divided by the plain-WOTS figure; "25× cheaper
-   native" did not follow from the table it cited (13.6× per transaction does).
+   two token-free merges. The record said otherwise until the review.
+9. **A ratio against the wrong baseline.** "Four times a WOTS+ spend" divided by the plain-WOTS figure; "a native
+   opcode would cut it about 25×" did not follow from the table it cited (13.6× per transaction did, before the
+   length guard; 13.5× now).
 10. **Derived figures written as measured.** Script costs computed as node cost minus a fixed charge were quoted as
     measurements; a harness figure was called a node's.
 11. **A logged fix that never happened.** Round one's text findings were recorded as fixed and were not in the file.
     The next round found the same sentences.
 
-## Why the outside seats mattered
+## Why independent review mattered
 
 - The author's suites test the author's model of the contract. Items 1, 2 and 4 are each a case the model did not
   contain: a second user, a planted box, an index past the tree. A reader with no model reads the predicate.
@@ -56,10 +65,11 @@ confirmed it and what changed, is `posts/seats/policy-post/REVIEW.md`.
 - A README is a claim. Items 8 to 10 were READMEs restated; the seat that reads the results file instead of the
   prose finds them in minutes.
 - A log is a claim too (item 11): verify that a recorded fix is in the file before building on the log.
-- Several seats, several models, one clean slice: the two contract seats (Claude) found items 3 to 5 between them,
-  the cryptography seat found 6 and 7, two outside models (Grok, Gemini) found 3 and 4 independently, and the
-  fidelity seat found 8 to 10. No single seat found everything, and the disagreements between them were themselves
-  useful (what "a building block of RFC 8391" may claim).
+- Several seats, several models, one clean slice: Gemini found 3; Gemini and the Derivation seat found 4 and 5
+  independently, and Grok also flagged 4; the Cryptography seat found 6 (with Gemini) and 7; the Fidelity and
+  Derivation seats found 8 to 10; 11 and the 25× were caught in the pre-round check. No single seat found
+  everything, and the disagreements between them were themselves useful (what "a building block of RFC 8391" may
+  claim).
 
 ## Where to read more
 
@@ -67,7 +77,5 @@ confirmed it and what changed, is `posts/seats/policy-post/REVIEW.md`.
 - The contracts and their rows: `skunks/policy/2-twostep/`, `skunks/policy/6-rekey/` (and `slhdsa/` for the FIPS
   205 verifier), `skunks/qvault/`, `skunks/keepalive/`.
 - The method: fresh headless sessions with read tools only on a slice of public files, two outside models through
-  `tools/outside-seat` in the sibling repository, every seat-introduced fact checked against source before it is
-  dispositioned, and three dispositions only: fixed, declined with the reason, or a ruling for the operator.
-
-*Draft. This document goes through the seats before it is posted, like the posts it describes.*
+  an outside-model runner, every seat-introduced fact checked against source before it is dispositioned, and three
+  dispositions only: fixed, declined with the reason, or a ruling for the operator.

@@ -6,3 +6,5 @@ slice-git: not a git checkout
 web:     UNCONTROLLED (no flag)
 jail:    tools/seat-jail
 prompt-sha256: ac03ef22e078dbd6b2960965951823f0898c8d5aab04f44019d36ce791612369
+exit:    0
+model-reported: gemini-3.8-flash-n(x49),gemini-3.8-flash-high(x10) [from c0ba196f-bbda-4267-862b-eec67cc80343.db]
