@@ -148,7 +148,8 @@ makes "registered" un-forgeable:
   restored wallet finds its account by the NFT, not by re-deriving the address. Tracked in the wallet-support list.
 
 Devnet, every row as expected (A = victim/owner key; B = attacker key). The exploit harness and its raw transactions
-are attack tooling, kept outside git in `~/bin/skunkyard-private/policy-attacks/6-rekey/`; the table is the public record:
+are attack tooling, kept outside git in `~/bin/skunkyard-private/policy-attacks/6-rekey/`; its verdict file is public
+since ruling 3 (2026-10-10): `results-planted.json`, one record per row below (6 of 6 `ok`):
 
 | # | case | expected | got |
 |---|---|---|---|
@@ -175,7 +176,8 @@ are the same attempts refused by the fix.
 `RekeyAccount3.es` welds the NFT to the script: **every output at this script must carry the NFT** (no bricked
 successor), **no output off the script may carry it** (no peel-off), and **closing the account burns it**. A transfer
 is therefore a rekey, nothing else. Devnet (`devnet-test-weld.py`, attack tooling in
-`~/bin/skunkyard-private/policy-attacks/6-rekey/`; table is the public record):
+`~/bin/skunkyard-private/policy-attacks/6-rekey/`; verdicts public in `results-weld.json`, 15 of 15 `ok`, the run
+against the round-2 tree, 1,302 B):
 
 | # | case | expected | got |
 |---|---|---|---|
@@ -186,10 +188,23 @@ is therefore a rekey, nothing else. Devnet (`devnet-test-weld.py`, attack toolin
 | v3-brick | v3: owner rekey dropping the NFT | REFUSE | REFUSE |
 | v3-peel | v3: owner peels the NFT off into a plain box | REFUSE | REFUSE |
 | v3-plant | v3: planted box (no NFT) absorbs a plain payment (hole-b regression) | REFUSE | REFUSE |
+| v3-no-regs | v3 round 2: owner rekey, successor has the NFT but no registers | REFUSE | REFUSE |
+| v3-no-r5 | v3 round 2: owner rekey, successor has the NFT and R4 but no R5 | REFUSE | REFUSE |
 | v3-rekey | v3: honest secp rekey, successor carries the NFT | ACCEPT | ACCEPT |
 | v3-xfer / v3-xfer-b | v3: transfer-by-rekey to B, then B spends with B's key | ACCEPT | ACCEPT |
 | v3-merge | v3: honest plain-payment merge, NFT kept | ACCEPT | ACCEPT |
 | v3-close | v3: closure-by-burn (withdraw all, NFT in no output) | ACCEPT | ACCEPT |
+| v3-hashkey | v3 round 2: WOTS+ hash-key rekey (installs a fresh commitment) | ACCEPT | ACCEPT; cost 51,458 (mempool) |
+
+**Round 2 (2026-10-10): a register-less successor bricked the account; fixed.** The review found that `custody`
+checked only `hasNft(o)` for outputs at the script, so an owner or hash-key rekey could create an NFT box without
+R4/R5: carrying the NFT, at the address, and unspendable (its `isReg` fails), bricking the account. `custody` now
+requires `isReg(o)` (the NFT and both registers) for every output at the script (`v3-no-regs`, `v3-no-r5` REFUSE;
+`v3-rekey` the ACCEPT sibling). The hash key is now WOTS+ with the tweak keyed by the account NFT id and a
+signature-length guard (`sig.size == 2144`), matching the family table (the post had said plain WOTS). Tree
+1,267 → **1,302 B**. `v3-hashkey` is the first costing of a hash-key rekey on an NFT version: **51,458**
+(`results-weld.json`, `v3-hashkey`, mempool entry; the 51,836 in commit `106014d`'s message is not in the results
+file and is superseded). 12,590 / 46,637 / 14,791 were measured on the pre-NFT `RekeyAccount.es`.
 
 ## Rekey-cost comparison (SK-052, 2026-10-10): fixed key vs NFT account vs key schedule
 
@@ -211,15 +226,17 @@ the `policy` devnet.
 | variant | tree | rekey | plain-payment handling | token | seed-derivable | post-quantum |
 |---|---|---|---|---|---|---|
 | `FixedKey.es` | 36 B (P2PK) | move, **4,928/box** (19,712 for 4) | free (already owner's) | no | yes | no |
-| `RekeyAccount3.es` | 1,302 B | in-place, WOTS+ hash-key **51,836**; secp owner rekey not re-costed on v3 | merge ~14,791 (v2) | **yes** (NFT) | no | WOTS+ hash key |
+| `RekeyAccount3.es` | 1,302 B | in-place, WOTS+ hash-key **51,458**; secp owner rekey not re-costed on v3 | merge ~14,791 (v2) | **yes** (NFT) | no | WOTS+ hash key |
 | `RekeySchedule.es` | 1,418 B | in-place, **47,130** (WOTS leaf) | merge **14,899** | no | yes | yes |
 
-Schedule devnet rows (`devnet-test-schedule.py`, attack tooling in `skunkyard-private`), all as expected:
+Schedule devnet rows (`devnet-test-schedule.py`, attack tooling in `skunkyard-private`; verdicts public in
+`results-schedule.json`, 11 of 11 `ok`, the run against the round-2 tree), all as expected:
 `sched-foreign` a leaf not in ROOT cannot be spent (REFUSE); `sched-fwd`/`sched-fwd2` WOTS-leaf rekey forward
 (ACCEPT, index 0→1→2); `sched-back` index-not-advanced (REFUSE); `sched-grief-theft` redirecting a griefer's merge
 to the griefer's own leaf (REFUSE); `sched-grief` a plain payment merged into a *revealed past* leaf (ACCEPT);
 `sched-recover` the owner reclaiming it by rekeying with the reused leaf (ACCEPT); `sched-merge` honest merge into
-the current box (ACCEPT). Fixed-key: `devnet-test-fixedkey.py`, `results-fixedkey.json` (public).
+the current box (ACCEPT); and the three round-2 rows below, `sched-idx8`, `sched-idx7to8` (REFUSE) and `sched-close`
+(ACCEPT). Fixed-key: `devnet-test-fixedkey.py`, `results-fixedkey.json` (public).
 
 **What the numbers say.**
 - **Dropping the token is essentially free** [corrected 2026-10-10 post review: the 14,791 was measured on
@@ -271,8 +288,18 @@ and the leaf check of `RekeySchedule.es`. The full suites re-ran on the policy d
 vault **18/18** (`skunks/qvault/`), the schedule **8/8** including the forced-reuse griefing and recovery rows
 (`devnet-test-schedule.py`). So every rotating/sign-once member now runs its SK-053 scheme end to end. The
 schedule after the swap: tree **1,473 B** (1,418 with plain leaves), WOTS+-leaf rekey **51,690** (sched-fwd), merge
-**14,900** (sched-merge); the results file (`results-schedule.json`) sits with the harness in `skunkyard-private`,
-so these are the numbers of record here. The comparison table above keeps the plain-leaf figures.
+**14,900** (sched-merge). The comparison table above keeps the plain-leaf figures.
+
+**Round 2 (2026-10-10): the schedule's three limits, fixed.** (a) `verify` range-checks the index (`0 <= i < 8`): a
+box claiming index 8 could take leaf 0's Merkle path, since the path's bits read index mod 8 (`sched-idx8` REFUSE;
+`sched-idx7to8`, a rekey from 7 to 8, REFUSE). (b) A **close path**: a leaf-signed spend with no successor at the
+script, every output off it (`sched-close` ACCEPT, signed with leaf 4). (c) The **leaf index is in the WOTS+ tweak**
+(`lseed ++ [index, chain, step]`), separating the N leaves as FIPS 205's key-pair address does. With the
+signature-length guard, the schedule now measures tree **1,530 B**, rekey **55,432** (`sched-fwd`), merge **14,908**
+(`sched-merge`); 11 of 11 as expected. Printed lines: `results-schedule.json` (`trees[0].tree_bytes`, the `cost` of
+`sched-fwd` and `sched-merge`). **Publishing it (decided, ruling 3, 2026-10-10):** the results file holds only verdict
+records, tree sizes, devnet addresses and the rig wallets' public keys, so it is in git with the other results files;
+the harness that builds the attack transactions stays private.
 
 ## Hash-based signature choice (SK-053)
 
@@ -286,16 +313,20 @@ sizing that gates the build is in `SCHEME-SIZING.md`.
   every chain hash to a per-vault **public seed** and the (chain, step) address, so two vaults share no hash target
   (SK-035's gap); the seed is bound into the commitment and published with it. Built and run on the devnet
   (`devnet-test-wotsplus.py`): a Python signer against the in-script verifier, a valid signature accepted, a one-byte
-  forgery refused. **Tree 703 B** (well inside the 4,096-B cap). Cost: a **measured ~18% over plain WOTS**, not the
+  forgery refused. **Tree 703 B** (well inside the 4,096-B cap; **717 B** with the round-2 length guard, whose
+  appended / truncated / other-key / deep-flip / replay rows all REFUSE, `results-wotsplus.json`). Cost: a
+  **measured ~18% over plain WOTS** (16.3% re-measured with the guard, `results-wotsplus.json` `cost_comparison`), not the
   ~8% the sizing table estimated — the tweak's per-step address/concatenation ops, not its extra hashing, dominate
   (`SCHEME-SIZING.md` records the correction and its effect on the SLH-DSA estimate).
 - **Sign-many (the rotating address): stateful vs stateless.** The key schedule (this, an XMSS shape with WOTS+
   leaves) is small and cheap but stateful — hence the revealed-leaf forced-reuse griefing above. **SLH-DSA** (FIPS
   205, stateless) removes the index entirely: no revealed-leaf griefing, no multi-device collision (SK-037), at a
   large signature (SK-105: 128s 7,856 B). **Its in-script verifier fits (step 3, 2026-10-10, `slhdsa/`):**
-  `SlhDsa.es` compiles to a **1,506 B** tree, node cost **201,947** on a random spend (~251,500 worst [est.]),
-  a BouncyCastle signature accepted and two forgeries refused — and **node-judged on the policy devnet** (honest
-  spend mined at cost 202,006, 8,054 B; `slhdsa/results-devnet.json`). So the rotating address has a stateless option
+  `SlhDsa.es` compiles to a **1,516 B** tree with the round-2 length guard (1,506 before), node cost **201,250**
+  on a random spend (~249,200 worst [est.]), a BouncyCastle signature accepted and seven forgeries refused
+  (another message; appended, truncated, another key, a FORS-node flip, a layer-6 WOTS+ flip, a replay on a second
+  box) — and **node-judged on the policy devnet** (honest spend mined at cost 201,416, 8,054 B, every forgery
+  refused; `slhdsa/results-devnet.json`). So the rotating address has a stateless option
   at about 3.9× the WOTS+ cost and ~39 spends per block by cost.
 
 Standards for the post: SLH-DSA is FIPS 205, XMSS is SP 800-208, WOTS+ is a building block (sign-once by design).

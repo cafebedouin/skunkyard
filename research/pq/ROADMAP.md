@@ -64,13 +64,27 @@ Answers given along the way that this roadmap assumes (`posts/REVIEW-manytime-re
 
 **A statement above is now false by measurement.** "Stateless SLH-DSA is not a path here (8 to 30 KB signatures,
 five times the verification cost)" was a reading. Built and measured (`skunks/policy/6-rekey/slhdsa/`,
-`skunks/policy/6-rekey/SCHEME-SIZING.md`): a FIPS 205 SLH-DSA-SHA2-128s verifier compiles to a 1,506-byte tree
-(cap 4,096), costs 188,944 script / 201,947 node per spend (relay cap 4,900,000), with a 7,856-byte signature and a
-transaction of about 9.4 KB; BouncyCastle's signature accepted, a flipped byte and an other-message signature
-refused, in the harness and then by the node on the policy devnet (cost 202,006, 8,054 bytes, mined). It is a path.
-Item 1 above (WOTS+ tweaks) is done and measured (`WotsPlus.es`, 703 bytes; tweak overhead 17.7% against the 8%
-estimated, because interpretation, not hashing, is about 89% of a hash-signature spend on Ergo). The option
+`skunks/policy/6-rekey/SCHEME-SIZING.md`): a FIPS 205 SLH-DSA-SHA2-128s verifier compiles to a 1,516-byte tree
+with the signature-length guard (cap 4,096), costs 188,247 script / 201,250 node per spend (relay cap 4,900,000;
+`slhdsa/run.log`, `stage 7 valid=ACCEPT cost=188247 node_cost=201250`), with a 7,856-byte signature and a
+transaction of about 9.4 KB; BouncyCastle's signature accepted, and an other-message signature, appended and
+truncated signatures, another key's signature, deep flips (a FORS auth node, a layer-6 WOTS+ chain) and a replay on a
+second box refused, in the harness and then by the node on the policy devnet (honest spend mined at cost 201,416,
+8,054 bytes; `slhdsa/results-devnet.json`, 9 of 9). It is a path. (Before the round-2 guard: 1,506 bytes,
+188,944 / 201,947, devnet 202,006; git `3a6f826`.)
+Item 1 above (WOTS+ tweaks) is done and measured (`WotsPlus.es`, 703 bytes, 717 with the length guard; tweak
+overhead 17.7%, 16.3% re-measured with the guard (`results-wotsplus.json`), against the 8% estimated, because interpretation, not hashing, is about 89% of a hash-signature spend on Ergo). The option
 comparison above is answered in `SCHEME-SIZING.md` for the script-only candidates.
+
+**Round 2 of the post's review (2026-10-10): four contract limits found by reading, all fixed on the devnet.**
+Each now has refusal rows and an ACCEPT sibling (`skunks/policy/6-rekey/SCHEME-SIZING.md`, "Round 2 review fixes"):
+- a signature-length guard on all five hash verifiers (a valid signature with bytes appended used to verify):
+  WotsPlus 717 B, QVault 1,247 B (21/21, `skunks/qvault/devnet-results.json`), SlhDsa 1,516 B (above);
+- the welded NFT account's custody requires both registers (a register-less successor bricked it) and its hash key
+  is WOTS+: 1,302 B, hash-key rekey 51,458 (`results-weld.json`, 15/15);
+- the key schedule range-checks the index (index 8 took leaf 0's path), has a close path and the leaf index in the
+  WOTS+ tweak: 1,530 B, rekey 55,432, merge 14,908 (`results-schedule.json`, 11/11).
+The schedule and weld verdict files moved from `skunkyard-private` into `skunks/policy/6-rekey/` (ruling 3).
 
 **The two decisions (SK-053), recorded 2026-10-10:**
 - Sign-once (the quantum-day vault's migration key): **WOTS+** with a per-vault public seed in the commitment.
@@ -83,11 +97,12 @@ comparison above is answered in `SCHEME-SIZING.md` for the script-only candidate
   block by cost. Acceptable because only owner spends run the verifier; payments in and keyless merges never do.
 - Interpretation is the cost (89%); no parameter or hash choice changes it. A native verification would cost about
   14,893 per transaction by SK-105's estimate (`research/lattice/RESULT.md`, the SLH-DSA-128s opcode row) against
-  201,947 measured in script, about 13.6× per transaction (computed; an earlier "25×" here did not follow from that
+  201,250 measured in script (201,947 before the length guard), about 13.5× per transaction (computed; an earlier "25×" here did not follow from that
   table and was corrected 2026-10-10); that is the one lever that needs a fork.
-- Assurance is thin: one key pair, nine spends, the stage vectors, BouncyCastle as the only oracle. A verifier that
+- Assurance is thin: one key pair, nine spends, the stage vectors, six negative classes (round 2), BouncyCastle as
+  the only oracle. A verifier that
   accepts a forgery is a total loss.
-- The forced worst case (every chain at 15 steps, about 238,500) is a fit, not a run. One parameter set (128s);
+- The forced worst case (every chain at 15 steps, about 236,200; 238,500 before the guard) is a fit, not a run. One parameter set (128s);
   128f and the higher categories are 2–3× the cost and would still fit, untested.
 - No wallet signs it: BouncyCastle in a Scala harness is the only signer; no hardware wallet supports it; key
   derivation from an EIP-3 seed is unspecified.

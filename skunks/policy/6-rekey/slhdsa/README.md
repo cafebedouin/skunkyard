@@ -1,26 +1,50 @@
 # SK-053 step 3 — an SLH-DSA-SHA2-128s verifier in ErgoScript: it fits
 
 **Answer: yes, on all four pre-registered criteria, with margin.** A complete FIPS 205 SLH-DSA-SHA2-128s verifier
-(`SlhDsa.es`) compiles with sigma-state 6.0.7 to a **1,506-byte** ErgoTree (cap 4,096), verifies a BouncyCastle
-signature on the spend it guards at a script cost of **188,944** (node cost **201,947** with mainnet's fixed 13,003;
-relay cap 4,900,000), accepts the valid signature and refuses both a one-byte-flipped signature and a signature on
-another message. Measured 2026-10-10 in the q2 interpreter harness (no node; see "Environment" for the classpath).
+(`SlhDsa.es`) compiles with sigma-state 6.0.7 to a **1,516-byte** ErgoTree (cap 4,096), verifies a BouncyCastle
+signature on the spend it guards at a script cost of **188,247** (node cost **201,250** with mainnet's fixed 13,003;
+relay cap 4,900,000), accepts the valid signature and refuses a signature on another message and the six round-2
+negatives (appended, truncated, another key, a flip in a FORS auth node, a flip in a layer-6 WOTS+ chain, the replay
+on a second box). Measured 2026-10-10 in the q2 interpreter harness, then judged by the node on the policy devnet
+("On the devnet" below); see "Environment" for the classpath.
+
+**Round 2 (2026-10-10): the signature-length guard.** The first build had no length check: a valid signature with
+bytes appended verified (the Cryptography seat's finding; the control row `sibling unguarded_appended_16_bytes=ACCEPT`
+reproduces it on the guard-less tree). `SlhDsa.es` now ends `sigmaProp(sig.size == 7856 && fin._1 == pkRoot)` (FIPS
+205 Algorithm 20, line 1). The guard costs 10 bytes (1,506 → 1,516; `stage 7 unguarded tree_bytes=1506 guarded
+tree_bytes=1516`) and changes the template, so every figure below that depends on the tree or the spend digest was
+re-measured; the pre-guard figures (1,506 B, 188,944 / 201,947, devnet 202,006) are in git history at `3a6f826`.
+The `&&` short-circuits: a wrong-length signature is refused at script cost 328, before the verification runs.
 
 | criterion | threshold | measured | verdict | printed line |
 |---|---|---|---|---|
-| 1. verifier tree | ≤ 4,096 B | **1,506 B** (header 0x10, 123 segregated constants) | **fits** | `stage 7 compiled=true tree_bytes=1506 …` |
-| 2. node cost | < 4,900,000 | **201,947** (script 188,944 + 13,003); 8 spends: script min 185,345 / median 187,307 / max 191,167; worst case **~238,500 script [est., linear fit]** | **fits** | `stage 7 valid=ACCEPT cost=188944 node_cost=201947 …`, `ref-fit …` |
+| 1. verifier tree | ≤ 4,096 B | **1,516 B** (header 0x10, 124 segregated constants) | **fits** | `stage 7 compiled=true tree_bytes=1516 …` |
+| 2. node cost | < 4,900,000 | **201,250** (script 188,247 + 13,003); 8 spends: script min 185,784 / median 188,247 / max 189,443; worst case **~236,200 script [est., linear fit]** | **fits** | `stage 7 valid=ACCEPT cost=188247 node_cost=201250 …`, `ref-fit …` |
 | 3. independent signature accepted | BouncyCastle 1.86 (FIPS 205 final) | valid = ACCEPT, and BC agrees | **pass** | `stage 7 criterion3_valid_accepted=true` |
-| 4. forgeries refused | one byte flipped; another message | REFUSE (cost 187,162); REFUSE (cost 184,938) | **pass** | `stage 7 one_byte_flipped=REFUSE … other_message=REFUSE …` |
+| 4. forgeries refused | another message; the six round-2 negatives (table below) | all REFUSE; BC refuses each too | **pass** | `stage 7 other_message=REFUSE … negatives_refused=true bc_agrees=true` |
+
+The round-2 negatives, each a single mutation of the valid spend (its ACCEPT sibling) unless the sibling column says
+otherwise (`run.log`, `stage 7 negative …` / `stage 7 sibling …`; `results.json` stage 7):
+
+| negative | script cost | verdict | sibling (ACCEPT) |
+|---|---|---|---|
+| valid signature with 16 bytes appended | 328 | REFUSE | the guard-less tree accepts the same bytes (`unguarded_appended_16_bytes=ACCEPT`): the hole |
+| valid signature truncated by 16 bytes | 328 | REFUSE | the valid spend |
+| another key's signature on the same digest | 188,499 | REFUSE | that key's signature on its own tree (`other_key_own_tree=ACCEPT`) |
+| one byte flipped in a FORS auth node (tree 7, level 5; byte 1,568) | 189,929 | REFUSE | the valid spend |
+| one byte flipped in a layer-6 WOTS+ chain element (chain 10; byte 7,312) | 188,247 | REFUSE | the valid spend |
+| the valid signature replayed on a second box at the same address | 188,353 | REFUSE | the second box with its own signature (`second_box_own_signature=ACCEPT`) |
+
+The two deep flips replace the first build's flip in R (byte 0), which only moved the message digest.
 
 Stage reached: **7 of 7** (the full verifier). No stage failed to compile; no construct was refused. ErgoTree
 **version 0** (header `0x10`, constants segregated), no 6.0-only method was needed.
 
 **The one sentence for the forum post:** a stateless FIPS 205 SLH-DSA-SHA2-128s verifier fits in an ErgoScript
-proposition today (1,506 of 4,096 bytes) at about 3.9× the measured cost of the plain-WOTS single-chain verifier
-(node 201,947 against 51,896 for `wots_constant` n=32 w=16 in `q2/RESULT.md`; about 3.4× the WOTS+ estimate) and a 7,856-byte signature, so the
+proposition today (1,516 of 4,096 bytes) at about 3.9× the measured cost of the plain-WOTS single-chain verifier
+(node 201,250 against 51,896 for `wots_constant` n=32 w=16 in `q2/RESULT.md`; about 3.4× the WOTS+ estimate) and a 7,856-byte signature, so the
 rotating receive address has a stateless option with no revealed-leaf griefing, at roughly 39 single-input spends per
-block by cost (8,001,091 / 201,947; computed, not run).
+block by cost (8,001,091 / 201,250; computed, not run).
 
 ## What was built (the staged record)
 
@@ -36,11 +60,11 @@ stage; `run.log` the full printed output of `bash skunks/policy/6-rekey/slhdsa/r
 | 4 | layer-0 XMSS root from the 9-node authentication path | `stage-4.es` | 314 | 620 | ACCEPT |
 | 5 | hypertree: 7 layers of (3) then (4) in one fold, indices from the digest | `stage-5.es` | 819 | 177,286 | ACCEPT |
 | 6 | FORS: 14 trees of height 12, roots compressed by T_k | `stage-6.es` | 622 | 10,750 | ACCEPT |
-| 7 | H_msg, index extraction, (6), (5), root == PK.root; message bound to the spend | `SlhDsa.es` | **1,506** | **188,944** | ACCEPT; forgeries REFUSE |
+| 7 | H_msg, index extraction, (6), (5), sig.size == 7,856 and root == PK.root; message bound to the spend | `SlhDsa.es` | **1,516** | **188,247** | ACCEPT; forgeries REFUSE |
 
 Stage trees are not additive (each carries the shared prefix code and its own expected-value constants); stage 7 is
-the figure. The 1,506 bytes break down roughly as ~250 bytes of constants (PK.seed prefix 64 B, PK.root 16 B, six
-index collections, eight zero bytes, literals) and ~1,250 bytes of code, with the WOTS+ and XMSS code written once
+the figure. The 1,516 bytes break down roughly as ~250 bytes of constants (PK.seed prefix 64 B, PK.root 16 B, six
+index collections, eight zero bytes, literals including the 7,856 of the length guard) and ~1,250 bytes of code, with the WOTS+ and XMSS code written once
 inside the layer fold.
 
 ## The construct that made it small, and the cost it carries
@@ -59,29 +83,31 @@ concatenations, one hash, one slice. There is no per-byte `toByte` (which throws
 accumulators `(Coll[Byte], Long)` three lambdas deep.
 
 **Cost per chain step, measured:** a least-squares fit over the 8 spends (chain steps counted by the reference,
-cost by the interpreter) gives **27.8 block-cost units per WOTS+ chain step** with a fixed part of **136,200** and a
-largest residual of 335 (`ref-fit spends=8 cost_per_chain_step=27.8 fixed=136200 max_residual=335`). The fixed part
+cost by the interpreter) gives **26.6 block-cost units per WOTS+ chain step** with a fixed part of **138,634** and a
+largest residual of 367 (`ref-fit spends=8 cost_per_chain_step=26.6 fixed=138634 max_residual=367`; before the guard,
+on other digests: 27.8, 136,200, 335). The fixed part
 is the structure that runs whatever the message: FORS (10,750), seven T_len compressions over 560 bytes, 63 XMSS
 nodes, and 3,675 fold iterations over the step index that each evaluate the `if (s >= digit)` test (WOTS+ in
 `WotsPlus.es` pays the same per-iteration cost). The worst case, every chain 15 steps, extrapolates to
-**~238,500 script, ~251,500 node [est.: fit, not run]**, 5.1% of the relay cap.
+**~236,200 script, ~249,200 node [est.: fit, not run]** (`cost_worst_est=236208`), 5.1% of the relay cap.
 
 **Hashing share: about 11%, computed; the stand-in measurement is unreliable here.** sha256 is charged
 `PerItemCost(80, 8, 64)` JIT per call (block units are JIT/10; the same formula on blake2b256 reproduces q2's measured
-2,673 for 990 chain hashes exactly). The reference counts the calls and their lengths: 2,023 to 2,233 tweakable calls
-of 102 (F), 118 (H), 310 (T_k) or 646 (T_len) bytes plus H_msg's two, which is 19,493 to 21,509 block units, a
-share of **0.105 to 0.113** of the script cost (`ref-spend … sha256_cost=… hash_share=…`). q2's method, replacing each
-hash by a slice of its input and re-measuring, gave 0.1375 on this key and 0.068 on the first key: without the real
+2,673 for 990 chain hashes exactly). The reference counts the calls and their lengths: 2,038 to 2,173 tweakable calls
+of 102 (F), 118 (H), 310 (T_k) or 646 (T_len) bytes plus H_msg's two, which is 19,637 to 20,933 block units, a
+share of **0.106 to 0.111** of the script cost (`ref-spend … sha256_cost=… hash_share=…`). q2's method, replacing each
+hash by a slice of its input and re-measuring, gave 0.1343 on this run (`hash_share_approx … share=0.1343`), 0.1375
+before the guard and 0.068 on the first key: without the real
 hash the WOTS+ digits come from garbage nodes, so the step counts, and the cost, change between runs. The computed
 figure is the one to quote; it is above q2's 7% because sha256 is charged 3.6× blake2b256 per call, and still means
 nearly 90% of the cost is interpretation.
 
 ## Per-key address, as for WOTS
 
-A second BouncyCastle key compiles to a 1,506-byte tree with the **same template** and a different tree
-(`stage 7 second_key tree_bytes=1506 templates_equal=true trees_equal=false`, template hash `586fe548…`), so each
-SLH-DSA public key has its own P2S address (2,063 characters) and the box carries no register, as
-`q2/wots-constant.es` does. The spend transaction is 9,412 bytes (one input, one output, the 7,856-byte signature in
+A second BouncyCastle key compiles to a 1,516-byte tree with the **same template** and a different tree
+(`stage 7 second_key tree_bytes=1516 templates_equal=true trees_equal=false`, template hash `6b2a95f4…`; `586fe548…`
+before the guard), so each SLH-DSA public key has its own P2S address (2,077 characters) and the box carries no
+register, as `q2/wots-constant.es` does. The spend transaction is 9,422 bytes (one input, one output, the 7,856-byte signature in
 context variable 1), under the 96 KiB mempool limit; by size it would be ~135 spends per block, so the SLH-DSA spend
 is **cost-bound** at ~39 per block (computed from the limits in `q2/RESULT.md`; the WOTS+ figure there is ~154).
 
@@ -113,23 +139,34 @@ never converged. What ran instead, with the same effect:
 `q2/README.md` records for the coursier-pinned 6.0.7 (`pin q2/wots-constant.es n=32 w=16 tree_bytes=840`). `run.sh`
 uses coursier when it can and takes `SLHDSA_CP` / `SCALAC_CP` otherwise.
 
-## On the devnet, judged by the node (2026-10-10, after the cloud run)
+## On the devnet, judged by the node (2026-10-10, after the cloud run; re-run with the length guard)
 
 The cloud session's four criteria were harness verdicts (compiler and interpreter, no node). The same verifier was
 then put on the peeryard devnet `policy` (ergo 6.0.7, one mining node, 20 s blocks) as a box's guard, with the
-harness's own compiled bytes as the tree (`run.sh tree`, 1506 bytes) and BouncyCastle's signature on the spend
-digest (`run.sh sign <digest>`), and every verdict is the node's (`devnet-test-slhdsa.py`, `results-devnet.json`).
-Forgeries were checked first, as siblings of the honest spend, then the honest spend was mined.
+harness's own compiled bytes as the tree (`run.sh tree`, 1,516 bytes with the guard) and BouncyCastle's signature on
+the spend digest (`run.sh sign <digest>`; `run.sh sign-other <digest>` for a fresh throwaway key), and every verdict
+is the node's (`devnet-test-slhdsa.py`, `results-devnet.json`). Two boxes of equal value were deposited at the
+address (for the replay row); forgeries were checked first, as siblings of the honest spend, then the honest spend
+was mined.
 
-| # | case | expected | node |
+| # | case | expected | node (script cost from the refusal text) |
 |---|---|---|---|
-| 1 | one byte of the signature flipped | REFUSE | REFUSE ("should pass verification") |
-| 2 | signed for one set of outputs, sent with another | REFUSE | REFUSE ("should pass verification") |
-| 3 | the honest spend | ACCEPT | ACCEPT, mined (`a9d53bca…`, height 1055), **cost 202,006** (mempool entry), 8,054 bytes |
+| 1 | the valid signature with 16 bytes appended | REFUSE | REFUSE (`Success((false,150))`: the guard, short-circuited) |
+| 2 | the valid signature truncated by 16 bytes | REFUSE | REFUSE (`(false,150)`) |
+| 3 | another key's signature on the same digest | REFUSE | REFUSE (`(false,189122)`) |
+| 4 | one byte flipped in a FORS auth node (tree 7, level 5) | REFUSE | REFUSE (`(false,184861)`) |
+| 5 | one byte flipped in a layer-6 WOTS+ chain element (chain 10) | REFUSE | REFUSE (`(false,189216)`) |
+| 6 | signed for one set of outputs, sent with another | REFUSE | REFUSE (`(false,185958)`) |
+| 7 | the valid signature replayed on the second box | REFUSE | REFUSE (`(false,187529)`): SELF.id is in the message |
+| 8 | the second box with its own signature (sibling of 7; checked, not sent) | ACCEPT | ACCEPT |
+| 9 | the honest spend | ACCEPT | ACCEPT, mined (`fa6d2aed…`, height 1635), **cost 201,416** (mempool entry), 8,054 bytes |
 
-The node's cost, 202,006, is the whole transaction's on the devnet's parameters (`inputCost` 2,000,
+The node's cost, 201,416, is the whole transaction's on the devnet's parameters (`inputCost` 2,000,
 `outputCost` 100, two outputs, a different digest from the harness's spend); it sits inside the harness's range for
-its spends (script 185,345–191,167 plus the fixed charge). Deposit `228d48a5…`, address `bChUYJfDxbHj…`.
+its spends (script 185,784–189,443 plus the fixed charge). Deposit `6ca18d24…`, address `9UueU9buQ96i…`. The node's
+script cost for a wrong-length signature (150) differs from the harness's (328) [why: not traced]; both are
+three orders below a verification, so in both the guard refused before the hash work ran. The first devnet run (before the guard, 1,506 B: flipped
+byte and other-message REFUSE, honest spend mined at 202,006) is in git history at `3a6f826`.
 The devnet's `maxBlockCost` is 1,000,000, so about four such spends fit a devnet block; mainnet's
 8,001,091 allows about 39 (computed from the node's cost, not run).
 
@@ -144,7 +181,7 @@ number above was produced from it; regenerating it would change them all.
 - `stage-2.es` … `stage-6.es`, `SlhDsa.es` — the stages and the verifier; each header says what it computes and which
   constants it expects.
 - `SlhDsaRunner.scala` — the harness (q2 pattern): `gen` (BC key pair and signature), `stage N`, `full` (criteria 1–4,
-  8 spends, second key, hash stand-in), `pin`.
+  the round-2 negatives and their siblings, 8 spends, second key, hash stand-in), `pin`, `tree`, `sign`, `sign-other`.
 - `run.sh` — the whole pipeline; writes `run.log`, `results.json` (`{stage, compiled, tree_bytes, cost, verdict, error}`
   per stage, with the stage-7 criteria), `vectors.json`, `vectors-spend.json`, `spends.json`.
 - `devnet-test-slhdsa.py`, `results-devnet.json`: the node's verdict (the section above). `run.sh tree` prints the
@@ -153,7 +190,7 @@ number above was produced from it; regenerating it would change them all.
 ## What this does not settle
 
 - **Executed on a devnet node, not mainnet.** The cloud run was harness-only; the devnet section above adds the
-  node's verdict on one honest spend and two forgeries. The devnet's block cost cap is one eighth of mainnet's.
+  node's verdict on one honest spend, its second-box sibling and seven forgeries. The devnet's block cost cap is one eighth of mainnet's.
 - **Worst-case cost is a fit, not a run.** Forcing all 7 × 35 chains to 15 steps needs a chosen-digest message the
   harness does not construct. The fit's residual is 335 on costs near 188,000.
 - **One parameter set.** 128s was the question. The same script with the 128f constants (d 22, h' 3, a 6, k 33) would

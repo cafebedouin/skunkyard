@@ -132,7 +132,8 @@ to the box, not by counting inputs:
   pending box is pinned to one vault by R6 and the tree.)
 
 Devnet, every row as expected (the exploit harness and its raw transactions are attack tooling, kept outside git in
-`~/bin/skunkyard-private/policy-attacks/2-twostep/`; the table is the public record):
+`~/bin/skunkyard-private/policy-attacks/2-twostep/`; its verdict file is public since ruling 3, 2026-10-10:
+`results-crossvault.json`, one record per row below, 6 of 6 `ok`):
 
 | # | case | expected | got |
 |---|---|---|---|

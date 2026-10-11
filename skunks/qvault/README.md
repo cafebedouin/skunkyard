@@ -14,7 +14,8 @@ only by a hash-based signature after. The rent half is KeepAlive's (`skunks/keep
 > Round 2 (2026-10-10) adds a signature-length guard (`sig.size == 2144`) and the Cryptography-seat negatives on the
 > hash key (rows 6a append, 6b truncate, 6c deep-flip, all REFUSE); the full suite is 21/21.
 
-- `QVault.es` (1,247 bytes at devnet constants, with the signature-length guard): the vault. Three ways to spend it:
+- `QVault.es` (1,247 bytes at devnet constants, 1,248 for the vault with the farther backstop; with the
+  signature-length guard, `devnet-results.json` `vaults`): the vault. Three ways to spend it:
   - **owner key:** `proveDlog(OWNER)`, only while the flag box, shown as a data input and found by its NFT, says
     false, and `HEIGHT < BACKSTOP`. Leaving the flag box out, or showing a look-alike, closes this path rather than
     opening it.
@@ -29,7 +30,7 @@ only by a hash-based signature after. The rent half is KeepAlive's (`skunks/keep
 - `devnet-test.py`: the harness. The spend message digest comes from `skunks/oneshot/scripts/wots-cli.mts`; the WOTS+
   key and signature are built in the harness (`wotsplus_keygen` / `wotsplus_sign`) against `WotsPlus.es`.
 
-## Devnet result (2026-10-10): 18 of 18 as expected
+## Devnet result (2026-10-10): 18 of 18 as expected; 21 of 21 after round 2
 
 peeryard devnet `keepalive` (ergo 6.0.7, one mining node, 20 s blocks; `rig/devnet.sh expose A 9180 keepalive`).
 The node wallet holds the owner key and a second, derived oracle key. Two vaults, each with its own WOTS key:
@@ -46,6 +47,9 @@ Results: `devnet-results.json`.
 | 4 | hash key spends A | ACCEPT | ACCEPT |
 | 5 | hash key: signed for one set of outputs, sent with another | REFUSE | REFUSE |
 | 6 | hash key spends B and C together (a one-time key twice) | REFUSE | REFUSE |
+| 6a | hash key, signature with 32 bytes appended (round 2) | REFUSE | REFUSE |
+| 6b | hash key, signature truncated by 32 bytes (round 2) | REFUSE | REFUSE |
+| 6c | hash key, a byte flipped deep in the signature (chain 33) (round 2) | REFUSE | REFUSE |
 | 7 | keyless merge of B and C | ACCEPT (mined) | ACCEPT |
 | 8 | lone refresh of A in the KeepAlive window, no key | ACCEPT | ACCEPT |
 | 9 | owner key spends D after NEAR's backstop (flag still false) | REFUSE | REFUSE |
@@ -59,10 +63,15 @@ Results: `devnet-results.json`.
 | 17 | keyless merge of A, the B+C box and a new payment E | ACCEPT (mined) | ACCEPT |
 | 18 | hash key spends the merged box to the owner | ACCEPT (mined) | ACCEPT |
 
+Rows 6a–6c are the Cryptography seat's negatives (round 2), each a mutation of row 4's honest hash-key spend; with
+the length guard the full suite is 21 of 21 (`devnet-results.json`, re-run 2026-10-10). The other-key and replay
+negatives were run on `WotsPlus.es` itself (`../policy/6-rekey/results-wotsplus.json`, `wp-otherkey`, `wp-replay`),
+whose chain code is the hash key here; they were not re-run against `QVault.es`.
+
 **Where each refusal comes from:**
 - **Key paths** (2, 3, 9, 13, 15, 16): the node's wallet answered "Script reduced to false". It evaluated the script
   in that exact context and found no path it could prove.
-- **The rest** (5, 6, 11): the node's own check, "Scripts of all transaction inputs should pass verification".
+- **The rest** (5, 6, 6a–6c, 11): the node's own check, "Scripts of all transaction inputs should pass verification".
 
 **What failed on the way:** two harness bugs, neither in the contracts.
 - The node wallet spent the look-alike flag box as change. It now sits at a key nobody holds.
@@ -80,5 +89,5 @@ Results: `devnet-results.json`.
   survives more than one spend.
 - **Mainnet constants** (PERIOD 1,051,200, WINDOW 21,600) and a mainnet flag box. Who runs the oracle is a
   governance question, not a contract one.
-- **Size.** 1,178 bytes (1,233 after the WOTS+ swap) against about 80 for an ordinary address. If such a box were left to rent, a claim would
+- **Size.** 1,178 bytes (1,233 after the WOTS+ swap, 1,247 with the length guard) against about 80 for an ordinary address. If such a box were left to rent, a claim would
   take about 1.5 ERG; KeepAlive's refresh is what makes that moot.
