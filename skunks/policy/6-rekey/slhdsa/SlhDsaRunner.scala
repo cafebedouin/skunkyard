@@ -24,7 +24,9 @@ import scala.io.Source
   *
   *   gen        BouncyCastle key pair + signature on a random 32-byte message -> vectors.json
   *   stage N    compile stage-N.es against the reference's intermediates (vectors.json "ref"), evaluate, print
-  *   full       compile SlhDsa.es, build the spend, sign its digest with BC; valid / one-byte flip / other message
+  *   full       compile SlhDsa.es, build the spend, sign its digest with BC; valid / other message, and the round-2
+  *              negatives (appended, truncated, another key, a flip in a FORS auth node and in a layer-6 WOTS+ chain,
+  *              the replay on a second box) with their ACCEPT siblings and the unguarded verifier as the control
   *
   * Every stage prints one `stage N ...` line and one `RESULT {json}` line; run.sh collects the latter into results.json.
   */
@@ -203,15 +205,48 @@ object SlhDsaRunner {
         }
         try {
           val (okValid, costValid) = evaluate(c.tree, self, out0, sig0)
-          val flipped = sig0.clone(); flipped(0) = (flipped(0) ^ 1).toByte
-          val (okFlip, costFlip) = evaluate(c.tree, self, out0, flipped)
           val (okOther, costOther) = evaluate(c.tree, self, out0, v.sig)      // BC's signature on vectors.json's message
-          val bcAgrees = bcVerify(v.pk, msg0, sig0) && !bcVerify(v.pk, msg0, flipped) && !bcVerify(v.pk, msg0, v.sig)
+          // the Cryptography seat's negatives (round 2), each a single mutation of the valid spend above (its ACCEPT
+          // sibling) unless noted. A refusal by exception (a slice past the end) counts as REFUSE, with the error kept.
+          def tryEval(t: ErgoTree, s: ErgoBox, o: ErgoBoxCandidate, sg: Array[Byte]): (Boolean, Long, String) =
+            try { val (ok, cost) = evaluate(t, s, o, sg); (ok, cost, "") } catch { case ex: Throwable => (false, -1L, firstLine(ex)) }
+          def flipAt(off: Int) = { val f = sig0.clone(); f(off) = (f(off) ^ 1).toByte; f }
+          val forsOff = 16 + 7 * 208 + 16 + 5 * 16          // FORS tree 7, authentication node at level 5
+          val wotsOff = 2928 + 6 * 704 + 10 * 16            // hypertree layer 6, WOTS+ chain 10, first byte
+          val appended = sig0 ++ Array.fill(16)(0x5a: Byte)
+          val truncated = sig0.take(SIG_LEN - 16)
+          val kp2 = { val kpg = new SLHDSAKeyPairGenerator(); kpg.init(new SLHDSAKeyGenerationParameters(new SecureRandom(), SLHDSAParameters.sha2_128s)); kpg.generateKeyPair() }
+          val pk2 = kp2.getPublic.asInstanceOf[SLHDSAPublicKeyParameters].getEncoded
+          val sk2 = kp2.getPrivate.asInstanceOf[SLHDSAPrivateKeyParameters].getEncoded
+          val sigKey2 = bcSign(sk2, msg0)                                    // another key, the same digest
+          val self2 = new ErgoBox(value = 1000000000L, ergoTree = c.tree, additionalTokens = Colls.emptyColl[(ErgoBox.TokenId, Long)],
+            additionalRegisters = Map.empty, transactionId = dummyTxId, index = 1.toShort, creationHeight = 100)   // same address, other id
+          val sigBox2 = bcSign(v.sk, Blake2b256.hash(self2.id ++ out0.bytesWithNoRef))
+          val c2 = compile(src, e ++ Map("PRE" -> coll(pk2.take(16) ++ Array.fill(48)(0: Byte)), "PK_ROOT" -> coll(pk2.drop(16))))
+          val unguarded = compile(src.replace("sig.size == 7856 && ", ""), e)  // the verifier before the length guard
+          val negs = Seq(
+            ("appended_16_bytes", tryEval(c.tree, self, out0, appended), !bcVerify(v.pk, msg0, appended)),
+            ("truncated_16_bytes", tryEval(c.tree, self, out0, truncated), !bcVerify(v.pk, msg0, truncated)),
+            ("other_key_same_digest", tryEval(c.tree, self, out0, sigKey2), !bcVerify(v.pk, msg0, sigKey2)),
+            ("flip_fors_auth_node", tryEval(c.tree, self, out0, flipAt(forsOff)), !bcVerify(v.pk, msg0, flipAt(forsOff))),
+            ("flip_layer6_wots_chain", tryEval(c.tree, self, out0, flipAt(wotsOff)), !bcVerify(v.pk, msg0, flipAt(wotsOff))),
+            ("replay_on_second_box", tryEval(c.tree, self2, out0, sig0), true))
+          val sibs = Seq(
+            ("unguarded_appended_16_bytes", tryEval(unguarded.tree, self, out0, appended)),   // the hole the guard closes
+            ("other_key_own_tree", tryEval(c2.tree, box(c2.tree), out0, bcSign(sk2, Blake2b256.hash(box(c2.tree).id ++ out0.bytesWithNoRef)))),
+            ("second_box_own_signature", tryEval(c.tree, self2, out0, sigBox2)))
+          val bcAgrees = bcVerify(v.pk, msg0, sig0) && !bcVerify(v.pk, msg0, v.sig) && negs.forall(_._3)
+          negs.foreach { case (name, (ok, cost, err), _) =>
+            println(s"stage 7 negative $name=${verdict(ok)} cost=$cost" + (if (err.nonEmpty) s" error=$err" else "")) }
+          sibs.foreach { case (name, (ok, cost, err)) =>
+            println(s"stage 7 sibling $name=${verdict(ok)} cost=$cost" + (if (err.nonEmpty) s" error=$err" else "")) }
+          println(s"stage 7 unguarded tree_bytes=${unguarded.bytes} guarded tree_bytes=${c.bytes}")
+          val negsRefused = negs.forall(!_._2._1)
           val nodeCost = costValid + FIXED_TX_COST
           val fits2 = nodeCost < MAX_RELAY_COST
           println(s"stage 7 valid=${verdict(okValid)} cost=$costValid node_cost=$nodeCost tx_bytes=$txLen criterion2_node_cost_lt_4900000=$fits2")
-          println(s"stage 7 one_byte_flipped=${verdict(okFlip)} cost=$costFlip other_message=${verdict(okOther)} cost=$costOther bc_agrees=$bcAgrees")
-          println(s"stage 7 criterion3_valid_accepted=$okValid criterion4_forgeries_refused=${!okFlip && !okOther}")
+          println(s"stage 7 other_message=${verdict(okOther)} cost=$costOther negatives_refused=$negsRefused bc_agrees=$bcAgrees")
+          println(s"stage 7 criterion3_valid_accepted=$okValid criterion4_forgeries_refused=${!okOther && negsRefused}")
           // more spends, for the message dependence of the cost (WOTS+ chain steps vary with the digest); spends.json
           // carries each (digest, signature, cost) so the reference can count the chain steps and fit cost per step
           val more = (1 to 7).map { i => val o = spend(i); val m = digest(o); val s = bcSign(v.sk, m); val (ok, cost) = evaluate(c.tree, self, o, s); (m, s, ok, cost) }
@@ -221,9 +256,6 @@ object SlhDsaRunner {
             spends.map { case (m, s, _, cost) => s"""{"msg": "${hex(m)}", "sig": "${hex(s)}", "cost": $cost}""" }.mkString(", ") + "]}")
           println(s"stage 7 costs_${spends.length}_spends min=${all.head} median=${all(spends.length / 2)} max=${all.last} all_accepted=${spends.forall(_._3)}")
           // per-key address: a second key must compile to the same template (constants segregated), a different tree
-          val pk2 = { val kpg = new SLHDSAKeyPairGenerator(); kpg.init(new SLHDSAKeyGenerationParameters(new SecureRandom(), SLHDSAParameters.sha2_128s))
-            kpg.generateKeyPair().getPublic.asInstanceOf[SLHDSAPublicKeyParameters].getEncoded }
-          val c2 = compile(src, e ++ Map("PRE" -> coll(pk2.take(16) ++ Array.fill(48)(0: Byte)), "PK_ROOT" -> coll(pk2.drop(16))))
           implicit val enc: ErgoAddressEncoder = ErgoAddressEncoder(ErgoAddressEncoder.MainnetNetworkPrefix)
           println(s"stage 7 second_key tree_bytes=${c2.bytes} templates_equal=${c.tree.template.sameElements(c2.tree.template)} " +
             s"trees_equal=${c.tree.bytes.sameElements(c2.tree.bytes)} template_hash=${hex(Blake2b256.hash(c.tree.template))} address_chars=${enc.toString(Pay2SAddress(c.tree)).length}")
@@ -234,11 +266,13 @@ object SlhDsaRunner {
           val cNo = compile(noHash, e)
           val (_, costNo) = evaluate(cNo.tree, box(cNo.tree), new ErgoBoxCandidate(1000000000L, cNo.tree, 100), sig0)
           println(s"stage 7 hash_share_approx cost_with_sha256=$costValid cost_without=$costNo share=${"%.4f".format((costValid - costNo).toDouble / costValid)}")
-          result("stage-7", "compiled" -> true, "tree_bytes" -> c.bytes, "cost" -> costValid, "verdict" -> verdict(okValid),
-            "error" -> null, "node_cost" -> nodeCost, "tx_bytes" -> txLen, "flipped" -> verdict(okFlip), "other_message" -> verdict(okOther),
+          result("stage-7", (Seq[(String, Any)]("compiled" -> true, "tree_bytes" -> c.bytes, "cost" -> costValid, "verdict" -> verdict(okValid),
+            "error" -> null, "node_cost" -> nodeCost, "tx_bytes" -> txLen, "other_message" -> verdict(okOther),
             "cost_min" -> all.head, "cost_median" -> all(spends.length / 2), "cost_max" -> all.last, "cost_without_tweakable_sha256" -> costNo,
             "second_key_templates_equal" -> c.tree.template.sameElements(c2.tree.template),
-            "criterion1" -> fits1, "criterion2" -> fits2, "criterion3" -> okValid, "criterion4" -> (!okFlip && !okOther))
+            "criterion1" -> fits1, "criterion2" -> fits2, "criterion3" -> okValid, "criterion4" -> (!okOther && negsRefused),
+            "bc_agrees" -> bcAgrees) ++
+            negs.map { case (n, (ok, _, _), _) => n -> verdict(ok) } ++ sibs.map { case (n, (ok, _, _)) => s"sibling_$n" -> verdict(ok) }): _*)
         } catch { case ex: Throwable =>
           ex.printStackTrace()
           println(s"stage 7 compiled=true tree_bytes=${c.bytes} eval_error=${firstLine(ex)}")
@@ -268,6 +302,10 @@ object SlhDsaRunner {
       val v = loadVectors(); val m = unhex(msgHex); val sig = bcSign(v.sk, m)
       require(bcVerify(v.pk, m, sig), "BouncyCastle does not verify its own signature")
       println(s"SIG ${hex(sig)}")
-    case _ => System.err.println("usage: SlhDsaRunner gen | stage N | full | pin | tree | sign <digestHex>"); sys.exit(2)
+    case "sign-other" :: msgHex :: Nil =>      // a fresh throwaway key signs the same digest (the other-key negative)
+      val kpg = new SLHDSAKeyPairGenerator(); kpg.init(new SLHDSAKeyGenerationParameters(new SecureRandom(), SLHDSAParameters.sha2_128s))
+      val sk = kpg.generateKeyPair().getPrivate.asInstanceOf[SLHDSAPrivateKeyParameters].getEncoded
+      println(s"SIG ${hex(bcSign(sk, unhex(msgHex)))}")
+    case _ => System.err.println("usage: SlhDsaRunner gen | stage N | full | pin | tree | sign <digestHex> | sign-other <digestHex>"); sys.exit(2)
   }
 }

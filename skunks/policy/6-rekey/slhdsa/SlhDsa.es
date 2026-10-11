@@ -96,5 +96,8 @@
     })
     (root._1, tree)
   })
-  sigmaProp(fin._1 == pkRoot)
+  // FIPS 205 Algorithm 20 line 1: a signature of the wrong length is rejected (closes the "valid signature with
+  // bytes appended" malleability the Cryptography seat flagged). The && short-circuits: a wrong length is refused
+  // at script cost 328 without the verification running (run.log, `negative appended_16_bytes=REFUSE cost=328`).
+  sigmaProp(sig.size == 7856 && fin._1 == pkRoot)
 }

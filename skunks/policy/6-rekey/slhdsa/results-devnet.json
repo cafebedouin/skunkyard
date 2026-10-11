@@ -6,7 +6,7 @@
    "outputCost": 100,
    "tokenAccessCost": 100,
    "maxBlockCost": 1000000,
-   "height": 1052,
+   "height": 1632,
    "maxBlockSize": 524288,
    "dataInputCost": 100,
    "blockVersion": 4,
@@ -16,43 +16,103 @@
    "minValuePerByte": 360
   }
  },
- "tree_bytes": 1506,
- "address": "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",
- "deposit_tx": "228d48a5c060837d6a8f3bfb3f85b96fe0281ec0ae9caa8058fde9e576196b66",
+ "tree_bytes": 1516,
+ "address": "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",
+ "deposit_tx": "6ca18d2497e05295bdd11c84b2def0aa5bf5419e77f55846358741c48c9eeefd",
  "results": [
   {
    "case": 1,
-   "label": "one byte of the signature flipped (sibling of 3)",
+   "label": "the valid signature with 16 bytes appended (sibling of 9)",
    "expect": "REFUSE",
    "got": "REFUSE",
    "ok": true,
-   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. a2664454bbcc613a0865521ebc67b01fabdaf989653464c68e7735011182a289: #0 => Success((false,182978))\" }",
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 7511fa2c208b8de9ba4c0e66ac728e86834b73009f46ce906b80ea88eb782c27: #0 => Success((false,150))\" }",
    "source": "node-check",
-   "sibling_n": 3
+   "sibling_n": 9
   },
   {
    "case": 2,
-   "label": "signed for one set of outputs, sent with another (sibling of 3)",
+   "label": "the valid signature truncated by 16 bytes (sibling of 9)",
    "expect": "REFUSE",
    "got": "REFUSE",
    "ok": true,
-   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. a31d37363bc9f362fc00140cb3ea7a43b56567288cda1d1f7fd71215146f6913: #0 => Success((false,189213))\" }",
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 8243fd88b1bdca35eca2c06de494517dbc68731cbac75c3315a75970a8a54336: #0 => Success((false,150))\" }",
    "source": "node-check",
-   "sibling_n": 3
+   "sibling_n": 9
   },
   {
    "case": 3,
+   "label": "another key's signature on the same digest (sibling of 9)",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 5f71a9e38ac7fd447d9ee89a2d16e9c5cabd5ba847e25f9b24757ea9e1d12595: #0 => Success((false,189122))\" }",
+   "source": "node-check",
+   "sibling_n": 9
+  },
+  {
+   "case": 4,
+   "label": "a byte flipped in a FORS auth node (sibling of 9)",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 85b0d9fb2e8128b4d0ae4c5acba1af4287213ffca20c4a6d98eda09baea4a1bb: #0 => Success((false,184861))\" }",
+   "source": "node-check",
+   "sibling_n": 9
+  },
+  {
+   "case": 5,
+   "label": "a byte flipped in a layer-6 WOTS+ chain (sibling of 9)",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 27f9f1ebc232ea5909f58f889d21b64e8af808bfe80a975cba7caab18c60163c: #0 => Success((false,189216))\" }",
+   "source": "node-check",
+   "sibling_n": 9
+  },
+  {
+   "case": 6,
+   "label": "signed for one set of outputs, sent with another (sibling of 9)",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. b981b79a14337521e0baaffd26fdab951b4667f9b709a70255c27ce941636f03: #0 => Success((false,185958))\" }",
+   "source": "node-check",
+   "sibling_n": 9
+  },
+  {
+   "case": 7,
+   "label": "the valid signature replayed on a second box (sibling of 8)",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 4c4db0846ae103836de3e16140e650d63ff4f7c100cb3b872120e7bbe75fb946: #0 => Success((false,187529))\" }",
+   "source": "node-check",
+   "sibling_n": 8
+  },
+  {
+   "case": 8,
+   "label": "the second box with its own signature (checked only)",
+   "expect": "ACCEPT",
+   "got": "ACCEPT",
+   "ok": true,
+   "detail": "48bdb9b0ddf8183cc32a2848b5272d573110f167313906de44cbbb1194ee062c",
+   "source": "node-check",
+   "sibling_n": null
+  },
+  {
+   "case": 9,
    "label": "the honest spend",
    "expect": "ACCEPT",
    "got": "ACCEPT",
    "ok": true,
-   "detail": "a9d53bca1610e1cf092e12ff227c89efd12c2277e619422e93a73113bbc22252",
+   "detail": "fa6d2aedb05f37904dfe114f20603e5eeaf4546114d70db5f54dc5b7498388e9",
    "source": "node-check",
    "sibling_n": null,
-   "tx_id": "a9d53bca1610e1cf092e12ff227c89efd12c2277e619422e93a73113bbc22252",
-   "cost": 202006,
+   "tx_id": "fa6d2aedb05f37904dfe114f20603e5eeaf4546114d70db5f54dc5b7498388e9",
+   "cost": 201416,
    "cost_instrument": "mempool",
-   "mined_height": 1055,
+   "mined_height": 1635,
    "tx_size": 8054
   }
  ]

@@ -7,9 +7,17 @@ the tree is the harness's own compiled bytes (`run.sh tree`), the signature is B
 (`run.sh sign <digest>`), and every verdict is the node's (`/transactions/check`; ACCEPT = 200, REFUSE = "should
 pass verification"). Forgeries are checked first, as siblings of the honest spend, then the honest spend is mined.
 
-  1  one byte of the signature flipped                              REFUSE
-  2  signed for one set of outputs, sent with another               REFUSE
-  3  the honest spend                                               ACCEPT (mined), cost from the mempool entry
+  1  the valid signature with 16 bytes appended                     REFUSE (the length guard, FIPS 205 Alg. 20 line 1)
+  2  the valid signature truncated by 16 bytes                      REFUSE
+  3  another key's signature on the same digest                     REFUSE
+  4  one byte flipped in a FORS authentication node (tree 7, lvl 5) REFUSE
+  5  one byte flipped in a layer-6 WOTS+ chain element (chain 10)   REFUSE
+  6  signed for one set of outputs, sent with another               REFUSE
+  7  the valid signature replayed on a second box at the address    REFUSE (SELF.id is in the message)
+  8  the second box with its own signature                          ACCEPT (checked, not sent; sibling of 7)
+  9  the honest spend                                               ACCEPT (mined), cost from the mempool entry
+
+Round 2 (2026-10-10) added 1-5, 7 and 8 and replaced the old flip in R (byte 1) with the deep flips 4 and 5.
 
 usage: devnet-test-slhdsa.py [--node http://127.0.0.1:9181] [--out results-devnet.json]
 """
@@ -72,10 +80,11 @@ def main():
     owner_tree = "0008cd" + must(base, f"/utils/addressToRaw/{owner_addr}")["raw"]
     print("verifier tree", len(tree) // 2, "bytes; address", addr[:12], "…; node", info["appVersion"], "height", info["fullHeight"])
 
+    # two boxes of equal value at the verifier's address: A is spent honestly, A2 receives A's signature (the replay)
     dep = wait_tx_outputs(base, must(base, "/wallet/transaction/send", {"requests": [
-        {"address": addr, "value": 20_000_000}], "fee": FEE}))
-    A = [o for o in dep["outputs"] if o["ergoTree"] == tree][0]
-    print("deposit", dep["id"][:8], "box", A["boxId"][:8], "at", A["creationHeight"])
+        {"address": addr, "value": 20_000_000}, {"address": addr, "value": 20_000_000}], "fee": FEE}))
+    A, A2 = sorted([o for o in dep["outputs"] if o["ergoTree"] == tree], key=lambda o: o["index"])[:2]
+    print("deposit", dep["id"][:8], "boxes", A["boxId"][:8], A2["boxId"][:8], "at", A["creationHeight"])
 
     h = height(base)
     outs = [{"value": A["value"] - FEE, "ergoTree": owner_tree, "creationHeight": h, "assets": [],
@@ -84,9 +93,12 @@ def main():
     digest = spend_digest(A["boxId"], outs)
     sig = runner("sign", digest)
     print("digest", digest[:16], "… signature", len(sig) // 2, "bytes")
+    sig_other = runner("sign-other", digest)
+    sig_a2 = runner("sign", spend_digest(A2["boxId"], outs))
 
-    def tx(signature, outputs):
-        return {"inputs": [{"boxId": A["boxId"], "spendingProof": {"proofBytes": "", "extension": {"1": coll_bytes(signature)}}}],
+    def tx(signature, outputs, box=None):
+        box = box or A
+        return {"inputs": [{"boxId": box["boxId"], "spendingProof": {"proofBytes": "", "extension": {"1": coll_bytes(signature)}}}],
                 "dataInputs": [], "outputs": outputs}
 
     def record(n, label, expect, got, detail="", **extra):
@@ -102,14 +114,23 @@ def main():
         record(n, label, expect, got, detail, source="node-check", sibling_n=sibling)
         return code == 200
 
-    # siblings first: both forgeries are single mutations of the honest spend (case 3), same input, same height
-    flipped = sig[:2] + format(int(sig[2:4], 16) ^ 1, "02x") + sig[4:]
-    check(1, "one byte of the signature flipped (sibling of 3)", tx(flipped, outs), "REFUSE", 3)
+    # siblings first: every forgery is a single mutation of the honest spend (case 9), same input, same height
+    def flip(at):
+        return sig[:2 * at] + format(int(sig[2 * at:2 * at + 2], 16) ^ 1, "02x") + sig[2 * at + 2:]
+    fors_off = 16 + 7 * 208 + 16 + 5 * 16          # as SlhDsaRunner.scala: FORS tree 7, auth node level 5
+    wots_off = 2928 + 6 * 704 + 10 * 16            # hypertree layer 6, WOTS+ chain 10
+    check(1, "the valid signature with 16 bytes appended (sibling of 9)", tx(sig + "5a" * 16, outs), "REFUSE", 9)
+    check(2, "the valid signature truncated by 16 bytes (sibling of 9)", tx(sig[:-32], outs), "REFUSE", 9)
+    check(3, "another key's signature on the same digest (sibling of 9)", tx(sig_other, outs), "REFUSE", 9)
+    check(4, "a byte flipped in a FORS auth node (sibling of 9)", tx(flip(fors_off), outs), "REFUSE", 9)
+    check(5, "a byte flipped in a layer-6 WOTS+ chain (sibling of 9)", tx(flip(wots_off), outs), "REFUSE", 9)
     redirect = [dict(outs[0], ergoTree="0008cd" + kt.G), outs[1]]
-    check(2, "signed for one set of outputs, sent with another (sibling of 3)", tx(sig, redirect), "REFUSE", 3)
+    check(6, "signed for one set of outputs, sent with another (sibling of 9)", tx(sig, redirect), "REFUSE", 9)
+    check(7, "the valid signature replayed on a second box (sibling of 8)", tx(sig, outs, A2), "REFUSE", 8)
+    check(8, "the second box with its own signature (checked only)", tx(sig_a2, outs, A2), "ACCEPT")
 
     honest = tx(sig, outs)
-    if check(3, "the honest spend", honest, "ACCEPT"):
+    if check(9, "the honest spend", honest, "ACCEPT"):
         txid = must(base, "/transactions", honest)
         cost, instrument = None, "missed"
         for _ in range(50):
