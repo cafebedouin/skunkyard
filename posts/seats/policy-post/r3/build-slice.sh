@@ -6,6 +6,8 @@ set -euo pipefail
 S="$1"; R="$(cd "$(dirname "$0")/../../../.." && pwd)"; R2="$R/posts/seats/policy-post/r3"
 rm -rf "$S"; mkdir -p "$S/evidence"; E="$S/evidence"
 cp "$R/posts/2026-10-policy-vaults-forum-draft.md" "$S/POST-DRAFT.md"
+cp "$R/posts/2026-10-policy-vaults-protocol-draft.md" "$S/POST-DRAFT-PROTOCOL.md"
+cp "$R/posts/2026-10-policy-review-lessons.md" "$S/POST-LESSONS.md"
 cp "$R2/README-SLICE.md" "$S/README-SLICE.md"
 awk '/^# Round 2: seven seats/{f=1} f' "$R/posts/seats/policy-post/REVIEW.md" > "$S/REVIEW-ROUND2.md"
 cp "$R2/../r2/template-hash.out" "$S/evidence/template-hash.out"

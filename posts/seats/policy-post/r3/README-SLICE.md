@@ -1,7 +1,9 @@
 # What is here
 
-`POST-DRAFT.md` is the third draft of a forum post for the Ergo forum (ergoforum.org), not yet posted. Its audience
-is wallet developers, with one section for the protocol side. It says that opt-in "policy" contracts on Ergo boxes
+`POST-DRAFT.md` (the wallet post) and `POST-DRAFT-PROTOCOL.md` (the protocol post) are the third round of a draft
+forum post for the Ergo forum (ergoforum.org), split in two after the second round, not yet posted. `POST-LESSONS.md`
+is a short companion document on the defects the reviews found. The wallet post's audience is wallet developers;
+the protocol post's is the node and protocol side. It says that opt-in "policy" contracts on Ergo boxes
 work without a fork: two run on mainnet (KeepAlive, a two-step withdrawal vault), the rest were tested on a devnet.
 It lists what a wallet would need to add per policy, describes a three-member family of rotating-key receive
 addresses, and reports that a FIPS 205 SLH-DSA-SHA2-128s verifier fits in an ErgoScript proposition.
@@ -27,6 +29,9 @@ https://github.com/cafebedouin/skunkyard on 2026-10-10:
   (`SIGNERS.md`), and the tree builder (`twostep-trees.mjs`).
 - `mainnet-tx/`: the eight mainnet transactions the draft cites, as the public explorer (api.ergoplatform.com)
   returned them on 2026-10-10, one JSON file per transaction id.
+- The four verdict files published after round two: `6-rekey/results-schedule.json`, `results-weld.json`,
+  `results-planted.json`, `2-twostep/results-crossvault.json`; the re-run `results-wotsplus.json`,
+  `qvault/devnet-results.json`, `slhdsa/results.json` and `results-devnet.json`.
 - `REVIEW-ROUND2.md`: the review log of the second draft (seven seats, every finding with its check and
   disposition), so this round can verify that each fix landed.
 - `evidence/template-hash.out`: the output of a parser over the three published mainnet trees (constant offsets,

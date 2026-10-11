@@ -4,7 +4,8 @@
 found eleven defects by reading the contracts and the records, none of which the devnet suites had caught, because
 every suite tested the cases its author had imagined. Three were thefts, two were lockouts, one was a standards
 departure, and five were claims that read true in a README and false in the source. All of them were found by
-seats that had only the public files and no part in writing them. The log, with every finding, the check that
+seats that had only the public files and no part in writing them, and all of the contract defects were fixed
+and re-measured on the devnet the same day (`skunks/policy/6-rekey/SCHEME-SIZING.md`, "Round 2 review fixes"). The log, with every finding, the check that
 confirmed it and what changed, is `posts/seats/policy-post/REVIEW.md`.
 
 ## The shape of each

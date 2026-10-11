@@ -97,7 +97,7 @@ The schedule and weld verdict files moved from `skunkyard-private` into `skunks/
   block by cost. Acceptable because only owner spends run the verifier; payments in and keyless merges never do.
 - Interpretation is the cost (89%); no parameter or hash choice changes it. A native verification would cost about
   14,893 per transaction by SK-105's estimate (`research/lattice/RESULT.md`, the SLH-DSA-128s opcode row) against
-  201,250 measured in script (201,947 before the length guard), about 13.5× per transaction (computed; an earlier "25×" here did not follow from that
+  201,250 in script (188,247 measured in the harness plus the fixed 13,003; 201,947 before the length guard), about 13.5× per transaction (computed; an earlier "25×" here did not follow from that
   table and was corrected 2026-10-10); that is the one lever that needs a fork.
 - Assurance is thin: one key pair, nine spends, the stage vectors, six negative classes (round 2), BouncyCastle as
   the only oracle. A verifier that

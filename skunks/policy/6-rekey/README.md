@@ -226,7 +226,7 @@ the `policy` devnet.
 | variant | tree | rekey | plain-payment handling | token | seed-derivable | post-quantum |
 |---|---|---|---|---|---|---|
 | `FixedKey.es` | 36 B (P2PK) | move, **4,928/box** (19,712 for 4) | free (already owner's) | no | yes | no |
-| `RekeyAccount3.es` | 1,302 B | in-place, WOTS+ hash-key **51,458**; secp owner rekey not re-costed on v3 | merge ~14,791 (v2) | **yes** (NFT) | no | WOTS+ hash key |
+| `RekeyAccount3.es` | 1,302 B | in-place, WOTS+ hash-key **51,458**; secp owner rekey not re-costed on v3 | merge 14,791 (measured on the pre-NFT `RekeyAccount.es`; no NFT version's merge costed) | **yes** (NFT) | no | WOTS+ hash key |
 | `RekeySchedule.es` | 1,418 B | in-place, **47,130** (WOTS leaf) | merge **14,899** | no | yes | yes |
 
 Schedule devnet rows (`devnet-test-schedule.py`, attack tooling in `skunkyard-private`; verdicts public in
