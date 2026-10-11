@@ -1,0 +1,317 @@
+{
+ "experiment": "6-rekey-weld",
+ "started_height": 1515,
+ "node": {
+  "appVersion": "6.0.7",
+  "parameters": {
+   "outputCost": 100,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 1512,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2000,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ },
+ "wallets": {
+  "A": [
+   "038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c",
+   "031ee1ab3b729f21e0dcee05642a63745286354d8e511e6376838e235a28078c01",
+   "0367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df",
+   "0398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04",
+   "026c2134d11af7f0bea024724278ebc37ced69a19a99dd6638f393d5f1b9c8bea0",
+   "0389e8fb63050cdb2c3f5c70b3d6167835b60bcf020b9ed7c332965ffce26f2e6f"
+  ],
+  "B": [
+   "03d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494",
+   "0376bf533d4b15510fa9f4124b6e48616f07debcf2ef0cfb185cdc4a576450b475",
+   "02ea2649b3512b9a859ab658a85e2989a7ae39b2518877b2dc0f2b44b785d5788d",
+   "03b4c210719212afb16b5f136a2dcb3cc9fc231721f711994facf3b6111afba7d0",
+   "0234835d35c02b0dc042aa9c041b854b98c28df4872fdc8c6a260bc2ddd767f5a3",
+   "02a52d6327542c16cce7645b899e651dc78098fa4f495acb36992e66b099405ec2"
+  ]
+ },
+ "trees": [
+  {
+   "name": "RekeyAccount3",
+   "tree_bytes": 1302,
+   "box_bytes": null,
+   "address": "44xTrW91PvGw894F2x8i75mQ5LqMnfJbVEyFTJXXhfT9ZboPejbSpqBq8ZRaCiBA7YYpbxnk6oSFJYnqdCMdtM4TcNf5QPv9sDNWfvyS4eWTE2ERGXFskH1CrzJQSRCs8WEaT7Hu7Gz6ZwWbAFmearqrvp11WG2QYAsZeHKcZEWFhMv1jYmEzKsnaYVWZiVTtLDZdcvTix31svpCdAxQJk9gPmU7vuiRNhahtJiPLxtdkSScCRMwnLct4TxvHpKt2x9GH7vnBVueaDFiYnPXKsSBTiw85tojYdDqeaaKQFPsQ5aLwAW4dCcoQowqwB1DqwQVdJqyR1EqjYzWMwiQW7LrVDJQnPs76k46jUw1FAvkZHQFbGzUMPocU6jizhtCYAdXZiUi2FwaHmYfi2VJiBRhz5EQSayyKobMnbeSf4RxdCaLu364QiqJkGcWqtwSrB1EHykKP17hAWi5noN2XhPiMUA3TYdmm35e4Mmk3Kx2SJGeTFKHBmLS1WFNmUi5ZPjpTUQb6LTXkMGeNgqkDo64myPZkDhfh18gXPhph2AAN1njUk3Eb2UQHsGmrH26eiHrqdgrabHPMpTMJo17T47R4d9xVoj5HgwNMXgaTvkYNphACKJj1zecgtDAvLK8hjeD6ag5ZNnkaGjVGxMMaLfmtXmS6AzMXbhUVEQ2m8oc8M8c38yEZXS2LDyBfLP9jL2owPdWkMQoj16oNHKfpLkfZ3RQLGC536jYenwLJKjtnSYi4D917yAvXvpX1eTXRtPUVkQpZXuGuqsRReNdavQbU55WiUbkviNEzaB6x1wMmBKf5eqtUkd5viHpppnmDraP17qbUACqkusazHMX5F2CBmGsZiGypjpVeSawAC2ZTqfKbH7rvF1WPkkWKFUPGodspixin5r1Gs4Z2CqJjETkq7rSBsb8AdqBSx5M3zvNUG2r9RQwJD8PmFUbavZzxE4SYEUVE5x9QK28JL68N3k19CPnnNqZpsjrms852mVKdeDySDbtUD5Q81RwCMD9gi7pookcNZdyvXjf6WqzcB8xi9iq3CTttDo73e9MufTEXTBFsJh9qtbRh3mYgpjRn2mB5SHwJSmZSvwHe429Qw7FRU13rg995JCSMp9hi9oAuysSpTFV4MJHmbFoBcbhx6jJjGtRUXvNcoT5q68yhCPbet2vCFjPBVmK4gzzDrNBdvaVautd6Be9kpzNTt1NuBBwYzowfegwZMLMf6uL7R6GwTD993SHQDSbvwNeDKKSK8PJjFC31Jg9XyyMKeHgcXGw2H4e3sohV4avCfkLCZtSPtNSDkf162wJ48recyDm9pWYLdEkB4uTWqkQujkpNHsosFE49PV1EDWHFMFKog2kiZ2J2YrrHcpspnsiX8fzFDTNZJitfqYnkf2TcbQXFiYgqhCAZcZWAamzWKpPFB3fP2uYa3NSaPuGW8HmSQJnaRtQGuwy3CuLztdMSCste8aBWaUmGJdvmz5N2qGdFeW1NAuE1jdMCffMBPPme36KnosuPgpiZAfQtQALDEQMoi2vLkVTMTokaeWa3R3kFN32U4VWzwb3GYnk9P9ydk6Ln4bv4Z2bb1JCXkbMn67nw1YtHXgGrshnp8VjTqAigqTgS8Bg4zbemn7LqBudt7dyzdS9rg95ZAK3SA1roQsk9RY2VZGvSmyYTVzFevAcpXa1TGDvQRKZN87qyrJsr9Gz8vKjaCnyKZNmg6TQR65gUM4Guz3R4AYynFLfEiVsqiKLD7eYFPcn3M7szXL39e9bUZ6M9vbWKZRSz",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": null
+  }
+ ],
+ "cases": [
+  {
+   "n": "v2-brick",
+   "label": "owner rekey drops the NFT (successor has no NFT)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "4cc3c5a6c9705282dea5edc16adbf808c56659e39da3fb8b36e06d4eabf52e19",
+   "heights": {
+    "before": 1517,
+    "after": 1517
+   },
+   "detail": "4cc3c5a6c9705282dea5edc16adbf808c56659e39da3fb8b36e06d4eabf52e19",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v2-brick-sp",
+   "label": "spend the NFT-less successor (bricked)",
+   "got": "REFUSE",
+   "source": "wallet-sign",
+   "sibling_n": "v2-brick",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1518,
+    "after": 1518
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. c9529e54b29af3ba37a7d69e869417c5154d130082673626c3ea31c8",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v2-peel",
+   "label": "owner peels the NFT off into a plain (off-script) box",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "918693f42af38191cb8b3a07b0aad63dd2661949e63c820b896efc483151a658",
+   "heights": {
+    "before": 1521,
+    "after": 1521
+   },
+   "detail": "918693f42af38191cb8b3a07b0aad63dd2661949e63c820b896efc483151a658",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v2-peel-cap",
+   "label": "the replanted NFT box (B's key) absorbs a plain payment, keyless merge",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "9963e9a80daeb9a451609b1311c43df1cf9ecc8f0d72e3dc34a5b3f515e572cb",
+   "heights": {
+    "before": 1523,
+    "after": 1523
+   },
+   "detail": "9963e9a80daeb9a451609b1311c43df1cf9ecc8f0d72e3dc34a5b3f515e572cb",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "v3-brick",
+   "label": "owner rekey dropping the NFT",
+   "got": "REFUSE",
+   "source": "wallet-sign",
+   "sibling_n": "v3-rekey",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1525,
+    "after": 1525
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. ec9cbf7819b82224a3f339a566851c2d8fca8bbeefe0b12d83ce70e0",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v3-peel",
+   "label": "owner peels the NFT off into a plain box",
+   "got": "REFUSE",
+   "source": "wallet-sign",
+   "sibling_n": "v3-rekey",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1525,
+    "after": 1525
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. cb2a0f270430b82fd65316b4b15c0ba1e381030fcd6e0803259115e5",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v3-plant",
+   "label": "planted box (no NFT) absorbs a plain payment (hole-b regression)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "v3-merge",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1526,
+    "after": 1526
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. e1601f551760af4a64d5f5cbd10b8bdd44669bbda7e9b6ece3fb0ea9c8cd61b5: #0 => Success((false,163))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "v3-no-regs",
+   "label": "owner rekey: successor has the NFT but no registers",
+   "got": "REFUSE",
+   "source": "wallet-sign",
+   "sibling_n": "v3-rekey",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1526,
+    "after": 1526
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 5d31572f01cf0cb4f6fbdf108132396b25854787272b2a428e25d677",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v3-no-r5",
+   "label": "owner rekey: successor has the NFT and R4 but no R5",
+   "got": "REFUSE",
+   "source": "wallet-sign",
+   "sibling_n": "v3-rekey",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 1526,
+    "after": 1526
+   },
+   "detail": "wallet A sign: {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed request: Script reduced to false\" } | unsigned check: REFUSE {   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 2d78cea9b827a15d1b5b3e925bcbf66c63a4426a6d3916e5ff06d699",
+   "expect": "REFUSE",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v3-rekey",
+   "label": "honest secp rekey, successor carries the NFT",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "fab71d66fbe08d550d0abd121972ef32140a4ed8027b9003b9629166055732d9",
+   "heights": {
+    "before": 1526,
+    "after": 1526
+   },
+   "detail": "fab71d66fbe08d550d0abd121972ef32140a4ed8027b9003b9629166055732d9",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v3-xfer",
+   "label": "transfer-by-rekey: successor R4 = B, NFT carried",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "fc6e0658def26cea55c96266295f3760838ff6696ea987930dac3a6c1bdc2f0e",
+   "heights": {
+    "before": 1527,
+    "after": 1527
+   },
+   "detail": "fc6e0658def26cea55c96266295f3760838ff6696ea987930dac3a6c1bdc2f0e",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  },
+  {
+   "n": "v3-xfer-b",
+   "label": "B (the new owner) spends the transferred box with B's key",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "62fd9ecd6ec8aa27a7194e0de21f006afea6072891fd3fe9b00f0370ddb57ae2",
+   "heights": {
+    "before": 1528,
+    "after": 1528
+   },
+   "detail": "62fd9ecd6ec8aa27a7194e0de21f006afea6072891fd3fe9b00f0370ddb57ae2",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "B"
+  },
+  {
+   "n": "v3-merge",
+   "label": "honest plain-payment merge, NFT kept",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "58557c7114516479097c7b16ec3cd2299fe88c388187ac727227d0f1e179e02b",
+   "heights": {
+    "before": 1529,
+    "after": 1529
+   },
+   "detail": "58557c7114516479097c7b16ec3cd2299fe88c388187ac727227d0f1e179e02b",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "v3-close",
+   "label": "closure-by-burn: withdraw all, NFT in no output",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "8f3debc4b4317732d38dbc6d5b4f43c7eb7cb7139ceb77d31ed038cec4946e61",
+   "heights": {
+    "before": 1530,
+    "after": 1530
+   },
+   "detail": "8f3debc4b4317732d38dbc6d5b4f43c7eb7cb7139ceb77d31ed038cec4946e61",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "B"
+  },
+  {
+   "n": "v3-hashkey",
+   "label": "WOTS+ hash-key rekey on the welded NFT account (installs a fresh commitment)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": 51458,
+   "cost_instrument": "mempool",
+   "tx_id": "f27610907794d051b48e4a461099391fb566c93e9b2103f8994f93bf67ec00d9",
+   "heights": {
+    "before": 1532,
+    "after": 1532
+   },
+   "detail": "f27610907794d051b48e4a461099391fb566c93e9b2103f8994f93bf67ec00d9",
+   "expect": "ACCEPT",
+   "ok": true
+  }
+ ],
+ "harness_bugs": []
+}

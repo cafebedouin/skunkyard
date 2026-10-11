@@ -1,0 +1,156 @@
+{
+ "experiment": "6-rekey-planted",
+ "started_height": 700,
+ "node": {
+  "appVersion": "6.0.7",
+  "parameters": {
+   "outputCost": 100,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 700,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2000,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ },
+ "wallets": {
+  "A": [
+   "038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c",
+   "031ee1ab3b729f21e0dcee05642a63745286354d8e511e6376838e235a28078c01",
+   "0367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df",
+   "0398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04",
+   "026c2134d11af7f0bea024724278ebc37ced69a19a99dd6638f393d5f1b9c8bea0",
+   "0389e8fb63050cdb2c3f5c70b3d6167835b60bcf020b9ed7c332965ffce26f2e6f"
+  ],
+  "B": [
+   "03d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494",
+   "0376bf533d4b15510fa9f4124b6e48616f07debcf2ef0cfb185cdc4a576450b475",
+   "02ea2649b3512b9a859ab658a85e2989a7ae39b2518877b2dc0f2b44b785d5788d",
+   "03b4c210719212afb16b5f136a2dcb3cc9fc231721f711994facf3b6111afba7d0",
+   "0234835d35c02b0dc042aa9c041b854b98c28df4872fdc8c6a260bc2ddd767f5a3",
+   "02a52d6327542c16cce7645b899e651dc78098fa4f495acb36992e66b099405ec2"
+  ]
+ },
+ "trees": [
+  {
+   "name": "RekeyAccount2",
+   "tree_bytes": 1213,
+   "box_bytes": null,
+   "address": "LaVh3uU8qwmx7noVL4T6cwLekJqgNaGhnFpFGSNPboT4YdHJsLqDrbw3883fhHzy6E1iowe8bodfpGaYAipFgiVMjYPtToXaF3TFjNMQEVe7irsfjPfyhHHeqVrLsicDVWtFxFFZ4ZNHCj3Qdg6Rfd1snBRfeTohT4NqbxxPnD6Cmv9FWs8LADfGN9kSM1HJq5b8uzy6W7C9LsU2zYeDrASSGQvjrCqTSnSUzHACaXsNrW8PhihZaMpbHVPkFcQQigMsWqVimMgrUqF28rnuJXJ2umfwPzZm4xgeqnBa4GMwJvr72uYuXChWtKtS7XwrpKDnrK6HAGeYTGdDbDR1dv4cy5mkTdvbPMGRxendRrZ7S7TcTrG321H6L5LPERu6PRfqy6JySLvidioXx2c5jKhxQacntP8fhhVsAdia1bF5S7jmN9aGkphBrXjJsWVNB3He8AwcndFd1rPk3EnvTq8YuxtbqzwhTZhm4McmUUrKpWtiwQVbxPfRg3jNCgQgJjWVJrSL8CCd4YYgUtsXbYdC3Dbg5JUHPu4YxtvxcHVM9JYL88hHW5e4h91CjWQYYj4LW6DhWPdTVuHiRQAhDGt7uYTLrw2Z3pUoC6MDtv3NyXJTDvrF3uuZYYsgrcjdMPfihbNk3SpJptce5irNfLxhhKfLv2af1fWgKuBaLjHhLtbQDYHP84o51t6NgxjzWQkLVQtFatF2uUjyX6RodmSJeoRQWqLSUrwsx9cnkrcpzR1CBR4XLWCXzW292cvPRUdopsDkFT3nZmE38sucLbun1HSTi3EVtEXDQCBp4iyPxYsnvuCpYcvBSrQ5KsAQw1bF5CnSiSFDhvx5AwAmADxwsEVhAwdUVwBW8wZk9LiGhuBn4YQMakyccywVqtXDdJYgodE57W1hZtyfDMKiEBXxEhFEyLHp96x8UyvSM2JjpydJTFFceu6bB8eUaUrVGynWFNNvvh8hpLgKfvf6GVRKiHjn52jJg7ffwUPKV9CYvHETttUwoGw6sRc2NyFAnEX15cSrNMCtR84AtZkCu75n7JdqnqeJXsxGmfHLweYVW8RXF1y9Fz3ZXPVGzc9f7ubxAUMkUiZd8SmkkqruH57CgTfny2PtDA6YmrmwtaAtfq2diAVWtGTp8KYCKY7vh7aJ2ixx6Tg561tHY5MQ3nns1RigfjkRNAxZLhVrsJ5GiiGqNWLMCo98WMsY5a5jGbJFQTirEb9SBb11ArhnyEsRC6k1S9g8M1hUh5ZJbkN3UFL8xygKamjzKbcQDMWtmzqvUrBhLi3vj3x5xtPCQ55WAXdzURT9RdQDdrUdP7ZGJwrWdFgXX5bfrtxKb5Dmsv3dEJcpSHNSeM8gSYdKrYoY4snrtgFZheiw2cJQceNhxcG7u3fSfb7uLdiUdQFvRD56hsbkAg2mHyt8g138qDFAyTsakSKGq6wvDTgg8NJKM5a684pV1eoqEkrBKiYgSAwtL1t7oLq1zZbkDRz9s6xp4PKnL7otA58ejKPtG2uZA7ejV9JUSt1RVfChnkccTTefyDXC6Xj8c2b7TZf1TxNH5VBAap1m5pimRowim8nBABGC7Xn3qLZD98jPDHxZuxun76Rtk9rVDt3FPYnBYciPGJrosSrPBRKUvmCKjrk5iChCQ1zrVzighrri5aB",
+   "tree_version": 1,
+   "rent_per_period_nanoerg_derived": null
+  }
+ ],
+ "cases": [
+  {
+   "n": "old-1",
+   "label": "attacker merge [PB(R4=pb), P(plain)] -> successor R4=pb, no key (theft of custody)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "4609c5b615f43c112598a763e6220b94bb76721ca5fa5429cea0b8886cfb5f1e",
+   "heights": {
+    "before": 701,
+    "after": 701
+   },
+   "detail": "4609c5b615f43c112598a763e6220b94bb76721ca5fa5429cea0b8886cfb5f1e",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "old-2",
+   "label": "attacker (B) spends the stolen successor anywhere with its key",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "304526b287f5bad3cb4dd77d67a0bdc4eb25873d1878a4ce9962e0496ca6c776",
+   "heights": {
+    "before": 703,
+    "after": 703
+   },
+   "detail": "304526b287f5bad3cb4dd77d67a0bdc4eb25873d1878a4ce9962e0496ca6c776",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "B"
+  },
+  {
+   "n": "new-1",
+   "label": "attacker merge [PB(no NFT), P] -> successor R4=pb (planted box not registered)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "new-3",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 705,
+    "after": 705
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. dfe22d2ccf90e6056e099f7d6801ea4cdb2102781f2ef47cf2670479201bede1: #0 => Success((false,106))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "new-2",
+   "label": "attacker drags the real NFT box in: merge [R0(NFT), P] -> successor R4=pb (key must be kept)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": "new-3",
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 705,
+    "after": 705
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 67961fb06af03962b03b0a5f62c1223b89b2aff42c254d82cb8f95de8635e9a4: #0 => Success((false,799))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "new-3",
+   "label": "honest merge [R0(NFT), P] -> successor keeps R4=pa and the NFT, no key",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "35e0e18c81b928b70a1c31f0953d64e37dc9636641493182718fdc8531a7c623",
+   "heights": {
+    "before": 705,
+    "after": 705
+   },
+   "detail": "35e0e18c81b928b70a1c31f0953d64e37dc9636641493182718fdc8531a7c623",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "new-4",
+   "label": "owner (A) spends the registered NFT box with the owner key",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "c507ec6923208a03a56060d5e87e7e6fbae425561a9ebeaafffebf609cc526aa",
+   "heights": {
+    "before": 706,
+    "after": 706
+   },
+   "detail": "c507ec6923208a03a56060d5e87e7e6fbae425561a9ebeaafffebf609cc526aa",
+   "expect": "ACCEPT",
+   "ok": true,
+   "wallet": "A"
+  }
+ ],
+ "harness_bugs": [],
+ "old_account_addr": "JtSKjHXBJ6HUHnH8imK7pnzhhL9ty48azNqe2VbDbj1f4AEzKrmbNhjpVxuwmHXqack6t6EjKJhsd1LgDNmpD1kG4vZArrJqW3hBtzfeaqscMdV68GzThngENAQbhL8ZpWUhHBwPrPTyFdHPkzq7u6hX5qCzybyzKNsFMMzXc9NXUewiisk4L6Zy2ATReJ6kuRRfYh4ywtUuChaAogH6B5j9RHR8dKEuoJW4srJuqx72cHnzwdEUZAsByGqps7JGHDzUt3cMP5pQfxZzSTNoPFBjpVu1kVTLgJR76jrG1eGqkkG1pGvfggN4QiweNMhrBHHJu3mmmxpW6eWV4kw8faezDDcL5UzhWTorwakezgkg3cA6Lkrf2jSzAm3mFtBd7QcpYGZJNcrTBnYPPMzRejXoBYYHqpXWD7kSbqmqD5DwbWk7rEDzhypTqhNHQo1KL8xNtMoWzjEK2RYZE3C36ZPE3GxMiWyXrVgyKWcxbszWKGp5RN5gydQ2QoaoNgevEgF61K2J7sgNMyJoei5RniqV1q7FcXxcTGYs1nQsT4EKBRU3Gk4PezirsWPrF1vkLxZKieoeiigBqg6fzyxAcRqNzNaALCTbLpB9bzneKjYjK8CcCdgvT9r1tR6b1MVKtx4NDyeVMxg1PR6mwMMWzS8HdTwLhDJ8SqPXCmRQ2CoLcJHqbmQWRbcf2gLMj6yYcUvR5TSscaSsd8ypDo7Gt59qVqMDgLEiFWrcVs63WjFq7zYD17QyhC2J9WQ1oqigHCa8Uz2dRcnfHsbXo1iV3arUKsBfDPifEj2uPXVRkX2rgJaTxRF7GLQbACMdCUaSgQQBBYDzyBb92AaHMc7UVg1tKBa2fkATx3BCsy4VNGoXvG526YQ8rRuiU6Ykhn8fcefwzKg42oJgmQ7AFyBGSn5fLQE2DU6NVzB2CeKHYCFRjogwYWNmgECB7JDxKH7fSH13dPB9MF5UWa3e9f9Nmqt6WRXxJtpxtupMqUihfHo9W3AFrfoY9UHM8pwXXNmB8pHEMT4p9aorqjmPWvztUftnguDu5ohC6vDkkWFnvduT7WK5rxmkda62mWCA754bxUK8oMSBvtVDasjB1Q11W2KskoRgqUwquDTuAcmgv24SGhytzbLzyXJGUiRTw5pBXjJaZrwoyFkXTiSYUkAw9RSTpsKbQ85KMW48T7BS4AQzdKLxwPMPA6ybcY1t2dNPFMLdk26Rrvf5MDV8sWuSChBJi5Rb32HRE1qopodt3AubGyDzMxi2VjtAND5stRwZMprcemNyR6G2pD8P7dgRS5xN8CBd5AskJEjpB7QeDpU91gjcRugFAYLrU2z3j9LwhG9w5uWKFoxsVPYVeBbTDstZXxsFA8wHvEbNtv1Mzxg3gdu48tYKSvPYFkmj4JXx2riSChHbf8qrESvxksQSEPRc52BttnD9EYVwR7DLyXRmDzxcC7qcgqVptTaV6FKGFrHXKG3uK13WMVYox1uWuumVzmkFxMrt116gTeuYDyWNFDPXNpBpzR7iDMqRwvkePQxR6oMMNANpL8JHAdMuaUtEfNohgnFyVZEMA7UAtoxhJQDibkTpXbY7Z6djZr9CRdjdb5yuQVKwrjoTAgCejmRgbHhTwbQVPjjoZ6vdNYN4edi2"
+}
