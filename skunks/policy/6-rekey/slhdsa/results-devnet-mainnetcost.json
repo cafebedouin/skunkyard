@@ -1,0 +1,119 @@
+{
+ "experiment": "6-rekey-slhdsa-devnet",
+ "node": {
+  "appVersion": "6.0.7",
+  "parameters": {
+   "outputCost": 298,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 1104,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2407,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ },
+ "tree_bytes": 1516,
+ "address": "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",
+ "deposit_tx": "23d69c6d0f537a9ac8f0a2bce985fef4daf3217d50d02fb8aea8c394fada3f94",
+ "results": [
+  {
+   "case": 1,
+   "label": "the valid signature with 16 bytes appended (sibling of 9)",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. ef95c85ea37855b21baf622139665a6f68f3997c80ac67144282b2274691108a: #0 => Success((false,150))\" }",
+   "source": "node-check",
+   "sibling_n": 9
+  },
+  {
+   "case": 2,
+   "label": "the valid signature truncated by 16 bytes (sibling of 9)",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 457b79750c1a8ef332b63f9c446f831ed30a829cbb7a4c849d13aad58969495d: #0 => Success((false,150))\" }",
+   "source": "node-check",
+   "sibling_n": 9
+  },
+  {
+   "case": 3,
+   "label": "another key's signature on the same digest (sibling of 9)",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 459fd2ee910e1ff2de36e3d92e5c5b0f6ffb68dcac71d65100713c35b825f11f: #0 => Success((false,188031))\" }",
+   "source": "node-check",
+   "sibling_n": 9
+  },
+  {
+   "case": 4,
+   "label": "a byte flipped in a FORS auth node (sibling of 9)",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. a8de3327ea7dbb5eb1520a0c3ce893ec1b582bf65ae162af982fe57a3bd250e1: #0 => Success((false,187624))\" }",
+   "source": "node-check",
+   "sibling_n": 9
+  },
+  {
+   "case": 5,
+   "label": "a byte flipped in a layer-6 WOTS+ chain (sibling of 9)",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 956145c8815284aa634b48cfe324c2d9494a19e55bac17e2eecfb3f3c8801cb3: #0 => Success((false,188813))\" }",
+   "source": "node-check",
+   "sibling_n": 9
+  },
+  {
+   "case": 6,
+   "label": "signed for one set of outputs, sent with another (sibling of 9)",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 86ea37d9e287e5611fac6a546e8495ae02662edbcbd63eb81d7f9ded9049065e: #0 => Success((false,184911))\" }",
+   "source": "node-check",
+   "sibling_n": 9
+  },
+  {
+   "case": 7,
+   "label": "the valid signature replayed on a second box (sibling of 8)",
+   "expect": "REFUSE",
+   "got": "REFUSE",
+   "ok": true,
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 66c95dca707a21c4477b51bd79bf2b8c948d8ba64d5fc4b6cda2136813addb80: #0 => Success((false,188278))\" }",
+   "source": "node-check",
+   "sibling_n": 8
+  },
+  {
+   "case": 8,
+   "label": "the second box with its own signature (checked only)",
+   "expect": "ACCEPT",
+   "got": "ACCEPT",
+   "ok": true,
+   "detail": "13db9882e51b80639b0a2793f3ae73dee8c169e3e63d8294568b069b89aad5db",
+   "source": "node-check",
+   "sibling_n": null
+  },
+  {
+   "case": 9,
+   "label": "the honest spend",
+   "expect": "ACCEPT",
+   "got": "ACCEPT",
+   "ok": true,
+   "detail": "4a90ec3aaa4f4b833a1d54f4a7d744ece5e84689063445b9bed1fd88a804e1ee",
+   "source": "node-check",
+   "sibling_n": null,
+   "tx_id": "4a90ec3aaa4f4b833a1d54f4a7d744ece5e84689063445b9bed1fd88a804e1ee",
+   "cost": 201816,
+   "cost_instrument": "mempool",
+   "mined_height": 1114,
+   "tx_size": 8054
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+{
+  "chain": {
+    "preset": "current",
+    "v4": true,
+    "blockInterval": "2s"
+  },
+  "nodes": [
+    {
+      "name": "A",
+      "mining": true,
+      "mine_poll": "1s",
+      "knownPeers": [],
+      "conf": {
+        "ergo.node.extraIndex": "true",
+        "ergo.node.minimalFeeAmount": "0",
+        "ergo.node.maxTransactionCost": "4900000",
+        "ergo.node.blockCandidateGenerationInterval": "1ms",
+        "ergo.voting.6": "2407",
+        "ergo.voting.8": "298"
+      }
+    }
+  ]
+}
