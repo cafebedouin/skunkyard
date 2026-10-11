@@ -8,9 +8,11 @@
   // merged into that one output, which must
   //   - be at this script (same owner),
   //   - hold at least the total of every token across mine,
-  //   - hold at least the total value of mine less the bounty,
+  //   - hold at least the total value of mine less the bounty (and, defence in depth, no more than that total),
   //   - be created at most SLACK blocks before the spending height,
   //   - be no larger than the inputs it replaces (one input: + 4 bytes, for value and height encodings).
+  // Every input of the transaction must be at this script (no foreign input), so a payout a third party executes
+  // into this address cannot double as the successor and drain the merged boxes; the fee comes from the bounty.
   // When: a merge (two or more of mine) at any time; a lone box only from WINDOW blocks before it is PERIOD old.
   // Bounty: a merge takes at most PER_INPUT per input and never more than the boxes other than the largest bring
   // (total - largest), so the largest box never pays for a merge and dust sent to the address cannot drain it; a lone
@@ -40,6 +42,15 @@
       next.propositionBytes == SELF.propositionBytes,
       tokensKept,
       next.value >= total - bounty,
+      // every input is at this script: the only value entering the transaction is the merged boxes' own, so by
+      // conservation nothing but the bounty can leave. Without this, a payout a third party executes into this
+      // address (a Pending2 completion, a settlement, an order fill) funds the successor at value V while the merged
+      // boxes' value escapes to the executor, up to total - fee -- and no bound on next.value can stop it, since the
+      // executor picks a subset of boxes worth about V. The cost is the sponsored merge (a sponsor's fee box is a
+      // foreign input): the fee now always comes from the bounty, as the keyless mainnet merge and the Lithos job do.
+      INPUTS.size == mine.size,
+      // defence in depth: the successor holds no more than the merged total (lone refresh: total == SELF.value).
+      next.value <= total,
       next.creationInfo._1 >= HEIGHT - $SLACK,
       sizeOk
     ))

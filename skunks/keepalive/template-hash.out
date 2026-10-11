@@ -1,6 +1,7 @@
-# skunks/keepalive/template-hash.py over the published trees, 2026-10-10 (the Blake2b256 value is the node index's template hash, the SHA-256 the explorer's)
+# skunks/keepalive/template-hash.py over the published trees, 2026-10-11 (post-fix: the no-foreign-input merge, part four)
+# (the Blake2b256 value is the node index's template hash, the SHA-256 the explorer's)
 == skunks/keepalive/kaa-mainnet-wallet.tree
-header=0x19 version=1 size=401 constants=15
+header=0x19 version=1 size=415 constants=15
   const 0: offset=4 Long 0
   const 1: offset=6 Coll[Byte] len=33 bytes@8..41 0329bbd4df63f911…
   const 2: offset=41 Int 2
@@ -16,9 +17,9 @@ header=0x19 version=1 size=401 constants=15
   const 12: offset=71 Int 0
   const 13: offset=73 Int 4
   const 14: offset=75 Boolean False
-template bytes=327 (tree bytes=404)
-template blake2b256=afc009dcb6d619a42be622b6b950651dfefa8409381abdb8bb27af8162965c19
-template sha256=43d8cc5616ce1e04df7cfa71ab8638783fb4139a5001135fca154b39ecd3aeac
+template bytes=341 (tree bytes=418)
+template blake2b256=2e7ff6aeefe21df26b519b0c519149b7272b59be83fca087b3f99d710c412cbc
+template sha256=ebff5777b98cd1d17b4784bf26054e83fc11cfd90481d4e119a67ab2004bfd46
 == skunks/policy/2-twostep/Vault.tree
 header=0x19 version=1 size=329 constants=6
   const 0: offset=4 Int 0

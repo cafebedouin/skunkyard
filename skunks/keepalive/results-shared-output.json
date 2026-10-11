@@ -1,0 +1,301 @@
+{
+ "experiment": "shared-output-theft",
+ "started_height": 2446,
+ "node": {
+  "appVersion": "6.0.7",
+  "parameters": {
+   "outputCost": 100,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 2444,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2000,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ },
+ "wallets": {
+  "A": [
+   "038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c",
+   "031ee1ab3b729f21e0dcee05642a63745286354d8e511e6376838e235a28078c01",
+   "0367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df",
+   "0398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04",
+   "026c2134d11af7f0bea024724278ebc37ced69a19a99dd6638f393d5f1b9c8bea0",
+   "0389e8fb63050cdb2c3f5c70b3d6167835b60bcf020b9ed7c332965ffce26f2e6f"
+  ],
+  "B": [
+   "03d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494",
+   "0376bf533d4b15510fa9f4124b6e48616f07debcf2ef0cfb185cdc4a576450b475",
+   "02ea2649b3512b9a859ab658a85e2989a7ae39b2518877b2dc0f2b44b785d5788d",
+   "03b4c210719212afb16b5f136a2dcb3cc9fc231721f711994facf3b6111afba7d0",
+   "0234835d35c02b0dc042aa9c041b854b98c28df4872fdc8c6a260bc2ddd767f5a3",
+   "02a52d6327542c16cce7645b899e651dc78098fa4f495acb36992e66b099405ec2"
+  ]
+ },
+ "trees": [],
+ "cases": [
+  {
+   "n": "1-kaa-pre",
+   "label": "KAA completion theft (token-free, V>total) [pre-fix]",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "0ef08f57e8ea27da3e4d00003b95983f6d78855c483ed2fab3da6f7d6455ef84",
+   "heights": {
+    "before": 2449,
+    "after": 2449
+   },
+   "detail": "0ef08f57e8ea27da3e4d00003b95983f6d78855c483ed2fab3da6f7d6455ef84",
+   "expect": "ACCEPT",
+   "ok": true,
+   "V": 200000000,
+   "out1_take": 99000000
+  },
+  {
+   "n": "1sub-kaa-pre",
+   "label": "KAA subset completion theft (V=99500000 in [total-bounty, total]) [pre-fix]",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "9372bf36f5e7a6716e0408e5fa183ff0fe9233c8cd45a312b77a08d491f062bc",
+   "heights": {
+    "before": 2451,
+    "after": 2451
+   },
+   "detail": "9372bf36f5e7a6716e0408e5fa183ff0fe9233c8cd45a312b77a08d491f062bc",
+   "expect": "ACCEPT",
+   "ok": true,
+   "V": 99500000,
+   "note": "V <= total, so next.value<=total passes; refused post-fix only by INPUTS.size==mine.size"
+  },
+  {
+   "n": "1b-kaa-pre",
+   "label": "KAA theft, K1 carries a token the pending box lacks [pre-fix]",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 2453,
+    "after": 2453
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 345ff5d4de46462e33d2da62e1841210a039c4d6eb8ddbe4cecaf6e554192e3b: #0 => Success((false,149))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "1c-kaa-pre",
+   "label": "KAA theft, pending box carries the token (tokens no protection) [pre-fix]",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "987e254cea8351027c8e8b7b460ad432bb18425ffe2f86f1c7264d5115173217",
+   "heights": {
+    "before": 2455,
+    "after": 2455
+   },
+   "detail": "987e254cea8351027c8e8b7b460ad432bb18425ffe2f86f1c7264d5115173217",
+   "expect": "ACCEPT",
+   "ok": true,
+   "note": "tokens do not protect: out0 carries P's token, satisfying tokensKept and the completion"
+  },
+  {
+   "n": "2-qv-pre",
+   "label": "QVault maintenance completion theft (V>total) [pre-fix]",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "af89da839a49b1505484a5a8afee0a022d3c14ddc57d6fea3083f2ffe75cd082",
+   "heights": {
+    "before": 2457,
+    "after": 2457
+   },
+   "detail": "af89da839a49b1505484a5a8afee0a022d3c14ddc57d6fea3083f2ffe75cd082",
+   "expect": "ACCEPT",
+   "ok": true
+  },
+  {
+   "n": "3-kaa-pre",
+   "label": "KAA plain keeper merge, bounty pays the fee [pre-fix]",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "f0183564cd1c198a0517c42cd727c8716ae5742f2bf6d2d14d60ac4a5d327c3c",
+   "heights": {
+    "before": 2458,
+    "after": 2458
+   },
+   "detail": "f0183564cd1c198a0517c42cd727c8716ae5742f2bf6d2d14d60ac4a5d327c3c",
+   "expect": "ACCEPT",
+   "ok": true,
+   "note": "no foreign input; INPUTS.size == mine.size; take = bounty"
+  },
+  {
+   "n": "4-kaa-pre",
+   "label": "KAA sponsored merge (foreign fee box), successor keeps every nanoERG [pre-fix]",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "7c152ac1cf1f895b8f601a4f8bc32560237b30b028dc367d99339ca3bf260b46",
+   "heights": {
+    "before": 2460,
+    "after": 2460
+   },
+   "detail": "7c152ac1cf1f895b8f601a4f8bc32560237b30b028dc367d99339ca3bf260b46",
+   "expect": "ACCEPT",
+   "ok": true,
+   "note": "a sponsor's fee box is a foreign input; the fix refuses it (the keyless/Lithos merge pays from the bounty)"
+  },
+  {
+   "n": "1-kaa-post",
+   "label": "KAA completion theft (token-free, V>total) [post-fix]",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 2463,
+    "after": 2463
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. c83a70a29f8b749f7ad88b4ae750ad59c72a4e10b24c4f59f1a4b36b3167823c: #1 => Success((false,564))\" }",
+   "expect": "REFUSE",
+   "ok": true,
+   "V": 200000000,
+   "out1_take": 99000000
+  },
+  {
+   "n": "1sub-kaa-post",
+   "label": "KAA subset completion theft (V=99500000 in [total-bounty, total]) [post-fix]",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 2466,
+    "after": 2466
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. e150fee76722a4f251c485eb55e36aa0220731c9460ba3990d98c3623a57e75d: #1 => Success((false,564))\" }",
+   "expect": "REFUSE",
+   "ok": true,
+   "V": 99500000,
+   "note": "V <= total, so next.value<=total passes; refused post-fix only by INPUTS.size==mine.size"
+  },
+  {
+   "n": "1b-kaa-post",
+   "label": "KAA theft, K1 carries a token the pending box lacks [post-fix]",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 2468,
+    "after": 2468
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. b34cf12af87962f682df43fd0aa5d0399c482c74e655a9811eddd77b6b7dd40a: #0 => Success((false,149))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "1c-kaa-post",
+   "label": "KAA theft, pending box carries the token (tokens no protection) [post-fix]",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 2470,
+    "after": 2470
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. f68db5b2afec6ac269fc12160e78c045c7512737f76a24edeffc0aa25df87af0: #1 => Success((false,640))\" }",
+   "expect": "REFUSE",
+   "ok": true,
+   "note": "tokens do not protect: out0 carries P's token, satisfying tokensKept and the completion"
+  },
+  {
+   "n": "2-qv-post",
+   "label": "QVault maintenance completion theft (V>total) [post-fix]",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 2473,
+    "after": 2473
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 7589bb667335ab6efea8b06b097753f4a04d24784056fd83253ff8235bb4ec17: #1 => Success((false,198))\" }",
+   "expect": "REFUSE",
+   "ok": true
+  },
+  {
+   "n": "3-kaa-post",
+   "label": "KAA plain keeper merge, bounty pays the fee [post-fix]",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "16777d59770407e92a7d29ed3d76c241c815adf15e9293cd08f6e74cc7d41c5d",
+   "heights": {
+    "before": 2474,
+    "after": 2474
+   },
+   "detail": "16777d59770407e92a7d29ed3d76c241c815adf15e9293cd08f6e74cc7d41c5d",
+   "expect": "ACCEPT",
+   "ok": true,
+   "note": "no foreign input; INPUTS.size == mine.size; take = bounty"
+  },
+  {
+   "n": "4-kaa-post",
+   "label": "KAA sponsored merge (foreign fee box), successor keeps every nanoERG [post-fix]",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 2476,
+    "after": 2476
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. b7db1169a30819e39dfb6a93f01c9d86a980b2db78e51c9ac113726f9e42b2c6: #0 => Success((false,564))\" }",
+   "expect": "REFUSE",
+   "ok": true,
+   "note": "a sponsor's fee box is a foreign input; the fix refuses it (the keyless/Lithos merge pays from the bounty)"
+  }
+ ],
+ "harness_bugs": [],
+ "trees_tested": {
+  "kaa_pre_bytes": 399,
+  "kaa_post_bytes": 413,
+  "qv_pre_bytes": 1248,
+  "qv_post_bytes": 1262,
+  "pending2_bytes": 193
+ }
+}

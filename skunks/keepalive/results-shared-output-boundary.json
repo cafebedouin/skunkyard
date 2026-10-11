@@ -1,0 +1,164 @@
+{
+ "experiment": "shared-output-boundary",
+ "started_height": 2476,
+ "node": {
+  "appVersion": "6.0.7",
+  "parameters": {
+   "outputCost": 100,
+   "tokenAccessCost": 100,
+   "maxBlockCost": 1000000,
+   "height": 2476,
+   "maxBlockSize": 524288,
+   "dataInputCost": 100,
+   "blockVersion": 4,
+   "inputCost": 2000,
+   "storageFeeFactor": 1250000,
+   "subblocksPerBlock": 30,
+   "minValuePerByte": 360
+  }
+ },
+ "wallets": {
+  "A": [
+   "038b0f29a60fa8d7e1aeafbe512288a6c6bc696547bbf8247db23c95e83014513c",
+   "031ee1ab3b729f21e0dcee05642a63745286354d8e511e6376838e235a28078c01",
+   "0367cc1a66c939d6239b44ed61b174f8af421081bf3b3e6c11faf74b26b47802df",
+   "0398bf6301988dd519b3b6e45a6f3171970a844c1d0f9b504f1f065a497f8a9a04",
+   "026c2134d11af7f0bea024724278ebc37ced69a19a99dd6638f393d5f1b9c8bea0",
+   "0389e8fb63050cdb2c3f5c70b3d6167835b60bcf020b9ed7c332965ffce26f2e6f"
+  ],
+  "B": [
+   "03d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494",
+   "0376bf533d4b15510fa9f4124b6e48616f07debcf2ef0cfb185cdc4a576450b475",
+   "02ea2649b3512b9a859ab658a85e2989a7ae39b2518877b2dc0f2b44b785d5788d",
+   "03b4c210719212afb16b5f136a2dcb3cc9fc231721f711994facf3b6111afba7d0",
+   "0234835d35c02b0dc042aa9c041b854b98c28df4872fdc8c6a260bc2ddd767f5a3",
+   "02a52d6327542c16cce7645b899e651dc78098fa4f495acb36992e66b099405ec2"
+  ]
+ },
+ "trees": [],
+ "cases": [
+  {
+   "n": "value-only V=total",
+   "label": "value-only variant, shared output V=total (executor take=99000000)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "a9353db164974c48bc7d0f315a588a26f08e7770a57d0899479317c490e3e23c",
+   "heights": {
+    "before": 2478,
+    "after": 2478
+   },
+   "detail": "a9353db164974c48bc7d0f315a588a26f08e7770a57d0899479317c490e3e23c",
+   "expect": "ACCEPT",
+   "ok": true,
+   "V": 100000000,
+   "out1_take": 99000000
+  },
+  {
+   "n": "value-only V=total-bounty",
+   "label": "value-only variant, shared output V=total-bounty (executor take=99000000)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "a8e8feb7ce3fb74a3d1403aae9fd51711956d0006cc62f9608cc37ddcf4d5191",
+   "heights": {
+    "before": 2480,
+    "after": 2480
+   },
+   "detail": "a8e8feb7ce3fb74a3d1403aae9fd51711956d0006cc62f9608cc37ddcf4d5191",
+   "expect": "ACCEPT",
+   "ok": true,
+   "V": 99000000,
+   "out1_take": 99000000
+  },
+  {
+   "n": "value-only V=total-bounty//2",
+   "label": "value-only variant, shared output V=total-bounty//2 (executor take=99000000)",
+   "got": "ACCEPT",
+   "source": "",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": "144b1d769a047d696a822a213700e3ad07406bb0d2ca5d4eebee97efc2cfd563",
+   "heights": {
+    "before": 2482,
+    "after": 2482
+   },
+   "detail": "144b1d769a047d696a822a213700e3ad07406bb0d2ca5d4eebee97efc2cfd563",
+   "expect": "ACCEPT",
+   "ok": true,
+   "V": 99500000,
+   "out1_take": 99000000
+  },
+  {
+   "n": "full V=total",
+   "label": "full variant, shared output V=total (executor take=99000000)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 2484,
+    "after": 2484
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. bcf6ace352e4cc2a2e289398aeb4c264ab4d199b0c3f82cb1ec04f2c66240ae6: #1 => Success((false,564))\" }",
+   "expect": "REFUSE",
+   "ok": true,
+   "V": 100000000,
+   "out1_take": 99000000
+  },
+  {
+   "n": "full V=total-bounty",
+   "label": "full variant, shared output V=total-bounty (executor take=99000000)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 2487,
+    "after": 2487
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. cb070dc1540580f1e4618c7bb29ed7be5b7bc8b3ef579e4c2b6ff98a4ee6feac: #1 => Success((false,564))\" }",
+   "expect": "REFUSE",
+   "ok": true,
+   "V": 99000000,
+   "out1_take": 99000000
+  },
+  {
+   "n": "full V=total-bounty//2",
+   "label": "full variant, shared output V=total-bounty//2 (executor take=99000000)",
+   "got": "REFUSE",
+   "source": "node-check",
+   "sibling_n": null,
+   "cost": null,
+   "cost_instrument": null,
+   "tx_id": null,
+   "heights": {
+    "before": 2489,
+    "after": 2489
+   },
+   "detail": "{   \"error\" : 400,   \"reason\" : \"bad.request\",   \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. a335964e605d1b469e53ab82d32ebca3fecb9077083c16752d66195054cd2ecf: #1 => Success((false,564))\" }",
+   "expect": "REFUSE",
+   "ok": true,
+   "V": 99500000,
+   "out1_take": 99000000
+  }
+ ],
+ "harness_bugs": [],
+ "variants": {
+  "value-only": {
+   "tree_bytes": 408
+  },
+  "full": {
+   "tree_bytes": 413
+  }
+ }
+}

@@ -110,6 +110,59 @@ nothing about rent: payments merge and refresh themselves, paid from the payment
 P2PK address is still outside it; for them the protocol-level protection (EIP-53/51) remains the only answer. Not yet
 done: a per-owner compile helper for mainnet, the Lithos upkeep job, and a wallet that offers the address.
 
+## The shared-output theft, and the no-foreign-input fix (part four, 2026-10-11)
+
+**The finding (a property of every keyless merge in the family).** The merge accepted a successor at this script
+worth at least the merged total less the bounty, without checking that the successor was *funded by* the merged
+boxes. Any value a third party brings into the address that it does not fund itself — a `Pending2` completion, a
+settlement, an order fill — can cover the successor, so the merged boxes' whole value escapes to the executor. With
+inputs `[P, K1, K2]` (P a payout worth V into this address, K1+K2 = total the merged boxes) and the payout output
+fixed at V, conservation makes the executor's other output `total − fee` **whatever V is**. Pre-fix the node
+accepts it (drains `total − fee`); tokens do not protect (a payout carrying the merged token in at least the merged
+amount rides it; a token the payout *lacks* breaks it, by `tokensKept`).
+
+**A bound on `next.value` is not enough.** The prompt's proposed fix was `next.value <= total` alone. The boundary
+probe (`devnet-test-shared-output2.py`, `results-shared-output-boundary.json`) sweeps V across `[total − bounty,
+total]` against a value-only variant and the shipped fix: the value-only variant **accepts every V in the window**
+(the executor still takes `total − fee`, since it picks a subset of boxes worth about V), the full fix refuses each.
+No `next.value` bound can work — the script cannot see which input funds which output.
+
+**The fix.** The maintenance path requires **every input of the transaction to be at this script**
+(`INPUTS.size == mine.size`), plus `next.value <= total` kept as defence in depth. The only value entering the
+transaction is then the merged boxes' own, so by conservation nothing but the bounty can leave. The cost is the
+**sponsored merge**: a sponsor's fee box is a foreign input, now refused — the fee comes from the bounty, as the
+keyless mainnet merge and the Lithos job already do; an owner who wants to keep every nanoERG uses the owner path. A
+lone refresh pays its fee from the refresh bounty, unchanged. The same clause is in all four family merges
+(`QVault.es`, `RekeyAccount3.es`, `RekeySchedule.es`); the rotating members' register binding already refused a
+`Pending2` completion as a successor, but the input rule hardens them against any payout that could carry their
+registers or route the NFT.
+
+Devnet, node-judged (harness `devnet-test-shared-output.py`; verdicts `results-shared-output.json`). The theft rows
+are built twice: against the pre-fix tree (git HEAD) and the shipped tree.
+
+| # | case | pre-fix | post-fix |
+|---|---|---|---|
+| 1 | completion theft, V > total: `[P, K1, K2]` → out0 = V (R4 = P.id), out1 = total − fee to a stranger | ACCEPT (theft) | **REFUSE** |
+| 1sub | subset theft, V in `[total − bounty, total]` (a `next.value <= total` bound alone would pass this) | ACCEPT | **REFUSE** |
+| 1b | K1 carries a token the pending box lacks | REFUSE (`tokensKept`) | REFUSE |
+| 1c | the pending box carries the token (≥ the merged amount): tokens do not protect | ACCEPT | **REFUSE** |
+| 2 | the same shape against `QVault.es`'s maintenance | ACCEPT | **REFUSE** |
+| 3 | plain keeper merge, the bounty pays the fee (no foreign input) | ACCEPT | ACCEPT (take = bounty) |
+| 4 | sponsored merge: a `sigmaProp(true)` fee box as a foreign input | ACCEPT | **REFUSE** (the cost of the fix) |
+
+**Trees.** The fix changes every template in the family. KeepAlive address: `2e7ff6ae…` (Blake2b256; SHA-256 in
+`template-hash.out`), 413 B devnet / 418 B mainnet (was `afc009dc…`, 399/404 B). The published mainnet tree
+`kaa-mainnet-wallet.tree` is now the fixed one; its address is `BpQ1xs4h…` (`kaa-mainnet-wallet.address`, re-derived
+by `address-vector.py`, `address-vectors.out`). **The mainnet demo ran the pre-fix tree** (`afc009dc…`, the
+`tx/mainnet-demo-*.json` and the old address `7fcz1gR1…`); it is superseded by the fixed tree, and whether to
+re-demonstrate on mainnet before the wallet post is the person's call, not this session's. The sponsored-merge demo
+row (`merge-sponsored`) is superseded by the fix: a sponsor's fee box is a foreign input the merge now refuses.
+
+**The Lithos `KeepAliveJob` needs no change.** Its merge spends only the address's own boxes (the devnet run's merge
+tx has three inputs, all at the address; the fee and bounty come from the merged boxes' value: `rig-run1/lithos/
+checks.jsonl`), so `INPUTS.size == mine.size` holds. A job that tried to add a foreign fee input would now be
+refused, which the job does not do.
+
 ## The Lithos upkeep job (2026-10-09)
 
 `KeepAliveJob` in the Lithos client, branch `upkeep-keepalive` on `cafebedouin/Lithos-Client` (stacked on
