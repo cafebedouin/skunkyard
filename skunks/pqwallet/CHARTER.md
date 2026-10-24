@@ -1,6 +1,6 @@
 # Skunk: pqwallet
 
-**Status (2026-10-24):** chartered, not started. Born from the protocol post (thread 5372) and the roadmap's
+**Status (2026-10-24):** step 1 passed (`RESULT.md`, `DERIVATION.md`): both derivation options implemented with vectors; noble reproduces the BouncyCastle SLH-DSA key pair and signature verdicts. Next: step 2. Born from the protocol post (thread 5372) and the roadmap's
 forward path (`research/pq/ROADMAP.md`, "Update 2026-10-10", steps 2 and 3): the quantum-day vault runs on a devnet,
 but no wallet signs its hash key, no derivation from a seed exists, and the SLH-DSA verifier has one oracle.
 
@@ -20,9 +20,10 @@ run end to end from one tool on testnet. Nothing here carries value until the as
 - **Today, and its limits.** The vault is judged on a devnet (39 of 39, `skunks/qvault/`), its WOTS+ key is built by a
   Python harness from random bytes, the SLH-DSA verifier has accepted signatures from one BouncyCastle key pair, and
   the oneshot page signs plain WOTS only. EIP-3 wallets derive `m/44'/429'/0'/0/i` with the last two levels
-  non-hardened, so a leaked account xpub plus one quantum-recovered child key recovers the account key and every
-  sibling (by reading of BIP32; to be stated with the derivation, not run): post-quantum keys must not hang under
-  that account key.
+  non-hardened and export the depth-4 xpub for read-only wallets, so that xpub plus one quantum-recovered child key
+  recovers the depth-4 private key and every descendant (computed, `test/derive.test.ts` check 7; the first draft
+  of this sentence said "account key", which overstates it: a hardened branch above that node is not reached):
+  post-quantum keys must not hang under any node whose xpub a wallet may export.
 - **What is new.** A derivation whose root shares nothing with the secp keys but the BIP39 seed bytes; a signer that
   a wallet or a page can take as is; a differential run that gives the SLH-DSA verifier a second and third oracle;
   the vault as a flow a person can click through, not a harness row.

@@ -1,0 +1,23 @@
+{
+  "name": "pqwallet",
+  "private": true,
+  "type": "module",
+  "description": "pqwallet: post-quantum keys from a wallet seed (derivation options), WOTS+ and SLH-DSA signers, the quantum-day vault flow",
+  "scripts": {
+    "test": "tsx test/derive.test.ts",
+    "vectors": "tsx scripts/vectors.ts",
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@noble/hashes": "2.4.0",
+    "@noble/post-quantum": "0.7.1",
+    "@scure/base": "1.2.6",
+    "@scure/bip32": "2.4.0",
+    "@scure/bip39": "2.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.4",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2"
+  }
+}
