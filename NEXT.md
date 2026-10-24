@@ -6,7 +6,7 @@
 > both recorded, the oracle one built; SK-055 is tested, not warned around. The work is chartered as
 > `skunks/pqwallet/CHARTER.md` (SK-061): derivation options with vectors, WOTS+ and SLH-DSA signers as the assurance
 > gate's second implementation, SK-055 on the devnet in two shapes, the vault end to end on testnet, then the posts.
-> Item 1 (derivation) is in progress. The plan this replaces: `~/.claude/plans/grok-is-making-a-serialized-moore.md`
+> Steps 1-3 passed on 2026-10-24 (derivation options + vectors; signers + the assurance gate incl. ACVP through the script and a three-seat review, `posts/seats/pqwallet-gate/r1/REVIEW.md`; SK-055 variant 2 on a 6.0.8 devnet, 51/51). Ruling 2026-10-24: both schemes by use stand (WOTS+ sign-once in the vault with the committed-successor forward and the signer guard; SLH-DSA at the rotating address); an SLH-DSA vault member is registered as SK-062, not built. Step 4 (the vault end to end on testnet from the TypeScript tool) is next; the test that decides the whole line: does it help someone write a post-quantum EIP miners can vote on. The plan this replaces: `~/.claude/plans/grok-is-making-a-serialized-moore.md`
 > (assurance gate before any signer ships; the signer and the gate are now one step).
 
 > **Hash-key line, 2026-10-10 (SK-053 done; forward path banked):** `research/pq/ROADMAP.md`, "Update 2026-10-10".
