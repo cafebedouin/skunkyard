@@ -72,5 +72,8 @@ records both verdicts or the reason one was not run.
 
 ## Environment to name in the result
 
-peeryard devnet (`rig/devnet.sh expose A 9180 keepalive`), ergo 6.0.7 jar and its sha256, 20 s blocks; the harness
-`skunks/qvault/devnet-test.py` extended with the f-rows (the vault's own harness, published).
+peeryard devnet `sk055` from `rig/examples/lithos-upkeep.json` (one mining node, 20 s blocks, `minimalFeeAmount 0`),
+jar `~/bin/ergo-node/ergo-6.0.8.jar`, sha256 `e1269f3c9b1c75d29f1f1bded720101792db41118757016123de113668353346` (the
+current reference since 2026-10-15; the 39-row baseline ran on 6.0.7, so a verdict change must first be checked
+against the jar before the contract); `/info.appVersion` recorded in the result. Harness: `skunks/qvault/devnet-test-v2.py`,
+derived from the published `devnet-test.py` (same rows, QVault2.es, successor vaults, the f-rows), committed before the run.
