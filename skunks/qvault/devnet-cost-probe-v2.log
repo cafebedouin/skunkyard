@@ -1,0 +1,3 @@
+cost-probe plain_merge_2_at_NEAR tx=98a9d934 inputs=2 mempool_cost=14640 size=1540
+cost-probe merge_forward_2_to_NEARprime tx=1dad17c3 inputs=2 mempool_cost=14634 size=1542
+cost-probe lone_forward_1_to_NEARprime tx=5ca66aeb inputs=1 mempool_cost=12378 size=1505

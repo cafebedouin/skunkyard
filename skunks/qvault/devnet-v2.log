@@ -1,0 +1,62 @@
+flag box e750fbef nft 60aa8132 fake d19a0fe4
+FAR' vault tree 1346 bytes; backstop 1000020 successor None
+NEAR' vault tree 1346 bytes; backstop 1000020 successor None
+FAR4' vault tree 1346 bytes; backstop 1000020 successor None
+FAR vault tree 1346 bytes; backstop 1000020 successor FAR'
+NEAR vault tree 1344 bytes; backstop 65 successor NEAR'
+FAR2 vault tree 1346 bytes; backstop 1000020 successor None
+FAR3 vault tree 1346 bytes; backstop 1000020 successor None
+FAR4 vault tree 1346 bytes; backstop 1000020 successor FAR4'
+payments {'A': '4ee3b946', 'B': '29c32ae1', 'C': '36b008ee', 'D': '36e93c3f', 'A2': 'd39004cc', 'G2': '1763e871', 'G3': '226a5b0e', 'E0': 'ee931c61', 'G4': 'e09fe182'} at 22
+ 1 owner key spends A, flag box (false) as a data input           expect ACCEPT got ACCEPT    ok
+ 2 owner key spends A with no flag box                            expect REFUSE got REFUSE    ok
+ 3 owner key spends A with a look-alike flag (another token)      expect REFUSE got REFUSE    ok
+ 4 hash key spends A                                              expect ACCEPT got ACCEPT    ok
+ 5 hash key: signed for one set of outputs, sent with another     expect REFUSE got REFUSE    ok
+ 6 hash key spends B and C together (a one-time key twice)        expect REFUSE got REFUSE    ok
+6a hash key, signature with 32 bytes appended                     expect REFUSE got REFUSE    ok
+6b hash key, signature truncated by 32 bytes                      expect REFUSE got REFUSE    ok
+6c hash key, a byte flipped deep in the signature (chain 33)      expect REFUSE got REFUSE    ok
+6d hash key: another WOTS+ key's signature (same PKSEED) on A's digest expect REFUSE got REFUSE    ok
+6e hash key: A's valid signature replayed on A2 (same vault, same outputs) expect REFUSE got REFUSE    ok
+ 7 keyless merge of B and C                                       expect ACCEPT got ACCEPT    ok
+ 8 lone refresh of A in the KeepAlive window, no key              expect ACCEPT got ACCEPT    ok
+f4 forward E0 (FAR) to FAR' before quantum day, flag false as a data input expect REFUSE got REFUSE    ok
+f4b forward E0 (FAR) to FAR' before quantum day, no data input     expect REFUSE got REFUSE    ok
+7a owner spend of A citing the flag box, signed now and held      expect SIGNED got SIGNED    ok
+7b flag box refreshed unchanged in its window, no key             expect ACCEPT got ACCEPT    ok
+7c the held owner spend submitted after the refresh               expect REFUSE got REFUSE    ok
+7d the refreshed flag box refreshed again at once (churn)         expect REFUSE got REFUSE    ok
+7e control: pre-window QDay flag box refreshed unchanged (twice in a row) expect ACCEPT got ACCEPT    ok
+7e2 control: pre-window QDay flag box refreshed unchanged (twice in a row) expect ACCEPT got ACCEPT    ok
+7f owner spend of A rebuilt on the refreshed flag box             expect ACCEPT got ACCEPT    ok
+8a FAR2 (flag NFT minted with amount 2): owner spend with the real flag (false) expect ACCEPT got ACCEPT    ok
+8b.a the oracle sets FAR2's real flag true                          expect ACCEPT got ACCEPT    ok
+8b FAR2: owner spend with the real flag, now true                 expect REFUSE got REFUSE    ok
+8c FAR2: owner spend with the NFT's second unit (a key address, R4 = false) expect ACCEPT got ACCEPT    ok
+8d FAR3 (flag NFT minted amount 1 into a key address, R4 = false): owner spend expect ACCEPT got ACCEPT    ok
+ 9 owner key spends D after NEAR's backstop                       expect REFUSE got REFUSE    ok
+10 hash key spends D after the backstop                           expect ACCEPT got ACCEPT    ok
+m1 after migration: owner key spends a new payment F1 (flag false, past the backstop) expect REFUSE got REFUSE    ok
+m2 after migration: keyless merge of F1 and F2                    expect ACCEPT got ACCEPT    ok
+m3 after migration: NEAR's already-used hash key signs again (checked, not submitted; the forward replaces it) expect ACCEPT got ACCEPT    ok
+f1 forward F3 alone, keyless, to NEAR' (past the backstop, no data input) expect ACCEPT got ACCEPT    ok
+f2 forward F5 to the owner's key address                          expect REFUSE got REFUSE    ok
+f3 forward F5 to FAR' (a QVault2 tree that is not NEAR's committed successor) expect REFUSE got REFUSE    ok
+f5 forward F5 with a foreign input (an anyone-can-spend box paying the fee) expect REFUSE got REFUSE    ok
+f6 forward F5 keeping less than total - bounty                    expect REFUSE got REFUSE    ok
+f7 FM and F4 merged and forwarded to NEAR' in one transaction     expect ACCEPT got ACCEPT    ok
+f9 the forwarded box at NEAR' spent by NEAR''s own hash key       expect ACCEPT got ACCEPT    ok
+f8 FAR4: forward G4 to FAR4' opened by a fake flag (NFT unit at a key address, R4 = true) expect ACCEPT got ACCEPT    ok
+11 flag false -> true with no key                                 expect REFUSE got REFUSE    ok
+12 flag false -> true by the oracle                               expect ACCEPT got ACCEPT    ok
+13 flag true -> false by the oracle                               expect REFUSE got REFUSE    ok
+14 flag box refreshed unchanged right after the flip, no key (outside its window) expect REFUSE got REFUSE    ok
+15 owner key spends A, flag box (true) as a data input            expect REFUSE got REFUSE    ok
+16 owner key spends A with no flag box                            expect REFUSE got REFUSE    ok
+17 keyless merge of A, the B+C box and a new payment E            expect ACCEPT got ACCEPT    ok
+18 hash key spends the merged box to the owner                    expect ACCEPT got ACCEPT    ok
+f1b after the flag: forward E2 (FAR) to FAR' with the true flag box as a data input expect ACCEPT got ACCEPT    ok
+f4c after the flag: forward E0 (FAR) with no data input (flag not shown, before FAR's backstop) expect REFUSE got REFUSE    ok
+14b flag box refreshed unchanged in its window, no key             expect ACCEPT got ACCEPT    ok
+ALL AS EXPECTED

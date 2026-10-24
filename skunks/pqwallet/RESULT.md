@@ -164,3 +164,73 @@ byte is one negative class; the Cryptography seat was asked for the others (wron
 hypertree over a valid FORS, edge indices, adversarial checksum digits). Two of the three oracles for the WOTS+ side
 are this project's own code (the script and the TypeScript signer); the Python harness keygen is the third and was
 checked at step 1. The security seat's reading is the remaining gate item.
+
+## Step 3: one signature per hash key (SK-055), variant 2 on the devnet (2026-10-24)
+
+**PASS on every pre-registered row (`SK055-PREREG.md`); variant 1 not built, by the decision rule.** `QVault2.es`
+(the quantum-day vault plus a keyless forward to a successor whose tree hash is a constant, open only after the flag
+says true or past the backstop) ran the vault's whole suite and the forward rows against an Ergo node 6.0.8, with no
+verdict changed from the 6.0.7 baseline (`skunks/qvault/devnet-results.json`).
+
+Environment: peeryard devnet `sk055` (`rig/devnet.sh up` on the keepalive topology: one mining node, 20 s blocks,
+`minimalFeeAmount 0`, `extraIndex`), jar `ergo-6.0.8.jar` sha256 `e1269f3c…` (`effective.json`: `jar_sha256_16
+e1269f3c9b1c75d2`), `/info.appVersion 6.0.8`. Harness `skunks/qvault/devnet-test-v2.py` (committed before the run,
+66dc005), results `skunks/qvault/devnet-results-v2.json`, log `skunks/qvault/devnet-v2.log`. Vault trees: 1,344 bytes
+(NEAR, backstop a two-digit height) and 1,346 bytes (the others), against 1,261 and 1,262 for `QVault.es`.
+
+```
+rows 51 ok 51 not ok []
+ALL AS EXPECTED
+```
+
+The forward rows (every one judged by the node's `/transactions/check`; "mined" rows were also submitted and confirmed):
+
+```
+f4 forward E0 (FAR) to FAR' before quantum day, flag false as a data input expect REFUSE got REFUSE    ok
+f4b forward E0 (FAR) to FAR' before quantum day, no data input           expect REFUSE got REFUSE    ok
+m3 after migration: NEAR's already-used hash key signs again (checked, not submitted; the forward replaces it) expect ACCEPT got ACCEPT    ok
+f1 forward F3 alone, keyless, to NEAR' (past the backstop, no data input) expect ACCEPT got ACCEPT    ok
+f2 forward F5 to the owner's key address                          expect REFUSE got REFUSE    ok
+f3 forward F5 to FAR' (a QVault2 tree that is not NEAR's committed successor) expect REFUSE got REFUSE    ok
+f5 forward F5 with a foreign input (an anyone-can-spend box paying the fee) expect REFUSE got REFUSE    ok
+f6 forward F5 keeping less than total - bounty                    expect REFUSE got REFUSE    ok
+f7 FM and F4 merged and forwarded to NEAR' in one transaction     expect ACCEPT got ACCEPT    ok
+f9 the forwarded box at NEAR' spent by NEAR''s own hash key       expect ACCEPT got ACCEPT    ok
+f8 FAR4: forward G4 to FAR4' opened by a fake flag (NFT unit at a key address, R4 = true) expect ACCEPT got ACCEPT    ok
+f1b after the flag: forward E2 (FAR) to FAR' with the true flag box as a data input expect ACCEPT got ACCEPT    ok
+f4c after the flag: forward E0 (FAR) with no data input (flag not shown, before FAR's backstop) expect REFUSE got REFUSE    ok
+```
+
+Cost (the node's mempool figures on devnet parameters, `skunks/qvault/devnet-cost-probe-v2.py`, run on the same
+devnet right after the suite, `devnet-cost-probe-v2.log`):
+
+```
+cost-probe plain_merge_2_at_NEAR tx=98a9d934 inputs=2 mempool_cost=14640 size=1540
+cost-probe merge_forward_2_to_NEARprime tx=1dad17c3 inputs=2 mempool_cost=14634 size=1542
+cost-probe lone_forward_1_to_NEARprime tx=5ca66aeb inputs=1 mempool_cost=12378 size=1505
+```
+
+A merge-and-forward costs what a plain merge costs (one hash of the successor's tree bytes against one byte-string
+comparison; 6 units apart, within the noise of the two paths). The prereg's cost criterion is met with margin.
+
+**What this settles.** After the vault's one hash-key spend, a payment that lands at the old address is moved by
+anyone, keyless, to the owner's next vault (f1, f7), and from there the owner spends with that vault's own fresh key
+(f9); the spent one-time key never signs again (the `m3` shape still verifies, since a script cannot see a signature
+that was never published, but no honest wallet needs it). The forward reaches nothing but the committed successor
+(f2, f3), admits no foreign value (f5), keeps the merged total less the bounty (f6), and is closed before quantum day
+(f4, f4b, f4c), so it cannot churn a pending owner spend.
+
+**Its price, measured.** A forged flag, an NFT unit at a key address carrying `R4 = true`, opens the forward early (f8,
+ACCEPT): the payment moves to the owner's own successor vault at the cost of a bounty, the same provenance gap as the
+vault's rows 8c and 8d, and the same wallet check (the flag NFT's mint) closes it. The successor is fixed at creation:
+a wallet must derive vault k+1's key before it hands out vault k's address (the derivation of step 1 makes both a
+function of the seed and the index, so restore finds the chain). The last vault of a chain has a dead-end successor
+(32 zero bytes here); a payment there after its hash-key spend is back to today's situation, so a wallet keeps one
+spare generation ahead.
+
+**Not run.** Variant 1 (the leaf signs the successor commitment; the worklist's SK-055 option 1), by the decision rule:
+variant 2 passed every row and is cheaper by one WOTS+ verification per forwarded box. The rows ran on 6.0.8 while
+the baseline ran on 6.0.7; no verdict differed, so no jar effect needed separating. Mainnet constants (PERIOD
+1,051,200, WINDOW 21,600) were not used; the devnet's 40 / 20 were, as in the baseline. The schedule member's version
+of the same problem (`RekeySchedule.es`, the planted-leaf griefing) is not addressed by this variant and stays open
+under SK-055.
