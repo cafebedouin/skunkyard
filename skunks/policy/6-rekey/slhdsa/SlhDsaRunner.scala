@@ -418,6 +418,9 @@ object SlhDsaRunner {
       out.append(s"""{"summary": true, "spends": $n, "digest_ok": $dOkN, "script_accept": $acc, "flip_script_refuse": $fRef}]}\n""")
       write(outPath, out.toString)
       println(s"wots-verify-ext spends=$n digest_ok=$dOkN script_accept=$acc flip_script_refuse=$fRef all_as_expected=${dOkN == n && acc == n && fRef == n}")
+    case "compile-file" :: path :: Nil =>      // compile an ErgoScript file (constants already substituted) and print its tree size, or the error
+      try { val c = compile(read(path), Map.empty[String, Any]); println(s"compile-file $path compiled=true tree_bytes=${c.bytes} header=0x${c.header.toHexString} constants=${c.tree.constants.length}") }
+      catch { case e: Throwable => println(s"compile-file $path compiled=false error=${firstLine(e)}") }
     case "sign-other" :: msgHex :: Nil =>      // a fresh throwaway key signs the same digest (the other-key negative)
       val kpg = new SLHDSAKeyPairGenerator(); kpg.init(new SLHDSAKeyGenerationParameters(new SecureRandom(), SLHDSAParameters.sha2_128s))
       val sk = kpg.generateKeyPair().getPrivate.asInstanceOf[SLHDSAPrivateKeyParameters].getEncoded
