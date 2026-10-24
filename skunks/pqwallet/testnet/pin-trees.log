@@ -1,0 +1,13 @@
+pin node=http://213.239.193.208:9052 appVersion=6.0.8 network=testnet height=605259
+pin QVault2 tree_bytes=1351 header=0x19 address=3CBLnV6NzUMveeA2zKSTFVjr… (1852 chars)
+pin QVault2 OWNER len=33 offsets=[89]
+pin QVault2 QDAY_NFT len=32 offsets=[11]
+pin QVault2 PKSEED len=32 offsets=[45]
+pin QVault2 PKCOMMIT len=32 offsets=[345]
+pin QVault2 SUCCESSOR len=32 offsets=[391]
+pin QVault2 BACKSTOP len=3 offsets=[80,382]
+pin QDay tree_bytes=153 header=0x19 address=2jFvbQvkJhoATbM4MJQkENqU… (216 chars)
+pin QDay ORACLE len=33 offsets=[19]
+pin QVault2 round_trip=true zeroed_blake2b256=000d534203e197ae5767520fdc588bc60e5360b3fa5ce40dad4b4195263fbe64
+pin QDay round_trip=true zeroed_blake2b256=d4a783e7a105a61c3f0497e49089749edf06e9fbac041a484beb95cf2bc5fdd2
+pin written /home/scott/bin/skunkyard/skunks/pqwallet/trees/{QVault2.tree,QDay.tree,pins.json}

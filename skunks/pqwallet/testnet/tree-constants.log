@@ -1,0 +1,157 @@
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::compareAndSwapObject has been called by scala.runtime.LazyVals$ (file:/home/scott/.local/bin/cs)
+WARNING: Please consider reporting this to the maintainers of class scala.runtime.LazyVals$
+WARNING: sun.misc.Unsafe::compareAndSwapObject will be removed in a future release
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::compareAndSwapObject has been called by scala.runtime.LazyVals$ (file:/home/scott/.local/bin/cs)
+WARNING: Please consider reporting this to the maintainers of class scala.runtime.LazyVals$
+WARNING: sun.misc.Unsafe::compareAndSwapObject will be removed in a future release
+tree-constants skunks/pqwallet/trees/QVault2.tree [0] SInt$=0
+tree-constants skunks/pqwallet/trees/QVault2.tree [1] SInt$=0
+tree-constants skunks/pqwallet/trees/QVault2.tree [2] Coll[Byte](32)=c143f2d94733cb4deee51b1db0dd5304f83510d4…
+tree-constants skunks/pqwallet/trees/QVault2.tree [3] Coll[Byte](32)=6c19484e63f310aa4590273b3989130e0aa2eda4…
+tree-constants skunks/pqwallet/trees/QVault2.tree [4] SLong$=0
+tree-constants skunks/pqwallet/trees/QVault2.tree [5] SInt$=777777
+tree-constants skunks/pqwallet/trees/QVault2.tree [6] SInt$=1
+tree-constants skunks/pqwallet/trees/QVault2.tree [7] SInt$=0
+tree-constants skunks/pqwallet/trees/QVault2.tree [8] Coll[Byte](33)=02b7da363cb84d41d10193c97e4fcdc35189e12f…
+tree-constants skunks/pqwallet/trees/QVault2.tree [9] SInt$=1
+tree-constants skunks/pqwallet/trees/QVault2.tree [10] SInt$=0
+tree-constants skunks/pqwallet/trees/QVault2.tree [11] SByte$=0
+tree-constants skunks/pqwallet/trees/QVault2.tree [12] SInt$=256
+tree-constants skunks/pqwallet/trees/QVault2.tree [13] SInt$=30
+tree-constants skunks/pqwallet/trees/QVault2.tree [14] SInt$=16
+tree-constants skunks/pqwallet/trees/QVault2.tree [15] SInt$=16
+tree-constants skunks/pqwallet/trees/QVault2.tree [16] SInt$=2144
+tree-constants skunks/pqwallet/trees/QVault2.tree [17] SInt$=0
+tree-constants skunks/pqwallet/trees/QVault2.tree [18] SInt$=1
+tree-constants skunks/pqwallet/trees/QVault2.tree [19] SInt$=2
+tree-constants skunks/pqwallet/trees/QVault2.tree [20] SInt$=3
+tree-constants skunks/pqwallet/trees/QVault2.tree [21] SInt$=4
+tree-constants skunks/pqwallet/trees/QVault2.tree [22] SInt$=5
+tree-constants skunks/pqwallet/trees/QVault2.tree [23] SInt$=6
+tree-constants skunks/pqwallet/trees/QVault2.tree [24] SInt$=7
+tree-constants skunks/pqwallet/trees/QVault2.tree [25] SInt$=8
+tree-constants skunks/pqwallet/trees/QVault2.tree [26] SInt$=9
+tree-constants skunks/pqwallet/trees/QVault2.tree [27] SInt$=10
+tree-constants skunks/pqwallet/trees/QVault2.tree [28] SInt$=11
+tree-constants skunks/pqwallet/trees/QVault2.tree [29] SInt$=12
+tree-constants skunks/pqwallet/trees/QVault2.tree [30] SInt$=13
+tree-constants skunks/pqwallet/trees/QVault2.tree [31] SInt$=14
+tree-constants skunks/pqwallet/trees/QVault2.tree [32] SInt$=15
+tree-constants skunks/pqwallet/trees/QVault2.tree [33] SInt$=16
+tree-constants skunks/pqwallet/trees/QVault2.tree [34] SInt$=17
+tree-constants skunks/pqwallet/trees/QVault2.tree [35] SInt$=18
+tree-constants skunks/pqwallet/trees/QVault2.tree [36] SInt$=19
+tree-constants skunks/pqwallet/trees/QVault2.tree [37] SInt$=20
+tree-constants skunks/pqwallet/trees/QVault2.tree [38] SInt$=21
+tree-constants skunks/pqwallet/trees/QVault2.tree [39] SInt$=22
+tree-constants skunks/pqwallet/trees/QVault2.tree [40] SInt$=23
+tree-constants skunks/pqwallet/trees/QVault2.tree [41] SInt$=24
+tree-constants skunks/pqwallet/trees/QVault2.tree [42] SInt$=25
+tree-constants skunks/pqwallet/trees/QVault2.tree [43] SInt$=26
+tree-constants skunks/pqwallet/trees/QVault2.tree [44] SInt$=27
+tree-constants skunks/pqwallet/trees/QVault2.tree [45] SInt$=28
+tree-constants skunks/pqwallet/trees/QVault2.tree [46] SInt$=29
+tree-constants skunks/pqwallet/trees/QVault2.tree [47] SInt$=30
+tree-constants skunks/pqwallet/trees/QVault2.tree [48] SInt$=31
+tree-constants skunks/pqwallet/trees/QVault2.tree [49] SInt$=32
+tree-constants skunks/pqwallet/trees/QVault2.tree [50] SInt$=33
+tree-constants skunks/pqwallet/trees/QVault2.tree [51] SInt$=34
+tree-constants skunks/pqwallet/trees/QVault2.tree [52] SInt$=35
+tree-constants skunks/pqwallet/trees/QVault2.tree [53] SInt$=36
+tree-constants skunks/pqwallet/trees/QVault2.tree [54] SInt$=37
+tree-constants skunks/pqwallet/trees/QVault2.tree [55] SInt$=38
+tree-constants skunks/pqwallet/trees/QVault2.tree [56] SInt$=39
+tree-constants skunks/pqwallet/trees/QVault2.tree [57] SInt$=40
+tree-constants skunks/pqwallet/trees/QVault2.tree [58] SInt$=41
+tree-constants skunks/pqwallet/trees/QVault2.tree [59] SInt$=42
+tree-constants skunks/pqwallet/trees/QVault2.tree [60] SInt$=43
+tree-constants skunks/pqwallet/trees/QVault2.tree [61] SInt$=44
+tree-constants skunks/pqwallet/trees/QVault2.tree [62] SInt$=45
+tree-constants skunks/pqwallet/trees/QVault2.tree [63] SInt$=46
+tree-constants skunks/pqwallet/trees/QVault2.tree [64] SInt$=47
+tree-constants skunks/pqwallet/trees/QVault2.tree [65] SInt$=48
+tree-constants skunks/pqwallet/trees/QVault2.tree [66] SInt$=49
+tree-constants skunks/pqwallet/trees/QVault2.tree [67] SInt$=50
+tree-constants skunks/pqwallet/trees/QVault2.tree [68] SInt$=51
+tree-constants skunks/pqwallet/trees/QVault2.tree [69] SInt$=52
+tree-constants skunks/pqwallet/trees/QVault2.tree [70] SInt$=53
+tree-constants skunks/pqwallet/trees/QVault2.tree [71] SInt$=54
+tree-constants skunks/pqwallet/trees/QVault2.tree [72] SInt$=55
+tree-constants skunks/pqwallet/trees/QVault2.tree [73] SInt$=56
+tree-constants skunks/pqwallet/trees/QVault2.tree [74] SInt$=57
+tree-constants skunks/pqwallet/trees/QVault2.tree [75] SInt$=58
+tree-constants skunks/pqwallet/trees/QVault2.tree [76] SInt$=59
+tree-constants skunks/pqwallet/trees/QVault2.tree [77] SInt$=60
+tree-constants skunks/pqwallet/trees/QVault2.tree [78] SInt$=61
+tree-constants skunks/pqwallet/trees/QVault2.tree [79] SInt$=62
+tree-constants skunks/pqwallet/trees/QVault2.tree [80] SInt$=63
+tree-constants skunks/pqwallet/trees/QVault2.tree [81] SInt$=64
+tree-constants skunks/pqwallet/trees/QVault2.tree [82] SInt$=65
+tree-constants skunks/pqwallet/trees/QVault2.tree [83] SInt$=66
+tree-constants skunks/pqwallet/trees/QVault2.tree [84] SInt$=0
+tree-constants skunks/pqwallet/trees/QVault2.tree [85] SInt$=1
+tree-constants skunks/pqwallet/trees/QVault2.tree [86] SInt$=2
+tree-constants skunks/pqwallet/trees/QVault2.tree [87] SInt$=3
+tree-constants skunks/pqwallet/trees/QVault2.tree [88] SInt$=4
+tree-constants skunks/pqwallet/trees/QVault2.tree [89] SInt$=5
+tree-constants skunks/pqwallet/trees/QVault2.tree [90] SInt$=6
+tree-constants skunks/pqwallet/trees/QVault2.tree [91] SInt$=7
+tree-constants skunks/pqwallet/trees/QVault2.tree [92] SInt$=8
+tree-constants skunks/pqwallet/trees/QVault2.tree [93] SInt$=9
+tree-constants skunks/pqwallet/trees/QVault2.tree [94] SInt$=10
+tree-constants skunks/pqwallet/trees/QVault2.tree [95] SInt$=11
+tree-constants skunks/pqwallet/trees/QVault2.tree [96] SInt$=12
+tree-constants skunks/pqwallet/trees/QVault2.tree [97] SInt$=13
+tree-constants skunks/pqwallet/trees/QVault2.tree [98] SInt$=14
+tree-constants skunks/pqwallet/trees/QVault2.tree [99] SInt$=32
+tree-constants skunks/pqwallet/trees/QVault2.tree [100] SInt$=1
+tree-constants skunks/pqwallet/trees/QVault2.tree [101] SInt$=32
+tree-constants skunks/pqwallet/trees/QVault2.tree [102] SInt$=64
+tree-constants skunks/pqwallet/trees/QVault2.tree [103] SInt$=2
+tree-constants skunks/pqwallet/trees/QVault2.tree [104] SByte$=0
+tree-constants skunks/pqwallet/trees/QVault2.tree [105] SInt$=256
+tree-constants skunks/pqwallet/trees/QVault2.tree [106] SInt$=2
+tree-constants skunks/pqwallet/trees/QVault2.tree [107] SInt$=0
+tree-constants skunks/pqwallet/trees/QVault2.tree [108] SInt$=16
+tree-constants skunks/pqwallet/trees/QVault2.tree [109] SInt$=16
+tree-constants skunks/pqwallet/trees/QVault2.tree [110] SInt$=256
+tree-constants skunks/pqwallet/trees/QVault2.tree [111] SInt$=16
+tree-constants skunks/pqwallet/trees/QVault2.tree [112] SInt$=16
+tree-constants skunks/pqwallet/trees/QVault2.tree [113] SInt$=16
+tree-constants skunks/pqwallet/trees/QVault2.tree [114] SInt$=64
+tree-constants skunks/pqwallet/trees/QVault2.tree [115] Coll[Byte](32)=ea9f744b01c61db994f1d34235f18d15301772a9…
+tree-constants skunks/pqwallet/trees/QVault2.tree [116] SBoolean=false
+tree-constants skunks/pqwallet/trees/QVault2.tree [117] SInt$=2
+tree-constants skunks/pqwallet/trees/QVault2.tree [118] SInt$=777777
+tree-constants skunks/pqwallet/trees/QVault2.tree [119] SInt$=1
+tree-constants skunks/pqwallet/trees/QVault2.tree [120] SInt$=0
+tree-constants skunks/pqwallet/trees/QVault2.tree [121] Coll[Byte](32)=27a38802b687ac929a6cc95174defd99475c71db…
+tree-constants skunks/pqwallet/trees/QVault2.tree [122] SLong$=0
+tree-constants skunks/pqwallet/trees/QVault2.tree [123] SInt$=1051200
+tree-constants skunks/pqwallet/trees/QVault2.tree [124] SInt$=21600
+tree-constants skunks/pqwallet/trees/QVault2.tree [125] SLong$=0
+tree-constants skunks/pqwallet/trees/QVault2.tree [126] SLong$=500000
+tree-constants skunks/pqwallet/trees/QVault2.tree [127] SLong$=0
+tree-constants skunks/pqwallet/trees/QVault2.tree [128] SLong$=2
+tree-constants skunks/pqwallet/trees/QVault2.tree [129] SLong$=2000000
+tree-constants skunks/pqwallet/trees/QVault2.tree [130] SInt$=10
+tree-constants skunks/pqwallet/trees/QVault2.tree [131] SInt$=0
+tree-constants skunks/pqwallet/trees/QVault2.tree [132] SInt$=4
+tree-constants skunks/pqwallet/trees/QVault2.tree [133] SBoolean=false
+tree-constants skunks/pqwallet/trees/QVault2.tree summary header=0x19 constants=134 int_collections= pre_padding_zero=false pre_len=-1
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::compareAndSwapObject has been called by scala.runtime.LazyVals$ (file:/home/scott/.local/bin/cs)
+WARNING: Please consider reporting this to the maintainers of class scala.runtime.LazyVals$
+WARNING: sun.misc.Unsafe::compareAndSwapObject will be removed in a future release
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::compareAndSwapObject has been called by scala.runtime.LazyVals$ (file:/home/scott/.local/bin/cs)
+WARNING: Please consider reporting this to the maintainers of class scala.runtime.LazyVals$
+WARNING: sun.misc.Unsafe::compareAndSwapObject will be removed in a future release
+tree-constants skunks/pqwallet/trees/QDay.tree [0] SInt$=0
+tree-constants skunks/pqwallet/trees/QDay.tree [1] SInt$=1051200
+tree-constants skunks/pqwallet/trees/QDay.tree [2] SInt$=21600
+tree-constants skunks/pqwallet/trees/QDay.tree [3] SInt$=10
+tree-constants skunks/pqwallet/trees/QDay.tree [4] Coll[Byte](33)=02ba70903563f312de15a348cae383316618d6c0…
+tree-constants skunks/pqwallet/trees/QDay.tree summary header=0x19 constants=5 int_collections= pre_padding_zero=false pre_len=-1

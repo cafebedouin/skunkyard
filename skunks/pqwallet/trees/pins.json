@@ -1,0 +1,71 @@
+{
+ "compiler": {
+  "node": "http://213.239.193.208:9052",
+  "appVersion": "6.0.8",
+  "network": "testnet",
+  "heightAtPin": 605259,
+  "endpoint": "/script/p2sAddress",
+  "treeVersion": 1,
+  "pinnedAt": "2026-10-24",
+  "sources": [
+   "skunks/qvault/QVault2.es",
+   "skunks/qvault/QDay.es"
+  ],
+  "schedule": {
+   "PERIOD": 1051200,
+   "WINDOW": 21600,
+   "PER_INPUT": 500000,
+   "REFRESH": 2000000,
+   "SLACK": 10
+  }
+ },
+ "QVault2": {
+  "offsets": {
+   "OWNER": [
+    89
+   ],
+   "QDAY_NFT": [
+    11
+   ],
+   "PKSEED": [
+    45
+   ],
+   "PKCOMMIT": [
+    345
+   ],
+   "SUCCESSOR": [
+    391
+   ],
+   "BACKSTOP": [
+    80,
+    382
+   ]
+  },
+  "placeholders": {
+   "OWNER": "02b7da363cb84d41d10193c97e4fcdc35189e12ff963e39f386aba766fa796ea50",
+   "QDAY_NFT": "c143f2d94733cb4deee51b1db0dd5304f83510d42d33346337f0c4579581d895",
+   "PKSEED": "6c19484e63f310aa4590273b3989130e0aa2eda4bb1be10af4558e1b62aa1f7d",
+   "PKCOMMIT": "ea9f744b01c61db994f1d34235f18d15301772a946d7f1fa99bdd4b8d15d601e",
+   "SUCCESSOR": "27a38802b687ac929a6cc95174defd99475c71db3bbd0d56397a47aa8c15c1e2",
+   "BACKSTOP": "e2f85e"
+  },
+  "bytes": 1351,
+  "header": "0x19",
+  "zeroedHash": "000d534203e197ae5767520fdc588bc60e5360b3fa5ce40dad4b4195263fbe64",
+  "placeholderAddress": "3CBLnV6NzUMveeA2zKSTFVjr4mqj6k8n2fgzxgRAvwFFbmBgqvwAiGr4ryH1EnhZXsUVWJgTeJWGttH7rBvaWiQzrzY83CB91iAkLhs1cE9iWQEZWFwmPBoPu5Nfs8QvxGnVfiAPZ3dxtMxNBggPJ77BPv9c84kNGPPAEbQGLFBUKXPR1GeNLFqWj6HvprXZBp4YVoUwWN6hbZPYgjvgn3eV4g6u9uAW4tN2pNJtcSSBGexmNtT2CctNFQpHPG5LYa9JRB2Zpw8firidPQNnyxhmtc6Zb3BJ3oVFvaYcAZ6bx22wY1E8tpghMV2PeXLq1YpY32iTZdrgb6o2wpcQwJGo2T7jN6soEayimegUMYUMTbSpACzuA152EpyS8EKiKgQJHe6ZiHL3tLEeBPajveCgkwNtvXaWne3snJiZYKPsLa6wt5SaZficad2Mt9E1q2tZ9HycyFn36Qu3HfJXskgvWhNHwXF8J93pSC1UzKKvQS6KcMsmSzWKg1fDtBEDexC6pwSTi6DWkGznRuwgnX1zNkFpRKEeSDFnDhivoJ5ax5Qm7VLrVGPJ1pnR3TiFhd14BNt8Hk1TWgaar2xpyEY1XD15qDha1DrBf8irGvB512uC8fcreVNmfwYtAqEyvonN9fG5jrexHhs4osimEnFhCMPNB2ikNPxRoWZJkpWDzaVScVfkiiXaGwjZQ7ZeuJh2SYfZFzwTanmxXmpMmS865Nunnq6vB2MNaW894avoRDfsV6V9NFCXbgTMrHw3qD9cgTH7KxZAyFZ3kBRQzdCK8uaCKLb7HMsLK8rSmNpDirr5SwTdax59xDBh9edFrBtTmq24QW8ApGVG2jzsvNdDoPCWQa1XuhGf6rLDVn8hjY44iqrcQ3AVRNgujCdMQXnYNHat9PbmND6e1CMgCnC2p5Vf8Jp8BaEoGoY4VqqRVmjTAkA6uAn4wJhAHrZvP7XDbbLciDVqezot2sTueWttewXJozQZWss1DDuLG29VXErid254117ssCQqpSwX458WvFWMBgF9NwM4qMn7gBqE7AHta5Z4dTRUiVtU9gbrWcxcrX3fCSjNNjacyKgvoGStdn81gT6h5eE2RtZGzx2bxqmP6QTY2sEMMEzPoKthrtxPjwpCBmEC6J72cUJnhty6AAwYwBLfLM6Xb2Y5LRN9j7jpDoqMaDNhizhmDH1DfVSTjLcHuKKgrfHGUMhF1nZfsSL7TSQypbsxagVNJ4eM1JNduotnvrnEQjvbrjvZnh1P3KuQasvt5GPJvsfs3SD8tYe5rTb9yqE5xPqbpFAwihuTqtDNxztuLwCEQb2QZGbmmECp1fRywpFgAA6ihhVA7ErcMBnKQVm8Q41PFR2wxfee2MMVANzLXpcpwe2wmPwrEwpDVsC61ixhvJvy1jNgsecbory4oryVdDnajD2aAErfL3Po1q7FRQ4gV7WFpeeAK6bbqX1SfM2FbfD6jrBBYgRggaVXtqD4eKVxUzphCHruDpnKrVebS6jZRX3CZM36BqN8jSqGgBBcFiTJX1JuKem45YHw1xNB31178LqDD7u1y8VTFmoCDuV2ktTGqFqmYLA9xhcwXiXpke633DqGrqyr7zDM3ZsEySAxFSCBzBHJWfxyAJssK713WLE2JiGNoTUrzJtu4U2skGy5NgkfAtRWMCmtqinoWi4EHnUDFtdn7zQZFn8cwnBxBnJG2VasbdpCPu7yAc6BzbYdDXEw4taWFQdtMSKXRFaB8C4g6Qn898bZCCPkHTUMKqBquZd1r9AUzC6JKhgJSGNFch23DDHuCtnGkjjz2JDb5vbmPCPpZUmCLFjHUcSwrw6fsNcxsNkWwWhGgMfn"
+ },
+ "QDay": {
+  "offsets": {
+   "ORACLE": [
+    19
+   ]
+  },
+  "placeholders": {
+   "ORACLE": "02ba70903563f312de15a348cae383316618d6c0d731633567fb8496e20b571722"
+  },
+  "bytes": 153,
+  "header": "0x19",
+  "zeroedHash": "d4a783e7a105a61c3f0497e49089749edf06e9fbac041a484beb95cf2bc5fdd2",
+  "placeholderAddress": "2jFvbQvkJhoATbM4MJQkENqUmMvtnugGBzKZYFZsqgrNCPj2cxdgDj7yEwjkLsJ3ENTefpMuyURCRT4ieY2y44tTyoad45ty5fXyQ8kBS2R73f9G3vJtz3zzev2dRR6QHjySfbGLfycFJfDZnXsZQebM2yKb7oqwA6HXGQjVbtoZ7pBnwekiejvLGGXZcscVhB2iWHc1jWzV9uYmhSp4vtgG"
+ }
+}
