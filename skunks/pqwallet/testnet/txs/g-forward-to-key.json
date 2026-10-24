@@ -1,0 +1,44 @@
+{
+ "height": 605269,
+ "builtId": "70cfeadf5faaf8229eb188112538bea6493eef8fe1b82bb541bb2abde457971b",
+ "label": "g: forward to the wallet P2PK instead of the successor",
+ "expected": "REFUSE",
+ "submit": {
+  "status": 400,
+  "body": "{\n  \"error\" : 400,\n  \"reason\" : \"bad.request\",\n  \"detail\" : \"Malformed transaction: Scripts of all transaction inputs should pass verification. 70cfeadf5faaf8229eb188112538bea6493eef8fe1b82bb541bb2abde457971b: #0 => Success((false,226))\"\n}"
+ },
+ "tx": {
+  "inputs": [
+   {
+    "boxId": "bf6bbf672ecc77463a6bc2fc7883462057695e3fb620c14386fd6ad1e96d58e0",
+    "spendingProof": {
+     "proofBytes": "",
+     "extension": {
+      "0": "0400"
+     }
+    }
+   }
+  ],
+  "dataInputs": [
+   {
+    "boxId": "ecb6947c3c570d5b28f12fccee0927ebfd01c77a83a6998ca76f425290778365"
+   }
+  ],
+  "outputs": [
+   {
+    "value": 18000000,
+    "ergoTree": "0008cd032d0c040f8ef24535cab2ee8529631bc60111095b3770dddc27f314aaca841a29",
+    "creationHeight": 605269,
+    "assets": [],
+    "additionalRegisters": {}
+   },
+   {
+    "value": 2000000,
+    "ergoTree": "1005040004000e36100204a00b08cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304",
+    "creationHeight": 605269,
+    "assets": [],
+    "additionalRegisters": {}
+   }
+  ]
+ }
+}

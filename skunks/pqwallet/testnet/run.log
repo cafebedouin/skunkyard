@@ -1,0 +1,126 @@
+2026-10-24T21:02:33.966Z == step keys (node http://213.239.193.208:9052)
+2026-10-24T21:02:34.370Z keys: node http://213.239.193.208:9052 appVersion 6.0.8 network testnet height 605262
+2026-10-24T21:02:34.370Z keys: wallet 3WxtnwJojAm4C9DJtgNHs5zawzD44yE6cKyGM7NeHf7Cw1yP7XBU (m/44'/429'/0'/0/0, pk 032d0c040f8ef24535cab2ee8529631bc60111095b3770dddc27f314aaca841a29)
+2026-10-24T21:02:34.370Z keys: demo oracle pk 03b2ac547ab2a6645e7e365330a255fb9830f1251fef9a5e2ffa852feade984db9 (m/44'/429'/0'/0/1, the same seed: a demo, not an oracle)
+2026-10-24T21:02:34.414Z keys: vault 0 hash key (option B, vaultKey('B', seed, 0, 0)): PKSEED 55215f53c4e2e74aa16aa7c86953f1f10ee163112127a47238857dfdb8ac4ed0 PKCOMMIT 522c3209d376e1b707821754995ae35f8d4dfd5471b4c84c167db53e283bceb1
+2026-10-24T21:02:34.432Z keys: vault 1 hash key (option B, vaultKey('B', seed, 0, 1)): PKSEED 64793ea6f47eb5864b7130f2110da5c049ed8a16c1a9a2ecfdf3551612bb9c20 PKCOMMIT d409055e888d1de11c1846a3c9d93d4ffa447479b782ba4217efe881fc823f2b
+2026-10-24T21:02:34.460Z trees: pinned QVault2.tree 1351 bytes header 0x19, QDay.tree 153 bytes header 0x19; compiler http://213.239.193.208:9052 appVersion 6.0.8 treeVersion 1
+2026-10-24T21:02:34.482Z trees: round trip QVault2 true QDay true; zeroed blake2b256 QVault2 000d534203e197ae5767520fdc588bc60e5360b3fa5ce40dad4b4195263fbe64 QDay d4a783e7a105a61c3f0497e49089749edf06e9fbac041a484beb95cf2bc5fdd2
+2026-10-24T21:02:34.483Z trees: BACKSTOP 900000 encodes to the placeholder's length: true
+2026-10-24T21:02:34.483Z == step keys done
+2026-10-24T21:02:59.740Z == step a-flag (node http://213.239.193.208:9052)
+2026-10-24T21:03:00.109Z a: cross-check: QDay substituted tree == node compile for the demo oracle: true
+2026-10-24T21:03:00.592Z a: QDay tree 153 bytes, address 2jFvbQvkJhoATbM4MJQkENqUmMvtpLT6dgk9z6VGN29CN1qsxKnymLhBB18QeZHfeJmNjtGeyA5gXCmhXFRtjAmMUkqG57n7vY7nWFrewSNoUzoq7sG3bb2gkEwjxdDeKkrWwb9Hn4CkCvGqKS1tK4pq57WPX9nLz7VtDBhERLL5wCb26NnWUY5LNsGoHDM5waJV4bg4JXSYPizbxsmCZUvn
+2026-10-24T21:03:00.592Z a: flag NFT id 72b950c686741516c9b83ac6684e26cc1c7b95c8e9e773c830f867ebb8210675 (supply 1, minted straight into the QDay box, R4 = 0100)
+2026-10-24T21:03:01.761Z a: mint the flag into the QDay box: tx 0897bdf7f8443bbc33b41f333b66b03c07fce54b4498c7b47bd96c44618ff648 submitted (HTTP 200)
+2026-10-24T21:03:02.076Z   a-flag 0897bdf7f844 mempool after 0s
+2026-10-24T21:03:22.666Z   a-flag 0897bdf7f844 mempool after 21s
+2026-10-24T21:03:43.268Z   a-flag 0897bdf7f844 mempool after 42s
+2026-10-24T21:04:03.868Z   a-flag 0897bdf7f844 mempool after 62s
+2026-10-24T21:04:24.410Z   a-flag 0897bdf7f844 mempool after 83s
+2026-10-24T21:04:44.998Z   a-flag 0897bdf7f844 mempool after 103s
+2026-10-24T21:05:05.336Z   a-flag 0897bdf7f844 confirmed after 124s
+2026-10-24T21:05:05.336Z a: mint the flag into the QDay box: tx 0897bdf7f8443bbc33b41f333b66b03c07fce54b4498c7b47bd96c44618ff648 confirmed at height 605264
+2026-10-24T21:05:05.598Z a: flag box 803f5c51ede97b1fef359fb652e0f322e3d6c64128f49bc2871206a4c7f55240
+2026-10-24T21:05:05.598Z == step a-flag done
+2026-10-24T21:05:25.293Z == step b-vaults (node http://213.239.193.208:9052)
+2026-10-24T21:05:25.428Z b: vault k+1 (key 1): tree 1351 bytes, SUCCESSOR 00..00, BACKSTOP 900000, address 3CBLnV6NzUMveeA2xTBtJpPTzGX67nW45gnjmxEc8eg1P4eAh9enfDizpJLW81msYhSPafBnvA9oSn6jAz1zJzBaDPSs1mv2Zke43WutCekie5SnNtYvEWniFr3dFR2BaawLjhU1JwgV3PYGfUpgPUUJAbBXBf8nWEkvEzm6hRwoNewcMyDg5cxrJKHYFtyUhPp5P1S6sFuCSt8VMTSoNK8yi5iL1ACTPtjFeyN8iYFGihcfkFDEWRuZcyXD7ASuLr9zC79zmpyBXvfm5ujKDugNwSQE5XhD7nZJodeTDaRFR7UKX8PmRNhxqUVVkaEw4oH57ewFf6A7Dk9zvsPeX2ek3cuBks6yZ12XNoDRQcU15TpzdhyJN4QT5hKiuJXC4sWxsKPcqZyQMqL75eBS9C7FQDiTBL5Xtboj5MdEQrdGPBEgUiT1Te5idoDcHaP531iMZx4oKgzJdF2FSrG3V3z2wSc98jtpFxaCWid8sZc3Bdg6cn5hWhTyjVe3Quxd9SxScj5tDisFp67WjBYWV3KZ8EUiYon41Yy6tuDR81YvsUrqLHe452GGAnstRGPGqs3VSJH5N4nGzCBraByPKrLvBNtjRh6M4sEJYddaUzEkK3BrenkUr77x86uGD9AfWVin4vdGbCv322GQPr8LcnTEqqN9becV2VhmK7DQ7umah4cRFkTavjJ6mLVJJqV1QzPUxcGwkXCaSoQ7wZBN1PX2vPpUEJheY2rzwtyesBdJZxgLAXLViXEL5agGkaitUoeigXC5dLmsnKpz5hSz53BhxpFH89WsddxkdUwVaURk9mE9fy2JhxeHq8F8Zz2YouTNtiaP3YyQB7xGXW9BqoqThs3RxnWij9hrKuX1DoKgc2iqbdPJtrtvVM5AVusPMVj8ZA36HvgyAUTCYQQBFv7T2Types8nUmBuphfuiPD26oH42XNfg6FAvH8uWP11JhgeKiXuUhGRNmWnQhYX2wjvtphwdrnGL8Ut8EcZe7ZBbn4UpW27mv1FXKsejkunDMSLiijoUMMTyyZH8cpnhG9nG4h3SCNPDJa34JjWG5gEtXnE3ekcJDQs9RYh8D8iP7dmiR4oUrkCCB3BLyyUna6bckApzemzExiqiKL41mPZ4ChPqNkX4fzKoCpoUs69hkW5ACofpsAcn8VXTp272LQAYPaynyCihxEzMMMMCkkeWZTyBGaALw3b3SVJSXNCbQR26SKKvLLLdTHCc36DYrRW5j5QGp8YAB8fpg9zjpsUfTwDgwc8CSczDbgaeD9Qqz8YNPepYzL6F7saSih3wuMEsMMC4TbjeAP9kULm3Bd7vpRZ5FZqG8F9bdFvAqaJDDDp8yP7EQXe9b3PXfZW47QN9FNWbXaTpUxvhunQAu9zpPeDRhEnz4cHQeQizxTCR8rbARZGKgsgfCftzqJzvkMMXJ66pTfcSVN9o3AByjBf2QyCYqirxuV1wcYLBuWQHcb6HETkwk5oLzBykwc7gDPMAh32XW2615R3taX4HgKH4RHoHpmPkH6HDqRCdMKWVhhQHUHAPUTSzz8Cx1Bm2xWmjsybUFhbXcoRddGL9qyVP1csZyYwohwuAMfUxf8smpLtM4LVQRg9Rc7zDdwcU6Zi1fF32hydhi3m9cH7JqRRgN8eH3jn1DpCoGWBWh42x7wVeN4T2oEPh5Vc9TX8N18HCVdhGwmLEwYdXyWv2nADX9qfQZuAZSBBD69jxPjAozBu7rCcFQyq3FpBaprR5unwSQHSMQnHxTdW55r1NvitE6St49BKSB6VgKmd7TQskeC3MCCpfuzE1FrB5T4xG3sRc5uib4rgjKfueDhp89kyH1zvEgXFj3X3Pghp
+2026-10-24T21:05:25.428Z b: vault k (key 0): tree 1351 bytes, SUCCESSOR = blake2b256(tree of k+1) = 2bd0823546f7f33395bfa34325f9aff7d7b03a32671a11d3d9538dee76d34a32, BACKSTOP 900000, address 3CBLnV6NzUMveeA2xTBtJpPTzGX67nW45gnjmxEc8eg1P4eAh9enfDizpJLW81motm59Xuv9tPGV91WeoB6k73CGwUdriZSCx3g3ge1dX5PTYtkRACGPND9uNtKnrTNDX223sppuwFf4uexX7TCJ3JyiBLmkigvN9bmoKtwn82KVdkQYVGnUiZ3f8JG3Yc7oCrZnEXvHsHzEA82HnxbySs4V9Qz8wVC62fzvyjDjNz93qUAQ1Sk8WaNbuE9Jb7XdxLhdiXqogZApM7Gnr4pdGd2aR8GWxhTqXgADSY92dpy7n8NjUZ2o56bLjfKgtW8emw4FNBmeMWDG7hmcDLPvyDXUhVdTufXFNaPBHrUfMfe89Tqw83NfNtzuMp4WzFXJsyZxtqddzLmi14EoboJbdhaLAvi8H6F3y7Mm5oSf7uiCmKDw3xsm7kNZMsJf85X4ZbRZyvcAdzSo7fGCGKRkjA8BfF87XhqVkB3e8gDnZ9GK6vgqUjccoC2ajb8c84AG4rnLCfy3pXpc2qNCTzie9KKE9T8hp7vUJsAbK7jt2QRLAzWE5uMqhaN3tp8aENZSjMNW4i6DbRwoEE5cMrRhiHXTwk2yifa1WL8PvCKLmk2hWH5pw654BQPBQ5NequAs4bLsbeSkfJzTpQJSRT3XefYEsfBfFkkNfgtCPnJoxBQ5JuYfqaSYduehxSHe1wvQxagj6Rte47kzr54CZMVddSKPyyJz46JD1ELtdXFjKFgEMx8SCtLPzdw6erzmpG59HEWG2wY3AZYH9LD7FCgRGV3XWqJ43L4a41HEXKkUeRN2KbVuyPNqxTZrmvwbbYuT6NzPp9MCyGqMJdJkYSxFoMnzHwhkXXdQdVmx5wBSURXvpH4wnhoCvp9BhKGwpe3tR57WDTad6WRHEoZZj56yJ3FyPfQ3Pirwx5kN7cXNzWB1fca3P1QEHzZQGkYsfEpPW15FD3sP9DmsSyRuDbCvk3WWE7HBGDhvoTy2xj6qWUnc4nYkwmY9xzAcRL1YVvfFTWsRtpjWbZQn47jGavTwL1tRGaTd3Esa2UMo57uHv1iHpZkNrowuKjiefSAkuGDw8zq4ggweRtQMbSYRdDcUh4SCMv2of9FB2bUaMhrq9PAxZNBoM6H5uyRWNeCJogxKNzmHG5N7K83Qf1zwNr35moQCgNZEBtN5bKqePzgiowqyRnrzjbDSkVWScjjJ6jQoS7n7jqfAHPuMBbrrVb66EX5NQBBL4xX6MFGn5AtFZFhTx1GcFwL2v29FbnvgZhtndmma3EqPSWxti65x33a47nUdcEYEPUAX191qLJFXcXFWpvBfAqQc4kDYnZmbNRrixSeQoBLyo5f6Nv4moaCRjxiHtiJHaN5FKZDri9f7ym2FTPTtbzdjA3w1XM2tjMDS2kiSi2wu5mBTUrehQBGeArspsFZs9GnhzV2g9DyCE1FeVpByqVfR3LUEG2VtCfArLS2y6BYMnciXkjZXMwY5NvmzrHSRNYevZbHCehiQtGK4rkgpJmQYLG72rpBz5E9jNJg5gasYwVQvy5JGbpJJcxckdCUQVv11yJxjFps7aAct3RUqb5dk1pf6LXiAJDRF197yTV9m84AvCpD9CbV4ycRTnZrZ6TLkuNVMPnECGBx9qY2i1UHmVYN3FJ1kTAnEb6n1pAHfbf3ZTMZWNVfvCCxNm26744WSmGoKwCqXdUpLdg8oa42vai15TfMfszQEdvu2cLkMKaffnJZBBsF2YS5AMvgiYDP2gWshHQekczkJ6vcYk1Y4uhqZrsaK1m57X1ki9XWf1MqWeDSBHg8T9TCeNcEHbEb1XHPPZsZac5AuK4KeL91gnTXeJ9st
+2026-10-24T21:05:26.135Z b: cross-check: vault k+1 substituted tree == node compile for its constants: true
+2026-10-24T21:05:26.707Z b: cross-check: vault k substituted tree == node compile for its constants: true
+2026-10-24T21:05:26.719Z == step b-vaults done
+2026-10-24T21:05:36.799Z == step c-deposit (node http://213.239.193.208:9052)
+2026-10-24T21:05:37.719Z c: two payments to vault k (30000000 + 20000000 nanoERG): tx fc9630cedb4adb363f0c38857fb17eb8825606a26f52369aaf1331d3740bdf9e submitted (HTTP 200)
+2026-10-24T21:05:38.020Z   c-deposit fc9630cedb4a mempool after 0s
+2026-10-24T21:05:58.576Z   c-deposit fc9630cedb4a mempool after 21s
+2026-10-24T21:06:19.124Z   c-deposit fc9630cedb4a mempool after 41s
+2026-10-24T21:06:39.702Z   c-deposit fc9630cedb4a mempool after 62s
+2026-10-24T21:07:00.070Z   c-deposit fc9630cedb4a confirmed after 82s
+2026-10-24T21:07:00.071Z c: two payments to vault k (30000000 + 20000000 nanoERG): tx fc9630cedb4adb363f0c38857fb17eb8825606a26f52369aaf1331d3740bdf9e confirmed at height 605265
+2026-10-24T21:07:00.362Z c: vault k boxes a6b915844bfb8d50f82550c65fd7e8e493d3e8177c17a1faf859e9be0135b325 (30000000) and f67d8094b19f963611c122209f1361d984911537607b26eb8be58d353a48c322 (20000000)
+2026-10-24T21:07:00.363Z == step c-deposit done
+2026-10-24T21:07:07.256Z == step d-merge (node http://213.239.193.208:9052)
+2026-10-24T21:07:07.838Z d: keyless merge of a6b915844bfb… and f67d8094b19f…: var 0 = 0400, output 49000000 at vault k, bounty 1000000 to the fee contract, creation height 605265, proofs empty (built id 0c84238326ceb2b08b61dadf3ce34f5e4d48f0c886837f21c1b2c0af7df64421)
+2026-10-24T21:07:08.025Z d: keyless merge at vault k: tx 0c84238326ceb2b08b61dadf3ce34f5e4d48f0c886837f21c1b2c0af7df64421 submitted (HTTP 200)
+2026-10-24T21:07:08.336Z   d-merge 0c84238326ce mempool after 0s
+2026-10-24T21:07:28.850Z   d-merge 0c84238326ce mempool after 21s
+2026-10-24T21:07:49.446Z   d-merge 0c84238326ce mempool after 41s
+2026-10-24T21:08:10.045Z   d-merge 0c84238326ce mempool after 62s
+2026-10-24T21:08:30.634Z   d-merge 0c84238326ce mempool after 83s
+2026-10-24T21:08:51.164Z   d-merge 0c84238326ce mempool after 103s
+2026-10-24T21:09:11.675Z   d-merge 0c84238326ce confirmed after 124s
+2026-10-24T21:09:11.696Z d: keyless merge at vault k: tx 0c84238326ceb2b08b61dadf3ce34f5e4d48f0c886837f21c1b2c0af7df64421 confirmed at height 605266
+2026-10-24T21:09:12.133Z d: merged box 1ba529d1e832e3fe6f034dcb827650500a5c785e655dde5c69d29384754821e7
+2026-10-24T21:09:12.133Z == step d-merge done
+2026-10-24T21:09:25.335Z == step e-flip (node http://213.239.193.208:9052)
+2026-10-24T21:09:29.435Z e: oracle flip: input 0 the flag box (P2S, reduces to proveDlog(oracle)), input 1 a wallet box for the fee; OUTPUTS(0) same value 10000000, same token, R4 = 0101; signed with sigmastate-js at tip 605266 (id 26d1f3bc945bf446388bb47bbb61da5fce664cdb4645dcfae989ec46c68a16b4)
+2026-10-24T21:09:29.590Z e: the demo oracle sets the flag true: tx 26d1f3bc945bf446388bb47bbb61da5fce664cdb4645dcfae989ec46c68a16b4 submitted (HTTP 200)
+2026-10-24T21:09:29.873Z   e-flip 26d1f3bc945b mempool after 0s
+2026-10-24T21:09:50.452Z   e-flip 26d1f3bc945b mempool after 21s
+2026-10-24T21:10:11.039Z   e-flip 26d1f3bc945b mempool after 41s
+2026-10-24T21:10:31.636Z   e-flip 26d1f3bc945b mempool after 62s
+2026-10-24T21:10:52.230Z   e-flip 26d1f3bc945b mempool after 83s
+2026-10-24T21:11:12.566Z   e-flip 26d1f3bc945b confirmed after 103s
+2026-10-24T21:11:12.568Z e: the demo oracle sets the flag true: tx 26d1f3bc945bf446388bb47bbb61da5fce664cdb4645dcfae989ec46c68a16b4 confirmed at height 605267
+2026-10-24T21:11:12.829Z e: flag box now ecb6947c3c570d5b28f12fccee0927ebfd01c77a83a6998ca76f425290778365 (R4 = true)
+2026-10-24T21:11:12.830Z == step e-flip done
+2026-10-24T21:11:32.712Z == step f-migrate (node http://213.239.193.208:9052)
+2026-10-24T21:11:33.346Z f: hash-key spend of the merged box 1ba529d1e832e3fe6f034dcb827650500a5c785e655dde5c69d29384754821e7 (49000000) to the wallet, creation height 605267: digest 267ccb6077dc04a7d57c3fe1be61561f41822d58f6749af8c34fa32c83346b3f, WOTS+ signature 2144 bytes under PKCOMMIT 522c3209d376e1b707821754995ae35f8d4dfd5471b4c84c167db53e283bceb1 (recorded in testnet/used.json before signing)
+2026-10-24T21:11:33.614Z f: FORGED migration (signature byte 0, low bit flipped), same digest: REFUSED HTTP 400: {
+  "error" : 400,
+  "reason" : "bad.request",
+  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 569ec291860bcb035020423de67fadf88c86ce7d5beea1212f194bc542fe8403: #0 => Success((false,38779))"
+}
+2026-10-24T21:11:33.819Z f: honest migration (vault k hash key): tx 5603ee16b79734c244974f47e9fadbd3e1a747295a621eff1b77d2f6a4a88998 submitted (HTTP 200)
+2026-10-24T21:11:34.130Z   f-migrate 5603ee16b797 mempool after 0s
+2026-10-24T21:11:54.669Z   f-migrate 5603ee16b797 mempool after 21s
+2026-10-24T21:12:15.270Z   f-migrate 5603ee16b797 mempool after 41s
+2026-10-24T21:12:35.799Z   f-migrate 5603ee16b797 mempool after 62s
+2026-10-24T21:12:56.395Z   f-migrate 5603ee16b797 mempool after 83s
+2026-10-24T21:13:16.737Z   f-migrate 5603ee16b797 confirmed after 103s
+2026-10-24T21:13:16.738Z f: honest migration (vault k hash key): tx 5603ee16b79734c244974f47e9fadbd3e1a747295a621eff1b77d2f6a4a88998 confirmed at height 605268
+2026-10-24T21:13:17.006Z f: wallet received box 987fc3f2d8e5e43cef69e63e232af661d7bd23634740ea762fc6d4ee08ed574c
+2026-10-24T21:13:17.007Z == step f-migrate done
+2026-10-24T21:13:25.597Z == step g-late (node http://213.239.193.208:9052)
+2026-10-24T21:13:26.410Z g: a late payment of 20000000 to vault k after the migration: tx 81f9ee74d002f4f2688c08f342c2b6f00d6adb128c8659e5ad4144680c0db3e6 submitted (HTTP 200)
+2026-10-24T21:13:26.718Z   g-late 81f9ee74d002 mempool after 0s
+2026-10-24T21:13:47.298Z   g-late 81f9ee74d002 mempool after 21s
+2026-10-24T21:14:07.863Z   g-late 81f9ee74d002 mempool after 41s
+2026-10-24T21:14:28.420Z   g-late 81f9ee74d002 mempool after 62s
+2026-10-24T21:14:48.937Z   g-late 81f9ee74d002 mempool after 83s
+2026-10-24T21:15:09.287Z   g-late 81f9ee74d002 confirmed after 103s
+2026-10-24T21:15:09.289Z g: a late payment of 20000000 to vault k after the migration: tx 81f9ee74d002f4f2688c08f342c2b6f00d6adb128c8659e5ad4144680c0db3e6 confirmed at height 605269
+2026-10-24T21:15:09.558Z g: late box bf6bbf672ecc77463a6bc2fc7883462057695e3fb620c14386fd6ad1e96d58e0
+2026-10-24T21:15:09.558Z == step g-late done
+2026-10-24T21:15:16.419Z == step g-forward (node http://213.239.193.208:9052)
+2026-10-24T21:15:17.096Z g: forward of the late box bf6bbf672ecc… with the true flag ecb6947c3c57… as a data input, var 0 = 0400, bounty 2000000: first to the wallet's key (must be refused), then to vault k+1
+2026-10-24T21:15:17.261Z g: forward to the wallet P2PK instead of the successor: REFUSED HTTP 400: {
+  "error" : 400,
+  "reason" : "bad.request",
+  "detail" : "Malformed transaction: Scripts of all transaction inputs should pass verification. 70cfeadf5faaf8229eb188112538bea6493eef8fe1b82bb541bb2abde457971b: #0 => Success((false,226))"
+}
+2026-10-24T21:15:17.414Z g: keyless forward to vault k+1 (18000000 kept, bounty 2000000): tx e4c6a2186e6b20ed707d9825e2527108ca96928a0456e0fe4b5a820b1193e8f5 submitted (HTTP 200)
+2026-10-24T21:15:17.693Z   g-forward e4c6a2186e6b mempool after 0s
+2026-10-24T21:15:38.224Z   g-forward e4c6a2186e6b mempool after 21s
+2026-10-24T21:15:58.818Z   g-forward e4c6a2186e6b mempool after 41s
+2026-10-24T21:16:19.414Z   g-forward e4c6a2186e6b mempool after 62s
+2026-10-24T21:16:40.015Z   g-forward e4c6a2186e6b mempool after 83s
+2026-10-24T21:17:00.362Z   g-forward e4c6a2186e6b confirmed after 103s
+2026-10-24T21:17:00.364Z g: keyless forward to vault k+1 (18000000 kept, bounty 2000000): tx e4c6a2186e6b20ed707d9825e2527108ca96928a0456e0fe4b5a820b1193e8f5 confirmed at height 605270
+2026-10-24T21:17:00.651Z g: forwarded box at vault k+1: 4e0bac8e336b0f1a874d61184d54d71b526b382c3c0c3d80f18d2a35db60c078
+2026-10-24T21:17:00.651Z == step g-forward done
+2026-10-24T21:17:07.828Z == step h-successor (node http://213.239.193.208:9052)
+2026-10-24T21:17:08.458Z h: vault k+1 hash-key spend of the forwarded box 4e0bac8e336b0f1a874d61184d54d71b526b382c3c0c3d80f18d2a35db60c078 (18000000) to the wallet, creation height 605270: digest b994b1c8c6afbdd4cbf51394275e30e55204f32c415028d8f599e2a823815136, PKCOMMIT d409055e888d1de11c1846a3c9d93d4ffa447479b782ba4217efe881fc823f2b (its first and only signature)
+2026-10-24T21:17:08.620Z h: vault k+1 hash key spends the forwarded box: tx 67a96659a30918e71fdcee6ea2bd9b19b191d773dc8bf74d0fe12835941c9edc submitted (HTTP 200)
+2026-10-24T21:17:08.928Z   h-successor 67a96659a309 mempool after 0s
+2026-10-24T21:17:29.457Z   h-successor 67a96659a309 mempool after 21s
+2026-10-24T21:17:50.071Z   h-successor 67a96659a309 mempool after 41s
+2026-10-24T21:18:10.659Z   h-successor 67a96659a309 mempool after 62s
+2026-10-24T21:18:31.249Z   h-successor 67a96659a309 mempool after 83s
+2026-10-24T21:18:51.800Z   h-successor 67a96659a309 mempool after 103s
+2026-10-24T21:19:12.146Z   h-successor 67a96659a309 confirmed after 124s
+2026-10-24T21:19:12.146Z h: vault k+1 hash key spends the forwarded box: tx 67a96659a30918e71fdcee6ea2bd9b19b191d773dc8bf74d0fe12835941c9edc confirmed at height 605271
+2026-10-24T21:19:12.418Z h: wallet received box 2a8633a7b0bb4db8a62e533ccd931a38657c16a6d5acb5f94e6782d77ac94689
+2026-10-24T21:19:12.419Z == step h-successor done
+2026-10-24T21:19:34.936Z == step status (node http://213.239.193.208:9052)
+2026-10-24T21:19:35.490Z == step status done

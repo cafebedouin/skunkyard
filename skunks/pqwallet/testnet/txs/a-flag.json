@@ -1,0 +1,52 @@
+{
+ "height": 605263,
+ "tokenId": "72b950c686741516c9b83ac6684e26cc1c7b95c8e9e773c830f867ebb8210675",
+ "qdayAddress": "2jFvbQvkJhoATbM4MJQkENqUmMvtpLT6dgk9z6VGN29CN1qsxKnymLhBB18QeZHfeJmNjtGeyA5gXCmhXFRtjAmMUkqG57n7vY7nWFrewSNoUzoq7sG3bb2gkEwjxdDeKkrWwb9Hn4CkCvGqKS1tK4pq57WPX9nLz7VtDBhERLL5wCb26NnWUY5LNsGoHDM5waJV4bg4JXSYPizbxsmCZUvn",
+ "label": "a: mint the flag into the QDay box",
+ "submit": {
+  "status": 200,
+  "body": "\"0897bdf7f8443bbc33b41f333b66b03c07fce54b4498c7b47bd96c44618ff648\""
+ },
+ "tx": {
+  "inputs": [
+   {
+    "boxId": "72b950c686741516c9b83ac6684e26cc1c7b95c8e9e773c830f867ebb8210675",
+    "spendingProof": {
+     "proofBytes": "4db13f1a51b0ea31031fb2e09d35cdadada4a0dfd75bf6c473d4b6eafbdd6f767503738cc85fb887b70c9012f4af657b02b1f70c4e7ffbaa",
+     "extension": {}
+    }
+   }
+  ],
+  "dataInputs": [],
+  "outputs": [
+   {
+    "value": 10000000,
+    "ergoTree": "1996010504000480a9800104c0d10204140e2103b2ac547ab2a6645e7e365330a255fb9830f1251fef9a5e2ffa852feade984db9d804d601b2a5730000d602eded93c27201c2a793db63087201db6308a792c17201c1a7d603e4c672010401d604e4c6a70401eb02d1eded72029372037204ed92a3999a8cc7a70173017302928cc772010199a37303ea02d1eded7202ef72047203cdee7304",
+    "creationHeight": 605263,
+    "assets": [
+     {
+      "tokenId": "72b950c686741516c9b83ac6684e26cc1c7b95c8e9e773c830f867ebb8210675",
+      "amount": 1
+     }
+    ],
+    "additionalRegisters": {
+     "R4": "0100"
+    }
+   },
+   {
+    "value": 1000000,
+    "ergoTree": "1005040004000e36100204a00b08cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304",
+    "creationHeight": 605263,
+    "assets": [],
+    "additionalRegisters": {}
+   },
+   {
+    "value": 1062000000,
+    "ergoTree": "0008cd032d0c040f8ef24535cab2ee8529631bc60111095b3770dddc27f314aaca841a29",
+    "creationHeight": 605263,
+    "assets": [],
+    "additionalRegisters": {}
+   }
+  ]
+ }
+}

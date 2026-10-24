@@ -1,0 +1,57 @@
+{
+ "height": 605266,
+ "label": "e: the demo oracle sets the flag true",
+ "submit": {
+  "status": 200,
+  "body": "\"26d1f3bc945bf446388bb47bbb61da5fce664cdb4645dcfae989ec46c68a16b4\""
+ },
+ "tx": {
+  "inputs": [
+   {
+    "boxId": "803f5c51ede97b1fef359fb652e0f322e3d6c64128f49bc2871206a4c7f55240",
+    "spendingProof": {
+     "proofBytes": "ab645d6bfc68aa950f58b6f365c112b4766ba2eeeb1e92d8e3976a0e3fa2c2c9c0f1eb3961aa5c3cbea20d1c51968dc96c858feed08b2858",
+     "extension": {}
+    }
+   },
+   {
+    "boxId": "6e501928c51855288993097545a98025cf32eadaf15c95993c68d807cc4ffcf7",
+    "spendingProof": {
+     "proofBytes": "7b182729d27ea43c678809b1d3f10a40d5590ca1bd2e9a5c60abf42f7843a63e21c3f4f6ad22b571f3cbafcc982cb6f133faaffb7f647fdf",
+     "extension": {}
+    }
+   }
+  ],
+  "dataInputs": [],
+  "outputs": [
+   {
+    "value": 10000000,
+    "ergoTree": "1996010504000480a9800104c0d10204140e2103b2ac547ab2a6645e7e365330a255fb9830f1251fef9a5e2ffa852feade984db9d804d601b2a5730000d602eded93c27201c2a793db63087201db6308a792c17201c1a7d603e4c672010401d604e4c6a70401eb02d1eded72029372037204ed92a3999a8cc7a70173017302928cc772010199a37303ea02d1eded7202ef72047203cdee7304",
+    "creationHeight": 605266,
+    "assets": [
+     {
+      "tokenId": "72b950c686741516c9b83ac6684e26cc1c7b95c8e9e773c830f867ebb8210675",
+      "amount": 1
+     }
+    ],
+    "additionalRegisters": {
+     "R4": "0101"
+    }
+   },
+   {
+    "value": 1000000,
+    "ergoTree": "1005040004000e36100204a00b08cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304",
+    "creationHeight": 605266,
+    "assets": [],
+    "additionalRegisters": {}
+   },
+   {
+    "value": 1010000000,
+    "ergoTree": "0008cd032d0c040f8ef24535cab2ee8529631bc60111095b3770dddc27f314aaca841a29",
+    "creationHeight": 605266,
+    "assets": [],
+    "additionalRegisters": {}
+   }
+  ]
+ }
+}

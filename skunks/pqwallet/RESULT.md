@@ -347,3 +347,32 @@ The alternative the seat proposes, SLH-DSA as the vault's key (sign-many, about 
 7,856-byte signature), removes the one-time assumption entirely and needs no forward path for reuse. The choice is a
 design ruling for the operator: variant 2 with WOTS+ (cheaper, one more constant, a successor fixed at creation) or
 SLH-DSA (simpler reasoning, four times the cost per spend).
+
+## Step 4: the flow on testnet (2026-10-24)
+
+**PASS.** Pass condition (`CHARTER.md`): the transaction ids printed, a forged migration refused by the node. The
+whole chain ran on Ergo **public testnet** against a 6.0.8 node, driven by `scripts/testnet-flow.ts`, every hash-key
+signature from `src/wotsplus.ts` under the on-disk `UsedStore`, addresses by substitution into the pinned trees
+(`src/vault-tree.ts`, `trees/`). Full result, environment, raw node texts and limits: `testnet/RESULT-testnet.md`;
+each transaction as submitted in `testnet/txs/`; log `testnet/run.log`.
+
+```
+a: mint the flag into the QDay box: tx 0897bdf7f8443bbc33b41f333b66b03c07fce54b4498c7b47bd96c44618ff648 confirmed at height 605264
+c: two payments to vault k (30000000 + 20000000 nanoERG): tx fc9630cedb4adb363f0c38857fb17eb8825606a26f52369aaf1331d3740bdf9e confirmed at height 605265
+d: keyless merge at vault k: tx 0c84238326ceb2b08b61dadf3ce34f5e4d48f0c886837f21c1b2c0af7df64421 confirmed at height 605266
+e: the demo oracle sets the flag true: tx 26d1f3bc945bf446388bb47bbb61da5fce664cdb4645dcfae989ec46c68a16b4 confirmed at height 605267
+f: FORGED migration (signature byte 0, low bit flipped), same digest: REFUSED HTTP 400: … "Scripts of all transaction inputs should pass verification. 569ec291…: #0 => Success((false,38779))"
+f: honest migration (vault k hash key): tx 5603ee16b79734c244974f47e9fadbd3e1a747295a621eff1b77d2f6a4a88998 confirmed at height 605268
+g: a late payment of 20000000 to vault k after the migration: tx 81f9ee74d002f4f2688c08f342c2b6f00d6adb128c8659e5ad4144680c0db3e6 confirmed at height 605269
+g: forward to the wallet P2PK instead of the successor: REFUSED HTTP 400: … "Scripts of all transaction inputs should pass verification. 70cfeadf…: #0 => Success((false,226))"
+g: keyless forward to vault k+1 (18000000 kept, bounty 2000000): tx e4c6a2186e6b20ed707d9825e2527108ca96928a0456e0fe4b5a820b1193e8f5 confirmed at height 605270
+h: vault k+1 hash key spends the forwarded box: tx 67a96659a30918e71fdcee6ea2bd9b19b191d773dc8bf74d0fe12835941c9edc confirmed at height 605271
+```
+
+Pinned trees (constants zeroed, blake2b256): QVault2 `000d534203e197ae5767520fdc588bc60e5360b3fa5ce40dad4b4195263fbe64`,
+QDay `d4a783e7a105a61c3f0497e49089749edf06e9fbac041a484beb95cf2bc5fdd2`. The UsedStore holds exactly one digest per
+hash key. 0.019 ERG of the wallet's 1.073 used. `npm test`: `ALL PASS (32 checks)`.
+
+**Limits.** The oracle is a demo (the same seed's second EIP-3 key). Mainnet constants mean the lone refresh and the
+backstop path were not reached on testnet (the devnet run of step 3 covers them). The negative rows other than the
+forged migration and the forward to a key address were not repeated. No SLH-DSA signature reached a node.
