@@ -284,8 +284,15 @@ verify-ext key=c1bd7fdf3b837540 i=307 digest_ok=true script=ACCEPT cost=187621 b
 
 Of the first key's 4 spends, 3 had nonzero discarded high bits in the 7-byte tree field and all 4 in the 2-byte leaf
 field (`indices … tree_field_high_bits_nonzero=3 leaf_field_high_bits_nonzero=4`), so the mod reductions are exercised.
-idx_leaf = 0 is being ground for (about 1 in 512 signatures); its line is appended below when found. idx_tree at 0 and
-2^54 − 1 cannot be reached by signing (2^−54) and would need a stage-level synthetic test: not run.
+idx_leaf = 0 was ground for (`scripts/grind-leaf.ts`, noble signing spends 400 onward of the same key until the leaf
+index came out 0: spend 1034; `diff/leaf0-sigs.json`, `diff/leaf0-verify.log`):
+
+```
+verify-ext key=c1bd7fdf3b837540 i=1034 digest_ok=true script=ACCEPT cost=187318 bc=ACCEPT flip_pos=1762 flip_script=REFUSE flip_cost=188554 flip_bc=REFUSE
+```
+
+So both ends of idx_leaf's range (0 and 511) verify in the script and in BouncyCastle. idx_tree at 0 and 2^54 − 1
+cannot be reached by signing (2^−54) and would need a stage-level synthetic test: not run.
 
 **Pinned trees** (seat A13 / Grok 3). `skunks/policy/6-rekey/slhdsa/SlhDsa.tree` is committed (the harness's `tree`
 command, 1,516 bytes); `tree-constants` reads its 124 constants as the chain sees them:

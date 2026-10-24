@@ -1,0 +1,3 @@
+{"spends": [
+{"pk": "c1bd7fdf3b8375409ae4446b62b264faa06b4ecd623e005a7478914eed4514b6", "i": 1034, "digest_ok": true, "script": "ACCEPT", "cost": 187318, "bc": "ACCEPT", "flip_pos": 1762, "flip_script": "REFUSE", "flip_cost": 188554, "flip_bc": "REFUSE"},
+{"summary": true, "spends": 1, "digest_ok": 1, "script_accept": 1, "bc_accept": 1, "flip_script_refuse": 1, "flip_bc_refuse": 1, "script_bc_agree": 1}]}
