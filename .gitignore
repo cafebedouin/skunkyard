@@ -19,3 +19,6 @@ research/agents/census/raw/
 __pycache__/
 research/agents/census/out/
 posts/seats/policy-post/r6/out/
+inbox/
+ergo.log
+*:Zone.Identifier

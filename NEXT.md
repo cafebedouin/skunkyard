@@ -1,5 +1,14 @@
 # Next session
 
+> **2026-10-24: start here.** The posts of 2026-10-11 (threads 5371, 5372) and the two of 5369 have no replies yet;
+> the four-week read of 5369 is 2026-10-30 (SK-001). Rulings of 2026-10-24: seed derivation is project-own, implemented
+> as options and taken to the forum; kushti's two quantum-day triggers (oracle flag, miner flag in the extension) are
+> both recorded, the oracle one built; SK-055 is tested, not warned around. The work is chartered as
+> `skunks/pqwallet/CHARTER.md` (SK-061): derivation options with vectors, WOTS+ and SLH-DSA signers as the assurance
+> gate's second implementation, SK-055 on the devnet in two shapes, the vault end to end on testnet, then the posts.
+> Item 1 (derivation) is in progress. The plan this replaces: `~/.claude/plans/grok-is-making-a-serialized-moore.md`
+> (assurance gate before any signer ships; the signer and the gate are now one step).
+
 > **Hash-key line, 2026-10-10 (SK-053 done; forward path banked):** `research/pq/ROADMAP.md`, "Update 2026-10-10".
 > SLH-DSA-SHA2-128s fits in script and is node-verified; WOTS+ for the sign-once vault, SLH-DSA for the rotating
 > address, the XMSS schedule as the stateful member. Next in order: the post, then the assurance gate (known-answer
