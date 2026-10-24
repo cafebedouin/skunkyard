@@ -351,7 +351,9 @@ object SlhDsaRunner {
       val out = new StringBuilder("{\"spends\": [\n")
       keys.foreach { kj =>
         val kc = kj.hcursor; val pkHex = kc.downField("pk").as[String].right.get; val pk = unhex(pkHex)
-        val c = compile(src, env(v) ++ Map("PRE" -> coll(pk.take(16) ++ Array.fill(48)(0: Byte)), "PK_ROOT" -> coll(pk.drop(16))))
+        val c = kc.downField("tree").as[String].toOption match {   // a provided tree (a constant substitution of SlhDsa.tree) is judged as it is
+          case Some(t) => val tr = sigma.serialization.ErgoTreeSerializer.DefaultSerializer.deserializeErgoTree(unhex(t)); Compiled(tr, tr.bytes.length, tr.header & 0xff)
+          case None => compile(src, env(v) ++ Map("PRE" -> coll(pk.take(16) ++ Array.fill(48)(0: Byte)), "PK_ROOT" -> coll(pk.drop(16)))) }
         val self = box(c.tree)
         kc.downField("spends").values.get.foreach { sj =>
           val sc = sj.hcursor; val i = sc.downField("i").as[Int].right.get; val msg = unhex(sc.downField("msg").as[String].right.get); val sig = unhex(sc.downField("sig").as[String].right.get)
@@ -421,6 +423,114 @@ object SlhDsaRunner {
     case "compile-file" :: path :: Nil =>      // compile an ErgoScript file (constants already substituted) and print its tree size, or the error
       try { val c = compile(read(path), Map.empty[String, Any]); println(s"compile-file $path compiled=true tree_bytes=${c.bytes} header=0x${c.header.toHexString} constants=${c.tree.constants.length}") }
       catch { case e: Throwable => println(s"compile-file $path compiled=false error=${firstLine(e)}") }
+    case "tree-constants" :: path :: Nil =>
+      // pqwallet gate r1 (seat A13 / Grok 3): the constants of a compiled tree, as the chain sees them. For SlhDsa.tree: PRE
+      // is PK.seed ++ 48 zero bytes, and the index collections are 0 .. n-1 for n = 14, 12, 7, 35, 15, 9.
+      val tr = sigma.serialization.ErgoTreeSerializer.DefaultSerializer.deserializeErgoTree(unhex(read(path).trim))
+      val cs = tr.constants
+      def show(c: sigma.ast.Constant[_]): String = c.value match {
+        case cb: Coll[_] if c.tpe.toString == "Coll[SByte$]" => val a = cb.asInstanceOf[Coll[Byte]].toArray; s"Coll[Byte](${a.length})=${hex(a).take(40)}${if (a.length > 20) "…" else ""}"
+        case ci: Coll[_] if c.tpe.toString == "Coll[SInt$]" => val a = ci.asInstanceOf[Coll[Int]].toArray; s"Coll[Int](${a.length})=${if (a.length <= 16) a.mkString(",") else a.take(3).mkString(",") + "…" + a.last}"
+        case x => s"${c.tpe}=${x}"
+      }
+      cs.zipWithIndex.foreach { case (c, i) => println(s"tree-constants $path [$i] ${show(c)}") }
+      val collInts = cs.filter(_.tpe.toString == "Coll[SInt$]").map(_.value.asInstanceOf[Coll[Int]].toArray)
+      val ranges = collInts.map(a => if (a.sameElements(a.indices)) s"0..${a.length - 1}" else "NOT-A-RANGE")
+      val pre = cs.find(c => c.tpe.toString == "Coll[SByte$]" && c.value.asInstanceOf[Coll[Byte]].length == 64).map(_.value.asInstanceOf[Coll[Byte]].toArray)
+      println(s"tree-constants $path summary header=0x${(tr.header & 0xff).toHexString} constants=${cs.length} int_collections=${ranges.mkString(",")} pre_padding_zero=${pre.map(_.drop(16).forall(_ == 0)).getOrElse(false)} pre_len=${pre.map(_.length).getOrElse(-1)}")
+    case "acvp" :: path :: outPath :: Nil =>
+      // pqwallet gate r1 (all three seats): NIST ACVP sigVer / sigGen cases THROUGH THE SCRIPT. The deployed SlhDsa.es
+      // hashes M' = 00 00 ++ blake2b256(SELF.id ++ outputs); a measurement variant takes M' from context variable 2 instead
+      // (src.replace, as the all-steps variant does; the deployed file is unchanged). Input: {"cases": [{"name", "pk",
+      // "mprime", "sig", "expected": bool}]}, M' already framed per interface (external pure: 00 ++ len(ctx) ++ ctx ++ M;
+      // internal: M as given). Verdict must equal expected; exceptions are counted separately.
+      val v = loadVectors(); val src0 = read(s"$DIR/SlhDsa.es")
+      val src = src0.replace("++ Coll(0.toByte, 0.toByte) ++ msg)", "++ getVar[Coll[Byte]](2).get)")
+      require(src != src0, "acvp variant substitution did not apply")
+      val cases = io.circe.parser.parse(read(path)).right.get.hcursor.downField("cases").values.get.toList
+      var n = 0; var agree = 0; var exc = 0; val out = new StringBuilder("{\"cases\": [\n")
+      cases.foreach { cj =>
+        val c = cj.hcursor; val name = c.downField("name").as[String].right.get; val pk = unhex(c.downField("pk").as[String].right.get)
+        val mprime = unhex(c.downField("mprime").as[String].right.get); val sig = unhex(c.downField("sig").as[String].right.get); val expected = c.downField("expected").as[Boolean].right.get
+        val cc = compile(src, env(v) ++ Map("PRE" -> coll(pk.take(16) ++ Array.fill(48)(0: Byte)), "PK_ROOT" -> coll(pk.drop(16))))
+        val self = box(cc.tree); val o = new ErgoBoxCandidate(value = 1000000000L, ergoTree = cc.tree, creationHeight = 100)
+        val ext = ContextExtension(Map(1.toByte -> ByteArrayConstant(sig), 2.toByte -> ByteArrayConstant(mprime)))
+        val tx = new ErgoLikeTransaction(IndexedSeq(new Input(self.id, ProverResult(Array.emptyByteArray, ext))), IndexedSeq.empty, IndexedSeq(o))
+        val (ok, cost, err) = verifier.verify(cc.tree, context(self, tx, ext), ProverResult(Array.emptyByteArray, ext), tx.messageToSign) match {
+          case scala.util.Success((k, cst)) => (k, cst, ""); case scala.util.Failure(e) => (false, -1L, firstLine(e)) }
+        n += 1; if (ok == expected) agree += 1; if (err.nonEmpty) exc += 1
+        println(s"acvp $name expected=${verdict(expected)} script=${verdict(ok)} cost=$cost agree=${ok == expected}" + (if (err.nonEmpty) s" exception=$err" else ""))
+        out.append(s"""{"name": "$name", "expected": $expected, "script": $ok, "cost": $cost, "exception": ${q(err)}},\n""")
+      }
+      out.append(s"""{"summary": true, "cases": $n, "agree": $agree, "exceptions": $exc}]}\n"""); write(outPath, out.toString)
+      println(s"acvp cases=$n agree=$agree exceptions=$exc all_agree=${agree == n}")
+    case "negatives" :: path :: outPath :: Nil =>
+      // pqwallet gate r1: structural negatives through the script and BouncyCastle. Input {"pk", "spends": [{"i","msg","sig"}] (the
+      // honest spends A = 0 and B = 1 of one key), "named": [{"name", "sig", "expected": "ACCEPT"|"REFUSE"}] (mutations of A's
+      // signature prepared outside: per-node flips, grafts, lengths, chain forwards, other-framing signatures)}; plus the
+      // output-field negatives this command builds itself from spend A (value, height, token, register, order, third output)
+      // and the two "outside the hash" additions (a second input at sigmaProp(true), a data input), recorded not judged.
+      val v = loadVectors(); val src = read(s"$DIR/SlhDsa.es")
+      val root = io.circe.parser.parse(read(path)).right.get.hcursor
+      val pk = unhex(root.downField("pk").as[String].right.get)
+      val c = compile(src, env(v) ++ Map("PRE" -> coll(pk.take(16) ++ Array.fill(48)(0: Byte)), "PK_ROOT" -> coll(pk.drop(16))))
+      val self = box(c.tree)
+      val spends = root.downField("spends").values.get.toList.map { sj => val sc = sj.hcursor; (sc.downField("i").as[Int].right.get, unhex(sc.downField("msg").as[String].right.get), unhex(sc.downField("sig").as[String].right.get)) }
+      val (iA, msgA, sigA) = spends.head
+      val outA = new ErgoBoxCandidate(value = 1000000000L + iA, ergoTree = c.tree, creationHeight = 100 + iA)
+      require(Blake2b256.hash(self.id ++ outA.bytesWithNoRef).sameElements(msgA), "spend A digest mismatch")
+      def ev(s: ErgoBox, outs: IndexedSeq[ErgoBoxCandidate], sg: Array[Byte], extraIn: Seq[ErgoBox] = Nil, data: IndexedSeq[ErgoBox] = IndexedSeq.empty): (Boolean, Long, String) = try {
+        val ext = ContextExtension(Map(1.toByte -> ByteArrayConstant(sg)))
+        val ins = (s +: extraIn).map(b => new Input(b.id, ProverResult(Array.emptyByteArray, if (b eq s) ext else ContextExtension.empty)))
+        val tx = new ErgoLikeTransaction(ins.toIndexedSeq, data.map(d => DataInput(d.id)), outs)
+        val ctx = new ErgoLikeContext(lastBlockUtxoRoot = AvlTreeData.dummy, headers = Colls.emptyColl[Header], preHeader = preHeader, dataBoxes = data,
+          boxesToSpend = (s +: extraIn).toIndexedSeq, spendingTransaction = tx, selfIndex = 0, extension = ext, validationSettings = ValidationRules.currentSettings, costLimit = 8001091L, initCost = 0L, activatedScriptVersion = 3.toByte)
+        verifier.verify(c.tree, ctx, ProverResult(Array.emptyByteArray, ext), tx.messageToSign) match { case scala.util.Success((ok, cost)) => (ok, cost, ""); case scala.util.Failure(e) => (false, -1L, firstLine(e)) }
+      } catch { case e: Throwable => (false, -1L, firstLine(e)) }
+      var n = 0; var asExpected = 0; val out = new StringBuilder("{\"rows\": [\n")
+      def row(name: String, expected: String, r: (Boolean, Long, String), bc: Option[Boolean]): Unit = {
+        val got = verdict(r._1); val okRow = got == expected; n += 1; if (okRow) asExpected += 1
+        println(s"negatives $name expected=$expected script=$got cost=${r._2}" + bc.map(b => s" bc=${verdict(b)}").getOrElse("") + (if (r._3.nonEmpty) s" exception=${r._3}" else "") + (if (okRow) "" else " UNEXPECTED"))
+        out.append(s"""{"name": "$name", "expected": "$expected", "script": "$got", "cost": ${r._2}, "bc": ${bc.map(_.toString).getOrElse("null")}, "exception": ${q(r._3)}, "ok": $okRow},\n""")
+      }
+      row("honest_A", "ACCEPT", ev(self, IndexedSeq(outA), sigA), Some(bcVerify(pk, msgA, sigA)))
+      root.downField("named").values.get.foreach { nj => val nc = nj.hcursor; val name = nc.downField("name").as[String].right.get; val sg = unhex(nc.downField("sig").as[String].right.get); val exp = nc.downField("expected").as[String].right.get
+        row(name, exp, ev(self, IndexedSeq(outA), sg), Some(try bcVerify(pk, msgA, sg) catch { case _: Throwable => false })) }
+      // output-field negatives: the signature is over outA; each changes one field of the output the script hashes
+      row("output_value_plus_1", "REFUSE", ev(self, IndexedSeq(new ErgoBoxCandidate(outA.value + 1, c.tree, outA.creationHeight)), sigA), None)
+      row("output_creation_height_plus_1", "REFUSE", ev(self, IndexedSeq(new ErgoBoxCandidate(outA.value, c.tree, outA.creationHeight + 1)), sigA), None)
+      val tokenId = coll(Array.fill(32)(7: Byte)).asInstanceOf[ErgoBox.TokenId]
+      val trueTree = compile("sigmaProp(true)", Map.empty[String, Any]).tree
+      row("output_token_added", "REFUSE", ev(self, IndexedSeq(new ErgoBoxCandidate(outA.value, c.tree, outA.creationHeight, Colls.fromItems[(ErgoBox.TokenId, Long)]((tokenId, 5L)))), sigA), None)
+      val regs: Map[ErgoBox.NonMandatoryRegisterId, sigma.ast.EvaluatedValue[_ <: sigma.ast.SType]] = Map(ErgoBox.R4 -> ByteArrayConstant(Array[Byte](1, 2, 3)))
+      row("output_register_set", "REFUSE", ev(self, IndexedSeq(new ErgoBoxCandidate(outA.value, c.tree, outA.creationHeight, Colls.emptyColl[(ErgoBox.TokenId, Long)], regs)), sigA), None)
+      row("output_script_changed", "REFUSE", ev(self, IndexedSeq(new ErgoBoxCandidate(outA.value, trueTree, outA.creationHeight)), sigA), None)
+      val fee = new ErgoBoxCandidate(1000000L, c.tree, outA.creationHeight)
+      row("third_output_added", "REFUSE", ev(self, IndexedSeq(outA, fee), sigA), None)
+      // two-output honest spend, then its outputs reordered
+      val two = IndexedSeq(outA, fee); val msg2 = Blake2b256.hash(self.id ++ two.toArray.flatMap((b: ErgoBoxCandidate) => b.bytesWithNoRef))
+      root.downField("sig_two_outputs").as[String].toOption.foreach { sh => val sg2 = unhex(sh)
+        row("two_outputs_honest", "ACCEPT", ev(self, two, sg2), Some(bcVerify(pk, msg2, sg2)))
+        row("two_outputs_reordered", "REFUSE", ev(self, IndexedSeq(fee, outA), sg2), None) }
+      println(s"negatives two_outputs_digest=${hex(msg2)}")
+      // outside the hash: recorded, not judged (expected ACCEPT: the signature covers SELF.id and the outputs only)
+      val trueBox = new ErgoBox(5000000L, trueTree, Colls.emptyColl[(ErgoBox.TokenId, Long)], Map.empty, dummyTxId, 7.toShort, 100)
+      row("second_input_added_sigmaProp_true", "ACCEPT", ev(self, IndexedSeq(outA), sigA, extraIn = Seq(trueBox)), None)
+      row("data_input_added", "ACCEPT", ev(self, IndexedSeq(outA), sigA, data = IndexedSeq(trueBox)), None)
+      // two boxes under one key in one transaction, each with its own signature (agy B2): a second self box, its own digest/signature supplied as "sig_second_box"
+      root.downField("sig_second_box").as[String].toOption.foreach { sh =>
+        val self2 = new ErgoBox(1000000000L, c.tree, Colls.emptyColl[(ErgoBox.TokenId, Long)], Map.empty, dummyTxId, 1.toShort, 100)
+        val sg2 = unhex(sh); val ext1 = ContextExtension(Map(1.toByte -> ByteArrayConstant(sigA))); val ext2 = ContextExtension(Map(1.toByte -> ByteArrayConstant(sg2)))
+        val tx = new ErgoLikeTransaction(IndexedSeq(new Input(self.id, ProverResult(Array.emptyByteArray, ext1)), new Input(self2.id, ProverResult(Array.emptyByteArray, ext2))), IndexedSeq.empty, IndexedSeq(outA))
+        def ctxFor(idx: Int, ext: ContextExtension) = new ErgoLikeContext(lastBlockUtxoRoot = AvlTreeData.dummy, headers = Colls.emptyColl[Header], preHeader = preHeader, dataBoxes = IndexedSeq.empty,
+          boxesToSpend = IndexedSeq(self, self2), spendingTransaction = tx, selfIndex = idx, extension = ext, validationSettings = ValidationRules.currentSettings, costLimit = 8001091L, initCost = 0L, activatedScriptVersion = 3.toByte)
+        val r1 = verifier.verify(c.tree, ctxFor(0, ext1), ProverResult(Array.emptyByteArray, ext1), tx.messageToSign); val r2 = verifier.verify(c.tree, ctxFor(1, ext2), ProverResult(Array.emptyByteArray, ext2), tx.messageToSign)
+        val d2 = Blake2b256.hash(self2.id ++ outA.bytesWithNoRef)
+        println(s"negatives two_boxes_one_key input0=${r1.map(x => verdict(x._1)).getOrElse("EXC")} input1=${r2.map(x => verdict(x._1)).getOrElse("EXC")} second_box_digest=${hex(d2)} (each input its own signature over SELF.id ++ outputs)")
+        out.append(s"""{"name": "two_boxes_one_key", "expected": "ACCEPT", "script": "${if (r1.map(_._1).getOrElse(false) && r2.map(_._1).getOrElse(false)) "ACCEPT" else "REFUSE"}", "cost": ${r1.map(_._2).getOrElse(-1L) + r2.map(_._2).getOrElse(-1L)}, "bc": null, "exception": "", "ok": ${r1.map(_._1).getOrElse(false) && r2.map(_._1).getOrElse(false)}},\n""") }
+      println(s"negatives second_box_digest_for_signing=${hex(Blake2b256.hash(new ErgoBox(1000000000L, c.tree, Colls.emptyColl[(ErgoBox.TokenId, Long)], Map.empty, dummyTxId, 1.toShort, 100).id ++ outA.bytesWithNoRef))}")
+      out.append(s"""{"summary": true, "rows": $n, "as_expected": $asExpected}]}\n"""); write(outPath, out.toString)
+      println(s"negatives rows=$n as_expected=$asExpected all_as_expected=${asExpected == n}")
     case "sign-other" :: msgHex :: Nil =>      // a fresh throwaway key signs the same digest (the other-key negative)
       val kpg = new SLHDSAKeyPairGenerator(); kpg.init(new SLHDSAKeyGenerationParameters(new SecureRandom(), SLHDSAParameters.sha2_128s))
       val sk = kpg.generateKeyPair().getPrivate.asInstanceOf[SLHDSAPrivateKeyParameters].getEncoded

@@ -1,0 +1,9 @@
+verify-ext key=c1bd7fdf3b837540 i=0 digest_ok=true script=ACCEPT cost=188997 bc=ACCEPT flip_pos=0 flip_script=REFUSE flip_cost=187465 flip_bc=REFUSE
+verify-ext key=c1bd7fdf3b837540 i=1 digest_ok=true script=ACCEPT cost=189150 bc=ACCEPT flip_pos=1060 flip_script=REFUSE flip_cost=186526 flip_bc=REFUSE
+verify-ext key=c1bd7fdf3b837540 i=2 digest_ok=true script=ACCEPT cost=189735 bc=ACCEPT flip_pos=2120 flip_script=REFUSE flip_cost=188645 flip_bc=REFUSE
+verify-ext key=c1bd7fdf3b837540 i=3 digest_ok=true script=ACCEPT cost=190541 bc=ACCEPT flip_pos=3180 flip_script=REFUSE flip_cost=193461 flip_bc=REFUSE
+verify-ext key=e516a8fb9a4cde10 i=0 digest_ok=true script=ACCEPT cost=190538 bc=ACCEPT flip_pos=252 flip_script=REFUSE flip_cost=186578 flip_bc=REFUSE
+verify-ext key=e516a8fb9a4cde10 i=1 digest_ok=true script=ACCEPT cost=187970 bc=ACCEPT flip_pos=1312 flip_script=REFUSE flip_cost=188316 flip_bc=REFUSE
+verify-ext key=e516a8fb9a4cde10 i=2 digest_ok=true script=ACCEPT cost=187223 bc=ACCEPT flip_pos=2372 flip_script=REFUSE flip_cost=188510 flip_bc=REFUSE
+verify-ext key=e516a8fb9a4cde10 i=3 digest_ok=true script=ACCEPT cost=189789 bc=ACCEPT flip_pos=3432 flip_script=REFUSE flip_cost=187215 flip_bc=REFUSE
+verify-ext spends=8 digest_ok=8 script_accept=8 bc_accept=8 flip_script_refuse=8 flip_bc_refuse=8 script_bc_agree=8 all_as_expected=true

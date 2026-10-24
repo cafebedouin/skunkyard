@@ -30,7 +30,18 @@ has seen the xpub, whether or not it was ever used. A branch that forks off *abo
 private key. The charter's first draft said post-quantum keys "must not hang under the account key"; the exact
 statement is: not under any node whose extended public key a wallet may export, and EIP-3 names the depth-4 node.
 Whether any wallet exports the depth-3 (account) xpub is not known to us; a reader who knows of one should say so,
-because that would push the safe fork point up to the master key.
+because that would move the safe fork point up to the account node `m/44'/429'/account'` (the next edge up is
+hardened): a branch under the account node, hardened or not, would then be reached; options A and B are not, under
+any EIP-3 xpub. (Corrected after the gate's Cryptography seat, 2026-10-24: the first draft said "up to the master
+key", which overstates it; a depth-3 xpub plus a depth-4 key climbs one level and stops at the hardened edge.)
+
+**Option A's own branch is a secp256k1 key tree** (the gate's outside seat, 2026-10-24). Every node under `8391'` has
+a secp256k1 public key, and `@scure/bip32` computes it whenever anything reads `.publicKey` or an extended key on that
+branch. The master xpub alone is enough: a quantum attacker recovers the master scalar from the master public key,
+the xpub carries the master chain code, and hardened derivation then walks `8391'/…` to every leaf. So option A stays
+post-quantum only while no public key or extended key on that branch, the master included, is ever serialized, and
+nothing in the code enforces that. Option B has no public key anywhere in its tree, and its root is an HMAC over the
+seed bytes that no BIP32 key reveals, so a master-xpub leak does not reach it. This is the decisive argument for B.
 
 ## The options
 
@@ -53,11 +64,12 @@ number.
 Rejected for the record: a hardened branch *under* the depth-4 node (`m/44'/429'/0'/0/i'`): reached by the leak
 above. Non-hardened anything: reached.
 
-**Recommendation.** B as the default: it has no curve in it, so no reader has to check that a secp scalar never
-leaks through a code path meant for secp keys, and its security reduces to HMAC-SHA512 over a seed that is never
-exposed. A is kept as the alternative for the day a hardware wallet runs a hash-based signer, since the device can
-already derive A's leaf; the two use identical levels, so a wallet could offer both behind one address rule. C is
-the fallback for a holder who wants the post-quantum keys on a different backup, at the cost of a second phrase.
+**Recommendation.** B, and all three gate seats concurred (2026-10-24): it has no curve in it, so no reader has to
+check that a secp scalar never leaks through a code path meant for secp keys, it has no extended public key that
+could ever be exported, and its security reduces to HMAC-SHA512 over a seed that is never exposed. A is kept only as
+a device-internal path for hardware that already implements BIP32 and will never serialize a public key on that
+branch; the two use identical levels, so a wallet could offer both behind one address rule. C is the fallback for a
+holder who wants the post-quantum keys on a different backup, at the cost of a second phrase.
 
 ## From leaf to key material (both options)
 

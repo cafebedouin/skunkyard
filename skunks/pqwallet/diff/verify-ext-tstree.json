@@ -1,0 +1,10 @@
+{"spends": [
+{"pk": "c1bd7fdf3b8375409ae4446b62b264faa06b4ecd623e005a7478914eed4514b6", "i": 0, "digest_ok": true, "script": "ACCEPT", "cost": 188997, "bc": "ACCEPT", "flip_pos": 0, "flip_script": "REFUSE", "flip_cost": 187465, "flip_bc": "REFUSE"},
+{"pk": "c1bd7fdf3b8375409ae4446b62b264faa06b4ecd623e005a7478914eed4514b6", "i": 1, "digest_ok": true, "script": "ACCEPT", "cost": 189150, "bc": "ACCEPT", "flip_pos": 1060, "flip_script": "REFUSE", "flip_cost": 186526, "flip_bc": "REFUSE"},
+{"pk": "c1bd7fdf3b8375409ae4446b62b264faa06b4ecd623e005a7478914eed4514b6", "i": 2, "digest_ok": true, "script": "ACCEPT", "cost": 189735, "bc": "ACCEPT", "flip_pos": 2120, "flip_script": "REFUSE", "flip_cost": 188645, "flip_bc": "REFUSE"},
+{"pk": "c1bd7fdf3b8375409ae4446b62b264faa06b4ecd623e005a7478914eed4514b6", "i": 3, "digest_ok": true, "script": "ACCEPT", "cost": 190541, "bc": "ACCEPT", "flip_pos": 3180, "flip_script": "REFUSE", "flip_cost": 193461, "flip_bc": "REFUSE"},
+{"pk": "e516a8fb9a4cde102f16262fc743aaeb2e790a0c9a2e373dfa41d70bfcc081a1", "i": 0, "digest_ok": true, "script": "ACCEPT", "cost": 190538, "bc": "ACCEPT", "flip_pos": 252, "flip_script": "REFUSE", "flip_cost": 186578, "flip_bc": "REFUSE"},
+{"pk": "e516a8fb9a4cde102f16262fc743aaeb2e790a0c9a2e373dfa41d70bfcc081a1", "i": 1, "digest_ok": true, "script": "ACCEPT", "cost": 187970, "bc": "ACCEPT", "flip_pos": 1312, "flip_script": "REFUSE", "flip_cost": 188316, "flip_bc": "REFUSE"},
+{"pk": "e516a8fb9a4cde102f16262fc743aaeb2e790a0c9a2e373dfa41d70bfcc081a1", "i": 2, "digest_ok": true, "script": "ACCEPT", "cost": 187223, "bc": "ACCEPT", "flip_pos": 2372, "flip_script": "REFUSE", "flip_cost": 188510, "flip_bc": "REFUSE"},
+{"pk": "e516a8fb9a4cde102f16262fc743aaeb2e790a0c9a2e373dfa41d70bfcc081a1", "i": 3, "digest_ok": true, "script": "ACCEPT", "cost": 189789, "bc": "ACCEPT", "flip_pos": 3432, "flip_script": "REFUSE", "flip_cost": 187215, "flip_bc": "REFUSE"},
+{"summary": true, "spends": 8, "digest_ok": 8, "script_accept": 8, "bc_accept": 8, "flip_script_refuse": 8, "flip_bc_refuse": 8, "script_bc_agree": 8}]}

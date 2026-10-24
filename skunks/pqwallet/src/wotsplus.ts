@@ -3,7 +3,7 @@
 //   skunks/policy/6-rekey/RekeySchedule.es (schedule, tweak = SEED ++ [leaf, chain, step]).
 // A port of the Python harness functions in skunks/qvault/devnet-test.py (wotsplus_keygen, wotsplus_sign,
 // _wp_chain, _wp_digits), byte for byte; scripts/wotsplus_ref.py carries a copy of those for the cross-check.
-import { blake2b256, cat } from './bytes.js';
+import { blake2b256, cat, hex } from './bytes.js';
 
 export const N = 32;
 export const W = 16;
@@ -49,8 +49,27 @@ export function keygen(seed: Uint8Array, secret: Uint8Array, prefix: Uint8Array 
   return { sk, seed, prefix, commit: blake2b256(cat(seed, ...ends)) };
 }
 
-/** The signature the scripts read from context variable 1: for each chain, the hash at step digit_c. */
-export function sign(key: WotsPlusKey, msg: Uint8Array): Uint8Array {
+/** A store that survives restarts: commit hex -> the one digest hex this key may sign. A wallet backs it with disk. */
+export interface UsedStore { get(commitHex: string): string | undefined; set(commitHex: string, digestHex: string): void }
+
+/** An in-memory store, for tests and one-shot tools; a wallet must persist its store before the signature leaves the process. */
+export class MemoryUsedStore implements UsedStore {
+  private m = new Map<string, string>();
+  get(k: string) { return this.m.get(k); }
+  set(k: string, v: string) { this.m.set(k, v); }
+}
+
+/**
+ * The signature the scripts read from context variable 1: for each chain, the hash at step digit_c. A key signs one
+ * digest, ever (gate seat r1, finding C5): a second, different digest is refused, and the digest is recorded before the
+ * signature is computed, so a crash after recording loses nothing but a retry of the same digest. Re-signing the same
+ * digest is allowed (it yields the same bytes). Two signatures under one WOTS+ key on different digests let anyone who
+ * sees both forge signatures for other digests; after a failed spend the wallet forwards or merges, it never re-signs.
+ */
+export function sign(key: WotsPlusKey, msg: Uint8Array, used: UsedStore): Uint8Array {
+  const k = hex(key.commit), m = hex(msg), prev = used.get(k);
+  if (prev !== undefined && prev !== m) throw new Error(`WOTS+ key ${k.slice(0, 16)}… already signed digest ${prev.slice(0, 16)}…; refusing a second digest`);
+  if (prev === undefined) used.set(k, m);
   const ds = digits(msg);
   return cat(...key.sk.map((s, c) => chain(key.seed, key.prefix, c, 0, ds[c], s)));
 }

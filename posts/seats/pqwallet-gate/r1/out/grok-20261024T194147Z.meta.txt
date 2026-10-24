@@ -1,0 +1,11 @@
+seat:    grok (grok 1.0.62 (1474f9cbdd91) [stable])
+model:   tool default
+utc:     20261024T194147Z
+slice:   /tmp/claude-1000/-home-scott-bin-ergo-logic/decbb6f9-5136-40cb-a6e5-06d3cd0e9043/scratchpad/gate-slice-r1
+slice-git: not a git checkout
+web:     disabled
+sandbox: read-only
+jail:    tools/seat-jail
+prompt-sha256: 69ecee856bfef875146ea63bdc212cc39c97f513493d644ea40562dcfab7bdb0
+exit:    0
+model-reported: grok-4.7-build

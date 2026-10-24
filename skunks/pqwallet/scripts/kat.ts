@@ -13,7 +13,7 @@ if (!dir) throw new Error('usage: kat.ts <acvp dir>');
 const PS = 'SLH-DSA-SHA2-128s';
 const load = (f: string) => JSON.parse(readFileSync(join(dir, f), 'utf8'));
 const hashes: Record<string, any> = { 'SHA2-256': sha256, 'SHA2-512': sha512, 'SHA3-256': sha3_256, 'SHA3-512': sha3_512, 'SHAKE-128': shake128_32, 'SHAKE-256': shake256_64 };
-let fails = 0, total = 0;
+let fails = 0, total = 0, exceptions = 0;
 function check(name: string, cond: boolean, detail = '') { total++; if (!cond) { fails++; console.log(`FAIL ${name} ${detail}`); } }
 
 // keyGen: pk and sk from (skSeed, skPrf, pkSeed)
@@ -58,11 +58,11 @@ for (const g of load('sigVer-internalProjection.json').testGroups) {
     if (g.preHash === 'preHash' && !hashes[t.hashAlg]) { skipped++; continue; }
     const opts: any = {}; if (S.ctx) opts.context = unhex(t.context ?? '');
     let ok: boolean;
-    try { ok = S.verify(unhex(t.signature), unhex(t.message), unhex(t.pk), opts, t.hashAlg); } catch { ok = false; }
+    try { ok = S.verify(unhex(t.signature), unhex(t.message), unhex(t.pk), opts, t.hashAlg); } catch { ok = false; exceptions++; }
     check(`sigVer tg${g.tgId} tc${t.tcId}`, ok === t.testPassed, `expected ${t.testPassed} (${t.reason ?? ''})`);
     n++; if (!t.testPassed) neg++;
   }
   console.log(`kat sigVer tg${g.tgId} ${PS} ${g.signatureInterface}/${g.preHash} tests=${n} negatives=${neg}${skipped ? ` skipped=${skipped}` : ''}`);
 }
-console.log(`kat noble ${PS}: checks=${total} failures=${fails} ${fails === 0 ? 'ALL PASS' : 'FAILED'}`);
+console.log(`kat noble ${PS}: checks=${total} failures=${fails} exceptions_counted_as_refuse=${exceptions} ${fails === 0 ? 'ALL PASS' : 'FAILED'}`);
 process.exit(fails === 0 ? 0 : 1);

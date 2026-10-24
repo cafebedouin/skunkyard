@@ -4,7 +4,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { hex, unhex, equalBytes } from '../src/bytes.js';
 import { seedFromMnemonic, vaultKey } from '../src/derive.js';
-import { sign, verify } from '../src/wotsplus.js';
+import { sign, verify, MemoryUsedStore } from '../src/wotsplus.js';
 import { wotsPlusTree } from '../src/tree.js';
 const MN = 'abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about';
 const seed = seedFromMnemonic(MN, '');
@@ -20,7 +20,7 @@ if (mode === 'keys') {
     let v = null; for (let k = 0; k < 64 && !v; k++) { const c = vaultKey('B', seed, 0, k); if (hex(c.key.commit) === kk.commit) v = c; }
     if (!v) throw new Error(`no derived key for commit ${kk.commit}`);
     if (equalBytes(unhex(kk.tree), wotsPlusTree(v.seed, v.key.commit))) treesEqual++;
-    const spends = kk.spends.map((s) => { const sig = sign(v!.key, unhex(s.msg)); n++; if (verify(v!.seed, v!.key.prefix, v!.key.commit, unhex(s.msg), sig)) selfOk++; return { i: s.i, msg: s.msg, sig: hex(sig) }; });
+    const spends = kk.spends.map((s) => { const sig = sign(v!.key, unhex(s.msg), new MemoryUsedStore()); n++; if (verify(v!.seed, v!.key.prefix, v!.key.commit, unhex(s.msg), sig)) selfOk++; return { i: s.i, msg: s.msg, sig: hex(sig) }; });
     return { seed: kk.seed, commit: kk.commit, spends };
   });
   writeFileSync(b, JSON.stringify({ keys: out }));

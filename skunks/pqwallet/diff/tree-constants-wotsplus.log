@@ -1,0 +1,4 @@
+tree-constants skunks/policy/6-rekey/WotsPlus.tree [0] Coll[Byte](32)=5d14168daead9a80ae76585bf0fc137d628b3df3…
+tree-constants skunks/policy/6-rekey/WotsPlus.tree [1] SInt$=0
+tree-constants skunks/policy/6-rekey/WotsPlus.tree [2] SByte$=0
+tree-constants skunks/policy/6-rekey/WotsPlus.tree summary header=0x19 constants=107 int_collections= pre_padding_zero=false pre_len=-1

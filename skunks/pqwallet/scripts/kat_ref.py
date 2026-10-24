@@ -9,7 +9,7 @@ acvp, slh = Path(sys.argv[1]), Path(sys.argv[2])
 spec = importlib.util.spec_from_file_location("slhdsa_ref", slh / "slhdsa_ref.py")
 ref = importlib.util.module_from_spec(spec); spec.loader.exec_module(ref)
 PS = "SLH-DSA-SHA2-128s"
-fails = total = 0
+fails = total = exceptions = 0
 def check(name, cond, detail=""):
     global fails, total
     total += 1
@@ -23,6 +23,8 @@ def verdict(g, t):
             return ref.verify_internal(m, sig, pk)
         return ref.verify(m, bytes.fromhex(t.get("context", "")), sig, pk)
     except Exception:
+        global exceptions
+        exceptions += 1
         return False
 
 t0 = time.time()
@@ -38,5 +40,5 @@ for g in json.load(open(acvp / "sigVer-internalProjection.json"))["testGroups"]:
         check(f"sigVer tg{g['tgId']} tc{t['tcId']}", verdict(g, t) == t["testPassed"], f"expected {t['testPassed']} ({t.get('reason','')})")
         neg += (not t["testPassed"])
     print(f"kat-ref sigVer tg{g['tgId']} {g['signatureInterface']}/{g['preHash']} tests={len(g['tests'])} negatives={neg}")
-print(f"kat-ref python reference {PS}: checks={total} failures={fails} {'ALL PASS' if fails == 0 else 'FAILED'} seconds={time.time()-t0:.1f}")
+print(f"kat-ref python reference {PS}: checks={total} failures={fails} exceptions_counted_as_refuse={exceptions} {'ALL PASS' if fails == 0 else 'FAILED'} seconds={time.time()-t0:.1f}")
 sys.exit(0 if fails == 0 else 1)

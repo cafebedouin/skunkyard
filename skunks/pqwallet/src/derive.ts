@@ -16,7 +16,7 @@
 // Material from a leaf (both options):
 //   WOTS+ (vault, sign-once):   secret = leaf(scheme 1, use 0, index k); public seed = leaf(scheme 1, use 1, index k)
 //   SLH-DSA-SHA2-128s:          seed48 = expand(leaf(scheme 2, use 0, index k), "slh-dsa-sha2-128s")[0..48]
-//   key schedule (8 leaves):    public seed = leaf(scheme 3, use 1, index account); leaf_i secret = leaf(scheme 3, use 0, index i)
+//   key schedule (8 leaves):    public seed = leaf(scheme 3, use 1, index 0) of the account; leaf_i secret = leaf(scheme 3, use 0, index i)
 import { HDKey, HARDENED_OFFSET } from '@scure/bip32';
 import { mnemonicToSeedSync, validateMnemonic } from '@scure/bip39';
 import { wordlist } from '@scure/bip39/wordlists/english.js';

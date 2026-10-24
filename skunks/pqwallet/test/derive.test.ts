@@ -5,7 +5,8 @@ import { readFileSync } from 'node:fs';
 import { slh_dsa_sha2_128s } from '@noble/post-quantum/slh-dsa.js';
 import { hex, unhex, equalBytes } from '../src/bytes.js';
 import { seedFromMnemonic, vaultKey, slhDsaKey, scheduleKeys, eip3Xpub, eip3Child, siblingFromXpub, leafA, leafB, SCHEME_WOTSPLUS, USE_SECRET } from '../src/derive.js';
-import { sign, verify } from '../src/wotsplus.js';
+import { sign, verify, MemoryUsedStore } from '../src/wotsplus.js';
+import { slhDsaTree, slhDsaPinnedHash } from '../src/slhdsa-tree.js';
 import { scheduleProof, scheduleVerify } from '../src/merkle.js';
 import { wotsPlusTree, p2sAddress, TESTNET } from '../src/tree.js';
 
@@ -43,7 +44,8 @@ ok('WOTS+ schedule leaf 5 commitment (leaf-index tweak) equals the Python harnes
 
 // 4. WOTS+ sign/verify round trip and a flipped byte refused (TS side only; the script side is step 2)
 const msg = unhex('73faa887f2436f02c99917afcb02ca832af2631d9b14e3dc2d95633794e15943');
-const sig = sign(vk.key, msg);
+const used = new MemoryUsedStore();
+const sig = sign(vk.key, msg, used);
 ok('WOTS+ signature is 2,144 bytes', sig.length === 2144);
 ok('WOTS+ signature verifies against the commitment', verify(vk.seed, vk.key.prefix, vk.key.commit, msg, sig));
 const flipped = sig.slice(); flipped[1000] ^= 1;
@@ -80,5 +82,22 @@ const t0 = wotsPlusTree(vk.seed, vk.key.commit), t1 = wotsPlusTree(vaultKey('B',
 let diff = 0; for (let i = 0; i < t0.length; i++) if (t0[i] !== t1[i]) diff++;
 ok('WotsPlus trees for two keys are 717 bytes and differ only inside the two 32-byte constants', t0.length === 717 && diff <= 64 && diff > 0);
 ok('testnet P2S address for vault key 0 is printable', p2sAddress(t0, TESTNET).length > 900);
+
+// 9. the signer guard (seat C5): the same digest again is allowed, a different digest under the same key is refused
+ok('WOTS+ signer: re-signing the same digest returns the same bytes', equalBytes(sign(vk.key, msg, used), sig));
+const other = msg.slice(); other[0] ^= 1;
+let refused = false; try { sign(vk.key, other, used); } catch { refused = true; }
+ok('WOTS+ signer: a second, different digest under the same key is refused', refused);
+
+// 10. the pinned SLH-DSA tree (seat A13): substitution reproduces the harness-compiled tree for the vectors.json key
+const slhTree = slhDsaTree(bcPk);
+ok('SLH-DSA tree for the vectors.json key equals the pinned SlhDsa.tree byte for byte', equalBytes(slhTree, unhex(readFileSync(new URL('../../policy/6-rekey/slhdsa/SlhDsa.tree', import.meta.url), 'utf8').trim())));
+const slhTree2 = slhDsaTree(sk0.publicKey); let dslh = 0; for (let i = 0; i < slhTree.length; i++) if (slhTree[i] !== slhTree2[i]) dslh++;
+ok('SLH-DSA trees for two keys differ only inside the two key constants (at most 32 bytes)', dslh > 0 && dslh <= 32);
+ok('SLH-DSA pinned-template hash is 32 bytes', slhDsaPinnedHash().length === 32);
+
+// 11. the derivation claim the xpub test did not lock (Grok 9): the xpub route reproduces neither option's leaf
+const stolen = siblingFromXpub(xpub, 0, eip3Child(seed, 0, 0), 7);
+ok('xpub recovery yields neither the option A nor the option B leaf for index 7', !equalBytes(stolen, leafA(seed, 0, SCHEME_WOTSPLUS, USE_SECRET, 7)) && !equalBytes(stolen, leafB(seed, 0, SCHEME_WOTSPLUS, USE_SECRET, 7)));
 
 console.log(`ALL PASS (${passed} checks)`);

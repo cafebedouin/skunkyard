@@ -79,7 +79,7 @@ harness's existing stages, outputs and pinned result files are untouched (`git s
 master `975de31e…` on 2026-10-24; file hashes in `diff/acvp-provenance.txt`), SLH-DSA-SHA2-128s only.** Through noble
 (`scripts/kat.ts`, `diff/kat-noble.log`): key generation from (SK.seed, SK.prf, PK.seed), deterministic signing
 reproducing the expected signature byte for byte, randomized signing with the given randomness, and verification
-verdicts equal to `testPassed` (36 negative cases across the three groups, with their reasons):
+verdicts equal to `testPassed` (30 negative cases across the three groups, 12 + 6 + 12, with their reasons; corrected from "36" after the seat round, which was the count of sigVer cases run):
 
 ```
 kat keyGen tg1 SLH-DSA-SHA2-128s tests=10
@@ -234,3 +234,109 @@ the baseline ran on 6.0.7; no verdict differed, so no jar effect needed separati
 1,051,200, WINDOW 21,600) were not used; the devnet's 40 / 20 were, as in the baseline. The schedule member's version
 of the same problem (`RekeySchedule.es`, the planted-leaf griefing) is not addressed by this variant and stays open
 under SK-055.
+
+## Step 2, the seat round (gate r1, 2026-10-24) and what it changed
+
+Three seats read the slice (`posts/seats/pqwallet-gate/r1/`: a Claude Opus Cryptography seat, Grok, Gemini; prompts,
+slice builder and raw outputs there; the disposition of every finding in `REVIEW.md`). Their common verdict: no input
+on which `SlhDsa.es` and FIPS 205 differ was found on the accept path; the gaps were evidence (the ACVP vectors had
+never been through the script; one negative class; trees pinned by template only) and the vault's one-time key
+(forced reuse). Everything mechanical was run the same day; the printed lines:
+
+**ACVP through the script** (`acvp` harness command: a measurement variant of `SlhDsa.es` takes M' from context variable
+2, `src.replace` as the all-steps variant does, the deployed file unchanged; `scripts/acvp-cases.py`, 56 cases: sigVer
+tg19 and tg31 with their 24 negatives, sigGen tg19, tg31, tg55, tg67; `diff/acvp-script.log`):
+
+```
+acvp cases=56 agree=56 exceptions=0 all_agree=true
+```
+
+**Structural negatives through the script and BouncyCastle** (`negatives` harness command on two honest noble spends of
+one key; mutations by `scripts/slh-negatives.py` and `scripts/slh-framing-sigs.ts`, deterministic from `diff/sigs.json` and `diff/keys.json`, so the 8 MB input file is not committed; `diff/slh-negatives.log` and `diff/slh-negatives-out.json`, 527 rows):
+
+```
+negatives rows=527 as_expected=527 all_as_expected=true
+```
+
+- 491 per-node flips (bit 7 of each 16-byte node's first byte): 491 REFUSE, BouncyCastle agreeing on each;
+- grafts: A's R and FORS with B's hypertree, each of B's 7 layers into A, B's R into A: REFUSE;
+- lengths 7,855, 7,857, 0, 16 (REFUSE at cost 329, the guard), 65,536 (refused by the serializer: "Value 65536 is out of
+  unsigned short range", an exception, counted as REFUSE and shown), a 32-byte rotation at legal length, all zeros: REFUSE;
+- checksum coupling in layer 0: each checksum chain (32, 33, 34) hashed one step forward with the reference's tweakable
+  hash at the right address, two message chains swapped, a message chain hashed forward: REFUSE;
+- other framings that noble accepts under their own rules (`framing: noble accepts ctx=true prehash=true internal=true
+  shake(own key)=true`): a context "a", HashSLH-DSA with SHA-256, the internal interface on the bare digest, and a
+  SLH-DSA-SHAKE-128s signature of the same length and layout: all REFUSE by the script and by BouncyCastle;
+- output fields: value + 1, creation height + 1, a token added, a register set, the script changed, a third output
+  added, two outputs reordered: REFUSE; the two-output honest spend: ACCEPT;
+- outside the hash, recorded as such: a second input at `sigmaProp(true)` and a data input added to the honest spend:
+  ACCEPT (the signature covers `SELF.id` and the outputs; a surrounding contract that trusts other inputs or data inputs
+  needs its own binding);
+- two boxes under one key in one transaction, each with its own signature: both inputs ACCEPT.
+
+**Index edges** (`scripts/slh-negatives.py` indices; `diff/leaf511-verify.log`): among the 496 signatures of 2b and 2c,
+idx_leaf ranged 1 to 511; the two idx_leaf = 511 spends were evaluated:
+
+```
+verify-ext key=c1bd7fdf3b837540 i=258 digest_ok=true script=ACCEPT cost=187558 bc=ACCEPT flip_pos=5834 flip_script=REFUSE flip_cost=185133 flip_bc=REFUSE
+verify-ext key=c1bd7fdf3b837540 i=307 digest_ok=true script=ACCEPT cost=187621 bc=ACCEPT flip_pos=7614 flip_script=REFUSE flip_cost=187621 flip_bc=REFUSE
+```
+
+Of the first key's 4 spends, 3 had nonzero discarded high bits in the 7-byte tree field and all 4 in the 2-byte leaf
+field (`indices … tree_field_high_bits_nonzero=3 leaf_field_high_bits_nonzero=4`), so the mod reductions are exercised.
+idx_leaf = 0 is being ground for (about 1 in 512 signatures); its line is appended below when found. idx_tree at 0 and
+2^54 − 1 cannot be reached by signing (2^−54) and would need a stage-level synthetic test: not run.
+
+**Pinned trees** (seat A13 / Grok 3). `skunks/policy/6-rekey/slhdsa/SlhDsa.tree` is committed (the harness's `tree`
+command, 1,516 bytes); `tree-constants` reads its 124 constants as the chain sees them:
+
+```
+tree-constants skunks/policy/6-rekey/slhdsa/SlhDsa.tree summary header=0x10 constants=124 int_collections=0..6,0..13,0..11,0..8,0..34,0..14 pre_padding_zero=true pre_len=64
+```
+
+`src/slhdsa-tree.ts` builds a key's tree by substituting PK.seed (bytes 4..19) and PK.root (80..95) into the pinned
+file, never recompiling; the test shows the substitution reproduces the pinned tree for its own key byte for byte, and
+8 noble signatures on two substituted trees were judged as provided bytes (`diff/verify-ext-tstree.log`):
+
+```
+verify-ext spends=8 digest_ok=8 script_accept=8 bc_accept=8 flip_script_refuse=8 flip_bc_refuse=8 script_bc_agree=8 all_as_expected=true
+```
+
+The WOTS+ devnet tree's constants were dumped the same way (`diff/tree-constants-wotsplus.log`: constant 0 is the seed;
+the chain and step collections are inline in that tree, not segregated).
+
+**The signer guard** (seat C5): `sign()` in `src/wotsplus.ts` now takes a `UsedStore`; a key signs one digest, ever,
+the digest recorded before the signature is computed; re-signing the same digest is allowed, a different one refused
+(tests 9a, 9b). `npm test`: `ALL PASS (32 checks)`.
+
+**Doc corrections from the round:** "36 negative cases" → 30 (B3); the depth-3 xpub sentence (D3); the schedule
+comment in `derive.ts` (D8); the KAT scripts now count exceptions separately (B2:
+`exceptions_counted_as_refuse=…`); FIPS 205's final numbering has Algorithm 20 = `slh_verify_internal` and 24 =
+`slh_verify` (the seat prompt had them swapped; the code comments were right).
+
+**Open after the round:** a node verdict on a noble SLH-DSA and a TypeScript WOTS+ signature (step 4 does this on
+testnet); the WOTS+ security paragraph owed in `WotsPlus.es`; a two-signature forgery demonstration (infeasible by
+grinding here: about 2^41 hashes for a dominating digest, by the per-chain estimate; the literature stands for it);
+the vault key's scheme (next section).
+
+## The forced-reuse finding (seat C5) against variant 2
+
+The Cryptography seat found a case the vault's own rows did not cover: while the owner's hash-key spend is pending, a
+third party pays dust to the vault and merges it with the owner's box (a keyless merge needs only two boxes at the
+script and no window). If the merge is mined first, the owner's box is gone and its signature is public; under
+`QVault.es`, after quantum day the only path left for the merged box is a second signature under the same key, which
+with w = 16 lets anyone who sees both grind forgeries.
+
+Against `QVault2.es` (step 3): the merged box is forwarded, keyless, to the committed successor (rows f1, f7), and the
+owner spends there with a fresh key (f9). One published signature over a box that no longer exists gives an attacker
+nothing (one signature is the construction's assumption), and the signer guard refuses a second. What remains is
+griefing: the attacker can race the forward too, merging new dust before it confirms, each round costing them a dust
+box and the fee from the bounty, until the owner's forward lands or the attacker stops; it cannot take value or force
+a second signature. A wallet rule follows: a hash-key spend that fails to confirm is never re-signed; the wallet
+forwards and spends from the successor. Not run as a mempool race here (the devnet has one miner and no competing
+relay); recorded as reasoning from the rows.
+
+The alternative the seat proposes, SLH-DSA as the vault's key (sign-many, about 200,000 per spend against 50,000, the
+7,856-byte signature), removes the one-time assumption entirely and needs no forward path for reuse. The choice is a
+design ruling for the operator: variant 2 with WOTS+ (cheaper, one more constant, a successor fixed at creation) or
+SLH-DSA (simpler reasoning, four times the cost per spend).
