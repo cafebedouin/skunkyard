@@ -1,0 +1,11 @@
+kat keyGen tg1 SLH-DSA-SHA2-128s tests=10
+kat sigGen tg19 SLH-DSA-SHA2-128s external/pure deterministic=true tests=7
+kat sigGen tg20 SLH-DSA-SHA2-128s external/preHash deterministic=true tests=6 skipped=6 (hash not available)
+kat sigGen tg31 SLH-DSA-SHA2-128s internal/none deterministic=true tests=7
+kat sigGen tg55 SLH-DSA-SHA2-128s external/pure deterministic=false tests=7
+kat sigGen tg56 SLH-DSA-SHA2-128s external/preHash deterministic=false tests=6 skipped=6 (hash not available)
+kat sigGen tg67 SLH-DSA-SHA2-128s internal/none deterministic=false tests=7
+kat sigVer tg19 SLH-DSA-SHA2-128s external/pure tests=14 negatives=12
+kat sigVer tg20 SLH-DSA-SHA2-128s external/preHash tests=8 negatives=6 skipped=6
+kat sigVer tg31 SLH-DSA-SHA2-128s internal/none tests=14 negatives=12
+kat noble SLH-DSA-SHA2-128s: checks=96 failures=0 ALL PASS

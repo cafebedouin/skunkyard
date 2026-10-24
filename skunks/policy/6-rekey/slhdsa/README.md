@@ -240,3 +240,18 @@ number above was produced from it; regenerating it would change them all.
   per-step slope], still far under the cap, with a 17,088-byte signature; not built.
 - **Security category 1 (128-bit).** The sizing question was fit; whether 128s or a 192/256 set is the right strength
   for a receive address is for the post's security paragraph (SK-035), not this measurement.
+
+## Harness commands added 2026-10-24 (pqwallet step 2, the differential)
+
+Nothing above changed; `SlhDsaRunner.scala` gained four commands that take signatures from an external implementation
+(`@noble/post-quantum` for SLH-DSA, the pqwallet TypeScript signer for WOTS+) and judge them with the script
+verifiers in the interpreter and, for SLH-DSA, with BouncyCastle on the same bytes. Each spend is paired with a copy
+of its signature with one byte flipped, which both must refuse. Results and the printed lines: `skunks/pqwallet/RESULT.md`,
+step 2; artifacts in `skunks/pqwallet/diff/`.
+
+- `digests <pks.json> <spends-per-key> <out>`: for each public key, compile `SlhDsa.es`, build the guarded box and the
+  stage-7 spends, write each spend's digest for the external signer.
+- `verify-ext <sigs.json> <out>`: evaluate every external signature and its flipped copy; one line per spend.
+- `wots-digests <keys.json> <spends-per-key> <out>` and `wots-verify-ext <sigs.json> <out>`: the same for
+  `../WotsPlus.es`, compiled from `(SEED, COMMIT)` or, when a key carries a `tree`, deserialized from the provided
+  bytes (so a constant substitution of the devnet tree can be judged as it is).

@@ -1,0 +1,3 @@
+steps spends=400 all_valid=True min=1650 median=1875 mean=1869.3 sd=77.9 max=2115 cap_valid=3570 cap_variant=3675
+steps max_spend i=313 steps=2115  min_spend i=52 steps=1650
+steps extremes -> diff/grind-extremes.json

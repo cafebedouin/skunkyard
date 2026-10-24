@@ -1,0 +1,4 @@
+{"spends": [
+{"pk": "c1bd7fdf3b8375409ae4446b62b264faa06b4ecd623e005a7478914eed4514b6", "i": 313, "digest_ok": true, "script": "ACCEPT", "cost": 195286, "bc": "ACCEPT", "flip_pos": 5677, "flip_script": "REFUSE", "flip_cost": 189298, "flip_bc": "REFUSE"},
+{"pk": "c1bd7fdf3b8375409ae4446b62b264faa06b4ecd623e005a7478914eed4514b6", "i": 52, "digest_ok": true, "script": "ACCEPT", "cost": 182170, "bc": "ACCEPT", "flip_pos": 4771, "flip_script": "REFUSE", "flip_cost": 184050, "flip_bc": "REFUSE"},
+{"summary": true, "spends": 2, "digest_ok": 2, "script_accept": 2, "bc_accept": 2, "flip_script_refuse": 2, "flip_bc_refuse": 2, "script_bc_agree": 2}]}

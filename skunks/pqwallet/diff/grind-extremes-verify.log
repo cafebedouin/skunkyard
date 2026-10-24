@@ -1,0 +1,3 @@
+verify-ext key=c1bd7fdf3b837540 i=313 digest_ok=true script=ACCEPT cost=195286 bc=ACCEPT flip_pos=5677 flip_script=REFUSE flip_cost=189298 flip_bc=REFUSE
+verify-ext key=c1bd7fdf3b837540 i=52 digest_ok=true script=ACCEPT cost=182170 bc=ACCEPT flip_pos=4771 flip_script=REFUSE flip_cost=184050 flip_bc=REFUSE
+verify-ext spends=2 digest_ok=2 script_accept=2 bc_accept=2 flip_script_refuse=2 flip_bc_refuse=2 script_bc_agree=2 all_as_expected=true

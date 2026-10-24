@@ -324,6 +324,100 @@ object SlhDsaRunner {
       val v = loadVectors(); val m = unhex(msgHex); val sig = bcSign(v.sk, m)
       require(bcVerify(v.pk, m, sig), "BouncyCastle does not verify its own signature")
       println(s"SIG ${hex(sig)}")
+    case "digests" :: pksPath :: spendsPerKey :: outPath :: Nil =>
+      // pqwallet step 2 (differential): for every public key in pksPath (JSON {"pks": [hex, ...]}), compile SlhDsa.es
+      // for that key, build the guarded box and `spendsPerKey` spends of it (the stage-7 construction, spend(i)), and
+      // write each spend's digest blake2b256(SELF.id ++ output bytesWithoutRef). An external signer signs the digests.
+      val pks = io.circe.parser.parse(read(pksPath)).right.get.hcursor.downField("pks").as[List[String]].right.get
+      val src = read(s"$DIR/SlhDsa.es"); val v = loadVectors(); val k = spendsPerKey.toInt
+      val rows = pks.map { pkHex =>
+        val pk = unhex(pkHex)
+        val c = compile(src, env(v) ++ Map("PRE" -> coll(pk.take(16) ++ Array.fill(48)(0: Byte)), "PK_ROOT" -> coll(pk.drop(16))))
+        val self = box(c.tree)
+        val ds = (0 until k).map { i => val o = new ErgoBoxCandidate(value = 1000000000L + i, ergoTree = c.tree, creationHeight = 100 + i); (i, hex(Blake2b256.hash(self.id ++ o.bytesWithNoRef))) }
+        s"""{"pk": "$pkHex", "tree_bytes": ${c.bytes}, "box_id": "${hex(self.id)}", "spends": [""" + ds.map { case (i, d) => s"""{"i": $i, "msg": "$d"}""" }.mkString(", ") + "]}"
+      }
+      write(outPath, "{\"keys\": [" + rows.mkString(",\n") + "]}")
+      println(s"digests keys=${pks.length} spends_per_key=$k written=$outPath")
+    case "verify-ext" :: sigsPath :: outPath :: Nil =>
+      // pqwallet step 2 (differential): sigsPath is {"keys": [{"pk": hex, "spends": [{"i": n, "msg": hex, "sig": hex}, ...]}]}
+      // with signatures from an external implementation. For each spend: rebuild the box and output exactly as
+      // `digests` did, check the digest, evaluate the script verifier (verdict, cost), and BouncyCastle's verdict on the
+      // same bytes; then the same for the signature with one byte flipped (position from the spend index), which both
+      // must refuse. One line per spend, a summary line, and a JSON row per spend in outPath.
+      val src = read(s"$DIR/SlhDsa.es"); val v = loadVectors()
+      val keys = io.circe.parser.parse(read(sigsPath)).right.get.hcursor.downField("keys").values.get.toList
+      var n = 0; var scriptAccept = 0; var bcAccept = 0; var digestOk = 0; var flipScriptRefuse = 0; var flipBcRefuse = 0; var agree = 0
+      val out = new StringBuilder("{\"spends\": [\n")
+      keys.foreach { kj =>
+        val kc = kj.hcursor; val pkHex = kc.downField("pk").as[String].right.get; val pk = unhex(pkHex)
+        val c = compile(src, env(v) ++ Map("PRE" -> coll(pk.take(16) ++ Array.fill(48)(0: Byte)), "PK_ROOT" -> coll(pk.drop(16))))
+        val self = box(c.tree)
+        kc.downField("spends").values.get.foreach { sj =>
+          val sc = sj.hcursor; val i = sc.downField("i").as[Int].right.get; val msg = unhex(sc.downField("msg").as[String].right.get); val sig = unhex(sc.downField("sig").as[String].right.get)
+          val o = new ErgoBoxCandidate(value = 1000000000L + i, ergoTree = c.tree, creationHeight = 100 + i)
+          val d = Blake2b256.hash(self.id ++ o.bytesWithNoRef); val dOk = d.sameElements(msg)
+          def tryEval(sg: Array[Byte]): (Boolean, Long, String) = try { val (ok, cost) = evaluate(c.tree, self, o, sg); (ok, cost, "") } catch { case ex: Throwable => (false, -1L, firstLine(ex)) }
+          val (ok, cost, err) = tryEval(sig); val bc = bcVerify(pk, msg, sig)
+          val pos = (i * 997 + n * 7919) % SIG_LEN; val flipped = sig.clone(); flipped(pos) = (flipped(pos) ^ 1).toByte
+          val (fok, fcost, ferr) = tryEval(flipped); val fbc = bcVerify(pk, msg, flipped)
+          n += 1; if (ok) scriptAccept += 1; if (bc) bcAccept += 1; if (dOk) digestOk += 1; if (!fok) flipScriptRefuse += 1; if (!fbc) flipBcRefuse += 1; if (ok == bc && fok == fbc) agree += 1
+          println(s"verify-ext key=${pkHex.take(16)} i=$i digest_ok=$dOk script=${verdict(ok)} cost=$cost bc=${verdict(bc)} flip_pos=$pos flip_script=${verdict(fok)} flip_cost=$fcost flip_bc=${verdict(fbc)}" + (if (err.nonEmpty) s" error=$err" else "") + (if (ferr.nonEmpty) s" flip_error=$ferr" else ""))
+          out.append(s"""{"pk": "$pkHex", "i": $i, "digest_ok": $dOk, "script": "${verdict(ok)}", "cost": $cost, "bc": "${verdict(bc)}", "flip_pos": $pos, "flip_script": "${verdict(fok)}", "flip_cost": $fcost, "flip_bc": "${verdict(fbc)}"},\n""")
+        }
+      }
+      out.append(s"""{"summary": true, "spends": $n, "digest_ok": $digestOk, "script_accept": $scriptAccept, "bc_accept": $bcAccept, "flip_script_refuse": $flipScriptRefuse, "flip_bc_refuse": $flipBcRefuse, "script_bc_agree": $agree}]}\n""")
+      write(outPath, out.toString)
+      println(s"verify-ext spends=$n digest_ok=$digestOk script_accept=$scriptAccept bc_accept=$bcAccept flip_script_refuse=$flipScriptRefuse flip_bc_refuse=$flipBcRefuse script_bc_agree=$agree all_as_expected=${digestOk == n && scriptAccept == n && bcAccept == n && flipScriptRefuse == n && flipBcRefuse == n}")
+    case "wots-digests" :: keysPath :: spendsPerKey :: outPath :: Nil =>
+      // pqwallet step 2: the same as `digests` for the WOTS+ verifier skunks/policy/6-rekey/WotsPlus.es, one tree per
+      // (SEED, COMMIT) pair in keysPath ({"keys": [{"seed": hex, "commit": hex}]}); also prints the compiled tree so an
+      // external constant substitution can be compared with a real compile.
+      val wsrc = read("skunks/policy/6-rekey/WotsPlus.es"); val k = spendsPerKey.toInt
+      val keys = io.circe.parser.parse(read(keysPath)).right.get.hcursor.downField("keys").values.get.toList
+      val rows = keys.map { kj =>
+        val kc = kj.hcursor; val seedHex = kc.downField("seed").as[String].right.get; val commitHex = kc.downField("commit").as[String].right.get
+        val c = kc.downField("tree").as[String].toOption match {
+          case Some(t) => val tr = sigma.serialization.ErgoTreeSerializer.DefaultSerializer.deserializeErgoTree(unhex(t)); Compiled(tr, tr.bytes.length, tr.header & 0xff)   // a provided tree (e.g. a constant substitution), not recompiled
+          case None => compile(wsrc.replace("$SEED", seedHex).replace("$COMMIT", commitHex), Map.empty[String, Any]) }
+        val self = box(c.tree)
+        val ds = (0 until k).map { i => val o = new ErgoBoxCandidate(value = 1000000000L + i, ergoTree = c.tree, creationHeight = 100 + i); (i, hex(Blake2b256.hash(self.id ++ o.bytesWithNoRef))) }
+        val devnetTree = sigma.serialization.ErgoTreeSerializer.DefaultSerializer.deserializeErgoTree(unhex(read("skunks/policy/6-rekey/WotsPlus.tree").trim))
+        val compiledTree = compile(wsrc.replace("$SEED", seedHex).replace("$COMMIT", commitHex), Map.empty[String, Any]).tree
+        println(s"wots-digests key=${seedHex.take(16)} tree_bytes=${c.bytes} header=0x${c.header.toHexString} template_eq_devnet_file=${c.tree.template.sameElements(devnetTree.template)} template_eq_fresh_compile=${c.tree.template.sameElements(compiledTree.template)} constants_types=${c.tree.constants.take(3).map(_.tpe).mkString(",")} seed_in_constants=${c.tree.constants.exists(k => k.value match { case cb: Coll[_] => hex(cb.asInstanceOf[Coll[Byte]].toArray) == seedHex; case _ => false })} commit_in_constants=${c.tree.constants.exists(k => k.value match { case cb: Coll[_] => hex(cb.asInstanceOf[Coll[Byte]].toArray) == commitHex; case _ => false })} tree_eq_devnet_bytes_outside_constants=${c.tree.template.sameElements(devnetTree.template) && c.tree.header == devnetTree.header}")
+        s"""{"seed": "$seedHex", "commit": "$commitHex", "tree_bytes": ${c.bytes}, "tree": "${hex(c.tree.bytes)}", "box_id": "${hex(self.id)}", "spends": [""" + ds.map { case (i, d) => s"""{"i": $i, "msg": "$d"}""" }.mkString(", ") + "]}"
+      }
+      write(outPath, "{\"keys\": [" + rows.mkString(",\n") + "]}")
+      println(s"wots-digests keys=${keys.length} spends_per_key=$k written=$outPath")
+    case "wots-verify-ext" :: sigsPath :: outPath :: Nil =>
+      // pqwallet step 2: external WOTS+ signatures ({"keys": [{"seed", "commit", "spends": [{"i", "msg", "sig"}]}]}) through
+      // WotsPlus.es in the interpreter, each with a flipped copy that must refuse. The script is the only verifier here.
+      val wsrc = read("skunks/policy/6-rekey/WotsPlus.es")
+      val keys = io.circe.parser.parse(read(sigsPath)).right.get.hcursor.downField("keys").values.get.toList
+      var n = 0; var acc = 0; var dOkN = 0; var fRef = 0
+      val out = new StringBuilder("{\"spends\": [\n")
+      keys.foreach { kj =>
+        val kc = kj.hcursor; val seedHex = kc.downField("seed").as[String].right.get; val commitHex = kc.downField("commit").as[String].right.get
+        val c = kc.downField("tree").as[String].toOption match {
+          case Some(t) => val tr = sigma.serialization.ErgoTreeSerializer.DefaultSerializer.deserializeErgoTree(unhex(t)); Compiled(tr, tr.bytes.length, tr.header & 0xff)
+          case None => compile(wsrc.replace("$SEED", seedHex).replace("$COMMIT", commitHex), Map.empty[String, Any]) }
+        val self = box(c.tree)
+        kc.downField("spends").values.get.foreach { sj =>
+          val sc = sj.hcursor; val i = sc.downField("i").as[Int].right.get; val msg = unhex(sc.downField("msg").as[String].right.get); val sig = unhex(sc.downField("sig").as[String].right.get)
+          val o = new ErgoBoxCandidate(value = 1000000000L + i, ergoTree = c.tree, creationHeight = 100 + i)
+          val dOk = Blake2b256.hash(self.id ++ o.bytesWithNoRef).sameElements(msg)
+          def tryEval(sg: Array[Byte]): (Boolean, Long, String) = try { val (ok, cost) = evaluate(c.tree, self, o, sg); (ok, cost, "") } catch { case ex: Throwable => (false, -1L, firstLine(ex)) }
+          val (ok, cost, err) = tryEval(sig)
+          val pos = (i * 331 + n * 977) % sig.length; val flipped = sig.clone(); flipped(pos) = (flipped(pos) ^ 1).toByte
+          val (fok, fcost, ferr) = tryEval(flipped)
+          n += 1; if (ok) acc += 1; if (dOk) dOkN += 1; if (!fok) fRef += 1
+          println(s"wots-verify-ext seed=${seedHex.take(16)} i=$i digest_ok=$dOk script=${verdict(ok)} cost=$cost flip_pos=$pos flip_script=${verdict(fok)} flip_cost=$fcost" + (if (err.nonEmpty) s" error=$err" else "") + (if (ferr.nonEmpty) s" flip_error=$ferr" else ""))
+          out.append(s"""{"seed": "$seedHex", "i": $i, "digest_ok": $dOk, "script": "${verdict(ok)}", "cost": $cost, "flip_pos": $pos, "flip_script": "${verdict(fok)}", "flip_cost": $fcost},\n""")
+        }
+      }
+      out.append(s"""{"summary": true, "spends": $n, "digest_ok": $dOkN, "script_accept": $acc, "flip_script_refuse": $fRef}]}\n""")
+      write(outPath, out.toString)
+      println(s"wots-verify-ext spends=$n digest_ok=$dOkN script_accept=$acc flip_script_refuse=$fRef all_as_expected=${dOkN == n && acc == n && fRef == n}")
     case "sign-other" :: msgHex :: Nil =>      // a fresh throwaway key signs the same digest (the other-key negative)
       val kpg = new SLHDSAKeyPairGenerator(); kpg.init(new SLHDSAKeyGenerationParameters(new SecureRandom(), SLHDSAParameters.sha2_128s))
       val sk = kpg.generateKeyPair().getPrivate.asInstanceOf[SLHDSAPrivateKeyParameters].getEncoded

@@ -1,0 +1,7 @@
+kat-ref sigGen tg19 external/pure tests=7
+kat-ref sigGen tg31 internal/none tests=7
+kat-ref sigGen tg55 external/pure tests=7
+kat-ref sigGen tg67 internal/none tests=7
+kat-ref sigVer tg19 external/pure tests=14 negatives=12
+kat-ref sigVer tg31 internal/none tests=14 negatives=12
+kat-ref python reference SLH-DSA-SHA2-128s: checks=56 failures=0 ALL PASS seconds=0.4
