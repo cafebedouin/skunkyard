@@ -1,0 +1,92 @@
+{
+ "height": 1902073,
+ "endpoint": "https://api.ergo.aap.cornell.edu/api/v1",
+ "storageFeeFactor": 1250000,
+ "period": 1051200,
+ "year": 262800,
+ "missingRanges": [],
+ "total": {
+  "boxes": 3146346,
+  "nanoErg": 96460767413848269
+ },
+ "p2pk": {
+  "boxes": 3044445,
+  "nanoErg": 77640211815418613
+ },
+ "contracts": {
+  "boxes": 101899,
+  "nanoErg": 4206057297862314
+ },
+ "protocolBoxes": [
+  {
+   "id": "26e7281e430e4aa4ee1ada75d8b4f07222fbeed422016d7614f235df109e93a9",
+   "template": "ae9ac8d914dcf12f94410683a5980dc2edb510920dbd83773e516cca5fd58681",
+   "nanoErg": 12986574336000000
+  },
+  {
+   "id": "bfc2bef9de24f170d52a1326f4e80cd1320f06de06cfe8ef709c6462c84807a2",
+   "template": "246e14059ac2d7642929d5486007ec55d0522936391ba60564ec84d44b19e430",
+   "nanoErg": 1627923964567342
+  }
+ ],
+ "nonProtocolNanoErg": 81846269113280927,
+ "p2pkByAge": {
+  "<1y": {
+   "boxes": 979109,
+   "nanoErg": 31954549830420540
+  },
+  "1-2y": {
+   "boxes": 774980,
+   "nanoErg": 18905070855620172
+  },
+  "2-3y": {
+   "boxes": 532623,
+   "nanoErg": 18673660812207726
+  },
+  "3-4y": {
+   "boxes": 757641,
+   "nanoErg": 8105975943468221
+  },
+  "4-5y": {
+   "boxes": 91,
+   "nanoErg": 954369249644
+  },
+  ">=5y": {
+   "boxes": 1,
+   "nanoErg": 4452310
+  }
+ },
+ "p2pkByCycles": {
+  "1 (consumed whole)": {
+   "boxes": 817375,
+   "nanoErg": 2980458974846
+  },
+  "2-10": {
+   "boxes": 1160890,
+   "nanoErg": 694517938773009
+  },
+  "11-100": {
+   "boxes": 963018,
+   "nanoErg": 1741973029621079
+  },
+  "101-1000": {
+   "boxes": 75469,
+   "nanoErg": 2474613276488761
+  },
+  ">1000": {
+   "boxes": 27693,
+   "nanoErg": 72726127111560918
+  }
+ },
+ "p2pkPastRentAge": {
+  "boxes": 92,
+  "nanoErg": 954373701954
+ },
+ "p2pkMaturingWithin1y": {
+  "boxes": 757735,
+  "nanoErg": 8107169965351843,
+  "taken": 59895784520193,
+  "consumedWhole": 163188,
+  "consumedWholeNanoErg": 660878270193
+ }
+}

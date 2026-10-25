@@ -1,0 +1,133 @@
+[00:54:36] tip 1902073 factor 1250000 endpoint https://api.ergo.aap.cornell.edu/api/v1
+[00:55:51] walk: 50/1239 ranges
+[00:56:59] walk: 100/1239 ranges
+[00:58:10] walk: 150/1239 ranges
+[00:59:29] walk: 200/1239 ranges
+[01:00:45] walk: 250/1239 ranges
+[01:02:07] walk: 300/1239 ranges
+[01:03:39] walk: 350/1239 ranges
+[01:05:22] walk: 400/1239 ranges
+[01:07:08] walk: 450/1239 ranges
+[01:08:55] walk: 500/1239 ranges
+[01:10:52] walk: 550/1239 ranges
+[01:13:30] walk: 600/1239 ranges
+960000-961535: HTTP Error 503: Service Unavailable; retry
+961536-963071: HTTP Error 503: Service Unavailable; retry
+966144-967679: HTTP Error 503: Service Unavailable; retry
+960000-961535: HTTP Error 503: Service Unavailable; retry
+960000-961535: HTTP Error 503: Service Unavailable; retry
+[01:17:21] walk: 650/1239 ranges
+[01:19:26] walk: 700/1239 ranges
+1093632-1095167: HTTP Error 503: Service Unavailable; retry
+1093632-1095167: HTTP Error 503: Service Unavailable; retry
+1093632-1095167: HTTP Error 503: Service Unavailable; retry
+1093632-1095167: HTTP Error 503: Service Unavailable; retry
+1093632-1095167: split at 1094399
+1093632-1094399: HTTP Error 503: Service Unavailable; retry
+1093632-1094399: HTTP Error 503: Service Unavailable; retry
+1093632-1094399: HTTP Error 503: Service Unavailable; retry
+1093632-1094399: HTTP Error 503: Service Unavailable; retry
+1094016-1094399: HTTP Error 503: Service Unavailable; retry
+[01:28:21] walk: 750/1239 ranges
+[01:28:21] walk: 800/1239 ranges
+1238016-1239551: HTTP Error 503: Service Unavailable; retry
+1238016-1239551: HTTP Error 503: Service Unavailable; retry
+1238016-1239551: HTTP Error 503: Service Unavailable; retry
+1238016-1239551: HTTP Error 503: Service Unavailable; retry
+1238016-1239551: split at 1238783
+1238016-1238783: HTTP Error 503: Service Unavailable; retry
+1238016-1238783: HTTP Error 503: Service Unavailable; retry
+[01:34:21] walk: 850/1239 ranges
+[01:35:06] walk: 900/1239 ranges
+[01:37:09] walk: 950/1239 ranges
+[01:39:02] walk: 1000/1239 ranges
+1602048-1603583: HTTP Error 503: Service Unavailable; retry
+1608192-1609727: HTTP Error 503: Service Unavailable; retry
+1611264-1612799: HTTP Error 503: Service Unavailable; retry
+1602048-1603583: HTTP Error 503: Service Unavailable; retry
+1608192-1609727: HTTP Error 503: Service Unavailable; retry
+1611264-1612799: HTTP Error 503: Service Unavailable; retry
+1602048-1603583: HTTP Error 503: Service Unavailable; retry
+1608192-1609727: HTTP Error 503: Service Unavailable; retry
+1602048-1603583: HTTP Error 503: Service Unavailable; retry
+1608192-1609727: HTTP Error 503: Service Unavailable; retry
+1602048-1603583: split at 1602815
+1608192-1609727: split at 1608959
+1608192-1608959: HTTP Error 503: Service Unavailable; retry
+1602816-1603583: HTTP Error 503: Service Unavailable; retry
+1608192-1608959: HTTP Error 503: Service Unavailable; retry
+1602816-1603583: HTTP Error 503: Service Unavailable; retry
+1608192-1608959: HTTP Error 503: Service Unavailable; retry
+1602816-1603583: HTTP Error 503: Service Unavailable; retry
+1608192-1608959: HTTP Error 503: Service Unavailable; retry
+1602816-1603583: HTTP Error 503: Service Unavailable; retry
+1608576-1608959: HTTP Error 503: Service Unavailable; retry
+1602816-1603199: HTTP Error 503: Service Unavailable; retry
+1608576-1608959: HTTP Error 503: Service Unavailable; retry
+1602816-1603199: HTTP Error 503: Service Unavailable; retry
+1608576-1608959: HTTP Error 503: Service Unavailable; retry
+1602816-1603199: HTTP Error 503: Service Unavailable; retry
+1608576-1608959: HTTP Error 503: Service Unavailable; retry
+1602816-1603199: HTTP Error 503: Service Unavailable; retry
+1608768-1608959: HTTP Error 503: Service Unavailable; retry
+1608768-1608959: HTTP Error 503: Service Unavailable; retry
+1603008-1603199: HTTP Error 503: Service Unavailable; retry
+1608768-1608959: HTTP Error 503: Service Unavailable; retry
+1608768-1608959: HTTP Error 503: Service Unavailable; retry
+1608768-1608863: HTTP Error 503: Service Unavailable; retry
+1608768-1608863: HTTP Error 503: Service Unavailable; retry
+1608768-1608863: HTTP Error 503: Service Unavailable; retry
+1608768-1608863: HTTP Error 503: Service Unavailable; retry
+1608960-1609727: HTTP Error 503: Service Unavailable; retry
+1608960-1609727: HTTP Error 503: Service Unavailable; retry
+1608960-1609727: HTTP Error 503: Service Unavailable; retry
+1608960-1609727: HTTP Error 503: Service Unavailable; retry
+1609344-1609727: HTTP Error 503: Service Unavailable; retry
+1609344-1609727: HTTP Error 503: Service Unavailable; retry
+1609344-1609727: HTTP Error 503: Service Unavailable; retry
+1881600-1883135: HTTP Error 503: Service Unavailable; retry
+1609344-1609727: HTTP Error 503: Service Unavailable; retry
+1881600-1883135: HTTP Error 503: Service Unavailable; retry
+1609344-1609535: HTTP Error 503: Service Unavailable; retry
+1609344-1609535: HTTP Error 503: Service Unavailable; retry
+1609344-1609535: HTTP Error 503: Service Unavailable; retry
+1609344-1609535: HTTP Error 503: Service Unavailable; retry
+1609344-1609439: HTTP Error 503: Service Unavailable; retry
+1609344-1609439: HTTP Error 503: Service Unavailable; retry
+1609344-1609439: HTTP Error 503: Service Unavailable; retry
+1609344-1609439: HTTP Error 503: Service Unavailable; retry
+[02:14:15] walk: 1050/1239 ranges
+[02:14:15] walk: 1100/1239 ranges
+[02:14:15] walk: 1150/1239 ranges
+[02:14:15] walk: 1200/1239 ranges
+[02:14:15] walk done: 1239 ranges in 4778s
+# Rent census (height 1,902,073, https://api.ergo.aap.cornell.edu/api/v1, storageFeeFactor 1,250,000)
+
+Unspent boxes: 3,146,346, 96,460,767.4 ERG. P2PK: 3,044,445 boxes, 77,640,211.8 ERG. Contracts: 101,899 boxes, 4,206,057.3 ERG. Protocol boxes excluded from non-protocol supply: ae9ac8d914dc 12,986,574.3 ERG, 246e14059ac2 1,627,924.0 ERG. Non-protocol supply: 81,846,269.1 ERG.
+
+## P2PK ERG by age of the box (settlement height)
+
+| age | boxes | ERG | share of P2PK ERG |
+|---|---|---|---|
+| <1y | 979,109 | 31,954,549.8 | 41.16% |
+| 1-2y | 774,980 | 18,905,070.9 | 24.35% |
+| 2-3y | 532,623 | 18,673,660.8 | 24.05% |
+| 3-4y | 757,641 | 8,105,975.9 | 10.44% |
+| 4-5y | 91 | 954.4 | 0.00% |
+| >=5y | 1 | 0.0 | 0.00% |
+
+## P2PK ERG by rent cycles to exhaustion (4 years per cycle)
+
+| cycles | boxes | ERG | share of P2PK ERG |
+|---|---|---|---|
+| 1 (consumed whole) | 817,375 | 2,980.5 | 0.004% |
+| 2-10 | 1,160,890 | 694,517.9 | 0.895% |
+| 11-100 | 963,018 | 1,741,973.0 | 2.244% |
+| 101-1000 | 75,469 | 2,474,613.3 | 3.187% |
+| >1000 | 27,693 | 72,726,127.1 | 93.671% |
+
+## Rent eligibility (creation height)
+
+- Past rent age now: 92 boxes, 954.4 ERG = 0.001% of non-protocol supply.
+- Reaching rent age within 365 days: 757,735 boxes, 8,107,170.0 ERG; one claim on each takes 59,895.8 ERG = 0.74% of that value; 163,188 boxes (660.9 ERG) are consumed whole; the rest is recreated under the same P2PK tree.
+

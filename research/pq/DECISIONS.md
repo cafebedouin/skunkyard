@@ -56,6 +56,8 @@ Evidence: the exposed share, the re-emission rows, and the storage-rent-eligible
   estimate was labeled.
 - Rent-eligible exposed ERG above 5% of non-protocol supply: write the legacy-coins thread, from this number.
   Below: the legacy question stays deferred; say so in the Q1 reply.
+  Measured 2026-10-25 (`research/pq/rent/RESULT.md`, height 1,902,073): 0.001% of non-protocol supply past rent
+  age; rent claims are taken within blocks, so the stock never accumulates. Below: deferred.
 
 ## Node D: the second skunk
 

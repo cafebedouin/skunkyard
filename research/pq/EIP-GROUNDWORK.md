@@ -51,6 +51,30 @@ therefore has to supply:
 - **The activation text.** Standard EIP material.
 - **Hardware wallets.** Nothing here reaches them; a native method does not change that.
 
+## Legacy coins: what storage rent does and does not do (measured 2026-10-25)
+
+The operator asked whether storage rent is the migration path for coins that never opt in. `research/pq/rent/`
+(`PREREG.md`, `RESULT.md`) answers from the node source and one walk of the unspent set at height 1,902,073:
+
+- **Not the mechanism.** A rent claim must recreate the box with the same R1, the script (`ErgoInterpreter.
+  checkExpiredBox`), so it re-emits the same P2PK tree. Measured forward over the next year: 8.1M ERG of P2PK value
+  reaches rent age, a claim takes 0.74% of it, the rest is recreated at the same exposed key. Boxes rent will ever
+  consume whole hold 0.004% of P2PK ERG.
+- **Changing that is a hard fork.** Allowing a different script in the recreated box makes a previously invalid
+  spend valid, so old nodes reject the block; `txScriptValidation` is `mayBeDisabled = false`.
+- **The soft-fork-compatible shape is the opposite: a restriction.** After the quantum-day flag, spends from a plain
+  P2PK tree are refused or need an extra proof; every block the new rule accepts, old nodes accept. Rent is the
+  precedent that consensus may act on a box without its owner after a fixed age, and the four-year period is the
+  natural length for the grace window.
+- **The stock such a deadline would act on is about a tenth of P2PK value.** P2PK ERG in boxes three to four years
+  old is 10.44% (8.1M ERG, one 2023 cohort); 41% of P2PK ERG moved within the last year, 65% within two. Box age is
+  an upper bound on owner dormancy. No box is older than four years, because rent claims are taken within blocks of
+  maturity, so dormancy cannot be read from rent eligibility (92 boxes, 954 ERG past rent age).
+
+For an EIP this adds the missing section an outside reader will ask for first: what happens to coins that do not
+move. The honest text is that the vault protects opt-in coins, a deadline rule can be voted in as a soft fork, and
+the value a deadline would strand is bounded by this measurement, to be re-run at the time of the vote.
+
 ## The judgment
 
 The groundwork turns the evidence half of such an EIP from a research task into a drafting task: the scheme table,
