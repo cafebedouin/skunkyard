@@ -335,29 +335,27 @@ The exact sequence of parameter-4 votes that produced 8,001,091. Not decoded fro
 
 How many Blake2b256 calls fit in 8,001,091 after `interpreterInitCost` and the per-input costs. The table above is enough to compute it; it was not computed here. `interpreterInitCost = 10000` was read from `Interpreter.scala` during the search (recorded at line 513) and was not re-opened while writing.
 
-## Unverified leads (added 2026-10-04 from an outside-model landscape summary; check every item against its primary source before anything quotes it)
+## Landscape leads: checked 2026-10-25 (first listed 2026-10-04 from an outside-model summary)
 
-None of these has been read here. Each needs the primary source (BIP text, research post, EF/Foundation announcement,
-paper, repository) and its date confirmed; drop any that do not check out.
+The 2026-10-04 list was checked against primary sources on 2026-10-25; the result is `research/pq/LANDSCAPE.md`,
+which holds the table with dates and sources. Summary of what checked out and what did not:
 
-- **Bitcoin.** Blockstream Research argued (reported May 2026) for a native hash-based opcode, `OP_CHECKSHRINCS`, built
-  on SHRINCS and SHRIMPS, with SHRINCS reportedly demonstrated on Liquid. Bitcoin Optech's quantum-resistance topic page
-  (BIP-361, a SHRINCS draft BIP, lattice proposals, commit/reveal rescue schemes). Relevance: precedent for the native
-  verifier question (SK-028) and a third "shape" (stateful/stateless hybrid) beside WOTS+/XMSS and SLH-DSA.
-- **Bitcoin exposure figure.** "About 7.1 million BTC, roughly 35% of supply, at addresses whose pubkey is already
-  revealed", from a weekly UTXO walk. Needs the source and its definition of "revealed" (P2PK outputs, reused P2PKH,
-  Taproot key-path) before any comparison with our 96.58% of non-protocol ERG; published estimates vary widely with
-  the definition.
-- **Ethereum.** A Foundation post-quantum team (January 2026); a December 2029 target for a quantum-resistant L1
-  (reported September 2026); consensus aimed at leanXMSS (stateful hash-based) with zkVM aggregation; user accounts via
-  account abstraction (EIP-8141, aimed at the Hegotá fork) and verification precompiles. Relevance: the precompile route
-  is the same opcode question at protocol scale; leanXMSS supports the stateful line.
-- **Solana.** Winternitz vault (January 2025) — already cited in skunks/manytime/LITERATURE.md; the new leads are
-  Winterwallet, later tokens on the primitive, and a Project Eleven post-quantum signature testnet.
-- **Sui.** NIST ML-DSA-65 for native accounts (testnet late 2026, mainnet early 2027 reported) and SLH-DSA verified
-  inside Move contracts for large-value vaults, "so the hash scheme can change without a core upgrade". Relevance:
-  argues for a generic primitive over a fixed WOTS opcode (ROADMAP item 7).
-- **Algorand.** Falcon-signed state proofs; Falcon transactions on mainnet; a 2027 resilience roadmap.
-- **QRL.** XMSS since 2018 (already cited); 2.0 testnet reportedly moving toward ML-DSA — check, it bears on the
-  stateful-vs-lattice choice.
-- **Aptos.** Grouped with Solana in hardening coverage — vague; find a primary source or drop.
+- **Bitcoin, `OP_CHECKSHRINCS`.** Confirmed: Jonas Nick, Blockstream Research, blog post 2026-05-12; compact stateful
+  path about 580 bytes, stateless fallbacks 4,336 to 4,496 bytes, SLH-DSA cited at 7,872; no BIP number; demonstrated on
+  Liquid via Simplicity; "a starting point rather than a finished design". The Optech topic page was not fetched.
+- **Bitcoin exposure figure ("about 7.1 million BTC, roughly 35%").** Still [UNVERIFIED]: the only primary figure read
+  is BIP-361's ">34% of all bitcoin" (Q3 above).
+- **Ethereum.** Confirmed from ethereum.org (page dated 2026-09-08): EIP-8141 under consideration for Hegotá in the
+  second half of 2026; leanXMSS to replace BLS with zkVM aggregation; "approximately 2029" as a planning target. The
+  January 2026 team formation was not checked.
+- **Solana.** The Foundation's April 2026 page (solana.com/news/quantum-readiness) was summarized by search, not
+  fetched: Anza and Firedancer each have an initial Falcon implementation; no protocol change planned now. [secondary]
+- **Sui.** Not checked. [UNVERIFIED]
+- **Algorand.** Confirmed from algorand.co (2026-06-18, with a later footnote): Falcon state proofs since 2022; Falcon
+  accounts via LogicSig on mainnet; native Falcon-1024 accounts live since August 2026 with go-algorand v5.0.0 (the
+  footnote); a derivation proposal for post-quantum keys from HD-wallet standards; VRF and participation keys remain.
+- **QRL 2.0 toward ML-DSA.** Not checked. [UNVERIFIED]
+- **Aptos.** Dropped; no primary source found.
+- **New, not in the 2026-10-04 list.** XRP Ledger's four-phase roadmap (ripple.com, 2026-04-20, full transition by
+  2028, a quantum-day contingency that stops accepting classical signatures); Cardano's CPS-0030 problem statement
+  (merged 2026-08-19).

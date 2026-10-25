@@ -55,3 +55,10 @@ rule 7): `SCOPE.md`, `LITERATURE.md`, `q1/`, `q2/`, `notes/`, `posts/`.
 
 The decision tree for what follows is preregistered in `DECISIONS.md`. The skunk born from finding 2 is
 `skunks/oneshot/`.
+
+## Companion files (added 2026-10-25)
+
+- `EIP-GROUNDWORK.md`: what a votable post-quantum EIP needs against what exists here, with pointers; the legacy-coins section.
+- `LANDSCAPE.md`: other chains' programs checked against their own pages, and what each settles that an Ergo EIP author can reuse.
+- `rent/`: storage rent against the exposed-key stock (preregistered, measured at height 1,902,073).
+- `ROADMAP.md`, `DECISIONS.md`: the line's order of work and its preregistered decision nodes.

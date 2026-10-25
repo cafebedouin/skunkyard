@@ -50,6 +50,11 @@ therefore has to supply:
 - **The sigma-rust implementation and a three-way agreement run.** The rig exists; the Rust wrapper does not.
 - **The activation text.** Standard EIP material.
 - **Hardware wallets.** Nothing here reaches them; a native method does not change that.
+- **Precedents an author can cite** (`LANDSCAPE.md`, checked 2026-10-25). Algorand's native Falcon-1024 account is the
+  deployed example of what item 1 and item 7 look like together: a signature envelope with a scheme id, a hashed
+  32-byte address (Ergo's P2SH already does this), creation from the existing mnemonic, and a derivation proposal.
+  Blockstream's `OP_CHECKSHRINCS` sketch is a third scheme shape for the table (stateful compact path, stateless
+  fallback, 580 bytes). Ethereum's EIP-8141 is the per-account opt-in shape of our vault at the protocol layer.
 
 ## Legacy coins: what storage rent does and does not do (measured 2026-10-25)
 
@@ -72,7 +77,10 @@ The operator asked whether storage rent is the migration path for coins that nev
   maturity, so dormancy cannot be read from rent eligibility (92 boxes, 954 ERG past rent age).
 
 For an EIP this adds the missing section an outside reader will ask for first: what happens to coins that do not
-move. The honest text is that the vault protects opt-in coins, a deadline rule can be voted in as a soft fork, and
+move. The written precedent for a deadline rule is Bitcoin's BIP-361 (draft, 2026-02-11): three phases, a
+quantum-safe rescue check, and P2PK outputs excluded, which on Ergo would exclude everything; XRP Ledger's roadmap
+(2026-04-20) plans the same switch as a quantum-day contingency with a zero-knowledge proof of key ownership as the
+rescue. Neither has decided the fate of unmoved coins (`LANDSCAPE.md`). The honest text is that the vault protects opt-in coins, a deadline rule can be voted in as a soft fork, and
 the value a deadline would strand is bounded by this measurement, to be re-run at the time of the vote.
 
 ## The judgment
@@ -86,3 +94,9 @@ method section with the table attached, written so that core's one decision (whi
 roadmap's "fork track" (`research/pq/ROADMAP.md`, forward path step 4), to be drafted after the derivation post. Until
 someone upstream engages, the line is groundwork, as the operator said; what it buys is that the day the question is
 asked, the answer is a pull request away rather than a research program away.
+
+The comparison with other chains' programs (`LANDSCAPE.md`) puts the same point from outside: the next decisive
+milestone for this line is not another verification demonstration but independent cryptographic validation, a
+standardized derivation rule, a wallet implementation, and reproducible evidence that the whole custody and spending
+process works. The first is the seat rounds and the conformance rig; the second is the derivation post and the EIP
+it asks for; the third and fourth are not ours to supply, and the method section should say so.
