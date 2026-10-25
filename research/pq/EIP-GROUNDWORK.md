@@ -91,7 +91,7 @@ derivation and the uses are written down with their files, and the rig can judge
 exists. The two pieces no outsider can supply are core's scheme preference and the cost calibration, and the EIP
 cannot be written without the first. So the most useful next artifact is not another measurement but a draft of the
 method section with the table attached, written so that core's one decision (which scheme) fills the blank: the
-roadmap's "fork track" (`research/pq/ROADMAP.md`, forward path step 4), to be drafted after the derivation post. Until
+roadmap's "fork track" (`research/pq/ROADMAP.md`, forward path step 4), to be drafted after the derivation post (posted 2026-10-25 as ergoforum topic 5385). Until
 someone upstream engages, the line is groundwork, as the operator said; what it buys is that the day the question is
 asked, the answer is a pull request away rather than a research program away.
 

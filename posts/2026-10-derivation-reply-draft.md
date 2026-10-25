@@ -2,7 +2,7 @@ Draft v2 (2026-10-25) after seat round r1 (`posts/seats/derivation-post/r1/REVIE
 choose: a reply in thread 5372 (the post-quantum thread, whose text says "key derivation from an EIP-3 seed is
 unspecified") or a new topic; both outside seats advised against thread 5371, whose open item it also answers ("the
 key schedule is derivable by design once a derivation from an EIP-3 seed is specified (none is yet)"), because that
-thread is about the secp policies. Not posted. The post begins after the rule.
+thread is about the secp policies. Posted by the operator on 2026-10-25 as a new topic, ergoforum 5385 (https://ergoforum.org/t/post-quantum-keys-from-the-eip-3-seed-a-derivation-rule-two-alternatives-and-vectors/5385); the landed text equals this draft's body word for word (checked against the forum's raw endpoint; the copy as landed is `2026-10-derivation-post-POST.md`). The post begins after the rule.
 
 ---
 

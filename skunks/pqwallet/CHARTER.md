@@ -1,6 +1,6 @@
 # Skunk: pqwallet
 
-**Status (2026-10-24):** steps 1 to 4 passed (`RESULT.md`): derivation options with vectors; the signers and the assurance gate (three seats, `posts/seats/pqwallet-gate/r1/`); one signature per key (SK-055 variant 2, `skunks/qvault/QVault2.es`) on a devnet; the vault end to end on public testnet with every signature from the TypeScript signers (`testnet/RESULT-testnet.md`). Next: step 5, the hand-off. Born from the protocol post (thread 5372) and the roadmap's
+**Status (2026-10-25):** step 5, first artifact posted: the derivation post is ergoforum topic 5385 (new topic, 2026-10-25, landed text equals the committed draft; `posts/2026-10-derivation-post-POST.md`). Second artifact, the vault's "what a wallet needs" note, next. Steps 1 to 4 passed (`RESULT.md`): derivation options with vectors; the signers and the assurance gate (three seats, `posts/seats/pqwallet-gate/r1/`); one signature per key (SK-055 variant 2, `skunks/qvault/QVault2.es`) on a devnet; the vault end to end on public testnet with every signature from the TypeScript signers (`testnet/RESULT-testnet.md`). Next: step 5, the hand-off. Born from the protocol post (thread 5372) and the roadmap's
 forward path (`research/pq/ROADMAP.md`, "Update 2026-10-10", steps 2 and 3): the quantum-day vault runs on a devnet,
 but no wallet signs its hash key, no derivation from a seed exists, and the SLH-DSA verifier has one oracle.
 
