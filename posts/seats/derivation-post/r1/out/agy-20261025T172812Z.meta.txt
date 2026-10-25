@@ -1,0 +1,10 @@
+seat:    agy (1.4.5)
+model:   tool default
+utc:     20261025T172812Z
+slice:   {{SLICE}}
+slice-git: not a git checkout
+web:     UNCONTROLLED (no flag)
+jail:    tools/seat-jail
+prompt-sha256: 7b997ec3d558bbd235a6281c2746df4b66ae06fdb1f5b6165bb1692838333e42
+exit:    0
+model-reported: gemini-3.8-flash-n(x24),gemini-3.8-flash-high(x5) [from 25789c3e-3584-4c9d-9689-ea4410be6582.db]

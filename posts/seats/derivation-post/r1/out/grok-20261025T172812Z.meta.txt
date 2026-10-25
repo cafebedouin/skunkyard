@@ -1,0 +1,11 @@
+seat:    grok (grok 1.0.62 (1474f9cbdd91) [stable])
+model:   tool default
+utc:     20261025T172812Z
+slice:   {{SLICE}}
+slice-git: not a git checkout
+web:     disabled
+sandbox: read-only
+jail:    tools/seat-jail
+prompt-sha256: 7b997ec3d558bbd235a6281c2746df4b66ae06fdb1f5b6165bb1692838333e42
+exit:    0
+model-reported: grok-4.6-build

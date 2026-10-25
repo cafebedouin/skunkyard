@@ -5,8 +5,9 @@
 //
 // Option A, "a BIP32 branch under a new purpose": m / PURPOSE' / 429' / account' / scheme' / use' / index', every
 //   level hardened, derived with @scure/bip32 exactly as EIP-3 keys are; the leaf's 32-byte private key is the
-//   material. The curve is never used: no public key of this branch is ever computed or published. What hardware
-//   wallets and existing HD code can already do.
+//   material. The leaf is used as bytes, never as a key, but the branch IS a secp256k1 key tree: @scure/bip32 computes a
+//   public key for any node whose .publicKey or extended key is read, and a leaked master extended key plus a discrete
+//   log reaches every leaf (DERIVATION.md, the gate's outside seat). What hardware wallets and existing HD code can do.
 // Option B, "a separate root": SLIP-0010's shape with no curve at all: root = HMAC-SHA512("ergo-pq/v1", seed),
 //   children by HMAC-SHA512(chain, 0x00 ++ key ++ be32(index | 0x80000000)), the same path levels as A. No scalar
 //   arithmetic mod n, no relation to any secp key beyond the shared seed bytes.

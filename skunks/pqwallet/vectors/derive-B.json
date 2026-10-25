@@ -37,6 +37,7 @@
   {
    "k": 0,
    "path": "pq/429'/0'/2'/0'/0'",
+   "leaf": "4c3ed6f350b8d9d6f772f15ca6239096daed02cdb51e94315d443f58be66e87f",
    "seed48": "9b1a103a2e727a557cb3d321f9c36b88dad9242c9c88ab350739cfb78d7ca9f8f8739c94ad3953a3f21d4760a2a7d3e1",
    "publicKey": "f8739c94ad3953a3f21d4760a2a7d3e1d9afa52fcb69614b9f6b7979fc227c69",
    "secretKey": "9b1a103a2e727a557cb3d321f9c36b88dad9242c9c88ab350739cfb78d7ca9f8f8739c94ad3953a3f21d4760a2a7d3e1d9afa52fcb69614b9f6b7979fc227c69"
@@ -46,6 +47,16 @@
   "seed_path": "pq/429'/0'/3'/1'/0'",
   "seed": "4027434952d0f0a9cea0efeba2f6394ec51563881fcec1315b380d422e1bf41e",
   "leaf_paths": "pq/429'/0'/3'/0'/0' .. index 7",
+  "leaf_secrets": [
+   "8ad7ba84a3abc62b9bbc47fe77c6347f8975671bb82fc61ce1bbdbbda53b44e4",
+   "757f0445a03672eb89976835280c26b729415c80cdaaaa5abdb2f6f59608920f",
+   "ff3e89d9c8c660ca722ea751bdbcd50c3cda22871f2d01b08e40ecd6b5836d66",
+   "f6f1c8d18a63e8a7d716d1233186d0745c6a9b91776e96f7f8791d756e359e99",
+   "162e122f774bd6c6780d576b13359e1d13ba5a447e435e6aae49ab0b494186d9",
+   "54a8a2789aadce0624624cf176380db9f884829938e4c15fe6796dcad79fb039",
+   "d0efbae719d8c7acde64b502ab8e034a9f7a86870b1803865896221060425fe0",
+   "b934ce37a229044d1749c03fa8c1d7216e2c9d62a4438aa800fb993cad1b8f05"
+  ],
   "commits": [
    "a29490b41c787d7a6a71fe412bff6fbbf9d3d5588c4445beb823201bb055742c",
    "8d2dc7239cb97e3dbce2d3f2190853a248792f7d7122826f6f19136684a36c5f",
@@ -58,5 +69,9 @@
   ],
   "root": "eae2740a929f626e61901dae348d8e2f2d26bd0199436f6eca84c303a99bfb88"
  },
- "eip3_xpub_depth4": "xpub6FGkUqFx68GfystdcXrJHZqxZfzhwP1fqiKMR6KVo2C2oexd7ZsPWMKjjfr455WAxQrSnGmNvizTuqXJAu8jeaVWpLRaTwwHoDc2CoVk8Vv"
+ "eip3_xpub_depth4": "xpub6FGkUqFx68GfystdcXrJHZqxZfzhwP1fqiKMR6KVo2C2oexd7ZsPWMKjjfr455WAxQrSnGmNvizTuqXJAu8jeaVWpLRaTwwHoDc2CoVk8Vv",
+ "root_b": {
+  "key": "6fb665e5d01fa298da3586ac1d91c97396920acc43b1661f82d3dd64af8d6a3a",
+  "chain": "0a352cd486403761c37992c7131ec9cc20618a1352c63431ff13de3bc3f3121c"
+ }
 }

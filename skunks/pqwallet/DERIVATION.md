@@ -17,7 +17,7 @@ non-hardened child as `child_i = (IL_i + parent) mod n` with `IL_i = HMAC-SHA512
 whoever holds the depth-4 xpub and *one* child private key has the parent private key, and from it every sibling.
 A quantum attacker recovers child private keys from their public keys, which every P2PK address shows at creation.
 With the xpub, they also get every address under that node that was never used, and every descendant of it,
-hardened or not. The test takes the xpub and child 0's private key and prints child 7's private key, equal to the
+hardened or not. The test takes the xpub and child 0's private key, recovers child 7's private key, and checks it equals the
 one derived from the seed:
 
 ```
