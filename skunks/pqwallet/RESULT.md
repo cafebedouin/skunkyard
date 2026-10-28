@@ -475,7 +475,7 @@ message binding, which no signature verifier sees, and stay judged by the script
 **What it shows, in the EIP's terms.** Three implementations in the three languages the interpreters are written in
 (a JVM library the Scala node already ships, a pure-Rust crate, a JavaScript library) agree on the standard's
 vectors, on 193 signatures under Ergo's spend-digest convention from three signers, and on 516 forgeries; the
-in-script verifier is a fourth reading that agrees on everything it can see. Wrapping took one file of about 200
+in-script verifier is a fourth reading that agrees on everything it can see. Wrapping took one file of 236
 lines because the crate exposes the FIPS 205 internal functions for KAT use; the sigma-rust implementation of a
 native method would be a call into the same crate, and this run is the acceptance test it would have to pass.
 
