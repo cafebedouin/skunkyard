@@ -392,7 +392,7 @@ Environment: rustc and cargo 1.98.1 (stable), `slh-dsa` 0.2.0-rc.5 with `sha2` 0
 pre-hash framing only; the Scala harness as in step 2 (sigma-state 6.0.7 pinned first on the classpath, BouncyCastle
 1.86, OpenJDK 21.0.12.1; `run.sh pin` reproduced the 840-byte q2 tree first); `@noble/post-quantum` 0.7.1 under Node 25.
 The ACVP files were re-fetched from ACVP-Server at the pinned commit `975de31e…` and their SHA-256 equals
-`diff/acvp-provenance.txt` line for line before anything ran. Nothing ran on a node.
+`diff/acvp-provenance.txt` line for line before anything ran (the sha256sum output and the diff: `diff/acvp-provenance-check-2026-10-28.txt`). Nothing ran on a node.
 
 **A. The standard's vectors through Rust** (`rust kat`, `diff/rust-kat.log`): key generation from the three seeds
 reproducing both keys, deterministic signing reproducing the expected signature byte for byte, randomized signing with

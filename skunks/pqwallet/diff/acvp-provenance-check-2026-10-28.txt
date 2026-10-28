@@ -1,0 +1,7 @@
+# 2026-10-28 re-fetch for the three-way agreement run: raw.githubusercontent.com/usnistgov/ACVP-Server/975de31eb83d87039ec88934fdc47d8c312b892d/gen-val/json-files/SLH-DSA-{keyGen,sigGen,sigVer}-FIPS205/internalProjection.json
+# sha256sum output, to be compared line for line with acvp-provenance.txt (2026-10-24):
+d7c53a1b6450087047b57aae83a5a51a0ac89ecdb23ebe071e83fbb69ae9d920  keyGen-internalProjection.json
+62b42e7c27fda5de8a94aba2943ae413b59b6ea08141f3bc035b1eceae235dba  sigGen-internalProjection.json
+a013fc2104f4ed4799d96d51141f65b965969b2cf10646626a021b6d456ce792  sigVer-internalProjection.json
+# diff against acvp-provenance.txt (hash lines only):
+# identical
