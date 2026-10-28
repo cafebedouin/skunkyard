@@ -1,3 +1,10 @@
+> **2026-10-28: the three-way agreement run is done** (EIP groundwork item 3): a thin Rust wrapper over RustCrypto `slh-dsa`
+> 0.2.0-rc.5 (`skunks/pqwallet/rust/`) through the rig's commands; Scala (BouncyCastle), JavaScript (noble) and Rust agree on
+> the ACVP vectors (Rust 114 checks incl. the pre-hash groups), on 193 spend-digest signatures from the three signers (the 72
+> deterministic Rust and noble signatures byte-identical) and on the 516 forgeries; zero disagreements, nothing on a node.
+> `skunks/pqwallet/RESULT.md` last section; `research/pq/EIP-GROUNDWORK.md` row 3 updated. Next on the fork track: the method
+> section draft (ROADMAP forward path step 4), after the 2026-10-30 read of 5369 and any reply on 5385.
+
 # Next session
 
 > **2026-10-24: start here.** The posts of 2026-10-11 (threads 5371, 5372) and the two of 5369 have no replies yet;

@@ -376,3 +376,118 @@ hash key. 0.019 ERG of the wallet's 1.073 used. `npm test`: `ALL PASS (32 checks
 **Limits.** The oracle is a demo (the same seed's second EIP-3 key). Mainnet constants mean the lone refresh and the
 backstop path were not reached on testnet (the devnet run of step 3 covers them). The negative rows other than the
 forged migration and the forward to a key address were not repeated. No SLH-DSA signature reached a node.
+
+## The three-way agreement run (2026-10-28): Scala, JavaScript and Rust on SLH-DSA-SHA2-128s
+
+**PASS: zero disagreements among three independent implementations on the standard's vectors, on 193 signatures over
+spend digests from the three signers, and on the 519 signature-level rows of the structural negatives.** This is the
+evidence `research/pq/EIP-GROUNDWORK.md` item 3 called unverified: a native method must agree across sigmastate (Scala),
+sigma-rust and sigmastate-js, and until today the rig had run only the first two readings (BouncyCastle through the
+harness; `@noble/post-quantum`). The Rust side is a thin wrapper over RustCrypto's `slh-dsa` crate, pinned at
+0.2.0-rc.5 (the version the groundwork note named without running; `rust/Cargo.lock`), `skunks/pqwallet/rust/`; it
+reads and writes the rig's own files so every verdict lines up by case name or spend index. No new cryptography; the
+message convention is the rig's (pure SLH-DSA, empty context, over `blake2b256(SELF.id ++ outputs' bytesWithoutRef)`).
+
+Environment: rustc and cargo 1.98.1 (stable), `slh-dsa` 0.2.0-rc.5 with `sha2` 0.10.9 and `sha3` 0.10.9 for the
+pre-hash framing only; the Scala harness as in step 2 (sigma-state 6.0.7 pinned first on the classpath, BouncyCastle
+1.86, OpenJDK 21.0.12.1; `run.sh pin` reproduced the 840-byte q2 tree first); `@noble/post-quantum` 0.7.1 under Node 25.
+The ACVP files were re-fetched from ACVP-Server at the pinned commit `975de31e…` and their SHA-256 equals
+`diff/acvp-provenance.txt` line for line before anything ran. Nothing ran on a node.
+
+**A. The standard's vectors through Rust** (`rust kat`, `diff/rust-kat.log`): key generation from the three seeds
+reproducing both keys, deterministic signing reproducing the expected signature byte for byte, randomized signing with
+the given randomness, and verification verdicts equal to `testPassed` with their 36 negatives:
+
+```
+kat keyGen tg1 SLH-DSA-SHA2-128s tests=10
+kat sigGen tg19 SLH-DSA-SHA2-128s external/pure deterministic=true tests=7
+kat sigGen tg20 SLH-DSA-SHA2-128s external/preHash deterministic=true tests=12
+kat sigGen tg31 SLH-DSA-SHA2-128s internal/none deterministic=true tests=7
+kat sigGen tg55 SLH-DSA-SHA2-128s external/pure deterministic=false tests=7
+kat sigGen tg56 SLH-DSA-SHA2-128s external/preHash deterministic=false tests=12
+kat sigGen tg67 SLH-DSA-SHA2-128s internal/none deterministic=false tests=7
+kat sigVer tg19 SLH-DSA-SHA2-128s external/pure tests=14 negatives=12
+kat sigVer tg20 SLH-DSA-SHA2-128s external/preHash tests=14 negatives=12
+kat sigVer tg31 SLH-DSA-SHA2-128s internal/none tests=14 negatives=12
+kat rust slh-dsa 0.2.0-rc.5 SLH-DSA-SHA2-128s: checks=114 failures=0 ALL PASS
+```
+
+Where noble's run of 2026-10-24 reported 96 checks, this one reports 114: the crate has no pre-hash API, so the
+wrapper builds the HashSLH-DSA framing itself (`0x01 ‖ len(ctx) ‖ ctx ‖ OID ‖ PH(M)`, FIPS 205 Algorithm 23) and runs it
+through the internal interface, which covers all twelve hash algorithms, including the six noble's hashes package
+could not supply; the deterministic sigGen group tg20 checks the twelve OID encodings byte for byte. The pre-hash
+interface is not what the script uses; it is recorded because the vectors were there.
+
+**B. The 56 cases the script judged, through Rust** (`rust acvp-cases diff/acvp-cases.json`, `diff/rust-acvp.log`):
+the same M' bytes the harness's `acvp` command fed the script variant on 2026-10-24, through the crate's internal
+interface: `acvp-rust cases=56 agree=56 all_agree=true`. So on the standard's sigVer and sigGen cases (24 negatives
+among them) the script, the Python reference, noble and Rust give the same 56 verdicts.
+
+**C. Signatures over spend digests, each signer judged by the other two.** The flipped copy in every row is the one
+`verify-ext` flips (byte `(i·997 + n·7919) mod 7856`, `n` counting spends across the file), so the Rust and noble
+judgments pair with the harness rows one for one.
+
+| signer | signatures | script | BouncyCastle | noble | Rust | flipped copies |
+|---|---|---|---|---|---|---|
+| noble (`diff/sigs.json`, 2026-10-24) | 96 | 96 ACCEPT | 96 ACCEPT | self 96 | **96 ACCEPT** (new) | refused by all four |
+| Rust (`diff/rust-sigs.json`, today) | 96 | **96 ACCEPT** | **96 ACCEPT** | **96 ACCEPT** | self 96 | refused by all four |
+| BouncyCastle (`vectors-spend.json`, 2026-10-10) | 1 | ACCEPT (step 7, devnet) | self | ACCEPT (step 1) | **ACCEPT** (new) | refused |
+
+Printed lines (`diff/rust-verify-noble-sigs.log`, `diff/rust-sign.log`, `diff/verify-ext-rust.log`,
+`diff/noble-verify-rust.log`, `diff/rust-verify-bc-sig.log`):
+
+```
+verify-rust spends=96 rust_accept=96 flip_rust_refuse=96 seconds=0.1 all_as_expected=true
+sign-rust signatures=96 rust_self_verify=96 seconds=58.6 -> skunks/pqwallet/diff/rust-sigs.json
+verify-ext spends=96 digest_ok=96 script_accept=96 bc_accept=96 flip_script_refuse=96 flip_bc_refuse=96 script_bc_agree=96 all_as_expected=true
+verify-noble spends=96 noble_accept=96 flip_noble_refuse=96 seconds=0.4 all_as_expected=true
+verify-rust key=0700414d1b1d7ffb i=0 rust=ACCEPT flip_pos=0 flip_rust=REFUSE
+```
+
+The Rust signatures are over the same 96 digests (24 keys, the 20 random and the 4 derived by option B, 4 spends
+each; `diff/digests.json`) with the same policy as `diff-sign.ts`: deterministic except every fourth spend, which
+takes 16 fresh random bytes. **The 72 deterministic Rust signatures equal noble's 72 byte for byte** (compared
+in `diff/rust-sigs.json` against `diff/sigs.json`): FIPS 205 deterministic signing is fully determined by the key and
+the message, so two independent implementations producing identical 7,856-byte signatures on 72 messages is the
+strongest form of agreement the standard allows. It also means that for those 72 the script and BouncyCastle
+verdicts repeat the 2026-10-24 rows on the same bytes; the 24 randomized Rust signatures are new bytes to every
+judge (`verify-ext-rust.json`: 24 of 24 accepted by script and BouncyCastle, their flipped copies refused by both).
+Script cost over the 96 Rust-signed spends: min 181,225, median 188,434, max 192,709, inside step 2's range. Signing
+took 0.61 s per signature in Rust against noble's 1.74 s on this machine; verifying 192 signatures took 0.1 s.
+
+**D. The structural negatives through Rust** (`rust negatives diff/slh-negatives.json …`, `diff/rust-negatives.log`,
+joined by row name with the script's and BouncyCastle's verdicts in `diff/slh-negatives-out.json`):
+
+```
+negatives-rust transaction-level rows with no signature reading (9): output_value_plus_1,output_creation_height_plus_1,output_token_added,output_register_set,output_script_changed,third_output_added,two_outputs_reordered,second_input_added_sigmaProp_true,data_input_added
+negatives-rust rows=519 as_expected=519 script_joined=519 script_agree=519 bc_joined=518 bc_agree=518 all_as_expected=true
+```
+
+519 rows: the honest spend A, the 516 named mutations of its signature (491 single-node flips, 7 layer grafts, 5
+lengths, 5 layer forwards or swaps, the FORS-of-A-with-hypertree-of-B and R-of-B grafts, a rotation, the all-zero
+signature, the three other-framing signatures and the SHAKE-128s signature of the same length; built by
+`scripts/slh-negatives.py` on 2026-10-24), the two-output honest spend and the second box's own signature. Rust
+refused all 516 and accepted the three honest ones, as the script did on every row and BouncyCastle on the 518 it
+judged. The nine rows Rust cannot read are the ones whose mutation is in the transaction, not the signature (the
+output fields the script hashes, the reordered outputs, the added input and data input); they are the script's
+message binding, which no signature verifier sees, and stay judged by the script alone.
+
+**What it shows, in the EIP's terms.** Three implementations in the three languages the interpreters are written in
+(a JVM library the Scala node already ships, a pure-Rust crate, a JavaScript library) agree on the standard's
+vectors, on 193 signatures under Ergo's spend-digest convention from three signers, and on 516 forgeries; the
+in-script verifier is a fourth reading that agrees on everything it can see. Wrapping took one file of about 200
+lines because the crate exposes the FIPS 205 internal functions for KAT use; the sigma-rust implementation of a
+native method would be a call into the same crate, and this run is the acceptance test it would have to pass.
+
+**Limits.** This is the crate behind a future sigma-rust method, not sigma-rust itself: no sigma-rust code was
+written or run, and the crate is a release candidate (0.2.0-rc.5), so the pin is the claim. The flipped byte of the
+BouncyCastle vector's row fell at position 0 (inside R, which only moves the message digest); the deeper flips are
+in the named negatives. `diff/slh-negatives.json` (8 MB) is not committed; the Rust negatives run read the local copy
+from 2026-10-24, whose rows `diff/slh-negatives-out.json` records, and `scripts/slh-negatives.py` rebuilds it from
+`diff/sigs.json`. Nothing ran on a node; the message convention's binding to the transaction is the script's and was
+not re-tested here.
+
+Files: `rust/` (`Cargo.toml`, `Cargo.lock`, `src/main.rs`; `cargo build --release`, run from the repository root as
+`skunks/pqwallet/rust/target/release/slhdsa-rust-rig <command>`), `scripts/noble-verify.ts`; in `diff/`: `rust-kat.log`,
+`rust-acvp.{json,log}`, `rust-verify-noble-sigs.{json,log}`, `rust-sign.log`, `rust-sigs.json` (1.5 MB), `verify-ext-rust.{json,log}`,
+`noble-verify-rust.{json,log}`, `bc-spend-sig.json`, `rust-verify-bc-sig.{json,log}`, `rust-negatives.{json,log}`.

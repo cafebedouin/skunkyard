@@ -141,7 +141,8 @@ signatures make it the ideal *opcode*, which is the SK-105 / item 7 track, not a
    from the EIP-3 seed; template hashes for the explorer; the Lithos KeepAlive job for the keyless merges (exists).
 4. **The fork track**: an EIP draft for a native hash-based verification opcode (SLH-DSA, WOTS+), justified by the
    in-script versus native cost table. Blocks nothing above; it is what makes the layer cheap. Item 7 above, with
-   the evidence it was waiting for.
+   the evidence it was waiting for. (2026-10-28: the three-way agreement run, Scala, JavaScript and Rust on the rig's
+   vectors, signatures and negatives, zero disagreements; `skunks/pqwallet/RESULT.md`, `research/pq/EIP-GROUNDWORK.md` row 3.)
 5. **Research edges, cheap**: the 128f and category 3/5 cost table; typed leaves for the schedule (secp before
    quantum day, WOTS+ after); multi-input spends.
 

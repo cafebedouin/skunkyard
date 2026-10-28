@@ -1,0 +1,2 @@
+verify-rust key=0700414d1b1d7ffb i=0 rust=ACCEPT flip_pos=0 flip_rust=REFUSE
+verify-rust spends=1 rust_accept=1 flip_rust_refuse=1 seconds=0.0 all_as_expected=true

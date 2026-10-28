@@ -251,7 +251,9 @@ step 2; artifacts in `skunks/pqwallet/diff/`.
 
 - `digests <pks.json> <spends-per-key> <out>`: for each public key, compile `SlhDsa.es`, build the guarded box and the
   stage-7 spends, write each spend's digest for the external signer.
-- `verify-ext <sigs.json> <out>`: evaluate every external signature and its flipped copy; one line per spend.
+- `verify-ext <sigs.json> <out>`: evaluate every external signature and its flipped copy; one line per spend. (2026-10-28:
+  the Rust wrapper `skunks/pqwallet/rust/` produces and consumes these files too; the three-way agreement run is in
+  `skunks/pqwallet/RESULT.md`.)
 - `wots-digests <keys.json> <spends-per-key> <out>` and `wots-verify-ext <sigs.json> <out>`: the same for
   `../WotsPlus.es`, compiled from `(SEED, COMMIT)` or, when a key carries a `tree`, deserialized from the provided
   bytes (so a constant substitution of the devnet tree can be judged as it is).
