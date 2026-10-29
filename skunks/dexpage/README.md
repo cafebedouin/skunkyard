@@ -1,5 +1,10 @@
 # dexpage
 
+> **Hand-off, 2026-10-29:** this page lives on as **FreeDEX for Ergo**, its own repository
+> (https://github.com/cafebedouin/freedex, MIT), published at https://cafebedouin.github.io/freedex/ by one
+> Pages workflow run per push. That repository is canonical from now on; this directory is the skunk's record
+> and does not move (PROGRAM rule 8).
+
 A static page for Machina Finance ERG-to-token limit orders on Ergo mainnet. It lists open orders from a public
 explorer, builds transactions in the browser with Fleet and `@nautls/machinafi-sdk`, and hands them to an EIP-12
 wallet (Nautilus, SAFEW) to sign and submit. No server, no keys in the page. Charter: `CHARTER.md`.

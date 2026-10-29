@@ -38,7 +38,8 @@ preflight with `access-control-allow-origin: *` and `access-control-allow-method
 
 - No transaction has been signed or submitted. The mainnet wallet session (create, fill, close from the built
   page with Nautilus and pocket change) is the operator's; its transaction ids go here.
-- No deployment to GitHub Pages yet (`deploy/pages.yml` is the template; it needs a repository of its own).
+- Deployed 2026-10-29 as its own repository, `cafebedouin/freedex` (MIT), Pages set to GitHub Actions; the first
+  workflow run is recorded below when it finishes.
 
 ## Limits
 
