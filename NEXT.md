@@ -10,6 +10,13 @@
 > Handed off the same day as `cafebedouin/freedex` (https://cafebedouin.github.io/freedex/). Overnight 2026-10-29:
 > Swap (ErgoDEX v1 pools, direct, fee 0.001 ERG only), Pool (add/remove liquidity) and grouped limit orders; nine
 > mainnet transactions from the builders through the guarded signer, all mined (`skunks/dexpage/mainnet/README.md`).
+> **2026-10-29 (SK-064 built):** the clocked box is live in freedex as the Programs tab with its `clock-legs`
+> upkeep job (`skunks/clockbox/`: charter, result, the contract, the mainnet record). Eleven mock-chain cases pass
+> against the compiled 504-byte tree (332 cost units a leg); one mainnet program of three legs was created through
+> the signer and executed keylessly by the Node runner. Open: `ClockSell.es` (the tranche sale), the rent reserve's
+> size for small programs (0.84 ERG held per box; a smaller tree is the lever), SK-065 (takes the deadline logic),
+> Duckpools, the Nautilus session, the mobile path's three checks.
+>
 > **2026-10-30 (overnight continued):** freedex has six tabs (Swap with ERG and token-to-token pools and the bank quoted
 > beside, Limit orders, Pool, Bank, Bonds, Escrow) and keyless upkeep from the page (Babel bids and Machina orders
 > across their pool; U1 a live take, mined). 30 mock-chain cases on the deployed scripts; 25 mainnet transactions

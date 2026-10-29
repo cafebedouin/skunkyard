@@ -24,6 +24,7 @@ import { buildCreateEscrow, buildTakeEscrow } from "../src/escrow.ts";
 import { buildLend, buildOpenOrder, buildRepay } from "../src/bonds.ts";
 import { buildMint as buildBankMint, buildRedeem as buildBankRedeem, loadBank } from "../src/bank.ts";
 import { buildDeposit, buildRedeem, buildSwap, buildSwapT2T, depositQuote, describePool, describeT2TPool, quote, quoteT2T, redeemQuote, type SwapDirection } from "../src/amm.ts";
+import { buildCancelClock, buildCreateClock, describeClock, sizeProgram } from "../src/clock.ts";
 
 const WALLET = readFileSync(join(homedir(), ".config", "skunkyard", "mainnet-wallet.address"), "utf8").trim();
 const owner = ErgoAddress.fromBase58(WALLET);
@@ -129,6 +130,28 @@ if (step === "fill") {
   const coin = args[0] as "stable" | "reserve";
   tx = (step === "bank-mint" ? buildBankMint : buildBankRedeem)({ height, inputs, user: owner, bank, coin, amount: BigInt(args[1]) });
   if (step === "bank-mint") allow = tx.outputs.filter((o) => o.ergoTree !== owner.ergoTree).map((o) => o.ergoTree).join(",");
+} else if (step === "clock-create") {
+  // clock-create <tokenName> <sliceNano> <legs> <intervalBlocks> <executorFeeNano> [toleranceBps=0] [maxPriceNano=0]
+  // SK-064: a clocked program on the token's deepest ERG pool; the rent reserve is added by sizeProgram
+  const pools = await explorer.pools(500);
+  const entry = pools
+    .filter((p) => p.tokenName === args[0] || p.box.assets[0].tokenId === args[0])
+    .sort((a, b) => (b.box.value > a.box.value ? 1 : -1))[0];
+  if (!entry) throw new Error(`no pool for ${args[0]}`);
+  const fresh = await explorer.poolByNft(entry.box.assets[0].tokenId);
+  const program = {
+    owner, tokenId: fresh.box.assets[2].tokenId, poolBox: fresh.box, slice: BigInt(args[1]), legs: Number(args[2]),
+    interval: Number(args[3]), executorFee: BigInt(args[4]), toleranceBps: BigInt(args[5] ?? "0"), maxPrice: BigInt(args[6] ?? "0"),
+  };
+  const sized = sizeProgram(program);
+  const p = describePool(fresh.box);
+  console.log(`pool ${p.boxId.slice(0, 12)} ${fresh.tokenName} (nft ${p.nft.slice(0, 12)}): x ${p.x} y ${p.y} fee ${p.feeNum}; ${program.legs} legs of ${program.slice} every ${program.interval} blocks, fee ${program.executorFee}; box ${sized.bytes} bytes, rent reserve ${sized.rentReserve}, value ${sized.value}`);
+  tx = buildCreateClock({ ...program, height, inputs });
+  allow = tx.outputs[0].ergoTree;
+} else if (step === "clock-cancel") {
+  const clockBox = await box(args[0]);
+  console.log(`program ${describeClock(clockBox).boxId.slice(0, 12)}: legs left ${describeClock(clockBox).legsLeft}`);
+  tx = buildCancelClock({ height, owner, clockBox });
 } else if (step === "close") {
   tx = buildClose({ height, inputs, owner, orderBox: await box(args[0]) });
 } else {

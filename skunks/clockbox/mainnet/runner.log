@@ -1,0 +1,57 @@
+2026-10-29T09:14:44.091Z height 1905028: found 0, submitted 0
+2026-10-29T09:15:51.685Z height 1905028: found 0, submitted 0
+2026-10-29T09:16:54.127Z height 1905028: found 0, submitted 0
+2026-10-29T09:17:56.513Z height 1905028: found 0, submitted 0
+2026-10-29T09:18:59.432Z height 1905028: found 0, submitted 0
+2026-10-29T09:20:02.452Z height 1905028: found 0, submitted 0
+2026-10-29T09:21:11.665Z height 1905029: found 0, submitted 0
+2026-10-29T09:22:25.171Z height 1905030: found 0, submitted 0
+2026-10-29T09:23:27.700Z height 1905030: found 0, submitted 0
+2026-10-29T09:24:31.148Z height 1905030: found 0, submitted 0
+2026-10-29T09:25:34.418Z height 1905030: found 0, submitted 0
+2026-10-29T09:26:37.466Z height 1905030: found 0, submitted 0
+2026-10-29T09:27:39.522Z height 1905030: found 0, submitted 0
+2026-10-29T09:28:42.173Z height 1905030: found 0, submitted 0
+2026-10-29T09:30:14.574Z upkeep babel-vs-pool: The operation was aborted due to timeout
+2026-10-29T09:30:21.812Z upkeep clock-legs: program 9d54c61f on f0cac602: 10000000 nanoERG for 328 units to its owner, 400000 nanoERG to you; submitted 95082ff30496dcae33049adb889c47962c0e3efab534b2c358d1f5fdc4e3ca8b
+2026-10-29T09:30:21.813Z height 1905032: found 1, submitted 1
+2026-10-29T09:31:24.733Z upkeep clock-legs: program 9d54c61f on f0cac602: 10000000 nanoERG for 328 units to its owner, 400000 nanoERG to you; submitted 565bc396307aea321bc10c7fd6534b0febbfa3b571f1eaaaa1b7578ae8d4a4ff
+2026-10-29T09:31:24.733Z height 1905032: found 1, submitted 1
+2026-10-29T09:32:29Z runner restarted with the recent-inputs memory
+2026-10-29T09:32:31.591Z upkeep clock-legs: program 9d54c61f on f0cac602: 10000000 nanoERG for 328 units to its owner, 400000 nanoERG to you; submitted 565bc396307aea321bc10c7fd6534b0febbfa3b571f1eaaaa1b7578ae8d4a4ff
+2026-10-29T09:32:31.592Z height 1905032: found 1, submitted 1
+2026-10-29T09:33:34.361Z height 1905032: found 1, submitted 0
+2026-10-29T09:34:37.163Z height 1905032: found 1, submitted 0
+2026-10-29T09:35:40.199Z height 1905032: found 1, submitted 0
+2026-10-29T09:36:51.077Z height 1905033: found 0, submitted 0
+2026-10-29T09:38:00.156Z upkeep clock-legs: program 84ad1605 on f0cac602: 10000000 nanoERG for 328 units to its owner, 400000 nanoERG to you; submitted 44c970a3b7cc7e3fec830068249f6eafdb19709303931feca3c2009842974833
+2026-10-29T09:38:00.205Z height 1905034: found 1, submitted 1
+2026-10-29T09:39:09.113Z height 1905034: found 1, submitted 0
+2026-10-29T09:40:21.095Z height 1905034: found 1, submitted 0
+2026-10-29T09:41:29.570Z height 1905035: found 1, submitted 0
+2026-10-29T09:42:32.689Z height 1905034: found 1, submitted 0
+2026-10-29T09:43:35.769Z height 1905035: found 1, submitted 0
+2026-10-29T09:44:40.514Z height 1905034: found 1, submitted 0
+2026-10-29T09:45:49.754Z upkeep clock-legs: program 2e04c968 on f0cac602: 10000000 nanoERG for 328 units to its owner, the last leg, 500000 nanoERG to you; submitted 3abd3594996ec91c0256a7187a70a7bbb3568e11f857e73fd2f66b6efcca1c15
+2026-10-29T09:45:49.754Z height 1905037: found 1, submitted 1
+2026-10-29T09:47:01.020Z height 1905037: found 1, submitted 0
+2026-10-29T09:48:03.721Z height 1905037: found 1, submitted 0
+2026-10-29T09:49:06.782Z height 1905037: found 1, submitted 0
+2026-10-29T09:50:09.512Z height 1905037: found 1, submitted 0
+2026-10-29T09:51:12.606Z height 1905037: found 1, submitted 0
+2026-10-29T09:52:15.674Z height 1905037: found 1, submitted 0
+2026-10-29T09:53:18.707Z height 1905037: found 1, submitted 0
+2026-10-29T09:54:21.390Z height 1905037: found 1, submitted 0
+2026-10-29T09:55:24.117Z height 1905037: found 1, submitted 0
+2026-10-29T09:56:26.995Z upkeep clock-legs: program 2e04c968 on f0cac602: 10000000 nanoERG for 328 units to its owner, the last leg, 500000 nanoERG to you; submitted 3abd3594996ec91c0256a7187a70a7bbb3568e11f857e73fd2f66b6efcca1c15
+2026-10-29T09:56:26.995Z height 1905037: found 1, submitted 1
+2026-10-29T09:57:29.503Z height 1905037: found 1, submitted 0
+2026-10-29T09:58:32.555Z height 1905037: found 1, submitted 0
+2026-10-29T09:59:35.392Z height 1905037: found 1, submitted 0
+2026-10-29T10:00:38.086Z height 1905037: found 1, submitted 0
+2026-10-29T10:01:41.235Z height 1905037: found 1, submitted 0
+2026-10-29T10:02:44.254Z height 1905037: found 1, submitted 0
+2026-10-29T10:03:58.989Z height 1905037: found 1, submitted 0
+2026-10-29T10:05:08.565Z height 1905038: found 1, submitted 0
+2026-10-29T10:06:17.201Z height 1905039: found 0, submitted 0
+2026-10-29T10:06:22Z runner stopped after the last leg (3abd3594…) was mined at 1905039
