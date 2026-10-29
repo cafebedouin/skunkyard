@@ -56,4 +56,11 @@ no proofs at all.
 |---|---|---|---|
 | U0 | the target: a Machina order buying FAKU at 34,000 nanoERG/unit with 0.01 ERG, deliberately above the pool's ~32,620 (signed, through the signer) | `95839cfa909910ccdb9ed6f8564705f726033d4f9982cacdbd794506095da834` | -11,000,000 |
 | U0b | a second target, 0.1 ERG at 35,000: U0 was too small (its whole gap, about 0.00037 ERG, is under the miner fee, so the job correctly declined it) | `0ca2d2052481e49f28ab7c710bae9ffcaf2662b8d392a1f2e327f0ac5229626a` | -101,000,000 |
+| U0b' | **U0b was filled one block after it landed** (placed at 1,904,969, filled at 1,904,970 by `5bd3e883…`, an existing bot that took 2,731,173 nanoERG for itself at a 1.1 mERG fee): 2,828 FAKU sold into the order for 98.98 mERG. The page's orders job, run after confirmation, correctly found nothing left. Remainder (0.00102 ERG, 2,828 FAKU) closed in `51bf0ce2fb811a7d4793c628118a659b02bfc910b1b941e313c4453618f50189`; U0 closed in `b5ba197fe99bdd7004ace358f95371428e2452c1a37d74f8fa2be49302b22de3` | | |
 | U1 | **a live Babel bid the dry run found on another token** (`e62170e9…`, token `3405d8f7…`): 20 units bought from the pool and sold to the bid, keyless, submitted via the explorer, 1,251,764 nanoERG to the wallet | `43f5fe4560ad967619c8dc9bcdcc23db641f715f8c828fd82f37d75c2ec214cb`, mined at 1,904,969 | +1,251,764 |
+
+**What the upkeep run settled.** Both jobs find and take real gaps (U1, a Babel bid nobody had touched). For
+Machina orders the market already has an executor that acts within a block of a mispriced order appearing, so the
+page's orders job is a backstop: it will win only when that bot is down, which is the liveness case the census
+worried about. Babel boxes, which no bot watched, are the page's own ground. The FAKU pool's fee is 3% (feeNum 970),
+which is why U0's gap did not cover a miner fee.

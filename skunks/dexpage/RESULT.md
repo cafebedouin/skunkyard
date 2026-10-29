@@ -52,6 +52,14 @@ build; the current suite is 17 cases. The Swap tab routes ERG-to-token through t
 token-to-token through a direct pool when one exists; the Pool tab offers ERG pairs and token pairs whose tokens are
 both on the whitelist, with either side of a deposit typed and the other derived.
 
+## Keyless upkeep (added 2026-10-29)
+
+The page runs keyless jobs for a connected visitor (`src/upkeep.ts`; Babel bids and Machina orders priced across
+their pool), submits through the explorer, bounty to the visitor, with an opt-out checkbox; the same runner is the
+Node sidecar (`scripts/upkeep-run.ts`). Six mock-chain cases on the real EIP-31, Machina and pool scripts. On
+mainnet the Babel job took a live gap with no signature (U1, mined at 1,904,969); the orders job was beaten to a
+deliberately mispriced order by an existing bot one block after placement (`mainnet/README.md`).
+
 ## Not done
 
 - The browser path (Nautilus signing from the deployed page) has not been exercised by a person yet; the mainnet
