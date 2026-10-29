@@ -64,3 +64,14 @@ Machina orders the market already has an executor that acts within a block of a 
 page's orders job is a backstop: it will win only when that bot is down, which is the liveness case the census
 worried about. Babel boxes, which no bot watched, are the page's own ground. The FAKU pool's fee is 3% (feeNum 970),
 which is why U0's gap did not cover a miner fee.
+
+## Escrow, bonds and the bank (2026-10-29, later still)
+
+Three more venues on their deployed contracts, each with mock-chain cases first (`test/escrow.test.ts`,
+`test/bonds.test.ts`, `test/bank.test.ts`), then one round through the wallet.
+
+| step | what | transaction | wallet net nanoERG |
+|---|---|---|---|
+| E1 | TokenJay escrow: 10 FAKU units offered to the wallet's own address at 0.002 ERG; the contract's "UI fee" output is pointed at the seller (`buildCreateEscrow`) | `d9d8b0af26deb343b527f5dc8ef47655b96c67a0c75f09568bf851f904b34371` | -2,000,000 |
+| L1 | SigmaFi loan request: 0.01 ERG principal, 0.0101 repayment, 100 blocks, 0.02 ERG collateral (`buildOpenOrder`) | `887902b55bea59e86cdab33bebd830d7f85f098a5932759dba3cf11152e9814f` | -21,000,000 |
+| B1 | SigmaUSD bank: 100 SigRSV minted at the oracle price plus the 2% protocol fee, 21,669,484 nanoERG all in (`buildMint`, Fleet's AgeUSD plugin, no implementor fee). SigUSD minting was closed: the live reserve ratio was 312%, under the 400% floor (`scripts/bank-state.ts`) | `c9feee3d5b22a692cfe3c4c50f28960089b2852d8350a029f8079e50705a3c6a` | -21,669,484 |

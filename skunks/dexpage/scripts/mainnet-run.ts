@@ -20,6 +20,9 @@ import type { EIP12UnsignedTransaction } from "@fleet-sdk/common";
 import { ErgoAddress } from "@fleet-sdk/core";
 import { Explorer, toFleetBox } from "../src/explorer.ts";
 import { buildClose, buildCreate, buildFill, describe } from "../src/orders.ts";
+import { buildCreateEscrow, buildTakeEscrow } from "../src/escrow.ts";
+import { buildLend, buildOpenOrder, buildRepay } from "../src/bonds.ts";
+import { buildMint as buildBankMint, buildRedeem as buildBankRedeem, loadBank } from "../src/bank.ts";
 import { buildDeposit, buildRedeem, buildSwap, buildSwapT2T, depositQuote, describePool, describeT2TPool, quote, quoteT2T, redeemQuote, type SwapDirection } from "../src/amm.ts";
 
 const WALLET = readFileSync(join(homedir(), ".config", "skunkyard", "mainnet-wallet.address"), "utf8").trim();
@@ -104,6 +107,28 @@ if (step === "fill") {
     console.log(`pool ${pool.boxId.slice(0, 12)} ${fresh.tokenName}: redeem ${lpIn} LP -> ${q.ergOut} nanoERG + ${q.tokenOut} units`);
     tx = buildRedeem({ height, inputs, user: owner, poolBox: fresh.box, lpIn });
   }
+} else if (step === "escrow-create") {
+  // escrow-create <tokenId> <units> <priceNano> [buyerAddress=the wallet]
+  const buyer = args[3] ? ErgoAddress.fromBase58(args[3]) : owner;
+  tx = buildCreateEscrow({ height, inputs, seller: owner, buyer, tokenId: args[0], amount: BigInt(args[1]), price: BigInt(args[2]) });
+  allow = tx.outputs[0].ergoTree;
+} else if (step === "escrow-take") {
+  tx = buildTakeEscrow({ height, inputs, buyer: owner, escrowBox: await box(args[0]) });
+} else if (step === "loan-open") {
+  // loan-open <principalNano> <repaymentNano> <termBlocks> <collateralNano>
+  tx = buildOpenOrder({ height, inputs, borrower: owner, principalId: "ERG", principal: BigInt(args[0]), repayment: BigInt(args[1]), term: Number(args[2]), collateralErg: BigInt(args[3]) });
+  allow = tx.outputs[0].ergoTree;
+} else if (step === "loan-lend") {
+  tx = buildLend({ height, inputs, lender: owner, orderBox: await box(args[0]) });
+  allow = tx.outputs[0].ergoTree + "," + tx.outputs[2].ergoTree; // the bond, and the developer fee address
+} else if (step === "loan-repay") {
+  tx = buildRepay({ height, inputs, borrower: owner, bondBox: await box(args[0]) });
+} else if (step === "bank-mint" || step === "bank-redeem") {
+  // bank-mint|bank-redeem stable|reserve <units>
+  const bank = await loadBank(explorer);
+  const coin = args[0] as "stable" | "reserve";
+  tx = (step === "bank-mint" ? buildBankMint : buildBankRedeem)({ height, inputs, user: owner, bank, coin, amount: BigInt(args[1]) });
+  if (step === "bank-mint") allow = tx.outputs.filter((o) => o.ergoTree !== owner.ergoTree).map((o) => o.ergoTree).join(",");
 } else if (step === "close") {
   tx = buildClose({ height, inputs, owner, orderBox: await box(args[0]) });
 } else {
