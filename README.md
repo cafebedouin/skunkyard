@@ -12,3 +12,5 @@ Second program: TSNP, the Temporal Stealth Note Protocol specification posted to
 pilot that would answer its open items and a note on its terms against the quantum horizon (`tsnp/`).
 
 The worklist is `WORKLIST.md`; how the repository works is `PROGRAM.md`.
+
+Licence: CC0 1.0 Universal (`LICENSE`), a public-domain dedication for everything in this repository that is ours.

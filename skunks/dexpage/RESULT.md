@@ -68,6 +68,17 @@ the SigmaUSD bank (mint and redeem through Fleet's AgeUSD plugin, no implementor
 Swap tab). Nine mock-chain cases and nine mainnet transactions (`mainnet/README.md`), including the bank's refusal
 of SigUSD minting and SigRSV redemption at a 312% reserve ratio, which the page reports as "not allowed now".
 
+## Review, 2026-10-30
+
+Two independent reviews of the freedex repository (a no-context Claude, Gemini) agreed on two findings, both
+real on inspection: a stored XSS (token names from the chain reached `innerHTML`; any stranger can mint a token
+with a hostile name for a fraction of a cent, and the page's origin holds a granted EIP-12 context) and a slippage
+guard that could not fire (the minimum was derived from the freshly read pool it was then checked against). Fixed in
+freedex the same day: chain-sourced text only ever becomes a text node, a Content-Security-Policy allows no external
+script, the swap's minimum is the one from the quote the user saw. Also applied: explorer failover with timeouts and
+a 30-second listing cache, a runtime explorer choice, pinned template hashes, tests for units, sizing against brute
+force and the keyless id (41 cases), a pull-request CI trigger. Deferred: one module per tab, UI tests.
+
 ## Not done
 
 - The browser path (Nautilus signing from the deployed page) has not been exercised by a person yet; the mainnet

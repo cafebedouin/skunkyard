@@ -1,23 +1,12 @@
-// List ErgoDEX v1 ERG-to-token (N2T) pools on mainnet by the pool contract's template hash, read-only.
-// The pool tree is taken from a pool successor the repo already spent (skunks/upkeep/mainnet/tx/ergopad-tx.json).
-import { readFileSync } from "node:fs";
+// List the ErgoDEX v1 ERG pools on mainnet by the template hash the page uses. node scripts/pools.ts
 import { ErgoTree } from "@fleet-sdk/core";
 import { hex, sha256 } from "@fleet-sdk/crypto";
-
-const tx = JSON.parse(readFileSync("../upkeep/mainnet/tx/ergopad-tx.json", "utf8"));
-const poolTree: string = tx.outputs[0].ergoTree;
-const tpl = new ErgoTree(poolTree).template;
-const hash = hex.encode(sha256(tpl));
-console.log("pool tree bytes", poolTree.length / 2, "template bytes", tpl.length, "sha256(template)", hash);
-const r = await fetch("https://api.ergoplatform.com/api/v1/boxes/unspent/search?limit=500", {
-  method: "POST", headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ ergoTreeTemplateHash: hash }),
-});
-const j = (await r.json()) as { total: number; items: any[] };
-console.log("pools under the template:", j.total, "(fetched", j.items.length + ")");
-const pools = j.items
-  .filter((b) => b.assets.length === 3)
-  .map((b) => ({ id: b.boxId.slice(0, 10), erg: Number(b.value) / 1e9, token: b.assets[2].tokenId.slice(0, 8), name: b.assets[2].name, units: b.assets[2].amount, dec: b.assets[2].decimals, fee: b.additionalRegisters.R4?.renderedValue, sameTree: b.ergoTree === poolTree }))
-  .sort((a, b) => b.erg - a.erg);
-console.log("with 3 tokens (NFT, LP, token):", pools.length, "; identical tree:", pools.filter((p) => p.sameTree).length);
-for (const p of pools.slice(0, 15)) console.log(p.id, String(p.erg.toFixed(2)).padStart(12), "ERG", p.token, (p.name ?? "").padEnd(12), "dec", p.dec, "fee", p.fee);
+import { POOL_TREE, describePool } from "../src/amm.ts";
+import { Explorer, POOL_TEMPLATE_SHA256 } from "../src/explorer.ts";
+console.log("tree bytes", POOL_TREE.length / 2, "template sha256", hex.encode(sha256(new ErgoTree(POOL_TREE).template)), "pinned", POOL_TEMPLATE_SHA256);
+const pools = await new Explorer(process.env.VITE_EXPLORER).pools(500);
+console.log("pools:", pools.length, "; identical tree:", pools.filter((p) => p.box.ergoTree === POOL_TREE).length);
+for (const p of pools.sort((a, b) => (b.box.value > a.box.value ? 1 : -1)).slice(0, 15)) {
+  const v = describePool(p.box);
+  console.log(v.boxId.slice(0, 10), String(Number(v.x) / 1e9).padStart(12), "ERG", (p.tokenName || v.tokenId.slice(0, 8)).padEnd(12), "fee", v.feeNum);
+}
