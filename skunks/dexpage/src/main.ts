@@ -1,9 +1,10 @@
 import type { Box } from "@fleet-sdk/common";
-import { buildSwap, describePool, priceImpactBps, quote, type SwapDirection } from "./amm";
+import { buildDeposit, buildRedeem, buildSwap, depositQuote, describePool, lpSupply, priceImpactBps, quote, redeemQuote, type SwapDirection } from "./amm";
 import { Explorer, type PoolEntry, type TokenInfo } from "./explorer";
 import { FEE, buildClose, buildCreate, buildFill, capacity, describe, type OrderView, type OwnerSide } from "./orders";
 import { ERG_DECIMALS, ergPerTokenToPrice, formatUnits, parseUnits, priceToErgPerToken } from "./units";
 import { availableWallets, connect, disconnect, signAndSubmit, utxos, type Wallet } from "./wallet";
+import tokenlist from "./tokenlist.json";
 
 const explorer = new Explorer(import.meta.env.VITE_EXPLORER ?? undefined);
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -37,7 +38,8 @@ async function tokenInfo(id: string): Promise<TokenInfo> {
 for (const b of document.querySelectorAll<HTMLButtonElement>("nav [role=tab]")) {
   b.onclick = () => {
     for (const o of document.querySelectorAll<HTMLButtonElement>("nav [role=tab]")) o.setAttribute("aria-selected", String(o === b));
-    for (const s of ["swap", "orders"]) $(`tab-${s}`).hidden = s !== b.dataset.tab;
+    for (const s of ["swap", "orders", "pool"]) $(`tab-${s}`).hidden = s !== b.dataset.tab;
+    if (b.dataset.tab === "pool") renderPool();
   };
 }
 
@@ -107,34 +109,62 @@ const swapFrom = $<HTMLSelectElement>("swap-from");
 const swapTo = $<HTMLSelectElement>("swap-to");
 const swapGo = $<HTMLButtonElement>("swap-go");
 let direction: SwapDirection = "erg-to-token";
-let selectedNft = "";
+let selectedToken = "";
 
+const OTHER = "__other__";
+
+/** The deepest live pool for a token id, if the explorer listed one. */
+function deepestPool(tokenId: string): PoolEntry | undefined {
+  return pools.filter((p) => p.box.assets[2].tokenId === tokenId).sort((a, b) => (b.box.value > a.box.value ? 1 : -1))[0];
+}
+
+/** Options: the static whitelist (tokens whose deepest pool held 100 ERG or more when the list was made), then "other". */
 function tokenSelect(sel: HTMLSelectElement) {
   sel.replaceChildren();
-  for (const p of pools) {
-    const o = document.createElement("option");
-    o.value = p.box.assets[0].tokenId;
-    const v = describePool(p.box);
-    o.textContent = `${p.tokenName || v.tokenId.slice(0, 8)}  (${formatUnits(v.x, ERG_DECIMALS, 0)} ERG pool)`;
+  for (const t of tokenlist.tokens) {
+    const live = deepestPool(t.id);
+    const o = new Option(`${t.name || t.id.slice(0, 8)}${live ? `  (${formatUnits(live.box.value, ERG_DECIMALS, 0)} ERG pool)` : ""}`, t.id);
     sel.append(o);
   }
-  if (selectedNft) sel.value = selectedNft;
+  sel.append(new Option("other token…", OTHER));
+  if (selectedToken) sel.value = selectedToken;
 }
 
 function renderSwapSelectors() {
-  // the token side is a select of pools; the ERG side is fixed text
+  // the token side is a select; the ERG side is fixed text
   const tokenSide = direction === "erg-to-token" ? swapTo : swapFrom;
   const ergSide = direction === "erg-to-token" ? swapFrom : swapTo;
   tokenSelect(tokenSide);
   ergSide.replaceChildren(new Option("ERG", "ERG"));
+  const otherRow = $<HTMLDivElement>("swap-other-row");
   tokenSide.onchange = () => {
-    selectedNft = tokenSide.value;
+    if (tokenSide.value === OTHER) {
+      otherRow.hidden = false;
+      return;
+    }
+    otherRow.hidden = true;
+    selectedToken = tokenSide.value;
     renderQuote();
     void renderBalance();
   };
-  selectedNft = tokenSide.value;
+  if (!selectedToken) selectedToken = tokenSide.value;
   void renderBalance();
 }
+
+$<HTMLButtonElement>("swap-other-go").onclick = () => {
+  const id = $<HTMLInputElement>("swap-other").value.trim().toLowerCase();
+  if (!/^[0-9a-f]{64}$/.test(id)) {
+    log("a token id is 64 hex characters");
+    return;
+  }
+  if (!deepestPool(id)) {
+    log(`no ErgoDEX v1 ERG pool holds token ${id.slice(0, 10)}…`);
+    return;
+  }
+  selectedToken = id;
+  renderQuote();
+  void renderBalance();
+};
 
 /** The connected wallet's balance of the asset being paid, with a "max" that leaves the fee and a change box. */
 async function renderBalance() {
@@ -163,7 +193,7 @@ async function renderBalance() {
 }
 
 function selectedPool(): PoolEntry | undefined {
-  return pools.find((p) => p.box.assets[0].tokenId === selectedNft);
+  return selectedToken ? deepestPool(selectedToken) : undefined;
 }
 
 function slippageBps(): bigint {
@@ -227,7 +257,7 @@ swapGo.onclick = async () => {
     if (!p) throw new Error("pick a token");
     const inDec = direction === "erg-to-token" ? ERG_DECIMALS : p.tokenDecimals;
     const amountIn = parseUnits(swapIn.value, inDec);
-    const fresh = await explorer.poolByNft(selectedNft); // the pool as it stands now, not as it was listed
+    const fresh = await explorer.poolByNft(p.box.assets[0].tokenId); // the pool as it stands now, not as it was listed
     const minOut = (() => {
       const q = quote(describePool(fresh.box), direction, amountIn);
       return q - (q * slippageBps()) / 10_000n;
@@ -245,19 +275,158 @@ swapGo.onclick = async () => {
 
 async function loadPools() {
   try {
-    pools = (await explorer.pools(500)).sort((a, b) => (b.box.value > a.box.value ? 1 : -1)).filter((p) => p.box.value >= 1_000_000_000n);
-    if (!selectedNft) {
-      const sigusd = pools.find((p) => p.tokenName === "SigUSD");
-      selectedNft = (sigusd ?? pools[0])?.box.assets[0].tokenId ?? "";
-    }
+    pools = (await explorer.pools(500)).sort((a, b) => (b.box.value > a.box.value ? 1 : -1));
+    if (!selectedToken) selectedToken = tokenlist.tokens.find((t) => t.name === "SigUSD")?.id ?? tokenlist.tokens[0]?.id ?? "";
     renderSwapSelectors();
     renderQuote();
     renderTokenPick();
-    log(`${pools.length} pools with at least 1 ERG`);
+    log(`${pools.length} pools listed by the explorer; ${tokenlist.tokens.length} tokens in the static list (${tokenlist.generated})`);
   } catch (e) {
     log(`could not load pools: ${err(e)}`);
   }
 }
+
+// ---- pool (liquidity) --------------------------------------------------------------------------
+
+let lpToken = "";
+
+function lpPool(): PoolEntry | undefined {
+  return lpToken ? deepestPool(lpToken) : undefined;
+}
+
+function dl(el: HTMLDListElement, rows: [string, string][]) {
+  el.replaceChildren();
+  for (const [k, v] of rows) {
+    const dt = document.createElement("dt");
+    dt.textContent = k;
+    const dd = document.createElement("dd");
+    dd.textContent = v;
+    el.append(dt, dd);
+  }
+}
+
+async function renderPool() {
+  const sel = $<HTMLSelectElement>("lp-token");
+  if (!sel.options.length) {
+    for (const t of tokenlist.tokens) sel.append(new Option(t.name || t.id.slice(0, 8), t.id));
+    sel.onchange = () => {
+      lpToken = sel.value;
+      void renderPool();
+    };
+  }
+  if (!lpToken) lpToken = selectedToken || sel.value;
+  sel.value = lpToken;
+  const p = lpPool();
+  if (!p) {
+    dl($("lp-info"), [["Pool", "no pool listed for this token yet (the explorer is still loading, or the token has none)"]]);
+    return;
+  }
+  const pool = describePool(p.box);
+  const name = p.tokenName || pool.tokenId.slice(0, 8);
+  $("lp-tok-name").textContent = name;
+  const rows: [string, string][] = [
+    ["Reserves", `${formatUnits(pool.x, ERG_DECIMALS, 3)} ERG and ${formatUnits(pool.y, p.tokenDecimals)} ${name}`],
+    ["LP in circulation", lpSupply(pool).toString()],
+    ["Pool fee", `${formatUnits(1000n - pool.feeNum, 1)}% to liquidity providers`],
+  ];
+  if (wallet) {
+    try {
+      const lp = BigInt(await wallet.api.get_balance(pool.lpTokenId));
+      const share = redeemQuote(pool, lp);
+      rows.push(["Your LP tokens", `${lp} (${formatUnits(share.ergOut, ERG_DECIMALS, 4)} ERG and ${formatUnits(share.tokenOut, p.tokenDecimals)} ${name})`]);
+      $<HTMLButtonElement>("lp-max").onclick = () => {
+        $<HTMLInputElement>("lp-in").value = lp.toString();
+        renderRedeemQuote();
+      };
+    } catch (e) {
+      rows.push(["Your LP tokens", err(e)]);
+    }
+  }
+  dl($("lp-info"), rows);
+  renderDepositQuote();
+  renderRedeemQuote();
+}
+
+function renderDepositQuote() {
+  const p = lpPool();
+  const btn = $<HTMLButtonElement>("lp-add");
+  btn.disabled = true;
+  if (!p) return;
+  const pool = describePool(p.box);
+  try {
+    const text = $<HTMLInputElement>("lp-erg").value.trim();
+    if (!text) {
+      $<HTMLInputElement>("lp-tok").value = "";
+      dl($("lp-quote"), []);
+      return;
+    }
+    const ergIn = parseUnits(text, ERG_DECIMALS);
+    const q = depositQuote(pool, ergIn);
+    $<HTMLInputElement>("lp-tok").value = formatUnits(q.tokenIn, p.tokenDecimals);
+    const supply = lpSupply(pool) + q.lpOut;
+    dl($("lp-quote"), [
+      ["LP tokens you receive", q.lpOut.toString()],
+      ["Your share after", `${formatUnits((q.lpOut * 1_000_000n) / supply, 4)}%`],
+      ["Miner fee", `${formatUnits(FEE, ERG_DECIMALS)} ERG`],
+    ]);
+    btn.disabled = !wallet || q.lpOut <= 0n;
+  } catch (e) {
+    dl($("lp-quote"), [["Amount", err(e)]]);
+  }
+}
+
+function renderRedeemQuote() {
+  const p = lpPool();
+  const btn = $<HTMLButtonElement>("lp-remove");
+  btn.disabled = true;
+  if (!p) return;
+  const pool = describePool(p.box);
+  try {
+    const text = $<HTMLInputElement>("lp-in").value.trim();
+    if (!text) {
+      dl($("lp-redeem-quote"), []);
+      return;
+    }
+    const lpIn = parseUnits(text, 0);
+    const q = redeemQuote(pool, lpIn);
+    dl($("lp-redeem-quote"), [
+      ["You receive", `${formatUnits(q.ergOut, ERG_DECIMALS)} ERG and ${formatUnits(q.tokenOut, p.tokenDecimals)} ${p.tokenName || "tokens"}`],
+      ["Miner fee", `${formatUnits(FEE, ERG_DECIMALS)} ERG`],
+    ]);
+    btn.disabled = !wallet || (q.ergOut <= 0n && q.tokenOut <= 0n);
+  } catch (e) {
+    dl($("lp-redeem-quote"), [["Amount", err(e)]]);
+  }
+}
+
+$<HTMLInputElement>("lp-erg").oninput = renderDepositQuote;
+$<HTMLInputElement>("lp-in").oninput = renderRedeemQuote;
+$<HTMLButtonElement>("lp-add").onclick = async () => {
+  try {
+    const p = lpPool();
+    if (!p) throw new Error("pick a pool");
+    const ergIn = parseUnits($<HTMLInputElement>("lp-erg").value, ERG_DECIMALS);
+    const fresh = await explorer.poolByNft(p.box.assets[0].tokenId);
+    await send((height, inputs) => buildDeposit({ height, inputs, user: wallet!.changeAddress, poolBox: fresh.box, ergIn }));
+    $<HTMLInputElement>("lp-erg").value = "";
+    setTimeout(() => void loadPools().then(renderPool), 3000);
+  } catch (e) {
+    log(`add liquidity failed: ${err(e)}`);
+  }
+};
+$<HTMLButtonElement>("lp-remove").onclick = async () => {
+  try {
+    const p = lpPool();
+    if (!p) throw new Error("pick a pool");
+    const lpIn = parseUnits($<HTMLInputElement>("lp-in").value, 0);
+    const fresh = await explorer.poolByNft(p.box.assets[0].tokenId);
+    await send((height, inputs) => buildRedeem({ height, inputs, user: wallet!.changeAddress, poolBox: fresh.box, lpIn }));
+    $<HTMLInputElement>("lp-in").value = "";
+    setTimeout(() => void loadPools().then(renderPool), 3000);
+  } catch (e) {
+    log(`remove liquidity failed: ${err(e)}`);
+  }
+};
 
 // ---- limit orders ------------------------------------------------------------------------------
 
@@ -275,76 +444,96 @@ async function loadOrders() {
   }
 }
 
+function orderRow(box: Box<bigint>, v: OrderView, decimals: number): HTMLTableRowElement {
+  const tr = document.createElement("tr");
+  if (isMine(v)) tr.className = "mine";
+  const cap = capacity(v);
+  tr.innerHTML =
+    `<td class="num">${priceToErgPerToken(v.price, decimals)}</td>` +
+    `<td class="num">${formatUnits(cap, decimals)}${v.takerAction === "sell" ? ` (${formatUnits(v.value, ERG_DECIMALS)} ERG)` : ""}</td>` +
+    `<td><code title="${v.owner}">${v.owner.slice(0, 6)}…</code>${isMine(v) ? " (you)" : ""}</td>`;
+  const actions = document.createElement("td");
+  if (wallet) {
+    if (isMine(v)) {
+      const b = document.createElement("button");
+      b.textContent = "close";
+      b.onclick = () =>
+        send((height, inputs) => buildClose({ height, inputs, owner: wallet!.changeAddress, orderBox: box }))
+          .then(() => setTimeout(() => void loadOrders(), 3000))
+          .catch((e) => log(`close failed: ${err(e)}`));
+      actions.append(b);
+    } else {
+      const amount = document.createElement("input");
+      amount.size = 10;
+      amount.placeholder = formatUnits(cap, decimals);
+      const b = document.createElement("button");
+      b.textContent = v.takerAction === "buy" ? "buy" : "sell";
+      b.onclick = () => {
+        try {
+          const n = parseUnits(amount.value || amount.placeholder, decimals);
+          void send((height, inputs) => buildFill({ height, inputs, taker: wallet!.changeAddress, orderBox: box, tokenAmount: n }))
+            .then(() => setTimeout(() => void loadOrders(), 3000))
+            .catch((e) => log(`fill failed: ${err(e)}`));
+        } catch (e) {
+          log(`fill: ${err(e)}`);
+        }
+      };
+      actions.append(amount, " ", b);
+    }
+  }
+  tr.append(actions);
+  return tr;
+}
+
+function sideTable(title: string, rows: { box: Box<bigint>; v: OrderView }[], decimals: number): HTMLElement[] {
+  if (rows.length === 0) return [];
+  const h = document.createElement("h3");
+  h.textContent = title;
+  const table = document.createElement("table");
+  table.innerHTML = `<thead><tr><th>Price (ERG/token)</th><th>Available</th><th>Owner</th><th></th></tr></thead>`;
+  const tbody = document.createElement("tbody");
+  for (const { box, v } of rows) tbody.append(orderRow(box, v, decimals));
+  table.append(tbody);
+  return [h, table];
+}
+
+/** Grouped by token, one collapsible block each; inside, takers' buys cheapest first and takers' sells dearest first. */
 function renderOrders() {
-  const views: { box: Box<bigint>; v: OrderView }[] = [];
+  const groups = new Map<string, { box: Box<bigint>; v: OrderView }[]>();
   for (const box of orderBoxes) {
     try {
-      views.push({ box, v: describe(box) });
+      const v = describe(box);
+      (groups.get(v.tokenId) ?? groups.set(v.tokenId, []).get(v.tokenId)!).push({ box, v });
     } catch {
       /* a box under the template that the SDK rejects (malformed registers): skip */
     }
   }
-  const table = document.createElement("table");
-  table.innerHTML = `<thead><tr><th>Token</th><th>Takers</th><th>Price (ERG/token)</th><th>Available</th><th>Owner</th><th></th></tr></thead>`;
-  const tbody = document.createElement("tbody");
-  for (const { box, v } of views) {
-    const t = tokens.get(v.tokenId) ?? { id: v.tokenId, name: "", decimals: 0 };
-    const tr = document.createElement("tr");
-    if (isMine(v)) tr.className = "mine";
-    const cap = capacity(v);
-    tr.innerHTML =
-      `<td><code title="${v.tokenId}">${t.name || v.tokenId.slice(0, 10)}</code></td>` +
-      `<td>${v.takerAction === "buy" ? "buy tokens" : "sell tokens"}</td>` +
-      `<td class="num">${priceToErgPerToken(v.price, t.decimals)}</td>` +
-      `<td class="num">${formatUnits(cap, t.decimals)}${v.takerAction === "sell" ? ` (${formatUnits(v.value, ERG_DECIMALS)} ERG)` : ""}</td>` +
-      `<td><code title="${v.owner}">${v.owner.slice(0, 6)}…</code>${isMine(v) ? " (you)" : ""}</td>`;
-    const actions = document.createElement("td");
-    if (wallet) {
-      if (isMine(v)) {
-        const b = document.createElement("button");
-        b.textContent = "close";
-        b.onclick = () =>
-          send((height, inputs) => buildClose({ height, inputs, owner: wallet!.changeAddress, orderBox: box }))
-            .then(() => setTimeout(() => void loadOrders(), 3000))
-            .catch((e) => log(`close failed: ${err(e)}`));
-        actions.append(b);
-      } else {
-        const amount = document.createElement("input");
-        amount.size = 10;
-        amount.placeholder = formatUnits(cap, t.decimals);
-        const b = document.createElement("button");
-        b.textContent = v.takerAction === "buy" ? "buy" : "sell";
-        b.onclick = () => {
-          try {
-            const n = parseUnits(amount.value || amount.placeholder, t.decimals);
-            void send((height, inputs) => buildFill({ height, inputs, taker: wallet!.changeAddress, orderBox: box, tokenAmount: n }))
-              .then(() => setTimeout(() => void loadOrders(), 3000))
-              .catch((e) => log(`fill failed: ${err(e)}`));
-          } catch (e) {
-            log(`fill: ${err(e)}`);
-          }
-        };
-        actions.append(amount, " ", b);
-      }
-    }
-    tr.append(actions);
-    tbody.append(tr);
+  const out: HTMLElement[] = [];
+  const sorted = [...groups.entries()].sort((a, b) => b[1].length - a[1].length);
+  for (const [tokenId, rows] of sorted) {
+    const t = tokens.get(tokenId) ?? { id: tokenId, name: "", decimals: 0 };
+    const buys = rows.filter((r) => r.v.takerAction === "buy").sort((a, b) => (a.v.price < b.v.price ? -1 : 1));
+    const sells = rows.filter((r) => r.v.takerAction === "sell").sort((a, b) => (a.v.price > b.v.price ? -1 : 1));
+    const det = document.createElement("details");
+    if (rows.some((r) => isMine(r.v))) det.open = true;
+    const sum = document.createElement("summary");
+    const best: string[] = [];
+    if (buys.length) best.push(`buy from ${priceToErgPerToken(buys[0].v.price, t.decimals)}`);
+    if (sells.length) best.push(`sell at ${priceToErgPerToken(sells[0].v.price, t.decimals)}`);
+    sum.innerHTML = `${t.name || tokenId.slice(0, 10)} <span class="muted">${rows.length} order${rows.length === 1 ? "" : "s"}; best: ${best.join(", ")} ERG/token</span>`;
+    det.append(sum, ...sideTable("You buy tokens from these orders", buys, t.decimals), ...sideTable("You sell tokens into these orders", sells, t.decimals));
+    out.push(det);
   }
-  table.append(tbody);
-  $("orders").replaceChildren(views.length ? table : "no open orders");
+  $("orders").replaceChildren(...(out.length ? out : ["no open orders"]));
 }
 
-/** The create form's token list: every token with a pool, by reserve; the id field stays editable for any other. */
+/** The create form's token list: the static whitelist; the id field stays editable for any other token. */
 function renderTokenPick() {
   const sel = $<HTMLSelectElement>("token-pick");
-  sel.replaceChildren(new Option("type an id below", ""));
-  const seen = new Set<string>();
-  for (const p of pools) {
-    const id = p.box.assets[2].tokenId;
-    if (seen.has(id)) continue;
-    seen.add(id);
-    sel.append(new Option(p.tokenName || id.slice(0, 10), id));
-    tokens.set(id, { id, name: p.tokenName, decimals: p.tokenDecimals });
+  sel.replaceChildren(new Option("other (type the id below)", ""));
+  for (const t of tokenlist.tokens) {
+    sel.append(new Option(t.name || t.id.slice(0, 10), t.id));
+    tokens.set(t.id, { id: t.id, name: t.name, decimals: t.decimals });
   }
   sel.onchange = () => {
     $<HTMLInputElement>("token").value = sel.value;

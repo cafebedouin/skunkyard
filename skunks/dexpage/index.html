@@ -32,6 +32,10 @@
     .mine { font-weight: 600; }
     .muted { opacity: .7; }
     .small { font-size: .85rem; }
+    details { margin: .5rem 0; border: 1px solid var(--line); border-radius: .4rem; padding: .3rem .6rem; }
+    summary { cursor: pointer; font-weight: 600; }
+    summary .muted { font-weight: 400; }
+    h3 { font-size: .95rem; margin: .6rem 0 .2rem; }
   </style>
 </head>
 <body>
@@ -44,6 +48,7 @@
   <nav role="tablist">
     <button role="tab" data-tab="swap" aria-selected="true">Swap</button>
     <button role="tab" data-tab="orders" aria-selected="false">Limit orders</button>
+    <button role="tab" data-tab="pool" aria-selected="false">Pool</button>
   </nav>
 
   <section id="tab-swap">
@@ -58,6 +63,10 @@
         <input type="text" id="swap-out" placeholder="0.0" readonly />
         <select id="swap-to"></select>
       </div>
+      <div class="row small" id="swap-other-row" hidden>
+        <input type="text" id="swap-other" placeholder="token id (64 hex) for any token with an ErgoDEX pool" size="64" />
+        <button id="swap-other-go">use</button>
+      </div>
       <dl id="swap-quote"></dl>
       <div class="row small"><label for="slippage">Slippage tolerance (%)</label><input id="slippage" type="text" inputmode="decimal" value="1" size="4" /></div>
       <button class="primary" id="swap-go" disabled>Swap</button>
@@ -66,11 +75,7 @@
   </section>
 
   <section id="tab-orders" hidden>
-    <h2>Open limit orders</h2>
-    <p class="muted small">Every unspent Machina ERG-to-token limit order on mainnet, by template hash. Prices in ERG per whole token; amounts with the token's decimals.</p>
-    <div id="orders">loading…</div>
-
-    <h2 style="margin-top:1.5rem">Create an order</h2>
+    <h2>Place a limit order</h2>
     <form id="create" class="grid">
       <label for="side">You</label>
       <select id="side" name="side">
@@ -78,7 +83,7 @@
         <option value="buy-tokens">buy tokens with ERG</option>
       </select>
       <label for="token-pick">Token</label>
-      <select id="token-pick"><option value="">type an id below</option></select>
+      <select id="token-pick"><option value="">other (type the id below)</option></select>
       <label for="token">Token id</label>
       <input id="token" name="token" size="64" pattern="[0-9a-fA-F]{64}" required />
       <label for="amount" id="amount-label">Token amount</label>
@@ -87,6 +92,27 @@
       <input id="price" name="price" inputmode="decimal" required />
       <button type="submit">Build, sign in wallet, submit</button>
     </form>
+
+    <h2 style="margin-top:1.5rem">Open limit orders</h2>
+    <p class="muted small">Every unspent Machina ERG-to-token limit order on mainnet, grouped by token, best price first on each side. Prices in ERG per whole token.</p>
+    <div id="orders">loading…</div>
+  </section>
+
+  <section id="tab-pool" hidden>
+    <div class="panel">
+      <h2>Add liquidity</h2>
+      <div class="row"><select id="lp-token"></select><span class="small muted">pool</span></div>
+      <dl id="lp-info"></dl>
+      <div class="row"><input type="text" id="lp-erg" inputmode="decimal" placeholder="ERG to add" autocomplete="off" /><span>ERG</span></div>
+      <div class="row"><input type="text" id="lp-tok" placeholder="tokens, at the pool's ratio" readonly /><span id="lp-tok-name">tokens</span></div>
+      <dl id="lp-quote"></dl>
+      <button class="primary" id="lp-add" disabled>Add liquidity</button>
+      <h2 style="margin-top:1.25rem">Remove liquidity</h2>
+      <div class="row"><input type="text" id="lp-in" inputmode="decimal" placeholder="LP tokens to redeem" autocomplete="off" /><button id="lp-max">max</button></div>
+      <dl id="lp-redeem-quote"></dl>
+      <button class="primary" id="lp-remove" disabled>Remove liquidity</button>
+      <p class="muted small">Deposits and redemptions go straight to the pool box in one transaction at the pool's own rule (Pool.sc: a deposit earns at most min(ΔERG, Δtoken) of the supply, pro rata; a redemption returns your share). LP tokens are plain tokens in your wallet. Miner fee 0.001 ERG, nothing else.</p>
+    </div>
   </section>
 
   <section>

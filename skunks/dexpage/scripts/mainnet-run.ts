@@ -8,6 +8,8 @@
 //   node scripts/mainnet-run.ts close <orderBoxId>                         owner closes
 //   node scripts/mainnet-run.ts swap <tokenName> <erg-to-token|token-to-erg> <amountIn> [slippageBps]
 //                                                                          direct swap on the token's ErgoDEX v1 pool
+//   node scripts/mainnet-run.ts deposit <tokenName> <nanoErg>               add liquidity (tokens at the pool's ratio)
+//   node scripts/mainnet-run.ts redeem <tokenName> <lpUnits>                remove liquidity
 // Set EXCLUDE=<boxId>[,<boxId>] to keep wallet boxes a pending transaction already spends out of the selection.
 // Writes mainnet/<step>-<time>.json and prints the summary and, for a create, the --allow-tree for the signer.
 import { readFileSync, writeFileSync } from "node:fs";
@@ -17,7 +19,7 @@ import type { EIP12UnsignedTransaction } from "@fleet-sdk/common";
 import { ErgoAddress } from "@fleet-sdk/core";
 import { Explorer, toFleetBox } from "../src/explorer.ts";
 import { buildClose, buildCreate, buildFill, describe } from "../src/orders.ts";
-import { buildSwap, describePool, quote, type SwapDirection } from "../src/amm.ts";
+import { buildDeposit, buildRedeem, buildSwap, depositQuote, describePool, quote, redeemQuote, type SwapDirection } from "../src/amm.ts";
 
 const WALLET = readFileSync(join(homedir(), ".config", "skunkyard", "mainnet-wallet.address"), "utf8").trim();
 const owner = ErgoAddress.fromBase58(WALLET);
@@ -70,6 +72,25 @@ if (step === "fill") {
   const minOut = q - (q * bps) / 10_000n;
   console.log(`pool ${pool.boxId.slice(0, 12)} ${fresh.tokenName}: x ${pool.x} y ${pool.y} fee ${pool.feeNum}; ${direction} ${amountIn} in -> quote ${q} out, min ${minOut}`);
   tx = buildSwap({ height, inputs, user: owner, poolBox: fresh.box, direction, amountIn, minOut });
+} else if (step === "deposit" || step === "redeem") {
+  const pools = await explorer.pools(500);
+  const entry = pools
+    .filter((p) => p.tokenName === args[0] || p.box.assets[0].tokenId === args[0])
+    .sort((a, b) => (b.box.value > a.box.value ? 1 : -1))[0];
+  if (!entry) throw new Error(`no pool for ${args[0]}`);
+  const fresh = await explorer.poolByNft(entry.box.assets[0].tokenId);
+  const pool = describePool(fresh.box);
+  if (step === "deposit") {
+    const ergIn = BigInt(args[1]);
+    const q = depositQuote(pool, ergIn);
+    console.log(`pool ${pool.boxId.slice(0, 12)} ${fresh.tokenName}: x ${pool.x} y ${pool.y}; deposit ${ergIn} nanoERG + ${q.tokenIn} units -> ${q.lpOut} LP`);
+    tx = buildDeposit({ height, inputs, user: owner, poolBox: fresh.box, ergIn });
+  } else {
+    const lpIn = BigInt(args[1]);
+    const q = redeemQuote(pool, lpIn);
+    console.log(`pool ${pool.boxId.slice(0, 12)} ${fresh.tokenName}: redeem ${lpIn} LP -> ${q.ergOut} nanoERG + ${q.tokenOut} units`);
+    tx = buildRedeem({ height, inputs, user: owner, poolBox: fresh.box, lpIn });
+  }
 } else if (step === "close") {
   tx = buildClose({ height, inputs, owner, orderBox: await box(args[0]) });
 } else {

@@ -34,10 +34,26 @@ SHA-256, `scripts/template-hash.mjs`) and `describe` on every box. The explorer 
 preflight with `access-control-allow-origin: *` and `access-control-allow-methods` including POST (curl,
 2026-10-29), so the deployed page can make the same call.
 
+## Mainnet, signed: every builder through the test wallet (`mainnet/README.md`)
+
+Eight transactions on 2026-10-29, all built by the page's code, signed and checked by the guarded signer, mined:
+fill a stranger's order (A), place an order (B), partial fill of it (C), close it (D), a direct pool swap each way
+(S1, S2), a liquidity deposit (L1) and its redemption (L2, see `mainnet/README.md` for the id). Transaction ids and
+the wallet's net per step are in that file. Fee 0.001 ERG on each.
+
+## Swap, pool and the second contract (added 2026-10-29)
+
+The page gained a Swap tab on ErgoDEX v1 ERG-to-token pools (direct swap against the pool box, no order box, no
+executor, no interface fee; quote, price impact and a slippage guard from the pool's own rule) and a Pool tab
+(add and remove liquidity by the same rule). `test/amm.test.ts` and `test/liquidity.test.ts` run both against the
+real pool ErgoTree on the mock chain, 7 cases including three refusals by the pool script (one token too many on a
+swap, one LP too many on a deposit, one nanoERG too many on a redemption). `run-test.log` is from the first build;
+the current suite is 13 cases.
+
 ## Not done
 
-- No transaction has been signed or submitted. The mainnet wallet session (create, fill, close from the built
-  page with Nautilus and pocket change) is the operator's; its transaction ids go here.
+- The browser path (Nautilus signing from the deployed page) has not been exercised by a person yet; the mainnet
+  transactions above went through the same builders from Node with the test wallet's signer.
 - Deployed 2026-10-29 as its own repository, `cafebedouin/freedex` (MIT), Pages set to GitHub Actions. First run
   40825399595: build (npm ci, test, build) 11 s, deploy 28 s, both `success`; https://cafebedouin.github.io/freedex/
   answers HTTP 200 with the built page (`<title>FreeDEX for Ergo</title>`, script `./assets/index-CNbkrN7z.js`,

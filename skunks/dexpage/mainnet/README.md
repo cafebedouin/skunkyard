@@ -15,6 +15,8 @@ default minimum; Fleet recommends 0.0011). The page adds no fee of its own.
 | C | taker: the wallet buys 40 units back from its own order, a partial fill (`buildFill`) | `6ebf30c18f064ec516715ad67d6b0fcbd9a200b841c70489e268c44c54db3859` | -2,600,000 |
 | D | owner: close the order, 60 units and the box's ERG back (`buildClose`; the signer signs the order box with the wallet key under `--sign-tree`) | `95a939cb823e49e4d4f4dd01d44a391a87eb78bb12c363e6f7ae8efdaf9bb956` | -1,000,000 |
 | S1 | direct pool swap: 0.01 ERG into the deepest rsADA pool (6,756 ERG) for 13,996 units (0.013996 rsADA), no order box (`buildSwap`) | `ea0a7dfeb6964df57c5fcf86a4734c44572f58547aedad36ddbeb38e1c3ba9d4` | -11,000,000 |
+| S2 | the 13,996 units back into the same pool for 9,939,553 nanoERG (`buildSwap`, token to ERG); the round trip lost 0.6%, two pool fees of 0.3% | `7303dce957bf31a2d4d8518a8a639b3b464c648a7304bd905044aafac163eea8` | +8,939,553 |
+| L1 | add liquidity: 0.003 ERG plus 92 FAKU units at the pool's ratio into the FAKU pool (4,464 ERG) for 12,438 LP tokens, a direct deposit (`buildDeposit`) | `5eaa12e353aa67277823793ee7f3892193fe50fd93d7e26c3a8c8528a0747b17` | -4,000,000 |
 
 Net of A to D: the wallet paid 3.36 mERG for 1.00 FAKU from a stranger, 1 mERG for each of its own four
 transactions, and holds 1.00 FAKU at the end (40 units bought back in C, 60 returned in D) plus the 1.60 mERG the C
@@ -32,4 +34,6 @@ fill paid into the order, returned in D.
 - **Closing an order needs the owner's signature on the order box itself** (the contract's close path is the owner's
   sigma proposition). The guarded signer only signed P2PK boxes; it now signs inputs under an explicitly named
   script (`--sign-tree`), the way it allows an explicit output script (`--allow-tree`).
+- **A deposit needs tokens at the pool's ratio, and the wallet must hold them.** 0.005 ERG into the FAKU pool needed
+  154 units against the wallet's 100; Fleet's selector said so before anything was signed. 0.003 ERG needed 92.
 - The node accepted every transaction at a 0.001 ERG fee and all were mined within a few blocks.
