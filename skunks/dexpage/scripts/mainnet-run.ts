@@ -11,6 +11,9 @@
 //   node scripts/mainnet-run.ts swap-t2t <inTokenId> <outTokenId> <amountIn> [slippageBps]  direct token-to-token swap
 //   node scripts/mainnet-run.ts deposit <tokenName> <nanoErg>               add liquidity (tokens at the pool's ratio)
 //   node scripts/mainnet-run.ts redeem <tokenName> <lpUnits>                remove liquidity
+//   node scripts/mainnet-run.ts clock-create <tokenName> <sliceNano> <legs> <interval> <feeNano> [tolBps] [maxPriceNano]
+//   node scripts/mainnet-run.ts clock-create-sell <tokenName> <units> <sliceUnits> <interval> <feeNano> [tolBps] [minPriceNano]
+//   node scripts/mainnet-run.ts clock-cancel <boxId>
 // Set EXCLUDE=<boxId>[,<boxId>] to keep wallet boxes a pending transaction already spends out of the selection.
 // Writes mainnet/<step>-<time>.json and prints the summary and, for a create, the --allow-tree for the signer.
 import { readFileSync, writeFileSync } from "node:fs";
@@ -24,7 +27,7 @@ import { buildCreateEscrow, buildTakeEscrow } from "../src/escrow.ts";
 import { buildLend, buildOpenOrder, buildRepay } from "../src/bonds.ts";
 import { buildMint as buildBankMint, buildRedeem as buildBankRedeem, loadBank } from "../src/bank.ts";
 import { buildDeposit, buildRedeem, buildSwap, buildSwapT2T, depositQuote, describePool, describeT2TPool, quote, quoteT2T, redeemQuote, type SwapDirection } from "../src/amm.ts";
-import { buildCancelClock, buildCreateClock, describeClock, sizeProgram } from "../src/clock.ts";
+import { buildCancelClock, buildCreateClock, buildCreateClockSell, describeClock, sizeProgram, sizeProgramSell } from "../src/clock.ts";
 
 const WALLET = readFileSync(join(homedir(), ".config", "skunkyard", "mainnet-wallet.address"), "utf8").trim();
 const owner = ErgoAddress.fromBase58(WALLET);
@@ -148,9 +151,28 @@ if (step === "fill") {
   console.log(`pool ${p.boxId.slice(0, 12)} ${fresh.tokenName} (nft ${p.nft.slice(0, 12)}): x ${p.x} y ${p.y} fee ${p.feeNum}; ${program.legs} legs of ${program.slice} every ${program.interval} blocks, fee ${program.executorFee}; box ${sized.bytes} bytes, rent reserve ${sized.rentReserve}, value ${sized.value}`);
   tx = buildCreateClock({ ...program, height, inputs });
   allow = tx.outputs[0].ergoTree;
+} else if (step === "clock-create-sell") {
+  // clock-create-sell <tokenName> <units> <sliceUnits> <intervalBlocks> <executorFeeNano> [toleranceBps=0] [minPriceNano=0]
+  // SK-064: a tranche sale on the token's deepest ERG pool; legs = units / slice; the full rent reserve and the box
+  // minimum are added by sizeProgramSell
+  const pools = await explorer.pools(500);
+  const entry = pools
+    .filter((p) => p.tokenName === args[0] || p.box.assets[0].tokenId === args[0])
+    .sort((a, b) => (b.box.value > a.box.value ? 1 : -1))[0];
+  if (!entry) throw new Error(`no pool for ${args[0]}`);
+  const fresh = await explorer.poolByNft(entry.box.assets[0].tokenId);
+  const program = {
+    owner, tokenId: fresh.box.assets[2].tokenId, poolBox: fresh.box, tokens: BigInt(args[1]), slice: BigInt(args[2]),
+    interval: Number(args[3]), executorFee: BigInt(args[4]), toleranceBps: BigInt(args[5] ?? "0"), minPrice: BigInt(args[6] ?? "0"),
+  };
+  const sized = sizeProgramSell(program);
+  const p = describePool(fresh.box);
+  console.log(`pool ${p.boxId.slice(0, 12)} ${fresh.tokenName} (nft ${p.nft.slice(0, 12)}): x ${p.x} y ${p.y} fee ${p.feeNum}; ${sized.legs} legs of ${program.slice} units every ${program.interval} blocks, fee ${program.executorFee}; box ${sized.bytes} bytes, rent reserve ${sized.rentReserve}, minimum ${sized.minBox}, value ${sized.value}`);
+  tx = buildCreateClockSell({ ...program, height, inputs });
+  allow = tx.outputs[0].ergoTree;
 } else if (step === "clock-cancel") {
   const clockBox = await box(args[0]);
-  console.log(`program ${describeClock(clockBox).boxId.slice(0, 12)}: legs left ${describeClock(clockBox).legsLeft}`);
+  console.log(`${describeClock(clockBox).side} program ${describeClock(clockBox).boxId.slice(0, 12)}: legs left ${describeClock(clockBox).legsLeft}`);
   tx = buildCancelClock({ height, owner, clockBox });
 } else if (step === "close") {
   tx = buildClose({ height, inputs, owner, orderBox: await box(args[0]) });

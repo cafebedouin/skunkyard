@@ -94,3 +94,53 @@ wallet's net per step in `RESULT.md` and `mainnet/README.md`.
 
 `ClockSell.es` (the tranche sale, the mirror with tokens in the box) if the buy side takes the session; grid
 programs; token-to-token pools; a price source other than the pinned pool.
+
+## Extended 2026-10-29: the sell side, and two fixes from the mainnet findings
+
+Preregistered before the build of the second session, from the two findings in `RESULT.md`:
+
+- **Fix 1, the rent reserve is side-dependent.** A buy program holds ERG: a storage-rent claim on an abandoned box
+  takes one fee and leaves a smaller program (or consumes a box smaller than the fee), so its creation rule holds no
+  reserve, `value = legs x (slice + executorFee)`, and `rentReserve` in R7 is 0. A sell program holds tokens: a box
+  too small to pay rent is consumed whole, tokens included, so it keeps one full rent fee for its bytes (plus the
+  node's minimum for the box), returned with the last leg. No contract changes: `rentReserve` was already a register
+  parameter. Measured effect: the ERG a pocket-change buy program locks, before and after.
+- **Fix 2, the first leg waits one interval.** The create and the leg builders set the new box's creation height to
+  the build height plus one, the first block it can be mined in (the node accepts a creation height up to the next
+  block: checked through the signer's node check before the first submission). Case: a program built at H with
+  interval N has its first leg refused at HEIGHT H+N and accepted at H+N+1.
+
+`ClockSell.es`, the mirror: the box holds tokens; a leg sells at most `slice` units into the pinned pool; the owner's
+output must carry at least `x * slice * feeNum / (y * 1000 + slice * feeNum)` nanoERG less tolerance, judged at the
+pool's reserves before the trade, from the box's own in and out; an optional floor `minPrice` (nanoERG per unit)
+makes a cheap leg invalid; the executor's take from the box's ERG is at most `executorFee`; the last leg (fewer than
+`slice` units would remain) sells what is left and the owner's output takes the rest of the ERG, reserve included;
+the owner's key spends the box any time; one clocked box per transaction; context variables name the outputs.
+Two trees, not one with a side flag: the leg bodies share almost nothing but the prelude, so one tree would be
+near the sum of both (about 1,000 bytes) and every box, buy or sell, would carry it; the sell side's rent reserve
+is one fee per byte of the box.
+
+Cases for the sell side (`freedex/test/clock.test.ts`, "the tranche sale"), the eleven mirrored plus three:
+
+1. A leg at the interval is accepted: the slice into the pool, the pool's rule in ERG to the owner, the fee to the
+   executor, the clock restarted.
+2. One block early is refused; the builder will not build it.
+3. A leg that sells more than the slice is refused.
+4. A fill below tolerance is refused (one nanoERG shaved from the owner's output); with a tolerance it passes.
+5. An executor fee above the cap is refused.
+6. The floor refuses a cheap pool and accepts a dear one (the cap of the buy side, mirrored).
+7. The last leg closes the box: no successor, the proceeds, the rent reserve and the minimum to the owner.
+8. The owner cancels at any time, tokens and ERG back.
+9. A stranger cannot cancel.
+10. Two sell boxes in one transaction are refused.
+11. A backdated successor is refused.
+12. (added) A remainder smaller than a slice is sold with the last leg (1,000 units in slices of 300: 300, 300, 400).
+13. (added) A slice whose proceeds are below the node's box minimum: the owner's box is topped up from the fee.
+14. (added) Sizing: legs from the tokens, value = legs x fee + one rent fee for the bytes + the minimum.
+
+Mainnet: one sell program from the test wallet (9 FAKU units in three slices of 3, interval 3 blocks, executor fee
+0.0015 ERG), its legs executed by the Node runner, keyless; then one buy program under the new rule, the same shape
+as the first (0.03 ERG in three legs), to measure the saving. Net under 0.05 ERG, the reserves excluded.
+
+Kill criterion for the extension: the sell leg's price check outside the per-transaction cost cap, or any mirrored
+case that cannot be made to refuse; then the sell side closes with the note and the two fixes still ship.

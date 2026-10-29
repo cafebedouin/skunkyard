@@ -147,3 +147,28 @@ New, each with a test:
 Found on the way: happy-dom 20.14.6 has no `Option` constructor, so the page uses `option()` from `dom.ts`
 (`document.createElement("option")`), the same DOM. Vitest 5.0.5's peer range for happy-dom is `^20.14.6`, which is
 why 20.14.6 and not 21.
+
+## The tranche sale, two clocked-box fixes, the Bonds tab reordered, 2026-10-29 (synced from freedex `18e7575`)
+
+The clocked box's second session is recorded in `skunks/clockbox/RESULT.md` (second session) and
+`skunks/clockbox/mainnet/README.md`; this copy carries the same `contracts/ClockSell.es`, `src/clock.ts`,
+`src/upkeep.ts`, `src/ui/programs.ts` and `test/clock.test.ts`, with `scripts/mainnet-run.ts` gaining
+`clock-create-sell`. The Bonds tab now leads with the request form, then the visitor's positions, then the market
+collapsed in the Limit orders style with counts on the summary lines (`test/ui/positions.test.ts`). Printed by the
+freedex checks before the commit:
+
+```
+All matched files use Prettier code style!
+ Test Files  26 passed (26)
+      Tests  107 passed (107)
+✓ built in 482ms
+```
+
+The clock cases' lines are in `run-test-clock.log`:
+
+```
+buy program box: 666 bytes, locked 34500000 nanoERG, rent reserve 0 (one rent fee would be 832500000); tree 504 bytes
+sell program box: 716 bytes, rent reserve 895000000 nanoERG, minimum 257760, locked 899757760; tree 517 bytes
+cost of one buy leg: clock script 332, pool script 186; tree 504 bytes
+cost of one sell leg: clock script 340, pool script 186; tree 517 bytes
+```

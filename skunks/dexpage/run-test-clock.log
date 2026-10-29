@@ -1,33 +1,46 @@
-[warn] scripts/mainnet-run.ts
-[warn] scripts/t2t-list.ts
-[warn] Code style issues found in 4 files. Run Prettier with --write to fix.
-stdout | test/clock.test.ts > the clocked box > sizes the program: legs x (slice + fee) plus one storage-rent fee for the box's bytes; refuses a schedule past a rent period
-program box: 671 bytes, rent reserve 838750000 nanoERG; tree 504 bytes
-✓ test/clock.test.ts > the clocked box > sizes the program: legs x (slice + fee) plus one storage-rent fee for the box's bytes; refuses a schedule past a rent period 23ms
-✓ test/clock.test.ts > the clocked box > a leg at the interval is accepted: the slice into the pool, the pool's rule to the owner, the fee to the executor, the clock restarted 553ms
-✓ test/clock.test.ts > the clocked box > one block early is refused by the script, and the builder will not build it 146ms
-✓ test/clock.test.ts > the clocked box > a leg that takes more than the slice is refused 128ms
-✓ test/clock.test.ts > the clocked box > a fill below tolerance is refused: one token shaved from the owner's output 119ms
-✓ test/clock.test.ts > the clocked box > with a tolerance, the same shave is accepted 124ms
-✓ test/clock.test.ts > the clocked box > an executor fee above the cap is refused 80ms
-✓ test/clock.test.ts > the clocked box > the absolute cap refuses a dear pool and accepts a cheap one 202ms
-✓ test/clock.test.ts > the clocked box > the last leg closes the box: no successor, the remainder and the rent reserve to the owner 201ms
-✓ test/clock.test.ts > the clocked box > the owner cancels at any time, everything back less the miner fee 64ms
-✓ test/clock.test.ts > the clocked box > a stranger cannot cancel 87ms
-✓ test/clock.test.ts > the clocked box > two clocked boxes in one transaction are refused 110ms
-stdout | test/clock.test.ts > the clocked box > prints the evaluation cost of one leg
-cost of one leg: clock script 332, pool script 186; tree 504 bytes
-✓ test/clock.test.ts > the clocked box > a backdated successor is refused: legs cannot come faster than the interval 127ms
-✓ test/clock.test.ts > the clocked box > prints the evaluation cost of one leg 130ms
-✓ test/ui/programs.test.ts > programs > quotes a program from the form before any wallet, and lists open programs 2067ms
-✓ test/explorer.test.ts > parseExact > a real pool box from the explorer re-hashes to its own id after conversion 10ms
-✓ test/hashes.test.ts > template hashes match their trees > ERG pool 4ms
-✓ test/hashes.test.ts > template hashes match their trees > token-to-token pool 2ms
-✓ test/hashes.test.ts > template hashes match their trees > Babel, the same for any token 1ms
-✓ test/hashes.test.ts > template hashes match their trees > Machina E2T limit order 6ms
-✓ test/hashes.test.ts > template hashes match their trees > the clocked box: the pinned tree is what contracts/Clock.es compiles to 682ms
-✓ test/hashes.test.ts > template hashes match their trees > SigmaFi orders and bonds 2ms
-✓ test/ui/programs.test.ts > programs > with a wallet: the visitor's program first, cancel through the wallet, and a new program from the form 974ms
-✓ test/ui/programs.test.ts > programs > the upkeep runner executes the due leg of a stranger's program, keyless, the fee to the visitor 588ms
-Test Files  26 passed (26)
-Tests  89 passed (89)
+buy program box: 666 bytes, locked 34500000 nanoERG, rent reserve 0 (one rent fee would be 832500000); tree 504 bytes
+✓ the clocked box (buy side, Clock.es) > sizes the program: legs x (slice + fee), no rent reserve on the buy side; refuses a schedule past a rent period 7ms
+✓ template hashes match their trees > ERG pool 3ms
+✓ template hashes match their trees > token-to-token pool 1ms
+✓ template hashes match their trees > Babel, the same for any token 0ms
+✓ template hashes match their trees > Machina E2T limit order 3ms
+✓ template hashes match their trees > the clocked box: the pinned tree is what contracts/Clock.es compiles to 316ms
+✓ the clocked box (buy side, Clock.es) > a leg at the interval is accepted: the slice into the pool, the pool's rule to the owner, the fee to the executor, the clock restarted 208ms
+✓ the clocked box (buy side, Clock.es) > a program built at H with interval N: its first leg is refused at HEIGHT H+N and accepted at H+N+1 84ms
+✓ template hashes match their trees > the tranche sale: the pinned tree is what contracts/ClockSell.es compiles to 117ms
+✓ template hashes match their trees > SigmaFi orders and bonds 1ms
+✓ the clocked box (buy side, Clock.es) > one block early is refused by the script, and the builder will not build it 35ms
+✓ the clocked box (buy side, Clock.es) > a leg that takes more than the slice is refused 33ms
+✓ the clocked box (buy side, Clock.es) > a fill below tolerance is refused: one token shaved from the owner's output 30ms
+✓ the clocked box (buy side, Clock.es) > with a tolerance, the same shave is accepted 32ms
+✓ the clocked box (buy side, Clock.es) > an executor fee above the cap is refused 27ms
+✓ the clocked box (buy side, Clock.es) > the absolute cap refuses a dear pool and accepts a cheap one 58ms
+✓ the clocked box (buy side, Clock.es) > the last leg closes the box: no successor, the remainder to the owner 43ms
+✓ the clocked box (buy side, Clock.es) > the owner cancels at any time, everything back less the miner fee 23ms
+✓ the clocked box (buy side, Clock.es) > a stranger cannot cancel 27ms
+✓ the clocked box (buy side, Clock.es) > two clocked boxes in one transaction are refused 38ms
+stdout | the clocked box (buy side, Clock.es) > prints the evaluation cost of one leg
+cost of one buy leg: clock script 332, pool script 186; tree 504 bytes
+sell program box: 716 bytes, rent reserve 895000000 nanoERG, minimum 257760, locked 899757760; tree 517 bytes
+✓ the clocked box (buy side, Clock.es) > a backdated successor is refused: legs cannot come faster than the interval 51ms
+✓ the clocked box (buy side, Clock.es) > prints the evaluation cost of one leg 41ms
+✓ the tranche sale (sell side, ClockSell.es) > sizes the program: legs x fee plus one storage-rent fee for the box's bytes plus the node's minimum; legs from the tokens 2ms
+✓ the tranche sale (sell side, ClockSell.es) > a leg at the interval is accepted: the slice into the pool, the pool's rule in ERG to the owner, the fee to the executor, the clock restarted 27ms
+✓ the tranche sale (sell side, ClockSell.es) > a slice whose proceeds are below the node's minimum: the owner's box is topped up out of the executor's fee 25ms
+✓ the tranche sale (sell side, ClockSell.es) > one block early is refused by the script, and the builder will not build it 23ms
+✓ the tranche sale (sell side, ClockSell.es) > a leg that sells more than the slice is refused 23ms
+✓ the tranche sale (sell side, ClockSell.es) > a fill below tolerance is refused: one nanoERG shaved from the owner's output 21ms
+✓ the tranche sale (sell side, ClockSell.es) > with a tolerance, the same shave is accepted 24ms
+✓ the tranche sale (sell side, ClockSell.es) > an executor fee above the cap is refused 23ms
+✓ the tranche sale (sell side, ClockSell.es) > the floor refuses a cheap pool and accepts a dear one 47ms
+✓ the tranche sale (sell side, ClockSell.es) > the last leg closes the box: no successor, the proceeds, the rent reserve and the minimum to the owner 36ms
+✓ the tranche sale (sell side, ClockSell.es) > a remainder smaller than a slice is sold with the last leg 50ms
+stdout | the tranche sale (sell side, ClockSell.es) > prints the evaluation cost of one leg
+cost of one sell leg: clock script 340, pool script 186; tree 517 bytes
+✓ the tranche sale (sell side, ClockSell.es) > the owner cancels at any time, the tokens and the ERG back less the miner fee 18ms
+✓ the tranche sale (sell side, ClockSell.es) > a stranger cannot cancel 24ms
+✓ the tranche sale (sell side, ClockSell.es) > two sell boxes in one transaction are refused 32ms
+✓ the tranche sale (sell side, ClockSell.es) > a backdated successor is refused: legs cannot come faster than the interval 43ms
+✓ the tranche sale (sell side, ClockSell.es) > prints the evaluation cost of one leg 39ms
+Test Files  2 passed (2)
+Tests  38 passed (38)

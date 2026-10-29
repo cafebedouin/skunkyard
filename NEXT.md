@@ -17,6 +17,14 @@
 > size for small programs (0.84 ERG held per box; a smaller tree is the lever), SK-065 (takes the deadline logic),
 > Duckpools, the Nautilus session, the mobile path's three checks.
 >
+> **2026-10-29 (SK-064 second session):** `ClockSell.es`, the tranche sale, is live beside the buy side on the Programs
+> tab with a side selector (517-byte tree, 340 cost units a leg, fourteen mirrored cases; one mainnet sell program of
+> three keyless legs closed, `skunks/clockbox/RESULT.md` second session). Two fixes from the first run: the buy side
+> holds no rent reserve (0.0345 ERG locked for the pocket-change program, against 0.87325), and a box's clock is the
+> first block it can be mined in. Open from SK-064: a leg that waits in the mempool still starts early by the wait;
+> the Bonds tab now leads with the request form and collapses the market (the user's ask). SK-065 next for the
+> deadline logic.
+>
 > **2026-10-30 (overnight continued):** freedex has six tabs (Swap with ERG and token-to-token pools and the bank quoted
 > beside, Limit orders, Pool, Bank, Bonds, Escrow) and keyless upkeep from the page (Babel bids and Machina orders
 > across their pool; U1 a live take, mined). 30 mock-chain cases on the deployed scripts; 25 mainnet transactions
