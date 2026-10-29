@@ -55,4 +55,5 @@ no proofs at all.
 | step | what | transaction | wallet net nanoERG |
 |---|---|---|---|
 | U0 | the target: a Machina order buying FAKU at 34,000 nanoERG/unit with 0.01 ERG, deliberately above the pool's ~32,620 (signed, through the signer) | `95839cfa909910ccdb9ed6f8564705f726033d4f9982cacdbd794506095da834` | -11,000,000 |
-| U1 | **a live Babel bid the dry run found on another token** (`e62170e9…`, token `3405d8f7…`): 20 units bought from the pool and sold to the bid, keyless, submitted via the explorer, 1,251,764 nanoERG to the wallet | `43f5fe4560ad967619c8dc9bcdcc23db641f715f8c828fd82f37d75c2ec214cb` | +1,251,764 |
+| U0b | a second target, 0.1 ERG at 35,000: U0 was too small (its whole gap, about 0.00037 ERG, is under the miner fee, so the job correctly declined it) | `0ca2d2052481e49f28ab7c710bae9ffcaf2662b8d392a1f2e327f0ac5229626a` | -101,000,000 |
+| U1 | **a live Babel bid the dry run found on another token** (`e62170e9…`, token `3405d8f7…`): 20 units bought from the pool and sold to the bid, keyless, submitted via the explorer, 1,251,764 nanoERG to the wallet | `43f5fe4560ad967619c8dc9bcdcc23db641f715f8c828fd82f37d75c2ec214cb`, mined at 1,904,969 | +1,251,764 |
