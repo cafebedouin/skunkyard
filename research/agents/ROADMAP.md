@@ -133,7 +133,17 @@ Mew Finance (launched October 2024, HQΣr and Aco Šmrkas) is a DEX (an ErgoDEX 
 Mart, with a centralized Ergo-Cardano NFT bridge; the Lock tool's source is public (`AcoSmrkas/mew-lock`, Svelte and
 TypeScript), the rest is unverified. Its June security response rotated the service and DEX fee wallets after a seed
 breach (docs.ergoplatform.com/eco/mew-finance) [secondary]. A static page has no service wallet to rotate, which is
-the argument.
+one argument. The other (the user, 2026-10-29): Mew simplified ErgoDEX but did not release its code, and tokenjay's
+backend was not found on GitHub either; the model is ErgoMixer, open source and run by the user on their own machine
+(`ergoMixer/ergoMixBack`). The ideal, in three tiers:
+1. **Open source, self-hosted**: static pages anyone deploys to GitHub Pages or any static host (the stack below).
+2. **A default instance** with low overhead, on GitHub or a low-cost VPS, for users who do not self-host.
+3. **Inside the Ergo mobile wallet, the way tokenjay is.** That is a Mosaik app (MrStahlfelge/mosaik, Apache-2.0,
+   last pushed 2022-12), a server-driven UI the wallet renders; the ErgoPay guide says this logic must run on a
+   server the wallets can reach. So tier 3 is not static. It is a thin server (no keys, no state beyond the UI
+   tree, the same Fleet build code), which tier 2 runs anyway. Whether the current wallet app still runs Mosaik apps
+   is unverified; check before building tier 3.
+The order is 1, then 2, then 3; the kill criterion below applies to tier 1 only.
 
 What the facts support (checked 2026-10-28):
 - EIP-20 option 2 puts the reduced transaction in the QR or link itself, no server; up to about 2,900 characters,
