@@ -38,8 +38,10 @@ preflight with `access-control-allow-origin: *` and `access-control-allow-method
 
 - No transaction has been signed or submitted. The mainnet wallet session (create, fill, close from the built
   page with Nautilus and pocket change) is the operator's; its transaction ids go here.
-- Deployed 2026-10-29 as its own repository, `cafebedouin/freedex` (MIT), Pages set to GitHub Actions; the first
-  workflow run is recorded below when it finishes.
+- Deployed 2026-10-29 as its own repository, `cafebedouin/freedex` (MIT), Pages set to GitHub Actions. First run
+  40825399595: build (npm ci, test, build) 11 s, deploy 28 s, both `success`; https://cafebedouin.github.io/freedex/
+  answers HTTP 200 with the built page (`<title>FreeDEX for Ergo</title>`, script `./assets/index-CNbkrN7z.js`,
+  the same bundle hash as the local build). One Actions job pair per push, well inside the budget in `CLAUDE.md`.
 
 ## Limits
 
