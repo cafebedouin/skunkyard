@@ -1,3 +1,10 @@
+> **2026-10-28: the agents line resumed** (the ergo_logic instance's read of the "agent at the protocol boundary" question
+> points at SK-005, the fence, chartered here since 2026-10-02 and never started). Plan agreed and registered:
+> `research/agents/ROADMAP.md` R5, worklist SK-005 and SK-063. Start with SK-063's three checks (reduced Machina order
+> length against EIP-20's 2,900 characters; the mobile wallet taking a static ErgoPay QR of that size; whether Satergo
+> opens ErgoPay links), then the SK-005 charter rewrite as fence v2. Node-side items (scoped API keys, key export off)
+> stay in ergo_logic.
+
 > **2026-10-28: the three-way agreement run is done** (EIP groundwork item 3): a thin Rust wrapper over RustCrypto `slh-dsa`
 > 0.2.0-rc.5 (`skunks/pqwallet/rust/`) through the rig's commands; Scala (BouncyCastle), JavaScript (noble) and Rust agree on
 > the ACVP vectors (Rust 114 checks incl. the pre-hash groups), on 193 spend-digest signatures from the three signers (the 72
