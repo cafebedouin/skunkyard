@@ -1,0 +1,54 @@
+{
+ "inputs": [
+  {
+   "boxId": "5a1e895eeee14821fca57d5c3234c159e1f18cdee005d57ebf2bd6ee8063dc5b",
+   "spendingProof": {
+    "proofBytes": "",
+    "extension": {}
+   }
+  },
+  {
+   "boxId": "026b0cf340d97353dcb30a21f0b332a6ae2869b7c169270ddbc38e4be7e98735",
+   "spendingProof": {
+    "proofBytes": "",
+    "extension": {}
+   }
+  }
+ ],
+ "dataInputs": [],
+ "outputs": [
+  {
+   "value": "711250000",
+   "ergoTree": "0008cd0329bbd4df63f911f6858fd5d35d4ff6a8e1404c51ec5ef3fa4899dc1a996726ab",
+   "creationHeight": 1905177,
+   "assets": [
+    {
+     "tokenId": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+     "amount": "9"
+    }
+   ],
+   "additionalRegisters": {
+    "R4": "0e205a1e895eeee14821fca57d5c3234c159e1f18cdee005d57ebf2bd6ee8063dc5b"
+   }
+  },
+  {
+   "value": "1000000",
+   "ergoTree": "1005040004000e36100204a00b08cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304",
+   "creationHeight": 1905177,
+   "assets": [],
+   "additionalRegisters": {}
+  },
+  {
+   "value": "178493065",
+   "ergoTree": "0008cd0329bbd4df63f911f6858fd5d35d4ff6a8e1404c51ec5ef3fa4899dc1a996726ab",
+   "creationHeight": 1905177,
+   "assets": [
+    {
+     "tokenId": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+     "amount": "9"
+    }
+   ],
+   "additionalRegisters": {}
+  }
+ ]
+}

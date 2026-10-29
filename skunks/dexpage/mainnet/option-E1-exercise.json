@@ -1,0 +1,74 @@
+{
+ "inputs": [
+  {
+   "boxId": "7c4f691c15c3d4a0c8d4f7d891931db3696b9808e603b84521f055ff94250ed7",
+   "spendingProof": {
+    "proofBytes": "",
+    "extension": {
+     "0": "0400",
+     "1": "0402"
+    }
+   }
+  },
+  {
+   "boxId": "575114fe4fceb2f4b42eec1f73a3ff914f5026cb12e215f73df7187d0c458811",
+   "spendingProof": {
+    "proofBytes": "",
+    "extension": {}
+   }
+  }
+ ],
+ "dataInputs": [],
+ "outputs": [
+  {
+   "value": "711520000",
+   "ergoTree": "0008cd0329bbd4df63f911f6858fd5d35d4ff6a8e1404c51ec5ef3fa4899dc1a996726ab",
+   "creationHeight": 1905148,
+   "assets": [],
+   "additionalRegisters": {
+    "R4": "0e207c4f691c15c3d4a0c8d4f7d891931db3696b9808e603b84521f055ff94250ed7"
+   }
+  },
+  {
+   "value": "100000",
+   "ergoTree": "0008cd0329bbd4df63f911f6858fd5d35d4ff6a8e1404c51ec5ef3fa4899dc1a996726ab",
+   "creationHeight": 1905148,
+   "assets": [
+    {
+     "tokenId": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+     "amount": "9"
+    }
+   ],
+   "additionalRegisters": {
+    "R4": "0e207c4f691c15c3d4a0c8d4f7d891931db3696b9808e603b84521f055ff94250ed7"
+   }
+  },
+  {
+   "value": "1000000",
+   "ergoTree": "1005040004000e36100204a00b08cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304",
+   "creationHeight": 1905148,
+   "assets": [],
+   "additionalRegisters": {}
+  },
+  {
+   "value": "7731103183",
+   "ergoTree": "0008cd0329bbd4df63f911f6858fd5d35d4ff6a8e1404c51ec5ef3fa4899dc1a996726ab",
+   "creationHeight": 1905148,
+   "assets": [
+    {
+     "tokenId": "f0cac602d618081f46db086726d3c4da53006b646b50e382989054dcf3c93bd8",
+     "amount": "4489"
+    },
+    {
+     "tokenId": "003bd19d0187117f130b62e1bcab0939929ff5c7709f843c5c4dd158949285d0",
+     "amount": "100"
+    },
+    {
+     "tokenId": "01dce8a5632d19799950ff90bca3b5d0ca3ebfa8aaafd06f0cc6dd1e97150e7f",
+     "amount": "87561"
+    }
+   ],
+   "additionalRegisters": {}
+  }
+ ]
+}

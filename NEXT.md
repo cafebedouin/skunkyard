@@ -25,6 +25,15 @@
 > the Bonds tab now leads with the request form and collapses the market (the user's ask). SK-065 next for the
 > deadline logic.
 >
+> **2026-10-29 (SK-065 built):** the option as a timed escrow is live in freedex as the Options tab (`skunks/option/`:
+> charter, result, the two contracts, the mainnet record). `Call.es` (373 bytes) and `Put.es` (357) mirror each
+> other; the fourteen preregistered cases pass on both sides; a call was written, bought and exercised on mainnet
+> from the test wallet and a second reclaimed after expiry, the same for a put (`skunks/option/mainnet/README.md`).
+> The page's upkeep reclaims an expired option for its writer beside the lender's collateral. Found: a sold call box
+> holds 0.71 ERG of rent reserve for 569 bytes, the same finding as the tranche sale; a strike in a token (a
+> SigUSD-denominated put) is not built. Next: Duckpools borrowing, a person's Nautilus session on the live page, the
+> mobile path's three checks.
+>
 > **2026-10-30 (overnight continued):** freedex has six tabs (Swap with ERG and token-to-token pools and the bank quoted
 > beside, Limit orders, Pool, Bank, Bonds, Escrow) and keyless upkeep from the page (Babel bids and Machina orders
 > across their pool; U1 a live take, mined). 30 mock-chain cases on the deployed scripts; 25 mainnet transactions

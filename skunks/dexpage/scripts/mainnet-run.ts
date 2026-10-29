@@ -14,6 +14,10 @@
 //   node scripts/mainnet-run.ts clock-create <tokenName> <sliceNano> <legs> <interval> <feeNano> [tolBps] [maxPriceNano]
 //   node scripts/mainnet-run.ts clock-create-sell <tokenName> <units> <sliceUnits> <interval> <feeNano> [tolBps] [minPriceNano]
 //   node scripts/mainnet-run.ts clock-cancel <boxId>
+//   node scripts/mainnet-run.ts option-write <call|put> <tokenId> <units> <strikeNano> <expiryBlocks> <premiumNano>
+//   node scripts/mainnet-run.ts option-buy <boxId>                         anyone pays the premium, becomes the buyer
+//   node scripts/mainnet-run.ts option-exercise <boxId>                    the named buyer (sign the box: --sign-tree)
+//   node scripts/mainnet-run.ts option-reclaim <boxId>                     the writer after expiry or while unsold (--sign-tree)
 // Set EXCLUDE=<boxId>[,<boxId>] to keep wallet boxes a pending transaction already spends out of the selection.
 // Writes mainnet/<step>-<time>.json and prints the summary and, for a create, the --allow-tree for the signer.
 import { readFileSync, writeFileSync } from "node:fs";
@@ -28,6 +32,7 @@ import { buildLend, buildOpenOrder, buildRepay } from "../src/bonds.ts";
 import { buildMint as buildBankMint, buildRedeem as buildBankRedeem, loadBank } from "../src/bank.ts";
 import { buildDeposit, buildRedeem, buildSwap, buildSwapT2T, depositQuote, describePool, describeT2TPool, quote, quoteT2T, redeemQuote, type SwapDirection } from "../src/amm.ts";
 import { buildCancelClock, buildCreateClock, buildCreateClockSell, describeClock, sizeProgram, sizeProgramSell } from "../src/clock.ts";
+import { buildBuy as buildOptionBuy, buildExercise, buildReclaim, buildWrite, describeOption, sizeWrite } from "../src/option.ts";
 
 const WALLET = readFileSync(join(homedir(), ".config", "skunkyard", "mainnet-wallet.address"), "utf8").trim();
 const owner = ErgoAddress.fromBase58(WALLET);
@@ -174,6 +179,25 @@ if (step === "fill") {
   const clockBox = await box(args[0]);
   console.log(`${describeClock(clockBox).side} program ${describeClock(clockBox).boxId.slice(0, 12)}: legs left ${describeClock(clockBox).legsLeft}`);
   tx = buildCancelClock({ height, owner, clockBox });
+} else if (step === "option-write") {
+  // option-write <call|put> <tokenId> <units> <strikeNano> <expiryBlocks> <premiumNano>
+  // SK-065: a call locks the tokens and one rent fee for the box's bytes; a put locks strike x amount of ERG
+  const t = {
+    side: args[0] as "call" | "put", writer: owner, tokenId: args[1], amount: BigInt(args[2]), strike: BigInt(args[3]),
+    expiry: height + Number(args[4]), premium: BigInt(args[5]),
+  };
+  const sized = sizeWrite(t, height);
+  console.log(`${t.side} on ${t.amount} units of ${t.tokenId.slice(0, 12)}: strike ${t.strike} nanoERG/unit (${t.strike * t.amount} in all), expiry ${t.expiry} (height ${height} + ${args[4]}), premium ${t.premium}; box ${sized.bytes} bytes, rent reserve ${sized.rentReserve}, value ${sized.value}`);
+  tx = buildWrite({ ...t, height, inputs });
+  allow = tx.outputs[0].ergoTree;
+} else if (step === "option-buy" || step === "option-exercise" || step === "option-reclaim") {
+  const optionBox = await box(args[0]);
+  const v = describeOption(optionBox);
+  console.log(`${v.side} ${v.boxId.slice(0, 12)}: ${v.amount} units of ${v.tokenId.slice(0, 12)}, strike ${v.strike} (${v.strikeTotal} in all), expiry ${v.expiry} (height ${height}), premium ${v.premium}, ${v.sold ? `sold to ${v.buyer}` : "unsold"}, value ${v.value}`);
+  if (step === "option-buy") tx = buildOptionBuy({ height, inputs, buyer: owner, optionBox });
+  else if (step === "option-exercise") tx = buildExercise({ height, inputs, buyer: owner, optionBox });
+  else tx = buildReclaim({ height, inputs, writer: owner, optionBox });
+  if (step !== "option-buy") console.log(`--sign-tree ${optionBox.ergoTree}`);
 } else if (step === "close") {
   tx = buildClose({ height, inputs, owner, orderBox: await box(args[0]) });
 } else {

@@ -1,0 +1,55 @@
+ ✓ test/upkeep-option.test.ts > expiredOptionsFor > picks the expired options the visitor wrote, sold or not, and leaves the others
+call box: 569 bytes (sized as sold), value 711250000 nanoERG (rent reserve 711250000); tree 373 bytes
+ ✓ test/hashes.test.ts > template hashes match their trees > ERG pool
+ ✓ test/hashes.test.ts > template hashes match their trees > token-to-token pool
+ ✓ test/hashes.test.ts > template hashes match their trees > Babel, the same for any token
+ ✓ test/hashes.test.ts > template hashes match their trees > Machina E2T limit order
+ ✓ test/hashes.test.ts > template hashes match their trees > the clocked box: the pinned tree is what contracts/Clock.es compiles to
+ ✓ test/option.test.ts > the call (Call.es) > 1. write: the box holds the underlying and the terms, R7 absent; the builder refuses an expiry past a rent period
+ ✓ test/option.test.ts > the call (Call.es) > 2. buy by a stranger is accepted: the premium to the writer, the stranger in R7, the box's value and tokens unchanged
+ ✓ test/hashes.test.ts > template hashes match their trees > the tranche sale: the pinned tree is what contracts/ClockSell.es compiles to
+ ✓ test/option.test.ts > the call (Call.es) > 3. a second buy of a sold box is refused
+ ✓ test/option.test.ts > the call (Call.es) > 4. exercise by the buyer before the expiry is accepted: the strike to the writer, the underlying across
+ ✓ test/hashes.test.ts > template hashes match their trees > the call: the pinned tree is what contracts/Call.es compiles to
+ ✓ test/option.test.ts > the call (Call.es) > 4b. exercise at the expiry itself is accepted (the last valid block)
+ ✓ test/option.test.ts > the call (Call.es) > 5. exercise at expiry + 1 is refused
+ ✓ test/hashes.test.ts > template hashes match their trees > the put: the pinned tree is what contracts/Put.es compiles to
+ ✓ test/hashes.test.ts > template hashes match their trees > SigmaFi orders and bonds
+ ✓ test/option.test.ts > the call (Call.es) > 6. exercise by a non-buyer is refused
+ ✓ test/option.test.ts > the call (Call.es) > 7. exercise paying one nanoERG less than the strike is refused
+ ✓ test/option.test.ts > the call (Call.es) > 8. writer reclaim at the expiry is refused and at expiry + 1 accepted
+ ✓ test/option.test.ts > the call (Call.es) > 9. writer cancel while unsold is accepted
+ ✓ test/option.test.ts > the call (Call.es) > 9b. a stranger cannot cancel an unsold option
+ ✓ test/option.test.ts > the call (Call.es) > 10. writer cancel after the sale, before the expiry, is refused
+ ✓ test/option.test.ts > the call (Call.es) > 11. premium one nanoERG short is refused
+ ✓ test/option.test.ts > the call (Call.es) > 12. two option boxes in one transaction are refused
+stdout | test/option.test.ts > the call (Call.es) > 14. (added) prints the evaluation cost of the buy and the exercise
+cost of a call: buy 201, exercise 177; tree 373 bytes
+put box: 518 bytes (sized as sold), value 270000 nanoERG (rent reserve 0); tree 357 bytes
+ ✓ test/option.test.ts > the call (Call.es) > 13. (added) a buy at the expiry is accepted; at expiry + 1 the builder refuses and, forced, so does the script
+ ✓ test/option.test.ts > the call (Call.es) > 14. (added) prints the evaluation cost of the buy and the exercise
+ ✓ test/option.test.ts > the put (Put.es) > 1. write: the box holds the underlying and the terms, R7 absent; the builder refuses an expiry past a rent period
+ ✓ test/option.test.ts > the put (Put.es) > 2. buy by a stranger is accepted: the premium to the writer, the stranger in R7, the box's value and tokens unchanged
+ ✓ test/ui/options.test.ts > options > quotes a call and a put from the form before any wallet, and lists the open offers grouped by token
+ ✓ test/option.test.ts > the put (Put.es) > 3. a second buy of a sold box is refused
+ ✓ test/option.test.ts > the put (Put.es) > 4. exercise by the buyer before the expiry is accepted: the strike to the writer, the underlying across
+ ✓ test/option.test.ts > the put (Put.es) > 4b. exercise at the expiry itself is accepted (the last valid block)
+ ✓ test/option.test.ts > the put (Put.es) > 5. exercise at expiry + 1 is refused
+ ✓ test/option.test.ts > the put (Put.es) > 6. exercise by a non-buyer is refused
+ ✓ test/option.test.ts > the put (Put.es) > 7. exercise delivering one unit less than the amount is refused
+ ✓ test/option.test.ts > the put (Put.es) > 8. writer reclaim at the expiry is refused and at expiry + 1 accepted
+ ✓ test/option.test.ts > the put (Put.es) > 9. writer cancel while unsold is accepted
+ ✓ test/option.test.ts > the put (Put.es) > 9b. a stranger cannot cancel an unsold option
+ ✓ test/option.test.ts > the put (Put.es) > 10. writer cancel after the sale, before the expiry, is refused
+ ✓ test/option.test.ts > the put (Put.es) > 11. premium one nanoERG short is refused
+stdout | test/option.test.ts > the put (Put.es) > 14. (added) prints the evaluation cost of the buy and the exercise
+cost of a put: buy 194, exercise 169; tree 357 bytes
+ ✓ test/option.test.ts > the put (Put.es) > 12. two option boxes in one transaction are refused
+ ✓ test/option.test.ts > the put (Put.es) > 13. (added) a buy at the expiry is accepted; at expiry + 1 the builder refuses and, forced, so does the script
+ ✓ test/option.test.ts > the put (Put.es) > 14. (added) prints the evaluation cost of the buy and the exercise
+ ✓ test/ui/options.test.ts > options > with a wallet: positions with exercise and cancel, buy an offer, exercise the held call, write a put
+ ✓ test/ui/options.test.ts > options > the upkeep timer asks the wallet to reclaim an expired option the visitor wrote, once
+ Test Files  4 passed (4)
+      Tests  45 passed (45)
+ Test Files  29 passed (29)
+      Tests  145 passed (145)
