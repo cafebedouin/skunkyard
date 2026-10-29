@@ -42,3 +42,17 @@ fill paid into the order, returned in D.
   `R4[Long]`. The mock chain's evaluator showed it (`Cannot getReg[Int](4)` against a Long), and every live T2T box
   carries `SInt`. The N2T source and chain agree on Int.
 - The node accepted every transaction at a 0.001 ERG fee and all were mined within a few blocks.
+
+## Keyless upkeep from the page's code (2026-10-29, later the same day)
+
+The page gained an upkeep runner (`src/upkeep.ts`): jobs that find boxes anyone may act on for a bounty, build the
+transaction with no signature, and submit it through the explorer's mempool endpoint, bounty to the visitor. Two
+jobs: Babel bids above their token's deepest ERG pool (`src/babel.ts`, the mainnet Babel take in TypeScript) and
+Machina limit orders priced across the pool, either side (`src/machina-arb.ts`). `scripts/upkeep-run.ts` is the
+same runner from Node, the sidecar form. Nothing in this section passed through the signer: these transactions have
+no proofs at all.
+
+| step | what | transaction | wallet net nanoERG |
+|---|---|---|---|
+| U0 | the target: a Machina order buying FAKU at 34,000 nanoERG/unit with 0.01 ERG, deliberately above the pool's ~32,620 (signed, through the signer) | `95839cfa909910ccdb9ed6f8564705f726033d4f9982cacdbd794506095da834` | -11,000,000 |
+| U1 | **a live Babel bid the dry run found on another token** (`e62170e9…`, token `3405d8f7…`): 20 units bought from the pool and sold to the bid, keyless, submitted via the explorer, 1,251,764 nanoERG to the wallet | `43f5fe4560ad967619c8dc9bcdcc23db641f715f8c828fd82f37d75c2ec214cb` | +1,251,764 |
