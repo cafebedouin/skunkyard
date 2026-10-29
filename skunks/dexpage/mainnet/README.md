@@ -75,3 +75,11 @@ Three more venues on their deployed contracts, each with mock-chain cases first 
 | E1 | TokenJay escrow: 10 FAKU units offered to the wallet's own address at 0.002 ERG; the contract's "UI fee" output is pointed at the seller (`buildCreateEscrow`) | `d9d8b0af26deb343b527f5dc8ef47655b96c67a0c75f09568bf851f904b34371` | -2,000,000 |
 | L1 | SigmaFi loan request: 0.01 ERG principal, 0.0101 repayment, 100 blocks, 0.02 ERG collateral (`buildOpenOrder`) | `887902b55bea59e86cdab33bebd830d7f85f098a5932759dba3cf11152e9814f` | -21,000,000 |
 | B1 | SigmaUSD bank: 100 SigRSV minted at the oracle price plus the 2% protocol fee, 21,669,484 nanoERG all in (`buildMint`, Fleet's AgeUSD plugin, no implementor fee). SigUSD minting was closed: the live reserve ratio was 312%, under the 400% floor (`scripts/bank-state.ts`) | `c9feee3d5b22a692cfe3c4c50f28960089b2852d8350a029f8079e50705a3c6a` | -21,669,484 |
+| E2 | the named buyer (the wallet itself) pays the 0.002 ERG and takes the 10 FAKU; the escrow box's own value became the buyer's token box and paid the miner fee, so the wallet's net was zero (`buildTakeEscrow`; the escrow input needs no signature on the sold path) | `10017e3b141bc114c73e9d9d934213a97bc193cd7c050f0b455e24da53c22a95` | 0 |
+| L2 | the wallet funds its own loan request: 0.01 ERG to the borrower, 50,000 nanoERG to SigmaFi's developer address (the contract's 0.5%), the 0.4% "interface fee" back to the lender, a bond for 100 blocks (`buildLend`) | `ae235887046f36450bbfe25974b280660a14001949fb3693510e655a0e479635` | -1,050,000 |
+| S3 | 0.2 ERG to SigUSD on the pool (5 units, 0.05 SigUSD), to have SigUSD for the bank's redeem path | `1084422e175d80753675d65928b17f74b71679495764851b7e357edfb9ee072f` | -201,000,000 |
+
+**Found:** with the reserve ratio at 312%, the bank refuses both SigUSD minting and SigRSV redemption (the AgeUSD
+rules: stable minting needs the ratio to stay above 400%, reserve redemption too). Fleet's plugin says so before
+anything is built ("Unable to mint more than 0 stable coins", "Unable to redeem more than 0 reserve coins"), and
+the Bank tab shows "allowed by the bank: no". The wallet keeps its 100 SigRSV until the ratio recovers.
