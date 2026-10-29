@@ -18,6 +18,10 @@
 //
 // usage: node scripts/mainnet-sign.mjs --tx <unsigned.json> [--submit --purpose "<why>"] [--out signed.json]
 //        [--node http://128.253.41.100:9053] [--max-loss 500000000] [--day-cap 5000000000] [--max-fee 5000000]
+//        [--allow-tree <hex>[,<hex>]]   extra output scripts allowed for this one transaction (e.g. an order contract
+//                                       the wallet is depositing into); named explicitly per call, logged, never default
+//        [--sign-tree <hex>[,<hex>]]    inputs under these scripts are signed with the wallet key too (a contract whose
+//                                       path reduces to this wallet's key, e.g. closing the wallet's own order)
 import { appendFileSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
@@ -48,6 +52,10 @@ const node = (opt.node ?? 'http://128.253.41.100:9053').replace(/\/+$/, '');
 const maxLoss = BigInt(opt['max-loss'] ?? '500000000');
 const dayCap = BigInt(opt['day-cap'] ?? '5000000000');
 const maxFee = BigInt(opt['max-fee'] ?? '5000000');
+const allowTrees = new Set((opt['allow-tree'] ?? '').split(',').map((t) => t.trim()).filter(Boolean));
+const signTrees = new Set((opt['sign-tree'] ?? '').split(',').map((t) => t.trim()).filter(Boolean));
+if (signTrees.size) log(`inputs under these scripts are signed with the wallet key: ${[...signTrees].map((t) => t.slice(0, 16) + '…').join(', ')}`);
+if (allowTrees.size) log(`extra output scripts allowed for this call: ${[...allowTrees].map((t) => t.slice(0, 16) + '…').join(', ')}`);
 
 const mnemonic = readFileSync(join(CONF, 'mainnet-wallet.txt'), 'utf8').trim();
 if (mnemonic.split(/\s+/).length !== 24 || !validateMnemonic(mnemonic)) die('the wallet file does not hold a valid 24-word mnemonic');
@@ -92,7 +100,7 @@ for (const i of tx.inputs) {
 }
 // Signed with the wallet key: its P2PK boxes, and its two-step vault boxes (the vault reduces to proveDlog(owner)
 // once the announce conditions hold, so the proof is the same Schnorr signature).
-const mine = boxes.map((b) => b.ergoTree === walletTree || b.ergoTree === ts.vault);
+const mine = boxes.map((b) => b.ergoTree === walletTree || b.ergoTree === ts.vault || signTrees.has(b.ergoTree));
 const inputTrees = new Set(boxes.map((b) => b.ergoTree));
 
 // Well-formed values, then the destination rule
@@ -107,8 +115,8 @@ for (const [k, o] of tx.outputs.entries()) {
     continue;
   }
   if (o.ergoTree !== walletTree && o.ergoTree !== vaultTree && o.ergoTree !== ts.vault && o.ergoTree !== recoveryTree &&
-      o.ergoTree !== FEE_TREE && !inputTrees.has(o.ergoTree))
-    die(`output ${k} goes to a script that is neither the wallet, its vaults, its recovery address, the fee contract, nor an input's script`);
+      o.ergoTree !== FEE_TREE && !inputTrees.has(o.ergoTree) && !allowTrees.has(o.ergoTree))
+    die(`output ${k} goes to a script that is neither the wallet, its vaults, its recovery address, the fee contract, an input's script, nor an --allow-tree`);
 }
 // Caps
 const sum = (xs) => xs.reduce((a, b) => a + BigInt(b), 0n);
