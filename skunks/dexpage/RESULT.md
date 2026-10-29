@@ -36,9 +36,9 @@ preflight with `access-control-allow-origin: *` and `access-control-allow-method
 
 ## Mainnet, signed: every builder through the test wallet (`mainnet/README.md`)
 
-Eight transactions on 2026-10-29, all built by the page's code, signed and checked by the guarded signer, mined:
+Nine transactions on 2026-10-29, all built by the page's code, signed and checked by the guarded signer, mined:
 fill a stranger's order (A), place an order (B), partial fill of it (C), close it (D), a direct pool swap each way
-(S1, S2), a liquidity deposit (L1) and its redemption (L2, see `mainnet/README.md` for the id). Transaction ids and
+(S1, S2), a liquidity deposit (L1) and its redemption (L2). Transaction ids and
 the wallet's net per step are in that file. Fee 0.001 ERG on each.
 
 ## Swap, pool and the second contract (added 2026-10-29)

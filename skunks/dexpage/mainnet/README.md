@@ -17,8 +17,9 @@ default minimum; Fleet recommends 0.0011). The page adds no fee of its own.
 | S1 | direct pool swap: 0.01 ERG into the deepest rsADA pool (6,756 ERG) for 13,996 units (0.013996 rsADA), no order box (`buildSwap`) | `ea0a7dfeb6964df57c5fcf86a4734c44572f58547aedad36ddbeb38e1c3ba9d4` | -11,000,000 |
 | S2 | the 13,996 units back into the same pool for 9,939,553 nanoERG (`buildSwap`, token to ERG); the round trip lost 0.6%, two pool fees of 0.3% | `7303dce957bf31a2d4d8518a8a639b3b464c648a7304bd905044aafac163eea8` | +8,939,553 |
 | L1 | add liquidity: 0.003 ERG plus 92 FAKU units at the pool's ratio into the FAKU pool (4,464 ERG) for 12,438 LP tokens, a direct deposit (`buildDeposit`) | `5eaa12e353aa67277823793ee7f3892193fe50fd93d7e26c3a8c8528a0747b17` | -4,000,000 |
+| L2 | remove liquidity: the 12,438 LP tokens redeemed for 2,999,942 nanoERG and 91 units (58 nanoERG and 1 unit stay in the pool, the rule's rounding) (`buildRedeem`) | `fd30f0e688047b91dc3461ee322ae9dbcb65bbaf4c3ebdd1196cc80742e0f4aa` | +1,999,942 |
 
-Net of A to D: the wallet paid 3.36 mERG for 1.00 FAKU from a stranger, 1 mERG for each of its own four
+Nine transactions, all accepted by the node and mined. Net of A to D: the wallet paid 3.36 mERG for 1.00 FAKU from a stranger, 1 mERG for each of its own four
 transactions, and holds 1.00 FAKU at the end (40 units bought back in C, 60 returned in D) plus the 1.60 mERG the C
 fill paid into the order, returned in D.
 
