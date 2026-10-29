@@ -7,9 +7,10 @@
 >
 > **2026-10-29: SK-063 tier 1 built, Nautilus first** (`skunks/dexpage/`): list, create, fill and close for Machina
 > limit orders from a static page; 4 mock-chain cases pass and all 38 live orders parse (`skunks/dexpage/RESULT.md`).
-> Handed off the same day as `cafebedouin/freedex` (https://cafebedouin.github.io/freedex/). Next: the user's wallet
-> session on mainnet with pocket change (the live page with Nautilus), transaction ids into freedex's README and
-> `skunks/dexpage/RESULT.md`, then the mobile path's three checks. The sidecar host for upkeep on
+> Handed off the same day as `cafebedouin/freedex` (https://cafebedouin.github.io/freedex/). Overnight 2026-10-29:
+> Swap (ErgoDEX v1 pools, direct, fee 0.001 ERG only), Pool (add/remove liquidity) and grouped limit orders; nine
+> mainnet transactions from the builders through the guarded signer, all mined (`skunks/dexpage/mainnet/README.md`).
+> Next: a person's session through Nautilus on the live page; the mobile path's three checks; T2T pools. The sidecar host for upkeep on
 > non-mining nodes is recorded in ROADMAP R5.
 
 > **2026-10-28: the three-way agreement run is done** (EIP groundwork item 3): a thin Rust wrapper over RustCrypto `slh-dsa`
