@@ -18,8 +18,9 @@ default minimum; Fleet recommends 0.0011). The page adds no fee of its own.
 | S2 | the 13,996 units back into the same pool for 9,939,553 nanoERG (`buildSwap`, token to ERG); the round trip lost 0.6%, two pool fees of 0.3% | `7303dce957bf31a2d4d8518a8a639b3b464c648a7304bd905044aafac163eea8` | +8,939,553 |
 | L1 | add liquidity: 0.003 ERG plus 92 FAKU units at the pool's ratio into the FAKU pool (4,464 ERG) for 12,438 LP tokens, a direct deposit (`buildDeposit`) | `5eaa12e353aa67277823793ee7f3892193fe50fd93d7e26c3a8c8528a0747b17` | -4,000,000 |
 | L2 | remove liquidity: the 12,438 LP tokens redeemed for 2,999,942 nanoERG and 91 units (58 nanoERG and 1 unit stay in the pool, the rule's rounding) (`buildRedeem`) | `fd30f0e688047b91dc3461ee322ae9dbcb65bbaf4c3ebdd1196cc80742e0f4aa` | +1,999,942 |
+| T1 | direct token-to-token swap: 50 units FAKU into the FAKU/CYPX pool (1.77M FAKU / 31.7M CYPX, fee 2%) for 87,561 units (8.7561 CYPX) (`buildSwapT2T`) | `643be27f7a2f28a81d88a3297a8107eff790bd05fda26af21249acd7558eb2c5` | -1,000,000 |
 
-Nine transactions, all accepted by the node and mined. Net of A to D: the wallet paid 3.36 mERG for 1.00 FAKU from a stranger, 1 mERG for each of its own four
+Ten transactions, all accepted by the node and mined. Net of A to D: the wallet paid 3.36 mERG for 1.00 FAKU from a stranger, 1 mERG for each of its own four
 transactions, and holds 1.00 FAKU at the end (40 units bought back in C, 60 returned in D) plus the 1.60 mERG the C
 fill paid into the order, returned in D.
 
@@ -37,4 +38,7 @@ fill paid into the order, returned in D.
   script (`--sign-tree`), the way it allows an explicit output script (`--allow-tree`).
 - **A deposit needs tokens at the pool's ratio, and the wallet must hold them.** 0.005 ERG into the FAKU pool needed
   154 units against the wallet's 100; Fleet's selector said so before anything was signed. 0.003 ERG needed 92.
+- **The deployed token-to-token pool reads its fee register as an Int**, while the repository's `t2t/Pool.sc` declares
+  `R4[Long]`. The mock chain's evaluator showed it (`Cannot getReg[Int](4)` against a Long), and every live T2T box
+  carries `SInt`. The N2T source and chain agree on Int.
 - The node accepted every transaction at a 0.001 ERG fee and all were mined within a few blocks.

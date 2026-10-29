@@ -8,6 +8,7 @@
 //   node scripts/mainnet-run.ts close <orderBoxId>                         owner closes
 //   node scripts/mainnet-run.ts swap <tokenName> <erg-to-token|token-to-erg> <amountIn> [slippageBps]
 //                                                                          direct swap on the token's ErgoDEX v1 pool
+//   node scripts/mainnet-run.ts swap-t2t <inTokenId> <outTokenId> <amountIn> [slippageBps]  direct token-to-token swap
 //   node scripts/mainnet-run.ts deposit <tokenName> <nanoErg>               add liquidity (tokens at the pool's ratio)
 //   node scripts/mainnet-run.ts redeem <tokenName> <lpUnits>                remove liquidity
 // Set EXCLUDE=<boxId>[,<boxId>] to keep wallet boxes a pending transaction already spends out of the selection.
@@ -19,7 +20,7 @@ import type { EIP12UnsignedTransaction } from "@fleet-sdk/common";
 import { ErgoAddress } from "@fleet-sdk/core";
 import { Explorer, toFleetBox } from "../src/explorer.ts";
 import { buildClose, buildCreate, buildFill, describe } from "../src/orders.ts";
-import { buildDeposit, buildRedeem, buildSwap, depositQuote, describePool, quote, redeemQuote, type SwapDirection } from "../src/amm.ts";
+import { buildDeposit, buildRedeem, buildSwap, buildSwapT2T, depositQuote, describePool, describeT2TPool, quote, quoteT2T, redeemQuote, type SwapDirection } from "../src/amm.ts";
 
 const WALLET = readFileSync(join(homedir(), ".config", "skunkyard", "mainnet-wallet.address"), "utf8").trim();
 const owner = ErgoAddress.fromBase58(WALLET);
@@ -72,6 +73,18 @@ if (step === "fill") {
   const minOut = q - (q * bps) / 10_000n;
   console.log(`pool ${pool.boxId.slice(0, 12)} ${fresh.tokenName}: x ${pool.x} y ${pool.y} fee ${pool.feeNum}; ${direction} ${amountIn} in -> quote ${q} out, min ${minOut}`);
   tx = buildSwap({ height, inputs, user: owner, poolBox: fresh.box, direction, amountIn, minOut });
+} else if (step === "swap-t2t") {
+  const [inId, outId] = [args[0], args[1]];
+  const has = (b: { assets: { tokenId: string }[] }, id: string) => b.assets[2].tokenId === id || b.assets[3].tokenId === id;
+  const entry = (await explorer.t2tPools(500)).filter((e) => has(e.box, inId) && has(e.box, outId))[0];
+  if (!entry) throw new Error("no direct pool");
+  const fresh = await explorer.t2tPoolByNft(entry.box.assets[0].tokenId);
+  const pool = describeT2TPool(fresh.box);
+  const amountIn = BigInt(args[2]);
+  const q = quoteT2T(pool, inId, amountIn);
+  const minOut = q - (q * BigInt(args[3] ?? "100")) / 10_000n;
+  console.log(`t2t pool ${pool.boxId.slice(0, 12)} ${fresh.xName}/${fresh.yName}: x ${pool.x} y ${pool.y} fee ${pool.feeNum}; ${amountIn} ${inId.slice(0, 8)} in -> quote ${q} ${outId.slice(0, 8)} out, min ${minOut}`);
+  tx = buildSwapT2T({ height, inputs, user: owner, poolBox: fresh.box, inId, amountIn, minOut });
 } else if (step === "deposit" || step === "redeem") {
   const pools = await explorer.pools(500);
   const entry = pools

@@ -36,9 +36,9 @@ preflight with `access-control-allow-origin: *` and `access-control-allow-method
 
 ## Mainnet, signed: every builder through the test wallet (`mainnet/README.md`)
 
-Nine transactions on 2026-10-29, all built by the page's code, signed and checked by the guarded signer, mined:
+Ten transactions on 2026-10-29, all built by the page's code, signed and checked by the guarded signer, mined:
 fill a stranger's order (A), place an order (B), partial fill of it (C), close it (D), a direct pool swap each way
-(S1, S2), a liquidity deposit (L1) and its redemption (L2). Transaction ids and
+(S1, S2), a liquidity deposit (L1) and its redemption (L2), a direct token-to-token swap (T1). Transaction ids and
 the wallet's net per step are in that file. Fee 0.001 ERG on each.
 
 ## Swap, pool and the second contract (added 2026-10-29)
@@ -46,9 +46,11 @@ the wallet's net per step are in that file. Fee 0.001 ERG on each.
 The page gained a Swap tab on ErgoDEX v1 ERG-to-token pools (direct swap against the pool box, no order box, no
 executor, no interface fee; quote, price impact and a slippage guard from the pool's own rule) and a Pool tab
 (add and remove liquidity by the same rule). `test/amm.test.ts` and `test/liquidity.test.ts` run both against the
-real pool ErgoTree on the mock chain, 7 cases including three refusals by the pool script (one token too many on a
-swap, one LP too many on a deposit, one nanoERG too many on a redemption). `run-test.log` is from the first build;
-the current suite is 13 cases.
+real pool ErgoTree on the mock chain, and `test/t2t.test.ts` the token-to-token pool (281 on mainnet under one
+tree): swaps both ways, deposit and redeem, and four refusals by the pool scripts. `run-test.log` is from the first
+build; the current suite is 17 cases. The Swap tab routes ERG-to-token through the deepest ERG pool and
+token-to-token through a direct pool when one exists; the Pool tab offers ERG pairs and token pairs whose tokens are
+both on the whitelist, with either side of a deposit typed and the other derived.
 
 ## Not done
 
