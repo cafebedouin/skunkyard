@@ -34,6 +34,15 @@
 > SigUSD-denominated put) is not built. Next: Duckpools borrowing, a person's Nautilus session on the live page, the
 > mobile path's three checks.
 >
+> **2026-10-29 (the phone path):** freedex signs from the phone with ErgoPay in its static mode, no server
+> (`skunks/dexpage/RESULT.md`, freedex `e595a95`): "sign with your phone" in the header, the address kept in the
+> browser, boxes from the explorer by address, the transaction reduced in the browser with `ergo-lib-wasm` 0.28.0
+> and shown as a QR code and an `ergopay:` link, the explorer polled for the id. Of SK-063's three checks: the
+> reduced length is settled (a real swap: 891 bytes, 1,196 characters, under half the limit), the wallet's source
+> says a static code of any scannable length is accepted, Satergo is untouched. Waiting on the person: scan the
+> live page's code with the Ergo mobile wallet or Terminus and sign (steps in RESULT.md); try the link in Satergo.
+> Then SK-005's charter rewrite as fence v2.
+>
 > **2026-10-30 (overnight continued):** freedex has six tabs (Swap with ERG and token-to-token pools and the bank quoted
 > beside, Limit orders, Pool, Bank, Bonds, Escrow) and keyless upkeep from the page (Babel bids and Machina orders
 > across their pool; U1 a live take, mined). 30 mock-chain cases on the deployed scripts; 25 mainnet transactions

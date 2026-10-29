@@ -83,6 +83,9 @@ force and the keyless id (41 cases), a pull-request CI trigger. Deferred: one mo
 
 - The browser path (Nautilus signing from the deployed page) has not been exercised by a person yet; the mainnet
   transactions above went through the same builders from Node with the test wallet's signer.
+- The phone path (ErgoPay static mode, built 2026-10-29, section below) has not been scanned by a person yet: the
+  reduction and the page are checked in Node and happy-dom; the camera, the wallet's signing screen and the WASM
+  load in a real browser are the person's rows in that section's table.
 - Deployed 2026-10-29 as its own repository, `cafebedouin/freedex` (MIT), Pages set to GitHub Actions. First run
   40825399595: build (npm ci, test, build) 11 s, deploy 28 s, both `success`; https://cafebedouin.github.io/freedex/
   answers HTTP 200 with the built page (`<title>FreeDEX for Ergo</title>`, script `./assets/index-CNbkrN7z.js`,
@@ -172,3 +175,145 @@ sell program box: 716 bytes, rent reserve 895000000 nanoERG, minimum 257760, loc
 cost of one buy leg: clock script 332, pool script 186; tree 504 bytes
 cost of one sell leg: clock script 340, pool script 186; tree 517 bytes
 ```
+
+## Signing from the phone: ErgoPay static mode, 2026-10-29 (synced from freedex `e595a95`)
+
+The second signing path. A `Signer` (`src/wallet.ts`: kind, address, `height`, `utxos`, `balance`, `sign`) over the
+EIP-12 wallet as before and over the phone (`src/ergopay.ts`): the visitor types a mainnet address once ("sign with
+your phone" in the header; the address is kept in `localStorage` under `freedex.phone`), boxes and balances come
+from the explorer by address, and `sign` reduces the EIP-12 transaction with sigma-rust's `ergo-lib-wasm-browser`
+0.28.0 (fetched only on this path, through `vite-plugin-wasm` 3.6.0) against the explorer's last ten headers, shows
+the reduced bytes as a QR code (`qrcode-generator` 2.0.4 on a canvas, error correction L, white background) and as
+an `ergopay:` link (EIP-20 option 2, URL-safe base64, padded), then polls the explorer every ten seconds for up to
+twenty minutes for the id, which is the same before and after signing. No server, no relay. Every tab and the two
+signed upkeep jobs go through the same `send()`. The CSP's `script-src` gains `'wasm-unsafe-eval'` and
+`connect-src` gains `'self'` (the WASM is fetched from the page's own origin). The tabs wrap on a narrow screen.
+
+**Check 1, the reduced length, settled in Node against mainnet state.** `scripts/reduce.ts` builds a 0.005 ERG pool
+swap from the test wallet's boxes exactly as the Swap tab does and reduces it. Printed (`run-reduce.log`):
+
+```
+explorer: reading from https://api.ergo.aap.cornell.edu
+explorer: reading from https://api.ergoplatform.com
+height 1905196; 10 headers from https://api.ergoplatform.com, 1905196 down to 1905187
+9gnBiuBAy4GgGEk1MZQ5f7aWWuQnyGHNVVF4bvhHKWvecWTNcfc: 36 boxes, 20.937793339 ERG
+pool RSN (cadac6db…), 240345.795702362 ERG deep; 0.005 ERG pays 118
+unsigned: 2 inputs, 0 data inputs, 4 outputs; EIP-12 JSON 3981 bytes
+reduced: 891 bytes in 26 ms; id 28f55832673dc9ffcffe11ee7f6efa56979e138122dc87efe3d644b23f3dcb13
+ergopay link: 1196 characters (limit 2800); fits a QR code
+parses back: same id
+```
+
+The explorer's header JSON (`/api/v1/blocks/headers?limit=10`, newest first, fields id, parentId, version,
+timestamp, height, nBits, votes, stateRoot, adProofsRoot, transactionsRoot, extensionHash, powSolutions) parses
+through `BlockHeaders.from_json` as is; the 0.28.0 `ErgoStateContext` constructor takes a third argument, the chain
+`Parameters` (`Parameters.default_parameters()` here), which the brief's two-argument form did not have. The
+"2 inputs" are the pool box and one of the wallet's; the earlier measurement in the brief (893 bytes for a swap) was
+for the same shape. A 1,196-character link is a version-25 QR code (117×117 modules); 2,800 characters would be
+version 39 (173×173), printed by `qrcode-generator` for strings of those lengths. The explorer's own timing matters
+on this path: on 2026-10-29 `api.ergoplatform.com` answered the headers request in 50.2 s once and 0.3 s another
+time, while `api.ergo.aap.cornell.edu` answered in 0.3 s; the page's 15 s timeout fails over, as the run's first
+two lines show. `/api/v1/mempool/transactions/byAddress/<p2pk>` answers `{"items":[],"total":0}` in 0.3 s and is
+the only mempool lookup the explorer offers, so the wait asks it with the phone's address beside
+`/api/v1/transactions/<id>`.
+
+**Check 2, the wallet taking a static code, settled in the wallet's source (not yet on a phone).**
+`ergoplatform/ergo-wallet-app` (develop, pushed 2026-09-14; latest release v2.4.2313 of 2026-05-25; Apache-2.0),
+`common-jvm/src/main/java/org/ergoplatform/transactions/ErgoPay.kt` (last commit afa99d6ee4, 2023-05-21):
+
+```
+fun isErgoPayStaticRequest(requestData: String) =
+    isErgoPaySigningRequest(requestData) && !isErgoPayDynamicRequest(requestData)
+fun isErgoPayDynamicRequest(requestData: String) =
+    requestData.startsWith("$uriSchemePrefix//", true)
+private fun parseErgoPaySigningRequestFromUri(uri: String): ErgoPaySigningRequest {
+    val uriWithoutPrefix = uri.substring(uriSchemePrefix.length)
+    val reducedTx = Base64Coder.decode(uriWithoutPrefix, true)
+    return ErgoPaySigningRequest(reducedTx)
+}
+object ErgoPay {
+    fun buildStaticSigningRequest(reducedTx: ByteArray) =
+        uriSchemePrefix + String(Base64Coder.encode(reducedTx, Base64Coder.urlsafeMap))
+```
+
+and `uilogic/MainAppUiLogic.kt`, `handleRequests`: `else if (isErgoPaySigningRequest(data)) { navigateToErgoPay(data) }`
+before the cold-signing chunk branches, which are the only multi-part QR path. So a scanned `ergopay:<base64>` of
+any length the camera decodes goes straight to the signing screen, and the page's encoder (URL-safe alphabet,
+padded with `=`) matches the wallet's own. Terminus is the iOS target of the same code (`ios/` in the repository).
+What the source cannot say: whether the phone's camera reads a 117-module code from a laptop screen, and what the
+signing screen shows for a pool swap; those are the person's rows below.
+
+**Check 3, Satergo:** untouched; a row below.
+
+**ErgoDEX for comparison** (`spectrum-finance/interface`, CC0): its ErgoPay wallet entry stores the address in
+`localStorage` (`ergopay-wallet`) and reads boxes with `searchUnspentBoxesByAddress`, the same client shape as
+here, but `submitErgopayTx` posts the unsigned transaction to `ergopayUrl/unsignedTx` and the code shown is the
+dynamic `ergopay://…/unsignedTx/<id>` link; the reduction is on its backend. `spectrum-finance/ergo-dex` holds the
+contracts only. Nothing was cribbed for the reduction; the white-background QR is the one detail taken.
+
+**Tests.** `test/ergopay.test.ts` (Node): the link encoding (`-_8=` for `fb ff`), the guard at 2,800 (a
+2,094-byte reduction is 2,800 characters and fits; 2,100 bytes is 2,808 and is refused), the address check
+(testnet and garbage refused), a real reduction through `ergo-lib-wasm-nodejs` 0.28.0 of a mock-chain transaction
+against the ten mainnet headers kept in `test/fixtures/headers.json` (id equal to Fleet's, parses back, the same
+transaction valid on the chain), and the signer's loop against a hand-made explorer (polls until seen, then leaves
+those inputs out; times out; cancels; refuses the oversize code before showing it). `test/ui/phone.test.ts`
+(happy-dom, the binding stubbed by `test/fake-ergolib.ts`): the address asked once and kept, a non-mainnet address
+refused, a swap showing the code and link and resolving when the explorer lists the id, cancel, the upkeep's
+matured-bond hand-over through the phone, the oversize refusal. Printed by the freedex checks before the commit
+(`run-checks.log` in the session; lint and typecheck print nothing on success):
+
+```
+All matched files use Prettier code style!
+ Test Files  31 passed (31)
+      Tests  160 passed (160)
+dist/index.html                                19.87 kB │ gzip:   5.99 kB
+dist/assets/ergo_lib_wasm_bg-vDt_QTSr.wasm  2,766.71 kB │ gzip: 977.86 kB
+dist/assets/ergo_lib_wasm-ZQFDxfON.js         125.34 kB │ gzip:  19.57 kB │ map: 457.47 kB
+dist/assets/index-DMhgWUlV.js                 214.84 kB │ gzip:  68.69 kB │ map: 787.14 kB
+✓ built in 377ms
+```
+
+The main bundle reaches the binding only through a lazy import, so a Nautilus visitor never fetches the 2.77 MB;
+from `dist/assets/index-DMhgWUlV.js`:
+
+```
+var Mo=()=>jo(()=>import(`./ergo_lib_wasm-ZQFDxfON.js`),[],import.meta
+```
+
+**Deployed.** Pages run 40905540178 for `e595a95`: build `success` 15:50:09 to 15:50:37 UTC, deploy `success`
+15:50:41 to 15:51:12 (`gh run view`). The live page then answered 200 with `assets/index-DMhgWUlV.js` (the local
+build's hash), `script-src 'self' 'wasm-unsafe-eval';` in its CSP and the `id="ergopay"` panel, and
+`assets/ergo_lib_wasm_bg-vDt_QTSr.wasm` answered 200 with `content-type: application/wasm`, `content-length:
+2766716`, which is the type streaming instantiation requires (`curl -I`).
+
+**The person's check** (nothing here was scanned; no browser on the build machine). On the live page
+https://cafebedouin.github.io/freedex/:
+
+1. On the desktop, open the page, choose "sign with your phone", paste the test wallet's address
+   `9gnBiuBAy4GgGEk1MZQ5f7aWWuQnyGHNVVF4bvhHKWvecWTNcfc` into the prompt. The header should read
+   `phone: 9gnBiuBA…TNcfc`, and the Swap tab's balance line should show the explorer's figure (20.94 ERG on
+   2026-10-29). Untick "Chain upkeep" first if you do not want the upkeep's own prompts.
+2. Swap tab: 0.005 ERG to the default token, "Build, sign in wallet, submit". The log should say `reduced to N
+   bytes, a M-character link` and the "Sign on your phone" panel should show the code. Note N and M.
+3. Scan with the Ergo mobile wallet (Android) or Terminus (iOS). Note whether the signing screen opens, what it
+   shows (inputs, outputs, fee), and sign. The page's log should then say `submitted <id>` within a poll (ten
+   seconds). Note the id and whether the explorer shows it.
+4. On the phone itself, open the page in the phone's browser, repeat step 2, and tap the "open in an ErgoPay
+   wallet" link. Note whether the wallet opens with the transaction.
+5. If a Satergo desktop wallet is at hand, click the link there (or paste it). Note whether Satergo opens it.
+
+| row | what | evidence to paste |
+| --- | --- | --- |
+| 1 | address accepted, balance from the explorer | header text, balance line |
+| 2 | code shown for a 0.005 ERG swap | the log's `reduced to … bytes, a … link` line |
+| 3 | Ergo mobile wallet or Terminus scans, shows, signs | wallet screen summary; the page's `submitted <id>`; explorer link |
+| 4 | the link opens the wallet on the phone | yes/no, wallet version |
+| 5 | Satergo opens the link | yes/no, Satergo version |
+
+**Limits.** The reduction's context is the newest header as pre-header (height H) while the node validates at H+1,
+the same as Nautilus; a script that turns on exactly at H+1 reduces differently from how it is checked. The chain
+`Parameters` passed are the genesis defaults, not the live ones. The explorer's unspent-by-address listing may still
+include a box a phone-signed transaction spent until it is mined, so the signer leaves the inputs it used out of the
+next build for fifteen minutes; a box spent by another wallet meanwhile is not known to the page until the explorer
+drops it. The WASM instantiation under the page's CSP in a real browser is not exercised by any test here (happy-dom
+has no WebAssembly streaming); row 2 covers it.

@@ -1,0 +1,9 @@
+explorer: reading from https://api.ergo.aap.cornell.edu
+explorer: reading from https://api.ergoplatform.com
+height 1905196; 10 headers from https://api.ergoplatform.com, 1905196 down to 1905187
+9gnBiuBAy4GgGEk1MZQ5f7aWWuQnyGHNVVF4bvhHKWvecWTNcfc: 36 boxes, 20.937793339 ERG
+pool RSN (cadac6db…), 240345.795702362 ERG deep; 0.005 ERG pays 118
+unsigned: 2 inputs, 0 data inputs, 4 outputs; EIP-12 JSON 3981 bytes
+reduced: 891 bytes in 26 ms; id 28f55832673dc9ffcffe11ee7f6efa56979e138122dc87efe3d644b23f3dcb13
+ergopay link: 1196 characters (limit 2800); fits a QR code
+parses back: same id

@@ -174,8 +174,22 @@ What the facts support (checked 2026-10-28):
   it. One shell page, one Fleet plugin per DEX; Machina has one today, ErgoDEX v1, Off the Grid and Duckpools do not.
 - Satergo Vault is a BLE link from the Satergo desktop to a phone that holds the seed; the desktop builds. Whether
   Satergo opens ErgoPay links is unverified; if it does, a desktop link reaches the phone with no QR.
-- The Ergo mobile wallet's code has multi-part QR handling in the cold-wallet flow; whether it applies to a static
-  ErgoPay QR is unverified.
+- The Ergo mobile wallet's code has multi-part QR handling in the cold-wallet flow only. Read 2026-10-29
+  (`ergo-wallet-app` develop, `MainAppUiLogic.handleRequests`): a scanned string starting with `ergopay:` goes
+  straight to the ErgoPay screen, and `ErgoPay.kt` decodes everything after the prefix as URL-safe base64 (its own
+  encoder pads with `=`). So a static QR is one code of whatever length the camera reads; no chunking applies.
+
+**Built 2026-10-29, the phone path (freedex `e595a95`, `skunks/dexpage/RESULT.md`).** The three checks, as far as
+code and Node reach: (1) a real pool swap from the test wallet's boxes reduces through `ergo-lib-wasm` 0.28.0 against
+the explorer's last ten headers to 891 bytes, a 1,196-character `ergopay:` link, under half of EIP-20's limit
+(`scripts/reduce.ts`, `run-reduce.log`); the explorer's header JSON parses as is, and the 0.28.0 state context wants
+the chain `Parameters` as a third argument. (2) The wallet app's source accepts a static code of any length its
+scanner reads (above). (3) Satergo: still unverified. What waits on the phone: scanning the live page's code with
+the Ergo mobile wallet or Terminus and signing (the checklist in `RESULT.md`); whether Satergo opens the link. The
+page: a `Signer` over EIP-12 and the phone, "sign with your phone" in the header with the address kept in the
+browser, boxes and balances from the explorer by address, the WASM (2.77 MB) fetched only on that path, a
+2,800-character guard, the explorer polled for the id. No server. ErgoDEX's interface (CC0) keeps the same client
+shape but reduces on its backend and sends a dynamic link, so nothing there was cribbed for the reduction.
 
 Three Degens-World patterns for agent authority exist today: agente (node API key, `MAX_ERG_PER_ORDER` in config,
 enforced by the agent's own code), Ergo-MCP (Nautilus connector, a person approves each transaction), the docs'
