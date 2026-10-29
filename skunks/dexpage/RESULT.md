@@ -60,6 +60,14 @@ Node sidecar (`scripts/upkeep-run.ts`). Six mock-chain cases on the real EIP-31,
 mainnet the Babel job took a live gap with no signature (U1, mined at 1,904,969); the orders job was beaten to a
 deliberately mispriced order by an existing bot one block after placement (`mainnet/README.md`).
 
+## Escrow, bonds and the bank (added 2026-10-29)
+
+Three venues on their deployed contracts: TokenJay's escrow (seller, named buyer, fee output returned to the
+seller), SigmaFi bonds (request, fund, repay, liquidate after maturity; the contract's 0.5% developer fee shown) and
+the SigmaUSD bank (mint and redeem through Fleet's AgeUSD plugin, no implementor fee; quoted beside the pool on the
+Swap tab). Nine mock-chain cases and nine mainnet transactions (`mainnet/README.md`), including the bank's refusal
+of SigUSD minting and SigRSV redemption at a 312% reserve ratio, which the page reports as "not allowed now".
+
 ## Not done
 
 - The browser path (Nautilus signing from the deployed page) has not been exercised by a person yet; the mainnet

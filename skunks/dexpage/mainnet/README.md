@@ -83,3 +83,9 @@ Three more venues on their deployed contracts, each with mock-chain cases first 
 rules: stable minting needs the ratio to stay above 400%, reserve redemption too). Fleet's plugin says so before
 anything is built ("Unable to mint more than 0 stable coins", "Unable to redeem more than 0 reserve coins"), and
 the Bank tab shows "allowed by the bank: no". The wallet keeps its 100 SigRSV until the ratio recovers.
+| B2 | SigmaUSD bank: the 0.05 SigUSD redeemed for 159,179,589 nanoERG, the oracle rate minus the 2% protocol fee (`buildRedeem`) | `96478f1bb4f2e36891ff16e126c9f2ee675d6f49ae46e641237c1b1f0a0a29d0` | +159,179,589 |
+| L3 | the borrower repays the bond before maturity: 0.0101 ERG to the lender (itself), 0.02 ERG collateral back (`buildRepay`). The node refused the first attempt with the bond input unsigned; the repay path reduces to the borrower's key, so the signer signed it under `--sign-tree`. The escrow's sold path (E2) and the order's lend path (L2) needed no signature on the contract box | `24a2be9d647edc06158e88ac8a00157192b8674cda149fc471277a8d36087c46` | -1,000,000 |
+
+**Totals for the day:** 25 transactions from the page's builders: ten on pools, orders and liquidity, two keyless
+upkeep takes plus the two targets and their closes, and nine across the escrow, the bonds and the bank. Every one
+was checked by a node and mined. Fee 0.001 ERG on each.
