@@ -4,6 +4,12 @@
 > length against EIP-20's 2,900 characters; the mobile wallet taking a static ErgoPay QR of that size; whether Satergo
 > opens ErgoPay links), then the SK-005 charter rewrite as fence v2. Node-side items (scoped API keys, key export off)
 > stay in ergo_logic.
+>
+> **2026-10-29: SK-063 tier 1 built, Nautilus first** (`skunks/dexpage/`): list, create, fill and close for Machina
+> limit orders from a static page; 4 mock-chain cases pass and all 38 live orders parse (`skunks/dexpage/RESULT.md`).
+> Next: the user's wallet session on mainnet with pocket change (`npm run dev` with Nautilus), then a repository of
+> its own on GitHub Pages (`deploy/pages.yml`), then the mobile path's three checks. The sidecar host for upkeep on
+> non-mining nodes is recorded in ROADMAP R5.
 
 > **2026-10-28: the three-way agreement run is done** (EIP groundwork item 3): a thin Rust wrapper over RustCrypto `slh-dsa`
 > 0.2.0-rc.5 (`skunks/pqwallet/rust/`) through the rig's commands; Scala (BouncyCastle), JavaScript (noble) and Rust agree on

@@ -145,6 +145,25 @@ backend was not found on GitHub either; the model is ErgoMixer, open source and 
    is unverified; check before building tier 3.
 The order is 1, then 2, then 3; the kill criterion below applies to tier 1 only.
 
+**Built 2026-10-29 (`skunks/dexpage/`, charter there).** Tier 1 started with the desktop wallet path (Nautilus
+over EIP-12, the way SigmaFi does it) rather than the mobile QR path, because it needs no reduction in the browser
+and no size check: the page builds with Fleet and the Machina SDK, the wallet signs and submits. Found on the way:
+the explorer lists every E2T limit order by the template's SHA-256 (`03ef002b…8f6b`) through a cross-origin POST;
+38 open orders on mainnet at height 1,904,918 across rsBTC, FAKU, rsFIRO and rsADA; the SDK sizes a token order's
+box at the minimum for its bytes, not at the 1,000,000 constant; the contract names orders by the taker's action
+(R6 true: takers buy from the box). The mobile path and its three checks follow the mainnet wallet session.
+
+**The sidecar host (recorded 2026-10-29).** The node has no plugin layer: routes are a fixed list in
+`ErgoApp.scala` (v6.0.4, lines 183-203), the one optional component is the extra indexer (a config-enabled actor on
+the internal event stream), and scans are the one declarative extension point. A plugin layer would be a few
+hundred lines and a hard sell (it runs beside the wallet secrets on unstable internal interfaces). The upkeep job
+host for non-mining nodes is therefore a sidecar against a stock node's API, the same job registry as the Lithos
+upkeep adapter (SK-043) with a second host; what a non-mining node can charge for is executing keyless jobs (the fill
+gap or the order's executor fee), watching for a bounty (SK-054), and building for thin clients with a visible fee
+output. Relay is not a service. The node change worth asking for later is a push feed (server-sent events or a
+websocket) of applied blocks and mempool changes, which every sidecar polls for today. Whether the Lithos jobs can be
+hosted outside the miner as written is unchecked.
+
 What the facts support (checked 2026-10-28):
 - EIP-20 option 2 puts the reduced transaction in the QR or link itself, no server; up to about 2,900 characters,
   URL mode recommended above 400. The phone signs and submits; the page polls the explorer by transaction id.

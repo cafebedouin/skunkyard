@@ -1,0 +1,9 @@
+
+ RUN  v5.0.5 /home/scott/bin/skunkyard/skunks/dexpage
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  00:24:01
+   Duration  1.00s (import 67%, tests 31%, transform 1%)
+
