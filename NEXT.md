@@ -10,7 +10,12 @@
 > Handed off the same day as `cafebedouin/freedex` (https://cafebedouin.github.io/freedex/). Overnight 2026-10-29:
 > Swap (ErgoDEX v1 pools, direct, fee 0.001 ERG only), Pool (add/remove liquidity) and grouped limit orders; nine
 > mainnet transactions from the builders through the guarded signer, all mined (`skunks/dexpage/mainnet/README.md`).
-> Next: a person's session through Nautilus on the live page; the mobile path's three checks; T2T pools. The sidecar host for upkeep on
+> **2026-10-30 (overnight continued):** freedex has six tabs (Swap with ERG and token-to-token pools and the bank quoted
+> beside, Limit orders, Pool, Bank, Bonds, Escrow) and keyless upkeep from the page (Babel bids and Machina orders
+> across their pool; U1 a live take, mined). 30 mock-chain cases on the deployed scripts; 25 mainnet transactions
+> through the guarded signer and the explorer (`skunks/dexpage/mainnet/README.md`). Chartered, not started: SK-064
+> (clocked box: DCA, tranche sale, the fence's per-period limit) and SK-065 (option as a timed escrow). Not started:
+> Duckpools borrowing. Next: a person's Nautilus session on the live page; the mobile path's three checks; SK-064. The sidecar host for upkeep on
 > non-mining nodes is recorded in ROADMAP R5.
 
 > **2026-10-28: the three-way agreement run is done** (EIP groundwork item 3): a thin Rust wrapper over RustCrypto `slh-dsa`
