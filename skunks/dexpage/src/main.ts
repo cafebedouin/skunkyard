@@ -57,6 +57,7 @@ function renderWallet() {
       renderWallet();
       renderOrders();
       renderQuote();
+      void renderBalance();
     };
     el.append(b);
     return;
@@ -79,6 +80,7 @@ function renderWallet() {
       renderWallet();
       renderOrders();
       renderQuote();
+      void renderBalance();
     };
     el.append(b, " ");
   }
@@ -128,8 +130,36 @@ function renderSwapSelectors() {
   tokenSide.onchange = () => {
     selectedNft = tokenSide.value;
     renderQuote();
+    void renderBalance();
   };
   selectedNft = tokenSide.value;
+  void renderBalance();
+}
+
+/** The connected wallet's balance of the asset being paid, with a "max" that leaves the fee and a change box. */
+async function renderBalance() {
+  const el = $<HTMLDivElement>("swap-balance");
+  el.replaceChildren();
+  const p = selectedPool();
+  if (!wallet || !p) return;
+  try {
+    const pool = describePool(p.box);
+    const paying = direction === "erg-to-token" ? "ERG" : pool.tokenId;
+    const dec = direction === "erg-to-token" ? ERG_DECIMALS : p.tokenDecimals;
+    const raw = BigInt(await wallet.api.get_balance(paying));
+    const reserve = direction === "erg-to-token" ? FEE + 1_000_000n : 0n; // fee plus a minimum change box
+    const max = raw > reserve ? raw - reserve : 0n;
+    el.append(`balance ${formatUnits(raw, dec)} ${direction === "erg-to-token" ? "ERG" : p.tokenName || "tokens"} `);
+    const b = document.createElement("button");
+    b.textContent = "max";
+    b.onclick = () => {
+      swapIn.value = formatUnits(max, dec);
+      renderQuote();
+    };
+    el.append(b);
+  } catch (e) {
+    el.textContent = `balance: ${err(e)}`;
+  }
 }
 
 function selectedPool(): PoolEntry | undefined {
@@ -204,7 +234,10 @@ swapGo.onclick = async () => {
     })();
     await send((height, inputs) => buildSwap({ height, inputs, user: wallet!.changeAddress, poolBox: fresh.box, direction, amountIn, minOut }));
     swapIn.value = "";
-    setTimeout(() => void loadPools(), 3000);
+    setTimeout(() => {
+      void loadPools();
+      void renderBalance();
+    }, 3000);
   } catch (e) {
     log(`swap failed: ${err(e)}`);
   }
@@ -219,6 +252,7 @@ async function loadPools() {
     }
     renderSwapSelectors();
     renderQuote();
+    renderTokenPick();
     log(`${pools.length} pools with at least 1 ERG`);
   } catch (e) {
     log(`could not load pools: ${err(e)}`);
@@ -298,6 +332,23 @@ function renderOrders() {
   }
   table.append(tbody);
   $("orders").replaceChildren(views.length ? table : "no open orders");
+}
+
+/** The create form's token list: every token with a pool, by reserve; the id field stays editable for any other. */
+function renderTokenPick() {
+  const sel = $<HTMLSelectElement>("token-pick");
+  sel.replaceChildren(new Option("type an id below", ""));
+  const seen = new Set<string>();
+  for (const p of pools) {
+    const id = p.box.assets[2].tokenId;
+    if (seen.has(id)) continue;
+    seen.add(id);
+    sel.append(new Option(p.tokenName || id.slice(0, 10), id));
+    tokens.set(id, { id, name: p.tokenName, decimals: p.tokenDecimals });
+  }
+  sel.onchange = () => {
+    $<HTMLInputElement>("token").value = sel.value;
+  };
 }
 
 $<HTMLSelectElement>("side").onchange = () => {

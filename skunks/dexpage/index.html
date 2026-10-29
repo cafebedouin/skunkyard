@@ -52,6 +52,7 @@
         <input type="text" id="swap-in" inputmode="decimal" placeholder="0.0" autocomplete="off" />
         <select id="swap-from"><option value="ERG">ERG</option></select>
       </div>
+      <div class="small muted" id="swap-balance"></div>
       <div style="text-align:center"><button id="swap-flip" title="flip direction">⇅</button></div>
       <div class="row">
         <input type="text" id="swap-out" placeholder="0.0" readonly />
@@ -76,6 +77,8 @@
         <option value="sell-tokens">sell tokens for ERG</option>
         <option value="buy-tokens">buy tokens with ERG</option>
       </select>
+      <label for="token-pick">Token</label>
+      <select id="token-pick"><option value="">type an id below</option></select>
       <label for="token">Token id</label>
       <input id="token" name="token" size="64" pattern="[0-9a-fA-F]{64}" required />
       <label for="amount" id="amount-label">Token amount</label>
