@@ -95,3 +95,55 @@ force and the keyless id (41 cases), a pull-request CI trigger. Deferred: one mo
 - T2T orders are not supported (the SDK's T2T contract placeholder is `0000`); grid orders are not in scope.
 - `takerAction` reads R6 as the SDK does: true means takers buy tokens from the box. The page labels orders by
   what the taker does and the create form by what the owner does.
+
+## One module per tab, UI tests, lint, 2026-10-29 (synced from freedex `ccc645d`)
+
+The two items the 2026-10-30 reviews deferred, and four small features. `src/main.ts` is 50 lines (the tab switcher
+and the boot); the tabs are `src/ui/swap.ts`, `orders.ts`, `pool.ts`, `bank.ts`, `bonds.ts`, `escrow.ts`, with
+`dom.ts` (text-node helpers), `store.ts` (wallet, explorer, tokens, pools, bank, the selected assets, `subscribe`),
+`header.ts`, `wallet.ts` (connect, disconnect, `send`) and `upkeep.ts`. Every element id and all 34 handlers of the
+old `main.ts` are referenced by the new modules (`comm` over the two id sets printed nothing missing, three new ids:
+`bonds-mine`, `escrow-mine`, `explorer-status`); `grep -rn innerHTML src index.html | wc -l` prints `0`, and
+`test/ui/page.test.ts` checks the same on every source file and on the rendered page (no `on*` attribute, no inline
+script, the CSP present).
+
+`npm test` (vitest 5.0.5, happy-dom 20.14.6 for `test/ui/`) prints:
+
+```
+ Test Files  24 passed (24)
+      Tests  71 passed (71)
+```
+
+`test/ui/harness.ts` writes `index.html` into happy-dom, answers `fetch` from a world of mock-chain boxes in the
+explorer's JSON shape (`test/ui/fixtures.ts`: pools, the bank, orders, a Babel box, loans and escrows, with the real
+whitelist token ids), stubs an EIP-12 wallet on `ergoConnector`, and boots the real `src/main.ts`. The behaviours
+covered by driving the inputs and reading the DOM: route resolution (ERG pool, direct pool, no ERG pool, no direct
+pool), the quote rows with the bank beside the pool and the stale-quote refusal, deposits typed from either side on an
+ERG pair and a token pair, the bank's "Allowed by the bank" line (yes at 666%, no when a mint would cross 400%),
+order grouping and ordering with Babel rows among the sells, the positions sections on Bonds and Escrow, the header's
+fallback line, and the upkeep timer asking the wallet once for a matured bond's collateral.
+
+`npm run lint` (prettier 3.9.10 at print width 120, eslint 10.13.0 with typescript-eslint 8.72.1) prints `All
+matched files use Prettier code style!` and no ESLint finding; it runs in `deploy/pages.yml` before `typecheck` and
+`test`. JSON and `index.html` are in `.prettierignore`, so the contract bytes stay on one line.
+`git diff -w --stat` over the builder files (`amm`, `bank`, `bonds`, `escrow`, `orders`, `machina-arb`, `wallet`)
+shows line wraps only; `src/units.ts` has one `let` made `const` that ESLint asked for.
+
+New, each with a test:
+- EIP-31 Babel boxes on the Limit orders tab as orders takers sell into (marked "Babel"), from the same template
+  hash as `src/babel.ts`; `buildFillBabel` recreates the box at output 0 with the tokens added and `tokens * bid`
+  less ERG (`test/babel-fill.test.ts`: a fill, a chained second fill, the capacity refusals, one nanoERG more refused
+  by the script).
+- A matured SigmaFi bond whose lender is the connected visitor: `maturedBondsFor` in `src/upkeep.ts` finds it, the
+  page's upkeep timer builds `buildLiquidate` from the visitor's boxes and asks the wallet to sign once per bond.
+  The path is keyless on the contract's side: `test/upkeep-lender.test.ts` has a stranger's boxes pay the fee with
+  nobody but the stranger signing, and the lender's balance rises by the whole 5 ERG collateral.
+- "Your positions" at the top of Bonds and Escrow (the visitor's rows, with their actions), the market below
+  without them; the Escrow market now lists without a wallet.
+- A header line when the explorer fell back (`Explorer.onBaseChange`): "reading from api.ergo.aap.cornell.edu:
+  api.ergoplatform.com did not answer", from `test/ui/header.test.ts` with the first base refusing.
+- A footer link to the repository (the user's ask during the session).
+
+Found on the way: happy-dom 20.14.6 has no `Option` constructor, so the page uses `option()` from `dom.ts`
+(`document.createElement("option")`), the same DOM. Vitest 5.0.5's peer range for happy-dom is `^20.14.6`, which is
+why 20.14.6 and not 21.
