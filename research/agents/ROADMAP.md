@@ -126,6 +126,53 @@ height (the F1 problem). First instance: a keeper bot's fee-only key (Dexy) befo
 The box states the result (at least X for these tokens by height H, else refund); any solver delivers by any route.
 The question is double satisfaction: one output paying two boxes. Measured on a devnet with two pools.
 
+## R5. The client half: a self-hosted page, and the plan agreed 2026-10-28
+
+The conceptual endpoint, registered as SK-063: what mewfinance.com offers, served as static pages anyone can host.
+Mew Finance (launched October 2024, HQΣr and Aco Šmrkas) is a DEX (an ErgoDEX fork), Mew Lock, Mew Mart and NFT
+Mart, with a centralized Ergo-Cardano NFT bridge; the Lock tool's source is public (`AcoSmrkas/mew-lock`, Svelte and
+TypeScript), the rest is unverified. Its June security response rotated the service and DEX fee wallets after a seed
+breach (docs.ergoplatform.com/eco/mew-finance) [secondary]. A static page has no service wallet to rotate, which is
+the argument.
+
+What the facts support (checked 2026-10-28):
+- EIP-20 option 2 puts the reduced transaction in the QR or link itself, no server; up to about 2,900 characters,
+  URL mode recommended above 400. The phone signs and submits; the page polls the explorer by transaction id.
+- `api.ergoplatform.com` answers browser requests from any origin (`access-control-allow-origin: *`) and serves
+  headers and boxes, so the page needs no node.
+- Fleet 0.12 builds; it has no reducer. `ergo-lib-wasm-browser` 0.28 has the reduced-transaction module.
+- `@nautls/machinafi-sdk` (MIT, pushed 2026-10-21) is a Fleet plugin for grid and limit orders, audited; agente uses
+  it. One shell page, one Fleet plugin per DEX; Machina has one today, ErgoDEX v1, Off the Grid and Duckpools do not.
+- Satergo Vault is a BLE link from the Satergo desktop to a phone that holds the seed; the desktop builds. Whether
+  Satergo opens ErgoPay links is unverified; if it does, a desktop link reaches the phone with no QR.
+- The Ergo mobile wallet's code has multi-part QR handling in the cold-wallet flow; whether it applies to a static
+  ErgoPay QR is unverified.
+
+Three Degens-World patterns for agent authority exist today: agente (node API key, `MAX_ERG_PER_ORDER` in config,
+enforced by the agent's own code), Ergo-MCP (Nautilus connector, a person approves each transaction), the docs'
+buyback-bot guide (mnemonic in the bot). The fence is the fourth: the limit enforced by consensus. The page is first
+the mobile form of pattern 2, then, with a fenced key signed by Fleet's wallet package in the browser, the A4
+demonstration of SK-005 that anyone can host: the agent trades within the fence, the phone's key sweeps.
+
+Order agreed 2026-10-28:
+1. The three checks (SK-063 next action), one session, before the charter is final.
+2. SK-005 charter rewrite as fence v2: R3 plus the 2026-10-10 policy findings (interval from a register; one policy
+   box per transaction, ruling R6; double-satisfaction guard on every path; the wallet signs at H and the node checks
+   at H+1, so build for the next block). Hand-off named: a PR to agente, the page, Ergo-MCP as a second candidate.
+3. Prior-art page, narrow: Cosmos authz, Chia's daily cap, Argent session keys, ERC-4337 session-key modules.
+4. A1 to A5 on the policy devnet harness (`skunks/policy/common.py`, the two-step vault's double-satisfaction rows).
+5. The page in two stages: a Machina order built in the browser and signed on the phone (mainnet, pocket change);
+   then the fenced key in the browser.
+6. The agente PR and the post together.
+
+Kill for the page: if the phone cannot take the static QR, no server is added (a page that needs a server is
+tokenjay, which exists); the client half is then a Fleet helper only. Later, if two clients adopt the fence, an EIP
+for an allowance box, the way EIP-31 standardized Babel boxes; not before the measurements.
+
+Not here: scoped node API keys and key export off by default (node layer, ergo_logic and an upstream PR); the
+wallet's authority invariants (ergo_logic E-152); an intent-versus-signed-bytes checker (the fence makes it moot for
+the agent key).
+
 ## Filed elsewhere
 
 - Scheduled retirement of the curve for new boxes (the old key stops at a height; a committed hash-based successor
