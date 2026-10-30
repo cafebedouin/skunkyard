@@ -43,6 +43,15 @@
 > live page's code with the Ergo mobile wallet or Terminus and sign (steps in RESULT.md); try the link in Satergo.
 > Then SK-005's charter rewrite as fence v2.
 >
+> **2026-10-29 (freedex hardening, `v0.1.0`):** the reviewer's second list is done in freedex `402e53a`
+> (`skunks/dexpage/RESULT.md`, last section): invariants written down per domain, 20 property tests with the mock
+> chain as the oracle (one bug found and fixed in one line: Pool.sc's Long multiply of the swap input by the fee
+> numerator, now refused by the builder), a contract registry as the single source of every hash (16 of 18 entries
+> matched to a mainnet box, two never deployed), scanning sized to the Actions budget (about six runs a month),
+> one Playwright job on pull requests, explorer retries with a visible state, the accessibility pass. Left to the
+> person: turn on private vulnerability reporting and branch protection on `cafebedouin/freedex` (the session
+> could not change repository settings); the phone scan and Satergo rows stand.
+>
 > **2026-10-30 (overnight continued):** freedex has six tabs (Swap with ERG and token-to-token pools and the bank quoted
 > beside, Limit orders, Pool, Bank, Bonds, Escrow) and keyless upkeep from the page (Babel bids and Machina orders
 > across their pool; U1 a live take, mined). 30 mock-chain cases on the deployed scripts; 25 mainnet transactions

@@ -1,0 +1,20 @@
+registry: 18 entries; explorer https://api.ergoplatform.com; height 1905489
+ergodex-n2t-pool               2dcc7830afe8… live: box 47343e98a48ae775… at height 874866
+ergodex-t2t-pool               3c09deff3b5f… live: box 2cb83d72b08e41ff… at height 858185
+eip31-babel                    4e83fa68ef3e… live: box fc3aa86922611be2… at height 873592
+machina-e2t-limit-order        03ef002b73a8… live: box d5ae5eac6245dc62… at height 1903246
+sigmafi-order-on-close-erg     525298e97a92… live: box 1c3dd9d14bcfb37b… at height 943490; 1 of 20 listed carry other constants
+sigmafi-order-on-close-token   05208404b335… live: box 988a9640e29e0cb0… at height 930342
+sigmafi-order-fixed-erg        8af6777c9b70… none, ever
+sigmafi-order-fixed-token      6f38fd7514e8… none, ever
+sigmafi-bond-erg               44830db1e02b… live: box 5335fa98ee05818e… at height 922218
+sigmafi-bond-token             edacb0e6bc89… live: box e1b6409a8735634b… at height 972857
+sigmafi-dev-fee-recipient      55e36dd33c1a… live: recipient 9hgm8enrcP… db5fbe65cf5368ca
+tokenjay-escrow                b2c3338d244f… spent: box 0916dac4c53c37bb… settled at height 761208, 47 all time
+sigmausd-bank                  246e14059ac2… live: box d0d74b7f2176e1a2… at height 1905194
+sigmausd-oracle                19e4db356244… live: box 10892ac65357d5db… at height 1905486
+clock-buy                      a1df056602fa… spent: box 9d54c61fd815006f… settled at height 1905031, 6 all time
+clock-sell                     7bf4e2d6ba91… spent: box 600da595cb83a46d… settled at height 1905121, 3 all time
+option-call                    da26dcb30f5b… spent: box 5a1e895eeee14821… settled at height 1905148, 3 all time
+option-put                     1296e3affd09… spent: box 2273d3dae3906fab… settled at height 1905149, 3 all time
+16 of 18 entries have a mainnet box (unspent, or spent where none is open) with the pinned bytes

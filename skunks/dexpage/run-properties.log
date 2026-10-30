@@ -1,0 +1,22 @@
+property units: round trip: 2000 runs, seed 20261029
+property sizing: Babel equals brute force: 300 runs, seed 20261029
+property units: non-canonical accepted forms normalise: 1500 runs, seed 20261029
+property sizing: Machina into-order equals brute force: 300 runs, seed 20261029
+property sizing: Machina from-order equals brute force: 300 runs, seed 20261029
+property units: refused strings: 2000 runs, seed 20261029
+property units: too many decimals refused: 1000 runs, seed 20261029
+property units: price round trip: 2000 runs, seed 20261029
+property pools: quote bound N2T: 2000 runs, seed 20261029
+property pools: quote bound T2T: 2000 runs, seed 20261029
+property pools: Long overflow guard: 200 runs, seed 20261029
+property pools: swap executes N2T: 40 runs, seed 20261029
+property option: call exercise and reclaim at the expiry: 12 runs, seed 20261029
+property clock: buy leg at the due height: 25 runs, seed 20261029
+property pools: swap executes T2T: 40 runs, seed 20261029
+property option: put exercise and reclaim at the expiry: 12 runs, seed 20261029
+property pools: deposit quotes agree N2T: 2000 runs, seed 20261029
+property pools: deposit quotes agree T2T: 2000 runs, seed 20261029
+property pools: deposit executes from either side: 30 runs, seed 20261029
+property clock: sell leg at the due height: 25 runs, seed 20261029
+      Tests  20 passed (20)
+   Duration  3.10s (tests 73%, import 26%, transform 1%)

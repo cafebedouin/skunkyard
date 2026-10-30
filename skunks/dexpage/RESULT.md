@@ -317,3 +317,230 @@ include a box a phone-signed transaction spent until it is mined, so the signer 
 next build for fifteen minutes; a box spent by another wallet meanwhile is not known to the page until the explorer
 drops it. The WASM instantiation under the page's CSP in a real browser is not exercised by any test here (happy-dom
 has no WebAssembly streaming); row 2 covers it.
+
+## Hardening, 2026-10-29 (synced from freedex `402e53a`, tagged `v0.1.0`)
+
+The reviewer's second list, accepted as `prompts/freedex-hardening.md`, done in the order the brief gives except
+that the module move (item 8) came first so every file written after it cites the final paths. No builder's
+behaviour changed except one new refusal a property test found (below). Freedex pull request #1 carried the
+work (`4a1e03c`, then `402e53a` for the one CodeQL alert below) so the browser job ran before the fast-forward to
+`main`.
+
+**Printed by the freedex checks before the commit** (`npm run lint` and `npm run typecheck` print nothing on
+success; `npm audit --omit=dev`, `npm test`, `npm run build`):
+
+```
+All matched files use Prettier code style!
+found 0 vulnerabilities
+ Test Files  38 passed (38)
+      Tests  206 passed (206)
+   Duration  13.89s (tests 64%, import 29%, environment 5%, transform 2%)
+dist/index.html                                21.60 kB │ gzip:   6.37 kB
+dist/assets/ergo_lib_wasm_bg-vDt_QTSr.wasm  2,766.71 kB │ gzip: 977.86 kB
+dist/assets/ergo_lib_wasm-ZQFDxfON.js         125.34 kB │ gzip:  19.57 kB │ map: 457.47 kB
+dist/assets/index-4s0FbZ44.js                 231.99 kB │ gzip:  74.08 kB │ map: 810.45 kB
+✓ built in 348ms
+```
+
+160 tests in 31 files before the session (`run-test.log` of the phone session); the 46 added are the 20 property
+cases, 4 explorer retry cases, 14 registry cases replacing the 9 hash cases, 3 explorer-down cases and 2 axe
+cases, plus one Long-guard case inside the pool properties.
+
+**Invariants** (item 1): `docs/invariants/` holds nine files (pools 11.6 kB, orders 9.8, bank 5.8, bonds 10.3,
+escrow 5.9, clock 14.7, option 11.6, upkeep 11.4, signing 10.0), linked from the README. Three forks of the session
+wrote them from the code and the fetched sources (`spectrum-finance/ergo-dex` `8fe94e1`, EIP-31 at `81edece`,
+`Emurgo/age-usd` `e810b19`, the TokenJay script from tokenjay.app, the SigmaFi port at `309c1ac`); SigmaFi's
+ErgoScript is not published anywhere the forks could find, so `bonds.md` marks every contract line [UNVERIFIED]
+and cites the deployed tree's segregated constants instead (`Long 500`, `Long 100000`, `Long 400`, the dev
+`SigmaProp`, the bond-tree blake2b). Findings the files record against the code's own comments: `machina-arb.ts`
+says the SDK checks the 0.0001 ERG remainder, but the SDK checks only that the payout fits the order's ERG (the box
+minimum is Fleet's build-time check); `option.test.ts`'s header says the builders refuse one block earlier than the
+script, but at the mock chain's `HEIGHT = h + 1` the guards coincide with `open = HEIGHT <= expiry` exactly; the
+clock builder is one block more conservative than `Clock.es`'s `due` (the existing case "refused at HEIGHT H+N and
+accepted at H+N+1" shows it); the Limit orders tab's default fill amount (`floor(value / price)`) can be refused by
+the SDK on a nearly empty order. None changed code.
+
+**Property tests** (item 2), `test/properties/`, fast-check 4.10.2 pinned, one seed for every suite printed with its
+run count (`run-properties.log`, `npx vitest run test/properties --silent=false`):
+
+```
+property pools: quote bound N2T: 2000 runs, seed 20261029
+property pools: quote bound T2T: 2000 runs, seed 20261029
+property pools: Long overflow guard: 200 runs, seed 20261029
+property pools: swap executes N2T: 40 runs, seed 20261029
+property pools: swap executes T2T: 40 runs, seed 20261029
+property pools: deposit quotes agree N2T: 2000 runs, seed 20261029
+property pools: deposit quotes agree T2T: 2000 runs, seed 20261029
+property pools: deposit executes from either side: 30 runs, seed 20261029
+property units: round trip: 2000 runs, seed 20261029
+property units: non-canonical accepted forms normalise: 1500 runs, seed 20261029
+property units: refused strings: 2000 runs, seed 20261029
+property units: too many decimals refused: 1000 runs, seed 20261029
+property units: price round trip: 2000 runs, seed 20261029
+property sizing: Babel equals brute force: 300 runs, seed 20261029
+property sizing: Machina into-order equals brute force: 300 runs, seed 20261029
+property sizing: Machina from-order equals brute force: 300 runs, seed 20261029
+property clock: buy leg at the due height: 25 runs, seed 20261029
+property clock: sell leg at the due height: 25 runs, seed 20261029
+property option: call exercise and reclaim at the expiry: 12 runs, seed 20261029
+property option: put exercise and reclaim at the expiry: 12 runs, seed 20261029
+      Tests  20 passed (20)
+   Duration  3.10s (tests 73%, import 26%, transform 1%)
+```
+
+`FC_SEED=7` reruns every suite under another seed (checked: `property units: round trip: 2000 runs, seed 7`).
+Two of the brief's properties were narrowed to what the code does, recorded rather than changed: (a) "the
+ERG-first and tokens-first deposit quotes agree" holds to within one rounding step, not exactly (`tokenIn = ceil(e
+* y / x)` then `e' = ceil(tokenIn * x / y)` gives `e <= e' <= e + ceil(x / y)` and a never-smaller LP out; the
+example in `liquidity.test.ts` happens to divide evenly), so the property asserts those bounds and that a deposit
+built from either side executes on the mock chain; (b) "`parseUnits` refuses every non-canonical string" is
+narrower than `units.ts`, which accepts leading and trailing zeros, a bare trailing dot and surrounding whitespace
+by design (`test/units.test.ts` "parses decimals exactly"), so the property refuses the grammar's outside (a sign,
+an exponent, a letter, a second dot, a comma, no digit, too many fraction digits) and checks the accepted forms
+normalise to the canonical string.
+
+**The one bug found, fixed in the smallest way.** The first run of the swap oracle, drawing reserves up to 2^62 as
+the brief asked, printed from sigmastate-js:
+
+```
+Caused by: java.lang.ArithmeticException: long overflow
+ ❯ $c_Ljava7_compat_Math$.multiplyExact__J__J__J node_modules/sigmastate-js/dist/main.js:9278:13
+```
+
+`Pool.sc`'s `validSwap` reads `reservesY0.toBigInt * deltaReservesX * feeNum0 >= -deltaReservesY *
+(reservesX0.toBigInt * FeeDenom + deltaReservesX * feeNum0)`: the term `deltaReservesX * feeNum0` is a Long times
+an Int (a Long in the T2T script) before any widening, so a swap input above `(2^63 - 1) / feeNum` (about 9.2
+million ERG, or 9.2e15 token units) makes the deployed script throw and the node reject the transaction, with no
+refusal from the page. The quote itself is exact at any size (the pure bound property passes over the full 2^62
+range). `buildSwap` and `buildSwapT2T` now throw `the amount times the pool's fee numerator does not fit a Long:
+the pool script cannot evaluate it` first (one `if` each, `src/protocols/ergodex/amm.ts`), the oracle draws inputs
+within what the script can multiply, and a 200-run property checks the refusal. Recorded in `pools.md` and the
+changelog.
+
+**The registry** (item 3). `src/registry.json`, 18 entries, generated once from the modules' pinned literals and the
+live bank and oracle trees (722 and 413 bytes, read from the explorer) and then hand-maintained; every module reads
+its trees and hashes through `src/registry.ts`, `sigmafi-contracts.json` is gone (its extraction script now prints
+the registry's shape), `test/hashes.test.ts` checks every entry's hash against its template (templates filled with
+three different byte values), the SDK-built Machina order against its sample, and recompiles the four contracts in
+`contracts/`. `scripts/registry-check.ts` (`run-registry-check.log`):
+
+```
+registry: 18 entries; explorer https://api.ergoplatform.com; height 1905489
+ergodex-n2t-pool               2dcc7830afe8… live: box 47343e98a48ae775… at height 874866
+ergodex-t2t-pool               3c09deff3b5f… live: box 2cb83d72b08e41ff… at height 858185
+eip31-babel                    4e83fa68ef3e… live: box fc3aa86922611be2… at height 873592
+machina-e2t-limit-order        03ef002b73a8… live: box d5ae5eac6245dc62… at height 1903246
+sigmafi-order-on-close-erg     525298e97a92… live: box 1c3dd9d14bcfb37b… at height 943490; 1 of 20 listed carry other constants
+sigmafi-order-on-close-token   05208404b335… live: box 988a9640e29e0cb0… at height 930342
+sigmafi-order-fixed-erg        8af6777c9b70… none, ever
+sigmafi-order-fixed-token      6f38fd7514e8… none, ever
+sigmafi-bond-erg               44830db1e02b… live: box 5335fa98ee05818e… at height 922218
+sigmafi-bond-token             edacb0e6bc89… live: box e1b6409a8735634b… at height 972857
+sigmafi-dev-fee-recipient      55e36dd33c1a… live: recipient 9hgm8enrcP… db5fbe65cf5368ca
+tokenjay-escrow                b2c3338d244f… spent: box 0916dac4c53c37bb… settled at height 761208, 47 all time
+sigmausd-bank                  246e14059ac2… live: box d0d74b7f2176e1a2… at height 1905194
+sigmausd-oracle                19e4db356244… live: box 10892ac65357d5db… at height 1905486
+clock-buy                      a1df056602fa… spent: box 9d54c61fd815006f… settled at height 1905031, 6 all time
+clock-sell                     7bf4e2d6ba91… spent: box 600da595cb83a46d… settled at height 1905121, 3 all time
+option-call                    da26dcb30f5b… spent: box 5a1e895eeee14821… settled at height 1905148, 3 all time
+option-put                     1296e3affd09… spent: box 2273d3dae3906fab… settled at height 1905149, 3 all time
+16 of 18 entries have a mainnet box (unspent, or spent where none is open) with the pinned bytes
+```
+
+The brief's "a live box for each entry" cannot be met for the six contracts whose boxes are all spent today
+(this project's four, every one closed on mainnet in the earlier sessions; TokenJay's 47 escrows, all taken) without
+submitting a mainnet transaction, which the brief forbids, so the script falls back to the explorer's all-time
+listing (`/api/v1/boxes/byErgoTreeTemplateHash/<hash>`) and names the newest spent box with the pinned bytes.
+SigmaFi's two fixed-term order contracts have never had a box on mainnet (listed for completeness, `liveBoxCheckedOn:
+null`). The first run, with `limit=1`, returned for the SigmaFi ERG order a box (`dd0b2f9f…`, height 907669) whose
+tree differs from the pinned one in the 32-byte constant after `0e20` at hex offset 108, the bond-tree blake2b:
+another deployment of the same script with another bond contract, under the same template hash. The page's
+`describeOrder` refuses it by its exact-tree check, so it never reaches the Bonds tab; 19 of the 20 unspent boxes
+under the hash carry the pinned bytes.
+
+**Scanning and the budget** (item 4). `npm audit --omit=dev` is a step of the existing build job (0 vulnerabilities;
+the full audit reports 2 low in the test harness, `diff` under `@fleet-sdk/mock-chain`, and the `happy-dom` high
+was closed by moving to 21.0.4, all 206 tests passing on it). `.github/workflows/codeql.yml`: weekly (Monday 06:23
+UTC) and on pull requests to `main`, never on a push. `.github/dependabot.yml`: npm, monthly, one grouped pull
+request, limit 1. Actions runs a month added, with no human pull request: about 4.3 CodeQL runs from the schedule
+plus, for Dependabot's one pull request, one pages run (two jobs: the build and the browser) and one CodeQL run,
+so about 6.3 runs a month, roughly 25 runner-minutes; each human pull request adds one CodeQL run and the browser
+job inside the pages run it already triggered; nothing new runs on a push. This session cost five runs: two
+pushes to the pull request (each a pages run of two jobs, build and browser, and a CodeQL run) and the
+fast-forward push's pages run. CodeQL's `init` warns that without an `on.push` hook the Security tab shows no
+alerts for the default branch; that is the budget's choice (pull requests and the weekly schedule only) and the
+schedule's runs analyse `main`.
+`SECURITY.md` names GitHub's private vulnerability reporting as the channel and states what the page holds; no
+address was invented. Two repository settings could not be changed from this session (the harness refused the
+calls as account changes): turning private vulnerability reporting on (`gh api -X PUT
+repos/cafebedouin/freedex/private-vulnerability-reporting`) and branch protection on `main` (the `build` check
+required, force pushes and deletion off); both are the person's to run, and SECURITY.md's link only works once the
+first is on.
+
+**The browser test** (item 5). `test/browser/phone.spec.ts`, Playwright 1.64.1 pinned, Chromium only, the built
+`dist/` served by `vite preview`, gated to `pull_request` in `pages.yml` with the browser download cached by
+Playwright's version. It asserts the CSP meta, unticks the upkeep (so nothing is submitted), chooses "sign with your
+phone" with the test wallet's address (read-only), picks RSN as the target (0.001 ERG into SigUSD quotes 0 units:
+two decimals), builds a 0.001 ERG swap and sees the QR panel render with a 64-hex id, an `ergopay:` link within
+2,800 characters, a square canvas titled with its module count, and the focus on the panel. Locally (Chrome Headless
+Shell 156.0.8078.4):
+
+```
+  ✓  1 [chromium] › test/browser/phone.spec.ts:11:1 › the CSP is set, the WASM path reduces a swap, and the QR panel shows a link within the limit (13.9s)
+  1 passed (15.4s)
+```
+
+The explorer's first poll for the unsigned id answers 404 by design; the browser logs every failed resource load,
+so that one is excluded from the test's "no console error" assertion.
+
+**Explorer resilience** (item 6). `src/explorer.ts` retries a failed try (a network error, a timeout, a 5xx, a 429)
+on the same backend after 1 s, 2 s and 4 s (`RETRY_DELAYS_MS`, so four tries a backend) before the next backend;
+a 404 is an answer, not a failure. `onStatus` reports each failed try, the final failure and the first success
+after one; the store carries it, the header line shows "explorer unavailable (host, try n failed), retrying…" on
+every tab, each listing shows the same while loading and "explorer unavailable (reason) [retry]" after a failure,
+the Swap route and the Pool tab say it in place of "no pool", the pool listing is re-asked every 30 s until it
+loads. Four Node cases (`test/explorer.test.ts`) and three page cases (`test/ui/explorer-down.test.ts`, the harness
+zeroing the waits). Worst case with both backends hanging: eight tries of 15 s plus 14 s of waits before the
+error, against 30 s before; the brief asked for the retries inside the failover loop and the record notes the cost.
+No telemetry; the page still phones nobody but the backends.
+
+**Accessibility** (item 7). Every input labelled (`aria-label` on the Swap and Pool amount fields and selects, the
+unit spans turned into `<label for>`), the tabs wired with `aria-controls` to `role="tabpanel"` sections inside a
+`<main>`, the log and the status lines `role="status" aria-live="polite"`, the QR panel `tabindex="-1"` focused on
+open and the focus returned on close, the actions column of every table named "actions" for screen readers only,
+and a sentence in words before every wallet prompt (`send(store, build, what)`, 24 call sites: "Swap 1 ERG for 19.8
+SigUSD (at least 19.6 after slippage), miner fee 0.001 ERG. Your wallet will ask you to confirm."). axe-core 4.14.0
+runs in happy-dom over all eight tabs without a wallet, with one, and with the QR panel open (colour contrast off:
+happy-dom lays nothing out); the first run reported `landmark-one-main` and `region` (fixed with `<main>`), the
+second `empty-table-header` (fixed with the hidden "actions" head), the third nothing.
+
+**Housekeeping** (item 8). `src/protocols/{ergodex,machina,babel,sigmausd,sigmafi,tokenjay,clock,option}/` with the
+tests beside the modules, a pure move with imports rewritten by a script (`git mv`, 21 files; 160 tests green
+before any other change). `CHANGELOG.md` from the first push. The README's compatibility section lists only what has
+run: Nautilus and SAFEW by EIP-12 (stubbed connector in the tests; the mainnet transactions went through the
+project's guarded signer), the mobile wallet and Terminus by static ErgoPay (the wallet's source; the scan is still
+the person's row), Satergo untested, the two explorer backends, the mock chain's `sigmastate-js` as the node
+interpreter, and Chromium 156 as the one browser the WASM path has run in. One run of `vite-bundle-visualizer` 1.2.1
+(`-t raw-data`): two chunks, the main one 355 kB unminified (224.65 kB minified before the session's UI additions,
+231.99 kB after; gzip 74.08 kB) and the lazy `ergo_lib_wasm` chunk 207 kB plus the 2.77 MB `.wasm` fetched only on
+the phone path; the largest modules in the main chunk are `qrcode-generator` 42.7 kB, Fleet core 41.9 kB, the
+serializer 29.8 kB and `src/registry.json` 26.9 kB (the trees and the prose; about 3 kB gzipped over the old SigmaFi
+JSON). Conclusion: no second heavy chunk; nothing to split.
+
+**On the pull request** (`gh pr checks 1`, run 40989252462 for `4a1e03c`): `build pass 42s`, `browser pass 43s`
+(Chromium downloaded, no cache yet), the CodeQL `analyze` job `pass 58s`, and the CodeQL check `fail 6s` with "1
+new alert including 1 high severity security vulnerability": `js/incomplete-url-substring-sanitization` at
+`test/explorer.test.ts:45`, the retry test's fake fetch routing by `url.startsWith("https://a.example")`. A test
+double, not page code, but the check gates the pull request, so `402e53a` routes by `new URL(url).origin` instead
+(an amend was not available to the session; the second commit is the fix). The second run (`gh pr checks 1`,
+runs 40989600448 and 40989600434 for `402e53a`): `build pass 1m2s`, `browser pass 44s`, `analyze pass 1m11s`,
+`CodeQL pass 2s`, zero open alerts on the pull request. Merged by a fast-forward of `main` to `402e53a` at
+02:06:53 UTC on 2026-10-30, tag `v0.1.0` pushed with it; the push's Pages run 40989781132 (`build success`,
+`browser skipped`, `deploy success`) and the live page answered 200 with `assets/index-4s0FbZ44.js`, the local
+build's hash, and seven `role="status"` lines (`curl`, 02:08 UTC).
+
+**Limits of this session.** The browser job's pass on the pull request is recorded above and below;
+the invariants files cite code lines that will drift with the next edit (the UI and explorer cites were reduced to
+file names for that reason, the `amm.ts` cites shifted by the guard's lines); the registry's `liveBoxCheckedOn`
+dates are set by hand from the check script, not by it; the brief's "three attempts, 1 s, 2 s, 4 s" was read as
+three retries after the first try.
