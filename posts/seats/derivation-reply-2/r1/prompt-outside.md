@@ -1,0 +1,22 @@
+You are reviewing a draft forum reply before it is posted. This is a read-only review: do not run shell commands, do not edit files, do not use the web. Work only from the files under {{SLICE}}.
+
+Layout of {{SLICE}}:
+- DRAFT.md: the reply under review. It will be posted in a public Ergo forum thread as an answer to the post in thread/5385-post2-reply-being-answered.md.
+- thread/5385-post1-opening.md: the thread's opening post (a proposed rule for deriving post-quantum keys from an Ergo wallet seed; rule A = a hardened BIP32 branch under a new purpose m/8391'/..., rule B = a separate HMAC root). It asked, among other things, whether any Ergo wallet exports the depth-3 account xpub m/44'/429'/account' rather than EIP-3's depth-4 node.
+- thread/5385-post2-reply-being-answered.md: the reply being answered.
+- XPUB-DEPTH-SURVEY.md: the survey the draft rests on, with commits and file:line citations.
+- sources/: the cited source files, copied from those commits (Ergo Ledger app C code, Nautilus, fleet-sdk, Satergo, Ergo mobile wallet, ergo-appkit, sigma-state).
+
+Your job, in this order:
+
+1. Read sources/ first, before DRAFT.md and before the survey. Write down, before you open either, what each codebase does: which derivation path the Ledger app will export an extended public key for (read the path validation), which node each wallet requests, derives, stores or shows, for Ledger and for mnemonic wallets.
+
+2. Then read XPUB-DEPTH-SURVEY.md and DRAFT.md. For every factual claim (what a wallet or the device does, what a depth-3 key reaches under BIP32 arithmetic with a discrete log, what rule A's path is relative to m/44'), classify it as: verified against the slice (say where), could not verify from the slice (say what would be needed), or wrong or overclaimed (quote the sentence and give the correction). A claim that goes beyond what the code shows is an overclaim even if plausibly true.
+
+3. Check the BIP32 reasoning independently: given a depth-3 public key and chain code, and the ability to take discrete logs, which keys are reachable and where does it stop? Does the draft's statement about rule A (m/8391'/...) and rule B hold? Does the draft correctly correct the reply's statement that a depth-3 export would expose rule A?
+
+4. Fit: does it answer what post 2 raised, at the right length and tone for a public forum reply? Is the last sentence (a proposed next step) supported by the thread?
+
+5. What would you cut, and what is missing that a wallet developer reading it would ask first?
+
+Write the review as plain markdown: a short verdict line, then numbered findings, each with the quoted sentence, the classification, and the evidence location in the slice. Do not rewrite the draft. Do not speculate about the authors.
