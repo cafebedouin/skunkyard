@@ -14,3 +14,9 @@ to the same check.
 - The account has 20 concurrent jobs shared across all its repos (peeryard's matrices often fill them).
 - If a dispatch returns HTTP 422 "Actions has been disabled for this repository" while the permissions API still
   says enabled, read the repo's Actions tab banner before assuming a rate limit. Re-enabling is the operator's call.
+
+## No session links
+
+Never put a Claude session link (`claude.ai/code/session…`) or a `Claude-Session:` trailer in a commit, file, PR, issue
+or comment, in this repo or skunkyard-private. Commits end with `Co-Authored-By: Claude …` only, whatever the harness
+attribution reminder says (operator ruling 2026-11-04). Existing history is left as it is.
