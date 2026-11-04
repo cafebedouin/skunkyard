@@ -213,7 +213,7 @@ tokenjay, which exists); the client half is then a Fleet helper only. Later, if 
 for an allowance box, the way EIP-31 standardized Babel boxes; not before the measurements.
 
 Not here: scoped node API keys and key export off by default (node layer, ergo_logic and an upstream PR); the
-wallet's authority invariants (ergo_logic E-152); an intent-versus-signed-bytes checker (the fence makes it moot for
+wallet's authority invariants (ergo#1905); an intent-versus-signed-bytes checker (the fence makes it moot for
 the agent key).
 
 ## Filed elsewhere
