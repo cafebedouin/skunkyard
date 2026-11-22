@@ -15,6 +15,15 @@ to the same check.
 - If a dispatch returns HTTP 422 "Actions has been disabled for this repository" while the permissions API still
   says enabled, read the repo's Actions tab banner before assuming a rate limit. Re-enabling is the operator's call.
 
+## Findings in other projects' code
+
+A suspected security defect in someone else's released code is a lead: keep it off public surfaces, including this
+public repo, until it is worked to a tested fix (or, for a protocol change, the decision the maintainers must make).
+Then the route is judged on the fix, not the lead. A fix that stands on its own correctness argument, or whose path
+is unreachable in the released default, usually goes out as an ordinary issue or PR with no account of how it was
+found. Only a fix whose text cannot avoid pointing at a live trigger goes privately to its authors, with the patch
+(operator ruling 2026-11-22).
+
 ## No session links
 
 Never put a Claude session link (`claude.ai/code/session…`) or a `Claude-Session:` trailer in a commit, file, PR, issue
